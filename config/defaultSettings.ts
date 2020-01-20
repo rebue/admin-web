@@ -48,14 +48,16 @@ export default {
   primaryColor: 'daybreak',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  // XXX 修改and design pro源码: 固定顶部header
+  fixedHeader: true,
   autoHideHeader: false,
   fixSiderbar: false,
   colorWeak: false,
   menu: {
     locale: true,
   },
-  title: 'Ant Design Pro',
+  // XXX 修改and design pro源码: 修改应用名称
+  title: 'Admin Web',
   pwa: false,
   iconfontUrl: '',
 } as DefaultSettings;

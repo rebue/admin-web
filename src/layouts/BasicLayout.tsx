@@ -92,7 +92,9 @@ const defaultFooterDom = (
 
 const footerRender: BasicLayoutProps['footerRender'] = () => {
   if (!isAntDesignPro()) {
-    return defaultFooterDom;
+    // XXX 修改and design pro源码: 不显示脚部
+    // return defaultFooterDom;
+    return undefined;
   }
   return (
     <>
