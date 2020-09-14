@@ -20,4 +20,5 @@ const i18n = new VueI18n({
     messages, // set locale messages
 });
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 ElementLocale.i18n((key: string, value: any[] | { [key: string]: any } | undefined) => i18n.t(key, value));

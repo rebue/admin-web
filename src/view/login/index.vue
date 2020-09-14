@@ -11,6 +11,7 @@
 </template>
 
 <style lang="less" scoped>
-.body {
+.el-container {
+    height: 100%;
 }
 </style>
