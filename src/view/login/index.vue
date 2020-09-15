@@ -1,21 +1,37 @@
 <template>
     <div class="body">
-        <div class="header">XXX系统|登录</div>
+        <div class="header">
+            <div class="">
+                XXX系统|登录
+            </div>
+        </div>
         <div class="main">
-            <el-card>
-                <div slot="header" class="clearfix">
-                    <span>登录</span>
+            <el-card class="login-card">
+                <div slot="header">
+                    <span>账号密码登录</span>
                 </div>
-                <el-form ref="form" :model="form" label-width="80px">
+                <el-form class="form" ref="form" :model="form" label-position="left" label-width="90px">
                     <el-form-item label="登录账号">
-                        <el-input v-model="form.loginName"></el-input>
+                        <el-input
+                            autofocus
+                            v-model="form.loginName"
+                            suffix-icon="el-icon-user-solid"
+                            required
+                            placeholder="请输入登录账号"
+                        />
                     </el-form-item>
                     <el-form-item label="登录密码">
-                        <el-input v-model="form.loginPswd"></el-input>
+                        <el-input
+                            v-model="form.loginPswd"
+                            suffix-icon="el-icon-key"
+                            show-password
+                            required
+                            placeholder="请输入登录密码"
+                        />
                     </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">登录</el-button>
-                    </el-form-item>
+                    <!-- <el-form-item> -->
+                    <el-button class="login-button" type="primary" @click="onSubmit">登录</el-button>
+                    <!-- </el-form-item> -->
                 </el-form>
             </el-card>
         </div>
@@ -65,9 +81,21 @@ export default {
         justify-content: center; /* 水平居中 */
         align-items: center; /* 垂直居中 */
 
-        .login-tabs {
-            width: 450px;
-            height: 300px;
+        .login-card {
+            margin-top: -200px;
+            width: 550px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+
+            .form {
+                width: 350px;
+                .login-button {
+                    width: 350px;
+                }
+            }
         }
     }
     .footer {
