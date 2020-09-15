@@ -1,39 +1,37 @@
 <template>
     <div class="body">
         <div class="header">
-            <div class="">
-                XXX系统|登录
-            </div>
+            <div class="header-center">XXX系统<a-divider type="vertical" />登录</div>
         </div>
         <div class="main">
-            <el-card class="login-card">
-                <div slot="header">
-                    <span>账号密码登录</span>
-                </div>
-                <el-form class="form" ref="form" :model="form" label-position="left" label-width="90px">
-                    <el-form-item label="登录账号">
-                        <el-input
-                            autofocus
+            <a-card title="账号密码登录" class="login-card">
+                <a-form class="form" :model="form">
+                    <a-form-item>
+                        <a-input
+                            auto-focus
+                            ref="txtLoginName"
                             v-model="form.loginName"
                             suffix-icon="el-icon-user-solid"
                             required
                             placeholder="请输入登录账号"
-                        />
-                    </el-form-item>
-                    <el-form-item label="登录密码">
-                        <el-input
+                        >
+                            <template v-slot:prefix><a-icon type="user"/></template>
+                        </a-input>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-input-password
                             v-model="form.loginPswd"
                             suffix-icon="el-icon-key"
                             show-password
                             required
                             placeholder="请输入登录密码"
-                        />
-                    </el-form-item>
-                    <!-- <el-form-item> -->
-                    <el-button class="login-button" type="primary" @click="onSubmit">登录</el-button>
-                    <!-- </el-form-item> -->
-                </el-form>
-            </el-card>
+                        >
+                            <template v-slot:prefix><a-icon type="key"/></template>
+                        </a-input-password>
+                    </a-form-item>
+                    <a-button type="primary" block @click="onSubmit">登录</a-button>
+                </a-form>
+            </a-card>
         </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>
@@ -41,6 +39,10 @@
 
 <script>
 export default {
+    mounted() {
+        // auto-focus在chrome中失效，只好手动设置
+        this.$refs.txtLoginName.focus();
+    },
     data() {
         return {
             form: {
@@ -62,16 +64,20 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-    text-align: center;
+    overflow-y: hidden;
     background: url(./bg.jpg) no-repeat center center fixed;
     background-size: cover;
     .header {
         height: 40px;
         font-size: 24px;
         padding: 10px;
-        .header {
+        display: flex;
+        justify-content: center; /* 水平居中 */
+        .header-center {
             text-align: left;
             width: 960px;
+            font-size: 28px;
+            color: white;
         }
     }
     .main {
@@ -83,18 +89,15 @@ export default {
 
         .login-card {
             margin-top: -200px;
-            width: 550px;
-            height: 350px;
+            width: 450px;
+            height: 300px;
             display: flex;
             flex-direction: column;
             justify-content: center; /* 水平居中 */
             align-items: center; /* 垂直居中 */
 
             .form {
-                width: 350px;
-                .login-button {
-                    width: 350px;
-                }
+                width: 280px;
             }
         }
     }
