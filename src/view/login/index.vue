@@ -59,10 +59,10 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     alert('submit!');
+                    this.loading = false;
                 } else {
                     console.log('error submit!!');
                     this.loading = false;
-                    return false;
                 }
             });
         },
