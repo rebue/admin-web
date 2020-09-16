@@ -5,32 +5,27 @@
         </div>
         <div class="main">
             <a-card title="账号密码登录" class="login-card">
-                <a-form class="form" :model="form">
-                    <a-form-item>
+                <!-- 只需要通过 rules 属性传入约定的验证规则，
+                并将 FormItem 的 prop 属性设置为需校验的字段名即可。
+                校验规则参见 https://github.com/yiminghe/async-validator -->
+                <a-form-model ref="form" class="form" :model="form" :rules="rules">
+                    <a-form-model-item prop="loginName">
                         <a-input
                             auto-focus
                             ref="txtLoginName"
-                            v-model="form.loginName"
-                            suffix-icon="el-icon-user-solid"
-                            required
+                            v-model.trim="form.loginName"
                             placeholder="请输入登录账号"
                         >
                             <template v-slot:prefix><a-icon type="user"/></template>
                         </a-input>
-                    </a-form-item>
-                    <a-form-item>
-                        <a-input-password
-                            v-model="form.loginPswd"
-                            suffix-icon="el-icon-key"
-                            show-password
-                            required
-                            placeholder="请输入登录密码"
-                        >
+                    </a-form-model-item>
+                    <a-form-model-item prop="loginPswd">
+                        <a-input-password v-model="form.loginPswd" placeholder="请输入登录密码">
                             <template v-slot:prefix><a-icon type="key"/></template>
                         </a-input-password>
-                    </a-form-item>
-                    <a-button type="primary" block @click="onSubmit">登录</a-button>
-                </a-form>
+                    </a-form-model-item>
+                    <a-button :loading="loading" type="primary" block @click="handleSubmit">登录</a-button>
+                </a-form-model>
             </a-card>
         </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
@@ -41,19 +36,35 @@
 export default {
     mounted() {
         // auto-focus在chrome中失效，只好手动设置
-        this.$refs.txtLoginName.focus();
+        // this.$refs.txtLoginName.focus();
     },
     data() {
         return {
+            loading: false,
             form: {
                 loginName: '',
                 loginPswd: '',
             },
+            rules: {
+                loginName: [{ required: true, message: '请输入登录账号', trigger: 'blur' }],
+                loginPswd: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
+            },
         };
     },
     methods: {
-        onSubmit() {
-            console.log('submit!');
+        handleSubmit() {
+            console.log('handleSubmit!');
+            this.loading = true;
+
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    this.loading = false;
+                    return false;
+                }
+            });
         },
     },
 };
