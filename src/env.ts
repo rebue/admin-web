@@ -1,47 +1,24 @@
-class Env {
-    /** 当前运行环境 */
-    nodeEnv!: string;
-    /** 主机地址 */
-    host!: string;
-    /** 后端服务器地址 */
-    baseUrl!: string;
-    /** 图片URL基础路径 */
-    picBaseUrl?: string;
-    /** 代理规则 */
-    proxyRules = new Map<string, string>();
-    /** 生成URL */
-    genUrl(url: string): string {
-        for (const [key, value] of this.proxyRules.entries()) {
-            console.log(key, value);
-            if (url.startsWith(key)) {
-                return value + url.substr(key.length);
-            }
-        }
-        return url;
-    }
-}
-
-const env = new Env();
-
-console.log('env', process.env);
-
-// env.nodeEnv = 'development';
-env.nodeEnv = 'production';
-
-if (env.nodeEnv === 'development') {
-    env.host = 'http://192.168.1.166';
-    // env.host = 'http://192.168.31.183';
-    env.baseUrl = env.host + ':3000';
-    env.picBaseUrl = env.host + '/ise-svr/files';
-    // 添加代理规则
-    env.proxyRules.set('/lck-svr/', env.host + ':9556/');
-} else if (env.nodeEnv === 'production') {
-    env.host = 'https://lock.bzttech.com';
-    // env.host = 'https://wx.cnbzt.net';
-    env.baseUrl = env.host;
-    env.picBaseUrl = env.host + '/ise-svr/files';
-    env.proxyRules.set('/lck-svr/', env.host + '/');
-}
+const env = {
+    /** 当前nodejs运行环境 */
+    nodeEnv: process.env.NODE_ENV,
+    /** 请求基础URL的协议部分 */
+    requestBaseScheme: process.env.VUE_APP_REQUEST_BASE_SCHEME,
+    /** 请求基础URL的主机部分 */
+    requestBaseHost: process.env.VUE_APP_REQUEST_BASE_HOST,
+    /** 请求基础URL的端口号部分 */
+    requestBasePort: process.env.VUE_APP_REQUEST_BASE_PORT,
+    /** 请求基础URL */
+    requestBaseUrl:
+        process.env.VUE_APP_REQUEST_BASE_SCHEME +
+        '://' +
+        process.env.VUE_APP_REQUEST_BASE_HOST +
+        (process.env.VUE_APP_REQUEST_BASE_PORT &&
+        process.env.VUE_APP_REQUEST_BASE_PORT.trim() !== '' &&
+        ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
+            (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443))
+            ? ''
+            : ':' + process.env.VUE_APP_REQUEST_BASE_PORT),
+};
 
 console.log('env', env);
 
