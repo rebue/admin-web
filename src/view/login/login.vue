@@ -29,12 +29,15 @@
 
 <script>
 import { observer } from 'mobx-vue';
-import sysStore from '@/store/SysStore';
+import { sysStore } from '@/store/SysStore';
+import { sysAction } from '@/action/SysAction';
+import { SysIdDic } from '@/dic/SysIdDic';
 
-export default {
+export default observer({
     data() {
         return {
-            sysStore,
+            /** 定义当前登录页面所对应的系统 */
+            sysId: SysIdDic.AdminWeb,
             loading: false,
             form: {
                 loginName: '',
@@ -48,12 +51,13 @@ export default {
     },
     methods: {
         doSubmit() {
-            console.log('doSubmit!', this.sysStore.sysId);
+            console.log('doSubmit!');
             this.loading = true;
 
             this.$refs.form.validate(valid => {
                 if (valid) {
                     alert('submit!');
+                    sysAction.setSysId(this.sysId);
                     this.loading = false;
                 } else {
                     console.log('error submit!!');
@@ -62,7 +66,7 @@ export default {
             });
         },
     },
-};
+});
 </script>
 
 <style lang="less" scoped>
