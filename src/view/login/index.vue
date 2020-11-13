@@ -10,12 +10,7 @@
                 校验规则参见 https://github.com/yiminghe/async-validator -->
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
                     <a-form-model-item prop="loginName">
-                        <a-input
-                            auto-focus
-                            ref="txtLoginName"
-                            v-model.trim="form.loginName"
-                            placeholder="请输入登录账号"
-                        >
+                        <a-input auto-focus v-model.trim="form.loginName" placeholder="请输入登录账号">
                             <template v-slot:prefix><a-icon type="user"/></template>
                         </a-input>
                     </a-form-model-item>
@@ -24,7 +19,7 @@
                             <template v-slot:prefix><a-icon type="key"/></template>
                         </a-input-password>
                     </a-form-model-item>
-                    <a-button :loading="loading" type="primary" block @click="handleSubmit">登录</a-button>
+                    <a-button :loading="loading" type="primary" block @click="doSubmit">登录</a-button>
                 </a-form-model>
             </a-card>
         </div>
@@ -33,13 +28,13 @@
 </template>
 
 <script>
+import { observer } from 'mobx-vue';
+import sysStore from '@/store/SysStore';
+
 export default {
-    mounted() {
-        // auto-focus在chrome中失效，只好手动设置
-        // this.$refs.txtLoginName.focus();
-    },
     data() {
         return {
+            sysStore,
             loading: false,
             form: {
                 loginName: '',
@@ -52,8 +47,8 @@ export default {
         };
     },
     methods: {
-        handleSubmit() {
-            console.log('handleSubmit!');
+        doSubmit() {
+            console.log('doSubmit!', this.sysStore.sysId);
             this.loading = true;
 
             this.$refs.form.validate(valid => {
@@ -79,14 +74,14 @@ export default {
     background: url(./bg.jpg) no-repeat center center fixed;
     background-size: cover;
     .header {
-        height: 40px;
+        height: 60px;
         font-size: 24px;
         padding: 10px;
         display: flex;
         justify-content: center; /* 水平居中 */
         .header-center {
             text-align: left;
-            width: 960px;
+            width: 1024px;
             font-size: 28px;
             color: white;
         }
@@ -113,8 +108,10 @@ export default {
         }
     }
     .footer {
-        height: 20px;
+        height: 40px;
         padding: 10px;
+        color: white;
+        text-align: center;
     }
 }
 </style>

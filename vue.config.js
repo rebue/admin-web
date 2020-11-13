@@ -14,9 +14,7 @@ module.exports = {
     devServer: {
         // 调试时自动打开浏览器
         open: true,
-        // // 代理
-        // proxy: require('./mock/proxy.ts'),
-        // https://vuejs-templates.github.io/webpack/proxy.html
+        // 代理
         proxy: require('./mock/proxy.ts'),
         // 调用mock服务器
         before: require('./mock/server.ts'),

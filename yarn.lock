@@ -6326,6 +6326,18 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+mobx-vue@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.npm.taobao.org/mobx-vue/download/mobx-vue-2.0.11.tgz#e5be8381438dfc9b98b4d1f580489a1f52a210a3"
+  integrity sha1-5b6DgUON/JuYtNH1gEiaH1KiEKM=
+  dependencies:
+    tslib "^1.9.0"
+
+mobx@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.npm.taobao.org/mobx/download/mobx-6.0.3.tgz#cec784bb41acf9eb87b449f1181c9dd8c77ccc0b"
+  integrity sha1-zseEu0Gs+euHtEnxGByd2Md8zAs=
+
 mockjs@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/mockjs/download/mockjs-1.1.0.tgz#e6a0c378e91906dbaff20911cc0273b3c7d75b06"
