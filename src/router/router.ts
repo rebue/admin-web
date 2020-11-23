@@ -10,7 +10,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: '/',
-        component: () => import('@/view/home/home.vue'),
+        component: () => import('@/view/index/index.vue'),
     },
 ];
 

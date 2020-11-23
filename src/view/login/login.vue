@@ -29,7 +29,6 @@
 
 <script>
 import { observer } from 'mobx-vue';
-import { sysStore } from '@/store/SysStore';
 import { sysAction } from '@/action/SysAction';
 import { SysIdDic } from '@/dic/SysIdDic';
 
