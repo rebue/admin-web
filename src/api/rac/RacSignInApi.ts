@@ -1,12 +1,12 @@
 /**
- * 角色访问控制相关请求
+ * 登录相关请求
  */
-// import { httpGet, httpPost, httpDelete, Ro } from '../../util/ReqUtils';
-// import LckLockMo from '../../mo/lck/LckLockMo';
+// import { httpGet, httpPost, httpDelete, Ro } from '@/util/ReqUtils';
+// import SignInByUserNameTo from '@/to/rac/SignInByUserNameTo';
 
-// /** 添加门锁 */
-// export function add(mo: LckLockMo): Promise<Ro> {
-//     return httpPost({ url: '/lck-svr/lck/lock', data: mo });
+// /** 通过用户名称登录 */
+// export function signInByUserName(to: SignInByUserNameTo): Promise<Ro> {
+//     return httpPost({ url: '/sign-in/sign-in-by-user-name', data: to });
 // }
 
 // /** 删除门锁 */
