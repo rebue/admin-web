@@ -9,13 +9,13 @@
                 并将 FormItem 的 prop 属性设置为需校验的字段名即可。
                 校验规则参见 https://github.com/yiminghe/async-validator -->
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
-                    <a-form-model-item prop="loginName">
-                        <a-input auto-focus v-model.trim="form.loginName" placeholder="请输入登录账号">
+                    <a-form-model-item prop="userName">
+                        <a-input auto-focus v-model.trim="form.userName" placeholder="请输入登录账号">
                             <template v-slot:prefix><a-icon type="user"/></template>
                         </a-input>
                     </a-form-model-item>
-                    <a-form-model-item prop="loginPswd">
-                        <a-input-password v-model="form.loginPswd" placeholder="请输入登录密码">
+                    <a-form-model-item prop="signInPswd">
+                        <a-input-password v-model="form.signInPswd" placeholder="请输入登录密码">
                             <template v-slot:prefix><a-icon type="key"/></template>
                         </a-input-password>
                     </a-form-model-item>
@@ -31,6 +31,7 @@
 import { observer } from 'mobx-vue';
 import { sysAction } from '@/action/SysAction';
 import { SysIdDic } from '@/dic/SysIdDic';
+import { signInByUserName } from '@/api/rac/RacSignInApi';
 
 export default observer({
     data() {
@@ -39,12 +40,12 @@ export default observer({
             sysId: SysIdDic.AdminWeb,
             loading: false,
             form: {
-                loginName: '',
-                loginPswd: '',
+                userName: '',
+                signInPswd: '',
             },
             rules: {
-                loginName: [{ required: true, message: '请输入登录账号', trigger: 'blur' }],
-                loginPswd: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
+                userName: [{ required: true, message: '请输入登录账号', trigger: 'blur' }],
+                signInPswd: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
             },
         };
     },
@@ -55,9 +56,15 @@ export default observer({
 
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    alert('submit!');
-                    sysAction.setSysId(this.sysId);
-                    this.loading = false;
+                    signInByUserName({
+                        sysId: this.sysId,
+                        userName: this.form.userName,
+                        signInPswd: this.form.signInPswd,
+                    })
+                        .then(res => {
+                            sysAction.setSysId(this.sysId);
+                        })
+                        .finally(() => (this.loading = false));
                 } else {
                     console.log('error submit!!');
                     this.loading = false;
