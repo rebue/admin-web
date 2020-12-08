@@ -4,12 +4,11 @@
 import { Ro } from '@/ro/Ro';
 import SignInByUserNameTo from '@/to/rac/SignInByUserNameTo';
 import request from '@/util/request';
-import { AxiosPromise } from 'axios';
 
 /** 通过用户名称登录 */
-export function signInByUserName(to: SignInByUserNameTo): AxiosPromise<Ro> {
+export function signInByUserName(to: SignInByUserNameTo): Promise<Ro> {
     console.log('RacSignInApi.signInByUserName', to);
-    return request.post('/sign-in/sign-in-by-user-name', to);
+    return request.post({ url: '/sign-in/sign-in-by-user-name', data: to });
 }
 
 // /** 删除门锁 */

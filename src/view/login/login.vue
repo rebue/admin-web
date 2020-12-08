@@ -61,8 +61,10 @@ export default observer({
                         userName: this.form.userName,
                         signInPswd: this.form.signInPswd,
                     })
-                        .then(res => {
-                            sysAction.setSysId(this.sysId);
+                        .then(ro => {
+                            if (ro.result > 0) {
+                                sysAction.setSysId(this.sysId);
+                            }
                         })
                         .finally(() => (this.loading = false));
                 } else {
