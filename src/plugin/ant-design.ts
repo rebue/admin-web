@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Button, Card, ConfigProvider, Divider, FormModel, Icon, Input, message } from 'ant-design-vue';
+import { Button, Card, ConfigProvider, Divider, FormModel, Icon, Input } from 'ant-design-vue';
 
 // 国际化
 Vue.use(ConfigProvider);
