@@ -8,7 +8,7 @@ import request from '@/util/request';
 /** 通过用户名称登录 */
 export function signInByUserName(to: SignInByUserNameTo): Promise<Ro> {
     console.log('RacSignInApi.signInByUserName', to);
-    return request.post({ url: '/sign-in/sign-in-by-user-name', data: to });
+    return request.post({ url: '/rac/sign-in/sign-in-by-user-name', data: to });
 }
 
 // /** 删除门锁 */

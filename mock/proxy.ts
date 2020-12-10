@@ -1,9 +1,7 @@
 // https://github.com/chimurai/http-proxy-middleware#proxycontext-config
 module.exports = {
-    '/api': {
-        target: '<url>',
-    },
-    '/foo': {
-        target: '<other_url>',
+    '/rac': {
+        target: 'http://127.0.0.1:9605/',
+        pathRewrite: { '^/rac': '' },
     },
 };

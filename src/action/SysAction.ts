@@ -5,7 +5,6 @@ export default class SysAction {
     @action
     setSysId(sysId: string) {
         sysStore.sysId = sysId;
-        console.log(sysId);
     }
 }
 
