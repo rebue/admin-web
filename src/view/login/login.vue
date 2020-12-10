@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import md5 from 'crypto-js/md5';
 import { observer } from 'mobx-vue';
 import { sysAction } from '@/action/SysAction';
 import { SysIdDic } from '@/dic/SysIdDic';
@@ -58,8 +59,8 @@ export default observer({
                 if (valid) {
                     signInByUserName({
                         sysId: this.sysId,
-                        userName: this.form.userName,
-                        signInPswd: this.form.signInPswd,
+                        userName: this.form.userName.trim(),
+                        signInPswd: md5(this.form.signInPswd.trim()).toString(),
                     })
                         .then(ro => {
                             if (ro.result > 0) {

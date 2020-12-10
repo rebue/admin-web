@@ -2,5 +2,5 @@
  * 系统ID
  */
 export enum SysIdDic {
-    AdminWeb = 'admin-web',
+    AdminWeb = 'rebue-admin-web',
 }
