@@ -16,7 +16,7 @@ process.env.VUE_APP_REQUEST_BASE_URL =
 module.exports = {
     devServer: {
         // 调试时自动打开浏览器
-        open: true,
+        // open: true,
         before(app) {
             apiMocker(app, path.resolve('./mock/mock'));
         },
