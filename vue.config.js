@@ -1,3 +1,6 @@
+const path = require('path');
+const apiMocker = require('mocker-api');
+
 // 设置请求的基础URL
 process.env.VUE_APP_REQUEST_BASE_URL =
     process.env.VUE_APP_REQUEST_BASE_SCHEME +
@@ -14,9 +17,8 @@ module.exports = {
     devServer: {
         // 调试时自动打开浏览器
         open: true,
-        // 代理
-        proxy: require('./proxy/proxy.ts'),
-        // 调用mock服务器
-        before: require('./mock/mock.ts'),
+        before(app) {
+            apiMocker(app, path.resolve('./mock/mock'));
+        },
     },
 };
