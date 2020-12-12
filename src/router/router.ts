@@ -6,11 +6,11 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
     {
         path: '/login',
-        component: () => import('@/view/login/login.vue'),
+        component: () => import('@/view/login/Login.vue'),
     },
     {
         path: '/',
-        component: () => import('@/view/index/index.vue'),
+        component: () => import('@/view/index/Index.vue'),
     },
     {
         path: '/404',
