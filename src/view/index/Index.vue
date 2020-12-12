@@ -13,8 +13,8 @@
     >
         <template v-slot:menuHeaderRender>
             <div>
-                <!-- <img src="../assets/logo.svg" /> -->
-                <h1>Pro Layout</h1>
+                <img src="@/asset/logo.png" />
+                <h1>Rebue Admin</h1>
             </div>
         </template>
         <template v-slot:rightContentRender>
