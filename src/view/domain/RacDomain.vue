@@ -84,7 +84,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import '@/asset/style/global';
 .content-wrapper {
     flex: 1;
     z-index: 100;
