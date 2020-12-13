@@ -76,7 +76,7 @@ export default {
             this.collapsed = collapsed;
         },
     },
-    components: {
+    component: {
         // SettingDrawer,
     },
 };
