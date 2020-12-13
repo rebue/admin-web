@@ -153,7 +153,7 @@ export default {
                     dataIndex: 'callNo',
                     sorter: true,
                     needTotal: true,
-                    customRender: (text) => text + ' 次',
+                    customRender: text => text + ' 次',
                 },
                 {
                     title: '状态',
@@ -173,7 +173,7 @@ export default {
                 },
             ],
             // 加载数据方法 必须为 Promise 对象
-            loadData: (parameter) => {
+            loadData: parameter => {
                 console.log('loadData.parameter', parameter);
                 // return getServiceList(Object.assign(parameter, this.queryParam)).then((res) => {
                 //     return res.result;
