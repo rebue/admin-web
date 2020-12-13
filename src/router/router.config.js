@@ -13,12 +13,11 @@ export const asyncRouterMap = [
         component: () => import('@/view/index/Index.vue'),
         children: [
             {
-                component: () => import('@/view/domain/RacDomain.vue'),
                 meta: { title: '基础配置', keepAlive: true },
                 children: [
                     {
                         path: '/rac-domain',
-                        component: () => import('@/view/domain/RacDomain.vue'),
+                        component: () => import('@/view/base/domain/List.vue'),
                         meta: { title: '领域管理', keepAlive: true },
                     },
                 ],
