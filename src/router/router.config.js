@@ -1,3 +1,5 @@
+import VueRouter, { RouteConfig } from 'vue-router';
+
 const RouteView = {
     name: 'RouteView',
     render: h => h('router-view'),
@@ -11,12 +13,16 @@ export const asyncRouterMap = [
     {
         path: '/',
         component: () => import('@/view/index/Index.vue'),
+        redirect: '/base/rac-domain',
         children: [
             {
+                path: 'base',
                 meta: { title: '基础配置', keepAlive: true },
+                component: RouteView,
+                redirect: '/base/rac-domain',
                 children: [
                     {
-                        path: '/rac-domain',
+                        path: 'rac-domain',
                         component: () => import('@/view/base/domain/List.vue'),
                         meta: { title: '领域管理', keepAlive: true },
                     },
