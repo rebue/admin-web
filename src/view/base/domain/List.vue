@@ -124,7 +124,7 @@ import { STable } from '@/component/ad-pro/';
 
 export default {
     name: 'TableList',
-    component: {
+    components: {
         STable,
     },
     data() {

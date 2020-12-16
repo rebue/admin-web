@@ -1,5 +1,21 @@
 import Vue from 'vue';
-import { Button, Card, ConfigProvider, Divider, FormModel, Icon, Input } from 'ant-design-vue';
+import {
+    Button,
+    Card,
+    ConfigProvider,
+    Divider,
+    FormModel,
+    Icon,
+    Input,
+    Form,
+    Table,
+    Alert,
+    Col,
+    Row,
+    Select,
+    DatePicker,
+    InputNumber,
+} from 'ant-design-vue';
 
 // 国际化
 Vue.use(ConfigProvider);
@@ -23,3 +39,17 @@ Vue.use(Input);
 Vue.use(Card);
 // Vue.use(Tabs);
 // Vue.use(TabPane);
+
+// 表格
+Vue.use(Form);
+Vue.use(Table);
+Vue.use(Col);
+Vue.use(Row);
+Vue.use(DatePicker);
+Vue.use(InputNumber);
+
+// 列表
+Vue.use(Select);
+
+// 弹框
+Vue.use(Alert);
