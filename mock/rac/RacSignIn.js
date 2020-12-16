@@ -19,7 +19,7 @@ const signIn = (req, res, u, b) => {
             id: user.id,
             sign: user.sign,
             expirationTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-            indexPath: 'index',
+            indexPath: '/',
             nickname: Random.cname(),
         },
     });

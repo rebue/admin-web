@@ -68,6 +68,7 @@ export default observer({
                     })
                         .then(ro => {
                             sysAction.setSysId(this.sysId);
+                            this.$router.push({ path: ro.extra.indexPath });
                         })
                         .finally(() => (this.loading = false));
                 } else {
