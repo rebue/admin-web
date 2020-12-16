@@ -1,9 +1,9 @@
 import { observable } from 'mobx';
 import { SysIdDic } from '@/dic/SysIdDic';
 
-export default class SysStore {
+class SysStore {
     @observable
-    sysId: string = SysIdDic.AdminWeb;
+    sysId = SysIdDic.AdminWeb;
 }
 
 export const sysStore = new SysStore();

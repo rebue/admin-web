@@ -1,5 +1,3 @@
-import VueRouter, { RouteConfig } from 'vue-router';
-
 const RouteView = {
     name: 'RouteView',
     render: h => h('router-view'),
@@ -42,4 +40,15 @@ export const asyncRouterMap = [
  * 基础路由
  * @type { *[] }
  */
-export const constantRouterMap = [];
+export const constantRouterMap = [
+    {
+        path: '/login',
+        component: () => import('@/view/login/Login.vue'),
+    },
+    {
+        path: '/404',
+        component: () => import('@/view/404/404.vue'),
+    },
+    // 404 page must be placed at the end !!!
+    { path: '*', redirect: '/404' },
+];

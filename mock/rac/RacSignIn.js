@@ -1,6 +1,4 @@
 const moment = require('moment');
-const Mock = require('mockjs');
-const Random = Mock.Random;
 const { findRacUserBySignInName } = require('./RacUser');
 
 const signIn = (req, res, u, b) => {
@@ -20,7 +18,6 @@ const signIn = (req, res, u, b) => {
             sign: user.sign,
             expirationTime: moment().format('YYYY-MM-DD HH:mm:ss'),
             indexPath: '/',
-            nickname: Random.cname(),
         },
     });
 };
