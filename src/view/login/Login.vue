@@ -45,8 +45,12 @@ export default observer({
                 signInPswd: '',
             },
             rules: {
-                userName: [{ required: true, message: '请输入登录账号', trigger: 'blur' }],
-                signInPswd: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
+                userName: [
+                    { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val.trim() },
+                ],
+                signInPswd: [
+                    { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
+                ],
             },
         };
     },
@@ -59,8 +63,8 @@ export default observer({
                 if (valid) {
                     signInByUserName({
                         sysId: this.sysId,
-                        userName: this.form.userName.trim(),
-                        signInPswd: md5(this.form.signInPswd.trim()).toString(),
+                        userName: this.form.userName,
+                        signInPswd: md5(this.form.signInPswd).toString(),
                     })
                         .then(ro => {
                             if (ro.result > 0) {
