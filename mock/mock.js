@@ -1,4 +1,9 @@
-module.exports = {
+const mock = {
     _proxy: require('./proxy'),
-    ...require('./rac/RacSignIn'),
+    ...require('./rac/RacUser').routes,
+    ...require('./rac/RacSignIn').routes,
 };
+
+// console.log('mock', mock);
+
+module.exports = mock;

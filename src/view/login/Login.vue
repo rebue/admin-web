@@ -67,9 +67,7 @@ export default observer({
                         signInPswd: md5(this.form.signInPswd).toString(),
                     })
                         .then(ro => {
-                            if (ro.result > 0) {
-                                sysAction.setSysId(this.sysId);
-                            }
+                            sysAction.setSysId(this.sysId);
                         })
                         .finally(() => (this.loading = false));
                 } else {

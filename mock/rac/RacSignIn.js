@@ -1,24 +1,28 @@
 const moment = require('moment');
 const Mock = require('mockjs');
 const Random = Mock.Random;
+const { findRacUserBySignInName } = require('./RacUser');
 
-const signInResults = [
-    {
+const signIn = (req, res, u, b) => {
+    const body = (b && b.body) || req.body;
+    console.log('signIn', body);
+    const user = findRacUserBySignInName(body.userName);
+
+    if (!!!user) return res.json({ result: -2, msg: '找不到此用户' });
+
+    if (body.signInPswd !== user.signInPswd) return res.json({ result: -2, msg: '密码输入错误' });
+
+    return res.json({
         result: 1,
         msg: '用户登录成功',
         extra: {
-            id: '1',
-            sign:
-                'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
+            id: user.id,
+            sign: user.sign,
             expirationTime: moment().format('YYYY-MM-DD HH:mm:ss'),
             indexPath: 'index',
             nickname: Random.cname(),
         },
-    },
-    { result: -3, msg: '密码错误，还可以重试4次' },
-    { result: -3, msg: '用户已被锁定，请明天再试' },
-];
-
-module.exports = {
-    'POST /rac/sign-in/sign-in-by-user-name': signInResults[0],
+    });
 };
+
+module.exports = { routes: { 'POST /rac/sign-in/sign-in-by-user-name': signIn } };

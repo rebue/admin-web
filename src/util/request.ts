@@ -52,8 +52,8 @@ instance.interceptors.request.use(
         // do something with request error
         console.log('request error', error); // for debug
         const msg = '请求超时';
-        message.info('msg');
-        return Promise.resolve({ result: 0, msg });
+        message.error('msg');
+        return Promise.reject({ result: 0, msg });
     }
 );
 
@@ -83,15 +83,22 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
         .then(resp => {
             console.log('response', resp);
             const ro = resp.data as Ro;
-            if (ro.msg) ro.result > 0 ? message.info(ro.msg) : message.error(ro.msg);
-            return resp.data;
+            if (ro.result > 0) {
+                if (ro.msg) message.info(ro.msg);
+                return resp.data;
+            } else {
+                return Promise.reject({ result: 0, msg: ro.msg });
+            }
         })
         .catch(err => {
             console.log('response error', err);
             // 错误提示信息
-            const msg = (err.response && err.response.status && codeMessage[err.response.status]) || '未知错误:' + err;
+            const msg =
+                (err.response && err.response.status && codeMessage[err.response.status]) ||
+                err.msg ||
+                '未知错误:' + err;
             message.error(msg);
-            return Promise.resolve({ result: 0, msg, code: err.response.status });
+            return Promise.reject({ result: 0, msg, code: err.response.status });
         });
 }
 
