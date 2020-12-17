@@ -30,7 +30,7 @@
 <script>
 import md5 from 'crypto-js/md5';
 import { observer } from 'mobx-vue';
-import { racSignInAction } from '@/action/rac/RacSignInAction';
+import { racSignInAction } from '@/action/Action';
 import { SysIdDic } from '@/dic/SysIdDic';
 import { signInByUserName } from '@/api/rac/RacSignInApi';
 
