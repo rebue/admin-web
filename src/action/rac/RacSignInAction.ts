@@ -1,6 +1,5 @@
 import { action } from 'mobx';
-import { sysStore } from '@/store/SysStore';
-import { userStore } from '@/store/UserStore';
+import { sysStore, userStore } from '@/store/Store';
 import { SysIdDic } from '@/dic/SysIdDic';
 
 class RacSignInAction {
