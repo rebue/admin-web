@@ -2,8 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import env from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
-// import store from '@/store';
-// import { getToken } from '@/utils/auth';
+import { getToken } from './token';
 
 const codeMessage = {
     ETIMEDOUT: '网络断开或服务器异常，请稍后重试',
@@ -29,23 +28,20 @@ const instance = axios.create({
     baseURL: env.requestBaseUrl, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000, // request timeout
-    // // 任何状态码都能通过(因为如果在error的方法中error只是一个字符串，不好判断状态，所以在成功中统一处理)
-    // validateStatus: () => true,
 });
 
 // request interceptor
 instance.interceptors.request.use(
     config => {
         console.log('request config', config);
-        // TODO 拦截请求，将token加入header
-        // // do something before request is sent
-
-        // if (store.getters.token) {
-        //     // let each request carry token
-        //     // ['X-Token'] is a custom headers key
-        //     // please modify it according to the actual situation
-        //     config.headers['X-Token'] = getToken();
-        // }
+        // do something before request is sent
+        const token = getToken();
+        if (token) {
+            // let each request carry token
+            // ['X-Token'] is a custom headers key
+            // please modify it according to the actual situation
+            config.headers['X-Token'] = getToken();
+        }
         return config;
     },
     error => {
