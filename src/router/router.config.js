@@ -5,8 +5,8 @@ const RouteView = {
 
 export const asyncRouterMap = [
     {
-        path: '/login',
-        component: () => import('@/view/login/Login.vue'),
+        path: '/sign-in',
+        component: () => import('@/view/sign-in/SignIn.vue'),
     },
     {
         path: '/',
@@ -42,8 +42,8 @@ export const asyncRouterMap = [
  */
 export const constantRouterMap = [
     {
-        path: '/login',
-        component: () => import('@/view/login/Login.vue'),
+        path: '/sign-in',
+        component: () => import('@/view/sign-in/SignIn.vue'),
     },
     {
         path: '/404',
