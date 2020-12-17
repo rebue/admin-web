@@ -67,7 +67,7 @@ export default observer({
                         signInPswd: md5(this.form.signInPswd).toString(),
                     })
                         .then(ro => {
-                            racSignInAction.loginSuccess(this.sysId, ro.extra.id, ro.extra.sign);
+                            racSignInAction.loginSuccess(this.sysId, ro.extra.id);
                             this.$router.push({ path: ro.extra.indexPath });
                         })
                         .finally(() => (this.loading = false));

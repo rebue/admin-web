@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import env from '@/env';
+import { requestBaseUrl } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import { getToken } from './token';
@@ -25,7 +25,7 @@ const codeMessage = {
 
 // create an axios instance
 const instance = axios.create({
-    baseURL: env.requestBaseUrl, // url = base url + request url
+    baseURL: requestBaseUrl, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000, // request timeout
 });
