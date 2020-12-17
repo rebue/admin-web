@@ -3,5 +3,5 @@ import { SysIdDic } from '@/dic/SysIdDic';
 
 export default class SysStore {
     @observable
-    sysId = SysIdDic.AdminWeb;
+    sysId = SysIdDic.None;
 }
