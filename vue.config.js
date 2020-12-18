@@ -7,9 +7,9 @@ process.env.VUE_APP_REQUEST_BASE_URL =
     '://' +
     process.env.VUE_APP_REQUEST_BASE_HOST +
     (process.env.VUE_APP_REQUEST_BASE_PORT &&
-        process.env.VUE_APP_REQUEST_BASE_PORT.trim() !== '' &&
-        ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
-            (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443))
+    process.env.VUE_APP_REQUEST_BASE_PORT.trim() !== '' &&
+    ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
+        (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443))
         ? ''
         : ':' + process.env.VUE_APP_REQUEST_BASE_PORT);
 
@@ -21,12 +21,12 @@ module.exports = {
             apiMocker(app, path.resolve('./mock/mock'));
         },
     },
-    publicPath:'/platform-admin-web',
+    publicPath: process.env.VUE_APP_PUBLIC_PATH,
     css: {
         loaderOptions: {
             less: {
-                javascriptEnabled: true
-            }
-        }
-    }
+                javascriptEnabled: true,
+            },
+        },
+    },
 };
