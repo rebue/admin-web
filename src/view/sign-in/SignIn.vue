@@ -68,7 +68,7 @@ export default observer({
                     })
                         .then(ro => {
                             racSignInAction.signInSuccess(this.sysId, ro.extra.id);
-                            this.$router.push({ path: ro.extra.indexPath });
+                            this.$router.push({ path: ro.extra.indexUrn });
                         })
                         .finally(() => (this.loading = false));
                 } else {

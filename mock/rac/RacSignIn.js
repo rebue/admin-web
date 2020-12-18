@@ -19,7 +19,7 @@ const signIn = (req, res, u, b) => {
         msg: '用户登录成功',
         extra: {
             id: user.id,
-            indexPath: '/',
+            indexUrn: '/',
         },
     });
 };
