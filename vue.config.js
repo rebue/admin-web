@@ -21,6 +21,7 @@ module.exports = {
             apiMocker(app, path.resolve('./mock/mock'));
         },
     },
+    publicPath:'/platform-admin-web',
     css: {
         loaderOptions: {
             less: {
