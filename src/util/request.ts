@@ -5,7 +5,8 @@ import { Ro } from '@/ro/Ro';
 import { getToken } from './token';
 
 const codeMessage = {
-    ETIMEDOUT: '网络断开或服务器异常，请稍后重试',
+    ETIMEDOUT: '网络断开或服务器无响应，请稍后重试',
+    ECONNABORTED: '网络断开或服务器无响应，请稍后重试',
     200: '服务器成功返回请求的数据。',
     201: '新建或修改数据成功。',
     202: '一个请求已经进入后台排队（异步任务）。',
@@ -47,7 +48,7 @@ instance.interceptors.request.use(
     error => {
         // do something with request error
         console.log('request error', error); // for debug
-        const msg = '请求超时';
+        const msg = codeMessage['ECONNABORTED'];
         message.error('msg');
         return Promise.reject({ result: 0, msg });
     }
@@ -87,14 +88,21 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
             }
         })
         .catch(err => {
-            console.log('response error', err);
+            console.dir('response error', err);
             // 错误提示信息
             const msg =
                 (err.response && err.response.status && codeMessage[err.response.status]) ||
+                (err.code && codeMessage[err.code]) ||
                 err.msg ||
                 '未知错误:' + err;
             message.error(msg);
-            return Promise.reject({ result: 0, msg, code: err.response.status });
+            if (err.response && err.response.status) {
+                return Promise.reject({ result: 0, msg, code: err.response.status });
+            } else if (err.code && codeMessage[err.code]) {
+                return Promise.reject({ result: 0, msg, code: err.code });
+            } else {
+                return Promise.reject({ result: 0, msg });
+            }
         });
 }
 

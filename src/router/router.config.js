@@ -36,6 +36,10 @@ export const constantRouterMap = [
         component: () => import('@/view/sign-in/SignIn.vue'),
     },
     {
+        path: '/',
+        component: () => import('@/view/index/Index.vue'),
+    },
+    {
         path: '/404',
         component: () => import('@/view/404/404.vue'),
     },
