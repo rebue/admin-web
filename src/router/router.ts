@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { asyncRouterMap } from '@/router/router.config';
+import { constantRouterMap } from '@/router/router.config';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    routes: asyncRouterMap,
+    routes: constantRouterMap,
     /**
      * 当切换到新路由时，页面滚到的行为
      * 注意: 这个功能只在支持 history.pushState 的浏览器中可用。

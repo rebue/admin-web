@@ -5,10 +5,6 @@ const RouteView = {
 
 export const asyncRouterMap = [
     {
-        path: '/sign-in',
-        component: () => import('@/view/sign-in/SignIn.vue'),
-    },
-    {
         path: '/',
         component: () => import('@/view/index/Index.vue'),
         redirect: '/base/rac-domain',
@@ -28,12 +24,6 @@ export const asyncRouterMap = [
             },
         ],
     },
-    {
-        path: '/404',
-        component: () => import('@/view/404/404.vue'),
-    },
-    // 404 page must be placed at the end !!!
-    { path: '*', redirect: '/404' },
 ];
 
 /**
