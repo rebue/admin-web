@@ -5,8 +5,8 @@ import { Ro } from '@/ro/Ro';
 import { getToken } from './token';
 
 const codeMessage = {
-    ETIMEDOUT: '网络断开或服务器无响应，请稍后重试',
-    ECONNABORTED: '网络断开或服务器无响应，请稍后重试',
+    ETIMEDOUT: '请求超时，请稍后重试',
+    ECONNABORTED: '请求超时，请稍后重试',
     200: '服务器成功返回请求的数据。',
     201: '新建或修改数据成功。',
     202: '一个请求已经进入后台排队（异步任务）。',
