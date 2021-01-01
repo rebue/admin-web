@@ -8,6 +8,6 @@ export class RacSignInAction {
     signInSuccess(sysId: SysIdDic, userId: string) {
         sysStore.sysId = sysId;
         userStore.userId = userId;
-        racMenuAction.refreshRacMenu();
+        racMenuAction.refreshUserInfo();
     }
 }
