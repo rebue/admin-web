@@ -38,16 +38,16 @@
 // by template
 import Vue from 'vue';
 import ProLayout from '@ant-design-vue/pro-layout';
+import { observer } from 'mobx-vue';
+import { userStore } from '@/store/Store';
 
 Vue.use(ProLayout);
 
-import { asyncRouterMap } from '@/router/router.config';
-
-export default {
+export default observer({
     name: 'BasicLayout',
     data() {
         return {
-            menus: [],
+            menus: userStore.menus,
             collapsed: false,
             autoHideHeader: false,
             query: {},
@@ -57,9 +57,9 @@ export default {
             isMobile: false,
         };
     },
-    created() {
-        this.menus = asyncRouterMap.find(item => item.path === '/').children;
-    },
+    // created() {
+    //     this.menus = constantRouterMap.find(item => item.path === '/').children;
+    // },
     methods: {
         handleMediaQuery(query) {
             this.query = query;
@@ -79,5 +79,5 @@ export default {
     component: {
         // SettingDrawer,
     },
-};
+});
 </script>

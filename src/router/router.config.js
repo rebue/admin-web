@@ -3,7 +3,19 @@ const RouteView = {
     render: h => h('router-view'),
 };
 
-export const asyncRouterMap = [
+/**
+ * 基础路由
+ * @type { *[] }
+ */
+export const constantRouters = [
+    {
+        path: '/sign-in',
+        component: () => import('@/view/sign-in/SignIn.vue'),
+    },
+    {
+        path: '/404',
+        component: () => import('@/view/404/404.vue'),
+    },
     {
         path: '/',
         component: () => import('@/view/index/Index.vue'),
@@ -11,37 +23,20 @@ export const asyncRouterMap = [
         children: [
             {
                 path: 'base',
-                meta: { title: '基础配置', keepAlive: true },
+                meta: { title: '基础配置', keepAlive: true, icon: 'setting' },
                 component: RouteView,
+                hidden: true,
                 redirect: '/base/rac-domain',
                 children: [
                     {
                         path: 'rac-domain',
                         component: () => import('@/view/base/domain/List.vue'),
-                        meta: { title: '领域管理', keepAlive: true },
+                        hidden: true,
+                        meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },
                 ],
             },
         ],
-    },
-];
-
-/**
- * 基础路由
- * @type { *[] }
- */
-export const constantRouterMap = [
-    {
-        path: '/sign-in',
-        component: () => import('@/view/sign-in/SignIn.vue'),
-    },
-    {
-        path: '/',
-        component: () => import('@/view/index/Index.vue'),
-    },
-    {
-        path: '/404',
-        component: () => import('@/view/404/404.vue'),
     },
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404' },

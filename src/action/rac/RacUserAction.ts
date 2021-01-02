@@ -1,7 +1,8 @@
 import { action } from 'mobx';
-import { sysStore } from '@/store/Store';
+import { sysStore, userStore } from '@/store/Store';
 import { getCurUserInfo } from '@/api/rac/RacUserApi';
 import { Ro } from '@/ro/Ro';
+import { constantRouters } from '@/router/router.config';
 
 export class RacUserAction {
     /**
@@ -20,5 +21,31 @@ export class RacUserAction {
     @action
     getCurUserInfoSuccess(ro: Ro) {
         console.log('getCurUserInfoSuccess', ro);
+        const ownMenus: string[] = ro.extra['menus'];
+        const menus = constantRouters.find(item => item.path === '/').children;
+        for (const menu of ownMenus) {
+            const sections = menu.split('/');
+            const section1 = sections[1];
+            const section2 = sections[2];
+            const section3 = sections[3];
+            const section4 = sections[4];
+            const section5 = sections[5];
+            if (!section1) continue;
+            const menu1 = menus.find(item => item.path === section1);
+            menu1.hidden = false;
+            if (!section2) continue;
+            const menu2 = menu1.children.find(item => item.path === section2);
+            menu2.hidden = false;
+            if (!section3) continue;
+            const menu3 = menu1.children.find(item => item.path === section3);
+            menu3.hidden = false;
+            if (!section4) continue;
+            const menu4 = menu1.children.find(item => item.path === section4);
+            menu4.hidden = false;
+            if (!section5) continue;
+            const menu5 = menu1.children.find(item => item.path === section5);
+            menu5.hidden = false;
+        }
+        userStore.menus = menus;
     }
 }
