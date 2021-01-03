@@ -14,11 +14,24 @@ const list = [
 ];
 
 const listRacUser = () => list;
+const curUserInfo = {
+    result: 1,
+    msg: '获取当前用户信息成功',
+    extra: {
+        id: list[0].id,
+        nickname: list[0].signInNickname,
+        isTester: false,
+        menus: ['/base/rac-domain'],
+    },
+};
 
 const findRacUserBySignInName = signInName => list.find(item => item.signInName === signInName);
 
 module.exports = {
     findRacUserBySignInName,
     listRacUser,
-    routes: { 'GET /rac/user/list': listRacUser },
+    routes: {
+        'GET /rac/user/list': listRacUser,
+        'GET /rac/user/get-cur-user-info': curUserInfo,
+    },
 };

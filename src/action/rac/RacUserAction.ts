@@ -3,6 +3,7 @@ import { sysStore, userStore } from '@/store/Store';
 import { getCurUserInfo } from '@/api/rac/RacUserApi';
 import { Ro } from '@/ro/Ro';
 import { constantRouters } from '@/router/router.config';
+import { GetUserInfoRa } from '@/ro/GetUserInfoRa';
 
 export class RacUserAction {
     /**
@@ -21,9 +22,15 @@ export class RacUserAction {
     @action
     getCurUserInfoSuccess(ro: Ro) {
         console.log('getCurUserInfoSuccess', ro);
-        const ownMenus: string[] = ro.extra['menus'];
+
+        const ra: GetUserInfoRa = ro.extra as GetUserInfoRa;
+        userStore.nickname = ra.nickname;
+        userStore.avatar = ra.avatar;
+        userStore.isTester = ra.isTester;
+
+        // 设置菜单
         const menus = constantRouters.find(item => item.path === '/').children;
-        for (const menu of ownMenus) {
+        for (const menu of ra.menus) {
             const sections = menu.split('/');
             const section1 = sections[1];
             const section2 = sections[2];
