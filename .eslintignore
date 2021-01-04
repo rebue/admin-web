@@ -5,3 +5,4 @@ dist
 vue.config.js
 mock
 src/component
+src/locale

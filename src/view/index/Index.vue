@@ -8,11 +8,17 @@
         :isMobile="isMobile"
         :handleMediaQuery="handleMediaQuery"
         :handleCollapse="handleCollapse"
+        :i18nRender="i18nRender"
     >
         <template v-slot:menuHeaderRender>
             <div>
                 <img src="@/asset/logo.png" />
                 <h1>Rebue Admin</h1>
+            </div>
+        </template>
+        <template v-slot:collapsedButtonRender>
+            <div>
+                <h1>{{ title }}</h1>
             </div>
         </template>
         <template v-slot:rightContentRender>
@@ -37,6 +43,7 @@
 // by template
 import { observer } from 'mobx-vue';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
+import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
 import { userStore } from '@/store/Store';
 
@@ -46,6 +53,7 @@ export default observer({
     name: 'Index',
     data() {
         return {
+            title: this.$route.meta.title,
             menus: userStore.menus,
             // 侧栏是否收起为图标的状态
             collapsed: false,
@@ -72,6 +80,7 @@ export default observer({
         };
     },
     methods: {
+        i18nRender,
         handleMediaQuery(query) {
             this.query = query;
             if (this.isMobile && !query['screen-xs']) {
@@ -110,3 +119,6 @@ export default observer({
     },
 });
 </script>
+<style lang="less">
+@import './Index.less';
+</style>

@@ -30,7 +30,7 @@ export const constantRouters = [
                 children: [
                     {
                         path: 'rac-domain',
-                        component: () => import('@/view/base/domain/List.vue'),
+                        component: () => import('@/view/base/rac-domain/Manager.vue'),
                         hidden: true,
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },
