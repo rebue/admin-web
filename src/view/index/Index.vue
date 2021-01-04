@@ -57,7 +57,7 @@ export default observer({
                 // 布局类型
                 layout: defaultSettings.layout, // 'sidemenu', 'topmenu'
                 // CONTENT_WIDTH_TYPE
-                contentWidth: defaultSettings.layout === 'sidemenu' ? 'fluid' : defaultSettings.contentWidth,
+                contentWidth: defaultSettings.layout === 'sidemenu' ? 'Fluid' : defaultSettings.contentWidth,
                 // 主题 'dark' | 'light'
                 theme: defaultSettings.navTheme,
                 // 主色调
@@ -95,10 +95,10 @@ export default observer({
                     break;
                 case 'layout':
                     if (value === 'sidemenu') {
-                        this.settings.contentWidth = 'fluid';
+                        this.settings.contentWidth = 'Fluid';
                     } else {
                         this.settings.fixSiderbar = false;
-                        this.settings.contentWidth = 'fixed';
+                        this.settings.contentWidth = 'Fixed';
                     }
                     break;
             }

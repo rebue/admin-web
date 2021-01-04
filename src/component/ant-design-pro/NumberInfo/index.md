@@ -7,7 +7,7 @@
 引用方式：
 
 ```javascript
-import NumberInfo from '@/component/ad-pro/NumberInfo'
+import NumberInfo from '@/component/ant-design-pro/NumberInfo'
 
 export default {
     component: {

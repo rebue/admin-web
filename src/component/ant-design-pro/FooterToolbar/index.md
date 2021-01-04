@@ -13,7 +13,7 @@
 引用方式：
 
 ```javascript
-import FooterToolBar from '@/component/ad-pro/FooterToolbar'
+import FooterToolBar from '@/component/ant-design-pro/FooterToolbar'
 
 export default {
     component: {

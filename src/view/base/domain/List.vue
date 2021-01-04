@@ -119,7 +119,7 @@
 
 <script>
 import moment from 'moment';
-import { STable } from '@/component/ad-pro/';
+import { STable } from '@/component/ant-design-pro/';
 // import { getRoleList, getServiceList } from '@/api/manage'
 
 export default {

@@ -7,7 +7,7 @@
 引用方式：
 
 ```javascript
-import Ellipsis from '@/component/ad-pro/Ellipsis'
+import Ellipsis from '@/component/ant-design-pro/Ellipsis'
 
 export default {
     component: {

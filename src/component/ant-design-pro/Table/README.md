@@ -130,7 +130,7 @@ Table 重封装组件说明
 </template>
 
 <script>
-  import STable from '@/component/ad-pro/table/'
+  import STable from '@/component/ant-design-pro/table/'
 
   export default {
     component: {
@@ -235,7 +235,7 @@ alert: {
 >
 > 文档中的结构有可能由于组件 bug 进行修正而改动。实际修改请以当时最新版本为准
 
-修改 `@/component/ad-pro/table/index.js`  第 156 行起
+修改 `@/component/ant-design-pro/table/index.js`  第 156 行起
 
 
 

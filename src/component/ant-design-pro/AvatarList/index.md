@@ -8,7 +8,7 @@
 引用方式：
 
 ```javascript
-import AvatarList from '@/component/ad-pro/AvatarList'
+import AvatarList from '@/component/ant-design-pro/AvatarList'
 const AvatarListItem = AvatarList.Item
 
 export default {

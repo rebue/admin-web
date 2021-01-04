@@ -1,6 +1,6 @@
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import Option from './TagSelectOption.jsx'
-import { filterEmpty } from '@/component/ad-pro/_util/util'
+import { filterEmpty } from '@/component/ant-design-pro/_util/util'
 
 export default {
   Option,

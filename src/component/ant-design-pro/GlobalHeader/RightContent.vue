@@ -7,7 +7,7 @@
 
 <script>
 import AvatarDropdown from './AvatarDropdown'
-import SelectLang from '@/component/ad-pro/SelectLang'
+import SelectLang from '@/component/ant-design-pro/SelectLang'
 
 export default {
   name: 'RightContent',

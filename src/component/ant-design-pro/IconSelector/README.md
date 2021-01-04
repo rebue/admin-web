@@ -18,7 +18,7 @@ IconSelector
 </template>
 
 <script>
-import IconSelector from '@/component/ad-pro/IconSelector'
+import IconSelector from '@/component/ant-design-pro/IconSelector'
 
 export default {
   name: 'YourView',
