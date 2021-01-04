@@ -36,7 +36,7 @@
 <script>
 // by template
 import { observer } from 'mobx-vue';
-import ProLayout, { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout';
+import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import defaultSettings from '@/config/defaultSettings';
 import { userStore } from '@/store/Store';
 
