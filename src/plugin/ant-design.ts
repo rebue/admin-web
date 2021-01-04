@@ -15,6 +15,8 @@ import {
     Select,
     DatePicker,
     InputNumber,
+    Modal,
+    Spin,
 } from 'ant-design-vue';
 
 // 国际化
@@ -30,6 +32,7 @@ Vue.use(ConfigProvider);
 Vue.use(Icon);
 Vue.use(Button);
 Vue.use(Divider);
+Vue.use(Spin);
 
 // 表单
 Vue.use(FormModel);
@@ -48,8 +51,10 @@ Vue.use(Row);
 Vue.use(DatePicker);
 Vue.use(InputNumber);
 
-// 列表
+// 选择框
 Vue.use(Select);
 
+// 对话框
+Vue.use(Modal);
 // 弹框
 Vue.use(Alert);

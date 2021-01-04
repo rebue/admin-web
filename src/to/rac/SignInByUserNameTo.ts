@@ -1,7 +1,7 @@
 /**
- * 门锁信息
+ * 通过用户名称登录方法的参数
  */
-export default interface SignInByUserNameTo {
+export default class SignInByUserNameTo {
     /** 系统ID */
     sysId: string;
     /** 组织ID */

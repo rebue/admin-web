@@ -17,6 +17,15 @@
                 </template>
             </span>
         </s-table>
+
+        <edit-form
+            ref="editForm"
+            :visible="editFormVisible"
+            :loading="confirmLoading"
+            :record="record"
+            @cancel="handleCancel"
+            @ok="handleOk"
+        />
     </a-card>
     <!-- </page-header-wrapper> -->
 </template>
@@ -24,6 +33,8 @@
 <script>
 import { STable } from '@/component/ant-design-pro';
 import { listAll } from '@/api/rac/RacDomainApi';
+import { RacDomainMo } from '@/mo/rac/RacDomainMo';
+import EditForm from './EditForm';
 
 const columns = [
     {
@@ -58,15 +69,14 @@ export default {
     name: 'Manager',
     components: {
         STable,
-        // PageHeaderWrapper,
+        EditForm,
     },
     data() {
         this.columns = columns;
         return {
-            // create model
-            visible: false,
+            editFormVisible: false,
             confirmLoading: false,
-            mdl: null,
+            record: null,
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
                 return listAll().then(res => {
@@ -77,15 +87,15 @@ export default {
     },
     methods: {
         handleAdd() {
-            this.mdl = null;
-            this.visible = true;
+            this.record = new RacDomainMo();
+            this.editFormVisible = true;
         },
         handleEdit(record) {
-            this.visible = true;
-            this.mdl = { ...record };
+            this.editFormVisible = true;
+            this.record = { ...record };
         },
         handleOk() {
-            const form = this.$refs.createModal.form;
+            const form = this.$refs.editForm.form;
             this.confirmLoading = true;
             form.validateFields((errors, values) => {
                 if (!errors) {
@@ -97,7 +107,7 @@ export default {
                                 resolve();
                             }, 1000);
                         }).then(res => {
-                            this.visible = false;
+                            this.editFormVisible = false;
                             this.confirmLoading = false;
                             // 重置表单数据
                             form.resetFields();
@@ -113,7 +123,7 @@ export default {
                                 resolve();
                             }, 1000);
                         }).then(res => {
-                            this.visible = false;
+                            this.editFormVisible = false;
                             this.confirmLoading = false;
                             // 重置表单数据
                             form.resetFields();
@@ -129,9 +139,9 @@ export default {
             });
         },
         handleCancel() {
-            this.visible = false;
+            this.editFormVisible = false;
 
-            const form = this.$refs.createModal.form;
+            const form = this.$refs.editForm.form;
             form.resetFields(); // 清理表单数据（可不做）
         },
         handleDel(record) {
