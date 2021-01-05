@@ -14,10 +14,10 @@
                     <a-input auto-focus v-model.trim="form.id" placeholder="请输入领域编码" />
                 </a-form-model-item>
                 <a-form-model-item label="名称" prop="name">
-                    <a-input auto-focus v-model.trim="form.name" placeholder="请输入领域名称" />
+                    <a-input v-model.trim="form.name" placeholder="请输入领域名称" />
                 </a-form-model-item>
                 <a-form-model-item label="备注" prop="remark">
-                    <a-input auto-focus v-model.trim="form.remark" placeholder="请输入领域备注" />
+                    <a-input v-model.trim="form.remark" placeholder="请输入领域备注" />
                 </a-form-model-item>
             </a-form-model>
         </a-spin>

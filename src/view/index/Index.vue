@@ -1,6 +1,6 @@
 <template>
     <pro-layout
-        :menus="menus"
+        :menus="userStore.menus"
         :collapsed="collapsed"
         :theme="theme"
         :layout="layout"
@@ -46,6 +46,7 @@ import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
 import { userStore } from '@/store/Store';
+import { racMenuAction } from '@/action/Action';
 
 // Vue.use(ProLayout);
 
@@ -53,8 +54,8 @@ export default observer({
     name: 'Index',
     data() {
         return {
+            userStore,
             title: this.$route.meta.title,
-            menus: userStore.menus,
             // 侧栏是否收起为图标的状态
             collapsed: false,
             query: {},
@@ -78,6 +79,12 @@ export default observer({
                 hideCopyButton: false,
             },
         };
+    },
+    mounted() {
+        //写在mounted或者activated生命周期内即可
+        // window.onload = () => {
+        //     };
+        racMenuAction.refreshUserInfo();
     },
     methods: {
         i18nRender,

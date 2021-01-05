@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { requestBaseUrl } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
-import { getToken } from './token';
 
 const codeMessage = {
     ETIMEDOUT: '请求超时，请稍后重试',
@@ -36,13 +35,13 @@ instance.interceptors.request.use(
     config => {
         console.log('request config', config);
         // do something before request is sent
-        const token = getToken();
-        if (token) {
-            // let each request carry token
-            // ['X-Token'] is a custom headers key
-            // please modify it according to the actual situation
-            config.headers['X-Token'] = getToken();
-        }
+        // const token = getJwtToken();
+        // if (token) {
+        //     // let each request carry token
+        //     // ['X-Token'] is a custom headers key
+        //     // please modify it according to the actual situation
+        //     config.headers['X-Token'] = getJwtToken();
+        // }
         return config;
     },
     error => {

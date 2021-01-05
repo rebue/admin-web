@@ -3,9 +3,9 @@
  */
 export default class RacDomainMo {
     /** ID */
-    id: string | undefined;
+    id = '';
     /** 名称 */
-    name: string | undefined;
+    name = '';
     /** 备注 */
-    remark: string | undefined;
+    remark?: string;
 }

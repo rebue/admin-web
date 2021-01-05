@@ -33,7 +33,7 @@
 <script>
 import { STable } from '@/component/ant-design-pro';
 import { listAll } from '@/api/rac/RacDomainApi';
-import { RacDomainMo } from '@/mo/rac/RacDomainMo';
+import RacDomainMo from '@/mo/rac/RacDomainMo';
 import EditForm from './EditForm';
 
 const columns = [
@@ -76,9 +76,9 @@ export default {
         return {
             editFormVisible: false,
             confirmLoading: false,
-            record: null,
+            record: new RacDomainMo(),
             // 加载数据方法 必须为 Promise 对象
-            loadData: parameter => {
+            loadData: () => {
                 return listAll().then(res => {
                     return { length: res.extra.list.length, data: res.extra.list };
                 });
@@ -92,7 +92,7 @@ export default {
         },
         handleEdit(record) {
             this.editFormVisible = true;
-            this.record = { ...record };
+            this.record = record;
         },
         handleOk() {
             const form = this.$refs.editForm.form;

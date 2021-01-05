@@ -19,3 +19,4 @@ export const requestBaseUrl =
         : ':' + process.env.VUE_APP_REQUEST_BASE_PORT);
 /** JWT Token的Key */
 export const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
+export const sysIdKey = process.env.VUE_APP_SYS_ID_KEY;

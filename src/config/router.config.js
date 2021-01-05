@@ -18,21 +18,31 @@ export const constantRouters = [
     },
     {
         path: '/',
+        name: 'index',
         component: () => import('@/view/index/Index.vue'),
         redirect: '/base/rac-domain',
         children: [
             {
-                path: 'base',
+                path: '/base',
+                name: 'base',
                 meta: { title: '基础配置', keepAlive: true, icon: 'setting' },
                 component: RouteView,
                 hidden: true,
                 redirect: '/base/rac-domain',
                 children: [
                     {
-                        path: 'rac-domain',
+                        path: '/base/rac-domain',
+                        name: 'rac-domain',
                         component: () => import('@/view/base/rac-domain/Manager.vue'),
                         hidden: true,
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
+                    },
+                    {
+                        path: '/base/rac-sys',
+                        name: 'rac-sys',
+                        component: () => import('@/view/base/rac-domain/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '系统', keepAlive: true, icon: 'global' },
                     },
                 ],
             },
