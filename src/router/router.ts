@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
+import { hasJwtToken } from '@/util/cookie';
 
 Vue.use(VueRouter);
 
@@ -27,5 +28,26 @@ const router = new VueRouter({
 //     // @ts-ignore
 //     return originalPush.call(this, location).catch(err => err);
 // };
+
+/** 不检查JWT Token的路径列表 */
+const uncheckJwtTokenPaths = ['/sign-in'];
+/**
+ * 路由跳转前置钩子
+ */
+router.beforeEach(async (to, from, next) => {
+    console.log('beforeEach: to, from, next');
+    console.log('to', to);
+    console.log('from', from);
+    console.log('next', next);
+
+    // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
+    if (!uncheckJwtTokenPaths.find(item => item.startsWith(to.path)) && !hasJwtToken()) {
+        console.log('需要登录');
+        next('/sign-in');
+        return;
+    }
+
+    next();
+});
 
 export default router;

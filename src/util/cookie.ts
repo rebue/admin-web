@@ -3,6 +3,9 @@ import { jwtTokenKey, sysIdKey } from '@/env';
 import { SysIdDic } from '@/dic/SysIdDic';
 
 /** JWT */
+export function hasJwtToken(): boolean {
+    return Cookies.get(jwtTokenKey) ? true : false;
+}
 export function removeJwtToken() {
     return Cookies.remove(jwtTokenKey);
 }
