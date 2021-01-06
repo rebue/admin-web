@@ -5,7 +5,15 @@
             <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
         </div>
 
-        <s-table ref="table" size="default" rowKey="id" :columns="columns" :data="loadData" :showPagination="false">
+        <a-table
+            ref="table"
+            size="default"
+            rowKey="id"
+            :columns="columns"
+            :dataSource="dataSource"
+            :loading="loading"
+            :pagination="false"
+        >
             <span slot="serial" slot-scope="text, record, index">
                 {{ index + 1 }}
             </span>
@@ -16,25 +24,25 @@
                     <a @click="handleDel(record)">删除</a>
                 </template>
             </span>
-        </s-table>
+        </a-table>
 
         <edit-form
             ref="editForm"
+            :title="this.$route.meta.title"
+            :editFormType="editFormType"
             :visible="editFormVisible"
-            :loading="confirmLoading"
-            :record="record"
-            @cancel="handleCancel"
-            @ok="handleOk"
+            :model="record"
+            @close="handleClose"
         />
     </a-card>
     <!-- </page-header-wrapper> -->
 </template>
 
 <script>
-import { STable } from '@/component/ant-design-pro';
 import { listAll } from '@/api/rac/RacDomainApi';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
 import EditForm from './EditForm';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 const columns = [
     {
@@ -43,12 +51,12 @@ const columns = [
         width: '30px',
     },
     {
-        title: '领域编码',
+        title: '编码',
         dataIndex: 'id',
         width: '150px',
     },
     {
-        title: '领域名称',
+        title: '名称',
         dataIndex: 'name',
         width: '150px',
     },
@@ -68,81 +76,49 @@ const columns = [
 export default {
     name: 'Manager',
     components: {
-        STable,
+        // STable,
         EditForm,
     },
     data() {
         this.columns = columns;
         return {
+            loading: false,
+            editFormType: EditFormTypeDic.None,
             editFormVisible: false,
-            confirmLoading: false,
             record: new RacDomainMo(),
             // 加载数据方法 必须为 Promise 对象
-            loadData: () => {
-                return listAll().then(res => {
-                    return { length: res.extra.list.length, data: res.extra.list };
-                });
-            },
+            // loadData: this.refreshData,
+            dataSource: [],
         };
     },
+    mounted() {
+        this.refreshData();
+    },
     methods: {
+        refreshData() {
+            this.loading = true;
+            return listAll()
+                .then(ro => {
+                    this.dataSource = ro.extra.list;
+                    // return { length: ro.extra.list.length, data: ro.extra.list };
+                })
+                .finally(() => (this.loading = false));
+        },
         handleAdd() {
-            this.record = new RacDomainMo();
+            this.model = new RacDomainMo();
+            this.editFormType = EditFormTypeDic.Add;
             this.editFormVisible = true;
         },
         handleEdit(record) {
+            this.model = record;
+            this.editFormType = EditFormTypeDic.Update;
             this.editFormVisible = true;
-            this.record = record;
         },
-        handleOk() {
-            const form = this.$refs.editForm.form;
-            this.confirmLoading = true;
-            form.validateFields((errors, values) => {
-                if (!errors) {
-                    console.log('values', values);
-                    if (values.id > 0) {
-                        // 修改 e.g.
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }).then(res => {
-                            this.editFormVisible = false;
-                            this.confirmLoading = false;
-                            // 重置表单数据
-                            form.resetFields();
-                            // 刷新表格
-                            this.$refs.table.refresh();
-
-                            this.$message.info('修改成功');
-                        });
-                    } else {
-                        // 新增
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }).then(res => {
-                            this.editFormVisible = false;
-                            this.confirmLoading = false;
-                            // 重置表单数据
-                            form.resetFields();
-                            // 刷新表格
-                            this.$refs.table.refresh();
-
-                            this.$message.info('新增成功');
-                        });
-                    }
-                } else {
-                    this.confirmLoading = false;
-                }
-            });
-        },
-        handleCancel() {
+        handleClose() {
             this.editFormVisible = false;
-
-            const form = this.$refs.editForm.form;
-            form.resetFields(); // 清理表单数据（可不做）
+            this.editFormType = EditFormTypeDic.None;
+            this.model = null;
+            this.refreshData();
         },
         handleDel(record) {
             if (record.status !== 0) {

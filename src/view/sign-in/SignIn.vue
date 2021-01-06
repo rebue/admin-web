@@ -38,7 +38,7 @@ export default observer({
     data() {
         return {
             /** 定义当前登录页面所对应的系统 */
-            sysId: SysIdDic.AdminWeb,
+            sysId: SysIdDic.PlatformAdminWeb,
             loading: false,
             form: {
                 userName: '',

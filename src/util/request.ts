@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { requestBaseUrl } from '@/env';
+import { isSimulateNetDelay, requestBaseUrl } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 
@@ -34,14 +34,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
     config => {
         console.log('request config', config);
-        // do something before request is sent
-        // const token = getJwtToken();
-        // if (token) {
-        //     // let each request carry token
-        //     // ['X-Token'] is a custom headers key
-        //     // please modify it according to the actual situation
-        //     config.headers['X-Token'] = getJwtToken();
-        // }
+
+        // 是否模拟网络延迟
+        if (isSimulateNetDelay) return new Promise(resolve => setTimeout(() => resolve(config), 1000));
+
         return config;
     },
     error => {

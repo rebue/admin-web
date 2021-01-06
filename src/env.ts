@@ -17,6 +17,10 @@ export const requestBaseUrl =
         (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443))
         ? ''
         : ':' + process.env.VUE_APP_REQUEST_BASE_PORT);
+
 /** JWT Token的Key */
 export const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
 export const sysIdKey = process.env.VUE_APP_SYS_ID_KEY;
+
+/** 是否模拟网络延迟 */
+export const isSimulateNetDelay = process.env.VUE_APP_SIMULATE_NET_DELAY;
