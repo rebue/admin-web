@@ -30,9 +30,9 @@
 <script>
 import md5 from 'crypto-js/md5';
 import { observer } from 'mobx-vue';
-import { racSignInAction } from '@/action/Action';
 import { SysIdDic } from '@/dic/SysIdDic';
 import { signInByUserName } from '@/api/rac/RacSignInApi';
+import { setSysId } from '@/util/cookie';
 
 export default observer({
     data() {
@@ -67,7 +67,7 @@ export default observer({
                         signInPswd: md5(this.form.signInPswd).toString(),
                     })
                         .then(ro => {
-                            racSignInAction.signInSuccess(this.sysId);
+                            setSysId(this.sysId);
                             this.$router.push({ path: ro.extra.indexUrn });
                         })
                         .finally(() => (this.loading = false));
