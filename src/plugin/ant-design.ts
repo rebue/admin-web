@@ -17,6 +17,7 @@ import {
     InputNumber,
     Modal,
     Spin,
+    Popconfirm,
 } from 'ant-design-vue';
 
 // 国际化
@@ -56,5 +57,6 @@ Vue.use(Select);
 
 // 对话框
 Vue.use(Modal);
+Vue.use(Popconfirm);
 // 弹框
 Vue.use(Alert);

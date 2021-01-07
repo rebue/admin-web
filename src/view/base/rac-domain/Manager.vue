@@ -21,7 +21,14 @@
                 <template>
                     <a @click="handleModify(record)">编辑</a>
                     <a-divider type="vertical" />
-                    <a @click="handleDel(record)">删除</a>
+                    <a-popconfirm
+                        title="你确定要删除本条记录吗?"
+                        @confirm="handleDel(record)"
+                        okText="确定"
+                        cancelText="取消"
+                    >
+                        <a>删除</a>
+                    </a-popconfirm>
                 </template>
             </span>
         </a-table>
@@ -116,11 +123,10 @@ export default {
             this.editFormVisible = false;
         },
         handleDel(record) {
-            if (record.status !== 0) {
-                this.$message.info(`${record.no} 订阅成功`);
-            } else {
-                this.$message.error(`${record.no} 订阅失败，规则已关闭`);
-            }
+            this.loading = true;
+            RacDomainApi.del(record.id).finally(() => {
+                this.refreshData();
+            });
         },
     },
 };
