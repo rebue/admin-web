@@ -5,9 +5,9 @@ import router from '@/router/router';
 import '@/plugin/vue-i18n';
 import '@/plugin/element-ui';
 import '@/plugin/ant-design';
-import '@/plugin/autofocus';
+import '@/plugin/auto-focus';
 import '@/env';
-import AutoFocus from '@/plugin/autofocus';
+import AutoFocus from '@/plugin/auto-focus';
 
 Vue.config.productionTip = false;
 // 注册自动设置焦点插件
