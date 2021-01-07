@@ -33,7 +33,6 @@ import { observer } from 'mobx-vue';
 import { SysIdDic } from '@/dic/SysIdDic';
 import RacSignInApi from '@/api/rac/RacSignInApi';
 import { setSysId } from '@/util/cookie';
-import { locateFirstErrorInput } from '@/util/comm';
 
 export default observer({
     data() {
@@ -74,7 +73,7 @@ export default observer({
                         .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {
-                        locateFirstErrorInput(); // 定位到第一个出错的输入框
+                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
                         this.loading = false;
                     });
                 }

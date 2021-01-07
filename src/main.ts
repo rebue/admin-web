@@ -7,8 +7,11 @@ import '@/plugin/element-ui';
 import '@/plugin/ant-design';
 import '@/plugin/autofocus';
 import '@/env';
+import AutoFocus from '@/plugin/autofocus';
 
 Vue.config.productionTip = false;
+// 注册自动设置焦点插件
+Vue.use(AutoFocus);
 
 new Vue({
     router,

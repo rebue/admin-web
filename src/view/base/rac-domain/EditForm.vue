@@ -30,7 +30,6 @@
 import { EditFormTypeDic, getEditFormTypeName } from '@/dic/EditFormTypeDic';
 import RacDomainApi from '@/api/rac/RacDomainApi';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
-import { locateFirstInput, locateFirstErrorInput } from '@/util/comm';
 
 export default {
     props: {
@@ -98,13 +97,13 @@ export default {
                         .catch(() => this.$emit('close'))
                         .finally(() => {
                             this.$nextTick(() => {
-                                locateFirstInput();
+                                this.$focus();
                             });
                             this.loading = false;
                         });
                 } else {
                     this.$nextTick(() => {
-                        locateFirstInput();
+                        this.$focus();
                     });
                     this.loading = false;
                 }
@@ -131,7 +130,7 @@ export default {
                     }
                 } else {
                     this.$nextTick(() => {
-                        locateFirstErrorInput(); // 定位到第一个出错的输入框
+                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
                         this.loading = false;
                     });
                 }
