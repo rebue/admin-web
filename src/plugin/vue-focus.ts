@@ -12,7 +12,7 @@
  * @param el 要设置焦点的元素(如果不传，默认为document，如果传入的值是Falsy，则不处理)
  */
 function focus(el: Element | Document | null = document) {
-    console.log('focus el', el);
+    // console.log('focus el', el);
     if (!el) return;
 
     if (el instanceof HTMLElement)
@@ -25,7 +25,7 @@ function focus(el: Element | Document | null = document) {
         // 'input:not([disabled*="disabled"]),textarea:not([disabled*="disabled"])'
         'input:not(:disabled),textarea:not(:disabled)'
     ) as HTMLElement;
-    console.log('focus dom', dom);
+    // console.log('focus dom', dom);
     dom?.focus();
 }
 
@@ -45,7 +45,7 @@ export default class VueFocus {
         console.log('注册实例方法 `$focusError`');
         Vue.prototype.$focusError = focusError;
 
-        console.log('注册全局自定义指令 `v-autofocus`');
+        console.log('注册全局指令 `v-autofocus`');
         Vue.directive('autofocus', {
             // 当被绑定的元素插入到 DOM 中时……
             inserted: el => {
