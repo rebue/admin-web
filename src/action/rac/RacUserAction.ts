@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { userStore } from '@/store/Store';
-import { getCurUserInfo } from '@/api/rac/RacUserApi';
+import RacUserApi from '@/api/rac/RacUserApi';
 import { Ro } from '@/ro/Ro';
 import { constantRouters } from '@/config/router.config';
 import { GetUserInfoRa } from '@/ro/GetUserInfoRa';
@@ -11,7 +11,7 @@ export class RacUserAction {
      */
     @action
     refreshUserInfo() {
-        getCurUserInfo().then(this.getCurUserInfoSuccess);
+        RacUserApi.getCurUserInfo().then(this.getCurUserInfoSuccess);
     }
 
     /**

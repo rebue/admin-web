@@ -10,7 +10,7 @@
                 校验规则参见 https://github.com/yiminghe/async-validator -->
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
                     <a-form-model-item prop="userName">
-                        <a-input auto-focus v-model.trim="form.userName" placeholder="请输入登录账号">
+                        <a-input v-autofocus v-model.trim="form.userName" placeholder="请输入登录账号">
                             <template v-slot:prefix><a-icon type="user"/></template>
                         </a-input>
                     </a-form-model-item>
@@ -31,8 +31,9 @@
 import md5 from 'crypto-js/md5';
 import { observer } from 'mobx-vue';
 import { SysIdDic } from '@/dic/SysIdDic';
-import { signInByUserName } from '@/api/rac/RacSignInApi';
+import RacSignInApi from '@/api/rac/RacSignInApi';
 import { setSysId } from '@/util/cookie';
+import { locateFirstErrorInput } from '@/util/comm';
 
 export default observer({
     data() {
@@ -61,7 +62,7 @@ export default observer({
 
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    signInByUserName({
+                    RacSignInApi.signInByUserName({
                         sysId: this.sysId,
                         userName: this.form.userName,
                         signInPswd: md5(this.form.signInPswd).toString(),
@@ -72,8 +73,10 @@ export default observer({
                         })
                         .finally(() => (this.loading = false));
                 } else {
-                    console.log('error submit!!');
-                    this.loading = false;
+                    this.$nextTick(() => {
+                        locateFirstErrorInput(); // 定位到第一个出错的输入框
+                        this.loading = false;
+                    });
                 }
             });
         },

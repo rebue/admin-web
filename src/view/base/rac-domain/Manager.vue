@@ -19,7 +19,7 @@
             </span>
             <span slot="action" slot-scope="text, record">
                 <template>
-                    <a @click="handleEdit(record)">编辑</a>
+                    <a @click="handleModify(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a @click="handleDel(record)">删除</a>
                 </template>
@@ -31,7 +31,7 @@
             :title="this.$route.meta.title"
             :editFormType="editFormType"
             :visible="editFormVisible"
-            :model="record"
+            :model="model"
             @close="handleClose"
         />
     </a-card>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { listAll } from '@/api/rac/RacDomainApi';
+import RacDomainApi from '@/api/rac/RacDomainApi';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
@@ -85,7 +85,7 @@ export default {
             loading: false,
             editFormType: EditFormTypeDic.None,
             editFormVisible: false,
-            record: new RacDomainMo(),
+            model: new RacDomainMo(),
             // 加载数据方法 必须为 Promise 对象
             // loadData: this.refreshData,
             dataSource: [],
@@ -97,11 +97,8 @@ export default {
     methods: {
         refreshData() {
             this.loading = true;
-            return listAll()
-                .then(ro => {
-                    this.dataSource = ro.extra.list;
-                    // return { length: ro.extra.list.length, data: ro.extra.list };
-                })
+            return RacDomainApi.listAll()
+                .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
         },
         handleAdd() {
@@ -109,16 +106,14 @@ export default {
             this.editFormType = EditFormTypeDic.Add;
             this.editFormVisible = true;
         },
-        handleEdit(record) {
+        handleModify(record) {
             this.model = record;
-            this.editFormType = EditFormTypeDic.Update;
+            this.editFormType = EditFormTypeDic.Modify;
             this.editFormVisible = true;
         },
         handleClose() {
-            this.editFormVisible = false;
-            this.editFormType = EditFormTypeDic.None;
-            this.model = null;
             this.refreshData();
+            this.editFormVisible = false;
         },
         handleDel(record) {
             if (record.status !== 0) {

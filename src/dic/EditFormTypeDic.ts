@@ -6,8 +6,8 @@ export enum EditFormTypeDic {
     None = 'none',
     /** 添加 */
     Add = 'add',
-    /** 编辑 */
-    Update = 'update',
+    /** 修改 */
+    Modify = 'modify',
 }
 
 export function getEditFormTypeName(val: EditFormTypeDic): string {
@@ -16,7 +16,7 @@ export function getEditFormTypeName(val: EditFormTypeDic): string {
     switch (val) {
         case EditFormTypeDic.Add:
             return '添加';
-        case EditFormTypeDic.Update:
+        case EditFormTypeDic.Modify:
             return '修改';
         default:
             return '未定义';

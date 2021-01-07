@@ -5,6 +5,7 @@ import router from '@/router/router';
 import '@/plugin/vue-i18n';
 import '@/plugin/element-ui';
 import '@/plugin/ant-design';
+import '@/plugin/autofocus';
 import '@/env';
 
 Vue.config.productionTip = false;
