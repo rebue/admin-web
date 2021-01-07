@@ -5,13 +5,13 @@ import router from '@/router/router';
 import '@/plugin/vue-i18n';
 import '@/plugin/element-ui';
 import '@/plugin/ant-design';
-import '@/plugin/auto-focus';
+import '@/plugin/vue-focus';
 import '@/env';
-import AutoFocus from '@/plugin/auto-focus';
+import VueFocus from '@/plugin/vue-focus';
 
 Vue.config.productionTip = false;
-// 注册自动设置焦点插件
-Vue.use(AutoFocus);
+// 注册设置焦点插件
+Vue.use(VueFocus);
 
 new Vue({
     router,

@@ -1,5 +1,9 @@
 /**
- * Vue的AutoFocus插件
+ * Vue的Focus插件
+ *
+ * 1. 提供v-autofocus指令，可以对自动输入框设置autofocus
+ * 2. 在Vue实例中提供focus方法，可以将焦点设置到第一个输入框
+ * 3. 在Vue实例中提供focusError方法，可以将焦点设置到第一个校验出错的输入框
  */
 
 /**
@@ -29,12 +33,13 @@ function focus(el: Element | Document | null = document) {
  * 设置焦点到第一个提示错误的输入框
  */
 function focusError() {
-    focus(document.querySelector('.has-error'));
+    // has-error,is-error分别是AntDesignVue,ElementUI校验错误的class
+    focus(document.querySelector('.has-error,.is-error'));
 }
 
-export default class AutoFocus {
+export default class VueFocus {
     static install(Vue) {
-        console.log('安装插件 `AutoFocus`');
+        console.log('安装插件 `VueFocus`');
         console.log('注册实例方法 `$focus`');
         Vue.prototype.$focus = focus;
         console.log('注册实例方法 `$focusError`');
