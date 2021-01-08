@@ -8,18 +8,18 @@
                 <a-tooltip title="刷新">
                     <a-button type="link" icon="reload" @click="refreshData" />
                 </a-tooltip>
-                <a-tooltip title="竖向间隔" autoAdjustOverflow="false">
+                <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
                     <a-dropdown>
                         <a-button type="link" icon="column-height" />
                         <a-menu slot="overlay">
                             <a-menu-item>
-                                <a @click="tableSize = 'default'">大</a>
+                                <a @click="setTableSize('default')">大</a>
                             </a-menu-item>
                             <a-menu-item>
-                                <a @click="tableSize = 'middle'">中</a>
+                                <a @click="setTableSize('middle')">中</a>
                             </a-menu-item>
                             <a-menu-item>
-                                <a @click="tableSize = 'small'">小</a>
+                                <a @click="setTableSize('small')">小</a>
                             </a-menu-item>
                         </a-menu>
                     </a-dropdown>
@@ -35,7 +35,7 @@
 
         <a-table
             ref="table"
-            :size="tableSize"
+            :size="settingStore.tableSize"
             rowKey="id"
             :columns="columns"
             :dataSource="dataSource"
@@ -67,16 +67,19 @@
             :editFormType="editFormType"
             :visible="editFormVisible"
             :model="model"
-            @close="handleClose"
+            @close="handleEditFormClose"
         />
     </a-card>
 </template>
 
 <script>
+import { observer } from 'mobx-vue';
+import { settingStore } from '@/store/Store';
 import RacDomainApi from '@/api/rac/RacDomainApi';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { settingAction } from '@/action/Action';
 
 const columns = [
     {
@@ -107,10 +110,9 @@ const columns = [
     },
 ];
 
-export default {
+export default observer({
     name: 'Manager',
     components: {
-        // STable,
         EditForm,
     },
     data() {
@@ -120,48 +122,71 @@ export default {
             editFormType: EditFormTypeDic.None,
             editFormVisible: false,
             model: new RacDomainMo(),
+            settingStore,
             dataSource: [],
             fullScreen: false,
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
-            tableSize: 'default',
         };
     },
     mounted() {
         this.refreshData();
     },
     methods: {
+        /**
+         * 刷新数据
+         */
         refreshData() {
             this.loading = true;
             return RacDomainApi.listAll()
                 .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
         },
+        /**
+         * 改变表格大小
+         */
+        setTableSize(size) {
+            settingAction.setTableSize(size);
+        },
+        /**
+         * 切换全屏
+         */
         toggleFullScreen() {
             this.$fullscreen.toggle(undefined, {
                 wrap: false,
-                callback: this.handleFullScreenChanged,
+                callback: fullScreen => {
+                    this.fullScreen = fullScreen;
+                    this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
+                    this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
+                },
             });
         },
-        handleFullScreenChanged(fullScreen) {
-            this.fullScreen = fullScreen;
-            this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
-            this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
-        },
+        /**
+         * 添加
+         */
         handleAdd() {
             this.model = new RacDomainMo();
             this.editFormType = EditFormTypeDic.Add;
             this.editFormVisible = true;
         },
+        /**
+         * 修改
+         */
         handleModify(record) {
             this.model = record;
             this.editFormType = EditFormTypeDic.Modify;
             this.editFormVisible = true;
         },
-        handleClose() {
+        /**
+         * 编辑窗体关闭
+         */
+        handleEditFormClose() {
             this.refreshData();
             this.editFormVisible = false;
         },
+        /**
+         * 删除
+         */
         handleDel(record) {
             this.loading = true;
             RacDomainApi.del(record.id).finally(() => {
@@ -169,7 +194,7 @@ export default {
             });
         },
     },
-};
+});
 </script>
 <style lang="less" scoped>
 .element-fullscreen {

@@ -29,12 +29,11 @@
 
 <script>
 import md5 from 'crypto-js/md5';
-import { observer } from 'mobx-vue';
 import { SysIdDic } from '@/dic/SysIdDic';
 import RacSignInApi from '@/api/rac/RacSignInApi';
 import { setSysId } from '@/util/cookie';
 
-export default observer({
+export default {
     data() {
         return {
             /** 定义当前登录页面所对应的系统 */
@@ -80,7 +79,7 @@ export default observer({
             });
         },
     },
-});
+};
 </script>
 
 <style lang="less" scoped>
