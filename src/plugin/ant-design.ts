@@ -18,6 +18,7 @@ import {
     Modal,
     Spin,
     Popconfirm,
+    Tooltip,
 } from 'ant-design-vue';
 
 // 国际化
@@ -44,7 +45,7 @@ Vue.use(Card);
 // Vue.use(Tabs);
 // Vue.use(TabPane);
 
-// 表格
+// 表单
 Vue.use(Form);
 Vue.use(Table);
 Vue.use(Col);
@@ -60,3 +61,4 @@ Vue.use(Modal);
 Vue.use(Popconfirm);
 // 弹框
 Vue.use(Alert);
+Vue.use(Tooltip);

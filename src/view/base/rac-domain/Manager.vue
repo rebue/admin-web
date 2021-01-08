@@ -1,8 +1,23 @@
 <template>
-    <!-- <page-header-wrapper> -->
-    <a-card :bordered="false">
-        <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+    <a-card class="manager-card" :bordered="false" :class="{ 'element-fullscreen': fullScreen }">
+        <div class="manager-operator">
+            <div class="manager-commands">
+                <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+            </div>
+            <div class="table-tools">
+                <a-tooltip title="刷新">
+                    <a-button type="link" icon="reload" @click="refreshData" />
+                </a-tooltip>
+                <a-tooltip title="竖向间隔">
+                    <a-button type="link" icon="column-height" />
+                </a-tooltip>
+                <a-tooltip title="列选择">
+                    <a-button type="link" icon="project" />
+                </a-tooltip>
+                <a-tooltip :title="fullScreenTitle">
+                    <a-button type="link" :icon="fullScreenIcon" @click="toggleFullScreen" />
+                </a-tooltip>
+            </div>
         </div>
 
         <a-table
@@ -13,6 +28,7 @@
             :dataSource="dataSource"
             :loading="loading"
             :pagination="false"
+            :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')"
         >
             <span slot="serial" slot-scope="text, record, index">
                 {{ index + 1 }}
@@ -32,7 +48,6 @@
                 </template>
             </span>
         </a-table>
-
         <edit-form
             ref="editForm"
             :title="this.$route.meta.title"
@@ -42,7 +57,6 @@
             @close="handleClose"
         />
     </a-card>
-    <!-- </page-header-wrapper> -->
 </template>
 
 <script>
@@ -90,6 +104,9 @@ export default {
         this.columns = columns;
         return {
             loading: false,
+            fullScreen: false,
+            fullScreenIcon: 'fullscreen',
+            fullScreenTitle: '全屏',
             editFormType: EditFormTypeDic.None,
             editFormVisible: false,
             model: new RacDomainMo(),
@@ -107,6 +124,17 @@ export default {
             return RacDomainApi.listAll()
                 .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
+        },
+        toggleFullScreen() {
+            this.$fullscreen.toggle(undefined, {
+                wrap: false,
+                callback: this.handleFullScreenChanged,
+            });
+        },
+        handleFullScreenChanged(fullScreen) {
+            this.fullScreen = fullScreen;
+            this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
+            this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
         },
         handleAdd() {
             this.model = new RacDomainMo();
@@ -131,3 +159,32 @@ export default {
     },
 };
 </script>
+
+<style lang="less" scoped>
+.element-fullscreen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.manager-card {
+    // height: 100%; /** 全屏的时候撑开高度 */
+    .manager-operator {
+        display: flex;
+        margin-bottom: 18px;
+        .manager-commands {
+            flex-grow: 1;
+        }
+        .table-tools {
+            flex-grow: 0;
+        }
+    }
+}
+
+.row-even {
+    background-color: #fafafa;
+}
+</style>
