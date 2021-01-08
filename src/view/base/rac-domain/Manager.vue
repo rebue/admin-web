@@ -8,8 +8,21 @@
                 <a-tooltip title="刷新">
                     <a-button type="link" icon="reload" @click="refreshData" />
                 </a-tooltip>
-                <a-tooltip title="竖向间隔">
-                    <a-button type="link" icon="column-height" />
+                <a-tooltip title="竖向间隔" autoAdjustOverflow="false">
+                    <a-dropdown>
+                        <a-button type="link" icon="column-height" />
+                        <a-menu slot="overlay">
+                            <a-menu-item>
+                                <a @click="tableSize = 'default'">大</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a @click="tableSize = 'middle'">中</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a @click="tableSize = 'small'">小</a>
+                            </a-menu-item>
+                        </a-menu>
+                    </a-dropdown>
                 </a-tooltip>
                 <a-tooltip title="列选择">
                     <a-button type="link" icon="project" />
@@ -22,7 +35,7 @@
 
         <a-table
             ref="table"
-            size="default"
+            :size="tableSize"
             rowKey="id"
             :columns="columns"
             :dataSource="dataSource"
@@ -104,15 +117,14 @@ export default {
         this.columns = columns;
         return {
             loading: false,
-            fullScreen: false,
-            fullScreenIcon: 'fullscreen',
-            fullScreenTitle: '全屏',
             editFormType: EditFormTypeDic.None,
             editFormVisible: false,
             model: new RacDomainMo(),
-            // 加载数据方法 必须为 Promise 对象
-            // loadData: this.refreshData,
             dataSource: [],
+            fullScreen: false,
+            fullScreenIcon: 'fullscreen',
+            fullScreenTitle: '全屏',
+            tableSize: 'default',
         };
     },
     mounted() {
@@ -159,7 +171,6 @@ export default {
     },
 };
 </script>
-
 <style lang="less" scoped>
 .element-fullscreen {
     position: fixed;

@@ -19,6 +19,8 @@ import {
     Spin,
     Popconfirm,
     Tooltip,
+    Dropdown,
+    Menu,
 } from 'ant-design-vue';
 
 // 国际化
@@ -39,19 +41,20 @@ Vue.use(Spin);
 // 表单
 Vue.use(FormModel);
 Vue.use(Input);
+Vue.use(DatePicker);
+Vue.use(InputNumber);
+Vue.use(Dropdown);
+Vue.use(Menu);
 
 // 导航
 Vue.use(Card);
 // Vue.use(Tabs);
 // Vue.use(TabPane);
 
-// 表单
-Vue.use(Form);
+// 表格
 Vue.use(Table);
 Vue.use(Col);
 Vue.use(Row);
-Vue.use(DatePicker);
-Vue.use(InputNumber);
 
 // 选择框
 Vue.use(Select);
