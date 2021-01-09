@@ -1,69 +1,30 @@
 <template>
-    <a-modal
-        :title="fullTitle"
-        okText="提交"
-        :ok-button-props="{ props: { icon: 'check' } }"
-        cancelText="返回"
-        :cancel-button-props="{ props: { icon: 'rollback' } }"
-        :width="640"
-        :visible="visible"
-        @ok="handleOk"
-        @cancel="handleCancel"
-    >
-        <a-spin :spinning="loading">
-            <a-form-model ref="form" :model="form" :rules="rules" v-bind="formLayout">
-                <a-form-model-item label="编码" prop="id">
-                    <a-input v-model.trim="form.id" placeholder="请输入领域编码" :disabled="modifyDisabled" />
-                </a-form-model-item>
-                <a-form-model-item label="名称" prop="name">
-                    <a-input v-model.trim="form.name" placeholder="请输入领域名称" />
-                </a-form-model-item>
-                <a-form-model-item label="备注" prop="remark">
-                    <a-input v-model.trim="form.remark" placeholder="请输入领域备注" />
-                </a-form-model-item>
-            </a-form-model>
-        </a-spin>
-    </a-modal>
+    <base-edit-form :form.sync="form" :rules="rules" :api="api" v-bind="$attrs" v-on="$listeners">
+        <a-form-model-item label="编码" prop="id">
+            <a-input v-model.trim="form.id" placeholder="请输入领域编码" :disabled="modifyDisabled" />
+        </a-form-model-item>
+        <a-form-model-item label="名称" prop="name">
+            <a-input v-model.trim="form.name" placeholder="请输入领域名称" />
+        </a-form-model-item>
+        <a-form-model-item label="备注" prop="remark">
+            <a-input v-model.trim="form.remark" placeholder="请输入领域备注" />
+        </a-form-model-item>
+    </base-edit-form>
 </template>
 
 <script>
-import { EditFormTypeDic, getEditFormTypeName } from '@/dic/EditFormTypeDic';
-import RacDomainApi from '@/api/rac/RacDomainApi';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { racDomainApi } from '@/api/Api';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
+import BaseEditForm from '@/component/rebue/BaseEditForm';
 
 export default {
-    props: {
-        title: {
-            type: String,
-            default: () => '',
-        },
-        model: {
-            type: Object,
-            default: () => null,
-        },
-        visible: {
-            type: Boolean,
-            required: true,
-        },
-        editFormType: {
-            type: String,
-            required: true,
-            default: () => EditFormTypeDic.None,
-        },
+    components: {
+        BaseEditForm,
     },
     data() {
-        this.formLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 7 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 13 },
-            },
-        };
         return {
-            loading: true,
+            api: racDomainApi,
             form: new RacDomainMo(),
             rules: {
                 id: [
@@ -76,68 +37,8 @@ export default {
         };
     },
     computed: {
-        fullTitle() {
-            return (
-                getEditFormTypeName(this.editFormType) +
-                this.title +
-                (this.editFormType === EditFormTypeDic.Modify ? '信息' : '')
-            );
-        },
         modifyDisabled() {
-            return this.editFormType === EditFormTypeDic.Modify;
-        },
-    },
-    watch: {
-        visible(val) {
-            if (val) {
-                this.loading = true;
-                if (this.editFormType === EditFormTypeDic.Modify) {
-                    RacDomainApi.getById(this.model.id)
-                        .then(ro => (this.form = ro.extra.one))
-                        .catch(() => this.$emit('close'))
-                        .finally(() => {
-                            this.$nextTick(() => {
-                                this.$focus();
-                            });
-                            this.loading = false;
-                        });
-                } else {
-                    this.$nextTick(() => {
-                        this.$focus();
-                    });
-                    this.loading = false;
-                }
-            } else {
-                this.$refs.form.resetFields();
-            }
-        },
-    },
-    methods: {
-        handleOk() {
-            this.loading = true;
-            const mo = this.form;
-            this.$refs.form.validate(valid => {
-                console.log('validate form: ', valid);
-                if (valid) {
-                    if (this.editFormType === EditFormTypeDic.Add) {
-                        RacDomainApi.add(mo)
-                            .then(() => this.$emit('close'))
-                            .finally(() => (this.loading = false));
-                    } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        RacDomainApi.modify(mo)
-                            .then(() => this.$emit('close'))
-                            .finally(() => (this.loading = false));
-                    }
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
-                }
-            });
-        },
-        handleCancel() {
-            this.$emit('close');
+            return this.$attrs.editFormType === EditFormTypeDic.Modify;
         },
     },
 };

@@ -30,7 +30,7 @@
 <script>
 import md5 from 'crypto-js/md5';
 import { SysIdDic } from '@/dic/SysIdDic';
-import RacSignInApi from '@/api/rac/RacSignInApi';
+import { racSignInApi } from '@/api/Api';
 import { setSysId } from '@/util/cookie';
 
 export default {
@@ -60,11 +60,12 @@ export default {
 
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    RacSignInApi.signInByUserName({
-                        sysId: this.sysId,
-                        userName: this.form.userName,
-                        signInPswd: md5(this.form.signInPswd).toString(),
-                    })
+                    racSignInApi
+                        .signInByUserName({
+                            sysId: this.sysId,
+                            userName: this.form.userName,
+                            signInPswd: md5(this.form.signInPswd).toString(),
+                        })
                         .then(ro => {
                             setSysId(this.sysId);
                             this.$router.push({ path: ro.extra.indexUrn });

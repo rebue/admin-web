@@ -64,8 +64,9 @@
         <edit-form
             ref="editForm"
             :title="this.$route.meta.title"
-            :editFormType="editFormType"
+            :width="640"
             :visible="editFormVisible"
+            :editFormType="editFormType"
             :model="model"
             @close="handleEditFormClose"
         />
@@ -75,7 +76,7 @@
 <script>
 import { observer } from 'mobx-vue';
 import { settingStore } from '@/store/Store';
-import RacDomainApi from '@/api/rac/RacDomainApi';
+import { racDomainApi } from '@/api/Api';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
@@ -138,7 +139,8 @@ export default observer({
          */
         refreshData() {
             this.loading = true;
-            return RacDomainApi.listAll()
+            return racDomainApi
+                .listAll()
                 .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
         },
@@ -189,7 +191,7 @@ export default observer({
          */
         handleDel(record) {
             this.loading = true;
-            RacDomainApi.del(record.id).finally(() => {
+            racDomainApi.delById(record.id).finally(() => {
                 this.refreshData();
             });
         },
