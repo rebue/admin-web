@@ -67,7 +67,7 @@
             :width="640"
             :visible="editFormVisible"
             :editFormType="editFormType"
-            :model="model"
+            :model.sync="model"
             @close="handleEditFormClose"
         />
     </a-card>
@@ -117,11 +117,11 @@ export default observer({
         EditForm,
     },
     data() {
-        this.columns = columns;
         return {
             loading: false,
             editFormType: EditFormTypeDic.None,
             editFormVisible: false,
+            columns,
             model: new RacDomainMo(),
             settingStore,
             dataSource: [],

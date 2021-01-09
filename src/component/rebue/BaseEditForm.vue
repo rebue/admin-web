@@ -11,7 +11,19 @@
         @cancel="handleCancel"
     >
         <a-spin :spinning="loading">
-            <a-form-model ref="form" :model="form" :rules="rules" v-bind="formLayout">
+            <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+                <a-form-model-item
+                    v-for="item in formItems"
+                    :key="item.dataIndex"
+                    :label="item.title"
+                    :prop="item.dataIndex"
+                >
+                    <a-input
+                        v-model.trim="model[item.dataIndex]"
+                        :placeholder="'请输入' + item.title"
+                        :disabled="item.disabled"
+                    />
+                </a-form-model-item>
                 <slot></slot>
             </a-form-model>
         </a-spin>
@@ -44,9 +56,9 @@ export default {
             type: Object,
             default: () => null,
         },
-        form: {
-            type: Object,
-            default: () => null,
+        formItems: {
+            type: Array,
+            required: true,
         },
         rules: {
             type: Object,
@@ -88,7 +100,7 @@ export default {
                 if (this.editFormType === EditFormTypeDic.Modify) {
                     this.api
                         .getById(this.model.id)
-                        .then(ro => this.$emit('update:form', ro.extra.one))
+                        .then(ro => this.$emit('update:model', ro.extra.one))
                         .catch(() => this.$emit('close'))
                         .finally(() => {
                             this.$nextTick(() => {
@@ -110,16 +122,18 @@ export default {
     methods: {
         handleOk() {
             this.loading = true;
-            const mo = this.form;
+            const mo = this.model;
             this.$refs.form.validate(valid => {
                 console.log('validate form: ', valid);
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
-                        this.api.add(mo)
+                        this.api
+                            .add(mo)
                             .then(() => this.$emit('close'))
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        this.api.modify(mo)
+                        this.api
+                            .modify(mo)
                             .then(() => this.$emit('close'))
                             .finally(() => (this.loading = false));
                     }
