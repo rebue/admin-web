@@ -10240,6 +10240,11 @@ vue-copy-to-clipboard@^1.0.3:
   dependencies:
     copy-to-clipboard "^3.3.1"
 
+vue-draggable-resizable@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/vue-draggable-resizable/download/vue-draggable-resizable-2.3.0.tgz#94c433ca748bc1a4d0959ba1c5c0e1c3536cee5b"
+  integrity sha1-lMQzynSLwaTQlZuhxcDhw1Ns7ls=
+
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.1.0.tgz#9cdbcc823e656b087507a1911732b867ac101e83"

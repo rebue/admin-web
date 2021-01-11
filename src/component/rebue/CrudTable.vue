@@ -40,12 +40,14 @@
         </div>
 
         <a-table
+            bordered
             :size="settingStore.tableSize"
             :rowKey="(record, index) => index"
             :columns="columns"
             :dataSource="dataSource"
             :loading="loading"
             :pagination="pagination"
+            :components="components"
             :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')"
         >
             <span slot="serial" slot-scope="text, record, index">
@@ -75,6 +77,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { observer } from 'mobx-vue';
 import { settingStore } from '@/store/Store';
 import { settingAction } from '@/action/Action';
@@ -104,6 +107,56 @@ export default observer({
         },
     },
     data() {
+        const draggingMap = {};
+        this.columns.forEach(col => {
+            draggingMap[col.key || col.dataIndex] = col.width;
+        });
+        const draggingState = Vue.observable(draggingMap);
+        const resizeableTitle = (h, props, children) => {
+            let thDom = null;
+            console.log('props', props);
+            const { key, ...restProps } = props;
+            if (key === 0) return;
+            const col = this.columns.find(col => {
+                const k = col.key || col.dataIndex;
+                return k === key;
+            });
+            if (!col.width) {
+                return <th {...restProps}>{children}</th>;
+            }
+            const onDrag = x => {
+                draggingState[key] = 0;
+                col.width = Math.max(x, 1);
+            };
+
+            const onDragstop = () => {
+                draggingState[key] = thDom.getBoundingClientRect().width;
+            };
+            return (
+                <th {...restProps} v-ant-ref={r => (thDom = r)} width={col.width} class="resize-table-th">
+                    {children}
+                    <vue-draggable-resizable
+                        key={col.key}
+                        class="table-draggable-handle"
+                        w={10}
+                        x={draggingState[key] || col.width}
+                        z={1}
+                        axis="x"
+                        draggable={true}
+                        resizable={false}
+                        onDragging={onDrag}
+                        onDragstop={onDragstop}
+                    ></vue-draggable-resizable>
+                </th>
+            );
+        };
+
+        this.components = {
+            header: {
+                cell: resizeableTitle,
+            },
+        };
+
         return {
             loading: false,
             settingStore,
@@ -182,5 +235,19 @@ export default observer({
 
 .row-even {
     background-color: #fafafa;
+}
+
+.resize-table-th {
+    position: relative;
+    .table-draggable-handle {
+        height: 100% !important;
+        bottom: 0;
+        left: auto !important;
+        right: -5px;
+        cursor: col-resize;
+        touch-action: none;
+        transform: none !important;
+        position: absolute;
+    }
 }
 </style>

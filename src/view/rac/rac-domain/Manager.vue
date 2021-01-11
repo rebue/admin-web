@@ -33,29 +33,30 @@ import { racDomainApi } from '@/api/Api';
 
 const columns = [
     {
+        dataIndex: 'no',
         title: '#',
         scopedSlots: { customRender: 'serial' },
-        width: '30px',
+        width: 50,
     },
     {
-        title: '编码',
         dataIndex: 'id',
-        width: '150px',
+        title: '编码',
+        width: 140,
     },
     {
-        title: '名称',
         dataIndex: 'name',
-        width: '150px',
+        title: '名称',
+        width: 150,
     },
     {
-        title: '备注',
         dataIndex: 'remark',
+        title: '备注',
         ellipsis: true,
     },
     {
-        title: '操作',
         dataIndex: 'action',
-        width: '150px',
+        title: '操作',
+        width: 150,
         scopedSlots: { customRender: 'action' },
     },
 ];
