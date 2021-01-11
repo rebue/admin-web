@@ -33,14 +33,14 @@ export const constantRouters = [
                     {
                         path: '/base/rac-domain',
                         name: 'rac-domain',
-                        component: () => import('@/view/base/rac-domain/Manager.vue'),
+                        component: () => import('@/view/rac/rac-domain/Manager.vue'),
                         hidden: true,
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },
                     {
                         path: '/base/rac-sys',
                         name: 'rac-sys',
-                        component: () => import('@/view/base/rac-domain/Manager.vue'),
+                        component: () => import('@/view/rac/rac-domain/Manager.vue'),
                         hidden: true,
                         meta: { title: '系统', keepAlive: true, icon: 'appstore' },
                     },

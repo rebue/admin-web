@@ -2,7 +2,13 @@
     <a-card class="manager-card" :bordered="false" :class="{ 'element-fullscreen': fullScreen }">
         <div class="manager-operator">
             <div class="manager-commands">
-                <a-button type="primary" icon="plus" @click="handleAdd">新建</a-button>
+                <slot name="managerCommands">
+                    <template v-for="(item, index) in managerCommands">
+                        <a-button :type="item.buttonType" :icon="item.icon" @click="handleAdd" :key="index">
+                            {{ item.title }}
+                        </a-button>
+                    </template>
+                </slot>
             </div>
             <div class="table-tools">
                 <a-tooltip title="刷新">
@@ -34,7 +40,6 @@
         </div>
 
         <a-table
-            ref="table"
             :size="settingStore.tableSize"
             rowKey="id"
             :columns="columns"
@@ -61,15 +66,13 @@
                 </template>
             </span>
         </a-table>
-        <edit-form
-            ref="editForm"
-            :title="this.$route.meta.title"
-            :width="640"
-            :visible="editFormVisible"
+        <slot
+            name="editForm"
+            :editFormVisible="editFormVisible"
             :editFormType="editFormType"
-            :model.sync="model"
-            @close="handleEditFormClose"
-        />
+            :model="model"
+            :handleEditFormClose="handleEditFormClose"
+        ></slot>
     </a-card>
 </template>
 
@@ -78,7 +81,6 @@ import { observer } from 'mobx-vue';
 import { settingStore } from '@/store/Store';
 import { racDomainApi } from '@/api/Api';
 import RacDomainMo from '@/mo/rac/RacDomainMo';
-import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { settingAction } from '@/action/Action';
 
@@ -112,9 +114,12 @@ const columns = [
 ];
 
 export default observer({
-    name: 'Manager',
-    components: {
-        EditForm,
+    name: 'BaseManager',
+    props: {
+        managerCommands: {
+            type: Array,
+            default: () => [],
+        },
     },
     data() {
         return {

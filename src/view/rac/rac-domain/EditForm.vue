@@ -1,5 +1,5 @@
 <template>
-    <base-edit-form :formItems="formItems" :rules="rules" :api="api" v-bind="$attrs" v-on="$listeners">
+    <base-edit-form title="领域" :formItems="formItems" :rules="rules" :api="api" v-bind="$attrs" v-on="$listeners">
     </base-edit-form>
 </template>
 
