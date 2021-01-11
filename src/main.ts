@@ -9,12 +9,15 @@ import '@/plugin/vue-focus';
 import '@/env';
 import VueFocus from '@/plugin/vue-focus';
 import FullScreen from 'vue-fullscreen';
+import Fragment from 'vue-fragment';
 
 Vue.config.productionTip = false;
 // 注册焦点插件
 Vue.use(VueFocus);
 // 注册全屏插件
 Vue.use(FullScreen);
+// 片段插件
+Vue.use(Fragment.Plugin);
 
 new Vue({
     router,

@@ -1,5 +1,13 @@
 <template>
-    <base-edit-form title="领域" :formItems="formItems" :rules="rules" :api="api" v-bind="$attrs" v-on="$listeners">
+    <base-edit-form
+        ref="baseEditForm"
+        title="领域"
+        :formItems="formItems"
+        :rules="rules"
+        :api="api"
+        v-bind="$attrs"
+        v-on="$listeners"
+    >
     </base-edit-form>
 </template>
 
@@ -13,8 +21,9 @@ export default {
         BaseEditForm,
     },
     data() {
+        this.api = racDomainApi;
         return {
-            api: racDomainApi,
+            editFormType: EditFormTypeDic.None,
             rules: {
                 id: [
                     { required: true, message: '请输入领域编码', trigger: 'blur', transform: val => val && val.trim() },
@@ -28,10 +37,16 @@ export default {
     computed: {
         formItems() {
             return [
-                { dataIndex: 'id', title: '编码', disabled: this.$attrs.editFormType === EditFormTypeDic.Modify },
+                { dataIndex: 'id', title: '编码', disabled: this.editFormType === EditFormTypeDic.Modify },
                 { dataIndex: 'name', title: '名称' },
                 { dataIndex: 'remark', title: '备注' },
             ];
+        },
+    },
+    methods: {
+        show: function(editFormType, ...params) {
+            this.editFormType = editFormType;
+            this.$refs.baseEditForm.show(editFormType, ...params);
         },
     },
 };

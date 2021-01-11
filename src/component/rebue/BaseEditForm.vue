@@ -43,19 +43,6 @@ export default {
             type: Number,
             default: () => 640,
         },
-        visible: {
-            type: Boolean,
-            required: true,
-        },
-        editFormType: {
-            type: String,
-            required: true,
-            default: () => EditFormTypeDic.None,
-        },
-        model: {
-            type: Object,
-            default: () => null,
-        },
         formItems: {
             type: Array,
             required: true,
@@ -82,6 +69,9 @@ export default {
         };
         return {
             loading: true,
+            visible: false,
+            editFormType: EditFormTypeDic.None,
+            model: {},
         };
     },
     computed: {
@@ -120,6 +110,11 @@ export default {
         },
     },
     methods: {
+        show(editFormType, model) {
+            this.model = model;
+            this.editFormType = editFormType;
+            this.visible = true;
+        },
         handleOk() {
             this.loading = true;
             const mo = this.model;
@@ -129,12 +124,12 @@ export default {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
                             .add(mo)
-                            .then(() => this.$emit('close'))
+                            .then(() => this.handleClose())
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         this.api
                             .modify(mo)
-                            .then(() => this.$emit('close'))
+                            .then(() => this.handleClose())
                             .finally(() => (this.loading = false));
                     }
                 } else {
@@ -146,7 +141,11 @@ export default {
             });
         },
         handleCancel() {
+            this.handleClose();
+        },
+        handleClose() {
             this.$emit('close');
+            this.visible = false;
         },
     },
 };

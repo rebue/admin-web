@@ -10252,6 +10252,11 @@ vue-eslint-parser@^7.0.0:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
+vue-fragment@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npm.taobao.org/vue-fragment/download/vue-fragment-1.5.1.tgz#44c070d55ed1e9a6c698ef57a5c83f64bb06feeb"
+  integrity sha1-RMBw1V7R6abGmO9Xpcg/ZLsG/us=
+
 vue-fullscreen@^2.1.6:
   version "2.1.6"
   resolved "https://registry.npm.taobao.org/vue-fullscreen/download/vue-fullscreen-2.1.6.tgz#2f4924dd630f6246bc780405a0e9cd3ecf3015f5"
