@@ -11,9 +11,22 @@
                 </slot>
             </div>
             <div class="table-tools">
-                <a-switch default-checked />
                 <a-tooltip title="刷新">
                     <a-button type="link" icon="reload" @click="refreshData" />
+                </a-tooltip>
+                <a-divider type="vertical" />
+                <a-tooltip title="表格边框" :autoAdjustOverflow="false">
+                    <a-dropdown>
+                        <a-button type="link" :icon="settingStore.tableBorder ? 'table' : 'small-dash'"></a-button>
+                        <div slot="overlay">
+                            <a-switch
+                                :default-checked="settingStore.tableBorder"
+                                checked-children="有边框"
+                                un-checked-children="无边框"
+                                @change="changeTableBorder"
+                            />
+                        </div>
+                    </a-dropdown>
                 </a-tooltip>
                 <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
                     <a-dropdown>
@@ -41,6 +54,7 @@
         </div>
 
         <a-table
+            :bordered="settingStore.tableBorder"
             :size="settingStore.tableSize"
             :rowKey="(record, index) => index"
             :columns="columns"
@@ -149,7 +163,9 @@ export default observer({
                     {children}
                     <vue-draggable-resizable
                         key={col.key}
-                        class={draggingState[key].isLeft ? 'table-draggable-handle-left' : 'table-draggable-handle-right'}
+                        class={
+                            draggingState[key].isLeft ? 'table-draggable-handle-left' : 'table-draggable-handle-right'
+                        }
                         w={10}
                         x={draggingState[key].width || col.width}
                         z={1}
@@ -189,6 +205,10 @@ export default observer({
             return (this.pagination ? this.api.page() : this.api.listAll())
                 .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
+        },
+        /** 改变表格边框 */
+        changeTableBorder(checked) {
+            settingAction.changeTableBorder(checked);
         },
         /**
          * 改变表格大小
