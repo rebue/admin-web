@@ -21,6 +21,8 @@ import {
     Dropdown,
     Switch,
     Menu,
+    Popover,
+    Checkbox,
 } from 'ant-design-vue';
 
 // 国际化
@@ -46,6 +48,8 @@ Vue.use(InputNumber);
 Vue.use(Dropdown);
 Vue.use(Menu);
 Vue.use(Switch);
+Vue.use(Popover);
+Vue.use(Checkbox);
 
 // 导航
 Vue.use(Card);

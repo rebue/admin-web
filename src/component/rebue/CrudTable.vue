@@ -44,8 +44,27 @@
                         </a-menu>
                     </a-dropdown>
                 </a-tooltip>
-                <a-tooltip title="列选择">
-                    <a-button type="link" icon="project" />
+                <a-tooltip title="列显示配置">
+                    <a-popover placement="bottom">
+                        <template slot="title">
+                            <a-checkbox
+                                :indeterminate="indeterminate"
+                                :defaultChecked="isCheckColsAll"
+                                :checked="isCheckColsAll"
+                                @change="changeColsCheckAll"
+                            >
+                                全选
+                            </a-checkbox>
+                        </template>
+                        <template slot="content">
+                            <a-checkbox-group
+                                v-model="checkedCols"
+                                :options="defaultOptionCols"
+                                @change="changeColCheck"
+                            />
+                        </template>
+                        <a-button type="link" icon="project" />
+                    </a-popover>
                 </a-tooltip>
                 <a-tooltip :title="fullScreenTitle">
                     <a-button type="link" :icon="fullScreenIcon" @click="toggleFullScreen" />
@@ -57,7 +76,7 @@
             :bordered="settingStore.tableBorder"
             :size="settingStore.tableSize"
             :rowKey="(record, index) => index"
-            :columns="columns"
+            :columns="displayColumns"
             :dataSource="dataSource"
             :loading="loading"
             :pagination="pagination"
@@ -121,22 +140,11 @@ export default observer({
         },
     },
     data() {
-        const draggingMap = {};
-        let isLeft = false;
-        this.columns.forEach(col => {
-            if (!col.width) {
-                isLeft = true;
-            }
-            draggingMap[col.key || col.dataIndex] = {
-                isLeft,
-                width: col.width,
-            };
-        });
-        const draggingState = Vue.observable(draggingMap);
+        /** 实现拖曳调整列宽度 */
         const resizeableTitle = (h, props, children) => {
             let thDom = null;
             const { key, ...restProps } = props;
-            const col = this.columns.find(col => {
+            const col = this.displayColumns.find(col => {
                 const k = col.key || col.dataIndex;
                 return k === key;
             });
@@ -146,16 +154,18 @@ export default observer({
             }
 
             const onDrag = x => {
-                // draggingState[key].width = 0;
-                if (draggingState[key].isLeft) {
-                    col.width = Math.max(draggingState[key].width * 2 - x, 1);
+                // this.draggingState[key].width = 0;
+                const propCol = this.columns.find(val => (val.dataIndex || val.key) === key);
+                const configCol = this.configColumns.find(val => (val.dataIndex || val.key) === key);
+                if (this.draggingState[key].isLeft) {
+                    configCol.width = Math.max(propCol.width * 2 - x, 1);
                 } else {
-                    col.width = Math.max(x, 1);
+                    configCol.width = Math.max(x, 1);
                 }
             };
 
             const onDragstop = () => {
-                draggingState[key].width = thDom.getBoundingClientRect().width;
+                // this.draggingState[key].width = thDom.getBoundingClientRect().width;
             };
 
             return (
@@ -164,10 +174,12 @@ export default observer({
                     <vue-draggable-resizable
                         key={col.key}
                         class={
-                            draggingState[key].isLeft ? 'table-draggable-handle-left' : 'table-draggable-handle-right'
+                            this.draggingState[key].isLeft
+                                ? 'table-draggable-handle-left'
+                                : 'table-draggable-handle-right'
                         }
                         w={10}
-                        x={draggingState[key].width || col.width}
+                        x={this.draggingState[key].width || col.width}
                         z={1}
                         axis="x"
                         draggable={true}
@@ -189,11 +201,53 @@ export default observer({
             loading: false,
             settingStore,
             dataSource: [],
+            configColumns: [], // 列配置的列表
+            indeterminate: false, // 设置 indeterminate 状态，只负责样式控制
+            checkedCols: [], // 选择的列列表(用于列选择配置)
+            isCheckColsAll: true, // 是否全选了列列表(用于列选择配置)
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
         };
     },
+    computed: {
+        draggingState() {
+            const draggingMap = {};
+            let isLeft = false;
+            this.displayColumns.forEach(col => {
+                if (!col.width) {
+                    isLeft = true;
+                }
+                draggingMap[col.key || col.dataIndex] = {
+                    isLeft,
+                    width: col.width,
+                };
+            });
+            // const draggingState = Vue.observable(draggingMap);
+            return draggingMap;
+        },
+        /** 默认选项的列列表(用于列选择配置) */
+        defaultOptionCols() {
+            const defaultOptionCols = [];
+            for (const item of this.configColumns) {
+                defaultOptionCols.push(item.title);
+            }
+            return defaultOptionCols;
+        },
+        /** 最终显示的列列表 */
+        displayColumns() {
+            const displayColumns = [];
+            for (const item of this.configColumns) {
+                if (!item.visible) continue;
+                displayColumns.push({ ...item });
+            }
+            return displayColumns;
+        },
+    },
     mounted() {
+        for (const item of this.columns) {
+            this.configColumns.push({ visible: true, ...item });
+            this.checkedCols.push(item.title);
+        }
         this.refreshData();
     },
     methods: {
@@ -215,6 +269,31 @@ export default observer({
          */
         setTableSize(size) {
             settingAction.setTableSize(size);
+        },
+        /**
+         * 改变列是否选择
+         */
+        changeColCheck(checkedCols) {
+            console.log('changeColCheck');
+            this.indeterminate = !!this.checkedCols.length && this.checkedCols.length < this.defaultOptionCols.length;
+            this.isCheckColsAll = this.checkedCols.length === this.defaultOptionCols.length;
+            for (const item of this.configColumns) {
+                item.visible = checkedCols.find(value => value === item.title);
+            }
+        },
+        /**
+         * 改变列全选
+         */
+        changeColsCheckAll(e) {
+            console.log('changeColsCheckAll', e);
+            Object.assign(this, {
+                checkedCols: e.target.checked ? this.defaultOptionCols : [],
+                indeterminate: false,
+                isCheckColsAll: e.target.checked,
+            });
+            for (const item of this.configColumns) {
+                item.visible = e.target.checked;
+            }
         },
         /**
          * 切换全屏
@@ -267,5 +346,10 @@ export default observer({
 
 .row-even {
     background-color: #fafafa;
+}
+
+.ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
 }
 </style>
