@@ -9,15 +9,22 @@ const TABLE_BORDER = 'table-border';
 export class SettingAction {
     constructor() {
         localForage.getItem(TABLE_SIZE).then(value => this.setTableSize(value as TableSizeDic));
-        localForage.getItem(TABLE_BORDER).then(value => this.changeTableBorder(value as boolean));
+        localForage.getItem(TABLE_BORDER).then(value => this.changeTableBorderWithoutPersist(value as boolean));
     }
     /**
-     * 改变表格边框
+     * 改变表格边框(不保存)
      */
     @action
-    changeTableBorder(val: boolean) {
+    changeTableBorderWithoutPersist(val) {
         settingStore.tableBorder = val;
-        localForage.setItem(TABLE_BORDER, val);
+    }
+    /**
+     * 切换表格边框
+     */
+    @action
+    switchTableBorder() {
+        settingStore.tableBorder = !settingStore.tableBorder;
+        localForage.setItem(TABLE_BORDER, settingStore.tableBorder);
     }
 
     /**

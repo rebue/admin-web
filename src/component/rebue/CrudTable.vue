@@ -16,7 +16,11 @@
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip title="表格边框" :autoAdjustOverflow="false">
-                    <a-dropdown>
+                    <a-button type="link" @click="switchTableBorder">
+                        <a-icon type="table" :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
+                    </a-button>
+
+                    <!-- <a-dropdown>
                         <a-button type="link" :icon="settingStore.tableBorder ? 'table' : 'small-dash'"></a-button>
                         <div slot="overlay">
                             <a-switch
@@ -26,7 +30,7 @@
                                 @change="changeTableBorder"
                             />
                         </div>
-                    </a-dropdown>
+                    </a-dropdown> -->
                 </a-tooltip>
                 <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
                     <a-dropdown>
@@ -261,8 +265,8 @@ export default observer({
                 .finally(() => (this.loading = false));
         },
         /** 改变表格边框 */
-        changeTableBorder(checked) {
-            settingAction.changeTableBorder(checked);
+        switchTableBorder() {
+            settingAction.switchTableBorder();
         },
         /**
          * 改变表格大小
