@@ -1,5 +1,6 @@
 <template>
     <pro-layout
+        :siderWidth="230"
         :menus="userStore.menus"
         :collapsed="collapsed"
         :theme="theme"

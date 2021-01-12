@@ -11,6 +11,7 @@
                 </slot>
             </div>
             <div class="table-tools">
+                <a-switch default-checked />
                 <a-tooltip title="刷新">
                     <a-button type="link" icon="reload" @click="refreshData" />
                 </a-tooltip>
@@ -40,7 +41,6 @@
         </div>
 
         <a-table
-            bordered
             :size="settingStore.tableSize"
             :rowKey="(record, index) => index"
             :columns="columns"
@@ -108,38 +108,50 @@ export default observer({
     },
     data() {
         const draggingMap = {};
+        let isLeft = false;
         this.columns.forEach(col => {
-            draggingMap[col.key || col.dataIndex] = col.width;
+            if (!col.width) {
+                isLeft = true;
+            }
+            draggingMap[col.key || col.dataIndex] = {
+                isLeft,
+                width: col.width,
+            };
         });
         const draggingState = Vue.observable(draggingMap);
         const resizeableTitle = (h, props, children) => {
             let thDom = null;
-            console.log('props', props);
             const { key, ...restProps } = props;
-            if (key === 0) return;
             const col = this.columns.find(col => {
                 const k = col.key || col.dataIndex;
                 return k === key;
             });
+
             if (!col.width) {
                 return <th {...restProps}>{children}</th>;
             }
+
             const onDrag = x => {
-                draggingState[key] = 0;
-                col.width = Math.max(x, 1);
+                // draggingState[key].width = 0;
+                if (draggingState[key].isLeft) {
+                    col.width = Math.max(draggingState[key].width * 2 - x, 1);
+                } else {
+                    col.width = Math.max(x, 1);
+                }
             };
 
             const onDragstop = () => {
-                draggingState[key] = thDom.getBoundingClientRect().width;
+                draggingState[key].width = thDom.getBoundingClientRect().width;
             };
+
             return (
                 <th {...restProps} v-ant-ref={r => (thDom = r)} width={col.width} class="resize-table-th">
                     {children}
                     <vue-draggable-resizable
                         key={col.key}
-                        class="table-draggable-handle"
+                        class={draggingState[key].isLeft ? 'table-draggable-handle-left' : 'table-draggable-handle-right'}
                         w={10}
-                        x={draggingState[key] || col.width}
+                        x={draggingState[key].width || col.width}
                         z={1}
                         axis="x"
                         draggable={true}
@@ -235,19 +247,5 @@ export default observer({
 
 .row-even {
     background-color: #fafafa;
-}
-
-.resize-table-th {
-    position: relative;
-    .table-draggable-handle {
-        height: 100% !important;
-        bottom: 0;
-        left: auto !important;
-        right: -5px;
-        cursor: col-resize;
-        touch-action: none;
-        transform: none !important;
-        position: absolute;
-    }
 }
 </style>

@@ -7,9 +7,25 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import VueFocus from '@/plugin/vue-focus';
+import FullScreen from 'vue-fullscreen';
+import Fragment from 'vue-fragment';
+import VueDraggableResizable from 'vue-draggable-resizable';
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
+
 moment.locale('zh-cn');
+
+// 注册焦点插件
+Vue.use(VueFocus);
+// 注册全屏插件
+Vue.use(FullScreen);
+// 片段插件
+Vue.use(Fragment.Plugin);
+// 拖曳插件
+Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
 export default {
     name: 'App',
@@ -25,7 +41,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 * {
     padding: 0;
     margin: 0;
@@ -38,5 +54,29 @@ body {
 
 #app {
     height: 100%;
+}
+
+/** vue-draggable-resizable */
+.resize-table-th {
+    position: relative;
+}
+
+.table-draggable-handle {
+    height: 100% !important;
+    bottom: 0;
+    right: -5px;
+    cursor: col-resize;
+    touch-action: none;
+    transform: none !important;
+    position: absolute;
+    border: 1px;
+}
+
+.table-draggable-handle-left:extend(.table-draggable-handle) {
+    left: -5px !important;
+}
+
+.table-draggable-handle-right:extend(.table-draggable-handle) {
+    left: auto !important;
 }
 </style>

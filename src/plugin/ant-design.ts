@@ -19,6 +19,7 @@ import {
     Popconfirm,
     Tooltip,
     Dropdown,
+    Switch,
     Menu,
 } from 'ant-design-vue';
 
@@ -44,6 +45,7 @@ Vue.use(DatePicker);
 Vue.use(InputNumber);
 Vue.use(Dropdown);
 Vue.use(Menu);
+Vue.use(Switch);
 
 // 导航
 Vue.use(Card);
