@@ -36,7 +36,10 @@ instance.interceptors.request.use(
         console.log('request config', config);
 
         // 是否模拟网络延迟
-        if (isSimulateNetDelay) return new Promise(resolve => setTimeout(() => resolve(config), 1000));
+        if (isSimulateNetDelay) {
+            console.log('模拟网络延迟');
+            return new Promise(resolve => setTimeout(() => resolve(config), 1000));
+        }
 
         return config;
     },

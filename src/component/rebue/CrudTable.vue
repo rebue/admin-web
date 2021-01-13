@@ -19,18 +19,6 @@
                     <a-button type="link" @click="switchTableBorder">
                         <a-icon type="table" :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
                     </a-button>
-
-                    <!-- <a-dropdown>
-                        <a-button type="link" :icon="settingStore.tableBorder ? 'table' : 'small-dash'"></a-button>
-                        <div slot="overlay">
-                            <a-switch
-                                :default-checked="settingStore.tableBorder"
-                                checked-children="有边框"
-                                un-checked-children="无边框"
-                                @change="changeTableBorder"
-                            />
-                        </div>
-                    </a-dropdown> -->
                 </a-tooltip>
                 <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
                     <a-dropdown>
