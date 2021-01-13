@@ -22,7 +22,7 @@ export class SettingAction {
      * 切换表格边框
      */
     @action
-    switchTableBorder() {
+    toggleTableBorder() {
         settingStore.tableBorder = !settingStore.tableBorder;
         localForage.setItem(TABLE_BORDER, settingStore.tableBorder);
     }

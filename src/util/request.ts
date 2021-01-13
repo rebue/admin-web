@@ -33,7 +33,7 @@ const instance = axios.create({
 // request interceptor
 instance.interceptors.request.use(
     config => {
-        console.log('request config', config);
+        // console.log('request config', config);
 
         // 是否模拟网络延迟
         if (isSimulateNetDelay) {
@@ -73,10 +73,14 @@ instance.interceptors.request.use(
 
 // 发出请求
 function request(config: AxiosRequestConfig): Promise<Ro> {
+    if (config.method?.toUpperCase() === 'GET' && config.data) {
+        throw new Error('Axios的GET请求不能使用body传参，请将参数放入params属性而不是data');
+    }
+
     return instance
         .request(config)
         .then(resp => {
-            console.log('response', resp);
+            // console.log('response', resp);
             const ro = resp.data as Ro;
             if (ro.result > 0) {
                 if (ro.msg) message.info(ro.msg);

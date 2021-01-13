@@ -35,10 +35,10 @@ const uncheckJwtTokenPaths = ['/sign-in'];
  * 路由跳转前置钩子
  */
 router.beforeEach(async (to, from, next) => {
-    console.log('beforeEach: to, from, next');
-    console.log('to', to);
-    console.log('from', from);
-    console.log('next', next);
+    // console.log('beforeEach: to, from, next');
+    // console.log('to', to);
+    // console.log('from', from);
+    // console.log('next', next);
 
     // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
     if (!uncheckJwtTokenPaths.find(item => item.startsWith(to.path)) && !hasJwtToken()) {

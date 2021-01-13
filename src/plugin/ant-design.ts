@@ -23,6 +23,7 @@ import {
     Menu,
     Popover,
     Checkbox,
+    Tabs,
 } from 'ant-design-vue';
 
 // 国际化
@@ -53,7 +54,7 @@ Vue.use(Checkbox);
 
 // 导航
 Vue.use(Card);
-// Vue.use(Tabs);
+Vue.use(Tabs);
 // Vue.use(TabPane);
 
 // 表格

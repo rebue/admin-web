@@ -1,9 +1,10 @@
 const mock = {
     _proxy: require('./proxy'),
-    ...require('./rac/RacUser').routes,
-    ...require('./rac/RacSignIn').routes,
-    ...require('./rac/RacDomain').routes,
-    ...require('./rac/RacMenu').routes,
+    ...require('./rac/RacUserMock').routes,
+    ...require('./rac/RacSignInMock').routes,
+    ...require('./rac/RacDomainMock').routes,
+    ...require('./rac/RacSysMock').routes,
+    ...require('./rac/RacMenuMock').routes,
 };
 
 // console.log('mock', mock);

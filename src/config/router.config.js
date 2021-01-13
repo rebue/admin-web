@@ -40,7 +40,7 @@ export const constantRouters = [
                     {
                         path: '/base/rac-sys',
                         name: 'rac-sys',
-                        component: () => import('@/view/rac/rac-domain/Manager.vue'),
+                        component: () => import('@/view/rac/rac-sys/Manager.vue'),
                         hidden: true,
                         meta: { title: '系统', keepAlive: true, icon: 'appstore' },
                     },

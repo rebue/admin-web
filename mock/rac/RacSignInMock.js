@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { findRacUserBySignInName } = require('./RacUser');
+const { findRacUserBySignInName } = require('./RacUserMock');
 
 const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
 

@@ -30,6 +30,12 @@ export default class BaseCrudApi implements CrudApi {
         return request.get({ url: this.baseUrn + '/get-by-id?id=' + id });
     }
     /**
+     * 获取列表
+     */
+    list(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/list', params: qo });
+    }
+    /**
      * 获取所有列表
      */
     listAll(): Promise<Ro> {

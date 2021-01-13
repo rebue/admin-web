@@ -16,7 +16,7 @@
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip title="表格边框" :autoAdjustOverflow="false">
-                    <a-button type="link" @click="switchTableBorder">
+                    <a-button type="link" @click="toggleTableBorder">
                         <a-icon type="table" :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
                     </a-button>
                 </a-tooltip>
@@ -126,9 +126,16 @@ export default observer({
             type: Object,
             required: true,
         },
+        query: {
+            type: Object,
+        },
         pagination: {
             type: Boolean,
             default: () => false,
+        },
+        fullScreenDom: {
+            type: Object,
+            required: true,
         },
     },
     data() {
@@ -248,13 +255,18 @@ export default observer({
          */
         refreshData() {
             this.loading = true;
-            return (this.pagination ? this.api.page() : this.api.listAll())
+            return (this.pagination
+                ? this.api.page(this.query)
+                : this.query
+                ? this.api.list(this.query)
+                : this.api.listAll()
+            )
                 .then(ro => (this.dataSource = ro.extra.list))
                 .finally(() => (this.loading = false));
         },
         /** 改变表格边框 */
-        switchTableBorder() {
-            settingAction.switchTableBorder();
+        toggleTableBorder() {
+            settingAction.toggleTableBorder();
         },
         /**
          * 改变表格大小
@@ -291,7 +303,7 @@ export default observer({
          * 切换全屏
          */
         toggleFullScreen() {
-            this.$parent.$parent.toggleFullScreen(fullScreen => {
+            this.fullScreenDom.toggleFullScreen(fullScreen => {
                 this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
                 this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
             });

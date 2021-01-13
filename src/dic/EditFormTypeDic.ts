@@ -11,8 +11,6 @@ export enum EditFormTypeDic {
 }
 
 export function getEditFormTypeName(val: EditFormTypeDic): string {
-    console.log('val', val);
-
     switch (val) {
         case EditFormTypeDic.Add:
             return '添加';

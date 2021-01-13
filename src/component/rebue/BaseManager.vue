@@ -1,18 +1,13 @@
 <template>
-    <a-card class="manager-card" :bordered="false" :class="{ 'element-fullscreen': fullScreen }">
-        <slot name="crudTable"> </slot>
-    </a-card>
+    <div :class="{ 'element-fullscreen': fullScreen }">
+        <a-card class="manager-card" :bordered="false">
+            <slot name="managerCard"> </slot>
+        </a-card>
+    </div>
 </template>
 
 <script>
-import { observer } from 'mobx-vue';
-import { settingStore } from '@/store/Store';
-import { settingAction } from '@/action/Action';
-import { racDomainApi } from '@/api/Api';
-import RacDomainMo from '@/mo/rac/RacDomainMo';
-import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-
-export default observer({
+export default {
     name: 'BaseManager',
     props: {},
     data() {
@@ -34,7 +29,7 @@ export default observer({
             });
         },
     },
-});
+};
 </script>
 <style lang="less" scoped>
 .element-fullscreen {
@@ -44,5 +39,9 @@ export default observer({
     bottom: 0;
     left: 0;
     z-index: 10;
+}
+
+.manager-card {
+    height: 100%;
 }
 </style>

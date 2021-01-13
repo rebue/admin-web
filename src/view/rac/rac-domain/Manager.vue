@@ -1,6 +1,6 @@
 <template>
     <base-manager ref="baseManager">
-        <template v-slot:crudTable>
+        <template v-slot:managerCard>
             <crud-table
                 ref="crudTable"
                 :commands="tableCommands"
@@ -8,6 +8,7 @@
                 :columns="columns"
                 :api="api"
                 :pagination="false"
+                :fullScreenDom="fullScreenDom"
             >
                 <template v-slot:editForm="slotProps">
                     <edit-form
@@ -87,11 +88,14 @@ export default {
                 onClick: record => this.$refs.crudTable.handleDel(record),
             },
         ];
+
         return {
+            fullScreenDom: {},
             columns,
         };
     },
-    methods: {},
+    mounted() {
+        this.fullScreenDom = this.$refs.baseManager;
+    },
 };
 </script>
-<style lang="less" scoped></style>
