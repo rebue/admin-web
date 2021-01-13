@@ -77,9 +77,18 @@ module.exports = {
 
             const eo = list.find(item => item.id === params.id);
             if (eo) {
-                return res.json(eo);
+                return res.json({
+                    result: 1,
+                    msg: '查询成功',
+                    extra: {
+                        one: eo,
+                    },
+                });
             } else {
-                return res.json({});
+                return res.json({
+                    result: 1,
+                    msg: '查询失败',
+                });
             }
         },
         /** 查询所有记录 */

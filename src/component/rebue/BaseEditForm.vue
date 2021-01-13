@@ -14,6 +14,7 @@
             <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
                 <a-form-model-item
                     v-for="item in formItems"
+                    v-show="!item.hidden"
                     :key="item.dataIndex"
                     :label="item.title"
                     :prop="item.dataIndex"

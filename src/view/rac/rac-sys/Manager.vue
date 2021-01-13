@@ -4,7 +4,7 @@
             <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
                     <crud-table
-                        ref="crudTable"
+                        :ref="'crudTable.' + item.id"
                         :commands="tableCommands"
                         :actions="tableActions"
                         :columns="columns"
@@ -15,7 +15,7 @@
                     >
                         <template v-slot:editForm="slotProps">
                             <edit-form
-                                ref="editForm"
+                                :ref="'editForm.' + item.id"
                                 :width="640"
                                 :visible="slotProps.editFormVisible"
                                 :editFormType="slotProps.editFormType"
@@ -82,16 +82,23 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: () => this.$refs.editForm.show(EditFormTypeDic.Add, {}),
+                onClick: () =>
+                    this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
+                        domainId: this.curDomainId,
+                    }),
             },
         ];
         this.tableActions = [
-            { type: 'a', title: '编辑', onClick: record => this.$refs.editForm.show(EditFormTypeDic.Modify, record) },
+            {
+                type: 'a',
+                title: '编辑',
+                onClick: record => this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Modify, record),
+            },
             {
                 type: 'confirm',
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.$refs.crudTable.handleDel(record),
+                onClick: record => this.$refs['crudTable.' + this.curDomainId][0].handleDel(record),
             },
         ];
 
