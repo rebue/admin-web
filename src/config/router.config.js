@@ -44,6 +44,13 @@ export const constantRouters = [
                         hidden: true,
                         meta: { title: '系统', keepAlive: true, icon: 'appstore' },
                     },
+                    {
+                        path: '/base/rac-perm',
+                        name: 'rac-perm',
+                        component: () => import('@/view/rac/rac-perm/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '权限', keepAlive: true, icon: 'deployment-unit' },
+                    },
                 ],
             },
         ],

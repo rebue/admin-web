@@ -37,7 +37,7 @@ import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
-import { racSysApi } from '@/api/Api';
+import { racPermApi } from '@/api/Api';
 
 const columns = [
     {
@@ -80,12 +80,12 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racSysApi;
+        this.api = racPermApi;
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '新建',
+                title: '新建分类',
                 onClick: () =>
                     this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
                         domainId: this.curDomainId,

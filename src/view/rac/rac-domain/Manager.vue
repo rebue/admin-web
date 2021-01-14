@@ -7,6 +7,7 @@
                 :actions="tableActions"
                 :columns="columns"
                 :api="api"
+                :scrollX="600"
                 :pagination="false"
                 :fullScreenDom="fullScreenDom"
             >
@@ -38,16 +39,18 @@ const columns = [
         title: '#',
         scopedSlots: { customRender: 'serial' },
         width: 50,
-    },
-    {
-        dataIndex: 'id',
-        title: '编码',
-        width: 140,
+        fixed: 'left',
     },
     {
         dataIndex: 'name',
         title: '名称',
         width: 150,
+        fixed: 'left',
+    },
+    {
+        dataIndex: 'id',
+        title: '编码',
+        width: 140,
     },
     {
         dataIndex: 'remark',
@@ -58,6 +61,7 @@ const columns = [
         dataIndex: 'action',
         title: '操作',
         width: 150,
+        fixed: 'right',
         scopedSlots: { customRender: 'action' },
     },
 ];

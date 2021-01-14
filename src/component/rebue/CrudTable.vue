@@ -71,6 +71,7 @@
             :columns="displayColumns"
             :dataSource="dataSource"
             :loading="loading"
+            :scroll="{ x: this.scrollX, y: 300 }"
             :pagination="pagination"
             :components="components"
             :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')"
@@ -128,6 +129,10 @@ export default observer({
         },
         query: {
             type: Object,
+        },
+        scrollX: {
+            type: Number,
+            default: () => 800,
         },
         pagination: {
             type: Boolean,
