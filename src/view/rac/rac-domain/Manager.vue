@@ -17,7 +17,6 @@
                         :width="640"
                         :visible="slotProps.editFormVisible"
                         :editFormType="slotProps.editFormType"
-                        :model.sync="slotProps.model"
                         @close="slotProps.handleEditFormClose"
                     />
                 </template>

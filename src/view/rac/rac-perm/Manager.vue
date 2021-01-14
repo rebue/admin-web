@@ -20,7 +20,6 @@
                                 :width="640"
                                 :visible="slotProps.editFormVisible"
                                 :editFormType="slotProps.editFormType"
-                                :model.sync="slotProps.model"
                                 @close="slotProps.handleEditFormClose"
                             />
                         </template>
@@ -54,14 +53,23 @@ const columns = [
         fixed: 'left',
     },
     {
-        dataIndex: 'id',
-        title: '编码',
-        width: 180,
-    },
-    {
         dataIndex: 'remark',
         title: '备注',
         ellipsis: true,
+    },
+    {
+        dataIndex: 'enable',
+        title: '启用',
+        width: 80,
+        fixed: 'right',
+        scopedSlots: { customRender: 'enable' },
+    },
+    {
+        dataIndex: 'sort',
+        title: '排序',
+        width: 80,
+        fixed: 'right',
+        scopedSlots: { customRender: 'sort' },
     },
     {
         dataIndex: 'action',
@@ -85,7 +93,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '新建分类',
+                title: '新建分组',
                 onClick: () =>
                     this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
                         domainId: this.curDomainId,
