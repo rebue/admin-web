@@ -56,7 +56,6 @@ export default observer({
     data() {
         return {
             userStore,
-            title: this.$route.meta.title,
             // 侧栏是否收起为图标的状态
             collapsed: false,
             query: {},
@@ -81,10 +80,12 @@ export default observer({
             },
         };
     },
+    computed: {
+        title: function() {
+            return this.$route.meta.title;
+        },
+    },
     mounted() {
-        //写在mounted或者activated生命周期内即可
-        // window.onload = () => {
-        //     };
         racMenuAction.refreshUserInfo();
     },
     methods: {
