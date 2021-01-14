@@ -24,3 +24,6 @@ export const sysIdKey = process.env.VUE_APP_SYS_ID_KEY;
 
 /** 是否模拟网络延迟 */
 export const isSimulateNetDelay: boolean = JSON.parse(process.env.VUE_APP_SIMULATE_NET_DELAY);
+
+/**  iconfont.cn中项目库的地址 */
+export const iconFontUrl = process.env.VUE_APP_ICON_FONT_URL;

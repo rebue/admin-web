@@ -26,39 +26,6 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 
-const columns = [
-    {
-        dataIndex: 'no',
-        title: '#',
-        scopedSlots: { customRender: 'serial' },
-        width: 50,
-        fixed: 'left',
-    },
-    {
-        dataIndex: 'name',
-        title: '名称',
-        width: 150,
-        fixed: 'left',
-    },
-    {
-        dataIndex: 'id',
-        title: '编码',
-        width: 140,
-    },
-    {
-        dataIndex: 'remark',
-        title: '备注',
-        ellipsis: true,
-    },
-    {
-        dataIndex: 'action',
-        title: '操作',
-        width: 150,
-        fixed: 'right',
-        scopedSlots: { customRender: 'action' },
-    },
-];
-
 export default {
     name: 'Manager',
     components: {
@@ -68,6 +35,38 @@ export default {
     },
     data() {
         this.api = racDomainApi;
+        const columns = [
+            {
+                dataIndex: 'no',
+                title: '#',
+                scopedSlots: { customRender: 'serial' },
+                width: 50,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'name',
+                title: '名称',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'id',
+                title: '编码',
+                width: 140,
+            },
+            {
+                dataIndex: 'remark',
+                title: '备注',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' },
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',

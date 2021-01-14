@@ -26,6 +26,11 @@ import {
     Tabs,
 } from 'ant-design-vue';
 
+import IconFont from '@/component/rebue/IconFont';
+
+// 使用iconfont.cn上的图标，项目库的地址在.env中配置
+Vue.component('icon-font', IconFont);
+
 // 国际化
 Vue.use(ConfigProvider);
 

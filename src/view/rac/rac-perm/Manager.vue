@@ -14,14 +14,6 @@
                         :pagination="false"
                         :fullScreenDom="fullScreenDom"
                     >
-                        <template #customRender>
-                            <span slot="enable" slot-scope="text, record">
-                                {{ record }}
-                            </span>
-                            <span slot="sort" slot-scope="text, record">
-                                {{ record }}
-                            </span>
-                        </template>
                         <template #editForm="slotProps">
                             <edit-form
                                 :ref="'editForm.' + item.id"
@@ -44,48 +36,6 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racPermApi } from '@/api/Api';
 
-const columns = [
-    {
-        dataIndex: 'no',
-        title: '#',
-        scopedSlots: { customRender: 'serial' },
-        width: 50,
-        fixed: 'left',
-    },
-    {
-        dataIndex: 'name',
-        title: '名称',
-        width: 150,
-        fixed: 'left',
-    },
-    {
-        dataIndex: 'remark',
-        title: '备注',
-        ellipsis: true,
-    },
-    {
-        dataIndex: 'enable',
-        title: '启用',
-        width: 80,
-        fixed: 'right',
-        scopedSlots: { customRender: 'enable' },
-    },
-    {
-        dataIndex: 'sort',
-        title: '排序',
-        width: 80,
-        fixed: 'right',
-        scopedSlots: { customRender: 'sort' },
-    },
-    {
-        dataIndex: 'action',
-        title: '操作',
-        width: 130,
-        fixed: 'right',
-        scopedSlots: { customRender: 'action' },
-    },
-];
-
 export default {
     name: 'Manager',
     components: {
@@ -95,6 +45,64 @@ export default {
     },
     data() {
         this.api = racPermApi;
+        const columns = [
+            {
+                dataIndex: 'no',
+                title: '#',
+                scopedSlots: { customRender: 'serial' },
+                width: 50,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'name',
+                title: '名称',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'remark',
+                title: '备注',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'isEnabled',
+                title: '启用',
+                width: 80,
+                fixed: 'right',
+                customRender: (text, record) => (
+                    <a-switch checked={record.isEnabled} checkedChildren="启" unCheckedChildren="禁" />
+                ),
+            },
+            {
+                dataIndex: 'sort',
+                title: '排序',
+                width: 100,
+                fixed: 'right',
+                customRender: (text, record) => (
+                    <div>
+                        <a-tooltip title="上移">
+                            <a-button shape="circle" size="small">
+                                <icon-font type="rebue-up" style={{ fontSize: '16px' }} />
+                            </a-button>
+                        </a-tooltip>
+                        <a-divider type="vertical" />
+                        <a-tooltip title="下移">
+                            <a-button shape="circle" size="small">
+                                <icon-font type="rebue-down" style={{ fontSize: '16px' }} />
+                            </a-button>
+                        </a-tooltip>
+                    </div>
+                ),
+            },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 130,
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' },
+            },
+        ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
