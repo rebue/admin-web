@@ -11,12 +11,12 @@
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
                     <a-form-model-item prop="userName">
                         <a-input v-autofocus v-model.trim="form.userName" placeholder="请输入登录账号">
-                            <template v-slot:prefix><a-icon type="user"/></template>
+                            <template #prefix><a-icon type="user"/></template>
                         </a-input>
                     </a-form-model-item>
                     <a-form-model-item prop="signInPswd">
                         <a-input-password v-model="form.signInPswd" placeholder="请输入登录密码">
-                            <template v-slot:prefix><a-icon type="key"/></template>
+                            <template #prefix><a-icon type="key"/></template>
                         </a-input-password>
                     </a-form-model-item>
                     <a-button :loading="loading" type="primary" block @click="doSubmit">登录</a-button>

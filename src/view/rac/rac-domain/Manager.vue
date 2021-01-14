@@ -1,6 +1,6 @@
 <template>
     <base-manager ref="baseManager">
-        <template v-slot:managerCard>
+        <template #managerCard>
             <crud-table
                 ref="crudTable"
                 :commands="tableCommands"
@@ -11,14 +11,8 @@
                 :pagination="false"
                 :fullScreenDom="fullScreenDom"
             >
-                <template v-slot:editForm="slotProps">
-                    <edit-form
-                        ref="editForm"
-                        :width="640"
-                        :visible="slotProps.editFormVisible"
-                        :editFormType="slotProps.editFormType"
-                        @close="slotProps.handleEditFormClose"
-                    />
+                <template #editForm="slotProps">
+                    <edit-form ref="editForm" :width="640" @close="slotProps.handleEditFormClose" />
                 </template>
             </crud-table>
         </template>

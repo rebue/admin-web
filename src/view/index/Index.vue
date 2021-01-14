@@ -11,18 +11,18 @@
         :handleCollapse="handleCollapse"
         :i18nRender="i18nRender"
     >
-        <template v-slot:menuHeaderRender>
+        <template #menuHeaderRender>
             <div>
                 <img src="@/asset/logo.png" />
                 <h1>Rebue Admin</h1>
             </div>
         </template>
-        <template v-slot:collapsedButtonRender>
+        <template #collapsedButtonRender>
             <div>
                 <h1>{{ title }}</h1>
             </div>
         </template>
-        <template v-slot:rightContentRender>
+        <template #rightContentRender>
             <div
                 :class="[
                     'ant-pro-global-header-index-right',
@@ -32,7 +32,7 @@
                 rightContentRender
             </div>
         </template>
-        <template v-slot:footerRender>
+        <template #footerRender>
             <div>footerRender</div>
         </template>
         <setting-drawer :settings="settings" @change="handleSettingChange"> </setting-drawer>

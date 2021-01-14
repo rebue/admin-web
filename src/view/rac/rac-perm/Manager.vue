@@ -1,6 +1,6 @@
 <template>
     <base-manager ref="baseManager">
-        <template v-slot:managerCard>
+        <template #managerCard>
             <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
                     <crud-table
@@ -14,12 +14,18 @@
                         :pagination="false"
                         :fullScreenDom="fullScreenDom"
                     >
-                        <template v-slot:editForm="slotProps">
+                        <template #customRender>
+                            <span slot="enable" slot-scope="text, record">
+                                {{ record }}
+                            </span>
+                            <span slot="sort" slot-scope="text, record">
+                                {{ record }}
+                            </span>
+                        </template>
+                        <template #editForm="slotProps">
                             <edit-form
                                 :ref="'editForm.' + item.id"
                                 :width="640"
-                                :visible="slotProps.editFormVisible"
-                                :editFormType="slotProps.editFormType"
                                 @close="slotProps.handleEditFormClose"
                             />
                         </template>

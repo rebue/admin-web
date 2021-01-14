@@ -96,6 +96,7 @@
                     </span>
                 </template>
             </span>
+            <slot name="customRender"></slot>
         </a-table>
 
         <slot name="editForm" :handleEditFormClose="handleEditFormClose"></slot>
