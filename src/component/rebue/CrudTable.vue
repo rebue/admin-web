@@ -16,7 +16,7 @@
                 </a-tooltip>
                 <a-divider type="vertical" />
                 <a-tooltip title="表格边框" :autoAdjustOverflow="false">
-                    <a-button type="link" @click="toggleTableBorder">
+                    <a-button type="link" size="large" @click="toggleTableBorder">
                         <a-icon type="table" :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
                     </a-button>
                 </a-tooltip>
@@ -58,6 +58,20 @@
                         <a-button type="link" icon="project" />
                     </a-popover>
                 </a-tooltip>
+                <a-divider type="vertical" />
+                <fragment v-if="isTree">
+                    <a-tooltip title="全部展开">
+                        <a-button type="link" size="large" @click="expandAll">
+                            <icon-font type="rebue-expand-all" />
+                        </a-button>
+                    </a-tooltip>
+                    <a-tooltip title="全部收缩">
+                        <a-button type="link" size="large" @click="collapseAll">
+                            <icon-font type="rebue-collapse-all" />
+                        </a-button>
+                    </a-tooltip>
+                    <a-divider type="vertical" />
+                </fragment>
                 <a-tooltip :title="fullScreenTitle">
                     <a-button type="link" :icon="fullScreenIcon" @click="toggleFullScreen" />
                 </a-tooltip>
@@ -69,6 +83,8 @@
             :size="settingStore.tableSize"
             :rowKey="(record, index) => (record.id ? record.id : index)"
             :columns="displayColumns"
+            :expandedRowKeys="expandedRowKeys"
+            @expand="handleExpand"
             :dataSource="dataSource"
             :loading="loading"
             :scroll="{ x: this.scrollX, y: this.scrollY }"
@@ -101,13 +117,13 @@
                 <span>
                     <a-tooltip title="上移">
                         <a-button shape="circle" size="small">
-                            <icon-font type="rebue-up" style="fontSize:'16px'" />
+                            <icon-font type="rebue-up" />
                         </a-button>
                     </a-tooltip>
                     <a-divider type="vertical" />
                     <a-tooltip title="下移">
                         <a-button shape="circle" size="small">
-                            <icon-font type="rebue-down" style="fontSize:'16px'" />
+                            <icon-font type="rebue-down" />
                         </a-button>
                     </a-tooltip>
                 </span>
@@ -153,6 +169,10 @@ export default observer({
         scrollY: {
             type: Number,
             default: () => 0,
+        },
+        isTree: {
+            type: Boolean,
+            default: () => false,
         },
         pagination: {
             type: Boolean,
@@ -229,6 +249,7 @@ export default observer({
             indeterminate: false, // 设置 indeterminate 状态，只负责样式控制
             checkedCols: [], // 选择的列列表(用于列选择配置)
             isCheckColsAll: true, // 是否全选了列列表(用于列选择配置)
+            expandedRowKeys: [], //展开的行
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
         };
@@ -325,6 +346,20 @@ export default observer({
             }
         },
         /**
+         * 展开树所有节点
+         */
+        expandAll() {
+            for (const record of this.dataSource) {
+                this.expandedRowKeys.push(record.id);
+            }
+        },
+        /**
+         * 收缩树所有节点
+         */
+        collapseAll() {
+            this.expandedRowKeys = [];
+        },
+        /**
          * 切换全屏
          */
         toggleFullScreen() {
@@ -332,6 +367,17 @@ export default observer({
                 this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
                 this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
             });
+        },
+        /**
+         * 处理树节点的展开与收缩
+         */
+        handleExpand(expanded, record) {
+            if (expanded) this.expandedRowKeys.push(record.id);
+            else
+                this.expandedRowKeys.splice(
+                    this.expandedRowKeys.findIndex(item => item.id === record.id),
+                    1
+                );
         },
         /**
          * 编辑窗体关闭

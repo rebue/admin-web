@@ -10,6 +10,7 @@
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
+                        :isTree="true"
                         :pagination="false"
                         :fullScreenDom="fullScreenDom"
                     >
@@ -155,19 +156,6 @@ export default {
                     this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
                         domainId: this.curDomainId,
                     }),
-            },
-        ];
-        this.tableActions = [
-            {
-                type: 'a',
-                title: '编辑',
-                onClick: record => this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Modify, record),
-            },
-            {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.$refs['crudTable.' + this.curDomainId][0].handleDel(record),
             },
         ];
 
