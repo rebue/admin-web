@@ -1,71 +1,40 @@
 const moment = require('moment');
 const { parse } = require('url');
-const { listAllRacPermGroup } = require('./RacPermGroupMock');
 
 const list = [
     {
-        id: '00',
-        name: '查看',
+        id: '0',
+        name: '基础配置-领域',
         domainId: 'platform',
-        groupId: '0',
         isEnabled: true,
         orderNo: 0,
-        remark: '查看领域的基础信息',
+        remark: '领域的基础信息',
     },
     {
-        id: '01',
-        name: '管理',
+        id: '1',
+        name: '基础配置-系统',
         domainId: 'platform',
-        groupId: '0',
         isEnabled: true,
         orderNo: 1,
-        remark: '管理领域的基础信息',
+        remark: '系统的基础信息',
     },
     {
-        id: '10',
-        name: '查看',
+        id: '2',
+        name: '基础配置-权限',
         domainId: 'platform',
-        groupId: '1',
         isEnabled: true,
-        orderNo: 0,
-        remark: '查看系统的基础信息',
-    },
-    {
-        id: '11',
-        name: '管理',
-        domainId: 'platform',
-        groupId: '1',
-        isEnabled: true,
-        orderNo: 1,
-        remark: '管理系统的基础信息',
-    },
-    {
-        id: '20',
-        name: '查看',
-        domainId: 'platform',
-        groupId: '2',
-        isEnabled: true,
-        orderNo: 0,
-        remark: '查看权限的基础信息',
-    },
-    {
-        id: '21',
-        name: '管理',
-        domainId: 'platform',
-        groupId: '2',
-        isEnabled: true,
-        orderNo: 1,
-        remark: '管理权限的基础信息',
+        orderNo: 2,
+        remark: '权限的基础信息',
     },
 ];
 
-const listAllRacPerm = () => list;
+const listAllRacPermGroup = () => list;
 
 module.exports = {
-    listAllRacPerm,
+    listAllRacPermGroup,
     routes: {
         /** 添加 */
-        'POST /rac/perm': (req, res, u, b) => {
+        'POST /rac/perm-group': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             list.push(body);
             return res.json({
@@ -77,7 +46,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/perm': (req, res, u, b) => {
+        'PUT /rac/perm-group': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -93,7 +62,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/perm': (req, res, u) => {
+        'DELETE /rac/perm-group': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -113,7 +82,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/perm/get-by-id': (req, res, u) => {
+        'GET /rac/perm-group/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -137,7 +106,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac/perm/list': (req, res, u, b) => {
+        'GET /rac/perm-group/list': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -149,23 +118,6 @@ module.exports = {
                 msg: '查询列表成功',
                 extra: {
                     list: list.filter(item => item.domainId === params.domainId),
-                },
-            });
-        },
-        /** 查询记录 */
-        'GET /rac/perm/list-with-group': (req, res, u, b) => {
-            let url = u;
-            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-                url = req.url;
-            }
-            const params = parse(url, true).query;
-
-            return res.json({
-                result: 1,
-                msg: '查询列表成功',
-                extra: {
-                    groupList: listAllRacPermGroup().filter(item => item.domainId === params.domainId),
-                    permList: list.filter(item => item.domainId === params.domainId),
                 },
             });
         },

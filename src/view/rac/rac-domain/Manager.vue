@@ -39,9 +39,9 @@ export default {
             {
                 dataIndex: 'no',
                 title: '#',
-                scopedSlots: { customRender: 'serial' },
                 width: 50,
                 fixed: 'left',
+                scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',

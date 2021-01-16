@@ -67,15 +67,16 @@
         <a-table
             :bordered="settingStore.tableBorder"
             :size="settingStore.tableSize"
-            :rowKey="(record, index) => index"
+            :rowKey="(record, index) => (record.id ? record.id : index)"
             :columns="displayColumns"
             :dataSource="dataSource"
             :loading="loading"
-            :scroll="{ x: this.scrollX, y: 300 }"
+            :scroll="{ x: this.scrollX, y: this.scrollY }"
             :pagination="pagination"
             :components="components"
-            :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')"
         >
+            <!-- 暂时去掉斑马条纹样式，不好看 -->
+            <!-- :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')" -->
             <span slot="serial" slot-scope="text, record, index">
                 {{ index + 1 }}
             </span>
@@ -95,6 +96,21 @@
                         <a-divider v-if="index < actions.length - 1" type="vertical" />
                     </span>
                 </template>
+            </span>
+            <span slot="sort" slot-scope="text, record">
+                <span>
+                    <a-tooltip title="上移">
+                        <a-button shape="circle" size="small">
+                            <icon-font type="rebue-up" style="fontSize:'16px'" />
+                        </a-button>
+                    </a-tooltip>
+                    <a-divider type="vertical" />
+                    <a-tooltip title="下移">
+                        <a-button shape="circle" size="small">
+                            <icon-font type="rebue-down" style="fontSize:'16px'" />
+                        </a-button>
+                    </a-tooltip>
+                </span>
             </span>
         </a-table>
 
@@ -133,6 +149,10 @@ export default observer({
         scrollX: {
             type: Number,
             default: () => 800,
+        },
+        scrollY: {
+            type: Number,
+            default: () => 0,
         },
         pagination: {
             type: Boolean,

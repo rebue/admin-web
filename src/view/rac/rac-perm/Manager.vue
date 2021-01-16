@@ -6,7 +6,6 @@
                     <crud-table
                         :ref="'crudTable.' + item.id"
                         :commands="tableCommands"
-                        :actions="tableActions"
                         :columns="columns"
                         :api="api"
                         :query="{ domainId: curDomainId }"
@@ -47,17 +46,33 @@ export default {
         this.api = racPermApi;
         const columns = [
             {
-                dataIndex: 'no',
-                title: '#',
-                scopedSlots: { customRender: 'serial' },
-                width: 50,
-                fixed: 'left',
-            },
-            {
                 dataIndex: 'name',
                 title: '名称',
-                width: 150,
+                width: 250,
                 fixed: 'left',
+                customRender: (text, record) => {
+                    if (record.type === 'PermGroup') {
+                        return (
+                            <span>
+                                <a-tag color="blue">
+                                    分组
+                                    <a-icon type="tags" />
+                                </a-tag>
+                                {{ text }}
+                            </span>
+                        );
+                    } else if (record.type === 'Perm') {
+                        return (
+                            <fragment>
+                                <a-tag color="blue">
+                                    权限
+                                    <a-icon type="tag" />
+                                </a-tag>
+                                {{ text }}
+                            </fragment>
+                        );
+                    }
+                },
             },
             {
                 dataIndex: 'remark',
@@ -66,40 +81,68 @@ export default {
             },
             {
                 dataIndex: 'isEnabled',
+                align: 'center',
                 title: '启用',
-                width: 80,
+                width: 70,
                 fixed: 'right',
                 customRender: (text, record) => (
                     <a-switch checked={record.isEnabled} checkedChildren="启" unCheckedChildren="禁" />
                 ),
             },
             {
+                dataIndex: 'action',
+                title: '操作',
+                width: 240,
+                fixed: 'right',
+                customRender: (text, record) => {
+                    if (record.type === 'PermGroup') {
+                        return (
+                            <span>
+                                <a click="item.onClick(record)">编辑</a>
+                                <a-divider type="vertical" />
+                                <a-popconfirm
+                                    title="你确定要删除本条记录吗?"
+                                    confirm="item.onClick(record)"
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <a>删除</a>
+                                </a-popconfirm>
+                                <a-divider type="vertical" />
+                                <a click="item.onClick(record)">添加新权限</a>
+                            </span>
+                        );
+                    } else if (record.type === 'Perm') {
+                        return (
+                            <span>
+                                <a click="item.onClick(record)">编辑</a>
+                                <a-divider type="vertical" />
+                                <a-popconfirm
+                                    title="你确定要删除本条记录吗?"
+                                    confirm="item.onClick(record)"
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <a>删除</a>
+                                </a-popconfirm>
+                                <a-divider type="vertical" />
+                                <a click="item.onClick(record)">菜单</a>
+                                <a-divider type="vertical" />
+                                <a click="item.onClick(record)">链接</a>
+                                <a-divider type="vertical" />
+                                <a click="item.onClick(record)">命令</a>
+                            </span>
+                        );
+                    }
+                },
+            },
+            {
                 dataIndex: 'sort',
+                align: 'center',
                 title: '排序',
                 width: 100,
                 fixed: 'right',
-                customRender: (text, record) => (
-                    <div>
-                        <a-tooltip title="上移">
-                            <a-button shape="circle" size="small">
-                                <icon-font type="rebue-up" style={{ fontSize: '16px' }} />
-                            </a-button>
-                        </a-tooltip>
-                        <a-divider type="vertical" />
-                        <a-tooltip title="下移">
-                            <a-button shape="circle" size="small">
-                                <icon-font type="rebue-down" style={{ fontSize: '16px' }} />
-                            </a-button>
-                        </a-tooltip>
-                    </div>
-                ),
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 130,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
+                scopedSlots: { customRender: 'sort' },
             },
         ];
 
