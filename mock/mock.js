@@ -4,6 +4,7 @@ const mock = {
     ...require('./rac/RacSignInMock').routes,
     ...require('./rac/RacDomainMock').routes,
     ...require('./rac/RacSysMock').routes,
+    ...require('./rac/RacPermGroupMock').routes,
     ...require('./rac/RacPermMock').routes,
     ...require('./rac/RacMenuMock').routes,
 };

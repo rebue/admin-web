@@ -106,7 +106,16 @@ export default {
                     if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
                             <span>
-                                <a click="domain.onClick(record)">编辑</a>
+                                <a
+                                    onClick={() =>
+                                        this.$refs['permGroupEditForm.' + this.curDomainId][0].show(
+                                            EditFormTypeDic.Modify,
+                                            record
+                                        )
+                                    }
+                                >
+                                    编辑
+                                </a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
@@ -191,6 +200,9 @@ export default {
         handleDomainChanged(domainId) {
             console.log(domainId);
             this.curDomainId = domainId;
+        },
+        showPermGroupModify() {
+            console.log('showPermGroupModify');
         },
     },
 };
