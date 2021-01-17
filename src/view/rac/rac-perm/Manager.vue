@@ -2,9 +2,9 @@
     <base-manager ref="baseManager">
         <template #managerCard>
             <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
+                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
-                        :ref="'crudTable.' + item.id"
+                        :ref="'crudTable.' + domain.id"
                         :commands="tableCommands"
                         :columns="columns"
                         :api="api"
@@ -12,11 +12,15 @@
                         :scrollX="600"
                         :isTree="true"
                         :pagination="false"
-                        :fullScreenDom="fullScreenDom"
                     >
                         <template #editForm="slotProps">
-                            <edit-form
-                                :ref="'editForm.' + item.id"
+                            <perm-group-edit-form
+                                :ref="'permGroupEditForm.' + domain.id"
+                                :width="640"
+                                @close="slotProps.handleEditFormClose"
+                            />
+                            <perm-edit-form
+                                :ref="'permEditForm.' + domain.id"
                                 :width="640"
                                 @close="slotProps.handleEditFormClose"
                             />
@@ -30,8 +34,10 @@
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-import EditForm from './EditForm';
+import PermGroupEditForm from '../rac-perm-group/EditForm';
+import PermEditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racPermApi } from '@/api/Api';
@@ -40,7 +46,8 @@ export default {
     name: 'Manager',
     components: {
         BaseManager,
-        EditForm,
+        PermEditForm,
+        PermGroupEditForm,
         CrudTable,
     },
     data() {
@@ -52,7 +59,7 @@ export default {
                 width: 250,
                 fixed: 'left',
                 customRender: (text, record) => {
-                    if (record.type === 'PermGroup') {
+                    if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
                             <span>
                                 <a-tag color="blue">
@@ -62,7 +69,7 @@ export default {
                                 {{ text }}
                             </span>
                         );
-                    } else if (record.type === 'Perm') {
+                    } else if (record.type === PermTreeNodeTypeDic.Perm) {
                         return (
                             <fragment>
                                 <a-tag color="blue">
@@ -96,42 +103,42 @@ export default {
                 width: 240,
                 fixed: 'right',
                 customRender: (text, record) => {
-                    if (record.type === 'PermGroup') {
+                    if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
                             <span>
-                                <a click="item.onClick(record)">编辑</a>
+                                <a click="domain.onClick(record)">编辑</a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
-                                    confirm="item.onClick(record)"
+                                    confirm="domain.onClick(record)"
                                     okText="确定"
                                     cancelText="取消"
                                 >
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a click="item.onClick(record)">添加新权限</a>
+                                <a click="domain.onClick(record)">添加新权限</a>
                             </span>
                         );
-                    } else if (record.type === 'Perm') {
+                    } else if (record.type === PermTreeNodeTypeDic.Perm) {
                         return (
                             <span>
-                                <a click="item.onClick(record)">编辑</a>
+                                <a click="domain.onClick(record)">编辑</a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
-                                    confirm="item.onClick(record)"
+                                    confirm="domain.onClick(record)"
                                     okText="确定"
                                     cancelText="取消"
                                 >
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a click="item.onClick(record)">菜单</a>
+                                <a click="domain.onClick(record)">菜单</a>
                                 <a-divider type="vertical" />
-                                <a click="item.onClick(record)">链接</a>
+                                <a click="domain.onClick(record)">链接</a>
                                 <a-divider type="vertical" />
-                                <a click="item.onClick(record)">命令</a>
+                                <a click="domain.onClick(record)">命令</a>
                             </span>
                         );
                     }
@@ -153,7 +160,7 @@ export default {
                 icon: 'plus',
                 title: '新建分组',
                 onClick: () =>
-                    this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
+                    this.$refs['permGroupEditForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
                         domainId: this.curDomainId,
                     }),
             },
@@ -161,7 +168,6 @@ export default {
 
         return {
             loading: false,
-            fullScreenDom: {},
             curDomainId: '',
             domains: [],
             columns,
@@ -169,7 +175,6 @@ export default {
     },
     watch: {},
     mounted() {
-        this.fullScreenDom = this.$refs.baseManager;
         this.refreshData();
     },
     methods: {

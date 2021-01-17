@@ -73,7 +73,7 @@
                     <a-divider type="vertical" />
                 </fragment>
                 <a-tooltip :title="fullScreenTitle">
-                    <a-button type="link" :icon="fullScreenIcon" @click="toggleFullScreen" />
+                    <a-button type="link" :icon="fullScreenIcon" @click="handleToggleFullScreen" />
                 </a-tooltip>
             </div>
         </div>
@@ -177,10 +177,6 @@ export default observer({
         pagination: {
             type: Boolean,
             default: () => false,
-        },
-        fullScreenDom: {
-            type: Object,
-            required: true,
         },
     },
     data() {
@@ -288,6 +284,7 @@ export default observer({
             return displayColumns;
         },
     },
+    inject: ['toggleFullScreen'],
     mounted() {
         for (const item of this.columns) {
             this.configColumns.push({ visible: true, ...item });
@@ -362,8 +359,8 @@ export default observer({
         /**
          * 切换全屏
          */
-        toggleFullScreen() {
-            this.fullScreenDom.toggleFullScreen(fullScreen => {
+        handleToggleFullScreen() {
+            this.toggleFullScreen(fullScreen => {
                 this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
                 this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
             });

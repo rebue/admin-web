@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="权限"
+        title="权限分组"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -13,15 +13,15 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racPermApi } from '@/api/Api';
-import BaseEditForm from '@/component/rebue/BaseEditForm';
+import { racPermGroupApi } from '@/api/Api';
+import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
     components: {
         BaseEditForm,
     },
     data() {
-        this.api = racPermApi;
+        this.api = racPermGroupApi;
         return {
             editFormType: EditFormTypeDic.None,
             formItems: [
@@ -32,7 +32,12 @@ export default {
             ],
             rules: {
                 name: [
-                    { required: true, message: '请输入权限名称', trigger: 'blur', transform: val => val && val.trim() },
+                    {
+                        required: true,
+                        message: '请输入权限分组名称',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
                 ],
             },
         };

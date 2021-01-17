@@ -20,7 +20,7 @@ function focus(el: Element | Document | null = document) {
             return;
         }
 
-    const dom = el.querySelector('input:not(:disabled),textarea:not(:disabled)') as HTMLElement;
+    const dom = el.querySelector('input:not(:disabled):not([type="hidden"]),textarea:not(:disabled)') as HTMLElement;
     dom?.focus();
 }
 

@@ -1,3 +1,5 @@
+import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
+
 /**
  * 领域
  */
@@ -19,5 +21,5 @@ export default class RacPermMo {
 
     /** 下面是前端添加的属性 */
     /** 类型 */
-    type = 'Perm';
+    type: PermTreeNodeTypeDic = PermTreeNodeTypeDic.Perm;
 }

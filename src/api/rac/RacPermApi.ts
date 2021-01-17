@@ -1,6 +1,7 @@
 /**
  * 领域信息相关请求
  */
+import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import RacPermGroupMo from '@/mo/rac/RacPermGroupMo';
 import RacPermMo from '@/mo/rac/RacPermMo';
 import { Ro } from '@/ro/Ro';
@@ -19,14 +20,14 @@ export default class RacPermApi extends BaseCrudApi {
             const { groupList, permList } = extra;
             const list: RacPermGroupMo[] = [];
             for (const group of groupList as RacPermGroupMo[]) {
-                group.type = 'PermGroup';
+                group.type = PermTreeNodeTypeDic.PermGroup;
                 list.push(group);
             }
             for (const perm of permList as RacPermMo[]) {
                 for (const group of groupList as RacPermGroupMo[]) {
                     if (group['id'] === perm['groupId']) {
                         if (!group.children) group.children = [];
-                        perm.type = 'Perm';
+                        perm.type = PermTreeNodeTypeDic.Perm;
                         group.children.push(perm);
                         continue;
                     }

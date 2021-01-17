@@ -15,6 +15,11 @@ export default {
             fullScreen: false,
         };
     },
+    provide: function() {
+        return {
+            toggleFullScreen: this.toggleFullScreen,
+        };
+    },
     methods: {
         /**
          * 切换全屏

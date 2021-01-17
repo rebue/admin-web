@@ -12,7 +12,6 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :pagination="false"
-                        :fullScreenDom="fullScreenDom"
                     >
                         <template #editForm="slotProps">
                             <edit-form
@@ -104,7 +103,6 @@ export default {
 
         return {
             loading: false,
-            fullScreenDom: {},
             curDomainId: '',
             domains: [],
             columns,
@@ -112,7 +110,6 @@ export default {
     },
     watch: {},
     mounted() {
-        this.fullScreenDom = this.$refs.baseManager;
         this.refreshData();
     },
     methods: {

@@ -9,7 +9,6 @@
                 :api="api"
                 :scrollX="600"
                 :pagination="false"
-                :fullScreenDom="fullScreenDom"
             >
                 <template #editForm="slotProps">
                     <edit-form ref="editForm" :width="640" @close="slotProps.handleEditFormClose" />
@@ -86,12 +85,8 @@ export default {
         ];
 
         return {
-            fullScreenDom: {},
             columns,
         };
-    },
-    mounted() {
-        this.fullScreenDom = this.$refs.baseManager;
     },
 };
 </script>

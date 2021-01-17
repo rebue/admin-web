@@ -1,34 +1,39 @@
 <template>
-    <a-modal
-        :title="fullTitle"
-        okText="提交"
-        :ok-button-props="{ props: { icon: 'check' } }"
-        cancelText="返回"
-        :cancel-button-props="{ props: { icon: 'rollback' } }"
-        :width="width"
-        :visible="visible"
-        @ok="handleOk"
-        @cancel="handleCancel"
-    >
-        <a-spin :spinning="loading">
-            <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                <a-form-model-item
-                    v-for="item in formItems"
-                    v-show="!item.hidden"
-                    :key="item.dataIndex"
-                    :label="item.title"
-                    :prop="item.dataIndex"
-                >
-                    <a-input
-                        v-model.trim="model[item.dataIndex]"
-                        :placeholder="'请输入' + item.title"
-                        :disabled="item.disabled"
-                    />
-                </a-form-model-item>
-                <slot></slot>
-            </a-form-model>
-        </a-spin>
-    </a-modal>
+    <!-- FIXME 如果不包裹上iframe，在同一页面如果有两个EditForm，显示前面的EditForm时，
+        在form-model-item下的输入框打任意一个字就会马上失去焦点 -->
+    <iframe v-show="false">
+        <a-modal
+            :title="fullTitle"
+            okText="提交"
+            :ok-button-props="{ props: { icon: 'check' } }"
+            cancelText="返回"
+            :cancel-button-props="{ props: { icon: 'rollback' } }"
+            :width="width"
+            :visible="visible"
+            @ok="handleOk"
+            @cancel="handleCancel"
+        >
+            <a-spin :spinning="loading">
+                <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+                    <a-form-model-item
+                        v-for="formItem in formItems"
+                        v-show="formItem.type !== 'hidden'"
+                        :key="formItem.dataIndex"
+                        :label="formItem.title"
+                        :prop="formItem.dataIndex"
+                    >
+                        <a-input
+                            v-model.trim="model[formItem.dataIndex]"
+                            :placeholder="'请输入' + formItem.title"
+                            :type="formItem.type"
+                            :disabled="formItem.disabled"
+                        />
+                    </a-form-model-item>
+                    <slot></slot>
+                </a-form-model>
+            </a-spin>
+        </a-modal>
+    </iframe>
 </template>
 
 <script>

@@ -1,3 +1,4 @@
+import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import RacPermMo from './RacPermMo';
 
 /**
@@ -19,7 +20,7 @@ export default class RacPermGroupMo {
 
     /** 下面是前端添加的属性 */
     /** 类型 */
-    type = 'PermGroup';
+    type: PermTreeNodeTypeDic = PermTreeNodeTypeDic.PermGroup;
     /** 权限列表 */
     children?: RacPermMo[];
 }
