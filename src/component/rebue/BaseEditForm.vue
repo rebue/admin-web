@@ -10,6 +10,7 @@
             cancelText="返回"
             :cancel-button-props="{ props: { icon: 'rollback' } }"
             :width="width"
+            :centered="true"
             :visible="visible"
             :destroyOnClose="true"
             @ok="handleOk"

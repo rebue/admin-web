@@ -116,13 +116,23 @@
             <span slot="sort" slot-scope="text, record">
                 <span>
                     <a-tooltip title="上移">
-                        <a-button shape="circle" size="small">
+                        <a-button
+                            :disabled="record.seqNo === 0"
+                            shape="circle"
+                            size="small"
+                            @click="$emit('moveUp', record)"
+                        >
                             <icon-font type="rebue-up" />
                         </a-button>
                     </a-tooltip>
                     <a-divider type="vertical" />
                     <a-tooltip title="下移">
-                        <a-button shape="circle" size="small">
+                        <a-button
+                            :disabled="record.seqNo === record.maxSeqNo"
+                            shape="circle"
+                            size="small"
+                            @click="$emit('moveDown', record)"
+                        >
                             <icon-font type="rebue-down" />
                         </a-button>
                     </a-tooltip>

@@ -12,8 +12,18 @@ export default class RacPermApi extends BaseCrudApi {
     baseUrn = '/rac/perm';
 
     /** 启用或禁用权限 */
-    enable(id, enable): Promise<Ro> {
+    enable(id: string, enable: boolean): Promise<Ro> {
         return request.post({ url: this.baseUrn + '/enable', data: { id, enable } });
+    }
+
+    /** 上移 */
+    moveUp(id: string): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/move-up', data: { id } });
+    }
+
+    /** 下移 */
+    moveDown(id: string): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/move-down', data: { id } });
     }
 
     /**
@@ -24,10 +34,13 @@ export default class RacPermApi extends BaseCrudApi {
             const extra = ro.extra as { list: RacPermGroupMo[]; groupList?: RacPermGroupMo[]; permList?: RacPermMo[] };
             const { groupList, permList } = extra;
             const list: RacPermGroupMo[] = [];
+            // 循环分组
             for (const group of groupList as RacPermGroupMo[]) {
                 group.type = PermTreeNodeTypeDic.PermGroup;
+                group.maxSeqNo = (groupList as RacPermGroupMo[]).length - 1;
                 list.push(group);
             }
+            // 将权限加入分组中
             for (const perm of permList as RacPermMo[]) {
                 for (const group of groupList as RacPermGroupMo[]) {
                     if (group['id'] === perm['groupId']) {
@@ -38,8 +51,18 @@ export default class RacPermApi extends BaseCrudApi {
                     }
                 }
             }
+
+            // 删除转换前的属性
             delete extra.groupList;
             delete extra.permList;
+
+            // 设置权限的最大序号
+            for (const group of list) {
+                if (!group.children) continue;
+                for (const perm of group.children) {
+                    perm.maxSeqNo = group.children.length - 1;
+                }
+            }
             extra.list = list;
             return ro;
         });

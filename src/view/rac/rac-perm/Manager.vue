@@ -12,6 +12,8 @@
                         :scrollX="600"
                         :isTree="true"
                         :pagination="false"
+                        @moveUp="handleMoveUp"
+                        @moveDown="handleMoveDown"
                     >
                         <template #editForm="slotProps">
                             <perm-group-edit-form
@@ -226,6 +228,34 @@ export default {
                 });
             else if (record.type === PermTreeNodeTypeDic.Perm)
                 racPermApi.enable(record.id, !record.isEnabled).finally(() => {
+                    this.refreshTableData();
+                });
+        },
+        /**
+         * 上移
+         */
+        handleMoveUp(record) {
+            this.loading = true;
+            if (record.type === PermTreeNodeTypeDic.PermGroup)
+                racPermGroupApi.moveUp(record.id).finally(() => {
+                    this.refreshTableData();
+                });
+            else if (record.type === PermTreeNodeTypeDic.Perm)
+                racPermApi.moveUp(record.id).finally(() => {
+                    this.refreshTableData();
+                });
+        },
+        /**
+         * 下移
+         */
+        handleMoveDown(record) {
+            this.loading = true;
+            if (record.type === PermTreeNodeTypeDic.PermGroup)
+                racPermGroupApi.moveDown(record.id).finally(() => {
+                    this.refreshTableData();
+                });
+            else if (record.type === PermTreeNodeTypeDic.Perm)
+                racPermApi.moveDown(record.id).finally(() => {
                     this.refreshTableData();
                 });
         },

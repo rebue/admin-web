@@ -7,7 +7,7 @@ const list = [
         name: '基础配置-领域',
         domainId: 'platform',
         isEnabled: true,
-        orderNo: 0,
+        seqNo: 0,
         remark: '领域的基础信息',
     },
     {
@@ -15,7 +15,7 @@ const list = [
         name: '基础配置-系统',
         domainId: 'platform',
         isEnabled: true,
-        orderNo: 1,
+        seqNo: 1,
         remark: '系统的基础信息',
     },
     {
@@ -23,7 +23,7 @@ const list = [
         name: '基础配置-权限',
         domainId: 'platform',
         isEnabled: true,
-        orderNo: 2,
+        seqNo: 2,
         remark: '权限的基础信息',
     },
 ];
@@ -97,6 +97,48 @@ module.exports = {
                 return res.json({
                     result: -1,
                     msg: body.enable ? '启用' : '禁用' + '失败，找不到要修改的记录',
+                });
+            }
+        },
+        /** 上移 */
+        'POST /rac/perm-group/move-up': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                const temp = list[findIndex];
+                list[findIndex] = list[findIndex - 1];
+                list[findIndex].seqNo++;
+                list[findIndex - 1] = temp;
+                list[findIndex - 1].seqNo--;
+                return res.json({
+                    result: 1,
+                    msg: '上移成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: '上移失败，找不到要修改的记录',
+                });
+            }
+        },
+        /** 下移 */
+        'POST /rac/perm-group/move-down': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                const temp = list[findIndex];
+                list[findIndex] = list[findIndex + 1];
+                list[findIndex].seqNo--;
+                list[findIndex + 1] = temp;
+                list[findIndex + 1].seqNo++;
+                return res.json({
+                    result: 1,
+                    msg: '下移成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: '下移失败，找不到要修改的记录',
                 });
             }
         },
