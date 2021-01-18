@@ -124,11 +124,11 @@ export default {
                     } else if (record.type === PermTreeNodeTypeDic.Perm) {
                         return (
                             <span>
-                                <a click="domain.onClick(record)">编辑</a>
+                                <a onClick={() => this.handlePermEdit(record)}>编辑</a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
-                                    confirm="domain.onClick(record)"
+                                    onConfirm={() => this.handlePermDel(record)}
                                     okText="确定"
                                     cancelText="取消"
                                 >
