@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import { settingStore } from '@/store/Store';
+import { settingStore, userStore } from '@/store/Store';
 import { TableSizeDic } from '@/dic/TableSizeDic';
 import localForage from 'localforage';
 
@@ -9,12 +9,18 @@ const TABLE_BORDER = 'table-border';
 
 export class SettingAction {
     /**
-     * 初始化时从本地存储中读取参数
+     * 加载用户的设置
      */
-    constructor() {
-        localForage.getItem(SLIDE_SIDE_COLLAPSED).then(value => this.setSlideSideCollapsed(value as boolean));
-        localForage.getItem(TABLE_BORDER).then(value => this.setTableBorderWithoutPersist(value as boolean));
-        localForage.getItem(TABLE_SIZE).then(value => this.setTableSize(value as TableSizeDic));
+    loadSetting() {
+        localForage
+            .getItem(userStore.userId + '.' + SLIDE_SIDE_COLLAPSED)
+            .then(value => this.setSlideSideCollapsed(value as boolean));
+        localForage
+            .getItem(userStore.userId + '.' + TABLE_BORDER)
+            .then(value => this.setTableBorderWithoutPersist(value as boolean));
+        localForage
+            .getItem(userStore.userId + '.' + TABLE_SIZE)
+            .then(value => this.setTableSize(value as TableSizeDic));
     }
 
     /**
@@ -29,10 +35,8 @@ export class SettingAction {
      */
     @action
     toggleSlideSideCollapsed() {
-        console.log('toggleSlideSideCollapsed');
-
         settingStore.slideSideCollapsed = !settingStore.slideSideCollapsed;
-        localForage.setItem(SLIDE_SIDE_COLLAPSED, settingStore.slideSideCollapsed);
+        localForage.setItem(userStore.userId + '.' + SLIDE_SIDE_COLLAPSED, settingStore.slideSideCollapsed);
     }
 
     /**
@@ -48,7 +52,7 @@ export class SettingAction {
     @action
     toggleTableBorder() {
         settingStore.tableBorder = !settingStore.tableBorder;
-        localForage.setItem(TABLE_BORDER, settingStore.tableBorder);
+        localForage.setItem(userStore.userId + '.' + TABLE_BORDER, settingStore.tableBorder);
     }
 
     /**
@@ -57,6 +61,6 @@ export class SettingAction {
     @action
     setTableSize(size: TableSizeDic) {
         settingStore.tableSize = size;
-        localForage.setItem(TABLE_SIZE, size);
+        localForage.setItem(userStore.userId + '.' + TABLE_SIZE, size);
     }
 }

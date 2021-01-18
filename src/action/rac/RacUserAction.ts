@@ -4,6 +4,7 @@ import { Ro } from '@/ro/Ro';
 import { constantRouters } from '@/config/router.config';
 import { GetUserInfoRa } from '@/ro/GetUserInfoRa';
 import { racUserApi } from '@/api/Api';
+import { settingAction } from '../Action';
 
 export class RacUserAction {
     /**
@@ -55,5 +56,8 @@ export class RacUserAction {
             menu5.hidden = false;
         }
         userStore.menus = observable(menus);
+
+        // 加载用户设置
+        settingAction.loadSetting();
     }
 }
