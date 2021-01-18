@@ -41,6 +41,7 @@ import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racPermApi } from '@/api/Api';
+import { racPermGroupApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -106,20 +107,11 @@ export default {
                     if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
                             <span>
-                                <a
-                                    onClick={() =>
-                                        this.$refs['permGroupEditForm.' + this.curDomainId][0].show(
-                                            EditFormTypeDic.Modify,
-                                            record
-                                        )
-                                    }
-                                >
-                                    编辑
-                                </a>
+                                <a onClick={() => this.handlePermGroupEdit(record)}>编辑</a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
-                                    confirm="domain.onClick(record)"
+                                    onConfirm={() => this.handlePermGroupDel(record)}
                                     okText="确定"
                                     cancelText="取消"
                                 >
@@ -168,10 +160,7 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建分组',
-                onClick: () =>
-                    this.$refs['permGroupEditForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
-                        domainId: this.curDomainId,
-                    }),
+                onClick: () => this.handlePermGroupAdd(),
             },
         ];
 
@@ -182,27 +171,67 @@ export default {
             columns,
         };
     },
+    computed: {
+        permGroupEditForm() {
+            return this.$refs['permGroupEditForm.' + this.curDomainId][0];
+        },
+        permEditForm() {
+            return this.$refs['permEditForm.' + this.curDomainId][0];
+        },
+        crudTable() {
+            return this.$refs['crudTable.' + this.curDomainId][0];
+        },
+    },
     watch: {},
     mounted() {
         this.refreshData();
     },
     methods: {
+        /**
+         * 刷新数据
+         */
         refreshData() {
             this.loading = true;
             racDomainApi
                 .listAll()
                 .then(ro => {
                     this.domains = ro.extra.list;
-                    this.curDomainId = this.domains[0].id;
+                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
+        /**
+         * 刷新表格数据
+         */
+        refreshTableData() {
+            this.crudTable.refreshData();
+        },
+        /**
+         * 处理改变领域的事件
+         */
         handleDomainChanged(domainId) {
-            console.log(domainId);
             this.curDomainId = domainId;
         },
-        showPermGroupModify() {
-            console.log('showPermGroupModify');
+        /**
+         * 处理添加分组的事件
+         */
+        handlePermGroupAdd(record) {
+            this.permGroupEditForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
+        },
+        /**
+         * 处理编辑分组的事件
+         */
+        handlePermGroupEdit(record) {
+            this.permGroupEditForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理删除分组的事件
+         */
+        handlePermGroupDel(record) {
+            this.loading = true;
+            racPermGroupApi.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
         },
     },
 };
