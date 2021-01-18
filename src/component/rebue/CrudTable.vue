@@ -343,6 +343,18 @@ export default observer({
             }
         },
         /**
+         * 展开树指定节点
+         */
+        expand(id) {
+            this.expandedRowKeys.push(id);
+        },
+        /**
+         * 收缩树指定节点
+         */
+        collapse(id) {
+            this.expandedRowKeys.splice(this.expandedRowKeys.findIndex(item => item.id === id));
+        },
+        /**
          * 展开树所有节点
          */
         expandAll() {

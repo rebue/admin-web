@@ -14,7 +14,7 @@
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racPermApi } from '@/api/Api';
-import BaseEditForm from '@/component/rebue/BaseEditForm';
+import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
     components: {
@@ -28,6 +28,7 @@ export default {
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'name', title: '名称' },
                 { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
+                { dataIndex: 'groupId', title: '权限分组ID', type: 'hidden' },
                 { dataIndex: 'remark', title: '备注' },
             ],
             rules: {

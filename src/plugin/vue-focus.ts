@@ -21,6 +21,7 @@ function focus(el: Element | Document | null = document) {
         }
 
     const dom = el.querySelector('input:not(:disabled):not([type="hidden"]),textarea:not(:disabled)') as HTMLElement;
+    console.log('focus dom', dom);
     dom?.focus();
 }
 

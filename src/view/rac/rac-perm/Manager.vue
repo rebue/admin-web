@@ -118,7 +118,7 @@ export default {
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a click="domain.onClick(record)">添加新权限</a>
+                                <a onClick={() => this.handlePermAdd(record)}>添加新权限</a>
                             </span>
                         );
                     } else if (record.type === PermTreeNodeTypeDic.Perm) {
@@ -160,7 +160,7 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建分组',
-                onClick: () => this.handlePermGroupAdd(),
+                onClick: this.handlePermGroupAdd,
             },
         ];
 
@@ -215,7 +215,7 @@ export default {
         /**
          * 处理添加分组的事件
          */
-        handlePermGroupAdd(record) {
+        handlePermGroupAdd() {
             this.permGroupEditForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
         },
         /**
@@ -230,6 +230,29 @@ export default {
         handlePermGroupDel(record) {
             this.loading = true;
             racPermGroupApi.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
+        },
+        /**
+         * 处理添加分组的事件
+         */
+        handlePermAdd(record) {
+            console.log(record);
+            this.crudTable.expand(record.id);
+            this.permEditForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
+        },
+        /**
+         * 处理编辑分组的事件
+         */
+        handlePermEdit(record) {
+            this.permEditForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理删除分组的事件
+         */
+        handlePermDel(record) {
+            this.loading = true;
+            racPermApi.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
         },
