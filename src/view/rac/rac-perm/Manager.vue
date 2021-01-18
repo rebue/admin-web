@@ -95,7 +95,12 @@ export default {
                 width: 70,
                 fixed: 'right',
                 customRender: (text, record) => (
-                    <a-switch checked={record.isEnabled} checkedChildren="启" unCheckedChildren="禁" />
+                    <a-switch
+                        checked={record.isEnabled}
+                        checkedChildren="启"
+                        unCheckedChildren="禁"
+                        onClick={() => this.handlePermCheck(record)}
+                    />
                 ),
             },
             {
@@ -211,6 +216,18 @@ export default {
          */
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
+        },
+        /** 处理权限启用或禁用 */
+        handlePermCheck(record) {
+            this.loading = true;
+            if (record.type === PermTreeNodeTypeDic.PermGroup)
+                racPermGroupApi.enable(record.id, !record.isEnabled).finally(() => {
+                    this.refreshTableData();
+                });
+            else if (record.type === PermTreeNodeTypeDic.Perm)
+                racPermApi.enable(record.id, !record.isEnabled).finally(() => {
+                    this.refreshTableData();
+                });
         },
         /**
          * 处理添加分组的事件

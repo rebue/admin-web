@@ -11,6 +11,11 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 export default class RacPermApi extends BaseCrudApi {
     baseUrn = '/rac/perm';
 
+    /** 启用或禁用权限 */
+    enable(id, enable): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/enable', data: { id, enable } });
+    }
+
     /**
      * 获取带分组的列表
      */
