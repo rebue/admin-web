@@ -2,7 +2,7 @@
     <pro-layout
         :siderWidth="230"
         :menus="userStore.menus"
-        :collapsed="collapsed"
+        :collapsed="settingStore.slideSideCollapsed"
         :theme="theme"
         :layout="layout"
         :mediaQuery="query"
@@ -41,23 +41,19 @@
 </template>
 
 <script>
-// by template
 import { observer } from 'mobx-vue';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
-import { userStore } from '@/store/Store';
-import { racMenuAction } from '@/action/Action';
-
-// Vue.use(ProLayout);
+import { userStore, settingStore } from '@/store/Store';
+import { racMenuAction, settingAction } from '@/action/Action';
 
 export default observer({
     name: 'Index',
     data() {
         return {
             userStore,
-            // 侧栏是否收起为图标的状态
-            collapsed: false,
+            settingStore,
             query: {},
             layout: 'sidemenu',
             theme: 'dark',
@@ -98,11 +94,11 @@ export default observer({
             }
             if (!this.isMobile && query['screen-xs']) {
                 this.isMobile = true;
-                this.collapsed = false;
+                settingAction.setSlideSideCollapsed(false);
             }
         },
-        handleCollapse(collapsed) {
-            this.collapsed = collapsed;
+        handleCollapse() {
+            settingAction.toggleSlideSideCollapsed();
         },
         handleSettingChange({ type, value }) {
             console.log('type', type, value);
