@@ -36,6 +36,7 @@ module.exports = {
         /** 添加 */
         'POST /rac/perm-group': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
+            body.id = new Date().getTime() + '';
             list.push(body);
             return res.json({
                 result: 1,
