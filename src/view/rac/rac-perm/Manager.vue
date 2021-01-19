@@ -21,8 +21,8 @@
                                 :width="640"
                                 @close="slotProps.handleEditFormClose"
                             />
-                            <perm-edit-form
-                                :ref="'permEditForm.' + domain.id"
+                            <edit-form
+                                :ref="'editForm.' + domain.id"
                                 :width="640"
                                 @close="slotProps.handleEditFormClose"
                             />
@@ -36,20 +36,18 @@
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
+import EditForm from './EditForm';
+import CrudTable from '@/component/rebue/CrudTable.vue';
 import PermGroupEditForm from '../rac-perm-group/EditForm';
-import PermEditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
-import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi } from '@/api/Api';
-import { racPermApi } from '@/api/Api';
-import { racPermGroupApi } from '@/api/Api';
+import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
-        PermEditForm,
+        EditForm,
         PermGroupEditForm,
         CrudTable,
     },
@@ -125,17 +123,17 @@ export default {
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a onClick={() => this.handlePermAdd(record)}>添加新权限</a>
+                                <a onClick={() => this.handleAdd(record)}>添加新权限</a>
                             </span>
                         );
                     } else if (record.type === PermTreeNodeTypeDic.Perm) {
                         return (
                             <span>
-                                <a onClick={() => this.handlePermEdit(record)}>编辑</a>
+                                <a onClick={() => this.handleEdit(record)}>编辑</a>
                                 <a-divider type="vertical" />
                                 <a-popconfirm
                                     title="你确定要删除本条记录吗?"
-                                    onConfirm={() => this.handlePermDel(record)}
+                                    onConfirm={() => this.handleDel(record)}
                                     okText="确定"
                                     cancelText="取消"
                                 >
@@ -182,14 +180,13 @@ export default {
         permGroupEditForm() {
             return this.$refs['permGroupEditForm.' + this.curDomainId][0];
         },
-        permEditForm() {
-            return this.$refs['permEditForm.' + this.curDomainId][0];
+        editForm() {
+            return this.$refs['editForm.' + this.curDomainId][0];
         },
         crudTable() {
             return this.$refs['crudTable.' + this.curDomainId][0];
         },
     },
-    watch: {},
     mounted() {
         this.refreshData();
     },
@@ -281,25 +278,24 @@ export default {
             });
         },
         /**
-         * 处理添加分组的事件
+         * 处理添加权限的事件
          */
-        handlePermAdd(record) {
-            console.log(record);
+        handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.permEditForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
+            this.editForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
         },
         /**
-         * 处理编辑分组的事件
+         * 处理编辑权限的事件
          */
-        handlePermEdit(record) {
-            this.permEditForm.show(EditFormTypeDic.Modify, record);
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
-         * 处理删除分组的事件
+         * 处理删除权限的事件
          */
-        handlePermDel(record) {
+        handleDel(record) {
             this.loading = true;
-            racPermApi.delById(record.id).finally(() => {
+            this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
         },

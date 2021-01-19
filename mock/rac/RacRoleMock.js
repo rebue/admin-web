@@ -3,12 +3,20 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: 'platform-admin-web',
-        name: '平台后台管理',
+        id: '00',
+        name: '查看',
         domainId: 'platform',
-        indexUrn: '/',
-        menuUrn: 'http://127.0.0.1:13080/menus',
-        remark: '对平台的后台管理提供最基本的功能',
+        isEnabled: true,
+        seqNo: 0,
+        remark: '查看角色的基础信息',
+    },
+    {
+        id: '01',
+        name: '管理',
+        domainId: 'platform',
+        isEnabled: true,
+        seqNo: 1,
+        remark: '管理角色的基础信息',
     },
 ];
 
@@ -20,6 +28,7 @@ module.exports = {
         /** 添加 */
         'POST /rac/role': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
+            body.id = new Date().getTime() + '';
             list.push(body);
             return res.json({
                 result: 1,
@@ -66,6 +75,65 @@ module.exports = {
                 });
             }
         },
+        /** 启用或禁用 */
+        'POST /rac/role/enable': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                list[findIndex].isEnabled = body.enable;
+                return res.json({
+                    result: 1,
+                    msg: body.enable ? '启用' : '禁用' + '成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: body.enable ? '启用' : '禁用' + '失败，找不到要修改的记录',
+                });
+            }
+        },
+        /** 上移 */
+        'POST /rac/role/move-up': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                const temp = list[findIndex];
+                list[findIndex] = list[findIndex - 1];
+                list[findIndex].seqNo++;
+                list[findIndex - 1] = temp;
+                list[findIndex - 1].seqNo--;
+                return res.json({
+                    result: 1,
+                    msg: '上移成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: '上移失败，找不到要修改的记录',
+                });
+            }
+        },
+        /** 下移 */
+        'POST /rac/role/move-down': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                const temp = list[findIndex];
+                list[findIndex] = list[findIndex + 1];
+                list[findIndex].seqNo--;
+                list[findIndex + 1] = temp;
+                list[findIndex + 1].seqNo++;
+                return res.json({
+                    result: 1,
+                    msg: '下移成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: '下移失败，找不到要修改的记录',
+                });
+            }
+        },
         'GET /rac/role/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
@@ -102,6 +170,23 @@ module.exports = {
                 msg: '查询列表成功',
                 extra: {
                     list: list.filter(item => item.domainId === params.domainId),
+                },
+            });
+        },
+        /** 查询记录 */
+        'GET /rac/role/list-with-group': (req, res, u, b) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '查询列表成功',
+                extra: {
+                    groupList: listAllRacRoleGroup().filter(item => item.domainId === params.domainId),
+                    roleList: list.filter(item => item.domainId === params.domainId),
                 },
             });
         },

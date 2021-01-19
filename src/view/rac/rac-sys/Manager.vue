@@ -76,28 +76,27 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: () =>
-                    this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
-                        domainId: this.curDomainId,
-                    }),
+                onClick: this.handleAdd,
             },
         ];
+
         this.tableActions = [
             {
                 type: 'a',
                 title: '编辑',
-                onClick: record => this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Modify, record),
+                onClick: record => this.handleEdit(record),
             },
             {
                 type: 'confirm',
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.$refs['crudTable.' + this.curDomainId][0].handleDel(record),
+                onClick: record => this.handleDel(record),
             },
         ];
 
@@ -108,7 +107,14 @@ export default {
             columns,
         };
     },
-    watch: {},
+    computed: {
+        editForm() {
+            return this.$refs['editForm.' + this.curDomainId][0];
+        },
+        crudTable() {
+            return this.$refs['crudTable.' + this.curDomainId][0];
+        },
+    },
     mounted() {
         this.refreshData();
     },
@@ -123,9 +129,37 @@ export default {
                 })
                 .finally(() => (this.loading = false));
         },
+        /**
+         * 刷新表格数据
+         */
+        refreshTableData() {
+            this.crudTable.refreshData();
+        },
         handleDomainChanged(domainId) {
-            console.log(domainId);
             this.curDomainId = domainId;
+        },
+        /**
+         * 处理添加系统的事件
+         */
+        handleAdd() {
+            this.editForm.show(EditFormTypeDic.Add, {
+                domainId: this.curDomainId,
+            });
+        },
+        /**
+         * 处理编辑系统的事件
+         */
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理删除系统的事件
+         */
+        handleDel(record) {
+            this.loading = true;
+            this.api.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
         },
     },
 };

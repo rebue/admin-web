@@ -3,8 +3,8 @@ import RacSysApi from './rac/RacSysApi';
 import RacPermGroupApi from './rac/RacPermGroupApi';
 import RacPermApi from './rac/RacPermApi';
 import RacSignInApi from './rac/RacSignInApi';
-import RacUserApi from './rac/RacUserApi';
 import RacRoleApi from './rac/RacRoleApi';
+import RacUserApi from './rac/RacUserApi';
 
 export const racDomainApi = new RacDomainApi();
 export const racSysApi = new RacSysApi();

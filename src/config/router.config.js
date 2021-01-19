@@ -56,7 +56,7 @@ export const constantRouters = [
                         name: 'rac-role',
                         component: () => import('@/view/rac/rac-role/Manager.vue'),
                         hidden: true,
-                        meta: { title: '角色', keepAlive: true, icon: 'appstore' },
+                        meta: { title: '角色', keepAlive: true, icon: 'smile' },
                     },
                 ],
             },

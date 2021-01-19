@@ -2,20 +2,23 @@
     <base-manager ref="baseManager">
         <template #managerCard>
             <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
+                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
-                        :ref="'crudTable.' + item.id"
+                        :ref="'crudTable.' + domain.id"
                         :commands="tableCommands"
                         :actions="tableActions"
                         :columns="columns"
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
+                        :isTree="true"
                         :pagination="false"
+                        @moveUp="handleMoveUp"
+                        @moveDown="handleMoveDown"
                     >
                         <template #editForm="slotProps">
                             <edit-form
-                                :ref="'editForm.' + item.id"
+                                :ref="'editForm.' + domain.id"
                                 :width="640"
                                 @close="slotProps.handleEditFormClose"
                             />
@@ -30,10 +33,9 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
-import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi } from '@/api/Api';
-import { racRoleApi } from '@/api/Api';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { racDomainApi, racRoleApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -46,22 +48,10 @@ export default {
         this.api = racRoleApi;
         const columns = [
             {
-                dataIndex: 'no',
-                title: '#',
-                scopedSlots: { customRender: 'serial' },
-                width: 50,
-                fixed: 'left',
-            },
-            {
                 dataIndex: 'name',
                 title: '名称',
-                width: 150,
+                width: 250,
                 fixed: 'left',
-            },
-            {
-                dataIndex: 'id',
-                title: '编码',
-                width: 180,
             },
             {
                 dataIndex: 'remark',
@@ -69,35 +59,57 @@ export default {
                 ellipsis: true,
             },
             {
+                dataIndex: 'isEnabled',
+                align: 'center',
+                title: '启用',
+                width: 70,
+                fixed: 'right',
+                customRender: (text, record) => (
+                    <a-switch
+                        checked={record.isEnabled}
+                        checkedChildren="启"
+                        unCheckedChildren="禁"
+                        onClick={() => this.handleRoleCheck(record)}
+                    />
+                ),
+            },
+            {
                 dataIndex: 'action',
                 title: '操作',
-                width: 130,
+                width: 240,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
+            {
+                dataIndex: 'sort',
+                align: 'center',
+                title: '排序',
+                width: 100,
+                fixed: 'right',
+                scopedSlots: { customRender: 'sort' },
+            },
         ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: () =>
-                    this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Add, {
-                        domainId: this.curDomainId,
-                    }),
+                onClick: this.handleAdd,
             },
         ];
+
         this.tableActions = [
             {
                 type: 'a',
                 title: '编辑',
-                onClick: record => this.$refs['editForm.' + this.curDomainId][0].show(EditFormTypeDic.Modify, record),
+                onClick: record => this.handleEdit(record),
             },
             {
                 type: 'confirm',
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.$refs['crudTable.' + this.curDomainId][0].handleDel(record),
+                onClick: record => this.handleDel(record),
             },
         ];
 
@@ -108,24 +120,90 @@ export default {
             columns,
         };
     },
-    watch: {},
+    computed: {
+        editForm() {
+            return this.$refs['editForm.' + this.curDomainId][0];
+        },
+        crudTable() {
+            return this.$refs['crudTable.' + this.curDomainId][0];
+        },
+    },
     mounted() {
         this.refreshData();
     },
     methods: {
+        /**
+         * 刷新数据
+         */
         refreshData() {
             this.loading = true;
             racDomainApi
                 .listAll()
                 .then(ro => {
                     this.domains = ro.extra.list;
-                    this.curDomainId = this.domains[0].id;
+                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
+        /**
+         * 刷新表格数据
+         */
+        refreshTableData() {
+            this.crudTable.refreshData();
+        },
+        /**
+         * 处理改变领域的事件
+         */
         handleDomainChanged(domainId) {
-            console.log(domainId);
             this.curDomainId = domainId;
+        },
+        /** 处理角色启用或禁用 */
+        handleRoleCheck(record) {
+            this.loading = true;
+            racRoleApi.enable(record.id, !record.isEnabled).finally(() => {
+                this.refreshTableData();
+            });
+        },
+        /**
+         * 上移
+         */
+        handleMoveUp(record) {
+            this.loading = true;
+            racRoleApi.moveUp(record.id).finally(() => {
+                this.refreshTableData();
+            });
+        },
+        /**
+         * 下移
+         */
+        handleMoveDown(record) {
+            this.loading = true;
+            racRoleApi.moveDown(record.id).finally(() => {
+                this.refreshTableData();
+            });
+        },
+        /**
+         * 处理添加角色的事件
+         */
+        handleAdd() {
+            this.editForm.show(EditFormTypeDic.Add, {
+                domainId: this.curDomainId,
+            });
+        },
+        /**
+         * 处理编辑角色的事件
+         */
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理删除角色的事件
+         */
+        handleDel(record) {
+            this.loading = true;
+            this.api.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
         },
     },
 };

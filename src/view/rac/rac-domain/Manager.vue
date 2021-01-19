@@ -66,27 +66,66 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: () => this.$refs.editForm.show(EditFormTypeDic.Add, {}),
+                onClick: this.handleAdd,
             },
         ];
+
         this.tableActions = [
-            { type: 'a', title: '编辑', onClick: record => this.$refs.editForm.show(EditFormTypeDic.Modify, record) },
+            {
+                type: 'a',
+                title: '编辑',
+                onClick: record => this.handleEdit(record),
+            },
             {
                 type: 'confirm',
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.$refs.crudTable.handleDel(record),
+                onClick: record => this.handleDel(record),
             },
         ];
 
         return {
             columns,
         };
+    },
+    mounted() {
+        this.editForm = this.$refs.editForm;
+        this.crudTable = this.$refs.crudTable;
+    },
+    methods: {
+        /**
+         * 刷新表格数据
+         */
+        refreshTableData() {
+            this.crudTable.refreshData();
+        },
+        /**
+         * 处理添加领域的事件
+         */
+        handleAdd() {
+            this.editForm.show(EditFormTypeDic.Add, {});
+        },
+        /**
+         * 处理编辑领域的事件
+         */
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理删除领域的事件
+         */
+        handleDel(record) {
+            this.loading = true;
+            this.api.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
+        },
     },
 };
 </script>
