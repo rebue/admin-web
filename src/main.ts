@@ -8,7 +8,7 @@ import '@/plugin/ant-design';
 import '@/plugin/vue-focus';
 import '@/env';
 
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
 
 new Vue({
     router,
