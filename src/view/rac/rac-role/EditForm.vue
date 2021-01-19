@@ -14,7 +14,7 @@
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racRoleApi } from '@/api/Api';
-import BaseEditForm from '@/component/rebue/BaseEditForm';
+import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
     components: {
@@ -24,25 +24,19 @@ export default {
         this.api = racRoleApi;
         return {
             editFormType: EditFormTypeDic.None,
+            formItems: [
+                { dataIndex: 'id', title: '编码', type: 'hidden' },
+                { dataIndex: 'name', title: '名称' },
+                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
+                { dataIndex: 'groupId', title: '角色分组ID', type: 'hidden' },
+                { dataIndex: 'remark', title: '备注' },
+            ],
             rules: {
-                id: [
-                    { required: true, message: '请输入角色编码', trigger: 'blur', transform: val => val && val.trim() },
-                ],
                 name: [
                     { required: true, message: '请输入角色名称', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
         };
-    },
-    computed: {
-        formItems() {
-            return [
-                { dataIndex: 'id', title: '编码', disabled: this.editFormType === EditFormTypeDic.Modify },
-                { dataIndex: 'name', title: '名称' },
-                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
-                { dataIndex: 'remark', title: '备注' },
-            ];
-        },
     },
     methods: {
         show: function(editFormType, ...params) {

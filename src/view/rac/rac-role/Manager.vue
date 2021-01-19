@@ -11,7 +11,6 @@
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
-                        :isTree="true"
                         :pagination="false"
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
@@ -76,7 +75,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 240,
+                width: 130,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -160,7 +159,7 @@ export default {
         /** 处理角色启用或禁用 */
         handleRoleCheck(record) {
             this.loading = true;
-            racRoleApi.enable(record.id, !record.isEnabled).finally(() => {
+            this.api.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
         },
@@ -169,7 +168,7 @@ export default {
          */
         handleMoveUp(record) {
             this.loading = true;
-            racRoleApi.moveUp(record.id).finally(() => {
+            this.api.moveUp(record.id).finally(() => {
                 this.refreshTableData();
             });
         },
@@ -178,7 +177,7 @@ export default {
          */
         handleMoveDown(record) {
             this.loading = true;
-            racRoleApi.moveDown(record.id).finally(() => {
+            this.api.moveDown(record.id).finally(() => {
                 this.refreshTableData();
             });
         },
