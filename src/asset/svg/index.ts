@@ -4,5 +4,5 @@
  * 2. 是否还应该搜索它的子目录
  * 3. 以及一个匹配文件的正则表达式
  */
-const req = require.context('./', false, /\.svg$/);
+const req = require.context('./', true, /\.svg$/);
 req.keys().map(req);

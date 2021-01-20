@@ -19,7 +19,9 @@ export default {
     },
     computed: {
         iconName() {
-            return `#icon-${this.icon}`;
+            return `#icon-${this.icon.replace(/(?:^|-)(\w)/g, function(all, letter) {
+                return letter.toUpperCase();
+            })}`;
         },
         svgClass() {
             if (this.className) {

@@ -23,7 +23,7 @@
                 <a-tooltip title="表格斑马条纹" :autoAdjustOverflow="false">
                     <a-button type="link" size="large" @click="toggleTableStrip">
                         <svg-icon
-                            icon="TableStripIcon"
+                            icon="table-strip"
                             :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }"
                         />
                     </a-button>
