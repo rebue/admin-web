@@ -15,11 +15,24 @@ process.env.VUE_APP_REQUEST_BASE_URL =
 
 module.exports = {
     chainWebpack(config) {
+        // 配置Vue可源码调试
         config.when(
             process.env.NODE_ENV === 'development', // 开发环境
             // config => config.devtool('cheap-source-map') // 转换过的源码-快
             config => config.devtool('source-map') // 源码-慢
         );
+
+        // 配置打包svg文件
+        const svgRule = config.module.rule('svg'); // 找到 svg-loader
+        svgRule.uses.clear(); // 清除已有 loader
+        svgRule.exclude.add(/node_modules/); // 排除 node_modules 目录
+        svgRule // 添加新的 svg loader
+            .test(/\.svg$/)
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
+                symbolId: 'icon-[name]',
+            });
     },
     devServer: {
         // 调试时自动打开浏览器

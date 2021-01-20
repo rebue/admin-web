@@ -4,8 +4,9 @@ import { TableSizeDic } from '@/dic/TableSizeDic';
 import localForage from 'localforage';
 
 const SLIDE_SIDE_COLLAPSED = 'slide-side-collapsed';
-const TABLE_SIZE = 'table-size';
 const TABLE_BORDER = 'table-border';
+const TABLE_STRIP = 'table-strip';
+const TABLE_SIZE = 'table-size';
 
 export class SettingAction {
     /**
@@ -18,6 +19,9 @@ export class SettingAction {
         localForage
             .getItem(userStore.userId + '.' + TABLE_BORDER)
             .then(value => this.setTableBorderWithoutPersist(value as boolean));
+        localForage
+            .getItem(userStore.userId + '.' + TABLE_STRIP)
+            .then(value => this.setTableStripWithoutPersist(value as boolean));
         localForage
             .getItem(userStore.userId + '.' + TABLE_SIZE)
             .then(value => this.setTableSize(value as TableSizeDic));
@@ -53,6 +57,22 @@ export class SettingAction {
     toggleTableBorder() {
         settingStore.tableBorder = !settingStore.tableBorder;
         localForage.setItem(userStore.userId + '.' + TABLE_BORDER, settingStore.tableBorder);
+    }
+
+    /**
+     * 设置表格斑马条纹(不保存，主要是初始化的时候或一些需要直接设定值的场合使用)
+     */
+    @action
+    setTableStripWithoutPersist(val: boolean) {
+        settingStore.tableStrip = val;
+    }
+    /**
+     * 切换表格斑马条纹
+     */
+    @action
+    toggleTableStrip() {
+        settingStore.tableStrip = !settingStore.tableStrip;
+        localForage.setItem(userStore.userId + '.' + TABLE_STRIP, settingStore.tableStrip);
     }
 
     /**

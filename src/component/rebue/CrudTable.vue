@@ -20,6 +20,14 @@
                         <a-icon type="table" :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
                     </a-button>
                 </a-tooltip>
+                <a-tooltip title="表格斑马条纹" :autoAdjustOverflow="false">
+                    <a-button type="link" size="large" @click="toggleTableStrip">
+                        <svg-icon
+                            icon="TableStripIcon"
+                            :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }"
+                        />
+                    </a-button>
+                </a-tooltip>
                 <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
                     <a-dropdown>
                         <a-button type="link" icon="column-height" />
@@ -88,11 +96,12 @@
             :dataSource="dataSource"
             :loading="loading"
             :scroll="{ x: this.scrollX, y: this.scrollY }"
+            :rowClassName="
+                (record, index) => (settingStore.tableStrip ? (index % 2 === 0 ? 'row-odd' : 'row-even') : '')
+            "
             :pagination="pagination"
             :components="components"
         >
-            <!-- 暂时去掉斑马条纹样式，不好看 -->
-            <!-- :rowClassName="(record, index) => (index % 2 === 0 ? 'row-odd' : 'row-even')" -->
             <span slot="serial" slot-scope="text, record, index">
                 {{ index + 1 }}
             </span>
@@ -149,8 +158,10 @@ import Vue from 'vue';
 import { observer } from 'mobx-vue';
 import { settingStore } from '@/store/Store';
 import { settingAction } from '@/action/Action';
+import SvgIcon from './SvgIcon.vue';
 
 export default observer({
+    components: { SvgIcon },
     name: 'CrudTable',
     props: {
         commands: {
@@ -180,6 +191,7 @@ export default observer({
             type: Number,
             default: () => 0,
         },
+        /** 数据结构是否是树 */
         isTree: {
             type: Boolean,
             default: () => false,
@@ -321,6 +333,10 @@ export default observer({
         toggleTableBorder() {
             settingAction.toggleTableBorder();
         },
+        /** 改变表格斑马条纹 */
+        toggleTableStrip() {
+            settingAction.toggleTableStrip();
+        },
         /**
          * 改变表格大小
          */
@@ -438,12 +454,14 @@ export default observer({
     }
 }
 
-.row-even {
-    background-color: #fafafa;
-}
-
 .ant-checkbox-group {
     display: flex;
     flex-direction: column;
+}
+</style>
+
+<style lang="less">
+.row-even {
+    background-color: #fafafa;
 }
 </style>

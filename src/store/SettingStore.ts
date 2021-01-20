@@ -9,6 +9,10 @@ export default class SettingStore {
     @observable
     tableBorder = false;
 
+    /** 表格斑马纹 */
+    @observable
+    tableStrip = false;
+
     /** 表格大小 */
     @observable
     tableSize = 'default';

@@ -15,6 +15,10 @@ import FullScreen from 'vue-fullscreen';
 import Fragment from 'vue-fragment';
 import VueDraggableResizable from 'vue-draggable-resizable';
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
+// SVG组件
+import SvgIcon from '@/component/rebue/SvgIcon.vue';
+// 引入SVG文件资源
+import '@/asset/svg/index';
 
 moment.locale('zh-cn');
 
@@ -26,6 +30,8 @@ Vue.use(FullScreen);
 Vue.use(Fragment.Plugin);
 // 拖曳插件
 Vue.component('vue-draggable-resizable', VueDraggableResizable);
+// 全局注册SVG组件
+Vue.use(SvgIcon);
 
 export default {
     name: 'App',
