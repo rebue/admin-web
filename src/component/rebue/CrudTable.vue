@@ -67,7 +67,7 @@
                     </a-popover>
                 </a-tooltip>
                 <a-divider type="vertical" />
-                <fragment v-if="isTree">
+                <fragment v-if="expandable">
                     <a-tooltip title="全部展开">
                         <a-button type="link" size="large" @click="expandAll">
                             <icon-font type="rebue-expand-all" />
@@ -191,8 +191,8 @@ export default observer({
             type: Number,
             default: () => 0,
         },
-        /** 数据结构是否是树 */
-        isTree: {
+        /** 表格行数据是否可展开 */
+        expandable: {
             type: Boolean,
             default: () => false,
         },

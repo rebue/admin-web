@@ -10,7 +10,7 @@
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
-                        :isTree="true"
+                        :expandable="true"
                         :pagination="false"
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
