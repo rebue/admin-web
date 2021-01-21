@@ -36,6 +36,8 @@ import { setSysId } from '@/util/cookie';
 export default {
     data() {
         return {
+            /** 登录后要中转的地址 */
+            redirect: undefined,
             /** 定义当前登录页面所对应的系统 */
             sysId: SysIdDic.PlatformAdminWeb,
             loading: false,
@@ -53,6 +55,14 @@ export default {
             },
         };
     },
+    watch: {
+        $route: {
+            handler: function(route) {
+                this.redirect = route.query && route.query.redirect;
+            },
+            immediate: true,
+        },
+    },
     methods: {
         doSubmit() {
             console.log('doSubmit!');
@@ -68,7 +78,7 @@ export default {
                         })
                         .then(ro => {
                             setSysId(this.sysId);
-                            this.$router.push({ path: ro.extra.indexUrn });
+                            this.$router.push({ path: this.redirect || ro.extra.indexUrn });
                         })
                         .finally(() => (this.loading = false));
                 } else {

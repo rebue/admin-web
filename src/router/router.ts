@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
     // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
     if (!uncheckJwtTokenPaths.find(item => item.startsWith(to.path)) && !hasJwtToken()) {
         console.log('需要登录');
-        next('/sign-in');
+        next(`/sign-in?redirect=${to.path}`);
         return;
     }
 
