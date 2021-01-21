@@ -3,7 +3,11 @@ import request from '@/util/request';
 import CrudApi from './CrudApi';
 
 export default class BaseCrudApi implements CrudApi {
+    /** 请求的基础链接 */
     protected baseUrn;
+
+    /** 是否需要排序 */
+    protected hasSort = false;
 
     /**
      * 添加
@@ -33,7 +37,14 @@ export default class BaseCrudApi implements CrudApi {
      * 获取列表
      */
     list(qo): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/list', params: qo });
+        return request.get({ url: this.baseUrn + '/list', params: qo }).then(ro => {
+            const list = ro.extra['list'];
+            if (!list || list.length === 0 || list[0].seqNo === undefined) return ro;
+            for (const item of list) {
+                item.maxSeqNo = list.length - 1;
+            }
+            return ro;
+        });
     }
     /**
      * 获取所有列表

@@ -3,20 +3,20 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: '00',
-        name: '查看',
+        id: '1611197906000',
+        name: '超级管理角色',
         domainId: 'platform',
         isEnabled: true,
         seqNo: 0,
-        remark: '查看角色的基础信息',
+        remark: '拥有所有管理权限，必须对开发/运维都了解得非常透彻',
     },
     {
-        id: '01',
-        name: '管理',
+        id: '1611197945000',
+        name: '平台管理角色',
         domainId: 'platform',
         isEnabled: true,
         seqNo: 1,
-        remark: '管理角色的基础信息',
+        remark: '拥有管理平台的基本权限，主要负责用户授权方面的管理',
     },
 ];
 

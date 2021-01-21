@@ -6,6 +6,7 @@ import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacPermApi extends BaseCrudApi {
+    /** 请求的基础链接 */
     baseUrn = '/rac/perm-group';
 
     /** 启用或禁用权限分组 */

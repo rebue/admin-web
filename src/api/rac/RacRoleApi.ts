@@ -6,6 +6,7 @@ import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacRoleApi extends BaseCrudApi {
+    /** 请求的基础链接 */
     baseUrn = '/rac/role';
 
     /** 启用或禁用角色 */
