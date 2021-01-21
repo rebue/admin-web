@@ -60,6 +60,23 @@ export const constantRouters = [
                     },
                 ],
             },
+            {
+                path: '/user',
+                name: 'user',
+                meta: { title: '用户中心', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/user/rac-user',
+                children: [
+                    {
+                        path: '/base/rac-user',
+                        name: 'rac-user',
+                        component: () => import('@/view/rac/rac-user/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '用户', keepAlive: true, icon: 'user' },
+                    },
+                ],
+            },
         ],
     },
     // 404 page must be placed at the end !!!

@@ -21,7 +21,7 @@ const curUserInfo = {
         id: list[0].id,
         nickname: list[0].signInNickname,
         isTester: false,
-        menus: ['/base/rac-domain', '/base/rac-sys', '/base/rac-perm', '/base/rac-role'],
+        menus: ['/base/rac-domain', '/base/rac-sys', '/base/rac-perm', '/base/rac-role', '/user/rac-user'],
     },
 };
 

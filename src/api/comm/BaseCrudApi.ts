@@ -50,6 +50,19 @@ export default class BaseCrudApi implements CrudApi {
      * 获取所有列表
      */
     listAll(): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/list-all' });
+        return request.get({ url: this.baseUrn + '/list-all' }).then(ro => {
+            const list = ro.extra['list'];
+            if (!list || list.length === 0 || list[0].seqNo === undefined) return ro;
+            for (const item of list) {
+                item.maxSeqNo = list.length - 1;
+            }
+            return ro;
+        });
+    }
+    /**
+     * 获取列表
+     */
+    page(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/page', params: qo });
     }
 }
