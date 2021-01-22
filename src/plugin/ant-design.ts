@@ -25,6 +25,7 @@ import {
     Checkbox,
     Tabs,
     Tag,
+    Radio,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -57,6 +58,7 @@ Vue.use(Menu);
 Vue.use(Switch);
 Vue.use(Popover);
 Vue.use(Checkbox);
+Vue.use(Radio);
 
 // 导航
 Vue.use(Card);

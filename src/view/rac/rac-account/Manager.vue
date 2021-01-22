@@ -116,7 +116,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '新建分组',
+                title: '新建',
                 onClick: this.handleOrgAdd,
             },
         ];

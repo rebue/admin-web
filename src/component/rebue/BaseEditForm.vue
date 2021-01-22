@@ -18,21 +18,22 @@
         >
             <a-spin :spinning="loading">
                 <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                    <a-form-model-item
-                        v-for="formItem in formItems"
-                        v-show="formItem.type !== 'hidden'"
-                        :key="formItem.dataIndex"
-                        :label="formItem.title"
-                        :prop="formItem.dataIndex"
-                    >
-                        <a-input
-                            v-model.trim="model[formItem.dataIndex]"
-                            :placeholder="'请输入' + formItem.title"
-                            :type="formItem.type"
-                            :disabled="formItem.disabled"
-                        />
-                    </a-form-model-item>
-                    <slot></slot>
+                    <slot name="formItems" :model="model">
+                        <a-form-model-item
+                            v-for="formItem in formItems"
+                            v-show="formItem.type !== 'hidden'"
+                            :key="formItem.dataIndex"
+                            :label="formItem.title"
+                            :prop="formItem.dataIndex"
+                        >
+                            <a-input
+                                v-model.trim="model[formItem.dataIndex]"
+                                :placeholder="'请输入' + formItem.title"
+                                :type="formItem.type"
+                                :disabled="formItem.disabled"
+                            />
+                        </a-form-model-item>
+                    </slot>
                 </a-form-model>
             </a-spin>
         </a-modal>
@@ -54,7 +55,7 @@ export default {
         },
         formItems: {
             type: Array,
-            required: true,
+            default: () => [],
         },
         rules: {
             type: Object,
