@@ -21,7 +21,7 @@ const curAccountInfo = {
         id: list[0].id,
         nickname: list[0].signInNickname,
         isTester: false,
-        menus: ['/base/rac-domain', '/base/rac-sys', '/base/rac-perm', '/base/rac-role', '/user/rac-user'],
+        menus: ['/base/rac-domain', '/base/rac-sys', '/base/rac-perm', '/base/rac-role', '/account/rac-account'],
     },
 };
 
@@ -31,7 +31,7 @@ module.exports = {
     findRacAccountBySignInName,
     listRacAccount,
     routes: {
-        'GET /rac/user/list': listRacAccount,
-        'GET /rac/user/get-cur-user-info': curAccountInfo,
+        'GET /rac/account/list': listRacAccount,
+        'GET /rac/account/get-cur-account-info': curAccountInfo,
     },
 };

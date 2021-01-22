@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { userStore } from '@/store/Store';
+import { accountStore } from '@/store/Store';
 import { Ro } from '@/ro/Ro';
 import { constantRouters } from '@/config/router.config';
 import { GetAccountInfoRa } from '@/ro/GetAccountInfoRa';
@@ -25,10 +25,10 @@ export class RacAccountAction {
         console.log('getCurAccountInfoSuccess', ro);
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
-        userStore.userId = ra.id;
-        userStore.nickname = ra.nickname;
-        userStore.avatar = ra.avatar;
-        userStore.isTester = ra.isTester;
+        accountStore.accountId = ra.id;
+        accountStore.nickname = ra.nickname;
+        accountStore.avatar = ra.avatar;
+        accountStore.isTester = ra.isTester;
 
         // 设置菜单
         const menus = constantRouters.find(item => item.path === '/').children;
@@ -55,7 +55,7 @@ export class RacAccountAction {
             const menu5 = menu1.children.find(item => item.name === section5);
             menu5.hidden = false;
         }
-        userStore.menus = observable(menus);
+        accountStore.menus = observable(menus);
 
         // 加载用户设置
         settingAction.loadSetting();

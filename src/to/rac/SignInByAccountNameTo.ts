@@ -7,7 +7,7 @@ export default class SignInByAccountNameTo {
     /** 组织ID */
     orgId?: string;
     /** 用户名称(手机号/电子邮箱/登录名称) */
-    userName = '';
+    accountName = '';
     /** 登录密码(需进行MD5摘要) */
     signInPswd = '';
 }

@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 export default class AccountStore {
     /** 用户ID */
     @observable
-    userId = '';
+    accountId = '';
     /** 用户昵称 */
     @observable
     nickname = '';

@@ -13,6 +13,6 @@ export default class RacAccountApi extends BaseCrudApi {
      */
     getCurAccountInfo(): Promise<Ro> {
         console.log('RacAccountApi.getCurAccountInfo');
-        return request.get({ url: '/rac/user/get-cur-user-info' });
+        return request.get({ url: '/rac/account/get-cur-account-info' });
     }
 }
