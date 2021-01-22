@@ -13,7 +13,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racUserApi } from '@/api/Api';
+import { racAccountApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
@@ -21,7 +21,7 @@ export default {
         BaseEditForm,
     },
     data() {
-        this.api = racUserApi;
+        this.api = racAccountApi;
         return {
             editFormType: EditFormTypeDic.None,
             formItems: [

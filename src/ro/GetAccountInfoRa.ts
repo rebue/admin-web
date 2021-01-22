@@ -1,4 +1,4 @@
-export interface GetUserInfoRa {
+export interface GetAccountInfoRa {
     /** 用户ID */
     id: string;
     /** 用户昵称 */

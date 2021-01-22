@@ -1,8 +1,8 @@
 import * as mobx from 'mobx';
 import SettingStore from './SettingStore';
-import UserStore from './UserStore';
+import AccountStore from './AccountStore';
 
 mobx.configure({ enforceActions: 'observed' });
 
-export const userStore = new UserStore();
+export const accountStore = new AccountStore();
 export const settingStore = new SettingStore();

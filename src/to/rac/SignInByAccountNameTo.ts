@@ -1,7 +1,7 @@
 /**
  * 通过用户名称登录方法的参数
  */
-export default class SignInByUserNameTo {
+export default class SignInByAccountNameTo {
     /** 系统ID */
     sysId = '';
     /** 组织ID */

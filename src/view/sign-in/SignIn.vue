@@ -9,9 +9,9 @@
                 并将 FormItem 的 prop 属性设置为需校验的字段名即可。
                 校验规则参见 https://github.com/yiminghe/async-validator -->
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
-                    <a-form-model-item prop="userName">
-                        <a-input v-autofocus v-model.trim="form.userName" placeholder="请输入登录账号">
-                            <template #prefix><a-icon type="user"/></template>
+                    <a-form-model-item prop="accountName">
+                        <a-input v-autofocus v-model.trim="form.accountName" placeholder="请输入登录账号">
+                            <template #prefix><a-icon type="account"/></template>
                         </a-input>
                     </a-form-model-item>
                     <a-form-model-item prop="signInPswd">
@@ -42,11 +42,11 @@ export default {
             sysId: SysIdDic.PlatformAdminWeb,
             loading: false,
             form: {
-                userName: '',
+                accountName: '',
                 signInPswd: '',
             },
             rules: {
-                userName: [
+                accountName: [
                     { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val.trim() },
                 ],
                 signInPswd: [
@@ -71,9 +71,9 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racSignInApi
-                        .signInByUserName({
+                        .signInByAccountName({
                             sysId: this.sysId,
-                            userName: this.form.userName,
+                            accountName: this.form.accountName,
                             signInPswd: md5(this.form.signInPswd).toString(),
                         })
                         .then(ro => {

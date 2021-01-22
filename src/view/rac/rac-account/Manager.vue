@@ -38,7 +38,7 @@ import EditForm from './EditForm';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import OrgEditForm from '../rac-org/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDomainApi, racOrgApi, racUserApi } from '@/api/Api';
+import { racDomainApi, racOrgApi, racAccountApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -49,7 +49,7 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racUserApi;
+        this.api = racAccountApi;
         const columns = [
             {
                 dataIndex: 'name',
@@ -84,7 +84,7 @@ export default {
                         checked={record.isEnabled}
                         checkedChildren="启"
                         unCheckedChildren="禁"
-                        onClick={() => this.handleUserCheck(record)}
+                        onClick={() => this.handleAccountCheck(record)}
                     />
                 ),
             },
@@ -169,9 +169,9 @@ export default {
             this.curDomainId = domainId;
         },
         /** 处理用户启用或禁用 */
-        handleUserCheck(record) {
+        handleAccountCheck(record) {
             this.loading = true;
-            racUserApi.enable(record.id, !record.isEnabled).finally(() => {
+            racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
         },

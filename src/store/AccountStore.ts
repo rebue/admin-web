@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
 
-export default class UserStore {
+export default class AccountStore {
     /** 用户ID */
     @observable
     userId = '';

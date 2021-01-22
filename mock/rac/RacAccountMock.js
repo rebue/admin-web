@@ -13,8 +13,8 @@ const list = [
     },
 ];
 
-const listRacUser = () => list;
-const curUserInfo = {
+const listRacAccount = () => list;
+const curAccountInfo = {
     result: 1,
     msg: '获取当前用户信息成功',
     extra: {
@@ -25,13 +25,13 @@ const curUserInfo = {
     },
 };
 
-const findRacUserBySignInName = signInName => list.find(item => item.signInName === signInName);
+const findRacAccountBySignInName = signInName => list.find(item => item.signInName === signInName);
 
 module.exports = {
-    findRacUserBySignInName,
-    listRacUser,
+    findRacAccountBySignInName,
+    listRacAccount,
     routes: {
-        'GET /rac/user/list': listRacUser,
-        'GET /rac/user/get-cur-user-info': curUserInfo,
+        'GET /rac/user/list': listRacAccount,
+        'GET /rac/user/get-cur-user-info': curAccountInfo,
     },
 };

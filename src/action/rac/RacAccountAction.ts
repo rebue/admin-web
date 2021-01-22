@@ -2,17 +2,17 @@ import { action, observable } from 'mobx';
 import { userStore } from '@/store/Store';
 import { Ro } from '@/ro/Ro';
 import { constantRouters } from '@/config/router.config';
-import { GetUserInfoRa } from '@/ro/GetUserInfoRa';
-import { racUserApi } from '@/api/Api';
+import { GetAccountInfoRa } from '@/ro/GetAccountInfoRa';
+import { racAccountApi } from '@/api/Api';
 import { settingAction } from '../Action';
 
-export class RacUserAction {
+export class RacAccountAction {
     /**
      * 刷新用户信息
      */
     @action
-    refreshUserInfo() {
-        racUserApi.getCurUserInfo().then(this.getCurUserInfoSuccess);
+    refreshAccountInfo() {
+        racAccountApi.getCurAccountInfo().then(this.getCurAccountInfoSuccess);
     }
 
     /**
@@ -21,10 +21,10 @@ export class RacUserAction {
      * @param ro 返回结果
      */
     @action
-    getCurUserInfoSuccess(ro: Ro) {
-        console.log('getCurUserInfoSuccess', ro);
+    getCurAccountInfoSuccess(ro: Ro) {
+        console.log('getCurAccountInfoSuccess', ro);
 
-        const ra: GetUserInfoRa = ro.extra as GetUserInfoRa;
+        const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
         userStore.userId = ra.id;
         userStore.nickname = ra.nickname;
         userStore.avatar = ra.avatar;

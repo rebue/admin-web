@@ -1,5 +1,5 @@
-import { RacUserAction } from '@/action/rac/RacUserAction';
+import { RacAccountAction } from '@/action/rac/RacAccountAction';
 import { SettingAction } from './SettingAction';
 
-export const racMenuAction = new RacUserAction();
+export const racMenuAction = new RacAccountAction();
 export const settingAction = new SettingAction();

@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import { settingStore, userStore } from '@/store/Store';
+import { settingStore, accountStore } from '@/store/Store';
 import { TableSizeDic } from '@/dic/TableSizeDic';
 import localForage from 'localforage';
 
@@ -14,16 +14,16 @@ export class SettingAction {
      */
     loadSetting() {
         localForage
-            .getItem(userStore.userId + '.' + SLIDE_SIDE_COLLAPSED)
+            .getItem(accountStore.accountId + '.' + SLIDE_SIDE_COLLAPSED)
             .then(value => this.setSlideSideCollapsed(value as boolean));
         localForage
-            .getItem(userStore.userId + '.' + TABLE_BORDER)
+            .getItem(accountStore.accountId + '.' + TABLE_BORDER)
             .then(value => this.setTableBorderWithoutPersist(value as boolean));
         localForage
-            .getItem(userStore.userId + '.' + TABLE_STRIP)
+            .getItem(accountStore.accountId + '.' + TABLE_STRIP)
             .then(value => this.setTableStripWithoutPersist(value as boolean));
         localForage
-            .getItem(userStore.userId + '.' + TABLE_SIZE)
+            .getItem(accountStore.accountId + '.' + TABLE_SIZE)
             .then(value => this.setTableSize(value as TableSizeDic));
     }
 
@@ -40,7 +40,7 @@ export class SettingAction {
     @action
     toggleSlideSideCollapsed() {
         settingStore.slideSideCollapsed = !settingStore.slideSideCollapsed;
-        localForage.setItem(userStore.userId + '.' + SLIDE_SIDE_COLLAPSED, settingStore.slideSideCollapsed);
+        localForage.setItem(accountStore.accountId + '.' + SLIDE_SIDE_COLLAPSED, settingStore.slideSideCollapsed);
     }
 
     /**
@@ -56,7 +56,7 @@ export class SettingAction {
     @action
     toggleTableBorder() {
         settingStore.tableBorder = !settingStore.tableBorder;
-        localForage.setItem(userStore.userId + '.' + TABLE_BORDER, settingStore.tableBorder);
+        localForage.setItem(accountStore.accountId + '.' + TABLE_BORDER, settingStore.tableBorder);
     }
 
     /**
@@ -72,7 +72,7 @@ export class SettingAction {
     @action
     toggleTableStrip() {
         settingStore.tableStrip = !settingStore.tableStrip;
-        localForage.setItem(userStore.userId + '.' + TABLE_STRIP, settingStore.tableStrip);
+        localForage.setItem(accountStore.accountId + '.' + TABLE_STRIP, settingStore.tableStrip);
     }
 
     /**
@@ -81,6 +81,6 @@ export class SettingAction {
     @action
     setTableSize(size: TableSizeDic) {
         settingStore.tableSize = size;
-        localForage.setItem(userStore.userId + '.' + TABLE_SIZE, size);
+        localForage.setItem(accountStore.accountId + '.' + TABLE_SIZE, size);
     }
 }

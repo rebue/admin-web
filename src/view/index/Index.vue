@@ -1,7 +1,7 @@
 <template>
     <pro-layout
         :siderWidth="230"
-        :menus="userStore.menus"
+        :menus="accountStore.menus"
         :collapsed="settingStore.slideSideCollapsed"
         :theme="theme"
         :layout="layout"
@@ -45,14 +45,14 @@ import { observer } from 'mobx-vue';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
-import { userStore, settingStore } from '@/store/Store';
+import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 
 export default observer({
     name: 'Index',
     data() {
         return {
-            userStore,
+            accountStore,
             settingStore,
             query: {},
             layout: 'sidemenu',
@@ -82,7 +82,7 @@ export default observer({
         },
     },
     mounted() {
-        racMenuAction.refreshUserInfo();
+        racMenuAction.refreshAccountInfo();
     },
     methods: {
         i18nRender,
