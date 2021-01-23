@@ -2,8 +2,6 @@
  * 组织类型
  */
 export enum OrgTypeDic {
-    /** 未定义 */
-    None = 0,
     /** 集团 */
     Group = 1,
     /** 政府单位 */
@@ -12,4 +10,6 @@ export enum OrgTypeDic {
     Corp = 21,
     /** 部门 */
     Dept = 80,
+    /** 小组 */
+    Team = 90,
 }

@@ -127,18 +127,17 @@ export default {
         },
         handleOk() {
             this.loading = true;
-            const mo = this.model;
             this.$refs.form.validate(valid => {
-                console.log('validate form: ', valid);
+                console.log('validate form: ', valid, this.model);
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
-                            .add(mo)
+                            .add(this.model)
                             .then(() => this.handleClose())
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         this.api
-                            .modify(mo)
+                            .modify(this.model)
                             .then(() => this.handleClose())
                             .finally(() => (this.loading = false));
                     }
