@@ -26,7 +26,22 @@
                             :label="formItem.title"
                             :prop="formItem.dataIndex"
                         >
+                            <a-radio-group
+                                v-if="formItem.type === 'radioGroup'"
+                                :value="model[formItem.dataIndex]"
+                                button-style="solid"
+                                @change="e => (model = { ...model, [formItem.dataIndex]: e.target.value })"
+                            >
+                                <a-radio-button
+                                    v-for="(item, index) in formItem.radios"
+                                    :value="item.value"
+                                    :key="index"
+                                >
+                                    {{ item.title }}
+                                </a-radio-button>
+                            </a-radio-group>
                             <a-input
+                                v-else
                                 v-model.trim="model[formItem.dataIndex]"
                                 :placeholder="'请输入' + formItem.title"
                                 :type="formItem.type"
@@ -41,7 +56,7 @@
 </template>
 
 <script>
-import { EditFormTypeDic, getEditFormTypeName } from '@/dic/EditFormTypeDic';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
     props: {
@@ -87,7 +102,7 @@ export default {
     computed: {
         fullTitle() {
             return (
-                getEditFormTypeName(this.editFormType) +
+                EditFormTypeDic.getName(this.editFormType) +
                 this.title +
                 (this.editFormType === EditFormTypeDic.Modify ? '信息' : '')
             );

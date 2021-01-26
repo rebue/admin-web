@@ -10,13 +10,17 @@ export enum EditFormTypeDic {
     Modify = 'modify',
 }
 
-export function getEditFormTypeName(val: EditFormTypeDic): string {
-    switch (val) {
-        case EditFormTypeDic.Add:
-            return '添加';
-        case EditFormTypeDic.Modify:
-            return '修改';
-        default:
-            return '未定义';
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace EditFormTypeDic {
+    // eslint-disable-next-line no-inner-declarations
+    export function getName(val: EditFormTypeDic): string {
+        switch (val) {
+            case EditFormTypeDic.Add:
+                return '添加';
+            case EditFormTypeDic.Modify:
+                return '修改';
+            default:
+                return '未定义';
+        }
     }
 }

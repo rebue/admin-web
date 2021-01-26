@@ -11,7 +11,6 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :expandable="true"
-                        :pagination="true"
                     >
                         <template #editForm="slotProps">
                             <org-edit-form

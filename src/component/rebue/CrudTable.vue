@@ -22,10 +22,7 @@
                 </a-tooltip>
                 <a-tooltip title="表格斑马条纹" :autoAdjustOverflow="false">
                     <a-button type="link" size="large" @click="toggleTableStrip">
-                        <svg-icon
-                            icon="table-strip"
-                            :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }"
-                        />
+                        <svg-icon icon="table-strip" :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }" />
                     </a-button>
                 </a-tooltip>
                 <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
@@ -166,11 +163,11 @@ export default observer({
     props: {
         commands: {
             type: Array,
-            default: () => [],
+            default: [],
         },
         actions: {
             type: Array,
-            default: () => [],
+            default: [],
         },
         columns: {
             type: Array,
@@ -185,20 +182,27 @@ export default observer({
         },
         scrollX: {
             type: Number,
-            default: () => 800,
+            default: 800,
         },
         scrollY: {
             type: Number,
-            default: () => 0,
+            default: 0,
         },
         /** 表格行数据是否可展开 */
         expandable: {
             type: Boolean,
-            default: () => false,
+            default: false,
         },
         pagination: {
-            type: Boolean,
-            default: () => false,
+            type: [Boolean, Object],
+            default: function() {
+                return {
+                    pageSize: 5,
+                    pageSizeOptions: ['5', '10', '20', '30'],
+                    showSizeChanger: true,
+                    showQuickJumper: true,
+                };
+            },
         },
     },
     data() {
@@ -320,13 +324,14 @@ export default observer({
          */
         refreshData() {
             this.loading = true;
+            console.log('pagination', this.pagination);
             return (this.pagination
                 ? this.api.page(this.query)
                 : this.query
                 ? this.api.list(this.query)
                 : this.api.listAll()
             )
-                .then(ro => (this.dataSource = ro.extra.list))
+                .then(ro => (this.dataSource = this.pagination ? ro.extra.page.list : ro.extra.list))
                 .finally(() => (this.loading = false));
         },
         /** 改变表格边框 */

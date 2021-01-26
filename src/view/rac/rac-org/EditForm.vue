@@ -3,12 +3,13 @@
         ref="baseEditForm"
         title="组织"
         :width="650"
+        :formItems="formItems"
         :rules="rules"
         :api="api"
         v-bind="$attrs"
         v-on="$listeners"
     >
-        <template #formItems="{model}">
+        <!-- <template #formItems="{model}">
             <a-form-model-item v-show="false" prop="id">
                 <a-input v-model.trim="model.id" type="hidden" />
             </a-form-model-item>
@@ -17,9 +18,6 @@
             </a-form-model-item>
             <a-form-model-item label="名称" prop="name">
                 <a-input v-model.trim="model.name" :placeholder="'请输入名称'" />
-            </a-form-model-item>
-            <a-form-model-item label="备注" prop="remark">
-                <a-input v-model.trim="model.remark" :placeholder="'请输入备注'" />
             </a-form-model-item>
             <a-form-model-item label="类型" prop="orgType">
                 <a-radio-group :value="model.orgType" button-style="solid" @change="handleOrgTypeChange">
@@ -40,7 +38,10 @@
                     </a-radio-button>
                 </a-radio-group>
             </a-form-model-item>
-        </template>
+            <a-form-model-item label="备注" prop="remark">
+                <a-input v-model.trim="model.remark" :placeholder="'请输入备注'" />
+            </a-form-model-item>
+        </template> -->
     </base-edit-form>
 </template>
 
@@ -56,8 +57,23 @@ export default {
     },
     data() {
         this.api = racOrgApi;
+        const orgTypes = Object.values(OrgTypeDic)
+            .filter(item => !isNaN(item))
+            .map(item => {
+                return {
+                    value: item,
+                    title: OrgTypeDic.getName(item),
+                };
+            });
         return {
             editFormType: EditFormTypeDic.None,
+            formItems: [
+                { dataIndex: 'id', title: '编码', type: 'hidden' },
+                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
+                { dataIndex: 'name', title: '名称' },
+                { dataIndex: 'orgType', title: '类型', type: 'radioGroup', radios: orgTypes },
+                { dataIndex: 'remark', title: '备注' },
+            ],
             rules: {
                 name: [
                     {

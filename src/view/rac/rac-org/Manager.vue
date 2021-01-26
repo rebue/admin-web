@@ -12,7 +12,6 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :expandable="true"
-                        :pagination="true"
                     >
                         <template #editForm="slotProps">
                             <edit-form
@@ -35,6 +34,7 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racOrgApi } from '@/api/Api';
+import { OrgTypeDic } from '@/dic/OrgTypeDic';
 
 export default {
     name: 'Manager',
@@ -60,9 +60,10 @@ export default {
                 fixed: 'left',
             },
             {
-                dataIndex: 'id',
-                title: '编码',
+                dataIndex: 'orgType',
+                title: '组织类型',
                 width: 180,
+                customRender: text => OrgTypeDic.getName(text),
             },
             {
                 dataIndex: 'remark',

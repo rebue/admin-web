@@ -7,7 +7,7 @@ const mock = {
     ...require('./rac/RacRoleMock').routes,
     ...require('./rac/RacPermGroupMock').routes,
     ...require('./rac/RacPermMock').routes,
-    ...require('./rac/RacMenuMock').routes,
+    ...require('./rac/RacOrgMock').routes,
 };
 
 // console.log('mock', mock);
