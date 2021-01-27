@@ -55,6 +55,7 @@
                         </template>
                         <template slot="content">
                             <a-checkbox-group
+                                class="col-config-checkbox-group"
                                 v-model="checkedCols"
                                 :options="defaultOptionCols"
                                 @change="changeColCheck"
@@ -89,7 +90,6 @@
             :rowKey="(record, index) => (record.id ? record.id : index)"
             :columns="displayColumns"
             :expandedRowKeys="expandedRowKeys"
-            @expand="handleExpand"
             :dataSource="dataSource"
             :loading="loading"
             :scroll="{ x: this.scrollX, y: this.scrollY }"
@@ -98,6 +98,8 @@
             "
             :pagination="pagination"
             :components="components"
+            @expand="handleTableExpand"
+            @change="handleTableChange"
         >
             <span slot="serial" slot-scope="text, record, index">
                 {{ index + 1 }}
@@ -195,14 +197,7 @@ export default observer({
         },
         pagination: {
             type: [Boolean, Object],
-            default: function() {
-                return {
-                    pageSize: 5,
-                    pageSizeOptions: ['5', '10', '20', '30'],
-                    showSizeChanger: true,
-                    showQuickJumper: true,
-                };
-            },
+            required: true,
         },
     },
     data() {
@@ -274,6 +269,9 @@ export default observer({
             expandedRowKeys: [], //展开的行
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
+            pager: {},
+            filters: {},
+            sorter: {},
         };
     },
     computed: {
@@ -324,15 +322,36 @@ export default observer({
          */
         refreshData() {
             this.loading = true;
-            console.log('pagination', this.pagination);
-            return (this.pagination
-                ? this.api.page(this.query)
-                : this.query
-                ? this.api.list(this.query)
-                : this.api.listAll()
-            )
-                .then(ro => (this.dataSource = this.pagination ? ro.extra.page.list : ro.extra.list))
-                .finally(() => (this.loading = false));
+
+            let promise;
+            const sorter =
+                JSON.stringify(this.sorter) === '{}'
+                    ? undefined
+                    : { orderBy: this.sorter.sortFilter + this.sorter.sortOrder === 'descend' ? ' DESC' : '' };
+            if (this.pagination) {
+                // 分页查询
+                // const pager =
+                //     JSON.stringify(this.pagination) === '{}'
+                //         ? { pageNum: 1, pageSize: this.pagination.pageSize }
+                //         : this.pager;
+                const { current, pageSize } = this.pagination;
+                console.log('current', current);
+                const data = { ...this.query, pageNum: current ?? 1, pageSize, ...this.filters, ...sorter };
+                promise = this.api.page(data).then(ro => {
+                    this.$emit('update:pagination', {
+                        ...this.pagination,
+                        total: ro.extra.page.total,
+                    });
+                    this.dataSource = ro.extra.page.list;
+                });
+            } else {
+                // 不分页查询
+                const data = { ...this.query, ...this.filters, ...sorter };
+                promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
+                    ro => (this.dataSource = ro.extra.list)
+                );
+            }
+            return promise.finally(() => (this.loading = false));
         },
         /** 改变表格边框 */
         toggleTableBorder() {
@@ -411,13 +430,31 @@ export default observer({
         /**
          * 处理树节点的展开与收缩
          */
-        handleExpand(expanded, record) {
+        handleTableExpand(expanded, record) {
             if (expanded) this.expandedRowKeys.push(record.id);
             else
                 this.expandedRowKeys.splice(
                     this.expandedRowKeys.findIndex(item => item.id === record.id),
                     1
                 );
+        },
+        /**
+         * 处理分页、排序、筛选的变化
+         */
+        handleTableChange(pagination, filters, sorter, { currentDataSource }) {
+            console.log('handleTableChange', pagination, filters, sorter, currentDataSource);
+            this.filters = filters;
+            this.sorter = sorter;
+            if (this.pagination !== false) {
+                this.$emit('update:pagination', {
+                    ...this.pagination,
+                    current: pagination.current,
+                    pageSize: pagination.pageSize,
+                });
+            }
+            this.$nextTick(() => {
+                this.refreshData();
+            });
         },
         /**
          * 编辑窗体关闭
@@ -439,15 +476,6 @@ export default observer({
 </script>
 
 <style lang="less" scoped>
-.element-fullscreen {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-}
-
 .table-operator {
     display: flex;
     margin-bottom: 18px;
@@ -459,7 +487,7 @@ export default observer({
     }
 }
 
-.ant-checkbox-group {
+.col-config-checkbox-group {
     display: flex;
     flex-direction: column;
 }

@@ -1,7 +1,7 @@
 <template>
     <base-manager ref="baseManager">
         <template #managerCard>
-            <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
+            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
                     <crud-table
                         :ref="'crudTable.' + item.id"
@@ -12,13 +12,10 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :expandable="true"
+                        :pagination.sync="pagination"
                     >
-                        <template #editForm="slotProps">
-                            <edit-form
-                                :ref="'editForm.' + item.id"
-                                :width="640"
-                                @close="slotProps.handleEditFormClose"
-                            />
+                        <template #editForm="{handleEditFormClose}">
+                            <edit-form :ref="'editForm.' + item.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>
@@ -107,6 +104,11 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
+            pagination: {
+                pageSize: 5,
+                pageSizeOptions: ['5', '10', '20', '30'],
+                showSizeChanger: true,
+            },
         };
     },
     computed: {
@@ -166,3 +168,8 @@ export default {
     },
 };
 </script>
+<style lang="less" scoped>
+.domain-tabs {
+    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+}
+</style>

@@ -97,14 +97,20 @@ module.exports = {
             }
             const params = parse(url, true).query;
 
-            const l = list.filter(item => item.domainId === params.domainId);
+            const { pageNum, pageSize } = params;
+
+            let l = list.filter(item => item.domainId === params.domainId);
+            let total = l.length;
+
+            const offset = (pageNum - 1) * pageSize;
+            l = offset + pageSize >= l.length ? l.slice(offset, l.length) : l.slice(offset, offset + pageSize);
 
             return res.json({
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
                     page: {
-                        total: l.length,
+                        total,
                         list: l,
                     },
                 },

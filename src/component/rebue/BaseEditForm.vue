@@ -28,9 +28,9 @@
                         >
                             <a-radio-group
                                 v-if="formItem.type === 'radioGroup'"
-                                :value="model[formItem.dataIndex]"
+                                v-model="model[formItem.dataIndex]"
                                 button-style="solid"
-                                @change="e => (model = { ...model, [formItem.dataIndex]: e.target.value })"
+                                @change="e => handleRadioGroupChanged(e, formItem)"
                             >
                                 <a-radio-button
                                     v-for="(item, index) in formItem.radios"
@@ -107,6 +107,9 @@ export default {
                 (this.editFormType === EditFormTypeDic.Modify ? '信息' : '')
             );
         },
+        form() {
+            return this.$refs.form;
+        },
     },
     watch: {
         visible(val) {
@@ -139,6 +142,10 @@ export default {
             this.model = model;
             this.editFormType = editFormType;
             this.visible = true;
+        },
+        handleRadioGroupChanged(e, formItem) {
+            console.log('handleRadioGroupChanged', e, formItem);
+            this.model = { ...this.model, [formItem.dataIndex]: e.target.value };
         },
         handleOk() {
             this.loading = true;
