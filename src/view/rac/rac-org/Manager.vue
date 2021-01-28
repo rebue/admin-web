@@ -43,22 +43,15 @@ export default {
         this.api = racOrgApi;
         const columns = [
             {
-                dataIndex: 'no',
-                title: '#',
-                scopedSlots: { customRender: 'serial' },
-                width: 50,
-                fixed: 'left',
-            },
-            {
                 dataIndex: 'name',
                 title: '名称',
-                width: 150,
+                width: 250,
                 fixed: 'left',
             },
             {
                 dataIndex: 'orgType',
                 title: '组织类型',
-                width: 180,
+                width: 90,
                 customRender: text => OrgTypeDic.getName(text),
             },
             {
@@ -69,7 +62,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 130,
+                width: 195,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -95,6 +88,11 @@ export default {
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
                 onClick: record => this.handleDel(record),
+            },
+            {
+                type: 'a',
+                title: '添加子组织',
+                onClick: record => this.handleAddChild(record),
             },
         ];
 
@@ -157,6 +155,16 @@ export default {
             this.loading = true;
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
+            });
+        },
+        /**
+         * 处理添加子组织的事件
+         */
+        handleAddChild(record) {
+            this.loading = true;
+            this.editForm.show(EditFormTypeDic.Add, {
+                domainId: this.curDomainId,
+                parentId: record.id,
             });
         },
     },

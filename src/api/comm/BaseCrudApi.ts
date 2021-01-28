@@ -6,9 +6,6 @@ export default class BaseCrudApi implements CrudApi {
     /** 请求的基础链接 */
     protected baseUrn;
 
-    /** 是否需要排序 */
-    protected hasSort = false;
-
     /**
      * 添加
      */
@@ -60,7 +57,7 @@ export default class BaseCrudApi implements CrudApi {
         });
     }
     /**
-     * 获取列表
+     * 获取分页列表
      */
     page(qo): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/page', params: qo });

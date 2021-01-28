@@ -15,12 +15,8 @@
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
                     >
-                        <template #editForm="slotProps">
-                            <edit-form
-                                :ref="'editForm.' + domain.id"
-                                :width="640"
-                                @close="slotProps.handleEditFormClose"
-                            />
+                        <template #editForm="{handleEditFormClose}">
+                            <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

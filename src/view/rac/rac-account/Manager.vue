@@ -12,17 +12,13 @@
                         :scrollX="600"
                         :expandable="true"
                     >
-                        <template #editForm="slotProps">
+                        <template #editForm="{handleEditFormClose}">
                             <org-edit-form
                                 :ref="'orgEditForm.' + domain.id"
                                 :width="640"
-                                @close="slotProps.handleEditFormClose"
+                                @close="handleEditFormClose"
                             />
-                            <edit-form
-                                :ref="'editForm.' + domain.id"
-                                :width="640"
-                                @close="slotProps.handleEditFormClose"
-                            />
+                            <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

@@ -13,12 +13,8 @@
                         :scrollX="600"
                         :defaultPagination="false"
                     >
-                        <template #editForm="slotProps">
-                            <edit-form
-                                :ref="'editForm.' + item.id"
-                                :width="640"
-                                @close="slotProps.handleEditFormClose"
-                            />
+                        <template #editForm="{handleEditFormClose}">
+                            <edit-form :ref="'editForm.' + item.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

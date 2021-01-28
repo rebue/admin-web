@@ -15,17 +15,13 @@
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
                     >
-                        <template #editForm="slotProps">
+                        <template #editForm="{handleEditFormClose}">
                             <perm-group-edit-form
                                 :ref="'permGroupEditForm.' + domain.id"
                                 :width="640"
-                                @close="slotProps.handleEditFormClose"
+                                @close="handleEditFormClose"
                             />
-                            <edit-form
-                                :ref="'editForm.' + domain.id"
-                                :width="640"
-                                @close="slotProps.handleEditFormClose"
-                            />
+                            <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

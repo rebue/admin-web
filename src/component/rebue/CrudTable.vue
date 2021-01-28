@@ -161,6 +161,7 @@ import Vue from 'vue';
 import { observer } from 'mobx-vue';
 import { settingStore } from '@/store/Store';
 import { settingAction } from '@/action/Action';
+import { forEachTree } from '@/util/tree';
 import SvgIcon from './SvgIcon.vue';
 
 export default observer({
@@ -169,11 +170,11 @@ export default observer({
     props: {
         commands: {
             type: Array,
-            default: [],
+            default: () => [],
         },
         actions: {
             type: Array,
-            default: [],
+            default: () => [],
         },
         columns: {
             type: Array,
@@ -415,9 +416,9 @@ export default observer({
          * 展开树所有节点
          */
         expandAll() {
-            for (const record of this.dataSource) {
-                this.expandedRowKeys.push(record.id);
-            }
+            forEachTree(this.dataSource, node => {
+                node['childen'] ?? this.expandedRowKeys.push(node.id);
+            });
         },
         /**
          * 收缩树所有节点
