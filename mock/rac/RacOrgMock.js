@@ -104,7 +104,6 @@ module.exports = {
 
             const begin = (pageNum - 1) * pageSize;
             const end = begin + (pageSize - 0);
-            console.log(begin, end, l);
             l = l.slice(begin, end);
 
             return res.json({
