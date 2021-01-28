@@ -8,7 +8,7 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="600"
-                :pagination="false"
+                :defaultPagination="false"
             >
                 <template #editForm="slotProps">
                     <edit-form ref="editForm" :width="640" @close="slotProps.handleEditFormClose" />

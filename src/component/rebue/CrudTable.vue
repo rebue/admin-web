@@ -102,7 +102,11 @@
             @change="handleTableChange"
         >
             <span slot="serial" slot-scope="text, record, index">
-                {{ index + 1 }}
+                {{
+                    pagination === false
+                        ? index + 1
+                        : (pagination.current ? (pagination.current - 1) * pagination.pageSize : 0) + index + 1
+                }}
             </span>
             <span slot="action" slot-scope="text, record">
                 <template v-for="(item, index) in actions">
@@ -195,9 +199,15 @@ export default observer({
             type: Boolean,
             default: false,
         },
-        pagination: {
+        defaultPagination: {
             type: [Boolean, Object],
-            required: true,
+            default: function() {
+                return {
+                    pageSize: 5,
+                    pageSizeOptions: ['5', '10', '20', '30'],
+                    showSizeChanger: true,
+                };
+            },
         },
     },
     data() {
@@ -269,7 +279,7 @@ export default observer({
             expandedRowKeys: [], //展开的行
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
-            pager: {},
+            pagination: {},
             filters: {},
             sorter: {},
         };
@@ -314,6 +324,7 @@ export default observer({
             this.configColumns.push({ visible: true, ...item });
             this.checkedCols.push(item.title);
         }
+        this.pagination = this.defaultPagination;
         this.refreshData();
     },
     methods: {
@@ -330,18 +341,14 @@ export default observer({
                     : { orderBy: this.sorter.sortFilter + this.sorter.sortOrder === 'descend' ? ' DESC' : '' };
             if (this.pagination) {
                 // 分页查询
-                // const pager =
-                //     JSON.stringify(this.pagination) === '{}'
-                //         ? { pageNum: 1, pageSize: this.pagination.pageSize }
-                //         : this.pager;
                 const { current, pageSize } = this.pagination;
                 console.log('current', current);
                 const data = { ...this.query, pageNum: current ?? 1, pageSize, ...this.filters, ...sorter };
                 promise = this.api.page(data).then(ro => {
-                    this.$emit('update:pagination', {
+                    this.pagination = {
                         ...this.pagination,
                         total: ro.extra.page.total,
-                    });
+                    };
                     this.dataSource = ro.extra.page.list;
                 });
             } else {
@@ -446,11 +453,11 @@ export default observer({
             this.filters = filters;
             this.sorter = sorter;
             if (this.pagination !== false) {
-                this.$emit('update:pagination', {
+                this.pagination = {
                     ...this.pagination,
                     current: pagination.current,
                     pageSize: pagination.pageSize,
-                });
+                };
             }
             this.$nextTick(() => {
                 this.refreshData();

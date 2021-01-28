@@ -102,8 +102,10 @@ module.exports = {
             let l = list.filter(item => item.domainId === params.domainId);
             let total = l.length;
 
-            const offset = (pageNum - 1) * pageSize;
-            l = offset + pageSize >= l.length ? l.slice(offset, l.length) : l.slice(offset, offset + pageSize);
+            const begin = (pageNum - 1) * pageSize;
+            const end = begin + (pageSize - 0);
+            console.log(begin, end, l);
+            l = l.slice(begin, end);
 
             return res.json({
                 result: 1,

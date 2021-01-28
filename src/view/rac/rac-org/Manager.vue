@@ -12,7 +12,6 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :expandable="true"
-                        :pagination.sync="pagination"
                     >
                         <template #editForm="{handleEditFormClose}">
                             <edit-form :ref="'editForm.' + item.id" :width="640" @close="handleEditFormClose" />
@@ -104,11 +103,6 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
-            pagination: {
-                pageSize: 5,
-                pageSizeOptions: ['5', '10', '20', '30'],
-                showSizeChanger: true,
-            },
         };
     },
     computed: {

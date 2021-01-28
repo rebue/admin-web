@@ -11,7 +11,7 @@
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
                         :expandable="true"
-                        :pagination="false"
+                        :defaultPagination="false"
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
                     >
