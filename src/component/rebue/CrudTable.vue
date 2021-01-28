@@ -343,7 +343,6 @@ export default observer({
             if (this.pagination) {
                 // 分页查询
                 const { current, pageSize } = this.pagination;
-                console.log('current', current);
                 const data = { ...this.query, pageNum: current ?? 1, pageSize, ...this.filters, ...sorter };
                 promise = this.api.page(data).then(ro => {
                     this.pagination = {
