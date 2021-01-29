@@ -12,6 +12,12 @@
                         :scrollX="600"
                         :expandable="true"
                     >
+                        <template #left>
+                            <div>
+                                <a-button :icon="orgFold ? 'menu-unfold' : 'menu-fold'" @click="handleOrgFoldChanged" />
+                            </div>
+                            <org-menu :fold="orgFold" />
+                        </template>
                         <template #editForm="{handleEditFormClose}">
                             <org-edit-form
                                 :ref="'orgEditForm.' + domain.id"
@@ -29,8 +35,9 @@
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-import EditForm from './EditForm';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import EditForm from './EditForm';
+import OrgMenu from '../rac-org/Menu';
 import OrgEditForm from '../rac-org/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racOrgApi, racAccountApi } from '@/api/Api';
@@ -40,6 +47,7 @@ export default {
     components: {
         BaseManager,
         EditForm,
+        OrgMenu,
         OrgEditForm,
         CrudTable,
     },
@@ -121,6 +129,7 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
+            orgFold: false,
         };
     },
     computed: {
@@ -169,6 +178,10 @@ export default {
             racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
+        },
+        /** 处理组织收缩改变 */
+        handleOrgFoldChanged() {
+            this.orgFold = !this.orgFold;
         },
         /**
          * 处理添加分组的事件
