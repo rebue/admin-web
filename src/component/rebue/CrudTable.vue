@@ -500,7 +500,7 @@ export default observer({
     display: flex;
     align-items: stretch;
     .left {
-        width: 200px;
+        // width: 200px;
     }
     .divider {
         width: 20px;
@@ -509,7 +509,7 @@ export default observer({
         flex-grow: 1;
         .table-operator {
             display: flex;
-            margin-bottom: 18px;
+            margin-bottom: 8px;
             .table-commands {
                 flex-grow: 1;
             }

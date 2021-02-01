@@ -13,10 +13,7 @@
                         :expandable="true"
                     >
                         <template #left>
-                            <div>
-                                <a-button :icon="orgFold ? 'menu-unfold' : 'menu-fold'" @click="handleOrgFoldChanged" />
-                            </div>
-                            <org-menu :fold="orgFold" />
+                            <org-menu />
                         </template>
                         <template #editForm="{handleEditFormClose}">
                             <org-edit-form
@@ -129,7 +126,6 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
-            orgFold: false,
         };
     },
     computed: {
@@ -178,10 +174,6 @@ export default {
             racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
-        },
-        /** 处理组织收缩改变 */
-        handleOrgFoldChanged() {
-            this.orgFold = !this.orgFold;
         },
         /**
          * 处理添加分组的事件
