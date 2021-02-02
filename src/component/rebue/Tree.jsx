@@ -122,7 +122,6 @@ export default {
                 {search ? this.renderSearch() : null}
                 <Menu
                     mode="inline"
-                    theme="dark"
                     inlineCollapsed={this.fold}
                     class="custom-tree"
                     {...{

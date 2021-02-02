@@ -26,6 +26,7 @@ import {
     Tabs,
     Tag,
     Radio,
+    Pagination,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -70,6 +71,7 @@ Vue.use(Tag);
 Vue.use(Table);
 Vue.use(Col);
 Vue.use(Row);
+Vue.use(Pagination);
 
 // 选择框
 Vue.use(Select);

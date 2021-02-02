@@ -4,7 +4,6 @@
             <div class="left">
                 <slot name="left" />
             </div>
-            <div class="divider"></div>
             <div class="client">
                 <div class="table-operator">
                     <div class="table-commands">
@@ -499,12 +498,6 @@ export default observer({
 .main {
     display: flex;
     align-items: stretch;
-    .left {
-        // width: 200px;
-    }
-    .divider {
-        width: 20px;
-    }
     .client {
         flex-grow: 1;
         .table-operator {

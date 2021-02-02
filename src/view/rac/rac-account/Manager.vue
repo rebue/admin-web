@@ -13,7 +13,10 @@
                         :expandable="true"
                     >
                         <template #left>
-                            <org-menu />
+                            <div v-show="showOrg" class="table-left">
+                                <org-menu :show.sync="showOrg" :domainId="curDomainId" />
+                                <div class="table-divider"></div>
+                            </div>
                         </template>
                         <template #editForm="{handleEditFormClose}">
                             <org-edit-form
@@ -123,6 +126,7 @@ export default {
 
         return {
             loading: false,
+            showOrg: false,
             curDomainId: '',
             domains: [],
             columns,
@@ -221,3 +225,12 @@ export default {
     },
 };
 </script>
+
+<style lang="less" scoped>
+.table-left {
+    display: flex;
+    .table-divider {
+        width: 20px;
+    }
+}
+</style>
