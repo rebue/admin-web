@@ -14,7 +14,7 @@
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
-                                <org-menu :show.sync="showOrg" :domainId="curDomainId" />
+                                <org-menu :show.sync="showOrg" :domainId="curDomainId" @click="handleOrgMenuClick" />
                                 <div class="table-divider"></div>
                             </div>
                         </template>
@@ -171,6 +171,9 @@ export default {
          */
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
+        },
+        handleOrgMenuClick(item) {
+            console.log('handleOrgMenuClick', item);
         },
         /** 处理用户启用或禁用 */
         handleAccountCheck(record) {
