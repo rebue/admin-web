@@ -9,9 +9,11 @@
 /**
  * 设置焦点
  *
+ * @param containerClass 容器的类样式
  * @param el 要设置焦点的元素(如果不传，默认为document，如果传入的值是Falsy，则不处理)
  */
-function focus(el: Element | Document | null = document) {
+function focus(el: Element | Document | null = document, containerClass = '') {
+    console.log('focus el', el);
     if (!el) return;
 
     if (el instanceof HTMLElement)
@@ -20,8 +22,11 @@ function focus(el: Element | Document | null = document) {
             return;
         }
 
-    const dom = el.querySelector('input:not(:disabled):not([type="hidden"]),textarea:not(:disabled)') as HTMLElement;
-    // console.log('focus dom', dom);
+    if (containerClass !== '') containerClass += ' ';
+    const dom = el.querySelector(
+        `${containerClass}input:not(:disabled):not([type="hidden"]),${containerClass}textarea:not(:disabled)`
+    ) as HTMLElement;
+    console.log('focus dom', dom);
     dom?.focus();
 }
 

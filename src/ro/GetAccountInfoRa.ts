@@ -1,9 +1,9 @@
 export interface GetAccountInfoRa {
-    /** 用户ID */
+    /** 账户ID */
     id: string;
-    /** 用户昵称 */
+    /** 账户昵称 */
     nickname: string;
-    /** 用户头像 */
+    /** 账户头像 */
     avatar: string;
     /** 是否测试者 */
     isTester: boolean;

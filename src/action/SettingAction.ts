@@ -10,7 +10,7 @@ const TABLE_SIZE = 'table-size';
 
 export class SettingAction {
     /**
-     * 加载用户的设置
+     * 加载账户的设置
      */
     loadSetting() {
         localForage

@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="用户"
+        title="账户"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -24,19 +24,33 @@ export default {
         this.api = racAccountApi;
         return {
             editFormType: EditFormTypeDic.None,
-            formItems: [
-                { dataIndex: 'id', title: '编码', type: 'hidden' },
-                { dataIndex: 'name', title: '名称' },
-                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
-                { dataIndex: 'groupId', title: '用户分组ID', type: 'hidden' },
-                { dataIndex: 'remark', title: '备注' },
-            ],
             rules: {
-                name: [
-                    { required: true, message: '请输入用户名称', trigger: 'blur', transform: val => val && val.trim() },
+                signInName: [
+                    { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+                signInPswd: [
+                    { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
         };
+    },
+    computed: {
+        formItems() {
+            return [
+                { dataIndex: 'signInName', title: '登录名称' },
+                {
+                    dataIndex: 'signInPswd',
+                    title: '登录密码',
+                    type: 'password',
+                    visible: this.editFormType === EditFormTypeDic.Add,
+                },
+                { dataIndex: 'isTester', title: '测试者', type: 'switch' },
+                { dataIndex: 'remark', title: '账户备注' },
+                { dataIndex: 'id', title: '编码', type: 'hidden' },
+                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
+                { dataIndex: 'orgId', title: '组织ID', type: 'hidden' },
+            ];
+        },
     },
     methods: {
         show: function(editFormType, ...params) {

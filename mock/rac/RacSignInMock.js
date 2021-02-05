@@ -8,7 +8,7 @@ const signIn = (req, res, u, b) => {
     console.log('signIn', body);
     const account = findRacAccountBySignInName(body.accountName);
 
-    if (!!!account) return res.json({ result: -2, msg: '找不到此用户' });
+    if (!!!account) return res.json({ result: -2, msg: '找不到此账户' });
 
     if (body.signInPswd !== account.signInPswd) return res.json({ result: -2, msg: '密码输入错误' });
 
@@ -16,7 +16,7 @@ const signIn = (req, res, u, b) => {
 
     return res.json({
         result: 1,
-        msg: '用户登录成功',
+        msg: '账户登录成功',
         extra: {
             id: account.id,
             indexUrn: '/',

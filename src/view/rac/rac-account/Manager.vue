@@ -24,11 +24,6 @@
                             </div>
                         </template>
                         <template #editForm="{handleEditFormClose}">
-                            <org-edit-form
-                                :ref="'orgEditForm.' + domain.id"
-                                :width="640"
-                                @close="handleEditFormClose"
-                            />
                             <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
@@ -43,9 +38,8 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import EditForm from './EditForm';
 import OrgTree from '../rac-org/Tree';
-import OrgEditForm from '../rac-org/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDomainApi, racOrgApi, racAccountApi } from '@/api/Api';
+import { racDomainApi, racAccountApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -53,7 +47,6 @@ export default {
         BaseManager,
         EditForm,
         OrgTree,
-        OrgEditForm,
         CrudTable,
     },
     data() {
@@ -68,7 +61,7 @@ export default {
                     return (
                         <fragment>
                             <a-tag color="blue">
-                                用户
+                                账户
                                 <a-icon type="tag" />
                             </a-tag>
                             {{ text }}
@@ -125,7 +118,7 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: this.handleOrgAdd,
+                onClick: this.handleAccountAdd,
             },
         ];
 
@@ -139,9 +132,6 @@ export default {
         };
     },
     computed: {
-        orgEditForm() {
-            return this.$refs['orgEditForm.' + this.curDomainId][0];
-        },
         editForm() {
             return this.$refs['editForm.' + this.curDomainId][0];
         },
@@ -188,7 +178,7 @@ export default {
             this.curOrgId = isSelected ? item.id : undefined;
             this.$nextTick(this.refreshTableData);
         },
-        /** 处理用户启用或禁用 */
+        /** 处理账户启用或禁用 */
         handleAccountCheck(record) {
             this.loading = true;
             racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
@@ -198,39 +188,39 @@ export default {
         /**
          * 处理添加分组的事件
          */
-        handleOrgAdd() {
-            this.orgEditForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
+        handleAccountAdd() {
+            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
         },
         /**
          * 处理编辑分组的事件
          */
-        handleOrgEdit(record) {
-            this.orgEditForm.show(EditFormTypeDic.Modify, record);
+        handleAccountEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
          * 处理删除分组的事件
          */
-        handleOrgDel(record) {
+        handleAccountDel(record) {
             this.loading = true;
-            racOrgApi.delById(record.id).finally(() => {
+            racAccountApi.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
         },
         /**
-         * 处理添加用户的事件
+         * 处理添加账户的事件
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
             this.editForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
         },
         /**
-         * 处理编辑用户的事件
+         * 处理编辑账户的事件
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
-         * 处理删除用户的事件
+         * 处理删除账户的事件
          */
         handleDel(record) {
             this.loading = true;

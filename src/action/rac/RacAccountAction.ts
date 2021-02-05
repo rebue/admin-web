@@ -8,7 +8,7 @@ import { settingAction } from '../Action';
 
 export class RacAccountAction {
     /**
-     * 刷新用户信息
+     * 刷新账户信息
      */
     @action
     refreshAccountInfo() {
@@ -16,7 +16,7 @@ export class RacAccountAction {
     }
 
     /**
-     * 请求获取当前用户信息成功
+     * 请求获取当前账户信息成功
      *
      * @param ro 返回结果
      */
@@ -57,7 +57,7 @@ export class RacAccountAction {
         }
         accountStore.menus = observable(menus);
 
-        // 加载用户设置
+        // 加载账户设置
         settingAction.loadSetting();
     }
 }

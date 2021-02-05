@@ -16,7 +16,7 @@ const list = [
         domainId: 'platform',
         isEnabled: true,
         seqNo: 1,
-        remark: '拥有管理平台的基本权限，主要负责用户授权方面的管理',
+        remark: '拥有管理平台的基本权限，主要负责账户授权方面的管理',
     },
 ];
 

@@ -80,7 +80,7 @@ export const constantRouters = [
                         name: 'rac-account',
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
-                        meta: { title: '用户', keepAlive: true, icon: 'user' },
+                        meta: { title: '账户', keepAlive: true, icon: 'user' },
                     },
                 ],
             },

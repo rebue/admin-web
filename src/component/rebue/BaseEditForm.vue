@@ -17,17 +17,32 @@
             @cancel="handleCancel"
         >
             <a-spin :spinning="loading">
-                <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+                <a-form-model ref="form" class="editForm" :model="model" :rules="rules" v-bind="formLayout">
                     <slot name="formItems" :model="model">
                         <a-form-model-item
                             v-for="formItem in formItems"
-                            v-show="formItem.type !== 'hidden'"
+                            v-show="
+                                formItem.type !== 'hidden' &&
+                                    (formItem.visible === undefined || formItem.visible === true)
+                            "
                             :key="formItem.dataIndex"
                             :label="formItem.title"
                             :prop="formItem.dataIndex"
                         >
+                            <a-input-password
+                                v-if="formItem.type === 'password'"
+                                v-model.trim="model[formItem.dataIndex]"
+                                :placeholder="'请输入' + formItem.title"
+                                autocomplete="new-password"
+                            />
+                            <a-switch
+                                v-else-if="formItem.type === 'switch'"
+                                v-model.trim="model[formItem.dataIndex]"
+                                checked-children="是"
+                                un-checked-children="否"
+                            />
                             <a-radio-group
-                                v-if="formItem.type === 'radioGroup'"
+                                v-else-if="formItem.type === 'radioGroup'"
                                 v-model="model[formItem.dataIndex]"
                                 button-style="solid"
                                 @change="e => handleRadioGroupChanged(e, formItem)"
@@ -46,6 +61,7 @@
                                 :placeholder="'请输入' + formItem.title"
                                 :type="formItem.type"
                                 :disabled="formItem.disabled"
+                                autocomplete="new-password"
                             />
                         </a-form-model-item>
                     </slot>
@@ -122,13 +138,13 @@ export default {
                         .catch(() => this.$emit('close'))
                         .finally(() => {
                             this.$nextTick(() => {
-                                this.$focus();
+                                this.$focus(document, '.editForm');
                             });
                             this.loading = false;
                         });
                 } else {
                     this.$nextTick(() => {
-                        this.$focus();
+                        this.$focus(document, '.editForm');
                     });
                     this.loading = false;
                 }

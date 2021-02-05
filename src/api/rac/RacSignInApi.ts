@@ -7,7 +7,7 @@ import request from '@/util/request';
 
 export default class RacSignInApi {
     /**
-     * 通过用户名称登录
+     * 通过账户名称登录
      */
     signInByAccountName(to: SignInByAccountNameTo): Promise<Ro> {
         console.log('RacSignInApi.signInByAccountName', to);
