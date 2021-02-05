@@ -14,7 +14,12 @@
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
-                                <org-menu :show.sync="showOrg" :domainId="curDomainId" @click="handleOrgMenuClick" />
+                                <org-tree
+                                    :show.sync="showOrg"
+                                    :domainId="curDomainId"
+                                    @click="handleOrgMenuClick"
+                                    @select="handleOrgTreeSelect"
+                                />
                                 <div class="table-divider"></div>
                             </div>
                         </template>
@@ -37,7 +42,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import EditForm from './EditForm';
-import OrgMenu from '../rac-org/Menu';
+import OrgTree from '../rac-org/Tree';
 import OrgEditForm from '../rac-org/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racOrgApi, racAccountApi } from '@/api/Api';
@@ -47,7 +52,7 @@ export default {
     components: {
         BaseManager,
         EditForm,
-        OrgMenu,
+        OrgTree,
         OrgEditForm,
         CrudTable,
     },
@@ -128,6 +133,7 @@ export default {
             loading: false,
             showOrg: false,
             curDomainId: '',
+            curOrgId: undefined,
             domains: [],
             columns,
         };
@@ -172,8 +178,15 @@ export default {
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
         },
+        /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
-            console.log('handleOrgMenuClick', item);
+            this.curOrgId = item.id;
+            this.$nextTick(this.refreshTableData);
+        },
+        /** 处理组织树选择节点的事件 */
+        handleOrgTreeSelect({ isSelected, item }) {
+            this.curOrgId = isSelected ? item.id : undefined;
+            this.$nextTick(this.refreshTableData);
         },
         /** 处理用户启用或禁用 */
         handleAccountCheck(record) {

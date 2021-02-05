@@ -27,6 +27,7 @@ import {
     Tag,
     Radio,
     Pagination,
+    Tree,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -64,8 +65,8 @@ Vue.use(Radio);
 // 导航
 Vue.use(Card);
 Vue.use(Tabs);
-// Vue.use(TabPane);
 Vue.use(Tag);
+Vue.use(Tree);
 
 // 表格
 Vue.use(Table);

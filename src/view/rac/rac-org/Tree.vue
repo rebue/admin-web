@@ -5,13 +5,20 @@
             <a-input-search v-show="!orgFold" :loading="loading" placeholder="关键字" @search="handleSearch" />
         </div>
         <a-spin :spinning="loading" class="spin">
-            <rebue-tree :fold="orgFold" :dataSource="dataSource" v-bind="$attrs" v-on="$listeners"></rebue-tree>
+            <rebue-tree
+                v-show="orgFold"
+                :fold="true"
+                :dataSource="dataSource"
+                v-bind="$attrs"
+                v-on="$listeners"
+            ></rebue-tree>
+            <a-tree v-show="!orgFold" :tree-data="dataSource" class="tree" blockNode @select="handleTreeNodeClick" />
             <a-pagination v-show="!orgFold" v-model="pageNum" :page-size:sync="pageSize" :total="500" simple />
         </a-spin>
     </div>
 </template>
 <script>
-import { forEachTree } from '@/util/tree';
+import { findFromTree, forEachTree } from '@/util/tree';
 import RebueTree from '@/component/rebue/Tree';
 import { racOrgApi } from '@/api/Api';
 
@@ -45,38 +52,7 @@ export default {
             pageNum: 1,
             pageSize: 20,
             keywords: '',
-            dataSource: [
-                {
-                    key: 1,
-                    title: '测试一',
-                    icon: 'apartment',
-                    children: [
-                        { key: 2, title: '测试A', icon: 'apartment' },
-                        { key: 3, title: '测试B', icon: 'apartment' },
-                        { key: 4, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-                {
-                    key: 5,
-                    title: '测试二',
-                    icon: 'apartment',
-                    children: [
-                        { key: 6, title: '测试A', icon: 'apartment' },
-                        { key: 7, title: '测试B', icon: 'apartment' },
-                        { key: 8, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-                {
-                    key: 9,
-                    title: '测试三',
-                    icon: 'apartment',
-                    children: [
-                        { key: 10, title: '测试A', icon: 'apartment' },
-                        { key: 11, title: '测试B', icon: 'apartment' },
-                        { key: 12, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-            ],
+            dataSource: [],
         };
     },
     computed: {
@@ -105,7 +81,7 @@ export default {
                 .page(qo)
                 .then(ro => {
                     forEachTree(ro.extra.page.list, node => {
-                        node.id = node.key;
+                        node.key = node.id;
                         node.title = node.name;
                         node.icon = 'apartment';
                     });
@@ -128,6 +104,13 @@ export default {
             this.keywords = value;
             this.$nextTick(() => this.refreshData());
         },
+        /** 处理树节点点击事件 */
+        handleTreeNodeClick(selectedKeys, { selected }) {
+            this.$emit('select', {
+                isSelected: selected,
+                ...(selected ? { item: findFromTree(this.dataSource, node => node.id === selectedKeys[0]) } : {}),
+            });
+        },
     },
 };
 </script>
@@ -144,6 +127,9 @@ export default {
 }
 .spin {
     height: 100%;
+}
+.tree {
+    border-right: 1px solid #eee;
 }
 .ant-pagination {
     margin-top: 20px;

@@ -45,38 +45,7 @@ export default {
             pageNum: 1,
             pageSize: 20,
             keywords: '',
-            dataSource: [
-                {
-                    key: 1,
-                    title: '测试一',
-                    icon: 'apartment',
-                    children: [
-                        { key: 2, title: '测试A', icon: 'apartment' },
-                        { key: 3, title: '测试B', icon: 'apartment' },
-                        { key: 4, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-                {
-                    key: 5,
-                    title: '测试二',
-                    icon: 'apartment',
-                    children: [
-                        { key: 6, title: '测试A', icon: 'apartment' },
-                        { key: 7, title: '测试B', icon: 'apartment' },
-                        { key: 8, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-                {
-                    key: 9,
-                    title: '测试三',
-                    icon: 'apartment',
-                    children: [
-                        { key: 10, title: '测试A', icon: 'apartment' },
-                        { key: 11, title: '测试B', icon: 'apartment' },
-                        { key: 12, title: '测试C', icon: 'apartment' },
-                    ],
-                },
-            ],
+            dataSource: [],
         };
     },
     computed: {
@@ -105,7 +74,7 @@ export default {
                 .page(qo)
                 .then(ro => {
                     forEachTree(ro.extra.page.list, node => {
-                        node.id = node.key;
+                        node.key = node.id;
                         node.title = node.name;
                         node.icon = 'apartment';
                     });
