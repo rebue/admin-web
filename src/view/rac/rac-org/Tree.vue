@@ -130,6 +130,7 @@ export default {
 }
 .tree {
     border-right: 1px solid #eee;
+    padding-right: 10px;
 }
 .ant-pagination {
     margin-top: 20px;

@@ -2,6 +2,8 @@
  * 组织类型
  */
 export enum OrgTypeDic {
+    /** 根节点 */
+    Root = 0,
     /** 集团 */
     Group = 1,
     /** 公司 */
