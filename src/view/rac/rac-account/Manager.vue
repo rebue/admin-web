@@ -1,7 +1,7 @@
 <template>
     <base-manager ref="baseManager">
         <template #managerCard>
-            <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
+            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
                         :ref="'crudTable.' + domain.id"
@@ -247,6 +247,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.domain-tabs {
+    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+}
+
 .table-left {
     display: flex;
     .table-divider {
