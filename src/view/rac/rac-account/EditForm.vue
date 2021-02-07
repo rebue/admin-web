@@ -31,6 +31,9 @@ export default {
                 signInPswd: [
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
+                signInNickname: [
+                    { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
+                ],
             },
         };
     },
@@ -44,6 +47,7 @@ export default {
                     type: 'password',
                     visible: this.editFormType === EditFormTypeDic.Add,
                 },
+                { dataIndex: 'signInNickname', title: '登录昵称' },
                 { dataIndex: 'isTester', title: '测试者', type: 'switch' },
                 { dataIndex: 'remark', title: '账户备注' },
                 { dataIndex: 'id', title: '编码', type: 'hidden' },

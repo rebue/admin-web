@@ -122,9 +122,9 @@
                     <span slot="action" slot-scope="text, record">
                         <template v-for="(item, index) in actions">
                             <span :key="index">
-                                <a v-if="item.type == 'a'" @click="item.onClick(record)">{{ item.title }}</a>
+                                <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
                                 <a-popconfirm
-                                    v-if="item.type == 'confirm'"
+                                    v-if="item.type === 'confirm'"
                                     :title="item.confirmTitle"
                                     @confirm="item.onClick(record)"
                                     okText="确定"

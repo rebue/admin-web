@@ -53,18 +53,32 @@ export default {
         this.api = racAccountApi;
         const columns = [
             {
-                dataIndex: 'name',
-                title: '名称',
-                width: 250,
+                dataIndex: 'signInName',
+                title: '登录名称',
+                width: 120,
                 fixed: 'left',
+            },
+            {
+                dataIndex: 'nickname',
+                title: '昵称',
+                width: 200,
+                ellipsis: true,
                 customRender: (text, record) => {
                     return (
                         <fragment>
-                            <a-tag color="blue">
-                                账户
-                                <a-icon type="tag" />
-                            </a-tag>
-                            {{ text }}
+                            {record.signInNickname && record.signInNickname}
+                            {record.wxNickname && (
+                                <span>
+                                    <br />
+                                    {record.wxNickname + '(微信)'}
+                                </span>
+                            )}
+                            {record.qqNickname && (
+                                <span>
+                                    <br />
+                                    {record.qqNickname + '(QQ)'}
+                                </span>
+                            )}
                         </fragment>
                     );
                 },

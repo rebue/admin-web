@@ -24,10 +24,10 @@ const curAccountInfo = {
         isTester: false,
         menus: [
             '/base/rac-domain',
-            '/base/rac-account',
+            '/base/rac-sys',
             '/base/rac-perm',
             '/base/rac-role',
-            '/user/rac-account',
+            '/user/rac-org',
             '/user/rac-account',
         ],
     },
