@@ -36,7 +36,7 @@ export default {
     props: {
         width: {
             type: Number,
-            default: 250,
+            default: 200,
         },
         foldWidth: {
             type: Number,

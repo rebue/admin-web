@@ -254,7 +254,7 @@ export default {
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;
-        margin-left: 20px;
+        margin-left: 10px;
     }
 }
 </style>
