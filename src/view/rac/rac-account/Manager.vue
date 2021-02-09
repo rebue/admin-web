@@ -4,6 +4,7 @@
             <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
+                        :showKeywords="true"
                         :ref="'crudTable.' + domain.id"
                         :commands="tableCommands"
                         :columns="columns"
@@ -248,8 +249,12 @@ export default {
 
 .table-left {
     display: flex;
+    height: 100%;
+    margin: 4px 0;
     .table-divider {
         width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 20px;
     }
 }
 </style>

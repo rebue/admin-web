@@ -2,7 +2,13 @@
     <div v-show="show" :style="{ width: currentWidth + 'px' }">
         <div class="menu-toolbar">
             <a-button :icon="orgFold ? 'menu-unfold' : 'menu-fold'" @click="handleOrgFoldChanged" />
-            <a-input-search v-show="!orgFold" :loading="loading" placeholder="关键字" @search="handleSearch" />
+            <a-input-search
+                v-show="!orgFold"
+                v-model.trim="keywords"
+                :loading="loading"
+                placeholder="关键字"
+                @search="refreshData"
+            />
         </div>
         <a-spin :spinning="loading" class="spin">
             <rebue-tree
@@ -87,10 +93,12 @@ export default {
                     });
                     this.dataSource = ro.extra.page.list;
 
-                    if ((!keywords || keywords.trim() === '') && ro.extra.page.total > 0) {
-                        this.$emit('update:show', true);
-                    } else {
-                        this.$emit('update:show', false);
+                    if (!keywords || keywords.trim() === '') {
+                        if (ro.extra.page.total > 0) {
+                            this.$emit('update:show', true);
+                        } else {
+                            this.$emit('update:show', false);
+                        }
                     }
                 })
                 .finally(() => (this.loading = false));
@@ -127,10 +135,6 @@ export default {
 }
 .spin {
     height: 100%;
-}
-.tree {
-    border-right: 1px solid #eee;
-    padding-right: 10px;
 }
 .ant-pagination {
     margin-top: 20px;

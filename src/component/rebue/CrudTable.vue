@@ -15,8 +15,16 @@
                             </template>
                         </slot>
                     </div>
-                    <div class="table-filter">
-                        <slot name="filter"> </slot>
+                    <div class="table-keywords">
+                        <slot name="keywords">
+                            <a-input-search
+                                v-if="showKeywords"
+                                v-model.trim="keywords"
+                                :loading="loading"
+                                placeholder="关键字"
+                                @search="refreshData"
+                            />
+                        </slot>
                     </div>
                     <div class="table-tools">
                         <a-tooltip title="刷新">
@@ -181,6 +189,10 @@ export default observer({
     components: { SvgIcon },
     name: 'CrudTable',
     props: {
+        showKeywords: {
+            type: Boolean,
+            default: false,
+        },
         commands: {
             type: Array,
             default: () => [],
@@ -286,6 +298,7 @@ export default observer({
             loading: false,
             settingStore,
             dataSource: [],
+            keywords: '',
             configColumns: [], // 列配置的列表
             indeterminate: false, // 设置 indeterminate 状态，只负责样式控制
             checkedCols: [], // 选择的列列表(用于列选择配置)
@@ -349,6 +362,7 @@ export default observer({
             this.loading = true;
 
             let promise;
+            const { query, keywords, filters } = this;
             const sorter =
                 JSON.stringify(this.sorter) === '{}'
                     ? undefined
@@ -356,7 +370,8 @@ export default observer({
             if (this.pagination) {
                 // 分页查询
                 const { current, pageSize } = this.pagination;
-                const data = { ...this.query, pageNum: current ?? 1, pageSize, ...this.filters, ...sorter };
+                const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
+                if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = this.api.page(data).then(ro => {
                     this.pagination = {
                         ...this.pagination,
@@ -366,7 +381,8 @@ export default observer({
                 });
             } else {
                 // 不分页查询
-                const data = { ...this.query, ...this.filters, ...sorter };
+                const data = { ...query, ...filters, ...sorter };
+                if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
                     ro => (this.dataSource = ro.extra.list)
                 );
@@ -503,10 +519,14 @@ export default observer({
         flex-grow: 1;
         .table-operator {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
-            .table-filter {
+            .table-commands {
                 flex-grow: 1;
+            }
+            .table-keywords {
+                margin: 0 15px;
             }
         }
     }
