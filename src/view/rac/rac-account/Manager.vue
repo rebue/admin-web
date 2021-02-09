@@ -68,7 +68,7 @@ export default {
             {
                 dataIndex: 'nickname',
                 title: '昵称',
-                width: 200,
+                width: 160,
                 ellipsis: true,
                 customRender: (text, record) => {
                     return (
@@ -113,23 +113,10 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 240,
+                width: 80,
                 fixed: 'right',
                 customRender: (text, record) => {
-                    return (
-                        <span>
-                            <a onClick={() => this.handleEdit(record)}>编辑</a>
-                            <a-divider type="vertical" />
-                            <a-popconfirm
-                                title="你确定要删除本条记录吗?"
-                                onConfirm={() => this.handleDel(record)}
-                                okText="确定"
-                                cancelText="取消"
-                            >
-                                <a>删除</a>
-                            </a-popconfirm>
-                        </span>
-                    );
+                    return <a onClick={() => this.handleEdit(record)}>编辑</a>;
                 },
             },
         ];

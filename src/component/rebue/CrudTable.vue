@@ -15,6 +15,9 @@
                             </template>
                         </slot>
                     </div>
+                    <div class="table-filter">
+                        <slot name="filter"> </slot>
+                    </div>
                     <div class="table-tools">
                         <a-tooltip title="刷新">
                             <a-button type="link" icon="reload" @click="refreshData" />
@@ -76,19 +79,17 @@
                             </a-popover>
                         </a-tooltip>
                         <a-divider type="vertical" />
-                        <fragment v-if="expandable">
-                            <a-tooltip title="全部展开">
-                                <a-button type="link" size="large" @click="expandAll">
-                                    <icon-font type="rebue-expand-all" />
-                                </a-button>
-                            </a-tooltip>
-                            <a-tooltip title="全部收缩">
-                                <a-button type="link" size="large" @click="collapseAll">
-                                    <icon-font type="rebue-collapse-all" />
-                                </a-button>
-                            </a-tooltip>
-                            <a-divider type="vertical" />
-                        </fragment>
+                        <a-tooltip v-if="expandable" title="全部展开">
+                            <a-button type="link" size="large" @click="expandAll">
+                                <icon-font type="rebue-expand-all" />
+                            </a-button>
+                        </a-tooltip>
+                        <a-tooltip v-if="expandable" title="全部收缩">
+                            <a-button type="link" size="large" @click="collapseAll">
+                                <icon-font type="rebue-collapse-all" />
+                            </a-button>
+                        </a-tooltip>
+                        <a-divider v-if="expandable" type="vertical" />
                         <a-tooltip :title="fullScreenTitle">
                             <a-button type="link" :icon="fullScreenIcon" @click="handleToggleFullScreen" />
                         </a-tooltip>
@@ -502,12 +503,10 @@ export default observer({
         flex-grow: 1;
         .table-operator {
             display: flex;
+            justify-content: space-between;
             margin-bottom: 8px;
-            .table-commands {
+            .table-filter {
                 flex-grow: 1;
-            }
-            .table-tools {
-                flex-grow: 0;
             }
         }
     }
