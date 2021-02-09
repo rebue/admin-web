@@ -90,6 +90,23 @@ module.exports = {
                 });
             }
         },
+        /** 启用或禁用 */
+        'POST /rac/account/enable': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                list[findIndex].isEnabled = body.enable;
+                return res.json({
+                    result: 1,
+                    msg: body.enable ? '启用' : '禁用' + '成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: body.enable ? '启用' : '禁用' + '失败，找不到要修改的记录',
+                });
+            }
+        },
         'GET /rac/account/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
