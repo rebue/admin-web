@@ -53,6 +53,13 @@ export default {
         this.api = racAccountApi;
         const columns = [
             {
+                dataIndex: 'no',
+                title: '#',
+                width: 50,
+                fixed: 'left',
+                scopedSlots: { customRender: 'serial' },
+            },
+            {
                 dataIndex: 'signInName',
                 title: '登录名称',
                 width: 120,
@@ -195,6 +202,7 @@ export default {
         /** 处理账户启用或禁用 */
         handleAccountCheck(record) {
             this.loading = true;
+            console.log('record', record);
             racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
