@@ -19,7 +19,6 @@ const signIn = (req, res, u, b) => {
         msg: '账户登录成功',
         extra: {
             id: account.id,
-            indexUrn: '/',
         },
     });
 };

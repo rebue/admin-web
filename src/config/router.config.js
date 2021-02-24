@@ -10,7 +10,21 @@ const RouteView = {
 export const constantRouters = [
     {
         path: '/sign-in',
-        component: () => import('@/view/sign-in/SignIn.vue'),
+        name: 'sign-in',
+        component: RouteView,
+        redirect: '/sign-in/ops',
+        children: [
+            {
+                path: '/sign-in/platform',
+                name: 'platform-sign-in',
+                component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
+            },
+            {
+                path: '/sign-in/ops',
+                name: 'ops-sign-in',
+                component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
+            },
+        ],
     },
     {
         path: '/404',

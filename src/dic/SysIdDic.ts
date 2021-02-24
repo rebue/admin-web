@@ -6,4 +6,6 @@ export enum SysIdDic {
     None = 'none',
     /** 平台后台管理 */
     PlatformAdminWeb = 'platform-admin-web',
+    /** 运营后台管理 */
+    OpsAdminWeb = 'ops-admin-web',
 }

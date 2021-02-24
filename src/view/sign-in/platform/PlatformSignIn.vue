@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <div class="header-center">XXX系统<a-divider type="vertical" />登录</div>
+            <div class="header-center">平台管理<a-divider type="vertical" />登录</div>
         </div>
         <div class="main">
             <a-card title="账号密码登录" class="login-card">
@@ -78,7 +78,7 @@ export default {
                         })
                         .then(ro => {
                             setSysId(this.sysId);
-                            this.$router.push({ path: this.redirect || ro.extra.indexUrn });
+                            this.$router.push({ path: this.redirect || '/' });
                         })
                         .finally(() => (this.loading = false));
                 } else {

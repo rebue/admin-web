@@ -1,4 +1,3 @@
-const moment = require('moment');
 const { parse } = require('url');
 
 const list = [
@@ -6,8 +5,14 @@ const list = [
         id: 'platform-admin-web',
         name: '平台后台管理',
         domainId: 'platform',
-        indexUrn: '/',
-        menuUrn: 'http://127.0.0.1:13080/menus',
+        menuUrn: 'http://127.0.0.1:13080/menus/platform',
+        remark: '对平台的后台管理提供最基本的功能',
+    },
+    {
+        id: 'ops-admin-web',
+        name: '运营后台管理',
+        domainId: 'ops',
+        menuUrn: 'http://127.0.0.1:13080/menus/ops',
         remark: '对平台的后台管理提供最基本的功能',
     },
 ];
