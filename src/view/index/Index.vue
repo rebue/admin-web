@@ -55,7 +55,7 @@ export default observer({
     data() {
         const sysId = getSysId();
         if (sysId === SysIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
-        else if (sysId === SysIdDic.OpsAdminWeb) this.logoTitle = '平台管理';
+        else if (sysId === SysIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
         return {
             accountStore,
             settingStore,

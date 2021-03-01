@@ -11,6 +11,16 @@ const list = [
         signInNickname: '平台管理员',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
+        menus: [
+            '/base/rac-domain',
+            '/base/rac-sys',
+            '/base/rac-perm',
+            '/base/rac-role',
+            '/account/rac-org',
+            '/account/rac-account',
+            '/log/login-log',
+            '/log/opration-log',
+        ],
     },
     {
         id: '2',
@@ -19,27 +29,14 @@ const list = [
         signInNickname: '运营管理员',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
+        menus: [
+            '/user/ops-org',
+            '/user/ops-account',
+        ],
     },
 ];
 
 const listRacAccount = () => list;
-const curAccountInfo = {
-    result: 1,
-    msg: '获取当前账户信息成功',
-    extra: {
-        id: list[0].id,
-        nickname: list[0].signInNickname,
-        isTester: false,
-        menus: [
-            '/base/rac-domain',
-            '/base/rac-sys',
-            '/base/rac-perm',
-            '/base/rac-role',
-            '/user/rac-org',
-            '/user/rac-account',
-        ],
-    },
-};
 
 const findRacAccountBySignInName = signInName => list.find(item => item.signInName === signInName);
 
@@ -49,20 +46,33 @@ module.exports = {
     routes: {
         'GET /rac/account/list': listRacAccount,
         'GET /rac/account/get-cur-account-info': (req, res, u) => {
-            let url = u;
-            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-                url = req.url;
+            const cookies = req.headers.cookie.split(';');
+            let accountId;
+            for (const cookie of cookies) {
+                const keyAndName = cookie.split('=');
+                const key = keyAndName[0].trim();
+                const name = keyAndName[1].trim();
+                if (key === 'sys_id') {
+                    switch (name) {
+                        case 'platform-admin-web':
+                            accountId = '1';
+                            break;
+                        case 'ops-admin-web':
+                            accountId = '2';
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
             }
-            const params = parse(url, true).query;
 
-            const eo = list.find(item => item.id === params.id);
+            const eo = list.find(item => item.id === accountId);
             if (eo) {
                 return res.json({
                     result: 1,
-                    msg: '查询成功',
-                    extra: {
-                        one: eo,
-                    },
+                    msg: '获取当前账户信息成功',
+                    extra: eo,
                 });
             } else {
                 return res.json({

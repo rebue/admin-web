@@ -36,10 +36,11 @@ export const constantRouters = [
         component: () => import('@/view/index/Index.vue'),
         redirect: '/base/rac-domain',
         children: [
+            /** 平台管理系统 */
             {
                 path: '/base',
                 name: 'base',
-                meta: { title: '基础配置', keepAlive: true, icon: 'setting' },
+                meta: { title: '基础', keepAlive: true, icon: 'setting' },
                 component: RouteView,
                 hidden: true,
                 redirect: '/base/rac-domain',
@@ -75,6 +76,55 @@ export const constantRouters = [
                 ],
             },
             {
+                path: '/account',
+                name: 'account',
+                meta: { title: '账户', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/account/rac-account',
+                children: [
+                    {
+                        path: '/account/rac-org',
+                        name: 'rac-org',
+                        component: () => import('@/view/rac/rac-org/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '组织', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/account/rac-account',
+                        name: 'rac-account',
+                        component: () => import('@/view/rac/rac-account/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账户', keepAlive: true, icon: 'user' },
+                    },
+                ],
+            },
+            {
+                path: '/log',
+                name: 'log',
+                meta: { title: '日志', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/log/login-log',
+                children: [
+                    {
+                        path: '/log/login-log',
+                        name: 'login-log',
+                        component: () => import('@/view/rac/rac-org/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '登录日志', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/log/opration-log',
+                        name: 'opration-log',
+                        component: () => import('@/view/rac/rac-account/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '操作日志', keepAlive: true, icon: 'user' },
+                    },
+                ],
+            },
+            /** 运营管理系统 */
+            {
                 path: '/user',
                 name: 'user',
                 meta: { title: '用户中心', keepAlive: true, icon: 'ant-design' },
@@ -83,15 +133,39 @@ export const constantRouters = [
                 redirect: '/user/rac-account',
                 children: [
                     {
-                        path: '/user/rac-org',
-                        name: 'rac-org',
+                        path: '/user/ops-org',
+                        name: 'ops-org',
                         component: () => import('@/view/rac/rac-org/Manager.vue'),
                         hidden: true,
                         meta: { title: '组织', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/user/rac-account',
-                        name: 'rac-account',
+                        path: '/user/ops-account',
+                        name: 'ops-account',
+                        component: () => import('@/view/rac/rac-account/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账户', keepAlive: true, icon: 'user' },
+                    },
+                ],
+            },
+            {
+                path: '/ops',
+                name: 'ops',
+                meta: { title: '运营管理', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/user/rac-account',
+                children: [
+                    {
+                        path: '/user/ops-org',
+                        name: 'ops-org',
+                        component: () => import('@/view/rac/rac-org/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '组织', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/user/ops-account',
+                        name: 'ops-account',
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户', keepAlive: true, icon: 'user' },
