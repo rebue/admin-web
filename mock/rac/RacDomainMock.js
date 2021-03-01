@@ -12,6 +12,11 @@ const list = [
         name: '平台领域',
         remark: '平台管理领域',
     },
+    {
+        id: 'ops',
+        name: '运营领域',
+        remark: '运营管理领域',
+    },
 ];
 
 const listAllRacDomain = () => list;

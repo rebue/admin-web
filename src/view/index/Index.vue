@@ -14,7 +14,7 @@
         <template #menuHeaderRender>
             <div>
                 <img src="@/asset/logo.png" />
-                <h1>Rebue Admin</h1>
+                <h1>{{ logoTitle }}</h1>
             </div>
         </template>
         <template #collapsedButtonRender>
@@ -42,15 +42,20 @@
 
 <script>
 import { observer } from 'mobx-vue';
+import { getSysId } from '@/util/cookie';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
 import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
+import { SysIdDic } from '@/dic/SysIdDic';
 
 export default observer({
     name: 'Index',
     data() {
+        const sysId = getSysId();
+        if (sysId === SysIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
+        else if (sysId === SysIdDic.OpsAdminWeb) this.logoTitle = '平台管理';
         return {
             accountStore,
             settingStore,
@@ -77,7 +82,7 @@ export default observer({
         };
     },
     computed: {
-        title: function() {
+        title() {
             return this.$route.meta.title;
         },
     },

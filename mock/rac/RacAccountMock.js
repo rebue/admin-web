@@ -5,7 +5,7 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: '0',
+        id: '1',
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
@@ -13,7 +13,7 @@ const list = [
             'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
     },
     {
-        id: '1',
+        id: '2',
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
@@ -48,7 +48,29 @@ module.exports = {
     listRacAccount,
     routes: {
         'GET /rac/account/list': listRacAccount,
-        'GET /rac/account/get-cur-account-info': curAccountInfo,
+        'GET /rac/account/get-cur-account-info': (req, res, u) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            const eo = list.find(item => item.id === params.id);
+            if (eo) {
+                return res.json({
+                    result: 1,
+                    msg: '查询成功',
+                    extra: {
+                        one: eo,
+                    },
+                });
+            } else {
+                return res.json({
+                    result: 1,
+                    msg: '查询失败',
+                });
+            }
+        },
         /** 添加 */
         'POST /rac/account': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
@@ -138,7 +160,8 @@ module.exports = {
                     msg: '查询失败',
                 });
             }
-        } /** 查询记录 */,
+        },
+        /** 查询记录 */
         'GET /rac/account/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
