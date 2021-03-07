@@ -19,7 +19,7 @@ const list = [
             '/account/rac-org',
             '/account/rac-account',
             '/log/login-log',
-            '/log/opration-log',
+            '/log/op-log',
         ],
     },
     {

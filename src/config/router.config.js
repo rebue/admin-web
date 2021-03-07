@@ -115,8 +115,8 @@ export const constantRouters = [
                         meta: { title: '登录日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/log/opration-log',
-                        name: 'opration-log',
+                        path: '/log/op-log',
+                        name: 'op-log',
                         component: () => import('@/view/rac/rac-log/OpLog.vue'),
                         hidden: true,
                         meta: { title: '操作日志', keepAlive: true, icon: 'user' },
