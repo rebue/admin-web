@@ -8,6 +8,7 @@ const mock = {
     ...require('./rac/RacPermGroupMock').routes,
     ...require('./rac/RacPermMock').routes,
     ...require('./rac/RacOrgMock').routes,
+    ...require('./rac/RacOpLogMock').routes,
 };
 
 // console.log('mock', mock);
