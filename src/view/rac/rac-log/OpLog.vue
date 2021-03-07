@@ -10,7 +10,6 @@
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
-                        :defaultPagination="false"
                     >
                     </crud-table>
                 </a-tab-pane>
@@ -34,14 +33,14 @@ export default {
         this.api = racOpLogApi;
         const columns = [
             {
-                dataIndex: 'id',
-                title: '日志ID',
+                dataIndex: 'accountId',
+                title: '账号ID',
                 width: 250,
                 fixed: 'left',
             },
             {
-                dataIndex: 'accountId',
-                title: '账号ID',
+                dataIndex: 'accountName',
+                title: '账号名称',
                 ellipsis: true,
             },
             {

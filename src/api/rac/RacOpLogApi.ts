@@ -1,21 +1,19 @@
 /**
- * 领域信息相关请求
+ * 操作日志信息相关请求
  */
-import { Ro } from '@/ro/Ro';
-import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
+import { Ro } from '@/ro/Ro';
 
 export default class RacOpLogApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/opLog';
+    baseUrn = '/rac/op-log';
 
-    /** 上移 */
-    moveUp(id: string): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/move-up', data: { id } });
-    }
-
-    /** 下移 */
-    moveDown(id: string): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/move-down', data: { id } });
+    /**
+     * 获取分页列表
+     */
+    page(qo): Promise<Ro> {
+        return super.page(qo).then(ro => {
+            return ro;
+        });
     }
 }
