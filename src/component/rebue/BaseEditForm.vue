@@ -160,7 +160,6 @@ export default {
             this.visible = true;
         },
         handleRadioGroupChanged(e, formItem) {
-            console.log('handleRadioGroupChanged', e, formItem);
             this.model = { ...this.model, [formItem.dataIndex]: e.target.value };
         },
         handleOk() {

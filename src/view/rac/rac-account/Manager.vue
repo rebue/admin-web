@@ -199,7 +199,7 @@ export default {
          * 处理添加分组的事件
          */
         handleAccountAdd() {
-            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
+            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId, isTester: false });
         },
         /**
          * 处理编辑分组的事件
