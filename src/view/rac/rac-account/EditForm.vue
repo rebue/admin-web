@@ -22,24 +22,49 @@ export default {
     },
     data() {
         this.api = racAccountApi;
+        this.rules = {
+            signInNickname: [
+                { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
+            ],
+            signInName: [
+                { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
+            ],
+            signInPswd: [
+                { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
+            ],
+            signInPswdAgain: [
+                {
+                    required: true,
+                    message: '请输入登录密码(再次确认)',
+                    trigger: ['change', 'blur'],
+                    validator: (rule, value, callback) => {
+                        console.log('value', value);
+                        if (value === undefined) value = '';
+
+                        value = value.trim();
+                        if (value === '') {
+                            callback(new Error('请输入登录密码(再次确认)'));
+                            return;
+                        }
+
+                        if (value !== this.$refs.baseEditForm.model.signInPswd) {
+                            callback(new Error('两次输入的登录密码不相同'));
+                            return;
+                        }
+
+                        callback();
+                    },
+                },
+            ],
+        };
         return {
             editFormType: EditFormTypeDic.None,
-            rules: {
-                signInName: [
-                    { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                signInPswd: [
-                    { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                signInNickname: [
-                    { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-            },
         };
     },
     computed: {
         formItems() {
             return [
+                { dataIndex: 'signInNickname', title: '登录昵称' },
                 { dataIndex: 'signInName', title: '登录名称' },
                 {
                     dataIndex: 'signInPswd',
@@ -47,7 +72,12 @@ export default {
                     type: 'password',
                     visible: this.editFormType === EditFormTypeDic.Add,
                 },
-                { dataIndex: 'signInNickname', title: '登录昵称' },
+                {
+                    dataIndex: 'signInPswdAgain',
+                    title: '登录密码(再次确认)',
+                    type: 'password',
+                    visible: this.editFormType === EditFormTypeDic.Add,
+                },
                 { dataIndex: 'isTester', title: '测试者', type: 'switch' },
                 { dataIndex: 'remark', title: '账户备注' },
                 { dataIndex: 'id', title: '编码', type: 'hidden' },

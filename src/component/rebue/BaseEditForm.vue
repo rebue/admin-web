@@ -165,7 +165,6 @@ export default {
         handleOk() {
             this.loading = true;
             this.$refs.form.validate(valid => {
-                console.log('validate form: ', valid, this.model);
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
