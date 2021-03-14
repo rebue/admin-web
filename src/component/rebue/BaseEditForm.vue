@@ -160,13 +160,11 @@ export default {
             this.visible = true;
         },
         handleRadioGroupChanged(e, formItem) {
-            console.log('handleRadioGroupChanged', e, formItem);
             this.model = { ...this.model, [formItem.dataIndex]: e.target.value };
         },
         handleOk() {
             this.loading = true;
             this.$refs.form.validate(valid => {
-                console.log('validate form: ', valid, this.model);
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api

@@ -5,7 +5,7 @@
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
                         :showKeywords="true"
-                        :ref="'crudTable.' + domain.id"
+                        :ref="`crudTable.${domain.id}`"
                         :columns="columns"
                         :api="api"
                         :query="{ domainId: curDomainId }"

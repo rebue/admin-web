@@ -5,8 +5,9 @@
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
                         :showKeywords="true"
-                        :ref="'crudTable.' + domain.id"
+                        :ref="`crudTable.${domain.id}`"
                         :commands="tableCommands"
+                        :actions="tableActions"
                         :columns="columns"
                         :api="api"
                         :query="{ domainId: curDomainId }"
@@ -25,11 +26,12 @@
                             </div>
                         </template>
                         <template #editForm="{handleEditFormClose}">
-                            <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
+                            <edit-form :ref="`editForm.${domain.id}`" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
+            <change-pswd-form ref="changePswdForm" :width="640" @close="handlechangePswdFormClose" />
         </template>
     </base-manager>
 </template>
@@ -37,7 +39,8 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import EditForm from './EditForm';
+import EditForm from './EditForm.vue';
+import ChangePswdForm from './ChangePswdForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racAccountApi } from '@/api/Api';
@@ -45,10 +48,11 @@ import { racDomainApi, racAccountApi } from '@/api/Api';
 export default {
     name: 'Manager',
     components: {
+        CrudTable,
         BaseManager,
         EditForm,
+        ChangePswdForm,
         OrgTree,
-        CrudTable,
     },
     data() {
         this.api = racAccountApi;
@@ -114,11 +118,9 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 80,
+                width: 150,
                 fixed: 'right',
-                customRender: (text, record) => {
-                    return <a onClick={() => this.handleEdit(record)}>编辑</a>;
-                },
+                scopedSlots: { customRender: 'action' },
             },
         ];
 
@@ -128,6 +130,19 @@ export default {
                 icon: 'plus',
                 title: '新建',
                 onClick: this.handleAccountAdd,
+            },
+        ];
+
+        this.tableActions = [
+            {
+                type: 'a',
+                title: '编辑',
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'a',
+                title: '修改密码',
+                onClick: record => this.handleChangePswd(record),
             },
         ];
 
@@ -199,7 +214,7 @@ export default {
          * 处理添加分组的事件
          */
         handleAccountAdd() {
-            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
+            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId, isTester: false });
         },
         /**
          * 处理编辑分组的事件
@@ -228,6 +243,15 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理改变密码的事件
+         */
+        handleChangePswd(record) {
+            this.$refs['changePswdForm'].show(EditFormTypeDic.Modify, record);
+        },
+        handlechangePswdFormClose() {
+            //
         },
         /**
          * 处理删除账户的事件

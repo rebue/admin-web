@@ -2,9 +2,9 @@
     <base-manager ref="baseManager">
         <template #managerCard>
             <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="item in domains" :key="item.id" :tab="item.name">
+                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
-                        :ref="'crudTable.' + item.id"
+                        :ref="`crudTable.${domain.id}`"
                         :commands="tableCommands"
                         :actions="tableActions"
                         :columns="columns"
@@ -14,7 +14,7 @@
                         :expandable="true"
                     >
                         <template #editForm="{handleEditFormClose}">
-                            <edit-form :ref="'editForm.' + item.id" :width="640" @close="handleEditFormClose" />
+                            <edit-form :ref="`editForm.${domain.id}`" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

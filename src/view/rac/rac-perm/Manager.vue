@@ -4,7 +4,7 @@
             <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
-                        :ref="'crudTable.' + domain.id"
+                        :ref="`crudTable.${domain.id}`"
                         :commands="tableCommands"
                         :columns="columns"
                         :api="api"
@@ -21,7 +21,7 @@
                                 :width="640"
                                 @close="handleEditFormClose"
                             />
-                            <edit-form :ref="'editForm.' + domain.id" :width="640" @close="handleEditFormClose" />
+                            <edit-form :ref="`editForm.${domain.id}`" :width="640" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

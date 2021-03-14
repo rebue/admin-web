@@ -10,7 +10,7 @@ const list = [
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
         sign:
-            'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
+            'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
             '/base/rac-domain',
             '/base/rac-sys',
@@ -28,7 +28,7 @@ const list = [
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
         sign:
-            'eyJhbGciOiJIUzUxMiJ9.eyJuYmYiOjE2MDc1ODk4MzAsImlzcyI6Inpib3NzIiwiZXhwIjoxNjA3NTg5ODMzLCJpYXQiOjE2MDc1ODk4MzAsInVzZXJJZCI6IjEifQ.NodxTh-rNCGwmkR1BhyebNl9Eeh0zV4v6KcaqBH6h2Kaqj4gKDMmVHstXCqsNKnLPKoOlcIYWW5BTVV94_wRRw',
+            'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
         menus: [
             '/user/ops-org',
             '/user/ops-account',

@@ -306,7 +306,7 @@ export default observer({
             expandedRowKeys: [], //展开的行
             fullScreenIcon: 'fullscreen',
             fullScreenTitle: '全屏',
-            pagination: {},
+            pagination: false,
             filters: {},
             sorter: {},
         };
@@ -367,20 +367,21 @@ export default observer({
                 JSON.stringify(this.sorter) === '{}'
                     ? undefined
                     : { orderBy: this.sorter.sortFilter + this.sorter.sortOrder === 'descend' ? ' DESC' : '' };
+            // 分页查询
             if (this.pagination) {
-                // 分页查询
                 const { current, pageSize } = this.pagination;
                 const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = this.api.page(data).then(ro => {
                     this.pagination = {
                         ...this.pagination,
-                        total: ro.extra.page.total,
+                        total: ro.extra.page.total - 0,
                     };
                     this.dataSource = ro.extra.page.list;
                 });
-            } else {
-                // 不分页查询
+            }
+            // 不分页查询
+            else {
                 const data = { ...query, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
