@@ -22,29 +22,13 @@ module.exports = {
     opLoglist,
     routes: {
         /** 查询记录 */
-        'GET /rac/op-log/list': (req, res, u, b) => {
-            let url = u;
-            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-                url = req.url;
-            }
-            const params = parse(url, true).query;
-
-            return res.json({
-                result: 1,
-                msg: '查询列表成功',
-                extra: {
-                    list: mockList.list.filter(item => item.domainId === params.domainId),
-                },
-            });
-        },
-        /** 查询记录 */
         'GET /rac/op-log/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
             }
             const params = parse(url, true).query;
-            const { pageNum, pageSize } = params;
+            const { pageNum, pageSize, opType } = params;
             let l = mockList.list.filter(item => item.domainId === params.domainId);
             let total = l.length;
 
