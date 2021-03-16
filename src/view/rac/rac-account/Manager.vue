@@ -31,7 +31,7 @@
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
-            <change-pswd-form ref="changePswdForm" :width="640" @close="handlechangePswdFormClose" />
+            <change-pswd-form :id="idOfChangePswd" :visible.sync="changePswdFormVisible" />
         </template>
     </base-manager>
 </template>
@@ -148,6 +148,8 @@ export default {
 
         return {
             loading: false,
+            changePswdFormVisible: false,
+            idOfChangePswd: '',
             showOrg: false,
             curDomainId: '',
             curOrgId: undefined,
@@ -205,10 +207,14 @@ export default {
         /** 处理账户启用或禁用 */
         handleAccountCheck(record) {
             this.loading = true;
-            console.log('record', record);
             racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
                 this.refreshTableData();
             });
+        },
+        /** 处理修改密码 */
+        handleChangePswd(record) {
+            this.idOfChangePswd = record.id;
+            this.changePswdFormVisible = true;
         },
         /**
          * 处理添加分组的事件
@@ -243,15 +249,6 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
-        },
-        /**
-         * 处理改变密码的事件
-         */
-        handleChangePswd(record) {
-            this.$refs['changePswdForm'].show(EditFormTypeDic.Modify, record);
-        },
-        handlechangePswdFormClose() {
-            //
         },
         /**
          * 处理删除账户的事件

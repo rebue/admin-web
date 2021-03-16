@@ -1,27 +1,46 @@
 <template>
-    <base-edit-form
-        ref="baseEditForm"
-        title="账户登录密码"
-        :formItems="formItems"
-        :rules="rules"
-        :api="api"
+    <base-modal
+        ref="baseModal"
+        title="修改账户登录密码"
+        :loading="loading"
         v-bind="$attrs"
         v-on="$listeners"
+        @ok="handleOk"
     >
-    </base-edit-form>
+        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+            <a-form-model-item key="signInPswd" label="登录密码" prop="signInPswd">
+                <a-input-password
+                    v-model.trim="model.signInPswd"
+                    placeholder="请输入登录密码"
+                    autocomplete="new-password"
+                />
+            </a-form-model-item>
+            <a-form-model-item key="signInPswdAgain" label="再次确认" prop="signInPswdAgain">
+                <a-input-password
+                    v-model.trim="model.signInPswdAgain"
+                    placeholder="请再次输入登录密码(确认)"
+                    autocomplete="new-password"
+                />
+            </a-form-model-item>
+        </a-form-model>
+    </base-modal>
 </template>
 
 <script>
-import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racAccountApi } from '@/api/Api';
-import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
+import BaseModal from '@/component/rebue/BaseModal.vue';
 
 export default {
     components: {
-        BaseEditForm,
+        BaseModal,
+    },
+    props: {
+        id: {
+            type: String,
+            required: true,
+        },
     },
     data() {
-        this.api = racAccountApi;
         this.rules = {
             signInPswd: [
                 { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
@@ -29,19 +48,17 @@ export default {
             signInPswdAgain: [
                 {
                     required: true,
-                    message: '请输入登录密码(再次确认)',
                     trigger: ['change', 'blur'],
                     validator: (rule, value, callback) => {
-                        console.log('value', value);
                         if (value === undefined) value = '';
-
                         value = value.trim();
+
                         if (value === '') {
-                            callback(new Error('请输入登录密码(再次确认)'));
+                            callback(new Error('请再次输入登录密码(确认)'));
                             return;
                         }
 
-                        if (value !== this.$refs.baseEditForm.model.signInPswd) {
+                        if (value !== this.model.signInPswd) {
                             callback(new Error('两次输入的登录密码不相同'));
                             return;
                         }
@@ -51,32 +68,40 @@ export default {
                 },
             ],
         };
+        this.formLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 7 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 13 },
+            },
+        };
         return {
-            editFormType: EditFormTypeDic.None,
+            loading: false,
+            model: {
+                signInPswd: '',
+                signInPswdAgain: '',
+            },
         };
     },
-    computed: {
-        formItems() {
-            return [
-                {
-                    dataIndex: 'signInPswd',
-                    title: '登录密码',
-                    type: 'password',
-                    visible: this.editFormType === EditFormTypeDic.Add,
-                },
-                {
-                    dataIndex: 'signInPswdAgain',
-                    title: '登录密码(再次确认)',
-                    type: 'password',
-                    visible: this.editFormType === EditFormTypeDic.Add,
-                },
-            ];
-        },
-    },
     methods: {
-        show: function(editFormType, ...params) {
-            this.editFormType = editFormType;
-            this.$refs.baseEditForm.show(editFormType, ...params);
+        handleOk() {
+            this.loading = true;
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    racAccountApi
+                        .modifySignInPswd(this.id, this.model.signInPswd)
+                        .then(() => this.$emit('update:visible', false))
+                        .finally(() => (this.loading = false));
+                } else {
+                    this.$nextTick(() => {
+                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
+                        this.loading = false;
+                    });
+                }
+            });
         },
     },
 };

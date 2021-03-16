@@ -21,10 +21,20 @@ export default class RacAccountApi extends BaseCrudApi {
     }
 
     /**
-     * 启用或禁用权限
+     * 修改登录密码
+     */
+    modifySignInPswd(id: string, signInPswd: string): Promise<Ro> {
+        return request.put({
+            url: this.baseUrn + '/modify-sign-in-pswd',
+            data: { id, signInPswd: md5(signInPswd).toString() },
+        });
+    }
+
+    /**
+     * 启用或禁用账户
      */
     enable(id: string, enable: boolean): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/enable', data: { id, enable } });
+        return request.put({ url: this.baseUrn + '/enable', data: { id, enable } });
     }
 
     /**
