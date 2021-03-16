@@ -1,7 +1,7 @@
 <template>
     <base-manager ref="baseManager">
         <template #managerCard>
-            <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
+            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
                 <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
                     <crud-table
                         :showKeywords="true"
@@ -35,7 +35,6 @@ export default {
             {
                 dataIndex: 'accountId',
                 title: '账号ID',
-                width: 250,
                 fixed: 'left',
             },
             {
@@ -47,6 +46,11 @@ export default {
                 dataIndex: 'opType',
                 title: '操作类型',
                 ellipsis: true,
+                filters: [
+                    { text: '登录', value: '登录' },
+                    { text: '注册', value: '注册' },
+                    { text: '操作', value: '操作' },
+                ],
             },
             {
                 dataIndex: 'opTitle',
@@ -109,3 +113,8 @@ export default {
     },
 };
 </script>
+<style lang="less" scoped>
+.domain-tabs {
+    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+}
+</style>
