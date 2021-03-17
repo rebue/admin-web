@@ -61,7 +61,6 @@
                                 :placeholder="'请输入' + formItem.title"
                                 :type="formItem.type"
                                 :disabled="formItem.disabled"
-                                autocomplete="new-password"
                             />
                         </a-form-model-item>
                     </slot>

@@ -5,9 +5,10 @@
         :loading="loading"
         v-bind="$attrs"
         v-on="$listeners"
+        @show="handleShow"
         @ok="handleOk"
     >
-        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout" autocomplete="off">
             <a-form-model-item key="signInPswd" label="登录密码" prop="signInPswd">
                 <a-input-password
                     v-model.trim="model.signInPswd"
@@ -87,6 +88,11 @@ export default {
         };
     },
     methods: {
+        handleShow() {
+            this.$nextTick(() => {
+                this.$refs.form.resetFields();
+            });
+        },
         handleOk() {
             this.loading = true;
             this.$refs.form.validate(valid => {
