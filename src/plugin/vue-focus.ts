@@ -6,28 +6,64 @@
  * 3. 在Vue实例中提供focusError方法，可以将焦点设置到第一个校验出错的输入框
  */
 
+import Vue from 'vue';
+
+/** 遍历Vue对象 */
+function forEachVue(obj: Vue, callback: (node: Vue) => boolean): boolean {
+    if (callback(obj) === false) return false;
+    const children: Vue[] = obj.$children;
+    if (children && children.length > 0) {
+        for (const child of children) {
+            if (forEachVue(child, callback) === false) return false;
+        }
+    }
+    return true;
+}
+
 /**
  * 设置焦点
  *
- * @param containerClass 容器的类样式
  * @param el 要设置焦点的元素(如果不传，默认为document，如果传入的值是Falsy，则不处理)
+ * @param containerClass 容器的类样式
  */
-function focus(el: Element | Document | null = document, containerClass = '') {
+function focus(el: Element | Document | Vue | null = document, containerClass = ''): boolean {
     console.log('focus el', el);
-    if (!el) return;
+    if (!el) return false;
 
-    if (el instanceof HTMLElement)
-        if (el.tagName.toUpperCase() === 'INPUT' || el.tagName.toUpperCase() === 'TEXTAREA') {
+    if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)
+        if (
+            (el.tagName.toUpperCase() === 'INPUT' || el.tagName.toUpperCase() === 'TEXTAREA') &&
+            el.hidden !== true &&
+            el.disabled !== true &&
+            el.readOnly !== true
+        ) {
             el.focus();
-            return;
+            return true;
+        } else {
+            return false;
         }
 
+    if (el instanceof Vue) {
+        if (
+            forEachVue(el as Vue, node => {
+                if (
+                    (node.$el instanceof HTMLInputElement || node.$el instanceof HTMLTextAreaElement) &&
+                    focus(node.$el) === true
+                )
+                    return false;
+                return true;
+            }) === false
+        )
+            return true;
+    }
+
     if (containerClass !== '') containerClass += ' ';
-    const dom = el.querySelector(
+    const dom = (el as Element).querySelector(
         `${containerClass}input:not(:disabled):not([type="hidden"]),${containerClass}textarea:not(:disabled)`
     ) as HTMLElement;
     console.log('focus dom', dom);
     dom?.focus();
+    return true;
 }
 
 /**

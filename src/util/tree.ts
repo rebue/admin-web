@@ -12,11 +12,14 @@ export function findFromTree<T>(tree: T[], compare: (node: T) => boolean): T | u
     return undefined;
 }
 
-/** 遍历树节点 */
-export function forEachTree<T>(tree: T[], callback: (node: T) => void): void {
+/** 遍历树 */
+export function forEachTree<T>(tree: T[], callback: (node: T) => boolean): boolean {
     for (const node of tree) {
-        callback(node);
+        if (callback(node) === false) return false;
         const children: T[] = node['children'];
-        if (children) forEachTree(children, callback);
+        if (children) {
+            if (forEachTree(children, callback) === false) return false;
+        }
     }
+    return true;
 }

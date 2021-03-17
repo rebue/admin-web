@@ -4,6 +4,7 @@
     <!-- <iframe v-show="false"> -->
     <!-- FIXME 如果没有设置属性 destroyOnClose=true，新建分组和添加新权限都点击后，再点击设置焦点会失效 -->
     <a-modal
+        ref="modal"
         :title="title"
         okText="提交"
         :ok-button-props="{ props: { icon: 'check' } }"
@@ -47,6 +48,9 @@ export default {
         visible(val) {
             if (val) {
                 this.$emit('show');
+                this.$nextTick(() => {
+                    this.$focus(this.$refs.modal);
+                });
             }
         },
     },
