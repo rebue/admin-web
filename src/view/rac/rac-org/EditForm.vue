@@ -3,6 +3,7 @@
         ref="baseEditForm"
         title="组织"
         :width="650"
+        :editFormType.sync="editFormType"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -97,9 +98,8 @@ export default {
         this.baseEditForm = this.$refs.baseEditForm;
     },
     methods: {
-        show(editFormType, ...params) {
-            this.editFormType = editFormType;
-            this.baseEditForm.show(editFormType, ...params);
+        show: function(...params) {
+            this.$refs.baseEditForm.show(...params);
         },
         handleOrgTypeChange(e) {
             const value = e.target.value;

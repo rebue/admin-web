@@ -118,6 +118,8 @@
                     "
                     :pagination="pagination"
                     :components="components"
+                    v-bind="$attrs"
+                    v-on="$listeners"
                     @expand="handleTableExpand"
                     @change="handleTableChange"
                 >

@@ -18,10 +18,9 @@
                         <template #editForm="{handleEditFormClose}">
                             <perm-group-edit-form
                                 :ref="'permGroupEditForm.' + domain.id"
-                                :width="640"
                                 @close="handleEditFormClose"
                             />
-                            <edit-form :ref="`editForm.${domain.id}`" :width="640" @close="handleEditFormClose" />
+                            <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>

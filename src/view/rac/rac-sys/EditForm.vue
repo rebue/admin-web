@@ -2,6 +2,7 @@
     <base-edit-form
         ref="baseEditForm"
         title="系统"
+        :editFormType.sync="editFormType"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -45,9 +46,8 @@ export default {
         },
     },
     methods: {
-        show: function(editFormType, ...params) {
-            this.editFormType = editFormType;
-            this.$refs.baseEditForm.show(editFormType, ...params);
+        show: function(...params) {
+            this.$refs.baseEditForm.show(...params);
         },
     },
 };

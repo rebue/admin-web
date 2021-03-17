@@ -51,6 +51,8 @@ export default {
                 this.$nextTick(() => {
                     this.$focus(this.$refs.modal);
                 });
+            } else {
+                this.$emit('close');
             }
         },
     },

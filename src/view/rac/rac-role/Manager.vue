@@ -16,7 +16,7 @@
                         @moveDown="handleMoveDown"
                     >
                         <template #editForm="{handleEditFormClose}">
-                            <edit-form :ref="`editForm.${domain.id}`" :width="640" @close="handleEditFormClose" />
+                            <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>
