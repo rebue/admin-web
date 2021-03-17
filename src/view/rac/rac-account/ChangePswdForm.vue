@@ -8,9 +8,10 @@
         @show="handleShow"
         @ok="handleOk"
     >
-        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout" autocomplete="off">
+        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
             <a-form-model-item key="signInPswd" label="登录密码" prop="signInPswd">
                 <a-input-password
+                    v-autofocus
                     v-model.trim="model.signInPswd"
                     placeholder="请输入登录密码"
                     autocomplete="new-password"
@@ -91,6 +92,7 @@ export default {
         handleShow() {
             this.$nextTick(() => {
                 this.$refs.form.resetFields();
+                // this.$focus(this.$refs.form);
             });
         },
         handleOk() {
