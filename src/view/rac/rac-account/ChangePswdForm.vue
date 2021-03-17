@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import { racAccountApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
+import { racAccountApi } from '@/api/Api';
 
 export default {
     components: {
@@ -92,7 +92,6 @@ export default {
         handleShow() {
             this.$nextTick(() => {
                 this.$refs.form.resetFields();
-                // this.$focus(this.$refs.form);
             });
         },
         handleOk() {
