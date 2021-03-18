@@ -34,6 +34,7 @@ function focus(el: Element | Document | Vue | null = document, containerClass = 
         if (
             (el.tagName.toUpperCase() === 'INPUT' || el.tagName.toUpperCase() === 'TEXTAREA') &&
             el.hidden !== true &&
+            el.type !== 'hidden' &&
             el.disabled !== true &&
             el.readOnly !== true
         ) {
@@ -46,9 +47,10 @@ function focus(el: Element | Document | Vue | null = document, containerClass = 
     if (el instanceof Vue) {
         if (
             forEachVue(el as Vue, node => {
+                const nodeEl = node.$el;
                 if (
-                    (node.$el instanceof HTMLInputElement || node.$el instanceof HTMLTextAreaElement) &&
-                    focus(node.$el) === true
+                    (nodeEl instanceof HTMLInputElement || nodeEl instanceof HTMLTextAreaElement) &&
+                    focus(nodeEl) === true
                 )
                     return false;
                 return true;
