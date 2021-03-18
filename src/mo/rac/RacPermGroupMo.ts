@@ -1,10 +1,10 @@
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
-import RacPermMo from './RacPermMo';
+import { RacPermMo } from './RacPermMo';
 
 /**
  * 领域
  */
-export default class RacPermGroupMo {
+export class RacPermGroupMo {
     /** ID */
     id = '';
     /** 名称 */

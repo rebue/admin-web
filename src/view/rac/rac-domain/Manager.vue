@@ -24,7 +24,6 @@ import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
-import RacDomainMo from '@/mo/rac/RacDomainMo';
 
 export default {
     name: 'Manager',
@@ -110,7 +109,7 @@ export default {
          * 处理添加领域的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, new RacDomainMo());
+            this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
          * 处理编辑领域的事件

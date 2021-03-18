@@ -1,11 +1,9 @@
 import { OrgTypeDic } from '@/dic/OrgTypeDic';
-import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
-import RacPermMo from './RacPermMo';
 
 /**
  * 领域
  */
-export default class RacOrgMo {
+export class RacOrgMo {
     /** ID */
     id = '';
     /** 名称 */

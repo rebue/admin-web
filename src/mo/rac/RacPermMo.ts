@@ -3,7 +3,7 @@ import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 /**
  * 领域
  */
-export default class RacPermMo {
+export class RacPermMo {
     /** ID */
     id = '';
     /** 名称 */

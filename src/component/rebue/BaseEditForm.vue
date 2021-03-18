@@ -8,7 +8,7 @@
         @show="handleShow"
         @ok="handleOk"
     >
-        <a-form-model ref="form" class="editForm" :model="model" :rules="rules" v-bind="formLayout">
+        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
             <slot name="formItems" :model="model">
                 <a-form-model-item
                     v-for="formItem in formItems"
@@ -113,8 +113,15 @@ export default {
     },
     methods: {
         show(editFormType, model) {
-            this.model = model;
             this.$emit('update:editFormType', editFormType);
+            // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
+            if (editFormType === EditFormTypeDic.Add) {
+                for (const formItem of this.formItems) {
+                    if (!(formItem.dataIndex in model)) model[formItem.dataIndex] = undefined;
+                }
+            }
+            console.log('model', model);
+            this.model = model;
             this.visible = true;
         },
         handleShow() {
