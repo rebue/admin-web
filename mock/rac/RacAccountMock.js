@@ -18,7 +18,7 @@ const list = [
             '/base/rac-role',
             '/account/rac-org',
             '/account/rac-account',
-            '/log/login-log',
+            '/log/lock-log',
             '/log/op-log',
         ],
     },
