@@ -8,9 +8,24 @@
                         :ref="`crudTable.${domain.id}`"
                         :columns="columns"
                         :api="api"
-                        :query="{ domainId: curDomainId }"
+                        :query="query"
                         :scrollX="600"
                     >
+                        <template #keywordsLeft>
+                            <label style="width: 100px; line-height: 30px">选择日期：</label>
+                            <a-range-picker
+                                format="YYYY-MM-DD HH:mm:ss"
+                                :show-time="{
+                                    hideDisabledOptions: true,
+                                    defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
+                                }"
+                                :disabled-date="disabledDate"
+                                @change="onChangeBir"
+                                @openChange="onOpenChange"
+                                @ok="onOK"
+                                style="width: 350px; padding-right: 20px"
+                            />
+                        </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
@@ -22,6 +37,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racLockLogApi } from '@/api/Api';
+import moment from 'moment';
 
 export default {
     name: 'Manager',
@@ -31,26 +47,38 @@ export default {
     },
     data() {
         this.api = racLockLogApi;
+        let nameId;
         const columns = [
-            {
-                dataIndex: 'id',
-                title: '锁定日志',
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'domainName',
-                title: '系统',
-                ellipsis: true,
-            },
             {
                 dataIndex: 'accountName',
                 title: '锁定账户的账户',
                 ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popover title={text + '详情'}>
+                        <template slot="content">
+                            <p>账户ID：{record.accountId}</p>
+                            <p>账户名：{{ text }}</p>
+                        </template>
+                        {{ text }}
+                    </a-popover>
+                ),
             },
             {
                 dataIndex: 'lockOpName',
                 title: '锁定操作员的账户',
                 ellipsis: true,
+                customRender: (text, record) => (
+                    (nameId = this.getInformation(text, record)),
+                    (
+                        <a-popover title={text + '详情'}>
+                            <template slot="content">
+                                <p>账户ID：{nameId}</p>
+                                <p>账户名：{{ text }}</p>
+                            </template>
+                            {{ text }}
+                        </a-popover>
+                    )
+                ),
             },
             {
                 dataIndex: 'lockReason',
@@ -61,6 +89,7 @@ export default {
                 dataIndex: 'lockDateTime',
                 title: '锁定时间',
                 ellipsis: true,
+                sorter: (a, b) => new Date(a.lockDateTime).getTime() - new Date(b.lockDateTime).getTime(),
             },
             {
                 dataIndex: 'unlockReason',
@@ -71,19 +100,43 @@ export default {
                 dataIndex: 'unlockDateTime',
                 title: '解锁时间',
                 ellipsis: true,
+                sorter: (a, b) => new Date(a.unlockDateTime).getTime() - new Date(b.unlockDateTime).getTime(),
             },
             {
                 dataIndex: 'unlockOpName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
+                customRender: (text, record) => (
+                    (nameId = this.getInformation(text, record)),
+                    (
+                        <a-popover title={text + '详情'}>
+                            <template slot="content">
+                                <p>账户ID：{nameId}</p>
+                                <p>账户名：{{ text }}</p>
+                            </template>
+                            {{ text }}
+                        </a-popover>
+                    )
+                ),
             },
         ];
 
         return {
             loading: false,
             curDomainId: '',
+            query: {},
             domains: [],
+            data: this.api,
             columns,
+            // rowClick: (record, index) => ({
+            //     on: {
+            //         click: () => {
+            //             //点击行要做的操作
+            //             console.log(record);
+            //             console.log(index);
+            //         },
+            //     },
+            // }),
         };
     },
     computed: {
@@ -95,8 +148,49 @@ export default {
         this.refreshData();
     },
     methods: {
-        clickk() {
-            console.log(564);
+        moment,
+        /**
+         * 限制选择时间范围
+         * 只能选择今天当天之后的时间
+         */
+        disabledDate(current) {
+            return current && current > moment().endOf('day');
+        },
+        getInformation() {
+            return Math.ceil(Math.random() * 1000000);
+        },
+        onPanelChange() {
+            console.log('有变化');
+        },
+        /**
+         * ok按扭回调
+         */
+        onOK() {
+            // this.refreshTableData();
+        },
+        /**
+         * 弹出日历和关闭日历的回调
+         */
+        onOpenChange(status) {
+            if (!status) {
+                this.refreshTableData();
+            }
+        },
+        /**
+         * 根据时间发生变化的回调
+         */
+        onChangeBir(date, dateDates) {
+            // this.searchsdates=dateDates
+            // this.query = {
+            //     ...this.query,
+            //     startDate: dateDates[0],
+            //     endDate: dateDates[1],
+            // };
+            this.query.startDate = dateDates[0];
+            this.query.endDate = dateDates[1];
+            if (dateDates[0] === '') {
+                this.refreshTableData();
+            }
         },
         /**
          * 刷新数据
@@ -107,7 +201,12 @@ export default {
                 .listAll()
                 .then(ro => {
                     this.domains = ro.extra.list;
-                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
+                    if (!this.curDomainId) {
+                        this.curDomainId = this.domains[0].id;
+                        this.query = {
+                            domainId: this.curDomainId,
+                        };
+                    }
                 })
                 .finally(() => (this.loading = false));
         },
@@ -122,6 +221,10 @@ export default {
          */
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
+            this.query = {
+                ...this.query,
+                domainId: this.curDomainId,
+            };
         },
     },
 };

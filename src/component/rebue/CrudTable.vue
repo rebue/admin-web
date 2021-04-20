@@ -16,8 +16,10 @@
                         </slot>
                     </div>
                     <div class="table-keywords">
+                        <slot name="keywordsLeft"> </slot>
                         <slot name="keywords">
                             <a-input-search
+                                :style="{ width: currentWidth + 'px' }"
                                 v-if="showKeywords"
                                 v-model.trim="keywords"
                                 :loading="loading"
@@ -191,6 +193,10 @@ export default observer({
     components: { SvgIcon },
     name: 'CrudTable',
     props: {
+        aInputSearch: {
+            type: Number,
+            default: 250,
+        },
         showKeywords: {
             type: Boolean,
             default: false,
@@ -311,9 +317,14 @@ export default observer({
             pagination: false,
             filters: {},
             sorter: {},
+            searchInput: '',
         };
     },
+
     computed: {
+        currentWidth() {
+            return (this.searchInput = this.aInputSearch);
+        },
         draggingState() {
             const draggingMap = {};
             let isLeft = false;
@@ -362,7 +373,6 @@ export default observer({
          */
         refreshData() {
             this.loading = true;
-
             let promise;
             const { query, keywords, filters } = this;
             const sorter =
@@ -529,6 +539,7 @@ export default observer({
                 flex-grow: 1;
             }
             .table-keywords {
+                display: flex;
                 margin: 0 15px;
             }
         }
