@@ -10,6 +10,8 @@
                         :api="api"
                         :query="query"
                         :scrollX="600"
+                        :expandable="true"
+                        bordered
                     >
                         <template #keywordsLeft>
                             <label style="width: 100px; line-height: 30px">选择日期：</label>
@@ -19,7 +21,6 @@
                                     hideDisabledOptions: true,
                                     defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
                                 }"
-                                :disabled-date="disabledDate"
                                 @change="onChangeBir"
                                 @openChange="onOpenChange"
                                 @ok="onOK"
@@ -34,10 +35,14 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racLockLogApi } from '@/api/Api';
 import moment from 'moment';
+import VueDraggableResizable from 'vue-draggable-resizable';
+
+Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
 export default {
     name: 'Manager',
@@ -53,6 +58,7 @@ export default {
                 dataIndex: 'accountName',
                 title: '锁定账户的账户',
                 ellipsis: true,
+                width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
                         <template slot="content">
@@ -67,6 +73,7 @@ export default {
                 dataIndex: 'lockOpName',
                 title: '锁定操作员的账户',
                 ellipsis: true,
+                width: 150,
                 customRender: (text, record) => (
                     (nameId = this.getInformation(text, record)),
                     (
@@ -84,28 +91,33 @@ export default {
                 dataIndex: 'lockReason',
                 title: '锁定原因',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'lockDateTime',
                 title: '锁定时间',
                 ellipsis: true,
+                width: 150,
                 sorter: (a, b) => new Date(a.lockDateTime).getTime() - new Date(b.lockDateTime).getTime(),
             },
             {
                 dataIndex: 'unlockReason',
                 title: '解锁原因',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'unlockDateTime',
                 title: '解锁时间',
                 ellipsis: true,
+                width: 150,
                 sorter: (a, b) => new Date(a.unlockDateTime).getTime() - new Date(b.unlockDateTime).getTime(),
             },
             {
                 dataIndex: 'unlockOpName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
+                width: 150,
                 customRender: (text, record) => (
                     (nameId = this.getInformation(text, record)),
                     (
