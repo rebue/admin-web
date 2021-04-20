@@ -11,7 +11,6 @@
                         :query="query"
                         :scrollX="600"
                         :expandable="true"
-                        bordered
                     >
                         <template #keywordsLeft>
                             <label style="width: 100px; line-height: 30px">选择日期：</label>
@@ -35,14 +34,10 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racLockLogApi } from '@/api/Api';
 import moment from 'moment';
-import VueDraggableResizable from 'vue-draggable-resizable';
-
-Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
 export default {
     name: 'Manager',
@@ -104,7 +99,6 @@ export default {
                 dataIndex: 'unlockReason',
                 title: '解锁原因',
                 ellipsis: true,
-                width: 150,
             },
             {
                 dataIndex: 'unlockDateTime',
@@ -117,7 +111,6 @@ export default {
                 dataIndex: 'unlockOpName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
-                width: 150,
                 customRender: (text, record) => (
                     (nameId = this.getInformation(text, record)),
                     (
