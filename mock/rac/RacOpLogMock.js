@@ -12,7 +12,7 @@ const mockList = Mock.mock({
         'opType': '@pick(["登录", "注册", "操作", "查询"])',
         'opTitle': '@title()',
         'opDetail': '@cparagraph',
-        'opDateTime': '@datetime("yyyy-MM-dd HH:mm:ss")',
+        'opDatetime': '@datetime("yyyy-MM-dd HH:mm:ss")',
     }]
 })
 

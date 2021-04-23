@@ -89,7 +89,7 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'lockDateTime',
+                dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
                 width: 150,
@@ -101,7 +101,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'unlockDateTime',
+                dataIndex: 'unlockDatetime',
                 title: '解锁时间',
                 ellipsis: true,
                 width: 150,

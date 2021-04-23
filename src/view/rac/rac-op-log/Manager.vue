@@ -63,7 +63,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'opDateTime',
+                dataIndex: 'opDatetime',
                 title: '操作时间',
                 ellipsis: true,
             },

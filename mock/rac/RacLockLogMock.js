@@ -17,8 +17,8 @@ const mockList = Mock.mock({
         //'opDetail': '@cparagraph',
         'lockReason': '@cparagraph',
         'unlockReason': '@cparagraph',
-        'lockDateTime': '@datetime("yyyy-MM-dd HH:mm:ss")',
-        'unlockDateTime': '@datetime("yyyy-MM-dd HH:mm:ss")',
+        'lockDatetime': '@datetime("yyyy-MM-dd HH:mm:ss")',
+        'unlockDatetime': '@datetime("yyyy-MM-dd HH:mm:ss")',
     }]
 })
 
