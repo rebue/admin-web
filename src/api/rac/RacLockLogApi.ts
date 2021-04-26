@@ -3,6 +3,7 @@
  */
 import BaseCrudApi from '../comm/BaseCrudApi';
 import { Ro } from '@/ro/Ro';
+import request from '@/util/request';
 
 export default class RacLockLogApi extends BaseCrudApi {
     /** 请求的基础链接 */
@@ -12,8 +13,6 @@ export default class RacLockLogApi extends BaseCrudApi {
      * 获取分页列表
      */
     page(qo): Promise<Ro> {
-        return super.page(qo).then(ro => {
-            return ro;
-        });
+        return request.get({ url: this.baseUrn + '/page', params: qo });
     }
 }

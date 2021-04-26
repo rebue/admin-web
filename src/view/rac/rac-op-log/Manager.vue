@@ -32,20 +32,36 @@ export default {
     data() {
         this.api = racOpLogApi;
         const columns = [
+            // {
+            //     dataIndex: 'accountId',
+            //     title: '账号ID',
+            //     fixed: 'left',
+            //     width: 150,
+            // },
             {
-                dataIndex: 'accountId',
-                title: '账号ID',
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'accountName',
+                dataIndex: 'signInName',
                 title: '账号名称',
+                fixed: 'left',
                 ellipsis: true,
+                width: 150,
+                customRender: (text, record) => (
+                    <a-popover title={text + '详情'}>
+                        <template slot="content">
+                            <p>账户ID：{record.accountId}</p>
+                            <p>账户名：{{ text }}</p>
+                            <p>账户昵称：{record.signInNickname}</p>
+                            <p>微信昵称：{record.wxNickname}</p>
+                            <p>QQ昵称：{record.qqNickname}</p>
+                        </template>
+                        {{ text }}
+                    </a-popover>
+                ),
             },
             {
                 dataIndex: 'opType',
                 title: '操作类型',
                 ellipsis: true,
+                width: 150,
                 filters: [
                     { text: '登录', value: '登录' },
                     { text: '注册', value: '注册' },
@@ -56,16 +72,19 @@ export default {
                 dataIndex: 'opTitle',
                 title: '操作标题',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'opDetail',
                 title: '操作详情',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'opDatetime',
                 title: '操作时间',
                 ellipsis: true,
+                width: 150,
             },
         ];
 

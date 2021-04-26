@@ -50,78 +50,81 @@ export default {
         let nameId;
         const columns = [
             {
-                dataIndex: 'accountName',
-                title: '锁定账户的账户',
+                dataIndex: 'signInName',
+                title: '账号名称',
+                fixed: 'left',
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
                         <template slot="content">
-                            <p>账户ID：{record.accountId}</p>
                             <p>账户名：{{ text }}</p>
+                            <p>账户昵称：{record.signInNickname}</p>
+                            <p>微信昵称：{record.wxNickname}</p>
+                            <p>QQ昵称：{record.qqNickname}</p>
                         </template>
                         {{ text }}
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'lockOpName',
+                dataIndex: 'bsignInName',
                 title: '锁定操作员的账户',
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
-                    (nameId = this.getInformation(text, record)),
-                    (
-                        <a-popover title={text + '详情'}>
-                            <template slot="content">
-                                <p>账户ID：{nameId}</p>
-                                <p>账户名：{{ text }}</p>
-                            </template>
-                            {{ text }}
-                        </a-popover>
-                    )
+                    <a-popover title={text + '详情'}>
+                        <template slot="content">
+                            <p>账户名：{{ text }}</p>
+                            <p>账户昵称：{record.bsignInNickname}</p>
+                            <p>微信昵称：{record.bwxNickname}</p>
+                            <p>QQ昵称：{record.bqqNickname}</p>
+                        </template>
+                        {{ text }}
+                    </a-popover>
                 ),
             },
             {
                 dataIndex: 'lockReason',
                 title: '锁定原因',
                 ellipsis: true,
-                width: 150,
+                width: 220,
             },
             {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
-                width: 150,
+                width: 180,
                 sorter: (a, b) => new Date(a.lockDateTime).getTime() - new Date(b.lockDateTime).getTime(),
             },
             {
                 dataIndex: 'unlockReason',
                 title: '解锁原因',
                 ellipsis: true,
+                width: 220,
             },
             {
                 dataIndex: 'unlockDatetime',
                 title: '解锁时间',
                 ellipsis: true,
-                width: 150,
+                width: 180,
                 sorter: (a, b) => new Date(a.unlockDateTime).getTime() - new Date(b.unlockDateTime).getTime(),
             },
             {
-                dataIndex: 'unlockOpName',
+                dataIndex: 'csignInName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
+                width: 150,
                 customRender: (text, record) => (
-                    (nameId = this.getInformation(text, record)),
-                    (
-                        <a-popover title={text + '详情'}>
-                            <template slot="content">
-                                <p>账户ID：{nameId}</p>
-                                <p>账户名：{{ text }}</p>
-                            </template>
-                            {{ text }}
-                        </a-popover>
-                    )
+                    <a-popover title={text + '详情'}>
+                        <template slot="content">
+                            <p>账户名：{{ text }}</p>
+                            <p>账户昵称：{record.csignInNickname}</p>
+                            <p>微信昵称：{record.cwxNickname}</p>
+                            <p>QQ昵称：{record.cqqNickname}</p>
+                        </template>
+                        {{ text }}
+                    </a-popover>
                 ),
             },
         ];
