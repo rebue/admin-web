@@ -68,7 +68,7 @@ export default {
                 ),
             },
             {
-                dataIndex: 'bsignInName',
+                dataIndex: 'locksignInName',
                 title: '锁定操作员的账户',
                 ellipsis: true,
                 width: 150,
@@ -76,9 +76,9 @@ export default {
                     <a-popover title={text + '详情'}>
                         <template slot="content">
                             <p>账户名：{{ text }}</p>
-                            <p>账户昵称：{record.bsignInNickname}</p>
-                            <p>微信昵称：{record.bwxNickname}</p>
-                            <p>QQ昵称：{record.bqqNickname}</p>
+                            <p>账户昵称：{record.locksignInNickname}</p>
+                            <p>微信昵称：{record.lockwxNickname}</p>
+                            <p>QQ昵称：{record.lockqqNickname}</p>
                         </template>
                         {{ text }}
                     </a-popover>
@@ -111,7 +111,7 @@ export default {
                 sorter: (a, b) => new Date(a.unlockDateTime).getTime() - new Date(b.unlockDateTime).getTime(),
             },
             {
-                dataIndex: 'csignInName',
+                dataIndex: 'unlocksignInName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
                 width: 150,
@@ -119,9 +119,9 @@ export default {
                     <a-popover title={text + '详情'}>
                         <template slot="content">
                             <p>账户名：{{ text }}</p>
-                            <p>账户昵称：{record.csignInNickname}</p>
-                            <p>微信昵称：{record.cwxNickname}</p>
-                            <p>QQ昵称：{record.cqqNickname}</p>
+                            <p>账户昵称：{record.unlocksignInNickname}</p>
+                            <p>微信昵称：{record.unlockwxNickname}</p>
+                            <p>QQ昵称：{record.unlockqqNickname}</p>
                         </template>
                         {{ text }}
                     </a-popover>

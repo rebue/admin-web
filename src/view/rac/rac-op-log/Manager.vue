@@ -32,12 +32,6 @@ export default {
     data() {
         this.api = racOpLogApi;
         const columns = [
-            // {
-            //     dataIndex: 'accountId',
-            //     title: '账号ID',
-            //     fixed: 'left',
-            //     width: 150,
-            // },
             {
                 dataIndex: 'signInName',
                 title: '账号名称',
@@ -52,6 +46,23 @@ export default {
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
+                        </template>
+                        {{ text }}
+                    </a-popover>
+                ),
+            },
+            {
+                dataIndex: 'sysName',
+                title: '系统名称',
+                ellipsis: true,
+                width: 150,
+                customRender: (text, record) => (
+                    <a-popover title={text + '详情'}>
+                        <template slot="content">
+                            <p>系统名称：{record.sysName}</p>
+                            <p>领域ID：{record.domainId}</p>
+                            <p>菜单：{record.menuUrn}</p>
+                            <p>系统备注：{record.remark}</p>
                         </template>
                         {{ text }}
                     </a-popover>
