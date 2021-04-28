@@ -25,13 +25,19 @@
                                 <div class="table-divider"></div>
                             </div>
                         </template>
-                        <template #editForm="{handleEditFormClose}">
+                        <template #editForm="{ handleEditFormClose }">
                             <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
-            <change-pswd-form :id="idOfChangePswd" :visible.sync="changePswdFormVisible" />
+            <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" />
+            <enabled-false-form
+                :record="curRecord"
+                :visible.sync="enabledFalseFormVisible"
+                @close="refreshTableData()"
+            />
+            <enabled-true-form :record="curRecord" :visible.sync="enabledTrueFormVisible" @close="refreshTableData()" />
         </template>
     </base-manager>
 </template>
@@ -40,6 +46,8 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import EditForm from './EditForm.vue';
+import EnabledFalseForm from './EnabledFalseForm.vue';
+import EnabledTrueForm from './EnabledTrueForm.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
@@ -53,6 +61,8 @@ export default {
         EditForm,
         ChangePswdForm,
         OrgTree,
+        EnabledFalseForm,
+        EnabledTrueForm,
     },
     data() {
         this.api = racAccountApi;
@@ -149,12 +159,15 @@ export default {
         return {
             loading: false,
             changePswdFormVisible: false,
-            idOfChangePswd: '',
+            enabledTrueFormVisible: false,
+            enabledFalseFormVisible: false,
+            curRecordId: '',
             showOrg: false,
             curDomainId: '',
             curOrgId: undefined,
             domains: [],
             columns,
+            curRecord: {},
         };
     },
     computed: {
@@ -207,13 +220,23 @@ export default {
         /** 处理账户启用或禁用 */
         handleAccountCheck(record) {
             this.loading = true;
-            racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
-                this.refreshTableData();
-            });
+            this.curRecord = record;
+            if (record.isEnabled === true) {
+                this.enabledTrueFormVisible = true;
+                this.curRecord.isEnabled = !record.isEnabled;
+            } else {
+                this.enabledFalseFormVisible = true;
+                this.curRecord.isEnabled = !record.isEnabled;
+            }
+
+            // racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
+            //     this.refreshTableData();
+            // });
+            //this.curRecordId = '';
         },
         /** 处理修改密码 */
         handleChangePswd(record) {
-            this.idOfChangePswd = record.id;
+            this.curRecordId = record.id;
             this.changePswdFormVisible = true;
         },
         /**

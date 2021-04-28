@@ -5,6 +5,7 @@ import md5 from 'crypto-js/md5';
 import { Ro } from '@/ro/Ro';
 import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
+import { RacAccountMo } from '@/mo/rac/RacAccountMo';
 
 export default class RacAccountApi extends BaseCrudApi {
     /** 请求的基础链接 */
@@ -33,8 +34,9 @@ export default class RacAccountApi extends BaseCrudApi {
     /**
      * 启用或禁用账户
      */
-    enable(id: string, enable: boolean): Promise<Ro> {
-        return request.put({ url: this.baseUrn + '/enable', data: { id, enable } });
+    enable(record: RacAccountMo): Promise<Ro> {
+        const { id, isEnabled, lockReason, unlockReason, ...rest } = record;
+        return request.put({ url: this.baseUrn + '/enable', data: { id, isEnabled, lockReason, unlockReason } });
     }
 
     /**
