@@ -47,7 +47,6 @@ export default {
     },
     data() {
         this.api = racLockLogApi;
-        let nameId;
         const columns = [
             {
                 dataIndex: 'signInName',
@@ -57,13 +56,13 @@ export default {
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
+                        {text}
                         <template slot="content">
-                            <p>账户名：{{ text }}</p>
+                            <p>账户名：{record.signInName}</p>
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
                         </template>
-                        {{ text }}
                     </a-popover>
                 ),
             },
@@ -74,13 +73,13 @@ export default {
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
+                        {text}
                         <template slot="content">
-                            <p>账户名：{{ text }}</p>
+                            <p>账户名：{record.locksignInName}</p>
                             <p>账户昵称：{record.locksignInNickname}</p>
                             <p>微信昵称：{record.lockwxNickname}</p>
                             <p>QQ昵称：{record.lockqqNickname}</p>
                         </template>
-                        {{ text }}
                     </a-popover>
                 ),
             },
@@ -88,27 +87,27 @@ export default {
                 dataIndex: 'lockReason',
                 title: '锁定原因',
                 ellipsis: true,
-                width: 220,
+                width: 180,
             },
             {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
                 width: 180,
-                sorter: (a, b) => new Date(a.lockDateTime).getTime() - new Date(b.lockDateTime).getTime(),
+                sorter: true,
             },
             {
                 dataIndex: 'unlockReason',
                 title: '解锁原因',
                 ellipsis: true,
-                width: 220,
+                width: 180,
             },
             {
                 dataIndex: 'unlockDatetime',
                 title: '解锁时间',
                 ellipsis: true,
                 width: 180,
-                sorter: (a, b) => new Date(a.unlockDateTime).getTime() - new Date(b.unlockDateTime).getTime(),
+                sorter: true,
             },
             {
                 dataIndex: 'unlocksignInName',
@@ -117,13 +116,13 @@ export default {
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
+                        {text}
                         <template slot="content">
-                            <p>账户名：{{ text }}</p>
+                            <p>账户名：{record.unlocksignInName}</p>
                             <p>账户昵称：{record.unlocksignInNickname}</p>
                             <p>微信昵称：{record.unlockwxNickname}</p>
                             <p>QQ昵称：{record.unlockqqNickname}</p>
                         </template>
-                        {{ text }}
                     </a-popover>
                 ),
             },

@@ -39,7 +39,11 @@ export default {
                     message: '请输入登录密码(再次确认)',
                     trigger: ['change', 'blur'],
                     validator: (rule, value, callback) => {
-                        console.log('value', value);
+                        if (this.editFormType === 'modify') {
+                            callback();
+                            return;
+                        }
+
                         if (value === undefined) value = '';
 
                         value = value.trim();
@@ -59,6 +63,7 @@ export default {
             ],
         };
         return {
+            rule: this.rule,
             editFormType: EditFormTypeDic.None,
         };
     },

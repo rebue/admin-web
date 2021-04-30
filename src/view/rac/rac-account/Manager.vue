@@ -86,9 +86,10 @@ export default {
                 width: 160,
                 ellipsis: true,
                 customRender: (text, record) => {
+                    //FIXME 在编辑的时候，昵称输入框删除完之后会报错，浏览窗口动不了
                     return (
                         <fragment>
-                            {record.signInNickname && record.signInNickname}
+                            {record.signInNickname}
                             {record.wxNickname && (
                                 <span>
                                     <br />
@@ -139,7 +140,7 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新建',
-                onClick: this.handleAccountAdd,
+                onClick: this.handleAdd,
             },
         ];
 
@@ -222,11 +223,11 @@ export default {
             this.loading = true;
             this.curRecord = record;
             if (record.isEnabled === true) {
+                this.curRecord.isEnabled = !record.isEnabled;
                 this.enabledTrueFormVisible = true;
-                this.curRecord.isEnabled = !record.isEnabled;
             } else {
-                this.enabledFalseFormVisible = true;
                 this.curRecord.isEnabled = !record.isEnabled;
+                this.enabledFalseFormVisible = true;
             }
 
             // racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
@@ -240,38 +241,18 @@ export default {
             this.changePswdFormVisible = true;
         },
         /**
-         * 处理添加分组的事件
-         */
-        handleAccountAdd() {
-            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId, isTester: false });
-        },
-        /**
-         * 处理编辑分组的事件
-         */
-        handleAccountEdit(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
-        },
-        /**
-         * 处理删除分组的事件
-         */
-        handleAccountDel(record) {
-            this.loading = true;
-            racAccountApi.delById(record.id).finally(() => {
-                this.refreshTableData();
-            });
-        },
-        /**
          * 处理添加账户的事件
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
+            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId, groupId: record.id });
         },
         /**
          * 处理编辑账户的事件
          */
         handleEdit(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+            console.log('record', record);
+            this.editForm.show(EditFormTypeDic.Modify, { ...record });
         },
         /**
          * 处理删除账户的事件
@@ -288,7 +269,7 @@ export default {
 
 <style lang="less" scoped>
 .domain-tabs {
-    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+    overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
 }
 
 .table-left {

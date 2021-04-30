@@ -25,8 +25,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racDomainApi, racAccountApi } from '@/api/Api';
-
+import { racDomainApi, racAccountApi, racLockLogApi } from '@/api/Api';
 export default {
     components: {
         BaseModal,
@@ -75,6 +74,12 @@ export default {
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
+                    console.log(this.record);
+                    this.record.lockAccountId = this.record.id;
+                    // racLockLogApi.add(this.record).then((ro) => {
+                    //     console.log('racLockLogApi:' + ro);
+                    // });
+
                     racAccountApi
                         .enable(this.record)
                         .then(() => this.$emit('update:visible', false))

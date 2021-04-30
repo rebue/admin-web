@@ -22,6 +22,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racOpLogApi } from '@/api/Api';
+import { opType } from '@/dic/opType';
 
 export default {
     name: 'Manager',
@@ -40,14 +41,14 @@ export default {
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
+                        {text}
                         <template slot="content">
                             <p>账户ID：{record.accountId}</p>
-                            <p>账户名：{{ text }}</p>
+                            <p>账户名：{record.signInName}</p>
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
                         </template>
-                        {{ text }}
                     </a-popover>
                 ),
             },
@@ -58,13 +59,13 @@ export default {
                 width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
+                        {text}
                         <template slot="content">
                             <p>系统名称：{record.sysName}</p>
                             <p>领域ID：{record.domainId}</p>
                             <p>菜单：{record.menuUrn}</p>
                             <p>系统备注：{record.remark}</p>
                         </template>
-                        {{ text }}
                     </a-popover>
                 ),
             },
@@ -74,9 +75,9 @@ export default {
                 ellipsis: true,
                 width: 150,
                 filters: [
-                    { text: '登录', value: '登录' },
-                    { text: '注册', value: '注册' },
-                    { text: '操作', value: '操作' },
+                    { text: opType.login, value: opType.login },
+                    { text: opType.register, value: opType.register },
+                    { text: opType.operation, value: opType.operation },
                 ],
             },
             {
@@ -96,6 +97,7 @@ export default {
                 title: '操作时间',
                 ellipsis: true,
                 width: 150,
+                sorter: true,
             },
         ];
 
