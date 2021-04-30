@@ -68,6 +68,7 @@ export default {
     methods: {
         handleShow() {
             this.$nextTick(() => {
+                this.model = {};
                 this.$refs.form.resetFields();
             });
         },
