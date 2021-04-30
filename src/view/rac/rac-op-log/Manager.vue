@@ -22,7 +22,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racOpLogApi } from '@/api/Api';
-import { opType } from '@/dic/opType';
+import { OpTypeDic } from '@/dic/OpTypeDic';
 
 export default {
     name: 'Manager',
@@ -75,9 +75,9 @@ export default {
                 ellipsis: true,
                 width: 150,
                 filters: [
-                    { text: opType.login, value: opType.login },
-                    { text: opType.register, value: opType.register },
-                    { text: opType.operation, value: opType.operation },
+                    { text: OpTypeDic.login, value: OpTypeDic.login },
+                    { text: OpTypeDic.register, value: OpTypeDic.register },
+                    { text: OpTypeDic.operation, value: OpTypeDic.operation },
                 ],
             },
             {

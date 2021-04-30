@@ -63,7 +63,6 @@ export default {
             ],
         };
         return {
-            rule: this.rule,
             editFormType: EditFormTypeDic.None,
         };
     },

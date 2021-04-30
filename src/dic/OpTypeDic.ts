@@ -1,7 +1,7 @@
 /**
  * 操作类型
  */
-export enum opType {
+export enum OpTypeDic {
     /** 登录 */
     login = '登录',
     /** 注册 */
