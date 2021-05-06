@@ -79,10 +79,6 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     this.record.lockAccountId = this.record.id;
-                    console.log('this.record', this.record);
-                    // racLockLogApi.modify(this.record).then((ro) => {
-                    //     console.log('racLockLogApi:' + ro);
-                    // });
                     racAccountApi
                         .enable(this.record)
                         .then(() => this.$emit('update:visible', false))
