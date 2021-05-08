@@ -29,7 +29,6 @@ export default {
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'name', title: '名称' },
                 { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
-                { dataIndex: 'groupId', title: '角色分组ID', type: 'hidden' },
                 { dataIndex: 'remark', title: '备注' },
             ],
             rules: {

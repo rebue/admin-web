@@ -155,16 +155,23 @@ export default {
         /** 处理角色启用或禁用 */
         handleRoleCheck(record) {
             this.loading = true;
-            this.api.enable(record.id, !record.isEnabled).finally(() => {
-                this.refreshTableData();
-            });
+            if (record.isEnabled) {
+                this.api.enable(record.id, !record.isEnabled).finally(() => {
+                    this.refreshTableData();
+                });
+            }
+            if (!record.isEnabled) {
+                this.api.disable(record.id, !record.isEnabled).finally(() => {
+                    this.refreshTableData();
+                });
+            }
         },
         /**
          * 上移
          */
         handleMoveUp(record) {
             this.loading = true;
-            this.api.moveUp(record.id).finally(() => {
+            this.api.moveUp(record).finally(() => {
                 this.refreshTableData();
             });
         },
@@ -173,7 +180,7 @@ export default {
          */
         handleMoveDown(record) {
             this.loading = true;
-            this.api.moveDown(record.id).finally(() => {
+            this.api.moveDown(record).finally(() => {
                 this.refreshTableData();
             });
         },
