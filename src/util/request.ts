@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import qs from 'qs';
 import { isSimulateNetDelay, requestBaseUrl } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
@@ -40,6 +41,10 @@ instance.interceptors.request.use(
             console.log('模拟网络延迟');
             return new Promise(resolve => setTimeout(() => resolve(config), 1000));
         }
+
+        config.paramsSerializer = params => {
+            return qs.stringify(params);
+        };
 
         return config;
     },
