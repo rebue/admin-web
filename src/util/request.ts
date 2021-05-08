@@ -42,6 +42,7 @@ instance.interceptors.request.use(
             return new Promise(resolve => setTimeout(() => resolve(config), 1000));
         }
 
+        // 默认参数序列化方法传递数组参数的时候会缺失索引
         config.paramsSerializer = params => {
             return qs.stringify(params);
         };
