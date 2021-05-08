@@ -5,7 +5,8 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: '1',
+        id: '10',
+        domainId: 'platform',
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
@@ -23,16 +24,14 @@ const list = [
         ],
     },
     {
-        id: '2',
+        id: '20',
+        domainId: 'ops',
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
-        menus: [
-            '/user/ops-org',
-            '/user/ops-account',
-        ],
+        menus: ['/user/ops-org', '/user/ops-account'],
     },
 ];
 
