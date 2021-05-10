@@ -214,14 +214,29 @@ export default {
         /** 处理权限启用或禁用 */
         handlePermCheck(record) {
             this.loading = true;
-            if (record.type === PermTreeNodeTypeDic.PermGroup)
-                racPermGroupApi.enable(record.id, !record.isEnabled).finally(() => {
-                    this.refreshTableData();
-                });
-            else if (record.type === PermTreeNodeTypeDic.Perm)
-                racPermApi.enable(record.id, !record.isEnabled).finally(() => {
-                    this.refreshTableData();
-                });
+            if (record.type === PermTreeNodeTypeDic.PermGroup) {
+                if (record.isEnabled) {
+                    racPermGroupApi.enable(record.id, !record.isEnabled).finally(() => {
+                        this.refreshTableData();
+                    });
+                }
+                if (!record.isEnabled) {
+                    racPermGroupApi.disable(record.id, !record.isEnabled).finally(() => {
+                        this.refreshTableData();
+                    });
+                }
+            } else if (record.type === PermTreeNodeTypeDic.Perm) {
+                if (record.isEnabled) {
+                    racPermApi.enable(record.id, !record.isEnabled).finally(() => {
+                        this.refreshTableData();
+                    });
+                }
+                if (!record.isEnabled) {
+                    racPermApi.disable(record.id, !record.isEnabled).finally(() => {
+                        this.refreshTableData();
+                    });
+                }
+            }
         },
         /**
          * 上移

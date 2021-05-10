@@ -12,9 +12,13 @@ export default class RacPermApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/rac/perm';
 
-    /** 启用或禁用权限 */
-    enable(id: string, enable: boolean): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/enable', data: { id, enable } });
+    /** 启用权限 */
+    enable(id: string, isEnabled: boolean): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/enable', data: { id, isEnabled } });
+    }
+    /** 禁用权限 */
+    disable(id: string, isEnabled: boolean): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/disable', data: { id, isEnabled } });
     }
 
     /** 上移 */

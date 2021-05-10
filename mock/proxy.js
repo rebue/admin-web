@@ -1,6 +1,6 @@
 module.exports = {
     proxy: {
-        // '/rac/(.*)': 'http://127.0.0.1:9605/rac',
+         '/rac/(.*)': 'http://127.0.0.1:9605/rac',
         // '/rac/(.*)': 'http://127.0.0.1:10080/rac-svr/rac',
     },
     pathRewrite: {

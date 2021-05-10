@@ -14,7 +14,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racOrgApi } from '@/api/Api';
+import { racPermGroupApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
@@ -22,7 +22,7 @@ export default {
         BaseEditForm,
     },
     data() {
-        this.api = racOrgApi;
+        this.api = racPermGroupApi;
         return {
             editFormType: EditFormTypeDic.None,
             formItems: [
