@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
 import { hasJwtToken } from '@/util/cookie';
+import { Modal } from 'ant-design-vue';
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,9 @@ router.beforeEach(async (to, from, next) => {
     console.log('to', to);
     console.log('from', from);
     console.log('next', next);
+
+    // 处理路由前进、后退不能销毁确认对话框的问题
+    Modal.destroyAll();
 
     // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
     if (!uncheckJwtTokenPaths.find(item => to.path.startsWith(item)) && !hasJwtToken()) {

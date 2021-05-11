@@ -106,9 +106,17 @@ export default observer({
     },
     methods: {
         i18nRender,
+        /**退出系统 */
         handleExit() {
-            removeJwtToken();
-            this.$router.push({ path: '/sign-in' });
+            this.$confirm({
+                title: '提示',
+                content: '你确定要退出系统吗?',
+                maskClosable: true,
+                onOk: () => {
+                    removeJwtToken();
+                    this.$router.push({ path: '/sign-in' });
+                },
+            });
         },
         handleMediaQuery(query) {
             this.query = query;

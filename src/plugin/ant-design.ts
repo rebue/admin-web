@@ -87,3 +87,5 @@ Vue.use(Tooltip);
 
 // 头像
 Vue.use(Avatar);
+
+Vue.prototype.$confirm = Modal.confirm;
