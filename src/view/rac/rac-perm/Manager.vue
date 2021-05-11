@@ -15,12 +15,17 @@
                         @moveUp="handleMoveUp"
                         @moveDown="handleMoveDown"
                     >
-                        <template #editForm="{handleEditFormClose}">
+                        <template #editForm="{ handleEditFormClose }">
                             <perm-group-edit-form
                                 :ref="'permGroupEditForm.' + domain.id"
                                 @close="handleEditFormClose"
                             />
                             <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
+                            <edit-link
+                                :record="curRecord"
+                                :visible.sync="edintLinkFormVisible"
+                                @close="refreshTableData()"
+                            />
                         </template>
                     </crud-table>
                 </a-tab-pane>
@@ -37,6 +42,7 @@ import PermGroupEditForm from '../rac-perm-group/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
+import EditLink from './EditLink.vue';
 
 export default {
     name: 'Manager',
@@ -45,6 +51,7 @@ export default {
         EditForm,
         PermGroupEditForm,
         CrudTable,
+        EditLink,
     },
     data() {
         this.api = racPermApi;
@@ -137,7 +144,7 @@ export default {
                                 <a-divider type="vertical" />
                                 <a click="domain.onClick(record)">菜单</a>
                                 <a-divider type="vertical" />
-                                <a click="domain.onClick(record)">链接</a>
+                                <a onClick={() => this.handleEditLink(record)}>链接</a>
                                 <a-divider type="vertical" />
                                 <a click="domain.onClick(record)">命令</a>
                             </span>
@@ -169,6 +176,8 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
+            edintLinkFormVisible: false,
+            curRecord: {},
         };
     },
     computed: {
@@ -215,23 +224,23 @@ export default {
         handlePermCheck(record) {
             this.loading = true;
             if (record.type === PermTreeNodeTypeDic.PermGroup) {
-                if (record.isEnabled) {
+                if (!record.isEnabled) {
                     racPermGroupApi.enable(record.id, !record.isEnabled).finally(() => {
                         this.refreshTableData();
                     });
                 }
-                if (!record.isEnabled) {
+                if (record.isEnabled) {
                     racPermGroupApi.disable(record.id, !record.isEnabled).finally(() => {
                         this.refreshTableData();
                     });
                 }
             } else if (record.type === PermTreeNodeTypeDic.Perm) {
-                if (record.isEnabled) {
+                if (!record.isEnabled) {
                     racPermApi.enable(record.id, !record.isEnabled).finally(() => {
                         this.refreshTableData();
                     });
                 }
-                if (!record.isEnabled) {
+                if (record.isEnabled) {
                     racPermApi.disable(record.id, !record.isEnabled).finally(() => {
                         this.refreshTableData();
                     });
@@ -299,6 +308,14 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理权限链接的事件
+         */
+        handleEditLink(record) {
+            this.curRecord = record;
+            this.edintLinkFormVisible = true;
+            console.log('rrr', record);
         },
         /**
          * 处理删除权限的事件

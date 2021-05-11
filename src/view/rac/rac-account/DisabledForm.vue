@@ -9,16 +9,8 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <!-- <a-form-model-item key="lockReason"  label="锁定原因" prop="lockReason">
-                <a-input
-                    v-show="record.isEnabled===true"
-                    v-autofocus
-                    v-model.trim="model.lockReason"
-                    placeholder="请输入锁定原因"
-                />
-            </a-form-model-item> -->
-            <a-form-model-item key="unlockReason" label="解锁原因" prop="unlockReason">
-                <a-input v-autofocus v-model.trim="model.unlockReason" placeholder="请输入解锁原因" />
+            <a-form-model-item key="lockReason" label="锁定原因" prop="lockReason">
+                <a-input v-autofocus v-model.trim="model.lockReason" placeholder="请输入锁定原因" />
             </a-form-model-item>
         </a-form-model>
     </base-modal>
@@ -27,7 +19,6 @@
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { racDomainApi, racAccountApi, racLockLogApi } from '@/api/Api';
-
 export default {
     components: {
         BaseModal,
@@ -44,8 +35,8 @@ export default {
     },
     data() {
         this.rules = {
-            unlockReason: [
-                { required: true, message: '请输入解锁原因', trigger: 'blur', transform: val => val && val.trim() },
+            lockReason: [
+                { required: true, message: '请输入锁定原因', trigger: 'blur', transform: val => val && val.trim() },
             ],
         };
         this.formLayout = {
@@ -61,7 +52,7 @@ export default {
         return {
             loading: false,
             model: {
-                unlockReason: '',
+                lockReason: '',
             },
         };
     },
@@ -73,16 +64,16 @@ export default {
             });
         },
         handleOk() {
-            this.record.unlockReason = this.model.unlockReason;
-
+            this.record.lockReason = this.model.lockReason;
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
                     this.record.lockAccountId = this.record.id;
                     racAccountApi
-                        .enable(this.record)
+                        .disable(this.record)
                         .then(() => this.$emit('update:visible', false))
                         .finally(() => (this.loading = false));
+                    this.loading = false;
                     this.loading = false;
                 } else {
                     this.$nextTick(() => {

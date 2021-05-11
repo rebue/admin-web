@@ -32,12 +32,8 @@
                 </a-tab-pane>
             </a-tabs>
             <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" />
-            <enabled-false-form
-                :record="curRecord"
-                :visible.sync="enabledFalseFormVisible"
-                @close="refreshTableData()"
-            />
-            <enabled-true-form :record="curRecord" :visible.sync="enabledTrueFormVisible" @close="refreshTableData()" />
+            <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
+            <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
         </template>
     </base-manager>
 </template>
@@ -46,8 +42,8 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import EditForm from './EditForm.vue';
-import EnabledFalseForm from './EnabledFalseForm.vue';
-import EnabledTrueForm from './EnabledTrueForm.vue';
+import DisabledForm from './DisabledForm.vue';
+import EnabledForm from './EnabledForm.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
@@ -61,8 +57,8 @@ export default {
         EditForm,
         ChangePswdForm,
         OrgTree,
-        EnabledFalseForm,
-        EnabledTrueForm,
+        DisabledForm,
+        EnabledForm,
     },
     data() {
         this.api = racAccountApi;
@@ -160,8 +156,8 @@ export default {
         return {
             loading: false,
             changePswdFormVisible: false,
-            enabledTrueFormVisible: false,
-            enabledFalseFormVisible: false,
+            enabledFormVisible: false,
+            disabledFormVisible: false,
             curRecordId: '',
             showOrg: false,
             curDomainId: '',
@@ -224,10 +220,10 @@ export default {
             this.curRecord = record;
             if (record.isEnabled === true) {
                 this.curRecord.isEnabled = !record.isEnabled;
-                this.enabledTrueFormVisible = true;
+                this.disabledFormVisible = true;
             } else {
                 this.curRecord.isEnabled = !record.isEnabled;
-                this.enabledFalseFormVisible = true;
+                this.enabledFormVisible = true;
             }
 
             // racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
@@ -251,7 +247,6 @@ export default {
          * 处理编辑账户的事件
          */
         handleEdit(record) {
-            console.log('record', record);
             this.editForm.show(EditFormTypeDic.Modify, { ...record });
         },
         /**
