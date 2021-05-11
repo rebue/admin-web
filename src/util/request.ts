@@ -3,6 +3,7 @@ import qs from 'qs';
 import { isSimulateNetDelay, requestBaseUrl } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
+import router from '@/router/router';
 
 const codeMessage = {
     ETIMEDOUT: '请求超时，请稍后重试',
@@ -12,8 +13,8 @@ const codeMessage = {
     202: '一个请求已经进入后台排队（异步任务）',
     204: '删除数据成功',
     400: '发出的请求有错误，服务器没有进行新建或修改数据的操作',
-    401: '用户没有权限（令牌、用户名、密码错误）',
-    403: '用户得到授权，但是访问是被禁止的',
+    401: '用户认证失败（令牌、用户名、密码错误）',
+    403: '用户认证通过，但是未被授权访问该资源',
     404: '请求的地址不存在',
     406: '请求的格式不可得',
     410: '请求的资源被永久删除，且不会再得到的',
@@ -58,25 +59,6 @@ instance.interceptors.request.use(
     }
 );
 
-// response interceptor
-// instance.interceptors.response.use(response => {
-//     console.log('response', response); // for debug
-//     const { status, data, statusText } = response;
-//     if (status >= 200 && status < 300) {
-//         const ro = data as Ro;
-//         if ((data as Ro).result > 0) {
-//             message.info(ro.msg);
-//             return Promise.resolve(ro);
-//         } else {
-//             message.error(ro.msg);
-//             return Promise.reject(ro);
-//         }
-//     }
-//     const msg = codeMessage[status] || '未知错误: ' + statusText;
-//     message.error(msg);
-//     return Promise.reject({ result: 0, msg });
-// });
-
 // 发出请求
 function request(config: AxiosRequestConfig): Promise<Ro> {
     if (config.method?.toUpperCase() === 'GET' && config.data) {
@@ -105,6 +87,13 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                 '未知错误:' + err;
             message.error(msg);
             if (err.response && err.response.status) {
+                if (err.response.status === 401) {
+                    router.push({ path: `/sign-in?redirect=${router.currentRoute.path}` });
+                    return;
+                } else if (err.response.status === 403) {
+                    router.push({ path: `/` });
+                    return;
+                }
                 return Promise.reject({ result: 0, msg, code: err.response.status });
             } else if (err.code && codeMessage[err.code]) {
                 return Promise.reject({ result: 0, msg, code: err.code });
