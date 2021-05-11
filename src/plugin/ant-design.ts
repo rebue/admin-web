@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {
+    Avatar,
     Button,
     Card,
     ConfigProvider,
@@ -83,3 +84,6 @@ Vue.use(Popconfirm);
 // 弹框
 Vue.use(Alert);
 Vue.use(Tooltip);
+
+// 头像
+Vue.use(Avatar);

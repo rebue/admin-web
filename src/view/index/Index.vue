@@ -29,11 +29,25 @@
                     layout === 'topmenu' && `ant-pro-global-header-index-${theme}`,
                 ]"
             >
-                rightContentRender
+                <a-dropdown>
+                    <a>
+                        <a-avatar
+                            size="large"
+                            :icon="accountStore.avatar ? accountStore.avatar : 'user'"
+                            :src="accountStore.avatar ? accountStore.avatar : undefined"
+                        />
+                        {{ accountStore.nickname }}</a
+                    >
+                    <a-menu slot="overlay">
+                        <a-menu-item>
+                            <a @click="handleExit">退出系统</a>
+                        </a-menu-item>
+                    </a-menu>
+                </a-dropdown>
             </div>
         </template>
         <template #footerRender>
-            <div>footerRender</div>
+            <div>&copy; Rebue</div>
         </template>
         <setting-drawer :settings="settings" @change="handleSettingChange"> </setting-drawer>
         <router-view />
@@ -49,6 +63,7 @@ import defaultSettings from '@/config/defaultSettings';
 import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 import { SysIdDic } from '@/dic/SysIdDic';
+import { removeJwtToken } from '@/util/cookie';
 
 export default observer({
     name: 'Index',
@@ -91,6 +106,10 @@ export default observer({
     },
     methods: {
         i18nRender,
+        handleExit() {
+            removeJwtToken();
+            this.$router.push({ path: '/sign-in' });
+        },
         handleMediaQuery(query) {
             this.query = query;
             if (this.isMobile && !query['screen-xs']) {
