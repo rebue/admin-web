@@ -32,9 +32,10 @@ export default {
     },
     data() {
         this.api = racOpLogApi;
-        const columns = [
+        this.columns = [
             {
                 dataIndex: 'signInName',
+                key: 'signInName',
                 title: '账号名称',
                 fixed: 'left',
                 ellipsis: true,
@@ -54,6 +55,7 @@ export default {
             },
             {
                 dataIndex: 'sysName',
+                key: 'sysName',
                 title: '系统名称',
                 ellipsis: true,
                 width: 150,
@@ -71,6 +73,7 @@ export default {
             },
             {
                 dataIndex: 'opType',
+                key: 'opType',
                 title: '操作类型',
                 ellipsis: true,
                 width: 150,
@@ -82,30 +85,32 @@ export default {
             },
             {
                 dataIndex: 'opTitle',
+                key: 'opTitle',
                 title: '操作标题',
                 ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'opDetail',
+                key: 'opDetail',
                 title: '操作详情',
                 ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'opDatetime',
+                key: 'opDatetime',
                 title: '操作时间',
                 ellipsis: true,
                 width: 150,
                 sorter: true,
+                sortDirections: ['ascend', 'descend', 'ascend'],
             },
         ];
-
         return {
             loading: false,
             curDomainId: '',
             domains: [],
-            columns,
         };
     },
     computed: {

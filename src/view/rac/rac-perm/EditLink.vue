@@ -7,17 +7,11 @@
         v-on="$listeners"
         @show="handleShow"
         @ok="handleOk"
+        :width="750"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="permLink" label="输入链接" prop="permLink">
-                <a-textarea
-                    v-autofocus
-                    v-model.trim="model.permLink"
-                    placeholder="请输入链接"
-                    rows="5"
-                    cols="20"
-                    :auto-size="{ minRows: 5, maxRows: 8 }"
-                />
+            <a-form-model-item key="permLink" label="输入链接" prop="permLink" style="width: 700px">
+                <a-textarea v-autofocus v-model.trim="model.permLink" placeholder="请输入链接" rows="10" cols="250" />
             </a-form-model-item>
         </a-form-model>
     </base-modal>
@@ -74,7 +68,7 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racPermUrnApi
-                        .add(this.record)
+                        .modifyByPermId(this.record)
                         .then(() => this.$emit('update:visible', false))
                         .finally(() => (this.loading = false));
                     this.loading = false;

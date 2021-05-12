@@ -18,7 +18,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racDomainApi, racAccountApi, racLockLogApi } from '@/api/Api';
+import { racAccountApi } from '@/api/Api';
 
 export default {
     components: {

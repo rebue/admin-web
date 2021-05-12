@@ -62,6 +62,8 @@ export default {
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
+                            <p>锁定原因：{record.lockReason}</p>
+                            <p>解锁原因：{record.unlockReason}</p>
                         </template>
                     </a-popover>
                 ),
@@ -84,30 +86,12 @@ export default {
                 ),
             },
             {
-                dataIndex: 'lockReason',
-                title: '锁定原因',
-                ellipsis: true,
-                width: 180,
-            },
-            {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
                 width: 180,
                 sorter: true,
-            },
-            {
-                dataIndex: 'unlockReason',
-                title: '解锁原因',
-                ellipsis: true,
-                width: 180,
-            },
-            {
-                dataIndex: 'unlockDatetime',
-                title: '解锁时间',
-                ellipsis: true,
-                width: 180,
-                sorter: true,
+                sortDirections: ['ascend', 'descend', 'ascend'],
             },
             {
                 dataIndex: 'unlocksignInName',
@@ -126,6 +110,14 @@ export default {
                     </a-popover>
                 ),
             },
+            {
+                dataIndex: 'unlockDatetime',
+                title: '解锁时间',
+                ellipsis: true,
+                width: 180,
+                sorter: true,
+                sortDirections: ['ascend', 'descend', 'ascend'],
+            },
         ];
 
         return {
@@ -135,15 +127,6 @@ export default {
             domains: [],
             data: this.api,
             columns,
-            // rowClick: (record, index) => ({
-            //     on: {
-            //         click: () => {
-            //             //点击行要做的操作
-            //             console.log(record);
-            //             console.log(index);
-            //         },
-            //     },
-            // }),
         };
     },
     computed: {
@@ -162,12 +145,6 @@ export default {
          */
         disabledDate(current) {
             return current && current > moment().endOf('day');
-        },
-        getInformation() {
-            return Math.ceil(Math.random() * 1000000);
-        },
-        onPanelChange() {
-            console.log('有变化');
         },
         /**
          * ok按扭回调

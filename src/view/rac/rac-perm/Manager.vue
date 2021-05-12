@@ -315,7 +315,6 @@ export default {
         handleEditLink(record) {
             this.curRecord = record;
             this.edintLinkFormVisible = true;
-            console.log('rrr', record);
         },
         /**
          * 处理删除权限的事件
