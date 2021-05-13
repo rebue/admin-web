@@ -77,6 +77,7 @@ export default {
                             signInPswd: md5(this.form.signInPswd).toString(),
                         })
                         .then(ro => {
+                            console.log(ro);
                             setSysId(this.sysId);
                             this.$router.push({ path: this.redirect || '/' });
                         })

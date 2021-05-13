@@ -32,6 +32,7 @@ export default {
         },
     },
     data() {
+        this.api = racPermUrnApi;
         this.rules = {
             permLink: [
                 { required: true, message: '请输入输入链接', trigger: 'blur', transform: val => val && val.trim() },
@@ -58,16 +59,39 @@ export default {
         handleShow() {
             this.$nextTick(() => {
                 this.model = {};
+                this.loading = true;
                 this.$refs.form.resetFields();
+                this.api
+                    .list(this.record.id)
+                    .then(ro => {
+                        const list = ro.extra.list;
+                        let permLinks = '';
+                        for (const result of list) {
+                            permLinks = permLinks + result.urn + '\n';
+                        }
+                        this.model.permLink = permLinks;
+                    })
+                    .catch(() => (this.visible = false))
+                    .finally(() => {
+                        this.loading = false;
+                    });
             });
         },
         handleOk() {
-            this.record.urn = this.model.permLink.split(/\n/);
+            const urns = this.model.permLink.trim().split(/\n/); //分割换行符
+            const urn = [];
+            for (let index = 0; index < urns.length; index++) {
+                //去掉空白行
+                if (urns[index] !== '') {
+                    urn.push(urns[index]);
+                }
+            }
+            this.record.urn = urn;
             this.record.permId = this.record.id;
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    racPermUrnApi
+                    this.api
                         .modifyByPermId(this.record)
                         .then(() => this.$emit('update:visible', false))
                         .finally(() => (this.loading = false));

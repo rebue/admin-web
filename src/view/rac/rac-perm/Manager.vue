@@ -21,7 +21,7 @@
                                 @close="handleEditFormClose"
                             />
                             <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
-                            <edit-link
+                            <urn-edit-form
                                 :record="curRecord"
                                 :visible.sync="edintLinkFormVisible"
                                 @close="refreshTableData()"
@@ -42,7 +42,7 @@ import PermGroupEditForm from '../rac-perm-group/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
-import EditLink from './EditLink.vue';
+import UrnEditForm from './UrnEditForm.vue';
 
 export default {
     name: 'Manager',
@@ -51,7 +51,7 @@ export default {
         EditForm,
         PermGroupEditForm,
         CrudTable,
-        EditLink,
+        UrnEditForm,
     },
     data() {
         this.api = racPermApi;
@@ -144,7 +144,7 @@ export default {
                                 <a-divider type="vertical" />
                                 <a click="domain.onClick(record)">菜单</a>
                                 <a-divider type="vertical" />
-                                <a onClick={() => this.handleEditLink(record)}>链接</a>
+                                <a onClick={() => this.handleUrnEditForm(record)}>链接</a>
                                 <a-divider type="vertical" />
                                 <a click="domain.onClick(record)">命令</a>
                             </span>
@@ -312,7 +312,7 @@ export default {
         /**
          * 处理权限链接的事件
          */
-        handleEditLink(record) {
+        handleUrnEditForm(record) {
             this.curRecord = record;
             this.edintLinkFormVisible = true;
         },
