@@ -29,6 +29,7 @@ import {
     Radio,
     Pagination,
     Tree,
+    Transfer,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -81,6 +82,7 @@ Vue.use(Select);
 // 对话框
 Vue.use(Modal);
 Vue.use(Popconfirm);
+Vue.use(Transfer);
 // 弹框
 Vue.use(Alert);
 Vue.use(Tooltip);
