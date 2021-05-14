@@ -62,7 +62,7 @@ export default {
                 this.loading = true;
                 this.$refs.form.resetFields();
                 this.api
-                    .list(this.record.id)
+                    .list({ permId: this.record.id })
                     .then(ro => {
                         const list = ro.extra.list;
                         let permLinks = '';

@@ -17,18 +17,4 @@ export default class RacPermUrnApi extends BaseCrudApi {
         const { permId, urn } = { ...record };
         return request.post({ url: this.baseUrn + '/modifyByPermId', data: { permId, urn } });
     }
-    /**
-     * 获取列表
-     */
-    list(qo): Promise<Ro> {
-        const permId = qo;
-        return request.get({ url: this.baseUrn + '/list', params: { permId } }).then(ro => {
-            const list = ro.extra['list'];
-            if (!list || list.length === 0 || list[0].seqNo === undefined) return ro;
-            for (const item of list) {
-                item.maxSeqNo = list.length - 1;
-            }
-            return ro;
-        });
-    }
 }

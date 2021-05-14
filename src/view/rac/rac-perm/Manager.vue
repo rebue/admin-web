@@ -21,15 +21,11 @@
                                 @close="handleEditFormClose"
                             />
                             <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
-                            <urn-edit-form
-                                :record="curRecord"
-                                :visible.sync="edintLinkFormVisible"
-                                @close="refreshTableData()"
-                            />
                         </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
+            <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="refreshTableData()" />
         </template>
     </base-manager>
 </template>
