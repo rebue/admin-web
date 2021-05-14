@@ -12,7 +12,7 @@
                         :api="api"
                         :query="{ domainId: curDomainId }"
                         :scrollX="600"
-                        :expandable="true"
+                        :ShowAllRecords="true"
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
@@ -212,6 +212,7 @@ export default {
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrgId = isSelected ? item.id : undefined;
+            console.log('item', item);
             this.$nextTick(this.refreshTableData);
         },
         /** 处理账户启用或禁用 */

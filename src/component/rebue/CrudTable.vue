@@ -9,9 +9,15 @@
                     <div class="table-commands">
                         <slot name="commands">
                             <template v-for="(item, index) in commands">
-                                <a-button :type="item.buttonType" :icon="item.icon" @click="item.onClick" :key="index">
-                                    {{ item.title }}
-                                </a-button>
+                                    <a-button
+                                        style="margin-right: 50px;"
+                                        :type="item.buttonType"
+                                        :icon="item.icon"
+                                        @click="item.onClick"
+                                        :key="index"
+                                    >
+                                        {{ item.title }}
+                                    </a-button>
                             </template>
                         </slot>
                     </div>
@@ -33,6 +39,15 @@
                             <a-button type="link" icon="reload" @click="refreshData" />
                         </a-tooltip>
                         <a-divider type="vertical" />
+                        <a-tooltip :title="this.iconTips" v-if="ShowAllRecords">
+                            <a-button type="link" size="large" @click="toggleAccountDisplay">
+                                <a-icon
+                                    :type="this.changeIcon ? 'unordered-list' : 'apartment'"
+                                    :style="{ color: '#1890ff' }"
+                                />
+                            </a-button>
+                            <a-divider type="vertical" />
+                        </a-tooltip>
                         <a-tooltip title="表格边框" :autoAdjustOverflow="false">
                             <a-button type="link" size="large" @click="toggleTableBorder">
                                 <a-icon
@@ -237,6 +252,11 @@ export default observer({
             type: Boolean,
             default: false,
         },
+        /** 是否展示全部账户 */
+        ShowAllRecords: {
+            type: Boolean,
+            default: false,
+        },
         defaultPagination: {
             type: [Boolean, Object],
             default: function () {
@@ -321,6 +341,8 @@ export default observer({
             pagination: false,
             filters: {},
             sorter: {},
+            changeIcon: false,
+            iconTips: '展示组织下全部账户',
         };
     },
 
@@ -401,6 +423,15 @@ export default observer({
                 );
             }
             return promise.finally(() => (this.loading = false));
+        },
+        /** 改变改变账户展示方式 */
+        toggleAccountDisplay() {
+            this.changeIcon = !this.changeIcon;
+            if (this.changeIcon) {
+                this.iconTips = '展示组织下全部账户';
+            } else {
+                this.iconTips = '展示组织下当前账户';
+            }
         },
         /** 改变表格边框 */
         toggleTableBorder() {
@@ -494,11 +525,6 @@ export default observer({
             console.log('handleTableChange', pagination, filters, sorter, currentDataSource);
             this.filters = filters;
             this.sorter = sorter;
-            // console.log('sorter', sorter);
-            //this.$emit('updateSortedInfoChange', sorter);
-            //  this.$emit('update:sortedInfo', sorter)
-            // this.$emit('sortedInfo', sorter)
-
             if (this.pagination !== false) {
                 this.pagination = {
                     ...this.pagination,

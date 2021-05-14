@@ -13,12 +13,13 @@
                         :scrollX="600"
                         :expandable="true"
                     >
-                        <template #editForm="{handleEditFormClose}">
+                        <template #editForm="{ handleEditFormClose }">
                             <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
                         </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
+            <add-to-org :visible.sync="addToOrgVisible" @close="refreshTableData()" />
         </template>
     </base-manager>
 </template>
@@ -31,6 +32,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racOrgApi } from '@/api/Api';
 import { OrgTypeDic } from '@/dic/OrgTypeDic';
+import AddToOrg from './AddToOrg';
 
 export default {
     name: 'Manager',
@@ -38,6 +40,7 @@ export default {
         BaseManager,
         EditForm,
         CrudTable,
+        AddToOrg,
     },
     data() {
         this.api = racOrgApi;
@@ -75,6 +78,12 @@ export default {
                 title: '新建根组织',
                 onClick: this.handleAdd,
             },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '添加',
+                onClick: this.handleAddToOrg,
+            },
         ];
 
         this.tableActions = [
@@ -101,6 +110,7 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
+            addToOrgVisible: false,
         };
     },
     computed: {
@@ -141,6 +151,11 @@ export default {
             this.editForm.show(EditFormTypeDic.Add, {
                 domainId: this.curDomainId,
             });
+        },
+        /**将用户添加到组织中 */
+        handleAddToOrg() {
+            this.addToOrgVisible = true;
+            console.log(12);
         },
         /**
          * 处理编辑组织的事件
