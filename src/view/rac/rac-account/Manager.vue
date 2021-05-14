@@ -17,8 +17,9 @@
                         <template #left>
                             <div v-show="showOrg" class="table-left">
                                 <org-tree
+                                    :ref="`orgTree.${domain.id}`"
                                     :show.sync="showOrg"
-                                    :domainId="curDomainId"
+                                    :domainId="domain.id"
                                     @click="handleOrgMenuClick"
                                     @select="handleOrgTreeSelect"
                                 />
@@ -174,6 +175,9 @@ export default {
         crudTable() {
             return this.$refs['crudTable.' + this.curDomainId][0];
         },
+        orgTree() {
+            return this.$refs['orgTree.' + this.curDomainId][0];
+        },
     },
     mounted() {
         this.refreshData();
@@ -203,6 +207,8 @@ export default {
          */
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
+            this.orgTree.refreshData();
+            this.crudTable.refreshData();
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {

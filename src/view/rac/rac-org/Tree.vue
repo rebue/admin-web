@@ -66,11 +66,11 @@ export default {
             return this.orgFold ? this.foldWidth : this.width;
         },
     },
-    watch: {
-        domainId() {
-            this.refreshData();
-        },
-    },
+    // watch: {
+    //     domainId() {
+    //         this.refreshData();
+    //     },
+    // },
     mounted() {
         this.refreshData();
     },
