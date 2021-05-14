@@ -19,7 +19,7 @@
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
-            <add-to-org :visible.sync="addToOrgVisible" @close="refreshTableData()" />
+            <add-to-org :record="curRecord" :visible.sync="addToOrgVisible" @close="refreshTableData()" />
         </template>
     </base-manager>
 </template>
@@ -65,7 +65,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 195,
+                width: 300,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -77,12 +77,6 @@ export default {
                 icon: 'plus',
                 title: '新建根组织',
                 onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '添加',
-                onClick: this.handleAddToOrg,
             },
         ];
 
@@ -103,6 +97,11 @@ export default {
                 title: '添加子组织',
                 onClick: record => this.handleAddChild(record),
             },
+            {
+                type: 'a',
+                title: '管理账户',
+                onClick: this.handleAddToOrg,
+            },
         ];
 
         return {
@@ -111,6 +110,7 @@ export default {
             domains: [],
             columns,
             addToOrgVisible: false,
+            curRecord: {},
         };
     },
     computed: {
@@ -153,9 +153,9 @@ export default {
             });
         },
         /**将用户添加到组织中 */
-        handleAddToOrg() {
+        handleAddToOrg(record) {
             this.addToOrgVisible = true;
-            console.log(12);
+            this.curRecord = record;
         },
         /**
          * 处理编辑组织的事件

@@ -166,6 +166,7 @@ export default {
             domains: [],
             columns,
             curRecord: {},
+            orgId: '',
         };
     },
     computed: {
@@ -218,6 +219,7 @@ export default {
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrgId = isSelected ? item.id : undefined;
+            this.orgId = item.id;
             console.log('item', item);
             this.$nextTick(this.refreshTableData);
         },
@@ -248,7 +250,11 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId, groupId: record.id });
+            this.editForm.show(EditFormTypeDic.Add, {
+                orgId: this.orgId,
+                domainId: this.curDomainId,
+                groupId: record.id,
+            });
         },
         /**
          * 处理编辑账户的事件
