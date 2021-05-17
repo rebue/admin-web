@@ -16,7 +16,7 @@ export default class RacSysApi extends BaseCrudApi {
     }
     /**移除组织账户关系*/
     delOrgAccount(mo): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/delOrgAccount', data: mo });
+        return request.delete({ url: this.baseUrn + '/delOrgAccount', data: mo });
     }
 
     /**
@@ -40,6 +40,8 @@ export default class RacSysApi extends BaseCrudApi {
                 }
             }
             ro.extra['page'].list = tempList;
+            console.log('tempList', tempList);
+
             return ro;
         });
     }

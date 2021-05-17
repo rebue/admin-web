@@ -20,6 +20,8 @@ export class RacOrgMo {
     fullName = '';
     /** 备注 */
     remark?: string;
+    /**有子节点为false*/
+    isLeaf = false;
 
     /** 下面是前端添加的属性 */
     /** 权限列表 */

@@ -70,9 +70,7 @@ export default {
             loading: false,
             mockData: [],
             targetKeys: [],
-            model: {
-                lockReason: '',
-            },
+            model: {},
         };
     },
     methods: {
@@ -95,7 +93,7 @@ export default {
                                 key: list[i].id,
                                 title: `${list[i].signInName}`,
                                 description: `${list[i].signInName}`,
-                                chosen: this.record.id === list[i].orgId || this.record.id === list[i].orgAccountOrgId,
+                                chosen: this.record.id === list[i].orgId,
                             };
                             if (data.chosen) {
                                 targetKeys.push(data.key);
@@ -136,7 +134,7 @@ export default {
                     });
             } else {
                 racOrgApi
-                    .delOrgAccount({ orgId: this.record.id, accountId: moveKeys })
+                    .delOrgAccount({ orgId: this.record.id, accountIds: moveKeys })
                     .then(ro => {
                         console.log('移除完成');
                     })

@@ -15,10 +15,18 @@
                 v-show="orgFold"
                 :fold="true"
                 :dataSource="dataSource"
+                :default-checked-keys="['0-0-0']"
                 v-bind="$attrs"
                 v-on="$listeners"
             ></rebue-tree>
-            <a-tree v-show="!orgFold" :tree-data="dataSource" class="tree" blockNode @select="handleTreeNodeClick" />
+            <a-tree
+                v-show="!orgFold"
+                :tree-data="dataSource"
+                class="tree"
+                blockNode
+                :load-data="handleTreeNodeExpand"
+                @select="handleTreeNodeClick"
+            />
             <a-pagination v-show="!orgFold" v-model="pageNum" :page-size:sync="pageSize" :total="500" simple />
         </a-spin>
     </div>
@@ -83,16 +91,17 @@ export default {
             this.loading = true;
             const qo = { pageNum, pageSize, domainId };
             if (keywords && keywords.trim() !== '') qo.keywords = keywords.trim();
+
             racOrgApi
                 .page(qo)
                 .then(ro => {
+                    console.log('roo', ro);
                     forEachTree(ro.extra.page.list, node => {
                         node.key = node.id;
                         node.title = node.name;
                         node.icon = 'apartment';
                     });
                     this.dataSource = ro.extra.page.list;
-
                     if (!keywords || keywords.trim() === '') {
                         if (ro.extra.page.total > 0) {
                             this.$emit('update:show', true);
@@ -117,6 +126,25 @@ export default {
             this.$emit('select', {
                 isSelected: selected,
                 ...(selected ? { item: findFromTree(this.dataSource, node => node.id === selectedKeys[0]) } : {}),
+            });
+        },
+        handleTreeNodeExpand(treeNode) {
+            console.log(treeNode);
+            return new Promise(resolve => {
+                if (treeNode.dataRef.children) {
+                    resolve();
+                    return;
+                }
+                racOrgApi.list({ parentId: treeNode.dataRef.id }).then(ro => {
+                    for (const item of ro.extra.list) {
+                        item.key = item.id;
+                        item.title = item.name;
+                        item.icon = 'apartment';
+                    }
+                    treeNode.dataRef.children = ro.extra.list;
+                    this.dataSource = [...this.dataSource];
+                    resolve();
+                });
             });
         },
     },
