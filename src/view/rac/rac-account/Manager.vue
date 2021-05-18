@@ -234,11 +234,6 @@ export default {
                 this.curRecord.isEnabled = !record.isEnabled;
                 this.enabledFormVisible = true;
             }
-
-            // racAccountApi.enable(record.id, !record.isEnabled).finally(() => {
-            //     this.refreshTableData();
-            // });
-            //this.curRecordId = '';
         },
         /** 处理修改密码 */
         handleChangePswd(record) {

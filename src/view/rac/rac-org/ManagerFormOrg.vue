@@ -6,7 +6,6 @@
         v-bind="$attrs"
         v-on="$listeners"
         @show="handleShow"
-        @ok="handleOk"
         :width="850"
         :ok-button-props="{ props: { disabled: true } }"
     >
@@ -48,7 +47,7 @@
                         >
                             <a-table
                                 :scroll="{ x: false, y: 300 }"
-                                :pagination="pagination"
+                                :pagination="direction === 'left' ? leftPagination : rightPagination"
                                 :row-selection="
                                     getRowSelection({ disabled: listDisabled, selectedKeys, itemSelectAll, itemSelect })
                                 "
@@ -66,6 +65,7 @@
                                         },
                                     })
                                 "
+                                @change="direction === 'left' ? handleLeftTableChange : handleRightTableChange"
                             />
                         </template>
                     </a-transfer>
@@ -118,7 +118,7 @@ export default {
             type: [Boolean, Object],
             default: function() {
                 return {
-                    pageSize: 10,
+                    pageSize: 5,
                     pageSizeOptions: ['5', '10', '20', '30'],
                     showSizeChanger: true,
                 };
@@ -146,7 +146,12 @@ export default {
             showSearch: true,
             leftColumns: leftTableColumns,
             rightColumns: rightTableColumns,
-            pagination: false,
+            leftPagination: {
+                ...this.defaultPagination,
+            },
+            rightPagination: {
+                ...this.defaultPagination,
+            },
         };
     },
     computed: {
@@ -154,21 +159,40 @@ export default {
             return ['需要添加的账户', this.curOrgName + '的账户'];
         },
     },
-    mounted() {
-        this.pagination = this.defaultPagination;
-    },
+    // mounted() {
+    //     this.leftPagination = {
+    //         ...this.defaultPagination,
+    //     };
+    //     this.rightPagination = {
+    //         ...this.defaultPagination,
+    //     };
+    // },
     methods: {
         handleShow() {
             this.$nextTick(() => {
                 this.model = {};
                 this.loading = true;
                 this.$refs.form.resetFields();
-                console.log('titles', this.titles);
+                const { current, pageSize } = this.leftPagination;
+                const data = { pageNum: current ?? 1, pageSize, domainId: this.record.domainId, orgId: this.record.id };
+                // this.api.page(data).then((ro) => {
+                //     this.pagination = {
+                //         ...this.pagination,
+                //         total: ro.extra.page.total - 0,
+                //     };
+                //     this.dataSource = ro.extra.page.list;
+                // });
                 racAccountApi
-                    .list({ domainId: this.record.domainId, orgId: this.record.id })
+                    .list(data)
                     .then(ro => {
-                        const list = ro.extra.list;
+                        // this.leftPagination = {
+                        //     ...this.leftPagination,
+                        //     total: ro.extra.page.total - 0,
+                        // };
+                        //const list = ro.extra.page.list;
                         const ids = ro.extra.ids;
+                        const list = ro.extra.list;
+                        console.log('list', list);
                         const targetKeys = [];
                         const mockData = [];
                         for (let i = 0; i < list.length; i++) {
@@ -177,6 +201,7 @@ export default {
                                 title: `${list[i].signInName}`,
                                 description: `${list[i].signInNickname}`,
                                 chosen: this.record.id === list[i].orgId,
+                                disabled: this.record.id === list[i].orgId,
                             };
                             if (data.chosen) {
                                 targetKeys.push(data.key);
@@ -199,10 +224,8 @@ export default {
             // return item.title.indexOf(inputValue) !== -1;
             return item.description.indexOf(inputValue) > -1;
         },
+        //点击移除/添加时触发
         handleChange(targetKeys, direction, moveKeys) {
-            console.log(targetKeys);
-            console.log(direction);
-            console.log(moveKeys);
             this.targetKeys = targetKeys;
             if (direction === 'right') {
                 racOrgApi
@@ -226,6 +249,7 @@ export default {
                     });
             }
         },
+        //搜索框的内容改变时触发
         handleSearch(dir, value) {
             console.log('search:', dir, value);
             console.log('this.targetKeys', this.targetKeys);
@@ -246,26 +270,40 @@ export default {
                 selectedRowKeys: selectedKeys,
             };
         },
-
-        handleOk() {
-            this.record.unlockReason = this.model.unlockReason;
-
-            this.loading = true;
-            this.$refs.form.validate(valid => {
-                if (valid) {
-                    this.record.lockAccountId = this.record.id;
-                    racAccountApi
-                        .enable(this.record)
-                        .then(() => this.$emit('update:visible', false))
-                        .finally(() => (this.loading = false));
-                    this.loading = false;
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
-                }
-            });
+        /**
+         * 左边表格处理分页、排序、筛选的变化
+         */
+        handleLeftTableChange: function(pagination, filters, sorter) {
+            console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
+            // this.filters = filters;
+            // this.sorter = sorter;
+            // this.leftPagination = {
+            //     ...this.pagination,
+            //     current: pagination.current,
+            //     pageSize: pagination.pageSize,
+            // };
+            // this.$nextTick(() => {
+            //     this.handleShow();
+            // });
+        },
+        /**
+         * 右边处理分页、排序、筛选的变化
+         */
+        handleRightTableChange: function(pagination, filters, sorter) {
+            console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
+            // this.filters = filters;
+            // this.sorter = sorter;
+            // this.rightPagination = {
+            //     ...this.pagination,
+            //     current: pagination.current,
+            //     pageSize: pagination.pageSize,
+            // };
+            // this.$nextTick(() => {
+            //     this.handleShow();
+            // });
+        },
+        say(direction) {
+            console.log('direction', direction);
         },
     },
 };

@@ -12,6 +12,12 @@ export default class RacAccountApi extends BaseCrudApi {
     baseUrn = '/rac/account';
 
     /**
+     * 获取分页列表
+     */
+    listPage(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/listPage', params: qo });
+    }
+    /**
      * 添加
      */
     add(mo): Promise<Ro> {
