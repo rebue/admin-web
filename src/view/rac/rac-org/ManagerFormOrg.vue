@@ -62,9 +62,7 @@
                             },
                         })
                     "
-                    v-on="{
-                        change: direction === 'left' ? handleLeftTableChange : handleRightTableChange,
-                    }"
+                    @change="direction === 'left' ? handleLeftTableChange($event) : handleRightTableChange($event)"
                 />
             </template>
         </a-transfer>
