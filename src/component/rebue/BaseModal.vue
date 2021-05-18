@@ -14,9 +14,14 @@
             :centered="true"
             :visible="visible"
             :destroyOnClose="true"
+            v-bind="$attrs"
+            v-on="$listeners"
             @ok="handleOk"
             @cancel="handleCancel"
         >
+            <template #footer>
+                <slot name="footer" :handleCancel="handleCancel"></slot>
+            </template>
             <a-spin :spinning="loading">
                 <slot></slot>
             </a-spin>

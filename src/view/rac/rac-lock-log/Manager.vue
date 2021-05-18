@@ -89,7 +89,7 @@ export default {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
-                width: 180,
+                width: 165,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
@@ -97,7 +97,6 @@ export default {
                 dataIndex: 'unlocksignInName',
                 title: '解锁操作员的账户',
                 ellipsis: true,
-                width: 150,
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
                         {text}
@@ -114,7 +113,7 @@ export default {
                 dataIndex: 'unlockDatetime',
                 title: '解锁时间',
                 ellipsis: true,
-                width: 180,
+                width: 165,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },

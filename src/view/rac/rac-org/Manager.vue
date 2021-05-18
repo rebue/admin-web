@@ -19,7 +19,12 @@
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
-            <add-to-org :record="curRecord" :visible.sync="addToOrgVisible" @close="refreshTableData()" />
+            <manager-form-org
+                :record="curRecord"
+                :curOrgName="curOrgName"
+                :visible.sync="addToOrgVisible"
+                @close="refreshTableData()"
+            />
         </template>
     </base-manager>
 </template>
@@ -32,7 +37,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racOrgApi } from '@/api/Api';
 import { OrgTypeDic } from '@/dic/OrgTypeDic';
-import AddToOrg from './AddToOrg';
+import ManagerFormOrg from './ManagerFormOrg.vue';
 
 export default {
     name: 'Manager',
@@ -40,7 +45,7 @@ export default {
         BaseManager,
         EditForm,
         CrudTable,
-        AddToOrg,
+        ManagerFormOrg,
     },
     data() {
         this.api = racOrgApi;
@@ -111,6 +116,7 @@ export default {
             columns,
             addToOrgVisible: false,
             curRecord: {},
+            curOrgName: '',
         };
     },
     computed: {
@@ -155,6 +161,8 @@ export default {
         /**将用户添加到组织中 */
         handleAddToOrg(record) {
             this.addToOrgVisible = true;
+            this.curOrgName = record.name;
+            console.log('record', record);
             this.curRecord = record;
         },
         /**
