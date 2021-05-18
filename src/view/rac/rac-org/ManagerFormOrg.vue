@@ -12,66 +12,62 @@
         <template #footer="{ handleCancel }">
             <a-button icon="rollback" @click="handleCancel"> 返回 </a-button>
         </template>
-        <a-form-model ref="form" :model="model">
-            <a-form-model-item>
-                <div>
-                    <a-transfer
-                        :titles="titles"
-                        :data-source="mockData"
-                        :filter-option="filterOption"
-                        :target-keys="targetKeys"
-                        :render="item => item.title"
-                        :disabled="disabled"
-                        :show-search="showSearch"
-                        :show-select-all="false"
-                        @change="handleChange"
-                        :operations="operations"
-                        @search="handleSearch"
-                        :locale="{
-                            itemUnit: '项',
-                            itemsUnit: '项',
-                            notFoundContent: '列表为空',
-                            searchPlaceholder: '请输入搜索内容',
-                        }"
-                        :list-style="{
-                            width: '400px',
-                            height: '500px',
-                        }"
-                    >
-                        <template
-                            slot="children"
-                            slot-scope="{
-                                props: { direction, filteredItems, selectedKeys, disabled: listDisabled },
-                                on: { itemSelectAll, itemSelect },
-                            }"
-                        >
-                            <a-table
-                                :scroll="{ x: false, y: 300 }"
-                                :pagination="direction === 'left' ? leftPagination : rightPagination"
-                                :row-selection="
-                                    getRowSelection({ disabled: listDisabled, selectedKeys, itemSelectAll, itemSelect })
-                                "
-                                :columns="direction === 'left' ? leftColumns : rightColumns"
-                                :data-source="filteredItems"
-                                size="small"
-                                :style="{ pointerEvents: listDisabled ? 'none' : null }"
-                                :custom-row="
-                                    ({ key, disabled: itemDisabled }) => ({
-                                        on: {
-                                            click: () => {
-                                                if (itemDisabled || listDisabled) return;
-                                                itemSelect(key, !selectedKeys.includes(key));
-                                            },
-                                        },
-                                    })
-                                "
-                                @change="direction === 'left' ? handleLeftTableChange : handleRightTableChange"
-                            />
-                        </template>
-                    </a-transfer>
-                </div>
-            </a-form-model-item>
-        </a-form-model>
+        <a-transfer
+            :titles="titles"
+            :data-source="mockData"
+            :filter-option="filterOption"
+            :target-keys="targetKeys"
+            :render="item => item.title"
+            :disabled="disabled"
+            :show-search="showSearch"
+            :show-select-all="false"
+            @change="handleChange"
+            :operations="operations"
+            @search="handleSearch"
+            :locale="{
+                itemUnit: '项',
+                itemsUnit: '项',
+                notFoundContent: '列表为空',
+                searchPlaceholder: '请输入搜索内容',
+            }"
+            :list-style="{
+                width: '400px',
+                height: '500px',
+            }"
+        >
+            <template
+                slot="children"
+                slot-scope="{
+                    props: { direction, filteredItems, selectedKeys, disabled: listDisabled },
+                    on: { itemSelectAll, itemSelect },
+                }"
+            >
+                <a-table
+                    :scroll="{ x: false, y: 300 }"
+                    :pagination="direction === 'left' ? leftPagination : rightPagination"
+                    :row-selection="
+                        getRowSelection({ disabled: listDisabled, selectedKeys, itemSelectAll, itemSelect })
+                    "
+                    :columns="direction === 'left' ? leftColumns : rightColumns"
+                    :data-source="filteredItems"
+                    size="small"
+                    :style="{ pointerEvents: listDisabled ? 'none' : null }"
+                    :custom-row="
+                        ({ key, disabled: itemDisabled }) => ({
+                            on: {
+                                click: () => {
+                                    if (itemDisabled || listDisabled) return;
+                                    itemSelect(key, !selectedKeys.includes(key));
+                                },
+                            },
+                        })
+                    "
+                    v-on="{
+                        change: direction === 'left' ? handleLeftTableChange : handleRightTableChange,
+                    }"
+                />
+            </template>
+        </a-transfer>
     </base-modal>
 </template>
 
@@ -140,7 +136,6 @@ export default {
             loading: false,
             mockData: [],
             targetKeys: [],
-            model: {},
             operations: ['添加', '移除'],
             disabled: false,
             showSearch: true,
@@ -170,9 +165,7 @@ export default {
     methods: {
         handleShow() {
             this.$nextTick(() => {
-                this.model = {};
                 this.loading = true;
-                this.$refs.form.resetFields();
                 const { current, pageSize } = this.leftPagination;
                 const data = { pageNum: current ?? 1, pageSize, domainId: this.record.domainId, orgId: this.record.id };
                 // this.api.page(data).then((ro) => {
