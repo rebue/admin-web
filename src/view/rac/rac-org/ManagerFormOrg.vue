@@ -3,6 +3,7 @@
         ref="baseModal"
         title="将账户添加到分组"
         :loading="loading"
+        :hiddenOkButton="true"
         v-bind="$attrs"
         v-on="$listeners"
         @show="handleShow"

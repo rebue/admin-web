@@ -5,6 +5,7 @@
         <!-- FIXME 如果没有设置属性 destroyOnClose=true，新建分组和添加新权限都点击后，再点击设置焦点会失效 -->
         <a-modal
             ref="modal"
+            :class="{ hiddenOkButton: hiddenOkButton }"
             :title="title"
             okText="提交"
             :ok-button-props="{ props: { icon: 'check' } }"
@@ -19,9 +20,9 @@
             @ok="handleOk"
             @cancel="handleCancel"
         >
-            <template #footer>
+            <!-- <template #footer>
                 <slot name="footer" :handleCancel="handleCancel"></slot>
-            </template>
+            </template> -->
             <a-spin :spinning="loading">
                 <slot></slot>
             </a-spin>
@@ -48,6 +49,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        hiddenOkButton: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         visible(val) {
@@ -71,3 +76,8 @@ export default {
     },
 };
 </script>
+<style scoped>
+.hiddenOkButton >>> .ant-btn-primary {
+    display: none;
+}
+</style>
