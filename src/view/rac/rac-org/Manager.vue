@@ -19,7 +19,7 @@
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
-            <manager-form-org
+            <manager-account-transfer-form
                 :record="curRecord"
                 :curOrgName="curOrgName"
                 :visible.sync="addToOrgVisible"
@@ -37,7 +37,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racOrgApi } from '@/api/Api';
 import { OrgTypeDic } from '@/dic/OrgTypeDic';
-import ManagerFormOrg from './ManagerFormOrg.vue';
+import ManagerAccountTransferForm from './ManagerAccountTransferForm.vue';
 
 export default {
     name: 'Manager',
@@ -45,7 +45,7 @@ export default {
         BaseManager,
         EditForm,
         CrudTable,
-        ManagerFormOrg,
+        ManagerAccountTransferForm,
     },
     data() {
         this.api = racOrgApi;

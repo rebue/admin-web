@@ -2,8 +2,8 @@
     <base-modal
         ref="baseModal"
         title="将账户添加到分组"
-        :loading="loading"
         :hiddenOkButton="true"
+        :loading="loading"
         v-bind="$attrs"
         v-on="$listeners"
         @show="handleShow"
@@ -150,7 +150,7 @@ export default {
     },
     computed: {
         titles() {
-            return ['需要添加的账户', this.curOrgName + '的账户'];
+            return ['可以添加的账户', this.curOrgName + '的账户'];
         },
     },
     // mounted() {
@@ -167,39 +167,32 @@ export default {
                 this.loading = true;
                 const { current, pageSize } = this.leftPagination;
                 const data = { pageNum: current ?? 1, pageSize, domainId: this.record.domainId, orgId: this.record.id };
-                // this.api.page(data).then((ro) => {
-                //     this.pagination = {
-                //         ...this.pagination,
-                //         total: ro.extra.page.total - 0,
-                //     };
-                //     this.dataSource = ro.extra.page.list;
-                // });
                 racAccountApi
-                    .list(data)
+                    .listTransferOfOrg(data)
                     .then(ro => {
-                        // this.leftPagination = {
-                        //     ...this.leftPagination,
-                        //     total: ro.extra.page.total - 0,
-                        // };
-                        //const list = ro.extra.page.list;
-                        const ids = ro.extra.ids;
-                        const list = ro.extra.list;
-                        console.log('list', list);
+                        const { addableList, existList } = ro.extra;
+                        this.leftPagination = {
+                            ...this.leftPagination,
+                            total: addableList.total - 0,
+                        };
+                        console.log('addableList', addableList);
+                        console.log('existList', existList);
+                        const allList = [...addableList.list, ...existList];
                         const targetKeys = [];
                         const mockData = [];
-                        for (let i = 0; i < list.length; i++) {
+                        for (let i = 0; i < allList.length; i++) {
                             const data = {
-                                key: list[i].id,
-                                title: `${list[i].signInName}`,
-                                description: `${list[i].signInNickname}`,
-                                chosen: this.record.id === list[i].orgId,
-                                disabled: this.record.id === list[i].orgId,
+                                key: allList[i].id,
+                                title: `${allList[i].signInName}`,
+                                description: `${allList[i].signInNickname}`,
+                                chosen: this.record.id === allList[i].orgId,
+                                disabled: this.record.id === allList[i].orgId,
                             };
-                            if (data.chosen) {
-                                targetKeys.push(data.key);
-                            }
-                            for (const id of ids) {
-                                targetKeys.push(id);
+                            // if (data.chosen) {
+                            //     targetKeys.push(data.key);
+                            // }
+                            for (const exist of existList) {
+                                targetKeys.push(exist.id);
                             }
                             mockData.push(data);
                         }
@@ -267,32 +260,32 @@ export default {
          */
         handleLeftTableChange: function(pagination, filters, sorter) {
             console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            // this.filters = filters;
-            // this.sorter = sorter;
-            // this.leftPagination = {
-            //     ...this.pagination,
-            //     current: pagination.current,
-            //     pageSize: pagination.pageSize,
-            // };
-            // this.$nextTick(() => {
-            //     this.handleShow();
-            // });
+            this.filters = filters;
+            this.sorter = sorter;
+            this.leftPagination = {
+                ...this.pagination,
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+            };
+            this.$nextTick(() => {
+                this.handleShow();
+            });
         },
         /**
          * 右边处理分页、排序、筛选的变化
          */
         handleRightTableChange: function(pagination, filters, sorter) {
             console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            // this.filters = filters;
-            // this.sorter = sorter;
-            // this.rightPagination = {
-            //     ...this.pagination,
-            //     current: pagination.current,
-            //     pageSize: pagination.pageSize,
-            // };
-            // this.$nextTick(() => {
-            //     this.handleShow();
-            // });
+            this.filters = filters;
+            this.sorter = sorter;
+            this.rightPagination = {
+                ...this.pagination,
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+            };
+            this.$nextTick(() => {
+                //  this.handleShow();
+            });
         },
         say(direction) {
             console.log('direction', direction);

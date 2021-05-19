@@ -77,7 +77,7 @@ export default {
 };
 </script>
 <style scoped>
-.hiddenOkButton >>> .ant-btn-primary {
+.hiddenOkButton >>> .ant-modal-footer .ant-btn-primary {
     display: none;
 }
 </style>

@@ -14,8 +14,8 @@ export default class RacAccountApi extends BaseCrudApi {
     /**
      * 获取分页列表
      */
-    listPage(qo): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/listPage', params: qo });
+    listTransferOfOrg(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/listTransferOfOrg', params: qo });
     }
     /**
      * 添加
