@@ -7,7 +7,7 @@
         v-bind="$attrs"
         v-on="$listeners"
         @show="handleShow"
-        :width="850"
+        :width="920"
         :ok-button-props="{ props: { disabled: true } }"
     >
         <template #footer="{ handleCancel }">
@@ -146,6 +146,7 @@ export default {
             rightPagination: {
                 ...this.defaultPagination,
             },
+            keywords: '',
         };
     },
     computed: {
@@ -163,10 +164,20 @@ export default {
     // },
     methods: {
         handleShow() {
+            this.keywords = '';
+            this.refreshData();
+        },
+        refreshData() {
             this.$nextTick(() => {
                 this.loading = true;
                 const { current, pageSize } = this.leftPagination;
-                const data = { pageNum: current ?? 1, pageSize, domainId: this.record.domainId, orgId: this.record.id };
+                const data = {
+                    pageNum: current ?? 1,
+                    pageSize,
+                    domainId: this.record.domainId,
+                    orgId: this.record.id,
+                    keywords: this.keywords,
+                };
                 racAccountApi
                     .listTransferOfOrg(data)
                     .then(ro => {
@@ -175,17 +186,42 @@ export default {
                             ...this.leftPagination,
                             total: addableList.total - 0,
                         };
-                        console.log('addableList', addableList);
-                        console.log('existList', existList);
                         const allList = [...addableList.list, ...existList];
                         const targetKeys = [];
                         const mockData = [];
                         for (let i = 0; i < allList.length; i++) {
                             const data = {
                                 key: allList[i].id,
-                                title: `${allList[i].signInName}`,
-                                description: `${allList[i].signInNickname}`,
-                                chosen: this.record.id === allList[i].orgId,
+                                title: (
+                                    <a-popover
+                                        title={
+                                            (allList[i].signInName ||
+                                                allList[i].signInMobile ||
+                                                allList[i].signInEmail) + '详情'
+                                        }
+                                    >
+                                        {allList[i].signInName || allList[i].signInMobile || allList[i].signInEmail}
+                                        <template slot="content">
+                                            <p>账户ID：{allList[i].id}</p>
+                                            <p>
+                                                账户名：
+                                                {allList[i].signInName ||
+                                                    allList[i].signInMobile ||
+                                                    allList[i].signInEmail}
+                                            </p>
+                                            <p>
+                                                昵称：
+                                                {allList[i].signInNickname ||
+                                                    allList[i].wxNickname ||
+                                                    allList[i].qqNickname}
+                                            </p>
+                                        </template>
+                                    </a-popover>
+                                ),
+                                description: `${allList[i].signInNickname ||
+                                    allList[i].wxNickname ||
+                                    allList[i].qqNickname}`,
+                                //chosen: this.record.id === allList[i].orgId,
                                 disabled: this.record.id === allList[i].orgId,
                             };
                             // if (data.chosen) {
@@ -196,12 +232,12 @@ export default {
                             }
                             mockData.push(data);
                         }
+                        console.log('mockData', mockData);
                         this.mockData = mockData;
                         this.targetKeys = targetKeys;
                     })
                     .finally(() => {
                         this.loading = false;
-                        this.orgName = this.record.name;
                     });
             });
         },
@@ -220,7 +256,7 @@ export default {
                     })
                     .finally(() => {
                         this.loading = false;
-                        this.handleShow();
+                        this.refreshData();
                     });
             } else {
                 racOrgApi
@@ -230,14 +266,15 @@ export default {
                     })
                     .finally(() => {
                         this.loading = false;
-                        this.handleShow();
+                        this.refreshData();
                     });
             }
         },
         //搜索框的内容改变时触发
         handleSearch(dir, value) {
-            console.log('search:', dir, value);
-            console.log('this.targetKeys', this.targetKeys);
+            console.log('search:', dir, this.selectedKeys);
+            this.keywords = value.trim();
+            this.refreshData();
         },
         getRowSelection({ disabled, selectedKeys, itemSelectAll, itemSelect }) {
             return {
@@ -259,16 +296,16 @@ export default {
          * 左边表格处理分页、排序、筛选的变化
          */
         handleLeftTableChange: function(pagination, filters, sorter) {
-            console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            this.filters = filters;
-            this.sorter = sorter;
+            // console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
+            // this.filters = filters;
+            //this.sorter = sorter;
             this.leftPagination = {
                 ...this.pagination,
                 current: pagination.current,
                 pageSize: pagination.pageSize,
             };
             this.$nextTick(() => {
-                this.handleShow();
+                this.refreshData();
             });
         },
         /**
@@ -283,12 +320,6 @@ export default {
                 current: pagination.current,
                 pageSize: pagination.pageSize,
             };
-            this.$nextTick(() => {
-                //  this.handleShow();
-            });
-        },
-        say(direction) {
-            console.log('direction', direction);
         },
     },
 };
