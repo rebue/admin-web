@@ -16,7 +16,7 @@
         <a-transfer
             :titles="titles"
             :data-source="mockData"
-            :filter-option="filterOption"
+            :filter-option="() => true"
             :target-keys="targetKeys"
             :render="item => item.title"
             :disabled="disabled"
@@ -202,10 +202,6 @@ export default {
                         this.loading = false;
                     });
             });
-        },
-        filterOption(inputValue, item) {
-            console.log('item', item);
-            return item.description.indexOf(inputValue) !== -1 || item.title.indexOf(inputValue) !== -1;
         },
         //点击移除/添加时触发
         handleChange(targetKeys, direction, moveKeys) {
