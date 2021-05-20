@@ -8,6 +8,7 @@
         :api="api"
         v-bind="$attrs"
         v-on="$listeners"
+        @show="handleShow"
     >
     </base-edit-form>
 </template>
@@ -23,7 +24,8 @@ export default {
     },
     data() {
         this.api = racAccountApi;
-        this.rules = {
+        //this.rules = {};
+        this.addRules = {
             signInNickname: [
                 { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
             ],
@@ -62,8 +64,19 @@ export default {
                 },
             ],
         };
+        this.modifyRules = {
+            signInName: [
+                {
+                    required: true,
+                    message: '请输入登录名称',
+                    trigger: 'blur',
+                    transform: val => val && val.trim(),
+                },
+            ],
+        };
         return {
             editFormType: EditFormTypeDic.None,
+            rules: this.addRules,
         };
     },
     computed: {
@@ -94,6 +107,14 @@ export default {
     methods: {
         show: function(...params) {
             this.$refs.baseEditForm.show(...params);
+        },
+        handleShow() {
+            console.log('editFormType', this.editFormType);
+            if (this.editFormType === EditFormTypeDic.Modify) {
+                this.rules = this.modifyRules;
+            } else {
+                this.rules = this.addRules;
+            }
         },
     },
 };
