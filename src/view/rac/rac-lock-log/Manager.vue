@@ -55,10 +55,12 @@ export default {
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
-                    <a-popover title={text + '详情'}>
-                        {text}
+                    <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
+                        {record.signInName || record.signInMobile || record.signInEmail}
                         <template slot="content">
                             <p>账户名：{record.signInName}</p>
+                            <p>手机号：{record.signInMobile}</p>
+                            <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
@@ -74,10 +76,14 @@ export default {
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
-                    <a-popover title={text + '详情'}>
-                        {text}
+                    <a-popover
+                        title={(record.locksignInName || record.locksignInMobile || record.locksignInEmail) + '详情'}
+                    >
+                        {record.locksignInName || record.locksignInMobile || record.locksignInEmail}
                         <template slot="content">
                             <p>账户名：{record.locksignInName}</p>
+                            <p>手机号：{record.locksignInMobile}</p>
+                            <p>邮箱：{record.locksignInEmail}</p>
                             <p>账户昵称：{record.locksignInNickname}</p>
                             <p>微信昵称：{record.lockwxNickname}</p>
                             <p>QQ昵称：{record.lockqqNickname}</p>
@@ -98,10 +104,16 @@ export default {
                 title: '解锁操作员的账户',
                 ellipsis: true,
                 customRender: (text, record) => (
-                    <a-popover title={text + '详情'}>
-                        {text}
+                    <a-popover
+                        title={
+                            (record.unlocksignInName || record.unlocksignInMobile || record.unlocksignInEmail) + '详情'
+                        }
+                    >
+                        {record.unlocksignInName || record.unlocksignInMobile || record.unlocksignInEmail}
                         <template slot="content">
                             <p>账户名：{record.unlocksignInName}</p>
+                            <p>手机号：{record.unlocksignInMobile}</p>
+                            <p>邮箱：{record.unlocksignInEmail}</p>
                             <p>账户昵称：{record.unlocksignInNickname}</p>
                             <p>微信昵称：{record.unlockwxNickname}</p>
                             <p>QQ昵称：{record.unlockqqNickname}</p>

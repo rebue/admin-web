@@ -33,7 +33,7 @@
                         v-else-if="formItem.type === 'radioGroup'"
                         v-model="model[formItem.dataIndex]"
                         button-style="solid"
-                        @change="e => handleRadioGroupChanged(e, formItem)"
+                        @change="(e) => handleRadioGroupChanged(e, formItem)"
                     >
                         <a-radio-button v-for="(item, index) in formItem.radios" :value="item.value" :key="index">
                             {{ item.title }}
@@ -117,11 +117,12 @@ export default {
             // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
             if (editFormType === EditFormTypeDic.Add) {
                 for (const formItem of this.formItems) {
-                    if (!(formItem.dataIndex in model)) model[formItem.dataIndex] = undefined;
+                    if (!(formItem.dataIndex in model)) model[formItem.dataIndex] = '';
                 }
             }
             console.log('model', model);
             this.model = model;
+            console.log('model', model);
             this.visible = true;
         },
         handleShow() {
@@ -131,7 +132,7 @@ export default {
                 if (this.editFormType === EditFormTypeDic.Modify) {
                     this.api
                         .getById(this.model.id)
-                        .then(ro => this.$emit('update:model', ro.extra.one))
+                        .then((ro) => this.$emit('update:model', ro.extra.one))
                         .catch(() => (this.visible = false))
                         .finally(() => {
                             this.loading = false;
@@ -146,7 +147,7 @@ export default {
         },
         handleOk() {
             this.loading = true;
-            this.$refs.form.validate(valid => {
+            this.$refs.form.validate((valid) => {
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
