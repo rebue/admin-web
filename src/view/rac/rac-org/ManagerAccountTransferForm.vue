@@ -118,10 +118,10 @@ export default {
                     <a-popover title={text + '详情'}>
                         {text}
                         <template slot="content">
+                            <p>帐号ID：{record.id}</p>
                             <p>账户名：{text}</p>
-                            <p>账户昵称：{record.signInNickname}</p>
-                            <p>微信昵称：{record.wxNickname}</p>
-                            <p>QQ昵称：{record.qqNickname}</p>
+                            <p>手机号：{record.signInMobile}</p>
+                            <p>邮箱：{record.signInEmail}</p>
                         </template>
                     </a-popover>
                 ),
@@ -129,6 +129,16 @@ export default {
             {
                 dataIndex: 'description',
                 title: '昵称',
+                customRender: (text, record) => (
+                    <a-popover title={'昵称详情'}>
+                        {text}
+                        <template slot="content">
+                            <p>账户昵称：{record.signInNickname}</p>
+                            <p>微信昵称：{record.wxNickname}</p>
+                            <p>QQ昵称：{record.qqNickname}</p>
+                        </template>
+                    </a-popover>
+                ),
             },
         ];
         return {
