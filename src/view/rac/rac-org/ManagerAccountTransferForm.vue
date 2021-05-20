@@ -49,7 +49,7 @@
                     :row-selection="
                         getRowSelection({ disabled: listDisabled, selectedKeys, itemSelectAll, itemSelect })
                     "
-                    :columns="direction === 'left' ? leftColumns : rightColumns"
+                    :columns="leftColumns"
                     :data-source="filteredItems"
                     size="small"
                     :style="{ pointerEvents: listDisabled ? 'none' : null }"
@@ -74,27 +74,6 @@
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { racAccountApi, racOrgApi } from '@/api/Api';
 import difference from 'lodash/difference';
-
-const leftTableColumns = [
-    {
-        dataIndex: 'title',
-        title: '名称',
-    },
-    {
-        dataIndex: 'description',
-        title: '昵称',
-    },
-];
-const rightTableColumns = [
-    {
-        dataIndex: 'title',
-        title: '名称',
-    },
-    {
-        dataIndex: 'description',
-        title: '昵称',
-    },
-];
 
 export default {
     components: {
@@ -131,6 +110,27 @@ export default {
                 sm: { span: 13 },
             },
         };
+        const leftTableColumns = [
+            {
+                dataIndex: 'title',
+                title: '名称',
+                customRender: (text, record) => (
+                    <a-popover title={text + '详情'}>
+                        {text}
+                        <template slot="content">
+                            <p>账户名：{text}</p>
+                            <p>账户昵称：{record.signInNickname}</p>
+                            <p>微信昵称：{record.wxNickname}</p>
+                            <p>QQ昵称：{record.qqNickname}</p>
+                        </template>
+                    </a-popover>
+                ),
+            },
+            {
+                dataIndex: 'description',
+                title: '昵称',
+            },
+        ];
         return {
             loading: false,
             mockData: [],
@@ -139,7 +139,7 @@ export default {
             disabled: false,
             showSearch: true,
             leftColumns: leftTableColumns,
-            rightColumns: rightTableColumns,
+            // rightColumns: rightTableColumns,
             leftPagination: {
                 ...this.defaultPagination,
             },
@@ -154,14 +154,6 @@ export default {
             return ['可以添加的账户', this.curOrgName + '的账户'];
         },
     },
-    // mounted() {
-    //     this.leftPagination = {
-    //         ...this.defaultPagination,
-    //     };
-    //     this.rightPagination = {
-    //         ...this.defaultPagination,
-    //     };
-    // },
     methods: {
         handleShow() {
             this.keywords = '';
@@ -192,47 +184,17 @@ export default {
                         for (let i = 0; i < allList.length; i++) {
                             const data = {
                                 key: allList[i].id,
-                                title: (
-                                    <a-popover
-                                        title={
-                                            (allList[i].signInName ||
-                                                allList[i].signInMobile ||
-                                                allList[i].signInEmail) + '详情'
-                                        }
-                                    >
-                                        {allList[i].signInName || allList[i].signInMobile || allList[i].signInEmail}
-                                        <template slot="content">
-                                            <p>账户ID：{allList[i].id}</p>
-                                            <p>
-                                                账户名：
-                                                {allList[i].signInName ||
-                                                    allList[i].signInMobile ||
-                                                    allList[i].signInEmail}
-                                            </p>
-                                            <p>
-                                                昵称：
-                                                {allList[i].signInNickname ||
-                                                    allList[i].wxNickname ||
-                                                    allList[i].qqNickname}
-                                            </p>
-                                        </template>
-                                    </a-popover>
-                                ),
+                                title: `${allList[i].signInName || allList[i].signInMobile || allList[i].signInEmail}`,
                                 description: `${allList[i].signInNickname ||
                                     allList[i].wxNickname ||
                                     allList[i].qqNickname}`,
-                                //chosen: this.record.id === allList[i].orgId,
                                 disabled: this.record.id === allList[i].orgId,
                             };
-                            // if (data.chosen) {
-                            //     targetKeys.push(data.key);
-                            // }
                             for (const exist of existList) {
                                 targetKeys.push(exist.id);
                             }
-                            mockData.push(data);
+                            mockData.push({ ...allList[i], ...data });
                         }
-                        console.log('mockData', mockData);
                         this.mockData = mockData;
                         this.targetKeys = targetKeys;
                     })
@@ -242,8 +204,8 @@ export default {
             });
         },
         filterOption(inputValue, item) {
-            // return item.title.indexOf(inputValue) !== -1;
-            return item.description.indexOf(inputValue) > -1;
+            console.log('item', item);
+            return item.description.indexOf(inputValue) !== -1 || item.title.indexOf(inputValue) !== -1;
         },
         //点击移除/添加时触发
         handleChange(targetKeys, direction, moveKeys) {
@@ -272,7 +234,6 @@ export default {
         },
         //搜索框的内容改变时触发
         handleSearch(dir, value) {
-            console.log('search:', dir, this.selectedKeys);
             this.keywords = value.trim();
             this.refreshData();
         },

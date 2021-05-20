@@ -128,8 +128,8 @@ export default {
                 ...(selected ? { item: findFromTree(this.dataSource, node => node.id === selectedKeys[0]) } : {}),
             });
         },
+        /**展开节点*/
         handleTreeNodeExpand(treeNode) {
-            console.log(treeNode);
             return new Promise(resolve => {
                 if (treeNode.dataRef.children) {
                     resolve();

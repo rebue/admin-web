@@ -162,7 +162,6 @@ export default {
         handleAddToOrg(record) {
             this.addToOrgVisible = true;
             this.curOrgName = record.name;
-            console.log('record', record);
             this.curRecord = record;
         },
         /**

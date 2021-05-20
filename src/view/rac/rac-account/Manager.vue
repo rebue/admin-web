@@ -10,7 +10,7 @@
                         :actions="tableActions"
                         :columns="columns"
                         :api="api"
-                        :query="{ domainId: curDomainId }"
+                        :query="{ domainId: curDomainId, orgId: curOrgId }"
                         :scrollX="600"
                         :ShowAllRecords="true"
                     >
@@ -76,6 +76,18 @@ export default {
                 title: '登录名称',
                 width: 120,
                 fixed: 'left',
+                customRender: (text, record) => (
+                    <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
+                        {record.signInName || record.signInMobile || record.signInEmail}
+                        <template slot="content">
+                            <p>账户ID：{record.id}</p>
+                            <p>账户名：{record.signInName || record.signInMobile || record.signInEmail}</p>
+                            <p>账户昵称：{record.signInNickname}</p>
+                            <p>微信昵称：{record.wxNickname}</p>
+                            <p>QQ昵称：{record.qqNickname}</p>
+                        </template>
+                    </a-popover>
+                ),
             },
             {
                 dataIndex: 'nickname',
@@ -126,7 +138,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 210,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -142,6 +154,11 @@ export default {
         ];
 
         this.tableActions = [
+            {
+                type: 'a',
+                title: '管理账户',
+                onClick: record => this.handleChangePswd(record),
+            },
             {
                 type: 'a',
                 title: '编辑',
@@ -214,13 +231,15 @@ export default {
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
             this.curOrgId = item.id;
-            this.$nextTick(this.refreshTableData);
+            console.log();
+            this.$nextTick(() => {
+                this.refreshTableData();
+            });
         },
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrgId = isSelected ? item.id : undefined;
             this.orgId = item.id;
-            console.log('item', item);
             this.$nextTick(this.refreshTableData);
         },
         /** 处理账户启用或禁用 */

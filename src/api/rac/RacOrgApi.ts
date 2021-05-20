@@ -40,8 +40,6 @@ export default class RacSysApi extends BaseCrudApi {
                 }
             }
             ro.extra['page'].list = tempList;
-            console.log('tempList', tempList);
-
             return ro;
         });
     }
