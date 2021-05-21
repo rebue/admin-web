@@ -74,14 +74,16 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '登录名称',
-                width: 120,
+                width: 150,
                 fixed: 'left',
                 customRender: (text, record) => (
                     <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
                         {record.signInName || record.signInMobile || record.signInEmail}
                         <template slot="content">
                             <p>账户ID：{record.id}</p>
-                            <p>账户名：{record.signInName || record.signInMobile || record.signInEmail}</p>
+                            <p>账户名：{record.signInName}</p>
+                            <p>手机号：：{record.signInMobile}</p>
+                            <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
                             <p>微信昵称：{record.wxNickname}</p>
                             <p>QQ昵称：{record.qqNickname}</p>
