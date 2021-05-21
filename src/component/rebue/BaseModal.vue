@@ -17,7 +17,6 @@
             :destroyOnClose="true"
             v-bind="$attrs"
             v-on="$listeners"
-            @ok="handleOk"
             @cancel="handleCancel"
         >
             <!-- <template #footer>
@@ -67,9 +66,6 @@ export default {
         },
     },
     methods: {
-        handleOk() {
-            this.$emit('ok');
-        },
         handleCancel() {
             this.$emit('update:visible', false);
         },

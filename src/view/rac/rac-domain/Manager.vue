@@ -1,21 +1,21 @@
 <template>
-    <base-manager ref="baseManager">
-        <template #managerCard>
-            <crud-table
-                ref="crudTable"
-                :commands="tableCommands"
-                :actions="tableActions"
-                :columns="columns"
-                :api="api"
-                :scrollX="600"
-                :defaultPagination="false"
-            >
-                <template #editForm="{handleEditFormClose}">
-                    <edit-form ref="editForm" @close="handleEditFormClose" />
-                </template>
-            </crud-table>
-        </template>
-    </base-manager>
+    <fragment>
+        <base-manager ref="baseManager">
+            <template #managerCard>
+                <crud-table
+                    ref="crudTable"
+                    :commands="tableCommands"
+                    :actions="tableActions"
+                    :columns="columns"
+                    :api="api"
+                    :scrollX="600"
+                    :defaultPagination="false"
+                >
+                </crud-table>
+            </template>
+        </base-manager>
+        <edit-form ref="editForm" @close="handleEditFormClose" />
+    </fragment>
 </template>
 
 <script>
@@ -125,6 +125,9 @@ export default {
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

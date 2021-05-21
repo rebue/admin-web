@@ -9,15 +9,15 @@
                     <div class="table-commands">
                         <slot name="commands">
                             <template v-for="(item, index) in commands">
-                                    <a-button
-                                        style="margin-right: 50px;"
-                                        :type="item.buttonType"
-                                        :icon="item.icon"
-                                        @click="item.onClick"
-                                        :key="index"
-                                    >
-                                        {{ item.title }}
-                                    </a-button>
+                                <a-button
+                                    style="margin-right: 50px;"
+                                    :type="item.buttonType"
+                                    :icon="item.icon"
+                                    @click="item.onClick"
+                                    :key="index"
+                                >
+                                    {{ item.title }}
+                                </a-button>
                             </template>
                         </slot>
                     </div>
@@ -192,7 +192,6 @@
                 </a-table>
             </div>
         </div>
-        <slot name="editForm" :handleEditFormClose="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -259,7 +258,7 @@ export default observer({
         },
         defaultPagination: {
             type: [Boolean, Object],
-            default: function () {
+            default: function() {
                 return {
                     pageSize: 5,
                     pageSizeOptions: ['5', '10', '20', '30'],
@@ -273,7 +272,7 @@ export default observer({
         const resizeableTitle = (h, props, children) => {
             let thDom = null;
             const { key, ...restProps } = props;
-            const col = this.displayColumns.find((col) => {
+            const col = this.displayColumns.find(col => {
                 const k = col.key || col.dataIndex;
                 return k === key;
             });
@@ -282,10 +281,10 @@ export default observer({
                 return <th {...restProps}>{children}</th>;
             }
 
-            const onDrag = (x) => {
+            const onDrag = x => {
                 // this.draggingState[key].width = 0;
-                const propCol = this.columns.find((val) => (val.dataIndex || val.key) === key);
-                const configCol = this.configColumns.find((val) => (val.dataIndex || val.key) === key);
+                const propCol = this.columns.find(val => (val.dataIndex || val.key) === key);
+                const configCol = this.configColumns.find(val => (val.dataIndex || val.key) === key);
                 if (this.draggingState[key].isLeft) {
                     configCol.width = Math.max(propCol.width * 2 - x, 1);
                 } else {
@@ -298,7 +297,7 @@ export default observer({
             };
 
             return (
-                <th {...restProps} v-ant-ref={(r) => (thDom = r)} width={col.width} class="resize-table-th">
+                <th {...restProps} v-ant-ref={r => (thDom = r)} width={col.width} class="resize-table-th">
                     {children}
                     <vue-draggable-resizable
                         key={col.key}
@@ -350,7 +349,7 @@ export default observer({
         draggingState() {
             const draggingMap = {};
             let isLeft = false;
-            this.displayColumns.forEach((col) => {
+            this.displayColumns.forEach(col => {
                 if (!col.width) {
                     isLeft = true;
                 }
@@ -406,7 +405,7 @@ export default observer({
                 const { current, pageSize } = this.pagination;
                 const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-                promise = this.api.page(data).then((ro) => {
+                promise = this.api.page(data).then(ro => {
                     this.pagination = {
                         ...this.pagination,
                         total: ro.extra.page.total - 0,
@@ -419,7 +418,7 @@ export default observer({
                 const data = { ...query, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
-                    (ro) => (this.dataSource = ro.extra.list)
+                    ro => (this.dataSource = ro.extra.list)
                 );
             }
             return promise.finally(() => (this.loading = false));
@@ -455,7 +454,7 @@ export default observer({
             this.indeterminate = !!this.checkedCols.length && this.checkedCols.length < this.defaultOptionCols.length;
             this.isCheckColsAll = this.checkedCols.length === this.defaultOptionCols.length;
             for (const item of this.configColumns) {
-                item.visible = checkedCols.find((value) => value === item.title);
+                item.visible = checkedCols.find(value => value === item.title);
             }
         },
         /**
@@ -482,13 +481,13 @@ export default observer({
          * 收缩树指定节点
          */
         collapse(id) {
-            this.expandedRowKeys.splice(this.expandedRowKeys.findIndex((item) => item.id === id));
+            this.expandedRowKeys.splice(this.expandedRowKeys.findIndex(item => item.id === id));
         },
         /**
          * 展开树所有节点
          */
         expandAll() {
-            forEachTree(this.dataSource, (node) => {
+            forEachTree(this.dataSource, node => {
                 node['childen'] ?? this.expandedRowKeys.push(node.id);
             });
         },
@@ -502,7 +501,7 @@ export default observer({
          * 切换全屏
          */
         handleToggleFullScreen() {
-            this.toggleFullScreen((fullScreen) => {
+            this.toggleFullScreen(fullScreen => {
                 this.fullScreenIcon = !fullScreen ? 'fullscreen' : 'fullscreen-exit';
                 this.fullScreenTitle = !fullScreen ? '全屏' : '退出全屏';
             });
@@ -514,7 +513,7 @@ export default observer({
             if (expanded) this.expandedRowKeys.push(record.id);
             else
                 this.expandedRowKeys.splice(
-                    this.expandedRowKeys.findIndex((item) => item.id === record.id),
+                    this.expandedRowKeys.findIndex(item => item.id === record.id),
                     1
                 );
         },
@@ -535,12 +534,6 @@ export default observer({
             this.$nextTick(() => {
                 this.refreshData();
             });
-        },
-        /**
-         * 编辑窗体关闭
-         */
-        handleEditFormClose() {
-            this.refreshData();
         },
         /**
          * 删除

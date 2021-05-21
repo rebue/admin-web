@@ -68,7 +68,7 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
     return instance
         .request(config)
         .then(resp => {
-            // console.log('response', resp);
+            console.log('response', resp);
             const ro = resp.data as Ro;
             if (ro.result > 0) {
                 if (ro.msg) message.info(ro.msg);
