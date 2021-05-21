@@ -32,10 +32,11 @@
                 </a-tabs>
             </template>
         </base-manager>
-        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" />
+        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <manage-account-form :record="curRecord" :visible.sync="manageAccountFormVisible" @close="refreshTableData()" />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
-        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="refreshTableData()" />
     </fragment>
 </template>
 
@@ -49,6 +50,7 @@ import ChangePswdForm from './ChangePswdForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racAccountApi } from '@/api/Api';
+import ManageAccountForm from './ManageAccountForm.vue';
 
 export default {
     name: 'Manager',
@@ -60,6 +62,7 @@ export default {
         OrgTree,
         DisabledForm,
         EnabledForm,
+        ManageAccountForm,
     },
     data() {
         this.api = racAccountApi;
@@ -140,7 +143,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 210,
+                width: 240,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -158,24 +161,31 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '管理账户',
-                onClick: record => this.handleChangePswd(record),
-            },
-            {
-                type: 'a',
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除该账户吗?',
+                onClick: record => this.handleDel(record),
             },
             {
                 type: 'a',
                 title: '修改密码',
                 onClick: record => this.handleChangePswd(record),
             },
+            {
+                type: 'a',
+                title: '管理组织',
+                onClick: record => this.handleManageAccount(record),
+            },
         ];
 
         return {
             loading: false,
             changePswdFormVisible: false,
+            manageAccountFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
             curRecordId: '',
@@ -269,6 +279,11 @@ export default {
                 domainId: this.curDomainId,
                 groupId: record.id,
             });
+        },
+        /**处理管理账户事件 */
+        handleManageAccount(record) {
+            this.curRecord = record;
+            this.manageAccountFormVisible = true;
         },
         /**
          * 处理编辑账户的事件

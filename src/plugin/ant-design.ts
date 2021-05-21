@@ -30,6 +30,7 @@ import {
     Pagination,
     Tree,
     Transfer,
+    Drawer,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -83,6 +84,7 @@ Vue.use(Select);
 Vue.use(Modal);
 Vue.use(Popconfirm);
 Vue.use(Transfer);
+Vue.use(Drawer);
 // 弹框
 Vue.use(Alert);
 Vue.use(Tooltip);

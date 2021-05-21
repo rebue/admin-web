@@ -10,9 +10,6 @@
         :width="920"
         :ok-button-props="{ props: { disabled: true } }"
     >
-        <template #footer="{ handleCancel }">
-            <a-button icon="rollback" @click="handleCancel"> 返回 </a-button>
-        </template>
         <a-transfer
             :titles="titles"
             :data-source="mockData"
@@ -269,10 +266,7 @@ export default {
         /**
          * 左边表格处理分页、排序、筛选的变化
          */
-        handleLeftTableChange: function(pagination, filters, sorter) {
-            // console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            // this.filters = filters;
-            //this.sorter = sorter;
+        handleLeftTableChange: function(pagination) {
             this.leftPagination = {
                 ...this.pagination,
                 current: pagination.current,
@@ -285,11 +279,8 @@ export default {
         /**
          * 右边处理分页、排序、筛选的变化
          */
-        handleRightTableChange: function(pagination, filters, sorter) {
-            // console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            // this.filters = filters;
-            // this.sorter = sorter;
-            this.leftPagination = {
+        handleRightTableChange: function(pagination) {
+            this.rightPagination = {
                 ...this.pagination,
                 current: pagination.current,
                 pageSize: pagination.pageSize,

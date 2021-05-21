@@ -95,7 +95,6 @@ export default {
             racOrgApi
                 .page(qo)
                 .then(ro => {
-                    console.log('roo', ro);
                     forEachTree(ro.extra.page.list, node => {
                         node.key = node.id;
                         node.title = node.name;
