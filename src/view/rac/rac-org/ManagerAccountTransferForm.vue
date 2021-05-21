@@ -156,7 +156,8 @@ export default {
             rightPagination: {
                 ...this.defaultPagination,
             },
-            keywords: '',
+            addableKeywords: '',
+            existKeywords: '',
         };
     },
     computed: {
@@ -166,7 +167,8 @@ export default {
     },
     methods: {
         handleShow() {
-            this.keywords = '';
+            this.addableKeywords = '';
+            this.existKeywords = '';
             this.refreshData();
         },
         refreshData() {
@@ -178,7 +180,8 @@ export default {
                     pageSize,
                     domainId: this.record.domainId,
                     orgId: this.record.id,
-                    keywords: this.keywords,
+                    addableKeywords: this.addableKeywords,
+                    existKeywords: this.existKeywords,
                 };
                 racAccountApi
                     .listTransferOfOrg(data)
@@ -240,7 +243,11 @@ export default {
         },
         //搜索框的内容改变时触发
         handleSearch(dir, value) {
-            this.keywords = value.trim();
+            if (dir === 'left') {
+                this.addableKeywords = value.trim();
+            } else {
+                this.existKeywords = value.trim();
+            }
             this.refreshData();
         },
         getRowSelection({ disabled, selectedKeys, itemSelectAll, itemSelect }) {
@@ -279,14 +286,17 @@ export default {
          * 右边处理分页、排序、筛选的变化
          */
         handleRightTableChange: function(pagination, filters, sorter) {
-            console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
-            this.filters = filters;
-            this.sorter = sorter;
-            this.rightPagination = {
+            // console.log('handleTableChange', 'pagination', pagination, 'filters', filters);
+            // this.filters = filters;
+            // this.sorter = sorter;
+            this.leftPagination = {
                 ...this.pagination,
                 current: pagination.current,
                 pageSize: pagination.pageSize,
             };
+            this.$nextTick(() => {
+                this.refreshData();
+            });
         },
     },
 };
