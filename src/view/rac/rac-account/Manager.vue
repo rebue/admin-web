@@ -1,42 +1,42 @@
 <template>
-    <base-manager ref="baseManager">
-        <template #managerCard>
-            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
-                    <crud-table
-                        :showKeywords="true"
-                        :ref="`crudTable.${domain.id}`"
-                        :commands="tableCommands"
-                        :actions="tableActions"
-                        :columns="columns"
-                        :api="api"
-                        :query="{ domainId: curDomainId, orgId: curOrgId }"
-                        :scrollX="600"
-                        :ShowAllRecords="true"
-                    >
-                        <template #left>
-                            <div v-show="showOrg" class="table-left">
-                                <org-tree
-                                    :ref="`orgTree.${domain.id}`"
-                                    :show.sync="showOrg"
-                                    :domainId="domain.id"
-                                    @click="handleOrgMenuClick"
-                                    @select="handleOrgTreeSelect"
-                                />
-                                <div class="table-divider"></div>
-                            </div>
-                        </template>
-                        <template #editForm="{ handleEditFormClose }">
-                            <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
-                        </template>
-                    </crud-table>
-                </a-tab-pane>
-            </a-tabs>
-            <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" />
-            <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
-            <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
-        </template>
-    </base-manager>
+    <fragment
+        ><base-manager ref="baseManager">
+            <template #managerCard>
+                <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
+                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                        <crud-table
+                            :showKeywords="true"
+                            :ref="`crudTable.${domain.id}`"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ domainId: curDomainId, orgId: curOrgId }"
+                            :scrollX="600"
+                            :ShowAllRecords="true"
+                        >
+                            <template #left>
+                                <div v-show="showOrg" class="table-left">
+                                    <org-tree
+                                        :ref="`orgTree.${domain.id}`"
+                                        :show.sync="showOrg"
+                                        :domainId="domain.id"
+                                        @click="handleOrgMenuClick"
+                                        @select="handleOrgTreeSelect"
+                                    />
+                                    <div class="table-divider"></div>
+                                </div>
+                            </template>
+                        </crud-table>
+                    </a-tab-pane>
+                </a-tabs>
+            </template>
+        </base-manager>
+        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" />
+        <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
+        <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
+        <edit-form ref="editForm" @close="handleEditFormClose" />
+    </fragment>
 </template>
 
 <script>
@@ -189,9 +189,6 @@ export default {
         };
     },
     computed: {
-        editForm() {
-            return this.$refs['editForm.' + this.curDomainId][0];
-        },
         crudTable() {
             return this.$refs['crudTable.' + this.curDomainId][0];
         },
@@ -200,6 +197,7 @@ export default {
         },
     },
     mounted() {
+        this.editForm = this.$refs.editForm;
         this.refreshData();
     },
     methods: {
@@ -286,6 +284,9 @@ export default {
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

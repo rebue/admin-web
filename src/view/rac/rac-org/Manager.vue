@@ -1,32 +1,32 @@
 <template>
-    <base-manager ref="baseManager">
-        <template #managerCard>
-            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
-                    <crud-table
-                        :ref="`crudTable.${domain.id}`"
-                        :commands="tableCommands"
-                        :actions="tableActions"
-                        :columns="columns"
-                        :api="api"
-                        :query="{ domainId: curDomainId }"
-                        :scrollX="600"
-                        :expandable="true"
-                    >
-                        <template #editForm="{ handleEditFormClose }">
-                            <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
-                        </template>
-                    </crud-table>
-                </a-tab-pane>
-            </a-tabs>
-            <account-manage-form
-                :record="curRecord"
-                :curOrgName="curOrgName"
-                :visible.sync="addToOrgVisible"
-                @close="refreshTableData()"
-            />
-        </template>
-    </base-manager>
+    <fragment>
+        <base-manager ref="baseManager">
+            <template #managerCard>
+                <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
+                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                        <crud-table
+                            :ref="`crudTable.${domain.id}`"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ domainId: curDomainId }"
+                            :scrollX="600"
+                            :expandable="true"
+                        >
+                        </crud-table>
+                    </a-tab-pane>
+                </a-tabs>
+            </template>
+        </base-manager>
+        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <account-manage-form
+            :record="curRecord"
+            :curOrgName="curOrgName"
+            :visible.sync="addToOrgVisible"
+            @close="refreshTableData()"
+        />
+    </fragment>
 </template>
 
 <script>
@@ -120,14 +120,12 @@ export default {
         };
     },
     computed: {
-        editForm() {
-            return this.$refs['editForm.' + this.curDomainId][0];
-        },
         crudTable() {
             return this.$refs['crudTable.' + this.curDomainId][0];
         },
     },
     mounted() {
+        this.editForm = this.$refs.editForm;
         this.refreshData();
     },
     methods: {
@@ -188,6 +186,9 @@ export default {
                 domainId: this.curDomainId,
                 parentId: record.id,
             });
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

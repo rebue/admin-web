@@ -1,33 +1,30 @@
 <template>
-    <base-manager ref="baseManager">
-        <template #managerCard>
-            <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
-                    <crud-table
-                        :ref="`crudTable.${domain.id}`"
-                        :commands="tableCommands"
-                        :columns="columns"
-                        :api="api"
-                        :query="{ domainId: curDomainId }"
-                        :scrollX="600"
-                        :expandable="true"
-                        :defaultPagination="false"
-                        @moveUp="handleMoveUp"
-                        @moveDown="handleMoveDown"
-                    >
-                        <template #editForm="{ handleEditFormClose }">
-                            <perm-group-edit-form
-                                :ref="'permGroupEditForm.' + domain.id"
-                                @close="handleEditFormClose"
-                            />
-                            <edit-form :ref="`editForm.${domain.id}`" @close="handleEditFormClose" />
-                        </template>
-                    </crud-table>
-                </a-tab-pane>
-            </a-tabs>
-            <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="refreshTableData()" />
-        </template>
-    </base-manager>
+    <fragment>
+        <base-manager ref="baseManager">
+            <template #managerCard>
+                <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
+                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                        <crud-table
+                            :ref="`crudTable.${domain.id}`"
+                            :commands="tableCommands"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ domainId: curDomainId }"
+                            :scrollX="600"
+                            :expandable="true"
+                            :defaultPagination="false"
+                            @moveUp="handleMoveUp"
+                            @moveDown="handleMoveDown"
+                        >
+                        </crud-table>
+                    </a-tab-pane>
+                </a-tabs>
+            </template>
+        </base-manager>
+        <perm-group-edit-form ref="permGroupEditForm" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="refreshTableData()" />
+    </fragment>
 </template>
 
 <script>
@@ -177,17 +174,13 @@ export default {
         };
     },
     computed: {
-        permGroupEditForm() {
-            return this.$refs['permGroupEditForm.' + this.curDomainId][0];
-        },
-        editForm() {
-            return this.$refs['editForm.' + this.curDomainId][0];
-        },
         crudTable() {
             return this.$refs['crudTable.' + this.curDomainId][0];
         },
     },
     mounted() {
+        this.editForm = this.$refs.editForm;
+        this.permGroupEditForm = this.$refs.permGroupEditForm;
         this.refreshData();
     },
     methods: {
@@ -320,6 +313,9 @@ export default {
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };
