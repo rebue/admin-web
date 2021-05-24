@@ -133,10 +133,11 @@ export default {
             this.loading = true;
             console.log('record', this.record);
             const { id, orgId } = { ...this.red };
+            const accountId = id;
             const { domainId } = { ...this.record };
-            const data = { domainId, id, orgId };
+            const data = { domainId, accountId, orgId };
             // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-            this.api.list(data).then(ro => {
+            this.api.listByAccountId(data).then(ro => {
                 this.loading = false;
                 this.dataSource = ro.extra.list;
             });

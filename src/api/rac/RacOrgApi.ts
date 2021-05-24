@@ -18,7 +18,17 @@ export default class RacSysApi extends BaseCrudApi {
     delOrgAccount(mo): Promise<Ro> {
         return request.delete({ url: this.baseUrn + '/delOrgAccount', data: mo });
     }
-
+    /** 获取列表   */
+    listByAccountId(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/list-by-account-id', params: qo }).then(ro => {
+            // const list = ro.extra['list'];
+            // if (!list || list.length === 0 || list[0].seqNo === undefined) return ro;
+            // for (const item of list) {
+            //     item.maxSeqNo = list.length - 1;
+            // }
+            return ro;
+        });
+    }
     /**
      * 获取分页列表
      */
