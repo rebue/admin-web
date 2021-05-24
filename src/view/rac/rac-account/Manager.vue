@@ -13,7 +13,7 @@
                             :api="api"
                             :query="{ domainId: curDomainId, orgId: curOrgId }"
                             :scrollX="600"
-                            :ShowAllRecords="true"
+                            :showHierarchical="showOrg"
                         >
                             <template #left>
                                 <div v-show="showOrg" class="table-left">
@@ -33,7 +33,12 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-account-form :record="curRecord" :visible.sync="manageAccountFormVisible" @close="refreshTableData()" />
+        <manage-account-form
+            ref="manageAccountForm"
+            :record="curRecord"
+            :visible.sync="manageAccountFormVisible"
+            @close="refreshTableData()"
+        />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
         <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="refreshTableData()" />
@@ -208,6 +213,7 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
+        this.manageAccountForm = this.$refs.manageAccountForm;
         this.refreshData();
     },
     methods: {
@@ -241,7 +247,6 @@ export default {
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
             this.curOrgId = item.id;
-            console.log();
             this.$nextTick(() => {
                 this.refreshTableData();
             });
@@ -283,7 +288,9 @@ export default {
         /**处理管理账户事件 */
         handleManageAccount(record) {
             this.curRecord = record;
+            console.log('manage record', record);
             this.manageAccountFormVisible = true;
+            this.manageAccountForm.show(record);
         },
         /**
          * 处理编辑账户的事件

@@ -33,11 +33,9 @@
             :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             :columns="columns"
             :data-source="dataSource"
-            :pagination="pagination"
             v-bind="$attrs"
             v-on="$listeners"
             :rowKey="(record, index) => (record.id ? record.id : index)"
-            @change="handleTableChange"
         >
             <span slot="action" slot-scope="text, record">
                 <template v-for="(item, index) in actions">
@@ -70,17 +68,7 @@ export default {
     props: {
         record: {
             type: Object,
-            required: true,
-        },
-        defaultPagination: {
-            type: [Boolean, Object],
-            default: function() {
-                return {
-                    pageSize: 5,
-                    pageSizeOptions: ['5', '10', '20', '30'],
-                    showSizeChanger: true,
-                };
-            },
+            required: false,
         },
     },
     data() {
@@ -132,32 +120,25 @@ export default {
             columns,
             actions: actions,
             selectedRowKeys: [], // Check here to configure the default column
-            pagination: {
-                ...this.defaultPagination,
-            },
+            red: {},
         };
     },
-    computed: {
-        //
-    },
+    computed: {},
     mounted() {
-        this.refreshData();
+        //
     },
     methods: {
         /** 刷新数据 */
         refreshData() {
             this.loading = true;
-            const { current, pageSize } = this.pagination;
+            console.log('record', this.record);
+            const { id, orgId } = { ...this.red };
             const { domainId } = { ...this.record };
-            const data = { pageNum: current ?? 1, pageSize, domainId };
+            const data = { domainId, id, orgId };
             // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-            this.api.page(data).then(ro => {
-                this.pagination = {
-                    ...this.pagination,
-                    total: ro.extra.page.total - 0,
-                };
+            this.api.list(data).then(ro => {
                 this.loading = false;
-                this.dataSource = ro.extra.page.list;
+                this.dataSource = ro.extra.list;
             });
         },
         /**切换抽屉时动画结束后的回调 */
@@ -171,19 +152,6 @@ export default {
         onSelectChange(selectedRowKeys) {
             console.log('selectedRowKeys changed: ', selectedRowKeys);
             this.selectedRowKeys = selectedRowKeys;
-        },
-        /**
-         * 左边表格处理分页、排序、筛选的变化
-         */
-        handleTableChange(pagination) {
-            this.pagination = {
-                ...this.pagination,
-                current: pagination.current,
-                pageSize: pagination.pageSize,
-            };
-            this.$nextTick(() => {
-                this.refreshData();
-            });
         },
         /**
          * 处理添加组织关系的事件
@@ -214,6 +182,12 @@ export default {
         handleCancel() {
             this.$emit('update:visible', false);
             this.$emit('close');
+        },
+
+        show(record) {
+            this.red = record;
+            //this.$emit('update:visible', true);
+            this.refreshData(record);
         },
     },
 };
