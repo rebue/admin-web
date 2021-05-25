@@ -24,7 +24,7 @@
             :record="curRecord"
             :curOrgName="curOrgName"
             :visible.sync="addToOrgVisible"
-            @close="refreshTableData()"
+            @close="handleEditFormClose"
         />
     </fragment>
 </template>

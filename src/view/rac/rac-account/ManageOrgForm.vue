@@ -1,6 +1,4 @@
 <template>
-    <!-- a-drawer -->
-
     <a-drawer
         :title="'管理-- ' + this.red.signInName + ' --的组织'"
         placement="right"
@@ -59,7 +57,7 @@
             :visible.sync="manageAddOrgFormVisible"
             :record="red"
             @close="refreshData()"
-            @show="handleShow()"
+            @show="handleModal()"
         />
     </a-drawer>
 </template>
@@ -167,7 +165,6 @@ export default {
         handleAdd() {
             console.log('handleAdd', this);
             this.manageAddOrgFormVisible = true;
-            //this.manageAddOrgForm.show(this.red);
         },
         /** 处理修改组织关系 */
         handleModify(record) {
@@ -219,8 +216,8 @@ export default {
                     });
             });
         },
-        handleShow() {
-            console.log('handleShow');
+        handleModal(...params) {
+            this.$refs.manageAddOrgForm.show(...params);
         },
         //**点击返回 */
         handleCancel() {
@@ -229,7 +226,6 @@ export default {
         },
         show(record) {
             this.red = record;
-            //this.$emit('update:visible', true);
             this.refreshData();
         },
     },

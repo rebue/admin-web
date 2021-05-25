@@ -7,10 +7,9 @@
         v-on="$listeners"
         :hiddenOkButton="true"
         @show="handleShow"
-        @cancel="handleCancel"
     >
         <a-input-search
-            v-model.trim="keywords"
+            v-model.trim="model.keywords"
             enter-button
             :loading="loading"
             placeholder="关键字"
@@ -50,6 +49,7 @@
 <script>
 import { racOrgApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
+import { Modal } from 'ant-design-vue';
 
 export default {
     components: {
@@ -103,7 +103,7 @@ export default {
                 ...this.defaultPagination,
             },
             actions: actions,
-            keywords: '',
+            model: { keywords: '' },
             red: {},
         };
     },
@@ -117,7 +117,7 @@ export default {
                 const { id, orgId } = { ...this.record };
                 const accountId = id;
                 const { current, pageSize } = this.pagination;
-                const data = { pageNum: current ?? 1, pageSize, accountId, orgId, keywords: this.keywords };
+                const data = { pageNum: current ?? 1, pageSize, accountId, orgId, keywords: this.model.keywords };
                 this.api.listAddableOrg(data).then(ro => {
                     this.pagination = {
                         ...this.pagination,
@@ -129,7 +129,7 @@ export default {
             });
         },
         handleShow() {
-            this.keywords = '';
+            this.model.keywords = '';
             this.refreshData();
         },
         /**
@@ -168,12 +168,8 @@ export default {
                 this.refreshData();
             });
         },
-        handleCancel() {
-            // this.$emit('close');
-            this.$emit('update:visible', false);
-        },
-        show() {
-            //
+        show(modal) {
+            console.log('ddddd', modal);
         },
     },
 };

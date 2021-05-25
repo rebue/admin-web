@@ -37,11 +37,11 @@
             ref="manageOrgForm"
             :record="curRecord"
             :visible.sync="manageOrgFormVisible"
-            @close="refreshTableData()"
+            @close="handleEditFormClose"
         />
-        <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
-        <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="refreshTableData()" />
-        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="refreshTableData()" />
+        <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
+        <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
+        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -240,9 +240,12 @@ export default {
          * 处理改变领域的事件
          */
         handleDomainChanged(domainId) {
+            console.log('dom', domainId);
             this.curDomainId = domainId;
-            this.orgTree.refreshData();
-            this.crudTable.refreshData();
+            this.$nextTick(() => {
+                this.orgTree.refreshData();
+                this.crudTable.refreshData();
+            });
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
@@ -288,7 +291,6 @@ export default {
         /**处理管理账户事件 */
         handleManageAccount(record) {
             this.curRecord = record;
-            console.log('manage record', record);
             this.manageOrgFormVisible = true;
             this.manageOrgForm.show(record);
         },
