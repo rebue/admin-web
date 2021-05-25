@@ -33,10 +33,10 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-account-form
-            ref="manageAccountForm"
+        <manage-org-form
+            ref="manageOrgForm"
             :record="curRecord"
-            :visible.sync="manageAccountFormVisible"
+            :visible.sync="manageOrgFormVisible"
             @close="refreshTableData()"
         />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="refreshTableData()" />
@@ -55,7 +55,7 @@ import ChangePswdForm from './ChangePswdForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racAccountApi } from '@/api/Api';
-import ManageAccountForm from './ManageAccountForm.vue';
+import ManageOrgForm from './ManageOrgForm.vue';
 
 export default {
     name: 'Manager',
@@ -67,7 +67,7 @@ export default {
         OrgTree,
         DisabledForm,
         EnabledForm,
-        ManageAccountForm,
+        ManageOrgForm,
     },
     data() {
         this.api = racAccountApi;
@@ -190,7 +190,7 @@ export default {
         return {
             loading: false,
             changePswdFormVisible: false,
-            manageAccountFormVisible: false,
+            manageOrgFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
             curRecordId: '',
@@ -213,7 +213,7 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.manageAccountForm = this.$refs.manageAccountForm;
+        this.manageOrgForm = this.$refs.manageOrgForm;
         this.refreshData();
     },
     methods: {
@@ -289,8 +289,8 @@ export default {
         handleManageAccount(record) {
             this.curRecord = record;
             console.log('manage record', record);
-            this.manageAccountFormVisible = true;
-            this.manageAccountForm.show(record);
+            this.manageOrgFormVisible = true;
+            this.manageOrgForm.show(record);
         },
         /**
          * 处理编辑账户的事件

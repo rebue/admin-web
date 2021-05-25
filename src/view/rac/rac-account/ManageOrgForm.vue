@@ -30,7 +30,6 @@
         </div>
 
         <a-table
-            :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             :columns="columns"
             :data-source="dataSource"
             v-bind="$attrs"
@@ -55,14 +54,23 @@
                 </template>
             </span>
         </a-table>
+        <manage-add-org-form
+            ref="manageAddOrgForm"
+            :visible.sync="manageAddOrgFormVisible"
+            :record="red"
+            @close="refreshData()"
+            @show="handleShow()"
+        />
     </a-drawer>
 </template>
 
 <script>
-import { racAccountApi, racOrgApi } from '@/api/Api';
+import { racOrgApi } from '@/api/Api';
+import ManageAddOrgForm from './ManageAddOrgForm.vue';
 
 export default {
     components: {
+        ManageAddOrgForm,
         // BaseModal,
     },
     props: {
@@ -104,13 +112,13 @@ export default {
             {
                 type: 'confirm',
                 title: '移除',
-                confirmTitle: '你确定要删除该组织吗?',
+                confirmTitle: '你确定要将账户移除出该组织吗?',
                 onClick: record => this.handleDel(record),
             },
             {
                 type: 'confirm',
                 title: '设置默认',
-                confirmTitle: '你确定要将该组织设置为默认组织吗?',
+                confirmTitle: '你确定要将该组织设置为账户默认组织吗?',
                 visible: false,
                 onClick: record => this.handleDefaultOrg(record),
             },
@@ -120,26 +128,29 @@ export default {
             dataSource: [],
             columns,
             actions: actions,
+            manageAddOrgFormVisible: false,
             selectedRowKeys: [], // Check here to configure the default column
             red: {},
         };
     },
     computed: {},
     mounted() {
-        //
+        this.manageAddOrgForm = this.$refs.manageAddOrgForm;
     },
     methods: {
         /** 刷新数据 */
         refreshData() {
-            this.loading = true;
-            const { id, orgId } = { ...this.red };
-            const accountId = id;
-            const { domainId } = { ...this.record };
-            const data = { domainId, accountId, orgId };
-            // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-            this.api.listByAccountId(data).then(ro => {
-                this.dataSource = ro.extra.list;
-                this.loading = false;
+            this.$nextTick(() => {
+                this.loading = true;
+                const { id, orgId } = { ...this.red };
+                const accountId = id;
+                const { domainId } = { ...this.record };
+                const data = { domainId, accountId, orgId };
+                // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
+                this.api.listByAccountId(data).then(ro => {
+                    this.dataSource = ro.extra.list;
+                    this.loading = false;
+                });
             });
         },
         /**切换抽屉时动画结束后的回调 */
@@ -150,15 +161,13 @@ export default {
         onClose() {
             this.$emit('update:visible', false);
         },
-        onSelectChange(selectedRowKeys) {
-            console.log('selectedRowKeys changed: ', selectedRowKeys);
-            this.selectedRowKeys = selectedRowKeys;
-        },
         /**
          * 处理添加组织关系的事件
          */
-        handleAdd(record) {
-            console.log('handleAdd', record);
+        handleAdd() {
+            console.log('handleAdd', this);
+            this.manageAddOrgFormVisible = true;
+            //this.manageAddOrgForm.show(this.red);
         },
         /** 处理修改组织关系 */
         handleModify(record) {
@@ -169,28 +178,46 @@ export default {
          */
         handleDel(record) {
             console.log('handleDel', record);
+            this.$nextTick(() => {
+                this.loading = true;
+                const { id } = { ...this.red };
+                const accountIds = [];
+                accountIds.push(id);
+                const orgId = record.id; //选择列组织ID
+                const data = { accountIds, orgId };
+                this.api
+                    .delOrgAccount(data)
+                    .then(ro => {
+                        this.loading = false;
+                    })
+                    .finally(() => {
+                        this.refreshData();
+                    });
+            });
         },
         /**
          * 处理设置默认组织关系的事件
          */
         handleDefaultOrg(record) {
-            this.loading = true;
-            const { id } = { ...this.red };
-            const accountId = id;
-            const orgId = record.id; //选择列组织ID
-            const { domainId } = { ...this.record };
-            const data = { domainId, accountId, orgId };
-            this.api
-                .modifyDefaultOrg(data)
-                .then(ro => {
-                    this.loading = false;
-                    if (ro.msg === '修改成功') {
-                        this.red.orgId = record.id;
-                    }
-                })
-                .finally(() => {
-                    this.refreshData();
-                });
+            this.$nextTick(() => {
+                this.loading = true;
+                const { id } = { ...this.red };
+                const accountId = id;
+                const orgId = record.id; //选择列组织ID
+                const { domainId } = { ...this.record };
+                const data = { domainId, accountId, orgId };
+                this.api
+                    .modifyDefaultOrg(data)
+                    .then(ro => {
+                        this.loading = false;
+                        if (ro.msg === '修改成功') {
+                            this.red.orgId = record.id;
+                        }
+                    })
+                    .finally(() => {
+                        this.refreshData();
+                    });
+            });
         },
         handleShow() {
             console.log('handleShow');
@@ -200,7 +227,6 @@ export default {
             this.$emit('update:visible', false);
             this.$emit('close');
         },
-
         show(record) {
             this.red = record;
             //this.$emit('update:visible', true);

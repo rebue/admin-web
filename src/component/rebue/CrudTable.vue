@@ -396,8 +396,10 @@ export default observer({
             this.loading = true;
             let promise;
             const { query, keywords, filters } = this;
-            if (query.orgId !== undefined) {
-                query['hierarchical'] = !this.changeIcon;
+            if (query !== undefined) {
+                if (query.orgId !== undefined) {
+                    query['hierarchical'] = !this.changeIcon;
+                }
             }
             const sorter =
                 JSON.stringify(this.sorter) === '{}'

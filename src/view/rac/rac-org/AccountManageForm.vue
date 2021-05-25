@@ -218,7 +218,7 @@ export default {
             this.targetKeys = targetKeys;
             if (direction === 'right') {
                 racOrgApi
-                    .addOrgAccount({ orgId: this.record.id, accountId: moveKeys })
+                    .addOrgAccount({ orgId: this.record.id, accountIds: moveKeys })
                     .then(ro => {
                         console.log('添加完成');
                     })
