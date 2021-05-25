@@ -1,57 +1,75 @@
 <template>
-    <pro-layout
-        :siderWidth="230"
-        :menus="accountStore.menus"
-        :collapsed="settingStore.slideSideCollapsed"
-        :theme="theme"
-        :layout="layout"
-        :mediaQuery="query"
-        :isMobile="isMobile"
-        :handleMediaQuery="handleMediaQuery"
-        :handleCollapse="handleCollapse"
-        :i18nRender="i18nRender"
-    >
-        <template #menuHeaderRender>
-            <div>
-                <img src="@/asset/logo.png" />
-                <h1>{{ logoTitle }}</h1>
-            </div>
-        </template>
-        <template #collapsedButtonRender>
-            <div>
-                <h1>{{ title }}</h1>
-            </div>
-        </template>
-        <template #rightContentRender>
-            <div
-                :class="[
-                    'ant-pro-global-header-index-right',
-                    layout === 'topmenu' && `ant-pro-global-header-index-${theme}`,
-                ]"
-            >
-                <a-dropdown>
-                    <a>
-                        <a-avatar
-                            size="large"
-                            :icon="accountStore.avatar ? accountStore.avatar : 'user'"
-                            :src="accountStore.avatar ? accountStore.avatar : undefined"
-                        />
-                        {{ accountStore.nickname }}</a
-                    >
-                    <a-menu slot="overlay">
-                        <a-menu-item>
-                            <a @click="handleExit">退出系统</a>
-                        </a-menu-item>
-                    </a-menu>
-                </a-dropdown>
-            </div>
-        </template>
-        <template #footerRender>
-            <div>&copy; Rebue</div>
-        </template>
-        <setting-drawer :settings="settings" @change="handleSettingChange"> </setting-drawer>
-        <router-view />
-    </pro-layout>
+    <fragment>
+        <pro-layout
+            :siderWidth="230"
+            :menus="accountStore.menus"
+            :collapsed="settingStore.slideSideCollapsed"
+            :theme="theme"
+            :layout="layout"
+            :mediaQuery="query"
+            :isMobile="isMobile"
+            :handleMediaQuery="handleMediaQuery"
+            :handleCollapse="handleCollapse"
+            :i18nRender="i18nRender"
+        >
+            <template #menuHeaderRender>
+                <div>
+                    <img src="@/asset/logo.png" />
+                    <h1>{{ logoTitle }}</h1>
+                </div>
+            </template>
+            <template #collapsedButtonRender>
+                <div>
+                    <h1>{{ title }}</h1>
+                </div>
+            </template>
+            <template #rightContentRender>
+                <div
+                    :class="[
+                        'ant-pro-global-header-index-right',
+                        layout === 'topmenu' && `ant-pro-global-header-index-${theme}`,
+                    ]"
+                >
+                    <a-dropdown>
+                        <a>
+                            <a-avatar
+                                size="large"
+                                :icon="accountStore.avatar ? accountStore.avatar : 'user'"
+                                :src="accountStore.avatar ? accountStore.avatar : undefined"
+                            />
+                            {{ accountStore.nickname }}</a
+                        >
+                        <a-menu slot="overlay">
+                            <a-menu-item>
+                                <a @click="handleUploadAvatar"><a-icon type="user" /> 上传头像</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a @click="handleChangePswd"><a-icon type="key" /> 修改密码</a>
+                            </a-menu-item>
+                            <a-menu-divider />
+                            <a-menu-item>
+                                <a @click="handleSignOut"><a-icon type="logout" /> 退出系统</a>
+                            </a-menu-item>
+                        </a-menu>
+                    </a-dropdown>
+                </div>
+            </template>
+            <template #footerRender>
+                <div>&copy; Rebue</div>
+            </template>
+            <setting-drawer :settings="settings" @change="handleSettingChange"> </setting-drawer>
+            <router-view />
+        </pro-layout>
+        <image-uploader
+            v-model="showImageUploader"
+            :width="180"
+            :height="180"
+            :noRotate="false"
+            url="/rac/account/upload-avatar"
+            @crop-upload-success="handleCropUploadSuccess"
+            @crop-upload-fail="handleCropUploadFail"
+        />
+    </fragment>
 </template>
 
 <script>
@@ -64,9 +82,15 @@ import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 import { SysIdDic } from '@/dic/SysIdDic';
 import { removeJwtToken } from '@/util/cookie';
+import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 
 export default observer({
     name: 'Index',
+    components: {
+        ProLayout,
+        SettingDrawer,
+        ImageUploader,
+    },
     data() {
         const sysId = getSysId();
         if (sysId === SysIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
@@ -94,6 +118,7 @@ export default observer({
                 hideHintAlert: false,
                 hideCopyButton: false,
             },
+            showImageUploader: false,
         };
     },
     computed: {
@@ -106,8 +131,39 @@ export default observer({
     },
     methods: {
         i18nRender,
+        /** 上传头像 */
+        handleUploadAvatar() {
+            this.showImageUploader = true;
+        },
+        /**
+         * upload success
+         *
+         * [param] jsonData  server api return data, already json encode
+         * [param] field
+         */
+        handleCropUploadSuccess(jsonData, field) {
+            console.log('-------- upload success --------');
+            console.log(jsonData);
+            console.log('field: ' + field);
+            racMenuAction.refreshAccountInfo();
+        },
+        /**
+         * upload fail
+         *
+         * [param] status    server api return error status, like 500
+         * [param] field
+         */
+        handleCropUploadFail(status, field) {
+            console.log('-------- upload fail --------');
+            console.log(status);
+            console.log('field: ' + field);
+        },
+        /** 修改密码 */
+        handleChangePswd() {
+            //
+        },
         /**退出系统 */
-        handleExit() {
+        handleSignOut() {
             this.$confirm({
                 title: '提示',
                 content: '你确定要退出系统吗?',
@@ -149,10 +205,6 @@ export default observer({
                     break;
             }
         },
-    },
-    components: {
-        ProLayout,
-        SettingDrawer,
     },
 });
 </script>
