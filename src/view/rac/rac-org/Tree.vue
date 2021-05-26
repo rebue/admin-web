@@ -27,7 +27,15 @@
                 :load-data="handleTreeNodeExpand"
                 @select="handleTreeNodeClick"
             />
-            <a-pagination v-show="!orgFold" v-model="pageNum" :page-size:sync="pageSize" :total="500" simple />
+            <a-pagination
+                show-quick-jumper
+                v-show="!orgFold"
+                v-model="pageNum"
+                :page-size:sync="pageSize"
+                :total="total"
+                simple
+                @change="handleTreeChange"
+            />
         </a-spin>
     </div>
 </template>
@@ -65,6 +73,7 @@ export default {
             showOrg: false,
             pageNum: 1,
             pageSize: 20,
+            total: 0,
             keywords: '',
             dataSource: [],
         };
@@ -95,6 +104,7 @@ export default {
             racOrgApi
                 .page(qo)
                 .then(ro => {
+                    this.total = ro.extra.page.total - 0;
                     forEachTree(ro.extra.page.list, node => {
                         node.key = node.id;
                         node.title = node.name;
@@ -144,6 +154,13 @@ export default {
                     this.dataSource = [...this.dataSource];
                     resolve();
                 });
+            });
+        },
+        handleTreeChange: function(page, pageSize) {
+            this.pageNum = page;
+            this.pageSize = pageSize;
+            this.$nextTick(() => {
+                this.refreshData();
             });
         },
     },
