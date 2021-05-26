@@ -58,9 +58,10 @@ export default {
             if (val) {
                 this.$emit('show');
                 this.$nextTick(() => {
+                    //如果不延时，搜索框可能还未渲染完成，会找不到input报错
                     setTimeout(() => {
                         this.$focus(this.$refs.modal);
-                    }, 10);
+                    }, 100);
                 });
             } else {
                 this.$emit('close');

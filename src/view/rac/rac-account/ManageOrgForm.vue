@@ -1,10 +1,11 @@
 <template>
     <a-drawer
-        :title="'管理-- ' + this.red.signInName + ' --的组织'"
+        :title="'账户(' + (account.signInName || account.signInMobile || account.signInEmail) + ')的组织'"
         placement="right"
         :closable="true"
         :mask="true"
         :keyboard="true"
+        :visible="visible"
         :after-visible-change="afterVisibleChange"
         :width="720"
         v-bind="$attrs"
@@ -32,16 +33,16 @@
             :data-source="dataSource"
             v-bind="$attrs"
             v-on="$listeners"
-            :rowKey="(record, index) => (record.id ? record.id : index)"
+            :rowKey="(account, index) => (account.id ? account.id : index)"
         >
-            <span slot="action" slot-scope="text, record">
+            <span slot="action" slot-scope="text, orgMo">
                 <template v-for="(item, index) in actions">
                     <span :key="index">
-                        <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
+                        <a v-if="item.type === 'a'" @click="item.onClick(orgMo)">{{ item.title }}</a>
                         <a-popconfirm
-                            v-if="item.type === 'confirm' && red.orgId !== record.id"
+                            v-if="item.type === 'confirm' && account.orgId !== orgMo.id"
                             :title="item.confirmTitle"
-                            @confirm="item.onClick(record)"
+                            @confirm="item.onClick(orgMo)"
                             okText="确定"
                             cancelText="取消"
                         >
@@ -55,9 +56,8 @@
         <manage-add-org-form
             ref="manageAddOrgForm"
             :visible.sync="manageAddOrgFormVisible"
-            :record="red"
+            :account="account"
             @close="refreshData()"
-            @show="handleModal()"
         />
     </a-drawer>
 </template>
@@ -72,9 +72,13 @@ export default {
         // BaseModal,
     },
     props: {
-        record: {
+        account: {
             type: Object,
             required: false,
+        },
+        visible: {
+            type: Boolean,
+            required: true,
         },
     },
     data() {
@@ -105,20 +109,20 @@ export default {
             {
                 type: 'a',
                 title: '修改',
-                onClick: record => this.handleModify(record),
+                onClick: orgMo => this.handleModify(orgMo),
             },
             {
                 type: 'confirm',
                 title: '移除',
                 confirmTitle: '你确定要将账户移除出该组织吗?',
-                onClick: record => this.handleDel(record),
+                onClick: orgMo => this.handleDel(orgMo),
             },
             {
                 type: 'confirm',
                 title: '设置默认',
                 confirmTitle: '你确定要将该组织设置为账户默认组织吗?',
                 visible: false,
-                onClick: record => this.handleDefaultOrg(record),
+                onClick: orgMo => this.handleDefaultOrg(orgMo),
             },
         ];
         return {
@@ -128,10 +132,16 @@ export default {
             actions: actions,
             manageAddOrgFormVisible: false,
             selectedRowKeys: [], // Check here to configure the default column
-            red: {},
         };
     },
     computed: {},
+    watch: {
+        visible(val) {
+            if (val) {
+                this.refreshData();
+            }
+        },
+    },
     mounted() {
         this.manageAddOrgForm = this.$refs.manageAddOrgForm;
     },
@@ -140,9 +150,9 @@ export default {
         refreshData() {
             this.$nextTick(() => {
                 this.loading = true;
-                const { id, orgId } = { ...this.red };
+                const { id, orgId } = { ...this.account };
                 const accountId = id;
-                const { domainId } = { ...this.record };
+                const { domainId } = { ...this.account };
                 const data = { domainId, accountId, orgId };
                 // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 this.api.listByAccountId(data).then(ro => {
@@ -167,20 +177,20 @@ export default {
             this.manageAddOrgFormVisible = true;
         },
         /** 处理修改组织关系 */
-        handleModify(record) {
-            console.log('handleModify', record);
+        handleModify(orgMo) {
+            console.log('handleModify', orgMo);
         },
         /**
          * 处理删除组织关系的事件
          */
-        handleDel(record) {
-            console.log('handleDel', record);
+        handleDel(orgMo) {
+            console.log('handleDel', orgMo);
             this.$nextTick(() => {
                 this.loading = true;
-                const { id } = { ...this.red };
+                const { id } = { ...this.account };
                 const accountIds = [];
                 accountIds.push(id);
-                const orgId = record.id; //选择列组织ID
+                const orgId = orgMo.id; //选择列组织ID
                 const data = { accountIds, orgId };
                 this.api
                     .delOrgAccount(data)
@@ -195,20 +205,20 @@ export default {
         /**
          * 处理设置默认组织关系的事件
          */
-        handleDefaultOrg(record) {
+        handleDefaultOrg(orgMo) {
             this.$nextTick(() => {
                 this.loading = true;
-                const { id } = { ...this.red };
+                const { id } = { ...this.account };
                 const accountId = id;
-                const orgId = record.id; //选择列组织ID
-                const { domainId } = { ...this.record };
+                const orgId = orgMo.id; //选择列组织ID
+                const { domainId } = { ...this.account };
                 const data = { domainId, accountId, orgId };
                 this.api
                     .modifyDefaultOrg(data)
                     .then(ro => {
                         this.loading = false;
                         if (ro.msg === '修改成功') {
-                            this.red.orgId = record.id;
+                            this.account.orgId = orgMo.id;
                         }
                     })
                     .finally(() => {
@@ -216,17 +226,10 @@ export default {
                     });
             });
         },
-        handleModal(...params) {
-            this.$refs.manageAddOrgForm.show(...params);
-        },
         //**点击返回 */
         handleCancel() {
             this.$emit('update:visible', false);
             this.$emit('close');
-        },
-        show(record) {
-            this.red = record;
-            this.refreshData();
         },
     },
 };

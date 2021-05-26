@@ -9,7 +9,7 @@
         @show="handleShow"
     >
         <a-input-search
-            v-model.trim="model.keywords"
+            v-model.trim="keywords"
             enter-button
             :loading="loading"
             placeholder="关键字"
@@ -22,17 +22,17 @@
             v-on="$listeners"
             :pagination="pagination"
             :scroll="{ x: false, y: 400 }"
-            :rowKey="(record, index) => (record.id ? record.id : index)"
+            :rowKey="(orgMo, index) => (orgMo.id ? orgMo.id : index)"
             @change="handleTableChange"
         >
-            <span slot="action" slot-scope="text, record">
+            <span slot="action" slot-scope="text, orgMo">
                 <template v-for="(item, index) in actions">
                     <span :key="index">
-                        <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
+                        <a v-if="item.type === 'a'" @click="item.onClick(orgMo)">{{ item.title }}</a>
                         <a-popconfirm
                             v-if="item.type === 'confirm'"
                             :title="item.confirmTitle"
-                            @confirm="item.onClick(record)"
+                            @confirm="item.onClick(orgMo)"
                             okText="确定"
                             cancelText="取消"
                         >
@@ -49,14 +49,13 @@
 <script>
 import { racOrgApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { Modal } from 'ant-design-vue';
 
 export default {
     components: {
         BaseModal,
     },
     props: {
-        record: {
+        account: {
             type: Object,
             required: false,
         },
@@ -91,7 +90,7 @@ export default {
             {
                 type: 'a',
                 title: '添加',
-                onClick: record => this.handleAdd(record),
+                onClick: orgMo => this.handleAdd(orgMo),
             },
         ];
         return {
@@ -103,8 +102,7 @@ export default {
                 ...this.defaultPagination,
             },
             actions: actions,
-            model: { keywords: '' },
-            red: {},
+            keywords: '',
         };
     },
     computed: {
@@ -114,10 +112,10 @@ export default {
         refreshData() {
             this.$nextTick(() => {
                 this.loading = true;
-                const { id, orgId } = { ...this.record };
+                const { id, orgId } = { ...this.account };
                 const accountId = id;
                 const { current, pageSize } = this.pagination;
-                const data = { pageNum: current ?? 1, pageSize, accountId, orgId, keywords: this.model.keywords };
+                const data = { pageNum: current ?? 1, pageSize, accountId, orgId, keywords: this.keywords };
                 this.api.listAddableOrg(data).then(ro => {
                     this.pagination = {
                         ...this.pagination,
@@ -129,21 +127,21 @@ export default {
             });
         },
         handleShow() {
-            this.model.keywords = '';
+            this.keywords = '';
             this.refreshData();
         },
         /**
          * 添加
          */
-        handleAdd(record) {
+        handleAdd(orgMo) {
             //
-            console.log('添加', record);
+            console.log('添加', orgMo);
             this.$nextTick(() => {
                 this.loading = true;
-                const { id } = { ...this.record };
+                const { id } = { ...this.account };
                 const accountIds = [];
                 accountIds.push(id);
-                const orgId = record.id; //选择列组织ID
+                const orgId = orgMo.id; //选择列组织ID
                 const data = { accountIds, orgId };
                 this.api
                     .addOrgAccount(data)
@@ -167,9 +165,6 @@ export default {
             this.$nextTick(() => {
                 this.refreshData();
             });
-        },
-        show(modal) {
-            console.log('ddddd', modal);
         },
     },
 };

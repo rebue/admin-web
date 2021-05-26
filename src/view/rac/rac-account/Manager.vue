@@ -35,7 +35,7 @@
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-org-form
             ref="manageOrgForm"
-            :record="curRecord"
+            :account="curRecord"
             :visible.sync="manageOrgFormVisible"
             @close="handleEditFormClose"
         />
@@ -288,11 +288,12 @@ export default {
                 groupId: record.id,
             });
         },
-        /**处理管理账户事件 */
+        /**处理管理组织事件 */
         handleManageAccount(record) {
             this.curRecord = record;
+            console.log('rec', record);
             this.manageOrgFormVisible = true;
-            this.manageOrgForm.show(record);
+            //this.manageOrgForm.show(record);
         },
         /**
          * 处理编辑账户的事件
