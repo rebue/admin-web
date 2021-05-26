@@ -8,16 +8,21 @@
 
 import Vue from 'vue';
 
-/** 遍历Vue对象 */
-function forEachVue(obj: Vue, callback: (node: Vue) => boolean): boolean {
-    if (callback(obj) === false) return false;
-    const children: Vue[] = obj.$children;
+/** 遍历DOM对象 */
+function forEachDom(el: Element, callback: (node: Element) => boolean): boolean {
+    if (callback(el) === false) return false;
+    const children: HTMLCollection = el.children;
     if (children && children.length > 0) {
         for (const child of children) {
-            if (forEachVue(child, callback) === false) return false;
+            if (forEachDom(child, callback) === false) return false;
         }
     }
     return true;
+}
+
+/** 遍历Vue对象 */
+function forEachVue(obj: Vue, callback: (node: Element) => boolean): boolean {
+    return forEachDom(obj.$el, callback);
 }
 
 /**
@@ -47,7 +52,7 @@ function focus(el: Element | Document | Vue | null = document, containerClass = 
     if (el instanceof Vue) {
         if (
             forEachVue(el as Vue, node => {
-                const nodeEl = node.$el;
+                const nodeEl = node;
                 if (
                     (nodeEl instanceof HTMLInputElement || nodeEl instanceof HTMLTextAreaElement) &&
                     focus(nodeEl) === true

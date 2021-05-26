@@ -58,7 +58,9 @@ export default {
             if (val) {
                 this.$emit('show');
                 this.$nextTick(() => {
-                    this.$focus(this.$refs.modal);
+                    setTimeout(() => {
+                        this.$focus(this.$refs.modal);
+                    }, 10);
                 });
             } else {
                 this.$emit('close');
