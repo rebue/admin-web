@@ -1,20 +1,32 @@
 <template>
-    <base-modal
-        ref="baseModal"
-        title="可添加组织"
-        :loading="loading"
-        v-bind="$attrs"
-        v-on="$listeners"
-        :hiddenOkButton="true"
-        @show="handleShow"
-    >
-        <a-input-search
+    <fragment>
+        <base-modal
+            ref="baseModal"
+            title="可添加组织"
+            :loading="loading"
+            v-bind="$attrs"
+            v-on="$listeners"
+            @show="handleShow"
+            @ok="handleOk"
+        >
+            <div>
+                <org-tree
+                    :ref="`orgTree.${account.domainId}`"
+                    :show.sync="showOrg"
+                    :width="width"
+                    :domainId="account.domainId"
+                    @click="handleOrgMenuClick"
+                    @select="handleOrgTreeSelect"
+                />
+            </div>
+            <!-- <a-input-search
             v-model.trim="keywords"
             enter-button
             :loading="loading"
             placeholder="关键字"
             @search="refreshData"
         />
+        <p></p>
         <a-table
             :columns="columns"
             :data-source="dataSource"
@@ -42,17 +54,20 @@
                     </span>
                 </template>
             </span>
-        </a-table>
-    </base-modal>
+        </a-table> -->
+        </base-modal>
+    </fragment>
 </template>
 
 <script>
 import { racOrgApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
+import OrgTree from '../rac-org/Tree';
 
 export default {
     components: {
         BaseModal,
+        OrgTree,
     },
     props: {
         account: {
@@ -71,18 +86,17 @@ export default {
         },
     },
     data() {
+        this.width = 550;
         this.api = racOrgApi;
         const columns = [
             {
                 dataIndex: 'name',
                 title: '名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 100,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
@@ -97,6 +111,7 @@ export default {
             //
             loading: false,
             dataSource: [],
+            showOrg: false,
             columns,
             pagination: {
                 ...this.defaultPagination,
@@ -128,7 +143,7 @@ export default {
         },
         handleShow() {
             this.keywords = '';
-            this.refreshData();
+            // this.refreshData();
         },
         /**
          * 添加
@@ -165,6 +180,22 @@ export default {
             this.$nextTick(() => {
                 this.refreshData();
             });
+        },
+        /** 处理组织菜单点击节点的事件 */
+        handleOrgMenuClick(item) {
+            // this.curOrgId = item.id;
+            // this.$nextTick(() => {
+            //     this.refreshTableData();
+            // });
+        },
+        /** 处理组织树选择节点的事件 */
+        handleOrgTreeSelect({ isSelected, item }) {
+            this.curOrg = isSelected ? item : undefined;
+            //this.$nextTick(this.refreshTableData);
+        },
+        /**点击提交*/
+        handleOk() {
+            this.handleAdd(this.curOrg);
         },
     },
 };

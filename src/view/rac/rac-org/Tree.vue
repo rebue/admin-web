@@ -25,6 +25,8 @@
                 class="tree"
                 blockNode
                 :load-data="handleTreeNodeExpand"
+                :loadedKeys="loadedKeys"
+                :expand="handleTreeNodeExpandOrContraction"
                 @select="handleTreeNodeClick"
             />
             <a-pagination
@@ -72,9 +74,10 @@ export default {
             orgFold: false,
             showOrg: false,
             pageNum: 1,
-            pageSize: 10,
+            pageSize: 5,
             total: 0,
             keywords: '',
+            loadedKeys: [],
             dataSource: [],
         };
     },
@@ -89,7 +92,7 @@ export default {
     //     },
     // },
     mounted() {
-        this.refreshData();
+        this.$nextTick(() => this.refreshData());
     },
     methods: {
         /**
@@ -100,7 +103,6 @@ export default {
             this.loading = true;
             const qo = { pageNum, pageSize, domainId };
             if (keywords && keywords.trim() !== '') qo.keywords = keywords.trim();
-
             racOrgApi
                 .page(qo)
                 .then(ro => {
@@ -139,7 +141,7 @@ export default {
         },
         /**展开节点*/
         handleTreeNodeExpand(treeNode) {
-            return new Promise(resolve => {
+            const p = new Promise(resolve => {
                 if (treeNode.dataRef.children) {
                     resolve();
                     return;
@@ -155,10 +157,17 @@ export default {
                     resolve();
                 });
             });
+            return p;
         },
-        handleTreeChange: function(page, pageSize) {
+        handleTreeNodeExpandOrContraction(expandedKeys, { expanded: bool, node }) {
+            console.log('this.expandedKeys', expandedKeys);
+            console.log('this.expanded', this.expanded.bool);
+            console.log('this.bool', bool);
+            console.log('this.node', node);
+        },
+        handleTreeChange(page, pageSize) {
             this.pageNum = page;
-            this.pageSize = pageSize;
+            // this.pageSize = pageSize;
             this.$nextTick(() => {
                 this.refreshData();
             });

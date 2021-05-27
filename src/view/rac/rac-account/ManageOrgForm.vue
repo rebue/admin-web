@@ -7,49 +7,54 @@
         :keyboard="true"
         :visible="visible"
         :after-visible-change="afterVisibleChange"
-        :width="720"
+        :width="600"
         v-bind="$attrs"
         v-on="$listeners"
         @close="onClose"
     >
         <div class="table-commands">
             <slot name="commands">
-                <template v-for="(item, index) in tableCommands">
-                    <a-button
-                        style="margin-right: 50px"
-                        :type="item.buttonType"
-                        :icon="item.icon"
-                        @click="item.onClick"
-                        :key="index"
-                    >
-                        {{ item.title }}
-                    </a-button>
-                </template>
+                <a-button style="margin-right: 50px" type="primary" icon="plus" @click="handleAdd"> 添加 </a-button>
             </slot>
         </div>
-
+        <p></p>
         <a-table
             :columns="columns"
             :data-source="dataSource"
             v-bind="$attrs"
             v-on="$listeners"
             :rowKey="(account, index) => (account.id ? account.id : index)"
+            :pagination="false"
         >
             <span slot="action" slot-scope="text, orgMo">
-                <template v-for="(item, index) in actions">
-                    <span :key="index">
-                        <a v-if="item.type === 'a'" @click="item.onClick(orgMo)">{{ item.title }}</a>
-                        <a-popconfirm
-                            v-if="item.type === 'confirm' && account.orgId !== orgMo.id"
-                            :title="item.confirmTitle"
-                            @confirm="item.onClick(orgMo)"
-                            okText="确定"
-                            cancelText="取消"
-                        >
-                            <a>{{ item.title }}</a>
-                        </a-popconfirm>
-                        <a-divider v-if="index < actions.length - 1" type="vertical" />
-                    </span>
+                <a :class="{ defaultRow: account.orgId === orgMo.id }" @click="handleModify(orgMo)">变更组织</a>
+
+                <a-divider v-if="account.orgId !== orgMo.id" type="vertical" />
+                <a-popconfirm
+                    v-if="account.orgId !== orgMo.id"
+                    title="你确定要将该组织设置为账户默认组织吗?"
+                    @confirm="handleDefaultOrg(orgMo)"
+                    okText="确定"
+                    cancelText="取消"
+                >
+                    <a>设为默认</a>
+                </a-popconfirm>
+                <a-divider v-if="account.orgId !== orgMo.id" type="vertical" />
+                <a-popconfirm
+                    v-if="account.orgId !== orgMo.id"
+                    title="你确定要将账户移除出该组织吗?"
+                    @confirm="handleDel(orgMo)"
+                    okText="确定"
+                    cancelText="取消"
+                >
+                    <a>移除组织</a>
+                </a-popconfirm>
+            </span>
+            <span slot="tagName" slot-scope="text, orgMo">
+                <template>
+                    <span :class="{ defaultRow: account.orgId === orgMo.id }">{{ text }} </span>
+                    &nbsp;
+                    <a-tag color="#666" v-if="account.orgId === orgMo.id"> 默认 </a-tag>
                 </template>
             </span>
         </a-table>
@@ -88,48 +93,20 @@ export default {
                 dataIndex: 'name',
                 title: '名称',
                 fixed: 'left',
+                scopedSlots: { customRender: 'tagName' },
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 200,
+                //width: 250,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
-            },
-        ];
-        this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '添加',
-                onClick: this.handleAdd,
-            },
-        ];
-        const actions = [
-            {
-                type: 'a',
-                title: '修改',
-                onClick: orgMo => this.handleModify(orgMo),
-            },
-            {
-                type: 'confirm',
-                title: '移除',
-                confirmTitle: '你确定要将账户移除出该组织吗?',
-                onClick: orgMo => this.handleDel(orgMo),
-            },
-            {
-                type: 'confirm',
-                title: '设置默认',
-                confirmTitle: '你确定要将该组织设置为账户默认组织吗?',
-                visible: false,
-                onClick: orgMo => this.handleDefaultOrg(orgMo),
             },
         ];
         return {
             loading: false,
             dataSource: [],
             columns,
-            actions: actions,
             manageAddOrgFormVisible: false,
             selectedRowKeys: [], // Check here to configure the default column
         };
@@ -234,3 +211,8 @@ export default {
     },
 };
 </script>
+<style lang="less" scoped>
+.defaultRow {
+    font-weight: bolder;
+}
+</style>

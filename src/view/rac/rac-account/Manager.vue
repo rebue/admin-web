@@ -1,6 +1,6 @@
 <template>
-    <fragment
-        ><base-manager ref="baseManager">
+    <fragment>
+        <base-manager ref="baseManager">
             <template #managerCard>
                 <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
                     <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
@@ -12,7 +12,7 @@
                             :columns="columns"
                             :api="api"
                             :query="{ domainId: curDomainId, orgId: curOrgId }"
-                            :scrollX="600"
+                            :scrollX="800"
                             :showHierarchical="showOrg"
                         >
                             <template #left>
@@ -200,7 +200,6 @@ export default {
             domains: [],
             columns,
             curRecord: {},
-            orgId: '',
         };
     },
     computed: {
@@ -240,7 +239,6 @@ export default {
          * 处理改变领域的事件
          */
         handleDomainChanged(domainId) {
-            console.log('dom', domainId);
             this.curDomainId = domainId;
             this.$nextTick(() => {
                 this.orgTree.refreshData();
@@ -257,7 +255,6 @@ export default {
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrgId = isSelected ? item.id : undefined;
-            this.orgId = item.id;
             this.$nextTick(this.refreshTableData);
         },
         /** 处理账户启用或禁用 */
@@ -283,7 +280,7 @@ export default {
         handleAdd(record) {
             this.crudTable.expand(record.id);
             this.editForm.show(EditFormTypeDic.Add, {
-                orgId: this.orgId,
+                orgId: this.curOrgId,
                 domainId: this.curDomainId,
                 groupId: record.id,
             });
