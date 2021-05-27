@@ -17,7 +17,6 @@
                     :domainId="account.domainId"
                     @click="handleOrgMenuClick"
                     @select="handleOrgTreeSelect"
-                    @check="handleCheck"
                 />
             </div>
         </base-modal>
@@ -103,14 +102,11 @@ export default {
         },
         handleShow() {
             this.keywords = '';
-            // this.refreshData();
         },
         /**
          * 添加
          */
         handleAdd(orgMo) {
-            //
-            console.log('添加', orgMo);
             this.$nextTick(() => {
                 this.loading = true;
                 const { id } = { ...this.account };
@@ -124,7 +120,9 @@ export default {
                         this.loading = false;
                     })
                     .finally(() => {
-                        this.refreshData();
+                        this.loading = false;
+                        this.curOrg = undefined;
+                        this.$emit('update:visible', false);
                     });
             });
         },
@@ -148,16 +146,12 @@ export default {
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrg = isSelected ? item : undefined;
-            console.log('eeeeeee', this.curOrg);
-            //this.$nextTick(this.refreshTableData);
         },
         /**点击提交*/
         handleOk() {
-            console.log('ssssss', this.curOrg);
-            this.handleAdd(this.curOrg);
-        },
-        handleCheck(checkedKeys, { checked: bool, checkedNodes, node, event }) {
-            console.log(11111111111111111111);
+            if (this.curOrg) {
+                this.handleAdd(this.curOrg);
+            }
         },
     },
 };

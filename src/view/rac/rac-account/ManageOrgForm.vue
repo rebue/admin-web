@@ -115,7 +115,9 @@ export default {
     watch: {
         visible(val) {
             if (val) {
-                this.refreshData();
+                this.$nextTick(() => {
+                    this.refreshData();
+                });
             }
         },
     },

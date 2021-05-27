@@ -26,7 +26,6 @@
                 blockNode
                 :load-data="handleTreeNodeExpand"
                 :loadedKeys="loadedKeys"
-                @expand="handleTreeNodeExpandOrContraction"
                 @select="handleTreeNodeClick"
             />
             <a-pagination
