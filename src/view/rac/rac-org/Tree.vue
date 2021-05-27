@@ -26,7 +26,7 @@
                 blockNode
                 :load-data="handleTreeNodeExpand"
                 :loadedKeys="loadedKeys"
-                :expand="handleTreeNodeExpandOrContraction"
+                @expand="handleTreeNodeExpandOrContraction"
                 @select="handleTreeNodeClick"
             />
             <a-pagination
@@ -66,6 +66,14 @@ export default {
         },
         show: {
             type: Boolean,
+        },
+        checkable: {
+            type: Boolean,
+            default: false,
+        },
+        checkStrictly: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
@@ -141,7 +149,7 @@ export default {
         },
         /**展开节点*/
         handleTreeNodeExpand(treeNode) {
-            const p = new Promise(resolve => {
+            const promise = new Promise(resolve => {
                 if (treeNode.dataRef.children) {
                     resolve();
                     return;
@@ -157,13 +165,7 @@ export default {
                     resolve();
                 });
             });
-            return p;
-        },
-        handleTreeNodeExpandOrContraction(expandedKeys, { expanded: bool, node }) {
-            console.log('this.expandedKeys', expandedKeys);
-            console.log('this.expanded', this.expanded.bool);
-            console.log('this.bool', bool);
-            console.log('this.node', node);
+            return promise;
         },
         handleTreeChange(page, pageSize) {
             this.pageNum = page;

@@ -17,44 +17,9 @@
                     :domainId="account.domainId"
                     @click="handleOrgMenuClick"
                     @select="handleOrgTreeSelect"
+                    @check="handleCheck"
                 />
             </div>
-            <!-- <a-input-search
-            v-model.trim="keywords"
-            enter-button
-            :loading="loading"
-            placeholder="关键字"
-            @search="refreshData"
-        />
-        <p></p>
-        <a-table
-            :columns="columns"
-            :data-source="dataSource"
-            v-bind="$attrs"
-            v-on="$listeners"
-            :pagination="pagination"
-            :scroll="{ x: false, y: 400 }"
-            :rowKey="(orgMo, index) => (orgMo.id ? orgMo.id : index)"
-            @change="handleTableChange"
-        >
-            <span slot="action" slot-scope="text, orgMo">
-                <template v-for="(item, index) in actions">
-                    <span :key="index">
-                        <a v-if="item.type === 'a'" @click="item.onClick(orgMo)">{{ item.title }}</a>
-                        <a-popconfirm
-                            v-if="item.type === 'confirm'"
-                            :title="item.confirmTitle"
-                            @confirm="item.onClick(orgMo)"
-                            okText="确定"
-                            cancelText="取消"
-                        >
-                            <a>{{ item.title }}</a>
-                        </a-popconfirm>
-                        <a-divider v-if="index < actions.length - 1" type="vertical" />
-                    </span>
-                </template>
-            </span>
-        </a-table> -->
         </base-modal>
     </fragment>
 </template>
@@ -100,13 +65,6 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-        const actions = [
-            {
-                type: 'a',
-                title: '添加',
-                onClick: orgMo => this.handleAdd(orgMo),
-            },
-        ];
         return {
             //
             loading: false,
@@ -116,8 +74,10 @@ export default {
             pagination: {
                 ...this.defaultPagination,
             },
-            actions: actions,
             keywords: '',
+            curOrg: '',
+            checkable: true,
+            checkStrictly: true,
         };
     },
     computed: {
@@ -183,19 +143,21 @@ export default {
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
-            // this.curOrgId = item.id;
-            // this.$nextTick(() => {
-            //     this.refreshTableData();
-            // });
+            this.curOrg = item;
         },
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrg = isSelected ? item : undefined;
+            console.log('eeeeeee', this.curOrg);
             //this.$nextTick(this.refreshTableData);
         },
         /**点击提交*/
         handleOk() {
+            console.log('ssssss', this.curOrg);
             this.handleAdd(this.curOrg);
+        },
+        handleCheck(checkedKeys, { checked: bool, checkedNodes, node, event }) {
+            console.log(11111111111111111111);
         },
     },
 };
