@@ -288,9 +288,7 @@ export default {
         /**处理管理组织事件 */
         handleManageAccount(record) {
             this.curRecord = record;
-            console.log('rec', record);
             this.manageOrgFormVisible = true;
-            //this.manageOrgForm.show(record);
         },
         /**
          * 处理编辑账户的事件

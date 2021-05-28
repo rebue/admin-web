@@ -1,7 +1,7 @@
 <template>
     <div v-show="show" :style="{ width: currentWidth + 'px' }">
         <div class="menu-toolbar">
-            <a-button :icon="orgFold ? 'menu-unfold' : 'menu-fold'" @click="handleOrgFoldChanged" />
+            <!-- //  <a-button :icon="orgFold ? 'menu-unfold' : 'menu-fold'" @click="handleOrgFoldChanged" /> -->
             <a-input-search
                 v-show="!orgFold"
                 v-model.trim="keywords"
@@ -15,7 +15,6 @@
                 v-show="orgFold"
                 :fold="true"
                 :dataSource="dataSource"
-                :default-checked-keys="['0-0-0']"
                 v-bind="$attrs"
                 v-on="$listeners"
             ></rebue-tree>

@@ -27,7 +27,7 @@
             :pagination="false"
         >
             <span slot="action" slot-scope="text, orgMo">
-                <a :class="{ defaultRow: account.orgId === orgMo.id }" @click="handleModify(orgMo)">变更组织</a>
+                <a @click="handleModify(orgMo)">变更组织</a>
 
                 <a-divider v-if="account.orgId !== orgMo.id" type="vertical" />
                 <a-popconfirm
@@ -59,9 +59,20 @@
             </span>
         </a-table>
         <manage-add-org-form
-            ref="manageAddOrgForm"
             :visible.sync="manageAddOrgFormVisible"
-            :account="account"
+            :account.sync="account"
+            :width="width"
+            :existOrgIds="existOrgIds"
+            :domainId="account.domainId"
+            @close="refreshData()"
+        />
+        <manager-modify-org-form
+            :visible.sync="managerModifyOrgFormVisible"
+            :account.sync="account"
+            :width="width"
+            :existOrgIds="existOrgIds"
+            :modifyOrgId="modifyOrgId"
+            :domainId="account.domainId"
             @close="refreshData()"
         />
     </a-drawer>
@@ -70,11 +81,12 @@
 <script>
 import { racOrgApi } from '@/api/Api';
 import ManageAddOrgForm from './ManageAddOrgForm.vue';
+import ManagerModifyOrgForm from './ManagerModifyOrgForm.vue';
 
 export default {
     components: {
         ManageAddOrgForm,
-        // BaseModal,
+        ManagerModifyOrgForm,
     },
     props: {
         account: {
@@ -87,6 +99,7 @@ export default {
         },
     },
     data() {
+        this.width = 550;
         this.api = racOrgApi;
         const columns = [
             {
@@ -106,9 +119,12 @@ export default {
         return {
             loading: false,
             dataSource: [],
+            existOrgIds: [],
+            modifyOrgId: '',
             columns,
+            showOrg: false,
             manageAddOrgFormVisible: false,
-            selectedRowKeys: [], // Check here to configure the default column
+            managerModifyOrgFormVisible: false,
         };
     },
     computed: {},
@@ -122,7 +138,8 @@ export default {
         },
     },
     mounted() {
-        this.manageAddOrgForm = this.$refs.manageAddOrgForm;
+        // this.manageAddOrgForm = this.$refs.manageAddOrgForm;
+        // this.managerModifyOrgForm = this.$refs.managerModifyOrgForm;
     },
     methods: {
         /** 刷新数据 */
@@ -134,10 +151,18 @@ export default {
                 const { domainId } = { ...this.account };
                 const data = { domainId, accountId, orgId };
                 // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-                this.api.listByAccountId(data).then(ro => {
-                    this.dataSource = ro.extra.list;
-                    this.loading = false;
-                });
+                this.api
+                    .listByAccountId(data)
+                    .then(ro => {
+                        this.dataSource = ro.extra.list;
+                    })
+                    .finally(() => {
+                        this.existOrgIds = [];
+                        for (const list of this.dataSource) {
+                            this.existOrgIds.push(list.id);
+                        }
+                        this.loading = false;
+                    });
             });
         },
         /**切换抽屉时动画结束后的回调 */
@@ -152,18 +177,17 @@ export default {
          * 处理添加组织关系的事件
          */
         handleAdd() {
-            console.log('handleAdd', this);
             this.manageAddOrgFormVisible = true;
         },
         /** 处理修改组织关系 */
         handleModify(orgMo) {
-            console.log('handleModify', orgMo);
+            this.modifyOrgId = orgMo.id;
+            this.managerModifyOrgFormVisible = true;
         },
         /**
          * 处理删除组织关系的事件
          */
         handleDel(orgMo) {
-            console.log('handleDel', orgMo);
             this.$nextTick(() => {
                 this.loading = true;
                 const { id } = { ...this.account };

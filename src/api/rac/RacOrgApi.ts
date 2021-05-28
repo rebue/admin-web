@@ -24,6 +24,12 @@ export default class RacSysApi extends BaseCrudApi {
     listAddableOrg(qo): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/listAddableOrg', params: qo });
     }
+    /**
+     * 更改组织
+     */
+    modifyOrgAccount(mo): Promise<Ro> {
+        return request.put({ url: this.baseUrn + '/modifyOrgAccount', data: mo });
+    }
     /**修改默认组织*/
     modifyDefaultOrg(mo): Promise<Ro> {
         return request.put({ url: this.baseUrn + '/modifyDefaultOrg', data: mo });

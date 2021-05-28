@@ -2,7 +2,7 @@
     <fragment>
         <base-modal
             ref="baseModal"
-            title="可添加的组织"
+            title="可变更的组织"
             :loading="loading"
             v-bind="$attrs"
             v-on="$listeners"
@@ -61,6 +61,10 @@ export default {
         foldWidth: {
             type: Number,
             default: 80,
+        },
+        modifyOrgId: {
+            type: String,
+            default: '',
         },
         domainId: {
             type: String,
@@ -162,21 +166,21 @@ export default {
         /**
          * 添加
          */
-        handleAdd(curOrg) {
+        handleModify(curOrg) {
             this.$nextTick(() => {
                 this.loading = true;
                 const { id } = { ...this.account };
-                const accountIds = [];
-                accountIds.push(id);
-                const orgId = curOrg.id;
-                const data = { accountIds, orgId };
+                const accountId = id;
+                const modifyOrgId = this.modifyOrgId; //被修改的的组织id
+                const orgId = curOrg.id; //修改成选择的组织Id
+                const data = { accountId, orgId, modifyOrgId };
                 this.api
-                    .addOrgAccount(data)
+                    .modifyOrgAccount(data)
                     .then(ro => {
-                        this.loading = false;
+                        //
                     })
                     .finally(() => {
-                        if (this.account.orgId === undefined) {
+                        if (this.account.orgId === modifyOrgId) {
                             this.account.orgId = orgId;
                             this.$emit('update:account', this.account);
                         }
@@ -199,7 +203,7 @@ export default {
         /**点击提交*/
         handleOk() {
             if (this.curOrg) {
-                this.handleAdd(this.curOrg);
+                this.handleModify(this.curOrg);
             }
         },
         /**处理分页 */
