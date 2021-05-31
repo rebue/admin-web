@@ -11,7 +11,7 @@
                             :actions="tableActions"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId, isTable: true }"
+                            :query="{ domainId: curDomainId, deep: true }"
                             :scrollX="600"
                             :expandable="true"
                         >

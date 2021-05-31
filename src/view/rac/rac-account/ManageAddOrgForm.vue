@@ -108,7 +108,7 @@ export default {
         refreshData() {
             const { pageNum, pageSize, domainId, keywords } = this;
             this.loading = true;
-            const qo = { pageNum, pageSize, domainId, isTable: true };
+            const qo = { pageNum, pageSize, domainId, deep: true };
             if (keywords && keywords.trim() !== '') qo.keywords = keywords.trim();
             racOrgApi
                 .page(qo)
