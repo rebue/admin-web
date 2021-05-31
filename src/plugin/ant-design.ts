@@ -31,6 +31,7 @@ import {
     Tree,
     Transfer,
     Drawer,
+    Space,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -52,6 +53,7 @@ Vue.use(Icon);
 Vue.use(Button);
 Vue.use(Divider);
 Vue.use(Spin);
+Vue.use(Space);
 
 // 表单
 Vue.use(FormModel);

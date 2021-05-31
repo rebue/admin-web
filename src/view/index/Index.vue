@@ -18,41 +18,66 @@
                     <h1>{{ logoTitle }}</h1>
                 </div>
             </template>
-            <template #collapsedButtonRender>
+            <template #headerContentRender>
                 <div>
-                    <h1>{{ title }}</h1>
+                    <a-space class="title">
+                        <h1>
+                            {{ title }}
+                        </h1>
+                        <a-tooltip placement="bottom" title="打开新页面">
+                            <router-link tag="a" target="_blank" :to="$route.path">
+                                <a-icon type="plus-circle" :style="{ fontSize: '24px' }" />
+                            </router-link>
+                        </a-tooltip>
+                    </a-space>
                 </div>
             </template>
             <template #rightContentRender>
-                <div
+                <a-space
                     :class="[
                         'ant-pro-global-header-index-right',
                         layout === 'topmenu' && `ant-pro-global-header-index-${theme}`,
                     ]"
                 >
-                    <a-dropdown>
+                    <a-popover placement="bottom">
+                        <a-avatar size="large" src="/img/account/agent.png" />
+                        <template slot="title">
+                            <div>
+                                <a-avatar
+                                    size="large"
+                                    :icon="accountStore.avatar ? accountStore.avatar : 'user'"
+                                    :src="accountStore.avatar ? accountStore.avatar : undefined"
+                                />
+                                {{ accountStore.nickname }}
+                            </div>
+                        </template>
+                        <template slot="content"> <a-icon type="logout" /> 退出代理 </template>
+                    </a-popover>
+                    <el-dropdown @command="handleAccountCommand">
                         <a>
                             <a-avatar
                                 size="large"
                                 :icon="accountStore.avatar ? accountStore.avatar : 'user'"
                                 :src="accountStore.avatar ? accountStore.avatar : undefined"
                             />
-                            {{ accountStore.nickname }}</a
-                        >
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a @click="handleUploadAvatar"><a-icon type="user" /> 上传头像</a>
-                            </a-menu-item>
-                            <a-menu-item>
-                                <a @click="handleChangePswd"><a-icon type="key" /> 修改密码</a>
-                            </a-menu-item>
-                            <a-menu-divider />
-                            <a-menu-item>
-                                <a @click="handleSignOut"><a-icon type="logout" /> 退出系统</a>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
-                </div>
+                            <ellipsis :length="50" tooltip>
+                                {{ accountStore.nickname }}
+                            </ellipsis>
+                        </a>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="PersonCenter">
+                                <a-icon type="user" /> 个人中心
+                            </el-dropdown-item>
+                            <el-dropdown-item command="UploadAvatar">
+                                <a-icon type="smile" /> 上传头像
+                            </el-dropdown-item>
+                            <el-dropdown-item command="ChangePswd"> <a-icon type="key" /> 修改密码 </el-dropdown-item>
+                            <el-dropdown-item command="SignOut" divided>
+                                <a-icon type="logout" /> 退出系统
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </a-space>
             </template>
             <template #footerRender>
                 <div>&copy; Rebue</div>
@@ -76,6 +101,7 @@
 import { observer } from 'mobx-vue';
 import { getSysId } from '@/util/cookie';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
+import { Ellipsis } from '@/component/ant-design-pro';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
 import { accountStore, settingStore } from '@/store/Store';
@@ -88,6 +114,7 @@ export default observer({
     name: 'Index',
     components: {
         ProLayout,
+        Ellipsis,
         SettingDrawer,
         ImageUploader,
     },
@@ -131,9 +158,32 @@ export default observer({
     },
     methods: {
         i18nRender,
-        /** 上传头像 */
-        handleUploadAvatar() {
-            this.showImageUploader = true;
+        handleAccountCommand(command) {
+            switch (command) {
+                case 'PersonCenter':
+                    break;
+                /** 上传头像 */
+                case 'UploadAvatar':
+                    this.showImageUploader = true;
+                    break;
+                /** 修改密码 */
+                case 'ChangePswd':
+                    break;
+                /**退出系统 */
+                case 'SignOut':
+                    this.$confirm({
+                        title: '提示',
+                        content: '你确定要退出系统吗?',
+                        maskClosable: true,
+                        onOk: () => {
+                            removeJwtToken();
+                            this.$router.push({ path: '/sign-in' });
+                        },
+                    });
+                    break;
+                default:
+                    break;
+            }
         },
         /**
          * upload success
@@ -157,22 +207,6 @@ export default observer({
             console.log('-------- upload fail --------');
             console.log(status);
             console.log('field: ' + field);
-        },
-        /** 修改密码 */
-        handleChangePswd() {
-            //
-        },
-        /**退出系统 */
-        handleSignOut() {
-            this.$confirm({
-                title: '提示',
-                content: '你确定要退出系统吗?',
-                maskClosable: true,
-                onOk: () => {
-                    removeJwtToken();
-                    this.$router.push({ path: '/sign-in' });
-                },
-            });
         },
         handleMediaQuery(query) {
             this.query = query;
@@ -210,4 +244,12 @@ export default observer({
 </script>
 <style lang="less">
 @import './Index.less';
+.title {
+    display: flex;
+    align-items: center;
+}
+.ant-pro-global-header-index-right {
+    display: flex;
+    align-items: center;
+}
 </style>
