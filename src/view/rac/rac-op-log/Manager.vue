@@ -13,7 +13,7 @@
                         :expandable="false"
                     >
                         <template #keywordsLeft>
-                            <label style="width: 100px; line-height: 30px">选择日期：</label>
+                            <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
                             <a-range-picker
                                 format="YYYY-MM-DD HH:mm:ss"
                                 :show-time="{
@@ -94,25 +94,20 @@ export default {
                 key: 'opType',
                 title: '操作类型',
                 ellipsis: true,
-                width: 110,
                 filters: [
                     { text: OpTypeDic.login, value: OpTypeDic.login },
                     { text: OpTypeDic.register, value: OpTypeDic.register },
                     { text: OpTypeDic.operation, value: OpTypeDic.operation },
                 ],
-            },
-            {
-                dataIndex: 'opTitle',
-                key: 'opTitle',
-                title: '操作标题',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'opDetail',
-                key: 'opDetail',
-                title: '操作详情',
-                ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popover title={text + '详情'}>
+                        {text}
+                        <template slot="content">
+                            <p>操作标题：{record.opTitle}</p>
+                            <p>操作详情：{record.opDetail}</p>
+                        </template>
+                    </a-popover>
+                ),
             },
             {
                 dataIndex: 'opDatetime',

@@ -13,7 +13,7 @@
                         :expandable="false"
                     >
                         <template #keywordsLeft>
-                            <label style="width: 100px; line-height: 30px">选择日期：</label>
+                            <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
                             <a-range-picker
                                 format="YYYY-MM-DD HH:mm:ss"
                                 :show-time="{
