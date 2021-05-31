@@ -13,6 +13,12 @@ export default class AccountStore {
     /** 是否测试者 */
     @observable
     isTester = false;
+    /** 账户组织ID */
+    @observable
+    orgId = '';
+    /** 账户组织全名 */
+    @observable
+    orgFullName = '';
     /** 菜单列表 */
     @observable
     menus = [];

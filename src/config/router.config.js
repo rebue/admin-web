@@ -39,6 +39,13 @@ export const constantRouters = [
         component: () => import('@/view/index/Index.vue'),
         redirect: '/base/rac-domain',
         children: [
+            {
+                path: '/person-center',
+                name: 'person-center',
+                meta: { title: '个人中心', keepAlive: true, icon: 'setting' },
+                component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
+                hidden: true,
+            },
             /** 平台管理系统 */
             {
                 path: '/base',

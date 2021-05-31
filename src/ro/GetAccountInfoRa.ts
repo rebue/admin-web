@@ -1,6 +1,10 @@
 export interface GetAccountInfoRa {
     /** 账户ID */
     id: string;
+    /** 账户组织ID */
+    orgId: string;
+    /** 账户组织全名 */
+    orgFullName: string;
     /** 账户昵称 */
     nickname: string;
     /** 账户头像 */

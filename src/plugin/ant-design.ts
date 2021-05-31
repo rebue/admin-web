@@ -43,6 +43,8 @@ Vue.component('icon-font', IconFont);
 Vue.use(ConfigProvider);
 
 // 布局
+Vue.use(Row);
+Vue.use(Col);
 // Vue.use(Container);
 // Vue.use(Header);
 // Vue.use(Main);
@@ -75,8 +77,6 @@ Vue.use(Tree);
 
 // 表格
 Vue.use(Table);
-Vue.use(Col);
-Vue.use(Row);
 Vue.use(Pagination);
 
 // 选择框

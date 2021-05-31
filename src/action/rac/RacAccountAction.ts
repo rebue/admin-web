@@ -26,6 +26,8 @@ export class RacAccountAction {
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
         accountStore.accountId = ra.id;
+        accountStore.orgId = ra.orgId;
+        accountStore.orgFullName = ra.orgFullName;
         accountStore.nickname = ra.nickname;
         accountStore.avatar = ra.avatar;
         accountStore.isTester = ra.isTester;

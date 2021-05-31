@@ -160,7 +160,9 @@ export default observer({
         i18nRender,
         handleAccountCommand(command) {
             switch (command) {
+                /** 个人中心 */
                 case 'PersonCenter':
+                    this.$router.push({ path: '/person-center' });
                     break;
                 /** 上传头像 */
                 case 'UploadAvatar':
