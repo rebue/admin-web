@@ -10,7 +10,7 @@
                         :api="api"
                         :query="query"
                         :scrollX="600"
-                        :expandable="true"
+                        :expandable="false"
                     >
                         <template #keywordsLeft>
                             <label style="width: 100px; line-height: 30px">选择日期：</label>
@@ -184,6 +184,8 @@ export default {
             this.query.startDate = dateDates[0];
             this.query.endDate = dateDates[1];
             if (dateDates[0] === '') {
+                delete this.query['startDate'];
+                delete this.query['endDate'];
                 this.refreshTableData();
             }
         },
