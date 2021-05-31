@@ -42,6 +42,7 @@
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
         <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
+        <agent-sign-in-form :id="curRecordId" :visible.sync="agentSignInFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -52,6 +53,7 @@ import EditForm from './EditForm.vue';
 import DisabledForm from './DisabledForm.vue';
 import EnabledForm from './EnabledForm.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
+import AgentSignInForm from './AgentSignInForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racAccountApi } from '@/api/Api';
@@ -63,6 +65,7 @@ export default {
         CrudTable,
         BaseManager,
         EditForm,
+        AgentSignInForm,
         ChangePswdForm,
         OrgTree,
         DisabledForm,
@@ -148,7 +151,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 240,
+                width: 170,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -188,6 +191,11 @@ export default {
                         title: '管理组织',
                         onClick: record => this.handleManageAccount(record),
                     },
+                    {
+                        type: 'a',
+                        title: '代理登录',
+                        onClick: record => this.handleAgentSignIn(record),
+                    },
                 ],
             },
         ];
@@ -198,6 +206,7 @@ export default {
             manageOrgFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
+            agentSignInFormVisible: false,
             curRecordId: '',
             showOrg: false,
             curDomainId: '',
@@ -290,10 +299,19 @@ export default {
                 groupId: record.id,
             });
         },
-        /**处理管理组织事件 */
+        /**
+         * 处理管理组织事件
+         */
         handleManageAccount(record) {
             this.curRecord = record;
             this.manageOrgFormVisible = true;
+        },
+        /**
+         * 处理代理登录事件
+         */
+        handleAgentSignIn(record) {
+            this.curRecord = record;
+            this.agentSignInFormVisible = true;
         },
         /**
          * 处理编辑账户的事件
