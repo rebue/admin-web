@@ -8,9 +8,24 @@
                         :ref="`crudTable.${domain.id}`"
                         :columns="columns"
                         :api="api"
-                        :query="{ domainId: curDomainId }"
+                        :query="query"
                         :scrollX="600"
+                        :expandable="false"
                     >
+                        <template #keywordsLeft>
+                            <label style="width: 100px; line-height: 30px">选择日期：</label>
+                            <a-range-picker
+                                format="YYYY-MM-DD HH:mm:ss"
+                                :show-time="{
+                                    hideDisabledOptions: true,
+                                    defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
+                                }"
+                                @change="onChangeBir"
+                                @openChange="onOpenChange"
+                                @ok="onOK"
+                                style="width: 350px; padding-right: 20px"
+                            />
+                        </template>
                     </crud-table>
                 </a-tab-pane>
             </a-tabs>
@@ -23,6 +38,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi, racOpLogApi } from '@/api/Api';
 import { OpTypeDic } from '@/dic/OpTypeDic';
+import moment from 'moment';
 
 export default {
     name: 'Manager',
@@ -111,6 +127,7 @@ export default {
         return {
             loading: false,
             curDomainId: '',
+            query: {},
             domains: [],
         };
     },
@@ -123,6 +140,14 @@ export default {
         this.refreshData();
     },
     methods: {
+        moment,
+        /**
+         * 限制选择时间范围
+         * 只能选择今天当天之后的时间
+         */
+        disabledDate(current) {
+            return current && current > moment().endOf('day');
+        },
         /**
          * 刷新数据
          */
@@ -132,7 +157,12 @@ export default {
                 .listAll()
                 .then(ro => {
                     this.domains = ro.extra.list;
-                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
+                    if (!this.curDomainId) {
+                        this.curDomainId = this.domains[0].id;
+                        this.query = {
+                            domainId: this.curDomainId,
+                        };
+                    }
                 })
                 .finally(() => (this.loading = false));
         },
@@ -147,6 +177,42 @@ export default {
          */
         handleDomainChanged(domainId) {
             this.curDomainId = domainId;
+            this.query = {
+                ...this.query,
+                domainId: this.curDomainId,
+            };
+        },
+        /**
+         * 弹出日历和关闭日历的回调
+         */
+        onOpenChange(status) {
+            if (!status) {
+                this.refreshTableData();
+            }
+        },
+        /**
+         * ok按扭回调
+         */
+        onOK() {
+            // this.refreshTableData();
+        },
+        /**
+         * 根据时间发生变化的回调
+         */
+        onChangeBir(date, dateDates) {
+            // this.searchsdates=dateDates
+            // this.query = {
+            //     ...this.query,
+            //     startDate: dateDates[0],
+            //     endDate: dateDates[1],
+            // };
+            this.query.startDate = dateDates[0];
+            this.query.endDate = dateDates[1];
+            if (dateDates[0] === '') {
+                delete this.query['startDate'];
+                delete this.query['endDate'];
+                this.refreshTableData();
+            }
         },
     },
 };
