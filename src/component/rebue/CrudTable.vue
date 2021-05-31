@@ -160,6 +160,18 @@
                                 >
                                     <a>{{ item.title }}</a>
                                 </a-popconfirm>
+                                <a-dropdown v-if="item.type === 'more'">
+                                    <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                                        更多 <a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay">
+                                         <template v-for="(moreItem, moreIndex) in item.items">
+                                        <a-menu-item :key="moreIndex">
+                                            <a  @click="moreItem.onClick(record)">{{moreItem.title}}</a>
+                                        </a-menu-item>
+                                        </template>
+                                    </a-menu>
+                                </a-dropdown>
                                 <a-divider v-if="index < actions.length - 1" type="vertical" />
                             </span>
                         </template>

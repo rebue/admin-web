@@ -176,14 +176,19 @@ export default {
                 onClick: record => this.handleDel(record),
             },
             {
-                type: 'a',
-                title: '修改密码',
-                onClick: record => this.handleChangePswd(record),
-            },
-            {
-                type: 'a',
-                title: '管理组织',
-                onClick: record => this.handleManageAccount(record),
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '修改密码',
+                        onClick: record => this.handleChangePswd(record),
+                    },
+                    {
+                        type: 'a',
+                        title: '管理组织',
+                        onClick: record => this.handleManageAccount(record),
+                    },
+                ],
             },
         ];
 
