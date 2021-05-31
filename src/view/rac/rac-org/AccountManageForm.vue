@@ -19,8 +19,8 @@
             :disabled="disabled"
             :show-search="showSearch"
             :show-select-all="false"
-            @change="handleChange"
             :operations="operations"
+            @change="handleChange"
             @search="handleSearch"
             :locale="{
                 itemUnit: '项',
@@ -90,7 +90,7 @@ export default {
             default: function() {
                 return {
                     pageSize: 5,
-                    pageSizeOptions: ['5', '10', '20', '30'],
+                    pageSizeOptions: ['5', '10', '20'],
                     showSizeChanger: true,
                 };
             },

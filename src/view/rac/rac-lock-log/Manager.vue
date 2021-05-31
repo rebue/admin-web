@@ -72,7 +72,7 @@ export default {
             },
             {
                 dataIndex: 'locksignInName',
-                title: '锁定操作员的账户',
+                title: '锁定操作员',
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
@@ -101,7 +101,7 @@ export default {
             },
             {
                 dataIndex: 'unlocksignInName',
-                title: '解锁操作员的账户',
+                title: '解锁操作员',
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
