@@ -508,6 +508,7 @@ export default observer({
         expandAll() {
             forEachTree(this.dataSource, (node) => {
                 if (node.children) {
+                    //有节点的数据添加到key中
                     this.expandedRowKeys.push(node.id);
                 }
                 //node['childen'] ?? this.expandedRowKeys.push(node.id);
