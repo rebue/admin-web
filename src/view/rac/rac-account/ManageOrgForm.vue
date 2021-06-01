@@ -149,7 +149,7 @@ export default {
                 const { id, orgId } = { ...this.account };
                 const accountId = id;
                 const { domainId } = { ...this.account };
-                const data = { domainId, accountId, orgId, deep: true };
+                const data = { domainId, accountId, orgId, deep: false };
                 // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 this.api
                     .listByAccountId(data)

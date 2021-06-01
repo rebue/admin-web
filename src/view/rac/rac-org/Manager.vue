@@ -64,6 +64,11 @@ export default {
                 customRender: text => OrgTypeDic.getName(text),
             },
             {
+                dataIndex: 'fullName',
+                title: '全称',
+                ellipsis: true,
+            },
+            {
                 dataIndex: 'remark',
                 title: '备注',
                 ellipsis: true,
@@ -186,6 +191,7 @@ export default {
             this.editForm.show(EditFormTypeDic.Add, {
                 domainId: this.curDomainId,
                 parentId: record.id,
+                superFullName: record.fullName,
             });
         },
         handleEditFormClose() {
