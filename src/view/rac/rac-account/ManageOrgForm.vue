@@ -104,9 +104,13 @@ export default {
         const columns = [
             {
                 dataIndex: 'name',
-                title: '名称',
+                title: '组织名称',
                 fixed: 'left',
                 scopedSlots: { customRender: 'tagName' },
+            },
+            {
+                dataIndex: 'fullName',
+                title: '组织全称',
             },
             {
                 dataIndex: 'action',
