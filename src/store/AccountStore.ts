@@ -10,6 +10,15 @@ export default class AccountStore {
     /** 账户头像 */
     @observable
     avatar = '';
+    /** 代理账户ID */
+    @observable
+    agentAccountId = '';
+    /** 代理账户昵称 */
+    @observable
+    agentNickname = '';
+    /** 代理账户头像 */
+    @observable
+    agentAvatar = '';
     /** 是否测试者 */
     @observable
     isTester = false;

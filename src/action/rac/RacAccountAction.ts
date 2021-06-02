@@ -25,11 +25,15 @@ export class RacAccountAction {
         console.log('getCurAccountInfoSuccess', ro);
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
-        accountStore.accountId = ra.id;
-        accountStore.orgId = ra.orgId;
-        accountStore.orgFullName = ra.orgFullName;
+        accountStore.accountId = ra.accountId;
         accountStore.nickname = ra.nickname;
         accountStore.avatar = ra.avatar;
+        accountStore.agentAccountId = ra.agentAccountId;
+        accountStore.agentNickname = ra.agentNickname;
+        accountStore.agentAvatar = ra.agentAvatar;
+
+        accountStore.orgId = ra.orgId;
+        accountStore.orgFullName = ra.orgFullName;
         accountStore.isTester = ra.isTester;
 
         // 设置菜单
