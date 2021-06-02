@@ -494,26 +494,29 @@ export default observer({
          * 展开树指定节点
          */
         expand(id) {
-            console.log('expand', this.expandedRowKeys);
+            this.expandedRowKeys.push(id);
         },
         /**
          * 收缩树指定节点
          */
         collapse(id) {
-            this.expandedRowKeys.splice(this.expandedRowKeys.findIndex((item) => item.id === id));
+            this.expandedRowKeys.splice(
+                this.expandedRowKeys.findIndex((item) => item.id === id),
+                1
+            );
         },
         /**
          * 展开树所有节点
          */
         expandAll() {
+            this.expandedRowKeys = [];
             forEachTree(this.dataSource, (node) => {
-                if (node.children) {
-                    //有节点的数据添加到key中
-                    this.expandedRowKeys.push(node.id);
-                }
-                //node['childen'] ?? this.expandedRowKeys.push(node.id);
+                // if (node['children']) {
+                //     //有节点的数据添加到key中
+                //     this.expandedRowKeys.push(node.id);
+                // }
+                node['children'] && this.expandedRowKeys.push(node.id);
             });
-            this.expandedRowKeys = Array.from(new Set(this.expandedRowKeys)); //去掉重复的元素
         },
         /**
          * 收缩树所有节点
@@ -537,9 +540,7 @@ export default observer({
             if (expanded) {
                 this.expandedRowKeys.push(record.id);
             } else {
-                const keyIndex = this.expandedRowKeys.findIndex((item) => {
-                    return item === record.id;
-                });
+                const keyIndex = this.expandedRowKeys.findIndex((item) => item === record.id);
                 this.expandedRowKeys.splice(keyIndex, 1);
             }
         },
