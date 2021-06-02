@@ -25,7 +25,7 @@ export class RacAccountAction {
         console.log('getCurAccountInfoSuccess', ro);
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
-        accountStore.accountId = ra.accountId;
+        accountStore.accountId = ra.id;
         accountStore.nickname = ra.nickname;
         accountStore.avatar = ra.avatar;
         accountStore.agentAccountId = ra.agentAccountId;

@@ -1,6 +1,6 @@
 export interface GetAccountInfoRa {
     /** 账户ID */
-    accountId: string;
+    id: string;
     /** 账户昵称 */
     nickname: string;
     /** 账户头像 */
