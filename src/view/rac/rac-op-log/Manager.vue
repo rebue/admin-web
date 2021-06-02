@@ -72,6 +72,30 @@ export default {
                 ),
             },
             {
+                dataIndex: 'agentSignInName',
+                key: 'agentSignInName',
+                title: '代理账号名称',
+                fixed: 'left',
+                ellipsis: true,
+                width: 150,
+                customRender: (text, record) => (
+                    <a-popover
+                        title={(record.agentSignInName || record.agentSignInMobile || record.agentSignInEmail) + '详情'}
+                    >
+                        {record.agentSignInName || record.agentSignInMobile || record.agentSignInEmail}
+                        <template slot="content">
+                            <p>代理人账户ID：{record.agentId}</p>
+                            <p>代理人账户名：{record.agentSignInName}</p>
+                            <p>代理人手机号：{record.agentSignInMobile}</p>
+                            <p>代理人邮箱：{record.agentSignInEmail}</p>
+                            <p>代理人账户昵称：{record.agentSignInNickname}</p>
+                            <p>代理人微信昵称：{record.agentwxNickname}</p>
+                            <p>代理人QQ昵称：{record.agentqqNickname}</p>
+                        </template>
+                    </a-popover>
+                ),
+            },
+            {
                 dataIndex: 'sysName',
                 key: 'sysName',
                 title: '系统名称',
@@ -97,7 +121,8 @@ export default {
                 filters: [
                     { text: OpTypeDic.login, value: OpTypeDic.login },
                     { text: OpTypeDic.register, value: OpTypeDic.register },
-                    { text: OpTypeDic.operation, value: OpTypeDic.operation },
+                    { text: OpTypeDic.add, value: OpTypeDic.add },
+                    { text: OpTypeDic.modify, value: OpTypeDic.modify },
                 ],
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>

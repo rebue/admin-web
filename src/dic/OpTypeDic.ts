@@ -7,6 +7,7 @@ export enum OpTypeDic {
     /** 注册 */
     register = '注册',
     /** 操作 */
-    operation = '操作',
+    add = '添加',
     /**未定义 */
+    modify = '修改',
 }
