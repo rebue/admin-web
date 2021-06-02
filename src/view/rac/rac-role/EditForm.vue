@@ -3,6 +3,7 @@
         ref="baseEditForm"
         title="角色"
         :editFormType.sync="editFormType"
+        :model.sync="model"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -25,6 +26,7 @@ export default {
         this.api = racRoleApi;
         return {
             editFormType: EditFormTypeDic.None,
+            model: {},
             formItems: [
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'name', title: '名称' },

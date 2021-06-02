@@ -3,6 +3,7 @@
         ref="baseEditForm"
         title="权限分组"
         :editFormType.sync="editFormType"
+        :model.sync="model"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -25,6 +26,7 @@ export default {
         this.api = racPermGroupApi;
         return {
             editFormType: EditFormTypeDic.None,
+            model: {},
             formItems: [
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'name', title: '名称' },

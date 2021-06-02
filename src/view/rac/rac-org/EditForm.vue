@@ -4,6 +4,7 @@
         title="组织"
         :width="650"
         :editFormType.sync="editFormType"
+        :model.sync="model"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -68,6 +69,7 @@ export default {
             });
         return {
             editFormType: EditFormTypeDic.None,
+            model: {},
             formItems: [
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
@@ -97,6 +99,29 @@ export default {
     },
     mounted() {
         this.baseEditForm = this.$refs.baseEditForm;
+    },
+    watch: {
+        model: {
+            handler: function(newModel) {
+                if (this.editFormType === EditFormTypeDic.Add) {
+                    if (newModel.name) {
+                        if (newModel.name !== this.oldModel.name) {
+                            this.model = {
+                                ...newModel,
+                                fullName: newModel.parentFullName
+                                    ? newModel.parentFullName + newModel.name
+                                    : newModel.name,
+                            };
+                        }
+                    } else {
+                        this.model.fullName = newModel.parentFullName;
+                    }
+                    this.oldModel = { ...newModel };
+                }
+            },
+            deep: true,
+            immediate: true,
+        },
     },
     methods: {
         show: function(...params) {

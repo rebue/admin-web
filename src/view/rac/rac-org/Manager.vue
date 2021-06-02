@@ -191,7 +191,7 @@ export default {
             this.editForm.show(EditFormTypeDic.Add, {
                 domainId: this.curDomainId,
                 parentId: record.id,
-                superFullName: record.fullName,
+                parentFullName: record.fullName,
             });
         },
         handleEditFormClose() {

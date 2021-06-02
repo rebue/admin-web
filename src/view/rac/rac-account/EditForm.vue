@@ -3,6 +3,7 @@
         ref="baseEditForm"
         title="账户"
         :editFormType.sync="editFormType"
+        :model.sync="model"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -76,6 +77,7 @@ export default {
         };
         return {
             editFormType: EditFormTypeDic.None,
+            model: {},
             rules: this.addRules,
         };
     },

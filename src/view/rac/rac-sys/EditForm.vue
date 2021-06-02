@@ -3,6 +3,7 @@
         ref="baseEditForm"
         title="系统"
         :editFormType.sync="editFormType"
+        :model.sync="model"
         :formItems="formItems"
         :rules="rules"
         :api="api"
@@ -25,6 +26,7 @@ export default {
         this.api = racSysApi;
         return {
             editFormType: EditFormTypeDic.None,
+            model: {},
             rules: {
                 id: [
                     { required: true, message: '请输入系统编码', trigger: 'blur', transform: val => val && val.trim() },

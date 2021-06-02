@@ -9,7 +9,7 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <slot name="formItems" :model="model">
+            <slot name="formItems">
                 <a-form-model-item
                     v-for="formItem in formItems"
                     v-show="formItem.type !== 'hidden' && (formItem.visible === undefined || formItem.visible === true)"
@@ -69,6 +69,10 @@ export default {
             type: String,
             default: () => '',
         },
+        model: {
+            type: Object,
+            required: true,
+        },
         formItems: {
             type: Array,
             default: () => [],
@@ -96,26 +100,7 @@ export default {
         return {
             loading: true,
             visible: false,
-            model: {},
-            orgName: '',
-            curFullNameModify: '',
         };
-    },
-    watch: {
-        model: {
-            handler(newValue, oldValue) {
-                this.orgName = this.model.name; //通过orgName，可以避免不能单独修改model.fullName的值
-            },
-            deep: true,
-        },
-        orgName: {
-            handler(newValue, oldValue) {
-                //newValue 改变后的数据
-                //oldValue  改变前的数据
-                this.changeModel(newValue, oldValue);
-            },
-            deep: true,
-        },
     },
     computed: {
         fullTitle() {
@@ -126,30 +111,11 @@ export default {
             );
         },
         form() {
-            this.model.fullName = this.model.name;
             return this.$refs.form;
         },
     },
     methods: {
-        changeModel(newValue, oldValue) {
-            this.$nextTick(() => {
-                if (this.editFormType === EditFormTypeDic.Add) {
-                    if (this.model.superFullName) {
-                        this.model.fullName = this.model.superFullName + (this.model.name ? this.model.name : '');
-                        this.model.remark = this.model.fullName;
-                    } else {
-                        this.model.fullName = this.model.name ? this.model.name : '';
-                        this.model.remark = this.model.fullName;
-                    }
-                }
-                if (this.editFormType === EditFormTypeDic.Modify) {
-                    this.model.fullName = this.curFullNameModify + (this.model.name ? this.model.name : '');
-                    this.model.remark = this.model.fullName;
-                }
-            });
-        },
         show(editFormType, model) {
-            this.orgName = model.name;
             this.$emit('update:editFormType', editFormType);
             // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
             if (editFormType === EditFormTypeDic.Add) {
@@ -157,10 +123,7 @@ export default {
                     if (!(formItem.dataIndex in model)) model[formItem.dataIndex] = undefined;
                 }
             }
-            console.log('model', model);
-            this.model = model;
-            // console.log('this.$refs.form', this);
-
+            this.$emit('update:model', model);
             this.visible = true;
         },
         handleShow() {
@@ -172,9 +135,6 @@ export default {
                         .getById(this.model.id)
                         .then((ro) => {
                             this.$emit('update:model', ro.extra.one);
-                            const regex = ro.extra.one.name;
-                            this.curFullNameModify = ro.extra.one.fullName.replace(regex, '');
-                            console.log('curFullNameModify', this.curFullNameModify, regex);
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
@@ -186,7 +146,7 @@ export default {
             });
         },
         handleRadioGroupChanged(e, formItem) {
-            this.model = { ...this.model, [formItem.dataIndex]: e.target.value };
+            this.$emit('update:model', { ...this.model, [formItem.dataIndex]: e.target.value });
         },
         handleOk() {
             this.loading = true;
