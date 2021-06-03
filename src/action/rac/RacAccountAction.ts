@@ -61,7 +61,9 @@ export class RacAccountAction {
             const menu5 = menu1.children.find(item => item.name === section5);
             menu5.hidden = false;
         }
-        accountStore.menus = observable(menus);
+        const menusTemp: string[] = [...menus];
+        accountStore.menus = observable(menusTemp);
+        console.log('accountStore.menus', menus);
 
         // 加载账户设置
         settingAction.loadSetting();

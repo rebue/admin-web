@@ -9,7 +9,18 @@ import { RacRoleMo } from '@/mo/rac/RacRoleMo';
 export default class RacRoleApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/rac/role';
-
+    /**
+     * 添加角色权限关系
+     */
+    addRolePerm(mo): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/add-role-perm', data: mo });
+    }
+    /**
+     * 查询角色已存在的权限关系
+     */
+    listRolePerm(roleId: string): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/list-role-perm?roleId=' + roleId });
+    }
     /** 启用角色 */
     enable(id: string, isEnabled: boolean): Promise<Ro> {
         return request.post({ url: this.baseUrn + '/enable', data: { id, isEnabled } });

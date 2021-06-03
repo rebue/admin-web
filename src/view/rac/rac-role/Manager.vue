@@ -22,6 +22,7 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
+        <manage-perm-form :role.sync="curRole" :visible.sync="managePermFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -31,6 +32,7 @@ import EditForm from './EditForm';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racRoleApi } from '@/api/Api';
+import ManagePermForm from './ManagePermForm.vue';
 
 export default {
     name: 'Manager',
@@ -38,6 +40,7 @@ export default {
         BaseManager,
         EditForm,
         CrudTable,
+        ManagePermForm,
     },
     data() {
         this.api = racRoleApi;
@@ -71,7 +74,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 130,
+                width: 170,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -106,6 +109,16 @@ export default {
                 confirmTitle: '你确定要删除本条记录吗?',
                 onClick: record => this.handleDel(record),
             },
+            {
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '管理权限',
+                        onClick: record => this.handleManagePerm(record),
+                    },
+                ],
+            },
         ];
 
         return {
@@ -113,6 +126,8 @@ export default {
             curDomainId: '',
             domains: [],
             columns,
+            managePermFormVisible: false,
+            curRole: {},
         };
     },
     computed: {
@@ -205,6 +220,16 @@ export default {
                 this.refreshTableData();
             });
         },
+        /**
+         * 处理管理权限的事件
+         */
+        handleManagePerm(record) {
+            this.curRole = record;
+            this.managePermFormVisible = true;
+        },
+        /**
+         * 关闭时触发
+         */
         handleEditFormClose() {
             this.refreshTableData();
         },

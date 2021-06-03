@@ -94,6 +94,7 @@ export default {
             {
                 dataIndex: 'lockAgentSignInName',
                 title: '代理解锁操作员',
+                width: 130,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
@@ -126,6 +127,7 @@ export default {
             {
                 dataIndex: 'unlocksignInName',
                 title: '解锁操作员',
+                width: 120,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover

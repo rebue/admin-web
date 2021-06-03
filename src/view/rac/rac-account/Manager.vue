@@ -39,6 +39,12 @@
             :visible.sync="manageOrgFormVisible"
             @close="handleEditFormClose"
         />
+        <manage-role-form
+            ref="manageRoleForm"
+            :account="curRecord"
+            :visible.sync="manageRoleFormVisible"
+            @close="handleEditFormClose"
+        />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
         <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
@@ -63,6 +69,7 @@ import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDomainApi, racAccountApi } from '@/api/Api';
 import ManageOrgForm from './ManageOrgForm.vue';
+import ManageRoleForm from './ManageRoleForm.vue';
 
 export default {
     name: 'Manager',
@@ -76,6 +83,7 @@ export default {
         DisabledForm,
         EnabledForm,
         ManageOrgForm,
+        ManageRoleForm,
     },
     data() {
         this.api = racAccountApi;
@@ -198,6 +206,11 @@ export default {
                     },
                     {
                         type: 'a',
+                        title: '管理角色',
+                        onClick: record => this.handleManageRole(record),
+                    },
+                    {
+                        type: 'a',
                         title: '代理登录',
                         onClick: record => this.handleAgentSignIn(record),
                     },
@@ -209,6 +222,7 @@ export default {
             loading: false,
             changePswdFormVisible: false,
             manageOrgFormVisible: false,
+            manageRoleFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
             agentSignInFormVisible: false,
@@ -231,6 +245,7 @@ export default {
     mounted() {
         this.editForm = this.$refs.editForm;
         this.manageOrgForm = this.$refs.manageOrgForm;
+        this.manageRoleForm = this.$refs.manageRoleForm;
         this.refreshData();
     },
     methods: {
@@ -309,6 +324,13 @@ export default {
         handleManageAccount(record) {
             this.curRecord = record;
             this.manageOrgFormVisible = true;
+        },
+        /**
+         * 处理管理角色事件
+         */
+        handleManageRole(record) {
+            this.curRecord = record;
+            this.manageRoleFormVisible = true;
         },
         /**
          * 处理代理登录事件

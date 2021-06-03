@@ -30,5 +30,5 @@ export default class AccountStore {
     orgFullName = '';
     /** 菜单列表 */
     @observable
-    menus = [];
+    menus: string[] = [];
 }
