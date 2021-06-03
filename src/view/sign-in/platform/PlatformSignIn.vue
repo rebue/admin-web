@@ -23,6 +23,7 @@
                 </a-form-model>
             </a-card>
         </div>
+        <div class="footer">相关系统链接: <router-link to="/sign-in/ops">运营管理系统</router-link></div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>
 </template>
@@ -76,10 +77,9 @@ export default {
                             accountName: this.form.accountName,
                             signInPswd: md5(this.form.signInPswd).toString(),
                         })
-                        .then(ro => {
-                            console.log(ro);
+                        .then(() => {
                             setSysId(this.sysId);
-                            this.$router.push({ path: this.redirect || '/' });
+                            window.location.href = this.redirect || '';
                         })
                         .finally(() => (this.loading = false));
                 } else {
