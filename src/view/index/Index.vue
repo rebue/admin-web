@@ -39,16 +39,16 @@
                         layout === 'topmenu' && `ant-pro-global-header-index-${theme}`,
                     ]"
                 >
-                    <a-popover placement="bottom">
+                    <a-popover v-if="accountStore.agentAccountId" placement="bottom">
                         <a-avatar size="large" src="/img/account/agent.png" />
                         <template slot="title">
                             <div>
                                 <a-avatar
                                     size="large"
-                                    :icon="accountStore.avatar ? accountStore.avatar : 'user'"
-                                    :src="accountStore.avatar ? accountStore.avatar : undefined"
+                                    :icon="accountStore.agentAavatar ? accountStore.agentAavatar : 'user'"
+                                    :src="accountStore.agentAvatar ? accountStore.agentAvatar : undefined"
                                 />
-                                {{ accountStore.nickname }}
+                                {{ accountStore.agentNickname }}
                             </div>
                         </template>
                         <template slot="content"> <a-icon type="logout" /> 退出代理 </template>

@@ -41,8 +41,13 @@
         />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
-        <change-pswd-form :id="curRecordId" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
-        <agent-sign-in-form :id="curRecordId" :visible.sync="agentSignInFormVisible" @close="handleEditFormClose" />
+        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
+        <agent-sign-in-form
+            :record="curRecord"
+            :domainId="curDomainId"
+            :visible.sync="agentSignInFormVisible"
+            @close="handleEditFormClose"
+        />
     </fragment>
 </template>
 
@@ -207,7 +212,6 @@ export default {
             enabledFormVisible: false,
             disabledFormVisible: false,
             agentSignInFormVisible: false,
-            curRecordId: '',
             showOrg: false,
             curDomainId: '',
             curOrgId: undefined,
@@ -285,7 +289,7 @@ export default {
         },
         /** 处理修改密码 */
         handleChangePswd(record) {
-            this.curRecordId = record.id;
+            this.curRecord = record;
             this.changePswdFormVisible = true;
         },
         /**
@@ -317,12 +321,14 @@ export default {
          * 处理编辑账户的事件
          */
         handleEdit(record) {
+            this.curRecord = record;
             this.editForm.show(EditFormTypeDic.Modify, { ...record });
         },
         /**
          * 处理删除账户的事件
          */
         handleDel(record) {
+            this.curRecord = record;
             this.loading = true;
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();

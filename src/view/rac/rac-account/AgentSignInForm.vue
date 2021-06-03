@@ -10,18 +10,9 @@
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
             <a-form-model-item key="targetSysId" label="登录系统" prop="targetSysId">
-                <a-radio-group v-model="model.targetSysId" @change="onChange">
-                    <a-radio-button value="a">
-                        Hangzhou
-                    </a-radio-button>
-                    <a-radio-button value="b">
-                        Shanghai
-                    </a-radio-button>
-                    <a-radio-button value="c">
-                        Beijing
-                    </a-radio-button>
-                    <a-radio-button value="d">
-                        Chengdu
+                <a-radio-group v-model="model.targetSysId" button-style="solid" @change="onChange">
+                    <a-radio-button v-for="(item, index) in syses" :value="item.id" :key="index">
+                        {{ item.name }}
                     </a-radio-button>
                 </a-radio-group>
             </a-form-model-item>
@@ -31,43 +22,29 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racAccountApi } from '@/api/Api';
+import { racAgentSignInApi, racSysApi } from '@/api/Api';
 
 export default {
     components: {
         BaseModal,
     },
     props: {
-        id: {
+        record: {
+            type: Object,
+            required: true,
+        },
+        domainId: {
             type: String,
             required: true,
         },
     },
     data() {
         this.rules = {
-            signInPswd: [
-                { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
-            ],
-            signInPswdAgain: [
+            targetSysId: [
                 {
                     required: true,
+                    message: '请选择登录系统',
                     trigger: ['change', 'blur'],
-                    validator: (rule, value, callback) => {
-                        if (value === undefined) value = '';
-                        value = value.trim();
-
-                        if (value === '') {
-                            callback(new Error('请再次输入登录密码(确认)'));
-                            return;
-                        }
-
-                        if (value !== this.model.signInPswd) {
-                            callback(new Error('两次输入的登录密码不相同'));
-                            return;
-                        }
-
-                        callback();
-                    },
                 },
             ],
         };
@@ -83,26 +60,42 @@ export default {
         };
         return {
             loading: false,
-            model: {
-                signInPswd: '',
-                signInPswdAgain: '',
-            },
+            model: {},
+            syses: [],
         };
     },
     methods: {
         handleShow() {
             this.$nextTick(() => {
-                this.model = {};
+                this.loading = true;
                 this.$refs.form.resetFields();
+                racSysApi
+                    .list({ domainId: this.domainId })
+                    .then(ro => {
+                        this.syses = ro.extra.list;
+                    })
+                    .catch(() => (this.visible = false))
+                    .finally(() => {
+                        this.loading = false;
+                    });
             });
         },
         handleOk() {
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    racAccountApi
-                        .modifySignInPswd(this.id, this.model.signInPswd)
-                        .then(() => this.$emit('update:visible', false))
+                    racAgentSignInApi
+                        .signIn({ accountId: this.record.id, sysId: this.model.targetSysId })
+                        .then(ro => {
+                            console.log('ro', ro);
+                            for (const sys of this.syses) {
+                                if (sys.id === this.model.targetSysId) {
+                                    console.log('sys', sys);
+                                    window.location.href = sys.url;
+                                    break;
+                                }
+                            }
+                        })
                         .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {
@@ -112,8 +105,8 @@ export default {
                 }
             });
         },
-        onChange() {
-            //
+        onChange(e) {
+            this.model = { ...this.model, targetSysId: e.target.value };
         },
     },
 };

@@ -10,7 +10,6 @@ export default class RacSignInApi {
      * 通过账户名称登录
      */
     signInByAccountName(to: SignInByAccountNameTo): Promise<Ro> {
-        console.log('RacSignInApi.signInByAccountName', to);
         return request.post({ url: '/rac/sign-in/sign-in-by-account-name', data: to });
     }
 }

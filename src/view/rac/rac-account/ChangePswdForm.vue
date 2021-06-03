@@ -37,8 +37,8 @@ export default {
         BaseModal,
     },
     props: {
-        id: {
-            type: String,
+        record: {
+            type: Object,
             required: true,
         },
     },
@@ -100,7 +100,7 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racAccountApi
-                        .modifySignInPswd(this.id, this.model.signInPswd)
+                        .modifySignInPswd(this.record.id, this.model.signInPswd)
                         .then(() => this.$emit('update:visible', false))
                         .finally(() => (this.loading = false));
                 } else {
