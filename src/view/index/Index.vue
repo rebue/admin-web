@@ -51,7 +51,9 @@
                                 {{ accountStore.agentNickname }}
                             </div>
                         </template>
-                        <template slot="content"> <a-icon type="logout" /> 退出代理 </template>
+                        <template slot="content">
+                            <a @click="handleAgentSignOut"> <a-icon type="logout" /> 退出代理 </a>
+                        </template>
                     </a-popover>
                     <el-dropdown @command="handleAccountCommand">
                         <a>
@@ -108,6 +110,7 @@ import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 import { SysIdDic } from '@/dic/SysIdDic';
 import { removeJwtToken } from '@/util/cookie';
+import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 
 export default observer({
@@ -158,6 +161,14 @@ export default observer({
     },
     methods: {
         i18nRender,
+        /** 处理退出代理登录 */
+        handleAgentSignOut() {
+            racAgentSignOutApi
+                .signOut()
+                .then(ro => (window.location.href = ro.extra.urlBeforeAgent))
+                .finally(() => (this.loading = false));
+        },
+        /** 处理账户的几个命令 */
         handleAccountCommand(command) {
             switch (command) {
                 /** 个人中心 */

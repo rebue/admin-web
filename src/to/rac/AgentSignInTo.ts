@@ -1,5 +1,5 @@
 /**
- * 通过账户名称登录方法的参数
+ * 代理登录方法的参数
  */
 export default class AgentSignInTo {
     /** 系统ID */

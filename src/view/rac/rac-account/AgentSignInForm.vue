@@ -85,12 +85,14 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racAgentSignInApi
-                        .signIn({ accountId: this.record.id, sysId: this.model.targetSysId })
-                        .then(ro => {
-                            console.log('ro', ro);
+                        .signIn({
+                            accountId: this.record.id,
+                            sysId: this.model.targetSysId,
+                            curUrl: window.location.href,
+                        })
+                        .then(() => {
                             for (const sys of this.syses) {
                                 if (sys.id === this.model.targetSysId) {
-                                    console.log('sys', sys);
                                     window.location.href = sys.url;
                                     break;
                                 }
