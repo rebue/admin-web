@@ -107,7 +107,7 @@ export default {
                         <template slot="content">
                             <p>系统名称：{record.sysName}</p>
                             <p>领域ID：{record.domainId}</p>
-                            <p>菜单：{record.menuUrn}</p>
+                            <p>菜单：{record.menu}</p>
                             <p>系统备注：{record.remark}</p>
                         </template>
                     </a-popover>

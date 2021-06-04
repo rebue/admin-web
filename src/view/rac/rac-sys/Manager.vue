@@ -20,6 +20,7 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
+        <manage-menus-form :curSys.sync="curSys" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -30,6 +31,7 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racDomainApi } from '@/api/Api';
 import { racSysApi } from '@/api/Api';
+import ManageMenusForm from './ManageMenusForm.vue';
 
 export default {
     name: 'Manager',
@@ -37,6 +39,7 @@ export default {
         BaseManager,
         EditForm,
         CrudTable,
+        ManageMenusForm,
     },
     data() {
         this.api = racSysApi;
@@ -67,7 +70,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 130,
+                width: 160,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -94,11 +97,18 @@ export default {
                 confirmTitle: '你确定要删除本条记录吗?',
                 onClick: record => this.handleDel(record),
             },
+            {
+                type: 'a',
+                title: '菜单',
+                onClick: record => this.handleMenus(record),
+            },
         ];
 
         return {
             loading: false,
             curDomainId: '',
+            manageMenusFormVisible: false,
+            curSys: {},
             domains: [],
             columns,
         };
@@ -154,6 +164,13 @@ export default {
             this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
+        },
+        /**
+         * 处理系统菜单的事件
+         */
+        handleMenus(record) {
+            this.curSys = record;
+            this.manageMenusFormVisible = true;
         },
         handleEditFormClose() {
             this.refreshTableData();
