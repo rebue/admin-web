@@ -42,6 +42,7 @@ export default {
             return [
                 { dataIndex: 'id', title: '编码', disabled: this.editFormType === EditFormTypeDic.Modify },
                 { dataIndex: 'name', title: '名称' },
+                { dataIndex: 'url', title: 'URL' },
                 { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
                 { dataIndex: 'remark', title: '备注' },
             ];

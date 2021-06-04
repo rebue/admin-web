@@ -69,7 +69,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racAccountApi, racOrgApi, racRoleApi } from '@/api/Api';
+import { racRoleApi } from '@/api/Api';
 import difference from 'lodash/difference';
 
 export default {
@@ -196,25 +196,15 @@ export default {
         handleChange(targetKeys, direction, moveKeys) {
             this.targetKeys = targetKeys;
             if (direction === 'right') {
-                racRoleApi
-                    .addAccountRole({ accountId: this.account.id, roleIds: moveKeys })
-                    .then(ro => {
-                        console.log('添加完成');
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                        this.refreshData();
-                    });
+                racRoleApi.addAccountRole({ accountId: this.account.id, roleIds: moveKeys }).finally(() => {
+                    this.loading = false;
+                    this.refreshData();
+                });
             } else {
-                racRoleApi
-                    .delAccountRole({ accountId: this.account.id, roleIds: moveKeys })
-                    .then(ro => {
-                        console.log('移除完成');
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                        this.refreshData();
-                    });
+                racRoleApi.delAccountRole({ accountId: this.account.id, roleIds: moveKeys }).finally(() => {
+                    this.loading = false;
+                    this.refreshData();
+                });
             }
         },
         //搜索框的内容改变时触发
@@ -245,7 +235,7 @@ export default {
         /**
          * 左边表格处理分页、排序、筛选的变化
          */
-        handleLeftTableChange: function(pagination) {
+        handleLeftTableChange(pagination) {
             this.leftPagination = {
                 ...this.pagination,
                 current: pagination.current,
@@ -258,7 +248,7 @@ export default {
         /**
          * 右边处理分页、排序、筛选的变化
          */
-        handleRightTableChange: function(pagination) {
+        handleRightTableChange(pagination) {
             this.rightPagination = {
                 ...this.pagination,
                 current: pagination.current,
