@@ -12,7 +12,7 @@
                             :columns="columns"
                             :api="api"
                             :query="{ domainId: curDomainId, orgId: curOrgId }"
-                            :scrollX="800"
+                            :scrollX="600"
                             :showHierarchical="showOrg"
                         >
                             <template #left>
@@ -98,7 +98,7 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '登录名称',
-                width: 150,
+                width: 120,
                 fixed: 'left',
                 customRender: (text, record) => (
                     <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
@@ -118,7 +118,7 @@ export default {
             {
                 dataIndex: 'nickname',
                 title: '昵称',
-                width: 160,
+                width: 120,
                 ellipsis: true,
                 customRender: (text, record) => {
                     //FIXME 在编辑的时候，昵称输入框删除完之后会报错，浏览窗口动不了

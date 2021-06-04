@@ -9,11 +9,20 @@ import { RacRoleMo } from '@/mo/rac/RacRoleMo';
 export default class RacRoleApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/rac/role';
+
     /**
      * 添加角色权限关系
      */
     addRolePerm(mo): Promise<Ro> {
         return request.post({ url: this.baseUrn + '/add-role-perm', data: mo });
+    }
+    /**添加角色账户关系*/
+    addAccountRole(mo): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/addAccountRole', data: mo });
+    }
+    /**移除角色账户关系*/
+    delAccountRole(mo): Promise<Ro> {
+        return request.delete({ url: this.baseUrn + '/delAccountRole', data: mo });
     }
     /**
      * 查询角色已存在的权限关系
@@ -40,5 +49,11 @@ export default class RacRoleApi extends BaseCrudApi {
     moveDown(record: RacRoleMo): Promise<Ro> {
         const { id, domainId } = record;
         return request.post({ url: this.baseUrn + '/move-down', data: { id, domainId } });
+    }
+    /**
+     * 获取分页列表
+     */
+    listTransferOfRole(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/listTransferOfRole', params: qo });
     }
 }
