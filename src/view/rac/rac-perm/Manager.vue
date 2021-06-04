@@ -11,6 +11,7 @@
                             :api="api"
                             :query="{ domainId: curDomainId }"
                             :scrollX="600"
+                            :scrollY="600"
                             :expandable="true"
                             :defaultPagination="false"
                             @moveUp="handleMoveUp"

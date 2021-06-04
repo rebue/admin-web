@@ -95,19 +95,6 @@ export default {
             this.checkedKeys = [];
             this.$nextTick(() => {
                 this.refreshTableData();
-                this.loading = true;
-                const checkedKeys = [];
-                racRoleApi
-                    .listRolePerm(this.role.id)
-                    .then(ro => {
-                        for (const list of ro.extra.list) {
-                            checkedKeys.push(list.permId);
-                        }
-                    })
-                    .finally(() => {
-                        this.onCheck(checkedKeys);
-                        this.loading = false;
-                    });
             });
         },
         /**
@@ -148,7 +135,21 @@ export default {
                         this.ids.push(list.id);
                     }
                 })
-                .finally(() => (this.loading = false));
+                .finally(() => {
+                    const checkedKeys = [];
+                    racRoleApi
+                        .listRolePerm(this.role.id)
+                        .then(ro => {
+                            for (const list of ro.extra.list) {
+                                checkedKeys.push(list.permId);
+                            }
+                        })
+                        .finally(() => {
+                            //默认选择存在的权限
+                            this.onCheck(checkedKeys);
+                        });
+                    this.loading = false;
+                });
         },
         /**
          * 展开节点
