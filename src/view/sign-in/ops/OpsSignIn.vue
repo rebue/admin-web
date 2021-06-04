@@ -79,7 +79,7 @@ export default {
                         })
                         .then(() => {
                             setSysId(this.sysId);
-                            window.location.href = '#' + this.redirect || '';
+                            window.location.href = this.redirect ? '#' + this.redirect : '';
                         })
                         .finally(() => (this.loading = false));
                 } else {
