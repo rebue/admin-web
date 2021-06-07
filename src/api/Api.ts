@@ -11,6 +11,7 @@ import RacAccountApi from './rac/RacAccountApi';
 import RacOpLogApi from './rac/RacOpLogApi';
 import RacLockLogApi from './rac/RacLockLogApi';
 import RacPermUrnApi from './rac/RacPermUrnApi';
+import RacPermMenuApi from './rac/RacPermMenuApi';
 
 export const racDomainApi = new RacDomainApi();
 export const racSysApi = new RacSysApi();
@@ -25,3 +26,4 @@ export const racAgentSignOutApi = new RacAgentSignOutApi();
 export const racOpLogApi = new RacOpLogApi();
 export const racLockLogApi = new RacLockLogApi();
 export const racPermUrnApi = new RacPermUrnApi();
+export const racPermMenuApi = new RacPermMenuApi();
