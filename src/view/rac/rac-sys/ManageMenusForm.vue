@@ -7,12 +7,13 @@
             :visible="visible"
             v-bind="$attrs"
             v-on="$listeners"
+            :width="800"
             @show="handleShow"
             @ok="handleOk"
         >
-            <a-form-model ref="form" :model="menus">
+            <a-form-model ref="form" :model="model">
                 <a-form-model-item label="输入菜单">
-                    <a-input v-model="menus.text" placeholder="输入菜单" type="textarea" :rows="15" />
+                    <a-input v-model="model.menu" placeholder="输入菜单" type="textarea" :rows="15" />
                 </a-form-model-item>
             </a-form-model>
         </base-modal>
@@ -20,9 +21,9 @@
 </template>
 
 <script>
-import { racDomainApi, racRoleApi, racPermApi } from '@/api/Api';
+import { racSysApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { findFromTree, forEachTree } from '@/util/tree';
+import { forEachTree } from '@/util/tree';
 
 export default {
     name: 'Manager',
@@ -40,11 +41,12 @@ export default {
         },
     },
     data() {
-        this.api = racPermApi;
+        this.api = racSysApi;
 
         return {
             loading: false,
-            menus: {},
+            model: {},
+            dataSource: [],
         };
     },
     computed: {
@@ -55,22 +57,22 @@ export default {
     },
     methods: {
         handleShow() {
-            this.expandedKeys = [];
-            this.checkedKeys = [];
+            this.model = {};
             this.$nextTick(() => {
                 // this.refreshTableData();
             });
         },
         /**
-         * 添加
+         * 添加修改菜单
          */
-        handleAdd() {
+        handleAddModify() {
+            this.loading = true;
+            const menu = JSON.stringify(this.dataSource);
             this.$nextTick(() => {
-                this.loading = true;
-                const data = { roleId: this.role.id, permIds: this.checkedKeys };
-                racRoleApi
-                    .addRolePerm(data)
-                    .then(ro => {
+                const data = { id: this.curSys.id, menu };
+                this.api
+                    .modify(data)
+                    .then(() => {
                         //
                     })
                     .finally(() => {
@@ -81,12 +83,37 @@ export default {
         },
         /**点击提交*/
         handleOk() {
-            console.log('menus', this.menus);
             const regex = new RegExp('component: RouteView,', 'g'); //g代表全部
-            const text = this.menus.text.replace(regex, '');
-            console.log('text', text);
-            const menu = eval(`(function (){return ${text};})`)();
-            console.log('text', menu);
+            const menu = this.model.menu.replace(regex, '');
+            this.refreshTreeData(menu);
+            this.handleAddModify(this.checkedKeys);
+        },
+        /**
+         * 刷新菜单数据
+         */
+        refreshTreeData(menu) {
+            this.dataSource = [];
+            const menuTemp = eval(`(function (){return [${menu}];})`)();
+            const menus = [];
+            forEachTree(menuTemp, node => {
+                const item = {};
+                if (node.children) {
+                    item.key = node.path;
+                    item.title = node.meta.title;
+                    const ite = [];
+                    forEachTree(node.children, ch => {
+                        const it = {};
+                        it.key = ch.path;
+                        it.title = ch.meta.title;
+                        ite.push(it);
+                    });
+                    item.children = ite;
+                    menus.push(item);
+                }
+            });
+            this.dataSource = menus;
+            console.log('dateSource', menus);
+            this.loading = false;
         },
     },
 };

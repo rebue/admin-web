@@ -24,7 +24,8 @@
         </base-manager>
         <perm-group-edit-form ref="permGroupEditForm" @close="handleEditFormClose" />
         <edit-form ref="editForm" @close="handleEditFormClose" />
-        <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="refreshTableData()" />
+        <manage-menu-form :perm="curRecord" :visible.sync="manageMenuFormVisible" @close="handleEditFormClose" />
+        <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -37,6 +38,7 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
 import UrnEditForm from './UrnEditForm.vue';
+import ManageMenuForm from './ManageMenuForm.vue';
 
 export default {
     name: 'Manager',
@@ -46,6 +48,7 @@ export default {
         PermGroupEditForm,
         CrudTable,
         UrnEditForm,
+        ManageMenuForm,
     },
     data() {
         this.api = racPermApi;
@@ -136,7 +139,7 @@ export default {
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a click="domain.onClick(record)">菜单</a>
+                                <a onclick={() => this.handleMenuForm(record)}>菜单</a>
                                 <a-divider type="vertical" />
                                 <a onClick={() => this.handleUrnEditForm(record)}>链接</a>
                                 <a-divider type="vertical" />
@@ -171,6 +174,7 @@ export default {
             domains: [],
             columns,
             edintLinkFormVisible: false,
+            manageMenuFormVisible: false,
             curRecord: {},
         };
     },
@@ -298,6 +302,13 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理菜单的事件
+         */
+        handleMenuForm(record) {
+            this.curRecord = record;
+            this.manageMenuFormVisible = true;
         },
         /**
          * 处理权限链接的事件

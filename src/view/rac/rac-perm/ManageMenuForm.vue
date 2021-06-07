@@ -2,7 +2,7 @@
     <fragment>
         <base-modal
             ref="baseModal"
-            title="请选择需要的权限"
+            title="请选择菜单"
             :loading="loading"
             :visible="visible"
             v-bind="$attrs"
@@ -21,12 +21,6 @@
                     <icon-font type="rebue-collapse-all" />
                 </a-button>
             </a-tooltip>
-            <!-- <a-input-search
-                v-model.trim="keywords"
-                :loading="loading"
-                placeholder="关键字"
-                @search="refreshTableData"
-            /> -->
             <p></p>
             <div style="height: 500px">
                 <a-tree
@@ -48,7 +42,7 @@
 </template>
 
 <script>
-import { racDomainApi, racRoleApi, racPermApi } from '@/api/Api';
+import { racSysApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { findFromTree, forEachTree } from '@/util/tree';
 
@@ -58,7 +52,7 @@ export default {
         BaseModal,
     },
     props: {
-        role: {
+        perm: {
             type: Object,
             required: false,
         },
@@ -68,7 +62,7 @@ export default {
         },
     },
     data() {
-        this.api = racPermApi;
+        this.api = racSysApi;
 
         return {
             loading: false,
@@ -90,7 +84,7 @@ export default {
     },
     methods: {
         handleShow() {
-            this.curDomainId = this.role.domainId;
+            this.curDomainId = this.perm.domainId;
             this.expandedKeys = [];
             this.checkedKeys = [];
             this.$nextTick(() => {
@@ -103,8 +97,8 @@ export default {
         handleAdd() {
             this.$nextTick(() => {
                 this.loading = true;
-                const data = { roleId: this.role.id, permIds: this.checkedKeys };
-                racRoleApi
+                const data = { permId: this.perm.id, permIds: this.checkedKeys };
+                this.api
                     .addRolePerm(data)
                     .then(ro => {
                         //
@@ -124,30 +118,19 @@ export default {
             this.api
                 .list(data)
                 .then(ro => {
-                    forEachTree(ro.extra.list, node => {
-                        node.key = node.id;
-                        node.title = node.name;
-                    });
-                    this.dataSource = ro.extra.list;
+                    // forEachTree(ro.extra.list, (node) => {
+                    //     node.key = node.id;
+                    //     node.title = node.name;
+                    // });
+
+                    this.dataSource = JSON.parse(ro.extra.list[0].menu);
                     this.ids = [];
-                    for (const list of ro.extra.list) {
-                        //记录权限分组的ID key
-                        this.ids.push(list.id);
+                    for (const list of this.dataSource) {
+                        //记录菜单的ID key
+                        this.ids.push(list.key);
                     }
                 })
                 .finally(() => {
-                    const checkedKeys = [];
-                    racRoleApi
-                        .listRolePerm(this.role.id)
-                        .then(ro => {
-                            for (const list of ro.extra.list) {
-                                checkedKeys.push(list.permId);
-                            }
-                        })
-                        .finally(() => {
-                            //默认选择存在的权限
-                            this.onCheck(checkedKeys);
-                        });
                     this.loading = false;
                 });
         },
@@ -163,7 +146,7 @@ export default {
          */
         onCheck(checkedKeys) {
             this.checkedKeys = checkedKeys;
-            //除去权限分组的ID key，只保留权限的ID key
+            //除去菜单的ID key，只保留子菜单的ID key
             for (const id of this.ids) {
                 const keyIndex = this.checkedKeys.findIndex(item => item === id);
                 if (keyIndex >= 0) {
@@ -186,7 +169,7 @@ export default {
         expandAll() {
             this.expandedKeys = [];
             forEachTree(this.dataSource, node => {
-                node['children'] && this.expandedKeys.push(node.id);
+                node['children'] && this.expandedKeys.push(node.key);
             });
         },
         /**
