@@ -7,7 +7,7 @@ import { findFromTree } from '@/util/tree';
 import BaseCrudApi from '../comm/BaseCrudApi';
 import request from '@/util/request';
 
-export default class RacSysApi extends BaseCrudApi {
+export default class RacOrgApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/rac/org';
     /**添加组织账户关系*/

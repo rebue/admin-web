@@ -189,7 +189,7 @@ export default {
                 const data = { sysId: this.curSysId, permId: this.perm.id, menuUrns: this.checkedKeys };
                 racPermMenuApi
                     .addPermMenuUrn(data)
-                    .then(ro => {
+                    .then(() => {
                         //
                     })
                     .finally(() => {
@@ -210,7 +210,6 @@ export default {
          */
         onCheck(checkedKeys) {
             this.checkedKeys = checkedKeys;
-            console.log('checke', this.checkedKeys);
             //除去菜单的ID key，只保留子菜单的ID key
             for (const id of this.ids) {
                 const keyIndex = this.checkedKeys.findIndex(item => item === id);
@@ -224,8 +223,7 @@ export default {
         /**
          * 选择节点
          */
-        onSelect(selectedKeys, info) {
-            console.log('onSelect', info);
+        onSelect(selectedKeys) {
             this.selectedKeys = selectedKeys;
         },
         /**

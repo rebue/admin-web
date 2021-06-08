@@ -83,6 +83,13 @@ export const constantRouters = [
                         hidden: true,
                         meta: { title: '角色', keepAlive: true, icon: 'smile' },
                     },
+                    {
+                        path: '/base/rac-dic',
+                        name: 'rac-dic',
+                        component: () => import('@/view/rac/rac-dic/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '字典', keepAlive: true, icon: 'read' },
+                    },
                 ],
             },
             {
