@@ -107,12 +107,13 @@ export default {
             });
         },
         /**
-         * 刷新表格数据
+         * 刷新领域下的系统
          */
         refreshTableData() {
             this.loading = true;
             this.dataSource = [];
             this.checkedKeys = [];
+            this.curSysId = '';
             const data = { domainId: this.curDomainId };
             this.api
                 .list(data)
