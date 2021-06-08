@@ -8,9 +8,11 @@
                     :commands="tableCommands"
                     :columns="columns"
                     :api="api"
+                    :query="{}"
                     :scrollX="600"
                     :scrollY="600"
                     :expandable="true"
+                    :showKeywords="true"
                 >
                 </crud-table>
             </template>
@@ -69,6 +71,30 @@ export default {
                 },
             },
             {
+                dataIndex: 'domainId',
+                key: 'domainId',
+                title: '领域',
+                with: 100,
+                ellipsis: true,
+                filters: [
+                    { text: '平台领域', value: 'platform' },
+                    { text: '运营领域', value: 'ops' },
+                    { text: '默认领域', value: 'default' },
+                ],
+            },
+            {
+                dataIndex: 'sysId',
+                key: 'sysId',
+                title: '系统',
+                with: 120,
+                ellipsis: true,
+                filters: [
+                    { text: '平台系统', value: 'ops-admin-web' },
+                    { text: '运营系统', value: 'platform-admin-web' },
+                    { text: '默认系统', value: 'default' },
+                ],
+            },
+            {
                 dataIndex: 'remark',
                 title: '备注',
                 ellipsis: true,
@@ -76,7 +102,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 240,
+                width: 200,
                 fixed: 'right',
                 customRender: (text, record) => {
                     if (!record.dicId) {
