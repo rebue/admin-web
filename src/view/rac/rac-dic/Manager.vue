@@ -72,7 +72,7 @@ export default {
             },
             {
                 dataIndex: 'domainId',
-                key: 'domainId',
+                key: 'domainIds',
                 title: '领域',
                 with: 100,
                 ellipsis: true,
@@ -84,7 +84,7 @@ export default {
             },
             {
                 dataIndex: 'sysId',
-                key: 'sysId',
+                key: 'sysIds',
                 title: '系统',
                 with: 120,
                 ellipsis: true,
