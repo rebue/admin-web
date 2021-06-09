@@ -35,7 +35,12 @@
                         button-style="solid"
                         @change="(e) => handleRadioGroupChanged(e, formItem)"
                     >
-                        <a-radio-button v-for="(item, index) in formItem.radios" :value="item.value" :key="index">
+                        <a-radio-button
+                            v-for="(item, index) in formItem.radios"
+                            :value="item.value"
+                            :key="index"
+                            @click="handleClickRadio(item.value, formItem)"
+                        >
                             {{ item.title }}
                         </a-radio-button>
                     </a-radio-group>
@@ -145,7 +150,15 @@ export default {
                 }
             });
         },
+        handleClickRadio(newValue, formItem) {
+            console.log('formItem', formItem);
+            if (this.oldValue === newValue) {
+                this.$emit('update:model', { ...this.model, [formItem.dataIndex]: undefined });
+            }
+            this.oldValue = newValue;
+        },
         handleRadioGroupChanged(e, formItem) {
+            console.log('eee', e, formItem);
             this.$emit('update:model', { ...this.model, [formItem.dataIndex]: e.target.value });
         },
         handleOk() {

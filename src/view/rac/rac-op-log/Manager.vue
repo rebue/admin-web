@@ -40,6 +40,12 @@ import { racDomainApi, racOpLogApi } from '@/api/Api';
 import { OpTypeDic } from '@/dic/OpTypeDic';
 import moment from 'moment';
 
+const opTypeDic = Object.values(OpTypeDic).map(item => {
+    return {
+        value: item,
+        text: item,
+    };
+});
 export default {
     name: 'Manager',
     components: {
@@ -118,12 +124,13 @@ export default {
                 key: 'opType',
                 title: '操作类型',
                 ellipsis: true,
-                filters: [
-                    { text: OpTypeDic.login, value: OpTypeDic.login },
-                    { text: OpTypeDic.register, value: OpTypeDic.register },
-                    { text: OpTypeDic.add, value: OpTypeDic.add },
-                    { text: OpTypeDic.modify, value: OpTypeDic.modify },
-                ],
+                filters: opTypeDic,
+                // [
+                //     { text: OpTypeDic.login, value: OpTypeDic.login },
+                //     { text: OpTypeDic.register, value: OpTypeDic.register },
+                //     { text: OpTypeDic.add, value: OpTypeDic.add },
+                //     { text: OpTypeDic.modify, value: OpTypeDic.modify },
+                // ],
                 customRender: (text, record) => (
                     <a-popover title={text + '详情'}>
                         {text}

@@ -72,6 +72,9 @@ export default {
         handleCancel() {
             this.$emit('update:visible', false);
         },
+        handleRadio(){
+            console.log('sssssssssssss');
+        }
     },
 };
 </script>

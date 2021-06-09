@@ -28,8 +28,26 @@ import EditDicItemForm from './EditDicItemForm.vue';
 import EditForm from './EditForm.vue';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi } from '@/api/Api';
+import { racDicApi, racSysApi, racDomainApi } from '@/api/Api';
 
+let syss = [];
+racSysApi.list().then(ro => {
+    syss = Object.values(ro.extra.list).map(item => {
+        return {
+            value: item.id,
+            text: item.name,
+        };
+    });
+});
+let domains = [];
+racDomainApi.listAll().then(ro => {
+    domains = Object.values(ro.extra.list).map(item => {
+        return {
+            value: item.id,
+            text: item.name,
+        };
+    });
+});
 export default {
     name: 'Manager',
     components: {
@@ -44,7 +62,7 @@ export default {
             {
                 dataIndex: 'name',
                 title: '名称',
-                width: 250,
+                width: 180,
                 fixed: 'left',
                 customRender: (text, record) => {
                     if (!record.dicId) {
@@ -76,11 +94,12 @@ export default {
                 title: '领域',
                 with: 100,
                 ellipsis: true,
-                filters: [
-                    { text: '平台领域', value: 'platform' },
-                    { text: '运营领域', value: 'ops' },
-                    { text: '默认领域', value: 'default' },
-                ],
+                filters: domains,
+                // [
+                //     { text: '平台领域', value: 'platform' },
+                //     { text: '运营领域', value: 'ops' },
+                //     { text: '默认领域', value: 'default' },
+                // ],
             },
             {
                 dataIndex: 'sysId',
@@ -88,11 +107,12 @@ export default {
                 title: '系统',
                 with: 120,
                 ellipsis: true,
-                filters: [
-                    { text: '平台系统', value: 'ops-admin-web' },
-                    { text: '运营系统', value: 'platform-admin-web' },
-                    { text: '默认系统', value: 'default' },
-                ],
+                filters: syss,
+                //  [
+                //     { text: '平台系统', value: 'ops-admin-web' },
+                //     { text: '运营系统', value: 'platform-admin-web' },
+                //     { text: '默认系统', value: 'default' },
+                // ],
             },
             {
                 dataIndex: 'remark',
@@ -159,6 +179,7 @@ export default {
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
+            syss,
         };
     },
     computed: {
@@ -168,22 +189,8 @@ export default {
         this.crudTable = this.$refs.crudTable;
         this.dicItemeditForm = this.$refs.dicItemeditForm;
         this.dicEditForm = this.$refs.dicEditForm;
-        //this.refreshTableData();
     },
     methods: {
-        // /**
-        //  * 刷新数据
-        //  */
-        // refreshData() {
-        //     this.loading = true;
-        //     racDomainApi
-        //         .listAll()
-        //         .then((ro) => {
-        //             this.domains = ro.extra.list;
-        //             if (!this.curDomainId) this.curDomainId = this.domains[0].id;
-        //         })
-        //         .finally(() => (this.loading = false));
-        // },
         /**
          * 刷新表格数据
          */
@@ -243,6 +250,10 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        setSys(syss) {
+            this.syss = syss;
+            console.log('进来了', this.syss);
         },
     },
 };
