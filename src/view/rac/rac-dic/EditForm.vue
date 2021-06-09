@@ -18,6 +18,7 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDicApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 import { DomainDic } from '@/dic/DomainDic';
+import { SysDic } from '@/dic/SysDic';
 
 export default {
     components: {
@@ -33,16 +34,38 @@ export default {
                     title: DomainDic.getName(item),
                 };
             });
+        const syss = Object.values(SysDic)
+            .filter(item => typeof item == 'string')
+            .map(item => {
+                return {
+                    value: item,
+                    title: SysDic.getName(item),
+                };
+            });
         return {
             editFormType: EditFormTypeDic.None,
             model: {},
             formItems: [
+                { dataIndex: 'id', title: '字典ID' },
                 { dataIndex: 'name', title: '字典名称' },
                 { dataIndex: 'domainId', title: '领域ID', type: 'radioGroup', radios: domains },
-                { dataIndex: 'sysId', title: '系统ID' },
+                {
+                    dataIndex: 'sysId',
+                    title: '系统ID',
+                    type: 'radioGroup',
+                    radios: syss,
+                },
                 { dataIndex: 'remark', title: '备注' },
             ],
             rules: {
+                id: [
+                    {
+                        required: true,
+                        message: '请输入字典ID',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
                 name: [
                     {
                         required: true,
