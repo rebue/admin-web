@@ -2,11 +2,10 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <!-- :query="{ domainId: curDomainId }" -->
                 <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
-                    :columns="columns"
+                    :columns.sync="columns"
                     :api="api"
                     :query="{}"
                     :scrollX="600"
@@ -30,24 +29,24 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDicApi, racSysApi, racDomainApi } from '@/api/Api';
 
-let syss = [];
-racSysApi.list().then(ro => {
-    syss = Object.values(ro.extra.list).map(item => {
-        return {
-            value: item.id,
-            text: item.name,
-        };
-    });
-});
-let domains = [];
-racDomainApi.listAll().then(ro => {
-    domains = Object.values(ro.extra.list).map(item => {
-        return {
-            value: item.id,
-            text: item.name,
-        };
-    });
-});
+// let domains = [];
+// let syss = [];
+// racSysApi.list().then((ro) => {
+//     syss = Object.values(ro.extra.list).map((item) => {
+//         return {
+//             value: item.id,
+//             text: item.name,
+//         };
+//     });
+// });
+// racDomainApi.listAll().then((ro) => {
+//     domains = Object.values(ro.extra.list).map((item) => {
+//         return {
+//             value: item.id,
+//             text: item.name,
+//         };
+//     });
+// });
 export default {
     name: 'Manager',
     components: {
@@ -58,110 +57,22 @@ export default {
     },
     data() {
         this.api = racDicApi;
-        const columns = [
-            {
-                dataIndex: 'name',
-                title: '名称',
-                width: 180,
-                fixed: 'left',
-                customRender: (text, record) => {
-                    if (!record.dicId) {
-                        return (
-                            <span>
-                                <a-tag color="blue">
-                                    字典
-                                    <a-icon type="tags" />
-                                </a-tag>
-                                {{ text }}
-                            </span>
-                        );
-                    } else {
-                        return (
-                            <fragment>
-                                <a-tag color="blue">
-                                    字典项
-                                    <a-icon type="tag" />
-                                </a-tag>
-                                {{ text }}
-                            </fragment>
-                        );
-                    }
-                },
-            },
-            {
-                dataIndex: 'domainId',
-                key: 'domainIds',
-                title: '领域',
-                with: 100,
-                ellipsis: true,
-                filters: domains,
-                // [
-                //     { text: '平台领域', value: 'platform' },
-                //     { text: '运营领域', value: 'ops' },
-                //     { text: '默认领域', value: 'default' },
-                // ],
-            },
-            {
-                dataIndex: 'sysId',
-                key: 'sysIds',
-                title: '系统',
-                with: 120,
-                ellipsis: true,
-                filters: syss,
-                //  [
-                //     { text: '平台系统', value: 'ops-admin-web' },
-                //     { text: '运营系统', value: 'platform-admin-web' },
-                //     { text: '默认系统', value: 'default' },
-                // ],
-            },
-            {
-                dataIndex: 'remark',
-                title: '备注',
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 200,
-                fixed: 'right',
-                customRender: (text, record) => {
-                    if (!record.dicId) {
-                        return (
-                            <span>
-                                <a onClick={() => this.handleDicEdit(record)}>编辑</a>
-                                <a-divider type="vertical" />
-                                <a-popconfirm
-                                    title="你确定要删除本条记录吗?"
-                                    onConfirm={() => this.handleDicDel(record)}
-                                    okText="确定"
-                                    cancelText="取消"
-                                >
-                                    <a>删除</a>
-                                </a-popconfirm>
-                                <a-divider type="vertical" />
-                                <a onClick={() => this.handleAdd(record)}>添加字典项</a>
-                            </span>
-                        );
-                    } else {
-                        return (
-                            <span>
-                                <a onClick={() => this.handleEdit(record)}>编辑</a>
-                                <a-divider type="vertical" />
-                                <a-popconfirm
-                                    title="你确定要删除本条记录吗?"
-                                    onConfirm={() => this.handleDel(record)}
-                                    okText="确定"
-                                    cancelText="取消"
-                                >
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </span>
-                        );
-                    }
-                },
-            },
-        ];
-
+        racDomainApi.listAll().then(ro => {
+            this.domains = Object.values(ro.extra.list).map(item => {
+                return {
+                    value: item.id,
+                    text: item.name,
+                };
+            });
+        });
+        racSysApi.list().then(ro => {
+            this.syss = Object.values(ro.extra.list).map(item => {
+                return {
+                    value: item.id,
+                    text: item.name,
+                };
+            });
+        });
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -170,25 +81,132 @@ export default {
                 onClick: this.handleDicAdd,
             },
         ];
-
         return {
             loading: false,
-            curDomainId: '',
             domains: [],
-            columns,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
-            syss,
+            syss: [],
         };
     },
     computed: {
-        //
+        columns() {
+            return [
+                {
+                    dataIndex: 'name',
+                    title: '名称',
+                    width: 180,
+                    fixed: 'left',
+                    customRender: (text, record) => {
+                        if (!record.dicId) {
+                            return (
+                                <span>
+                                    <a-tag color="blue">
+                                        字典
+                                        <a-icon type="tags" />
+                                    </a-tag>
+                                    {{ text }}
+                                </span>
+                            );
+                        } else {
+                            return (
+                                <fragment>
+                                    <a-tag color="blue">
+                                        字典项
+                                        <a-icon type="tag" />
+                                    </a-tag>
+                                    {{ text }}
+                                </fragment>
+                            );
+                        }
+                    },
+                },
+                {
+                    dataIndex: 'domainId',
+                    key: 'domainIds',
+                    title: '领域',
+                    with: 100,
+                    ellipsis: true,
+                    filters: this.domains,
+                },
+                {
+                    dataIndex: 'sysId',
+                    key: 'sysIds',
+                    title: '系统',
+                    with: 120,
+                    ellipsis: true,
+                    filters: this.syss,
+                },
+                {
+                    dataIndex: 'remark',
+                    title: '备注',
+                    ellipsis: true,
+                },
+                {
+                    dataIndex: 'action',
+                    title: '操作',
+                    width: 200,
+                    fixed: 'right',
+                    customRender: (text, record) => {
+                        if (!record.dicId) {
+                            return (
+                                <span>
+                                    <a onClick={() => this.handleDicEdit(record)}>编辑</a>
+                                    <a-divider type="vertical" />
+                                    <a-popconfirm
+                                        title="你确定要删除本条记录吗?"
+                                        onConfirm={() => this.handleDicDel(record)}
+                                        okText="确定"
+                                        cancelText="取消"
+                                    >
+                                        <a>删除</a>
+                                    </a-popconfirm>
+                                    <a-divider type="vertical" />
+                                    <a onClick={() => this.handleAdd(record)}>添加字典项</a>
+                                </span>
+                            );
+                        } else {
+                            return (
+                                <span>
+                                    <a onClick={() => this.handleEdit(record)}>编辑</a>
+                                    <a-divider type="vertical" />
+                                    <a-popconfirm
+                                        title="你确定要删除本条记录吗?"
+                                        onConfirm={() => this.handleDel(record)}
+                                        okText="确定"
+                                        cancelText="取消"
+                                    >
+                                        <a>删除</a>
+                                    </a-popconfirm>
+                                </span>
+                            );
+                        }
+                    },
+                },
+            ];
+        },
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
         this.dicItemeditForm = this.$refs.dicItemeditForm;
         this.dicEditForm = this.$refs.dicEditForm;
+        // racDomainApi.listAll().then((ro) => {
+        //     this.domains = Object.values(ro.extra.list).map((item) => {
+        //         return {
+        //             value: item.id,
+        //             text: item.name,
+        //         };
+        //     });
+        // });
+        // racSysApi.list().then((ro) => {
+        //     this.syss = Object.values(ro.extra.list).map((item) => {
+        //         return {
+        //             value: item.id,
+        //             text: item.name,
+        //         };
+        //     });
+        // });
     },
     methods: {
         /**
@@ -196,12 +214,6 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        /**
-         * 处理改变领域的事件
-         */
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
         },
         /**
          * 处理添加字典的事件
@@ -250,10 +262,6 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
-        },
-        setSys(syss) {
-            this.syss = syss;
-            console.log('进来了', this.syss);
         },
     },
 };

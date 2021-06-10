@@ -9,6 +9,7 @@
         :api="api"
         v-bind="$attrs"
         v-on="$listeners"
+        @show="handleShow"
     >
     </base-edit-form>
 </template>
@@ -50,15 +51,7 @@ export default {
         };
     },
     mounted() {
-        racDomainApi.listAll().then(ro => {
-            this.domains = Object.values(ro.extra.list).map(item => {
-                return {
-                    value: item.id,
-                    title: item.name,
-                };
-            });
-            this.$forceUpdate();
-        });
+        //
     },
     computed: {
         formItems() {
@@ -96,11 +89,24 @@ export default {
         },
     },
     methods: {
+        handleShow() {
+            this.domains = [];
+            this.syss = [];
+            this.$nextTick(() => {
+                racDomainApi.listAll().then(ro => {
+                    this.domains = Object.values(ro.extra.list).map(item => {
+                        return {
+                            value: item.id,
+                            title: item.name,
+                        };
+                    });
+                });
+            });
+        },
         show: function(...params) {
             this.$refs.baseEditForm.show(...params);
         },
         changeModel(domainId) {
-            console.log('ddd', domainId);
             racSysApi.list({ domainId: domainId }).then(ro => {
                 this.syss = Object.values(ro.extra.list).map(item => {
                     return {

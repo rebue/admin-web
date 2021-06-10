@@ -151,15 +151,14 @@ export default {
             });
         },
         handleClickRadio(newValue, formItem) {
-            console.log('formItem', formItem);
             if (this.oldValue === newValue) {
-                this.$emit('update:model', { ...this.model, [formItem.dataIndex]: undefined });
+                this.$emit('update:model', { ...this.model, [formItem.dataIndex]: '' });
             }
             this.oldValue = newValue;
         },
         handleRadioGroupChanged(e, formItem) {
-            console.log('eee', e, formItem);
             this.$emit('update:model', { ...this.model, [formItem.dataIndex]: e.target.value });
+            this.oldValue = e.target.value;
         },
         handleOk() {
             this.loading = true;
