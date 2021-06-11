@@ -27,26 +27,26 @@ import EditDicItemForm from './EditDicItemForm.vue';
 import EditForm from './EditForm.vue';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi, racSysApi, racDomainApi } from '@/api/Api';
+import { racDicApi, racDicItemApi, racSysApi, racDomainApi } from '@/api/Api';
 
-// let domains = [];
-// let syss = [];
-// racSysApi.list().then((ro) => {
-//     syss = Object.values(ro.extra.list).map((item) => {
-//         return {
-//             value: item.id,
-//             text: item.name,
-//         };
-//     });
-// });
-// racDomainApi.listAll().then((ro) => {
-//     domains = Object.values(ro.extra.list).map((item) => {
-//         return {
-//             value: item.id,
-//             text: item.name,
-//         };
-//     });
-// });
+let domains = [];
+let syss = [];
+racSysApi.list().then(ro => {
+    syss = Object.values(ro.extra.list).map(item => {
+        return {
+            value: item.id,
+            text: item.name,
+        };
+    });
+});
+racDomainApi.listAll().then(ro => {
+    domains = Object.values(ro.extra.list).map(item => {
+        return {
+            value: item.id,
+            text: item.name,
+        };
+    });
+});
 export default {
     name: 'Manager',
     components: {
@@ -57,22 +57,22 @@ export default {
     },
     data() {
         this.api = racDicApi;
-        racDomainApi.listAll().then(ro => {
-            this.domains = Object.values(ro.extra.list).map(item => {
-                return {
-                    value: item.id,
-                    text: item.name,
-                };
-            });
-        });
-        racSysApi.list().then(ro => {
-            this.syss = Object.values(ro.extra.list).map(item => {
-                return {
-                    value: item.id,
-                    text: item.name,
-                };
-            });
-        });
+        // racDomainApi.listAll().then(ro => {
+        //     this.domains = Object.values(ro.extra.list).map(item => {
+        //         return {
+        //             value: item.id,
+        //             text: item.name,
+        //         };
+        //     });
+        // });
+        // racSysApi.list().then(ro => {
+        //     this.syss = Object.values(ro.extra.list).map(item => {
+        //         return {
+        //             value: item.id,
+        //             text: item.name,
+        //         };
+        //     });
+        // });
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -83,11 +83,11 @@ export default {
         ];
         return {
             loading: false,
-            domains: [],
+            domains: domains,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
-            syss: [],
+            syss: syss,
         };
     },
     computed: {
@@ -179,6 +179,8 @@ export default {
                                     >
                                         <a>删除</a>
                                     </a-popconfirm>
+                                    <a-divider type="vertical" />
+                                    <a onClick={() => this.handleItemAdd(record)}>添加字典项</a>
                                 </span>
                             );
                         }
@@ -232,17 +234,26 @@ export default {
          */
         handleDicDel(record) {
             this.loading = true;
-            racDicApi.delById(record.id).finally(() => {
+            this.api.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
             this.loading = false;
         },
         /**
-         * 处理添加字典项的事件
+         * 处理字典添加字典项的事件
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
             this.dicItemeditForm.show(EditFormTypeDic.Add, { dicId: record.id });
+        },
+        /**
+         * 处理字典项添加字典项的事件
+         */
+        handleItemAdd(record) {
+            this.crudTable.expand(record.id);
+            const { dicId, id } = { ...record };
+            const parentId = id;
+            this.dicItemeditForm.show(EditFormTypeDic.Add, { dicId, parentId });
         },
         /**
          * 处理字典项的事件
@@ -255,7 +266,7 @@ export default {
          */
         handleDel(record) {
             this.loading = true;
-            this.api.delById(record.id).finally(() => {
+            racDicItemApi.delById(record.id).finally(() => {
                 this.refreshTableData();
             });
             this.loading = false;

@@ -31,10 +31,10 @@ export default {
             model: {},
             domains: [],
             rules: {
-                id: [
+                dicKey: [
                     {
                         required: true,
-                        message: '请输入字典ID',
+                        message: '字典Key',
                         trigger: 'blur',
                         transform: val => val && val.trim(),
                     },
@@ -56,7 +56,7 @@ export default {
     computed: {
         formItems() {
             return [
-                { dataIndex: 'id', title: '字典ID' },
+                { dataIndex: 'dicKey', title: '字典Key' },
                 { dataIndex: 'name', title: '字典名称' },
                 {
                     dataIndex: 'domainId',

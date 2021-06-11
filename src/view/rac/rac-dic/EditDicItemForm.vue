@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="字典"
+        title="字典项"
         :editFormType.sync="editFormType"
         :model.sync="model"
         :formItems="formItems"
@@ -28,15 +28,24 @@ export default {
             editFormType: EditFormTypeDic.None,
             model: {},
             formItems: [
+                { dataIndex: 'dicItemKey', title: '字典项Key' },
                 { dataIndex: 'name', title: '字典项名称' },
                 { dataIndex: 'dicId', title: '字典ID', type: 'hidden' },
                 { dataIndex: 'remark', title: '备注' },
             ],
             rules: {
+                dicItemKey: [
+                    {
+                        required: true,
+                        message: '请输入字典项Key',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
                 name: [
                     {
                         required: true,
-                        message: '请输入字典名称',
+                        message: '请输入字典项名称',
                         trigger: 'blur',
                         transform: val => val && val.trim(),
                     },

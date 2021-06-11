@@ -11,46 +11,4 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 export default class RacDicItemApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/rac/dic-item';
-
-    /**
-     * 获取带分组的列表
-     */
-    list(qo): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/page', params: qo }).then(ro => {
-            const extra = ro.extra as { list: RacPermGroupMo[]; groupList?: RacPermGroupMo[]; permList?: RacPermMo[] };
-            const { groupList, permList } = extra;
-            const list: RacPermGroupMo[] = [];
-            // 循环分组
-            for (const group of groupList as RacPermGroupMo[]) {
-                group.type = PermTreeNodeTypeDic.PermGroup;
-                group.maxSeqNo = (groupList as RacPermGroupMo[]).length - 1;
-                list.push(group);
-            }
-            // 将权限加入分组中
-            for (const perm of permList as RacPermMo[]) {
-                for (const group of groupList as RacPermGroupMo[]) {
-                    if (group['id'] === perm['groupId']) {
-                        if (!group.children) group.children = [];
-                        perm.type = PermTreeNodeTypeDic.Perm;
-                        group.children.push(perm);
-                        continue;
-                    }
-                }
-            }
-
-            // 删除转换前的属性
-            delete extra.groupList;
-            delete extra.permList;
-
-            // 设置权限的最大序号
-            for (const group of list) {
-                if (!group.children) continue;
-                for (const perm of group.children) {
-                    perm.maxSeqNo = group.children.length - 1;
-                }
-            }
-            extra.list = list;
-            return ro;
-        });
-    }
 }
