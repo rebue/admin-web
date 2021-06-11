@@ -96,7 +96,7 @@ export default {
                 {
                     dataIndex: 'name',
                     title: '名称',
-                    width: 180,
+                    width: 250,
                     fixed: 'left',
                     customRender: (text, record) => {
                         if (!record.dicId) {
