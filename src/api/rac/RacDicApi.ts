@@ -41,7 +41,7 @@ export default class RacDicApi extends BaseCrudApi {
                                     if (!itemList[i].children) {
                                         itemList[i].children = [];
                                     }
-                                    itemList[i].children.push(itemList[j]);
+                                    itemList[i].children?.push(itemList[j]);
                                     continue;
                                 }
                             }
