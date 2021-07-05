@@ -118,7 +118,6 @@ export default {
                 href:
                     'data:text/css;base64,LmltcG93ZXJCb3ggLnFyY29kZXsNCgl3aWR0aDogMTAwJTsNCgltYXJnaW46IDA7DQoJYm9yZGVyOiBub25lOw0KfQ0KLmltcG93ZXJCb3ggLnRpdGxlew0KCWRpc3BsYXk6IG5vbmU7DQp9DQouaW1wb3dlckJveCAuaW5mb3sNCgl3aWR0aDogMTAwJTsNCn0=',
             });
-            console.log('dddd', obj);
         },
         switchLogin() {
             this.get_wx_qrcode();
