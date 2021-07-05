@@ -21,7 +21,7 @@
             </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="微信扫码登录">
-            <div id="wx-login-box" style="width: 350px;"></div>
+            <div id="wx-login-box" style="width: 350px"></div>
         </a-tab-pane>
     </a-tabs>
 </template>
@@ -80,12 +80,15 @@ export default {
         },
     },
     mounted() {
+        //FIXME 引入js慢一步，第一次切换微信选项时报错，待解决
         const s = document.createElement('script');
         s.type = 'text/javascript';
         s.src = 'http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
         document.body.appendChild(s);
         this.$nextTick(() => {
-            this.get_wx_qrcode();
+            setTimeout(() => {
+                this.get_wx_qrcode();
+            }, 100);
         });
     },
     methods: {
