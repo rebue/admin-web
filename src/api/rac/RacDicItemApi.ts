@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 字典项信息相关请求
  */
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import { RacPermGroupMo } from '@/mo/rac/RacPermGroupMo';

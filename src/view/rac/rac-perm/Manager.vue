@@ -26,6 +26,13 @@
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-menu-form :perm="curRecord" :visible.sync="manageMenuFormVisible" @close="handleEditFormClose" />
         <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="handleEditFormClose" />
+        <manager-command
+            :width="750"
+            :title="'权限命令'"
+            :record="curRecord"
+            :visible.sync="managerCommandVisible"
+            @close="handleEditFormClose"
+        />
     </fragment>
 </template>
 
@@ -39,6 +46,7 @@ import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
 import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
 import UrnEditForm from './UrnEditForm.vue';
 import ManageMenuForm from './ManageMenuForm.vue';
+import ManagerCommand from './ManagerCommand.vue';
 
 export default {
     name: 'Manager',
@@ -49,6 +57,7 @@ export default {
         CrudTable,
         UrnEditForm,
         ManageMenuForm,
+        ManagerCommand,
     },
     data() {
         this.api = racPermApi;
@@ -139,11 +148,11 @@ export default {
                                     <a>删除</a>
                                 </a-popconfirm>
                                 <a-divider type="vertical" />
-                                <a onclick={() => this.handleMenuForm(record)}>菜单</a>
+                                <a onClick={() => this.handleMenuForm(record)}>菜单</a>
                                 <a-divider type="vertical" />
                                 <a onClick={() => this.handleUrnEditForm(record)}>链接</a>
                                 <a-divider type="vertical" />
-                                <a click="domain.onClick(record)">命令</a>
+                                <a onClick={() => this.handleCommandEditForm(record)}>命令</a>
                             </span>
                         );
                     }
@@ -175,6 +184,7 @@ export default {
             columns,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
+            managerCommandVisible: false,
             curRecord: {},
         };
     },
@@ -316,6 +326,13 @@ export default {
         handleUrnEditForm(record) {
             this.curRecord = record;
             this.edintLinkFormVisible = true;
+        },
+        /**
+         * 处理权限命令的事件
+         */
+        handleCommandEditForm(record) {
+            this.curRecord = record;
+            this.managerCommandVisible = true;
         },
         /**
          * 处理删除权限的事件

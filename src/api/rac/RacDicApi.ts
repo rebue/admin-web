@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 字典信息相关请求
  */
 import { RacDicItemMo } from '@/mo/rac/RacDicItemMo';
 import { RacDicMo } from '@/mo/rac/RacDicMo';

@@ -159,7 +159,7 @@ export default {
     height: 450px;
 }
 .sign {
-    margin-top: 40px;
+    margin-top: 90px;
     margin-bottom: 20px;
 }
 .footer {

@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 权限分组信息相关请求
  */
 import { Ro } from '@/ro/Ro';
 import request from '@/util/request';

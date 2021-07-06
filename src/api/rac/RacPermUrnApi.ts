@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 权限URN信息相关请求
  */
 import { RacPermUrnMo } from '@/mo/rac/RacPermUrnMo';
 import { Ro } from '@/ro/Ro';

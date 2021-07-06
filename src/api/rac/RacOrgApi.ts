@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 组织信息相关请求
  */
 import { RacOrgMo } from '@/mo/rac/RacOrgMo';
 import { Ro } from '@/ro/Ro';

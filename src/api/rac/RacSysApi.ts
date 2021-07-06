@@ -1,5 +1,5 @@
 /**
- * 领域信息相关请求
+ * 系统信息相关请求
  */
 import BaseCrudApi from '../comm/BaseCrudApi';
 
