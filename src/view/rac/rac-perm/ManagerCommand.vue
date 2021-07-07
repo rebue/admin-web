@@ -60,19 +60,19 @@ export default {
                 scopedSlots: { customRender: 'id' },
             },
             {
-                title: 'PERM_ID',
+                title: '权限ID',
                 dataIndex: 'permId',
                 width: '15%',
                 scopedSlots: { customRender: 'permId' },
             },
             {
-                title: 'COMMAND_Key',
+                title: '命令Key',
                 dataIndex: 'commandKey',
                 width: '30%',
                 scopedSlots: { customRender: 'commandKey' },
             },
             {
-                title: 'REMARK',
+                title: '备注',
                 dataIndex: 'remark',
                 scopedSlots: { customRender: 'remark' },
             },
@@ -88,7 +88,7 @@ export default {
             data: [],
             dataSource: [],
             columns: columns,
-            cols: ['id', 'permId', 'commandKey', 'remark'],
+            cols: ['commandKey', 'remark'],
             editingkey: '',
         };
     },
@@ -98,8 +98,6 @@ export default {
                 this.$emit('show');
                 this.$nextTick(() => {
                     //如果不延时，搜索框可能还未渲染完成，会找不到input报错
-                    this.data = [];
-                    this.refreshData();
                     setTimeout(() => {
                         // this.$focus(this.$refs.modal);
                     }, 100);
@@ -115,7 +113,7 @@ export default {
     methods: {
         handleShow() {
             this.$nextTick(() => {
-                // this.refreshData();
+                this.refreshData();
             });
         },
         /**
@@ -125,7 +123,7 @@ export default {
             this.loading = true;
             this.dataSource = [];
             racPermCommandApi
-                .list({ id: this.record.id })
+                .list({ permId: this.record.id })
                 .then(ro => {
                     for (const item of ro.extra.list) {
                         item.key = item.id.toString();

@@ -21,22 +21,21 @@
         >
             <a-table :columns="columns" :data-source="data" :pagination="false" bordered>
                 <template v-for="col in cols" :slot="col" slot-scope="text, record, index">
-                    <!-- <a-form-model ref="ruleForm" :rules="rules"> -->
                     <div :key="col">
-                        <!-- <a-form-model-item v-if="record.editable" :prop="col"> -->
                         <a-input
                             v-if="record.editable"
                             style="margin: -5px 0"
                             :value="text"
+                            v-model.trim="model[col]"
                             @change="e => handleChange(e.target.value, record.key, col)"
                         />
-                        <!-- </a-form-model-item> -->
                         <template v-else>
                             {{ text }}
                         </template>
+                        <span style="color: red" v-if="record.editable && message">{{ message.commandKey }}</span>
                     </div>
-                    <!-- </a-form-model> -->
                 </template>
+
                 <template slot="operation" slot-scope="text, record, index">
                     <div class="editable-row-operations">
                         <span v-if="record.editable">
@@ -67,6 +66,9 @@
 </template>
 
 <script>
+import schema from 'async-validator';
+import AsyncValidator from 'async-validator';
+
 export default {
     props: {
         record: {
@@ -77,6 +79,10 @@ export default {
             type: String,
             default: '',
         },
+        // rules: {
+        //     type: Object,
+        //     //default: () => {},
+        // },
         /**
          * 需要填写修改的字段
          */
@@ -118,14 +124,33 @@ export default {
             loading: false,
             data: [],
             editingkey: '',
+            commandKey: '我来了',
+            model: {},
+            errors: {},
+            validator: null,
+            rules: {
+                commandKey: {
+                    // 一条校验规则
+                    required: true,
+                    message: 'key为必填项',
+                },
+            },
+            // 错误提示
+            message: {
+                commandKey: '',
+            },
         };
     },
     computed: {
-        //
+        // 实例化构造函数表示创建一个校验器，参数为校验规则对象
+        // validator = new schema(this.rules)
     },
     watch: {
+        model() {
+            console.log('model', this.model);
+        },
         dataSource() {
-            this.data = this.dataSource;
+            this.data = [...this.dataSource];
         },
         data() {
             this.cacheData = this.data.map(item => ({ ...item }));
@@ -152,18 +177,21 @@ export default {
         refreshData() {
             this.$nextTick(() => {
                 this.editingkey = '';
-                this.data = this.dataSource;
+                this.data = [...this.dataSource];
+                // 实例化构造函数表示创建一个校验器，参数为校验规则对象
+                this.validator = new schema(this.rules);
             });
         },
         handleChange(value, key, column) {
             const newData = [...this.data];
             const target = newData.filter(item => key === item.key)[0];
             if (target) {
-                target[column] = value;
+                //target[column] = value;
                 this.data = newData;
             }
         },
         add() {
+            this.model = {};
             const random = Math.round(Math.random() * 1000) + '.'; //加入字符避免与已存在的Key重复
             const item = {
                 key: random,
@@ -172,9 +200,6 @@ export default {
             this.edit(item.key); //添加并编辑
         },
         edit(key) {
-            this.$nextTick(() => {
-                this.$emit('edit');
-            });
             const newData = [...this.data];
             const target = newData.filter(item => key === item.key)[0];
             this.editingkey = key;
@@ -182,24 +207,54 @@ export default {
                 target.editable = true;
                 this.data = newData;
             }
+            Object.assign(this.model, target);
+            for (const col of this.cols) {
+                target[col] = '';
+            }
+            setTimeout(() => {
+                this.$focus(this.$refs.modal);
+            }, 100);
         },
         save(key) {
-            const newData = [...this.data];
-            const newCacheData = [...this.cacheData];
-            const target = newData.filter(item => key === item.key)[0];
-            const targetCache = newCacheData.filter(item => key === item.key)[0];
-            if (target && targetCache) {
-                delete target.editable;
-                this.data = newData;
-                Object.assign(targetCache, target);
-                this.cacheData = newCacheData;
-            }
-            console.log('targetCache', targetCache);
-            this.editingkey = '';
             this.$nextTick(() => {
-                const saveData = targetCache;
-                this.$emit('save', saveData);
+                this.clearMessage();
+                this.validator
+                    .validate(this.model, {
+                        firstFields: true,
+                    })
+                    .then(() => {
+                        // 校验通过
+                        const newData = [...this.data];
+                        const newCacheData = [...this.cacheData];
+                        const target = newData.filter(item => key === item.key)[0];
+                        const targetCache = newCacheData.filter(item => key === item.key)[0];
+                        if (target && targetCache) {
+                            delete target.editable;
+                            this.data = newData;
+                            Object.assign(targetCache, target);
+                            Object.assign(targetCache, this.model); //复制后参数到先参数，字段一样则覆盖
+                            this.cacheData = newCacheData;
+                        }
+                        this.editingkey = '';
+                        console.log('targetCache', targetCache);
+                        console.log('ok');
+                        const saveData = targetCache;
+                        //this.$emit('save', saveData);
+                    })
+                    .catch(({ errors }) => {
+                        // 校验未通过
+                        // 显示错误信息
+                        for (const { field, message } of errors) {
+                            this.message[field] = message;
+                        }
+                        console.log('errors', errors);
+                        console.log(' this.message', this.message);
+                    });
             });
+        },
+        // 清空校验错误提示
+        clearMessage() {
+            for (const key in this.message) this.message[key] = '';
         },
         del(record) {
             this.$nextTick(() => {
@@ -222,12 +277,13 @@ export default {
                 delete target.editable;
                 this.data = newData;
             }
+            this.$emit('show');
         },
         handleCancel() {
-            // this.$nextTick(() => {
-            //     this.$emit('cancel');
-            // });
-            this.$emit('update:visible', false);
+            this.$nextTick(() => {
+                this.$emit('cancel');
+            });
+            //this.$emit('update:visible', false);
         },
     },
 };
