@@ -3,13 +3,14 @@
         <can-edit-table
             v-bind="$attrs"
             v-on="$listeners"
-            :record="record"
             :title="title"
             :visible.sync="visible"
             :width="width"
             :dataSource.sync="dataSource"
             :columns="columns"
             :cols="cols"
+            :rules="rules"
+            :message="message"
             @show="handleShow"
             @cancel="handleCancel"
             @save="save"
@@ -20,7 +21,7 @@
 
 <script>
 import { racPermCommandApi } from '@/api/Api';
-import CanEditTable from './CanEditTable.vue';
+import CanEditTable from '@/component/rebue/CanEditTable.vue';
 
 export default {
     components: {
@@ -35,9 +36,6 @@ export default {
             type: String,
             default: '',
         },
-        /**
-         * 需要填写修改的字段
-         */
         width: {
             type: Number,
             default: 640,
@@ -53,18 +51,6 @@ export default {
     },
     data() {
         const columns = [
-            {
-                title: 'ID',
-                dataIndex: 'id',
-                width: '15%',
-                scopedSlots: { customRender: 'id' },
-            },
-            {
-                title: '权限ID',
-                dataIndex: 'permId',
-                width: '15%',
-                scopedSlots: { customRender: 'permId' },
-            },
             {
                 title: '命令Key',
                 dataIndex: 'commandKey',
@@ -83,13 +69,26 @@ export default {
                 scopedSlots: { customRender: 'operation' },
             },
         ];
+        const rules = {
+            commandKey: {
+                // 一条校验规则
+                required: true,
+                message: 'commandKey为必填项',
+                trigger: 'blur',
+            },
+        };
         return {
             loading: false,
             data: [],
             dataSource: [],
             columns: columns,
             cols: ['commandKey', 'remark'],
-            editingkey: '',
+            rules: rules,
+            // 错误提示,根rules中的校验字段相关
+            message: {
+                commandKey: '',
+                remark: '',
+            },
         };
     },
     watch: {
@@ -136,8 +135,8 @@ export default {
                 });
         },
         save(saveData) {
+            //判断是添加还是修改
             if (saveData.key.indexOf('.') != -1) {
-                //判断是添加还是修改
                 saveData.permId = this.record.id;
                 racPermCommandApi
                     .add(saveData)

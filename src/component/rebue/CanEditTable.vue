@@ -27,12 +27,12 @@
                             style="margin: -5px 0"
                             :value="text"
                             v-model.trim="model[col]"
-                            @change="e => handleChange(e.target.value, record.key, col)"
+                            @change="(e) => handleChange(e.target.value, record.key, col)"
                         />
                         <template v-else>
                             {{ text }}
                         </template>
-                        <span style="color: red" v-if="record.editable && message">{{ message.commandKey }}</span>
+                        <span style="color: red" v-show="record.editable && message[col]">{{ message[col] }}</span>
                     </div>
                 </template>
 
@@ -58,7 +58,7 @@
                 </template>
             </a-table>
             <br />
-            <a-button icon="plus" :disabled="editingkey !== ''" style="width: 100%" @click="event => add(event)"
+            <a-button icon="plus" :disabled="editingkey !== ''" style="width: 100%" @click="(event) => add(event)"
                 >添加</a-button
             >
         </a-modal>
@@ -67,22 +67,22 @@
 
 <script>
 import schema from 'async-validator';
-import AsyncValidator from 'async-validator';
 
 export default {
     props: {
-        record: {
-            type: Object,
-            required: true,
-        },
         title: {
             type: String,
             default: '',
         },
-        // rules: {
-        //     type: Object,
-        //     //default: () => {},
-        // },
+        //校验规则
+        rules: {
+            type: Object,
+            //default: () => {},
+        },
+        // 校验规则中的错误提示
+        message: {
+            type: Object,
+        },
         /**
          * 需要填写修改的字段
          */
@@ -91,7 +91,7 @@ export default {
             required: true,
         },
         /**
-         * 必须包含一列
+         * 必须包含下面这个一列
          * {
                 title: '操作',
                 dataIndex: 'operation',
@@ -124,21 +124,9 @@ export default {
             loading: false,
             data: [],
             editingkey: '',
-            commandKey: '我来了',
             model: {},
             errors: {},
             validator: null,
-            rules: {
-                commandKey: {
-                    // 一条校验规则
-                    required: true,
-                    message: 'key为必填项',
-                },
-            },
-            // 错误提示
-            message: {
-                commandKey: '',
-            },
         };
     },
     computed: {
@@ -153,7 +141,7 @@ export default {
             this.data = [...this.dataSource];
         },
         data() {
-            this.cacheData = this.data.map(item => ({ ...item }));
+            this.cacheData = this.data.map((item) => ({ ...item }));
         },
         visible(val) {
             if (val) {
@@ -180,11 +168,12 @@ export default {
                 this.data = [...this.dataSource];
                 // 实例化构造函数表示创建一个校验器，参数为校验规则对象
                 this.validator = new schema(this.rules);
+                this.clearMessage();
             });
         },
         handleChange(value, key, column) {
             const newData = [...this.data];
-            const target = newData.filter(item => key === item.key)[0];
+            const target = newData.filter((item) => key === item.key)[0];
             if (target) {
                 //target[column] = value;
                 this.data = newData;
@@ -201,7 +190,7 @@ export default {
         },
         edit(key) {
             const newData = [...this.data];
-            const target = newData.filter(item => key === item.key)[0];
+            const target = newData.filter((item) => key === item.key)[0];
             this.editingkey = key;
             if (target) {
                 target.editable = true;
@@ -226,8 +215,8 @@ export default {
                         // 校验通过
                         const newData = [...this.data];
                         const newCacheData = [...this.cacheData];
-                        const target = newData.filter(item => key === item.key)[0];
-                        const targetCache = newCacheData.filter(item => key === item.key)[0];
+                        const target = newData.filter((item) => key === item.key)[0];
+                        const targetCache = newCacheData.filter((item) => key === item.key)[0];
                         if (target && targetCache) {
                             delete target.editable;
                             this.data = newData;
@@ -237,9 +226,9 @@ export default {
                         }
                         this.editingkey = '';
                         console.log('targetCache', targetCache);
-                        console.log('ok');
+                        console.log('校验通过');
                         const saveData = targetCache;
-                        //this.$emit('save', saveData);
+                        this.$emit('save', saveData);
                     })
                     .catch(({ errors }) => {
                         // 校验未通过
@@ -247,6 +236,7 @@ export default {
                         for (const { field, message } of errors) {
                             this.message[field] = message;
                         }
+                        // this.$focus(this.$refs.modal);
                         console.log('errors', errors);
                         console.log(' this.message', this.message);
                     });
@@ -262,18 +252,19 @@ export default {
             });
         },
         cancel(key) {
+            this.clearMessage(); //取消清楚提示
             if (key.indexOf('.') != -1) {
                 this.data.splice(
-                    this.data.findIndex(item => item.key === key),
+                    this.data.findIndex((item) => item.key === key),
                     1
                 );
             }
-            this.cacheData = this.data.map(item => ({ ...item }));
+            this.cacheData = this.data.map((item) => ({ ...item }));
             const newData = [...this.data];
-            const target = newData.filter(item => key === item.key)[0];
+            const target = newData.filter((item) => key === item.key)[0];
             this.editingkey = '';
             if (target) {
-                Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);
+                Object.assign(target, this.cacheData.filter((item) => key === item.key)[0]);
                 delete target.editable;
                 this.data = newData;
             }
