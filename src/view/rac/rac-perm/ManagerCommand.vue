@@ -73,8 +73,12 @@ export default {
             commandKey: {
                 // 一条校验规则
                 required: true,
+                placeholder: '请输入key',
                 message: 'commandKey为必填项',
-                trigger: 'blur',
+            },
+            remark: {
+                // 一条校验规则
+                placeholder: '请输入备注',
             },
         };
         return {

@@ -19,13 +19,18 @@
             v-on="$listeners"
             @cancel="handleCancel"
         >
-            <a-table :columns="columns" :data-source="data" :pagination="false" bordered>
+            <a-table :columns="columns" :data-source="data" :pagination="false" size="middle" bordered>
                 <template v-for="col in cols" :slot="col" slot-scope="text, record, index">
-                    <div :key="col">
+                    <div :key="col" :class="{ divHeight: record.editable }">
+                        <label v-if="record.editable && localRules[col].required" style="color: red; font-size: 20px"
+                            >* &nbsp;</label
+                        >
                         <a-input
                             v-if="record.editable"
-                            style="margin: -5px 0"
+                            style="width: 90%"
+                            :class="{ input_border: record.editable && localRules[col].required && message[col] }"
                             :value="text"
+                            :placeholder="localRules[col].placeholder"
                             v-model.trim="model[col]"
                             @change="(e) => handleChange(e.target.value, record.key, col)"
                         />
@@ -77,7 +82,7 @@ export default {
         //校验规则
         rules: {
             type: Object,
-            //default: () => {},
+            default: () => {},
         },
         // 校验规则中的错误提示
         message: {
@@ -127,6 +132,7 @@ export default {
             model: {},
             errors: {},
             validator: null,
+            localRules: {},
         };
     },
     computed: {
@@ -149,6 +155,23 @@ export default {
                 this.$nextTick(() => {
                     //如果不延时，搜索框可能还未渲染完成，会找不到input报错
                     this.refreshData();
+                    for (const key in this.rules) {
+                        const required = this.rules[key].required;
+                        const placeholder = this.rules[key].placeholder;
+                        if (this.localRules[key]) {
+                            this.localRules[key].required = required;
+                            this.localRules[key].placeholder = placeholder;
+                        } else {
+                            this.localRules[key] = {};
+                            this.localRules[key].required = required;
+                            this.localRules[key].placeholder = placeholder;
+                        }
+                        console.log('localRules', this.localRules);
+                        // if (Object.hasOwnProperty.call(object, key)) {
+                        //     const element = object[key];
+
+                        // }
+                    }
                 });
             } else {
                 this.$emit('close');
@@ -236,8 +259,10 @@ export default {
                         for (const { field, message } of errors) {
                             this.message[field] = message;
                         }
-                        // this.$focus(this.$refs.modal);
+                        this.$focus(this.$refs.modal);
                         console.log('errors', errors);
+                        console.log('rules', this.rules);
+
                         console.log(' this.message', this.message);
                     });
             });
@@ -285,5 +310,12 @@ export default {
 }
 .editable-row-operations a {
     margin-right: 8px;
+}
+.divHeight {
+    height: 50px;
+}
+.input_border {
+    border: 1px solid #f5222d;
+    margin: -5px 0 3px 0;
 }
 </style>
