@@ -22,22 +22,35 @@
             <a-table :columns="columns" :data-source="data" :pagination="false" size="middle" bordered>
                 <template v-for="col in cols" :slot="col" slot-scope="text, record, index">
                     <div :key="col" :class="{ divHeight: record.editable }">
-                        <label v-if="record.editable && localRules[col].required" style="color: red; font-size: 20px"
+                        <label v-if="record.editable && rules[col].required" style="color: red; font-size: 20px"
                             >* &nbsp;</label
                         >
                         <a-input
                             v-if="record.editable"
                             style="width: 90%"
-                            :class="{ input_border: record.editable && localRules[col].required && message[col] }"
+                            :class="{
+                                input_border:
+                                    rules[col].required && message[col] && (model[col] == '' || model[col] == undefined)
+                                        ? true
+                                        : false,
+                            }"
                             :value="text"
-                            :placeholder="localRules[col].placeholder"
+                            :placeholder="rules[col].placeholder"
                             v-model.trim="model[col]"
                             @change="(e) => handleChange(e.target.value, record.key, col)"
                         />
                         <template v-else>
                             {{ text }}
                         </template>
-                        <span style="color: red" v-show="record.editable && message[col]">{{ message[col] }}</span>
+                        <span
+                            style="color: red"
+                            v-show="
+                                record.editable && message[col] && (model[col] == '' || model[col] == undefined)
+                                    ? true
+                                    : false
+                            "
+                            >{{ message[col] }}</span
+                        >
                     </div>
                 </template>
 
@@ -140,8 +153,13 @@ export default {
         // validator = new schema(this.rules)
     },
     watch: {
-        model() {
-            console.log('model', this.model);
+        model: {
+            handler: function (newModel) {
+                console.log('model', this.model);
+                this.oldModel = { ...newModel };
+            },
+            deep: true,
+            immediate: true,
         },
         dataSource() {
             this.data = [...this.dataSource];
@@ -155,23 +173,23 @@ export default {
                 this.$nextTick(() => {
                     //如果不延时，搜索框可能还未渲染完成，会找不到input报错
                     this.refreshData();
-                    for (const key in this.rules) {
-                        const required = this.rules[key].required;
-                        const placeholder = this.rules[key].placeholder;
-                        if (this.localRules[key]) {
-                            this.localRules[key].required = required;
-                            this.localRules[key].placeholder = placeholder;
-                        } else {
-                            this.localRules[key] = {};
-                            this.localRules[key].required = required;
-                            this.localRules[key].placeholder = placeholder;
-                        }
-                        console.log('localRules', this.localRules);
-                        // if (Object.hasOwnProperty.call(object, key)) {
-                        //     const element = object[key];
+                    // for (const key in this.rules) {
+                    //     const required = this.rules[key].required;
+                    //     const placeholder = this.rules[key].placeholder;
+                    //     if (this.localRules[key]) {
+                    //         this.localRules[key].required = required;
+                    //         this.localRules[key].placeholder = placeholder;
+                    //     } else {
+                    //         this.localRules[key] = {};
+                    //         this.localRules[key].required = required;
+                    //         this.localRules[key].placeholder = placeholder;
+                    //     }
+                    //     console.log('localRules', this.localRules);
+                    //     // if (Object.hasOwnProperty.call(object, key)) {
+                    //     //     const element = object[key];
 
-                        // }
-                    }
+                    //     // }
+                    // }
                 });
             } else {
                 this.$emit('close');
