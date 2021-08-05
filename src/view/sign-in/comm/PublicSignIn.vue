@@ -108,7 +108,7 @@ export default {
             //     domain_name_length = call_back_domain_name.indexOf('#') - 1,
             //     DDNS = call_back_domain_name.substring(0, domain_name_length),
             //     DDNS_resolution = encodeURIComponent(DDNS);
-            const obj = new WxLogin({
+            /* const obj = new WxLogin({
                 self_redirect: false,
                 id: 'wx-login-box',
                 appid: 'wx25d6c6c863c8629a',
@@ -120,7 +120,7 @@ export default {
                 style: 'black',
                 href:
                     'data:text/css;base64,LmltcG93ZXJCb3ggLnFyY29kZXsNCgl3aWR0aDogMTAwJTsNCgltYXJnaW46IDA7DQoJYm9yZGVyOiBub25lOw0KfQ0KLmltcG93ZXJCb3ggLnRpdGxlew0KCWRpc3BsYXk6IG5vbmU7DQp9DQouaW1wb3dlckJveCAuaW5mb3sNCgl3aWR0aDogMTAwJTsNCn0=',
-            });
+            }); */
         },
         switchLogin() {
             this.get_wx_qrcode();
