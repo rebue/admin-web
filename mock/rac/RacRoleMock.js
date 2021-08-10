@@ -5,7 +5,7 @@ const list = [
     {
         id: '1611197906000',
         name: '超级管理角色',
-        domainId: 'platform',
+        realmId: 'platform',
         isEnabled: true,
         seqNo: 0,
         remark: '拥有所有管理权限，必须对开发/运维都了解得非常透彻',
@@ -13,7 +13,7 @@ const list = [
     {
         id: '1611197945000',
         name: '平台管理角色',
-        domainId: 'platform',
+        realmId: 'platform',
         isEnabled: true,
         seqNo: 1,
         remark: '拥有管理平台的基本权限，主要负责账户授权方面的管理',
@@ -169,7 +169,7 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    list: list.filter(item => item.domainId === params.domainId),
+                    list: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },
@@ -185,8 +185,8 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    groupList: listAllRacRoleGroup().filter(item => item.domainId === params.domainId),
-                    roleList: list.filter(item => item.domainId === params.domainId),
+                    groupList: listAllRacRoleGroup().filter(item => item.realmId === params.realmId),
+                    roleList: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },

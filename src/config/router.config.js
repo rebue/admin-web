@@ -37,7 +37,7 @@ export const constantRouters = [
         path: '/',
         name: 'index',
         component: () => import('@/view/index/Index.vue'),
-        redirect: '/base/rac-domain',
+        redirect: '/base/rac-realm',
         children: [
             {
                 path: '/person-center',
@@ -53,12 +53,12 @@ export const constantRouters = [
                 meta: { title: '基础', keepAlive: true, icon: 'setting' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/base/rac-domain',
+                redirect: '/base/rac-realm',
                 children: [
                     {
-                        path: '/base/rac-domain',
-                        name: 'rac-domain',
-                        component: () => import('@/view/rac/rac-domain/Manager.vue'),
+                        path: '/base/rac-realm',
+                        name: 'rac-realm',
+                        component: () => import('@/view/rac/rac-realm/Manager.vue'),
                         hidden: true,
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },

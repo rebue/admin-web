@@ -6,12 +6,12 @@ const mockList = Mock.mock({
     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
     'list|1-20000': [{
         'id|+1': 10000000,
-        'domainId|+1': ['default', 'platform', 'ops'],
+        'realmId|+1': ['default', 'platform', 'ops'],
         "accountId|1-1000000": 193201,
         "accountName": "@name()",
         "lockOpName": "@name()",
         "unlockOpName": "@name()",
-        "domainName": "@pick(['默认系统'])",
+        "realmName": "@pick(['默认系统'])",
         //'opType': '@pick(["锁定", "启用"])',
         //'opTitle': '@title()',
         //'opDetail': '@cparagraph',
@@ -35,7 +35,7 @@ module.exports = {
             }
             const params = parse(url, true).query;
             const { pageNum, pageSize, opType } = params;
-            let l = mockList.list.filter(item => item.domainId === params.domainId);
+            let l = mockList.list.filter(item => item.realmId === params.realmId);
             let total = l.length;
 
             const begin = (pageNum - 1) * pageSize;

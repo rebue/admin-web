@@ -19,13 +19,13 @@ const list = [
     },
 ];
 
-const listAllRacDomain = () => list;
+const listAllRacRealm = () => list;
 
 module.exports = {
-    listAllRacDomain,
+    listAllRacRealm,
     routes: {
         /** 添加 */
-        'POST /rac/domain': (req, res, u, b) => {
+        'POST /rac/realm': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             list.push(body);
             return res.json({
@@ -37,7 +37,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/domain': (req, res, u, b) => {
+        'PUT /rac/realm': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -53,7 +53,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/domain': (req, res, u) => {
+        'DELETE /rac/realm': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -73,7 +73,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/domain/get-by-id': (req, res, u) => {
+        'GET /rac/realm/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -97,11 +97,11 @@ module.exports = {
             }
         },
         /** 查询所有记录 */
-        'GET /rac/domain/list-all': {
+        'GET /rac/realm/list-all': {
             result: 1,
             msg: '查询列表成功',
             extra: {
-                list: listAllRacDomain(),
+                list: listAllRacRealm(),
             },
         },
     },

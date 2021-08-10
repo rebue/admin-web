@@ -41,14 +41,14 @@ export default class RacRoleApi extends BaseCrudApi {
 
     /** 上移 */
     moveUp(record: RacRoleMo): Promise<Ro> {
-        const { id, domainId } = record;
-        return request.post({ url: this.baseUrn + '/move-up', data: { id, domainId } });
+        const { id, realmId } = record;
+        return request.post({ url: this.baseUrn + '/move-up', data: { id, realmId } });
     }
 
     /** 下移 */
     moveDown(record: RacRoleMo): Promise<Ro> {
-        const { id, domainId } = record;
-        return request.post({ url: this.baseUrn + '/move-down', data: { id, domainId } });
+        const { id, realmId } = record;
+        return request.post({ url: this.baseUrn + '/move-down', data: { id, realmId } });
     }
     /**
      * 获取分页列表

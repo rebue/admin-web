@@ -15,8 +15,8 @@
             <a-form-model-item v-show="false" prop="id">
                 <a-input v-model.trim="model.id" type="hidden" />
             </a-form-model-item>
-            <a-form-model-item v-show="false" prop="domainId">
-                <a-input v-model.trim="model.domainId" type="hidden" />
+            <a-form-model-item v-show="false" prop="realmId">
+                <a-input v-model.trim="model.realmId" type="hidden" />
             </a-form-model-item>
             <a-form-model-item label="名称" prop="name">
                 <a-input v-model.trim="model.name" :placeholder="'请输入名称'" />
@@ -72,7 +72,7 @@ export default {
             model: {},
             formItems: [
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
-                { dataIndex: 'domainId', title: '领域ID', type: 'hidden' },
+                { dataIndex: 'realmId', title: '领域ID', type: 'hidden' },
                 { dataIndex: 'name', title: '名称' },
                 { dataIndex: 'fullName', title: '组织全称' },
                 { dataIndex: 'orgType', title: '类型', type: 'radioGroup', radios: orgTypes },

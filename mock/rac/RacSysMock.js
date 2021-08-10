@@ -4,14 +4,14 @@ const list = [
     {
         id: 'platform-admin-web',
         name: '平台后台管理',
-        domainId: 'platform',
+        realmId: 'platform',
         menuUrn: 'http://127.0.0.1:13080/menus/platform',
         remark: '对平台的后台管理提供最基本的功能',
     },
     {
         id: 'ops-admin-web',
         name: '运营后台管理',
-        domainId: 'ops',
+        realmId: 'ops',
         menuUrn: 'http://127.0.0.1:13080/menus/ops',
         remark: '对平台的后台管理提供最基本的功能',
     },
@@ -106,7 +106,7 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    list: list.filter(item => item.domainId === params.domainId),
+                    list: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },

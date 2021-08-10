@@ -7,7 +7,7 @@ export class RacRoleMo {
     /** 名称 */
     name = '';
     /** 领域ID */
-    domainId = '';
+    realmId = '';
     /** 是否启用 */
     isEnabled = true;
     /** 顺序号 */

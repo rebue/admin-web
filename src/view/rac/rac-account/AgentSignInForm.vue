@@ -33,7 +33,7 @@ export default {
             type: Object,
             required: true,
         },
-        domainId: {
+        realmId: {
             type: String,
             required: true,
         },
@@ -70,7 +70,7 @@ export default {
                 this.loading = true;
                 this.$refs.form.resetFields();
                 racSysApi
-                    .list({ domainId: this.domainId })
+                    .list({ realmId: this.realmId })
                     .then(ro => {
                         this.syses = ro.extra.list;
                     })

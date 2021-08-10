@@ -3,7 +3,7 @@
  */
 import BaseCrudApi from '../comm/BaseCrudApi';
 
-export default class RacDomainApi extends BaseCrudApi {
+export default class RacRealmApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/domain';
+    baseUrn = '/rac/realm';
 }

@@ -9,7 +9,7 @@ export class RacSysMo {
     /**URL */
     url = '';
     /** 领域ID */
-    domainId = '';
+    realmId = '';
     /** 菜单URN */
     menu = '';
     /** 备注 */

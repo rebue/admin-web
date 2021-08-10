@@ -10,7 +10,7 @@ export class RacPermGroupMo {
     /** 名称 */
     name = '';
     /** 领域ID */
-    domainId = '';
+    realmId = '';
     /** 启用 */
     isEnabled = false;
     /** 顺序号 */

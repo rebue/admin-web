@@ -2,25 +2,25 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                         <crud-table
                             :showKeywords="true"
-                            :ref="`crudTable.${domain.id}`"
+                            :ref="`crudTable.${realm.id}`"
                             :commands="tableCommands"
                             :actions="tableActions"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId, orgId: curOrgId }"
+                            :query="{ realmId: curRealmId, orgId: curOrgId }"
                             :scrollX="600"
                             :showHierarchical="showOrg"
                         >
                             <template #left>
                                 <div v-show="showOrg" class="table-left">
                                     <org-tree
-                                        :ref="`orgTree.${domain.id}`"
+                                        :ref="`orgTree.${realm.id}`"
                                         :show.sync="showOrg"
-                                        :domainId="domain.id"
+                                        :realmId="realm.id"
                                         @click="handleOrgMenuClick"
                                         @select="handleOrgTreeSelect"
                                     />
@@ -50,7 +50,7 @@
         <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
         <agent-sign-in-form
             :record="curRecord"
-            :domainId="curDomainId"
+            :realmId="curRealmId"
             :visible.sync="agentSignInFormVisible"
             @close="handleEditFormClose"
         />
@@ -67,7 +67,7 @@ import ChangePswdForm from './ChangePswdForm.vue';
 import AgentSignInForm from './AgentSignInForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDomainApi, racAccountApi } from '@/api/Api';
+import { racRealmApi, racAccountApi } from '@/api/Api';
 import ManageOrgForm from './ManageOrgForm.vue';
 import ManageRoleForm from './ManageRoleForm.vue';
 
@@ -227,19 +227,19 @@ export default {
             disabledFormVisible: false,
             agentSignInFormVisible: false,
             showOrg: false,
-            curDomainId: '',
+            curRealmId: '',
             curOrgId: undefined,
-            domains: [],
+            realms: [],
             columns,
             curRecord: {},
         };
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
         orgTree() {
-            return this.$refs['orgTree.' + this.curDomainId][0];
+            return this.$refs['orgTree.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -254,11 +254,11 @@ export default {
          */
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    if (!this.curRealmId) this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
@@ -271,8 +271,8 @@ export default {
         /**
          * 处理改变领域的事件
          */
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
             this.$nextTick(() => {
                 this.orgTree.refreshData();
                 this.crudTable.refreshData();
@@ -314,7 +314,7 @@ export default {
             this.crudTable.expand(record.id);
             this.editForm.show(EditFormTypeDic.Add, {
                 orgId: this.curOrgId,
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
                 groupId: record.id,
             });
         },
@@ -364,7 +364,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.domain-tabs {
+.realm-tabs {
     overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
 }
 

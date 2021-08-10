@@ -9,7 +9,7 @@ export class RacAccountEnableMo {
     /**
      * 领域ID
      */
-    domainId = '';
+    realmId = '';
 
     /**
      * 是否启用

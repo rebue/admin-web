@@ -175,7 +175,7 @@ export default {
                 const data = {
                     pageNum: current ?? 1,
                     pageSize,
-                    domainId: this.record.domainId,
+                    realmId: this.record.realmId,
                     orgId: this.record.id,
                     addableKeywords: this.addableKeywords,
                     existKeywords: this.existKeywords,

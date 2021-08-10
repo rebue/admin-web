@@ -11,7 +11,7 @@ export class RacOrgMo {
     /** 领域ID */
     parentId = '';
     /** 领域ID */
-    domainId = '';
+    realmId = '';
     /** 组织类型 */
     orgType?: OrgTypeDic;
     /** 启用 */

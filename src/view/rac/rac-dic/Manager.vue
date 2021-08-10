@@ -27,9 +27,9 @@ import EditDicItemForm from './EditDicItemForm.vue';
 import EditForm from './EditForm.vue';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi, racDicItemApi, racSysApi, racDomainApi } from '@/api/Api';
+import { racDicApi, racDicItemApi, racSysApi, racRealmApi } from '@/api/Api';
 
-let domains = [];
+let realms = [];
 let syss = [];
 racSysApi.list().then(ro => {
     syss = Object.values(ro.extra.list).map(item => {
@@ -39,8 +39,8 @@ racSysApi.list().then(ro => {
         };
     });
 });
-racDomainApi.listAll().then(ro => {
-    domains = Object.values(ro.extra.list).map(item => {
+racRealmApi.listAll().then(ro => {
+    realms = Object.values(ro.extra.list).map(item => {
         return {
             value: item.id,
             text: item.name,
@@ -57,8 +57,8 @@ export default {
     },
     data() {
         this.api = racDicApi;
-        // racDomainApi.listAll().then(ro => {
-        //     this.domains = Object.values(ro.extra.list).map(item => {
+        // racRealmApi.listAll().then(ro => {
+        //     this.realms = Object.values(ro.extra.list).map(item => {
         //         return {
         //             value: item.id,
         //             text: item.name,
@@ -83,7 +83,7 @@ export default {
         ];
         return {
             loading: false,
-            domains: domains,
+            realms: realms,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
@@ -123,12 +123,12 @@ export default {
                     },
                 },
                 {
-                    dataIndex: 'domainId',
-                    key: 'domainIds',
+                    dataIndex: 'realmId',
+                    key: 'realmIds',
                     title: '领域',
                     with: 100,
                     ellipsis: true,
-                    filters: this.domains,
+                    filters: this.realms,
                 },
                 {
                     dataIndex: 'sysId',
@@ -193,8 +193,8 @@ export default {
         this.crudTable = this.$refs.crudTable;
         this.dicItemeditForm = this.$refs.dicItemeditForm;
         this.dicEditForm = this.$refs.dicEditForm;
-        // racDomainApi.listAll().then((ro) => {
-        //     this.domains = Object.values(ro.extra.list).map((item) => {
+        // racRealmApi.listAll().then((ro) => {
+        //     this.realms = Object.values(ro.extra.list).map((item) => {
         //         return {
         //             value: item.id,
         //             text: item.name,

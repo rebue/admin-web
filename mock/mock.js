@@ -2,7 +2,7 @@ const mock = {
     _proxy: require('./proxy'),
     ...require('./rac/RacAccountMock').routes,
     ...require('./rac/RacSignInMock').routes,
-    ...require('./rac/RacDomainMock').routes,
+    ...require('./rac/RacRealmMock').routes,
     ...require('./rac/RacSysMock').routes,
     ...require('./rac/RacRoleMock').routes,
     ...require('./rac/RacPermGroupMock').routes,

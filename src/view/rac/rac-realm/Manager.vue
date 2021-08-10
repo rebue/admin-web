@@ -23,7 +23,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi } from '@/api/Api';
+import { racRealmApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -33,7 +33,7 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racDomainApi;
+        this.api = racRealmApi;
         const columns = [
             {
                 dataIndex: 'no',

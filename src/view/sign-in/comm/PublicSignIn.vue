@@ -104,9 +104,9 @@ export default {
             }
         },
         get_wx_qrcode() {
-            // let call_back_domain_name = window.location.href,
-            //     domain_name_length = call_back_domain_name.indexOf('#') - 1,
-            //     DDNS = call_back_domain_name.substring(0, domain_name_length),
+            // let call_back_realm_name = window.location.href,
+            //     realm_name_length = call_back_realm_name.indexOf('#') - 1,
+            //     DDNS = call_back_realm_name.substring(0, realm_name_length),
             //     DDNS_resolution = encodeURIComponent(DDNS);
             /* const obj = new WxLogin({
                 self_redirect: false,

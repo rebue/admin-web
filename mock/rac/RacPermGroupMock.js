@@ -5,7 +5,7 @@ const list = [
     {
         id: '0',
         name: '基础配置-领域',
-        domainId: 'platform',
+        realmId: 'platform',
         isEnabled: true,
         seqNo: 0,
         remark: '领域的基础信息',
@@ -13,7 +13,7 @@ const list = [
     {
         id: '1',
         name: '基础配置-系统',
-        domainId: 'platform',
+        realmId: 'platform',
         isEnabled: true,
         seqNo: 1,
         remark: '系统的基础信息',
@@ -21,7 +21,7 @@ const list = [
     {
         id: '2',
         name: '基础配置-权限',
-        domainId: 'platform',
+        realmId: 'platform',
         isEnabled: true,
         seqNo: 2,
         remark: '权限的基础信息',
@@ -177,7 +177,7 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    list: list.filter(item => item.domainId === params.domainId),
+                    list: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },

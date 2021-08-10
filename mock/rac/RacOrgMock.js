@@ -5,7 +5,7 @@ const list = [
     {
         id: '1',
         name: 'Rebue平台根组织',
-        domainId: 'platform',
+        realmId: 'platform',
         orgType: 20,
         remark: '模拟测试组织管理的根数据',
     },
@@ -99,7 +99,7 @@ module.exports = {
 
             const { pageNum, pageSize } = params;
 
-            let l = list.filter(item => item.domainId === params.domainId);
+            let l = list.filter(item => item.realmId === params.realmId);
             let total = l.length;
 
             const begin = (pageNum - 1) * pageSize;

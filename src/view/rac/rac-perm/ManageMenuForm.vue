@@ -78,7 +78,7 @@ export default {
         return {
             loading: false,
             keywords: '',
-            curDomainId: '',
+            curRealmId: '',
             dataSource: [],
             expandedKeys: [],
             autoExpandParent: true,
@@ -99,7 +99,7 @@ export default {
     },
     methods: {
         handleShow() {
-            this.curDomainId = this.perm.domainId;
+            this.curRealmId = this.perm.realmId;
             this.expandedKeys = [];
             this.checkedKeys = [];
             this.$nextTick(() => {
@@ -114,7 +114,7 @@ export default {
             this.dataSource = [];
             this.checkedKeys = [];
             this.curSysId = '';
-            const data = { domainId: this.curDomainId };
+            const data = { realmId: this.curRealmId };
             this.api
                 .list(data)
                 .then(ro => {

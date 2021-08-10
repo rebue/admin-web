@@ -6,14 +6,14 @@ const { parse } = require('url');
 const list = [
     {
         id: '10',
-        domainId: 'platform',
+        realmId: 'platform',
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
-            '/base/rac-domain',
+            '/base/rac-realm',
             '/base/rac-sys',
             '/base/rac-perm',
             '/base/rac-role',
@@ -25,7 +25,7 @@ const list = [
     },
     {
         id: '20',
-        domainId: 'ops',
+        realmId: 'ops',
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
@@ -180,7 +180,7 @@ module.exports = {
 
             const { pageNum, pageSize } = params;
 
-            let l = list.filter(item => item.domainId === params.domainId);
+            let l = list.filter(item => item.realmId === params.realmId);
             let total = l.length;
 
             const begin = (pageNum - 1) * pageSize;

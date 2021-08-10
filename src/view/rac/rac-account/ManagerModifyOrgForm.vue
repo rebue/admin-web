@@ -66,7 +66,7 @@ export default {
             type: String,
             default: '',
         },
-        domainId: {
+        realmId: {
             type: String,
             required: true,
         },
@@ -110,9 +110,9 @@ export default {
          * 刷新数据
          */
         refreshData() {
-            const { pageNum, pageSize, domainId, keywords } = this;
+            const { pageNum, pageSize, realmId, keywords } = this;
             this.loading = true;
-            const qo = { pageNum, pageSize, domainId, deep: false };
+            const qo = { pageNum, pageSize, realmId, deep: false };
             if (keywords && keywords.trim() !== '') qo.keywords = keywords.trim();
             racOrgApi
                 .page(qo)

@@ -9,7 +9,7 @@ export class RacPermMo {
     /** 名称 */
     name = '';
     /** 领域ID */
-    domainId = '';
+    realmId = '';
     /** 分组ID */
     groupId = '';
     /** 启用 */

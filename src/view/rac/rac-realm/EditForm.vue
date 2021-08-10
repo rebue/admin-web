@@ -15,7 +15,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDomainApi } from '@/api/Api';
+import { racRealmApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm';
 
 export default {
@@ -23,7 +23,7 @@ export default {
         BaseEditForm,
     },
     data() {
-        this.api = racDomainApi;
+        this.api = racRealmApi;
         return {
             editFormType: EditFormTypeDic.None,
             model: {},

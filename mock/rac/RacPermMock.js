@@ -6,7 +6,7 @@ const list = [
     {
         id: '00',
         name: '查看',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '0',
         isEnabled: true,
         seqNo: 0,
@@ -15,7 +15,7 @@ const list = [
     {
         id: '01',
         name: '管理',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '0',
         isEnabled: true,
         seqNo: 1,
@@ -24,7 +24,7 @@ const list = [
     {
         id: '10',
         name: '查看',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '1',
         isEnabled: true,
         seqNo: 0,
@@ -33,7 +33,7 @@ const list = [
     {
         id: '11',
         name: '管理',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '1',
         isEnabled: true,
         seqNo: 1,
@@ -42,7 +42,7 @@ const list = [
     {
         id: '20',
         name: '查看',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '2',
         isEnabled: true,
         seqNo: 0,
@@ -51,7 +51,7 @@ const list = [
     {
         id: '21',
         name: '管理',
-        domainId: 'platform',
+        realmId: 'platform',
         groupId: '2',
         isEnabled: true,
         seqNo: 1,
@@ -208,7 +208,7 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    list: list.filter(item => item.domainId === params.domainId),
+                    list: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },
@@ -224,8 +224,8 @@ module.exports = {
                 result: 1,
                 msg: '查询列表成功',
                 extra: {
-                    groupList: listAllRacPermGroup().filter(item => item.domainId === params.domainId),
-                    permList: list.filter(item => item.domainId === params.domainId),
+                    groupList: listAllRacPermGroup().filter(item => item.realmId === params.realmId),
+                    permList: list.filter(item => item.realmId === params.realmId),
                 },
             });
         },

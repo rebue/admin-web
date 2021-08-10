@@ -41,10 +41,10 @@ export default class RacAccountApi extends BaseCrudApi {
      * 启用账户
      */
     enable(record: RacAccountEnableMo): Promise<Ro> {
-        const { id, domainId, isEnabled, lockReason, unlockReason, lockAccountId } = record;
+        const { id, realmId, isEnabled, lockReason, unlockReason, lockAccountId } = record;
         return request.put({
             url: this.baseUrn + '/enable',
-            data: { id, domainId, isEnabled, lockReason, unlockReason, lockAccountId },
+            data: { id, realmId, isEnabled, lockReason, unlockReason, lockAccountId },
         });
     }
 
@@ -52,10 +52,10 @@ export default class RacAccountApi extends BaseCrudApi {
      * 禁用账户
      */
     disable(record: RacAccountEnableMo): Promise<Ro> {
-        const { id, domainId, isEnabled, lockReason, unlockReason, lockAccountId } = record;
+        const { id, realmId, isEnabled, lockReason, unlockReason, lockAccountId } = record;
         return request.put({
             url: this.baseUrn + '/disable',
-            data: { id, domainId, isEnabled, lockReason, unlockReason, lockAccountId },
+            data: { id, realmId, isEnabled, lockReason, unlockReason, lockAccountId },
         });
     }
 

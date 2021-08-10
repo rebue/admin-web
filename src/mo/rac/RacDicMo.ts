@@ -7,7 +7,7 @@ export class RacDicMo {
     /*** 字典名称*/
     name = '';
     /*** 领域ID*/
-    domainId = '';
+    realmId = '';
     /*** 系统ID*/
     sysId = '';
     /*** 字典备注*/

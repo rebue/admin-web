@@ -2,15 +2,15 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                <a-tabs :activeKey="curRealmId" @change="handleRealmChanged">
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                         <crud-table
-                            :ref="`crudTable.${domain.id}`"
+                            :ref="`crudTable.${realm.id}`"
                             :commands="tableCommands"
                             :actions="tableActions"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId }"
+                            :query="{ realmId: curRealmId }"
                             :scrollX="600"
                             :defaultPagination="false"
                         >
@@ -29,7 +29,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi } from '@/api/Api';
+import { racRealmApi } from '@/api/Api';
 import { racSysApi } from '@/api/Api';
 import ManageMenusForm from './ManageMenusForm.vue';
 
@@ -106,16 +106,16 @@ export default {
 
         return {
             loading: false,
-            curDomainId: '',
+            curRealmId: '',
             manageMenusFormVisible: false,
             curSys: {},
-            domains: [],
+            realms: [],
             columns,
         };
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -125,11 +125,11 @@ export default {
     methods: {
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
@@ -139,15 +139,15 @@ export default {
         refreshTableData() {
             this.crudTable.refreshData();
         },
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /**
          * 处理添加系统的事件
          */
         handleAdd() {
             this.editForm.show(EditFormTypeDic.Add, {
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
             });
         },
         /**

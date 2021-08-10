@@ -63,7 +63,7 @@
             :account.sync="account"
             :width="width"
             :existOrgIds="existOrgIds"
-            :domainId="account.domainId"
+            :realmId="account.realmId"
             @close="refreshData()"
         />
         <manager-modify-org-form
@@ -72,7 +72,7 @@
             :width="width"
             :existOrgIds="existOrgIds"
             :modifyOrgId="modifyOrgId"
-            :domainId="account.domainId"
+            :realmId="account.realmId"
             @close="refreshData()"
         />
     </a-drawer>
@@ -152,8 +152,8 @@ export default {
                 this.loading = true;
                 const { id, orgId } = { ...this.account };
                 const accountId = id;
-                const { domainId } = { ...this.account };
-                const data = { domainId, accountId, orgId, deep: false };
+                const { realmId } = { ...this.account };
+                const data = { realmId, accountId, orgId, deep: false };
                 // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 this.api
                     .listByAccountId(data)
@@ -218,8 +218,8 @@ export default {
                 const { id } = { ...this.account };
                 const accountId = id;
                 const orgId = orgMo.id; //选择列组织ID
-                const { domainId } = { ...this.account };
-                const data = { domainId, accountId, orgId };
+                const { realmId } = { ...this.account };
+                const data = { realmId, accountId, orgId };
                 this.api
                     .modifyDefaultOrg(data)
                     .then(ro => {

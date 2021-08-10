@@ -16,7 +16,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi, racSysApi, racDomainApi } from '@/api/Api';
+import { racDicApi, racSysApi, racRealmApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
@@ -29,7 +29,7 @@ export default {
             syss: [],
             editFormType: EditFormTypeDic.None,
             model: {},
-            domains: [],
+            realms: [],
             rules: {
                 dicKey: [
                     {
@@ -59,10 +59,10 @@ export default {
                 { dataIndex: 'dicKey', title: '字典Key' },
                 { dataIndex: 'name', title: '字典名称' },
                 {
-                    dataIndex: 'domainId',
+                    dataIndex: 'realmId',
                     title: '领域ID',
                     type: 'radioGroup',
-                    radios: this.domains,
+                    radios: this.realms,
                 },
                 {
                     dataIndex: 'sysId',
@@ -77,9 +77,9 @@ export default {
     watch: {
         model: {
             handler: function(newModel) {
-                if (newModel.domainId) {
-                    if (newModel.domainId !== this.oldModel.domainId) {
-                        this.changeModel(newModel.domainId);
+                if (newModel.realmId) {
+                    if (newModel.realmId !== this.oldModel.realmId) {
+                        this.changeModel(newModel.realmId);
                     }
                 }
                 this.oldModel = { ...newModel };
@@ -90,11 +90,11 @@ export default {
     },
     methods: {
         handleShow() {
-            this.domains = [];
+            this.realms = [];
             this.syss = [];
             this.$nextTick(() => {
-                racDomainApi.listAll().then(ro => {
-                    this.domains = Object.values(ro.extra.list).map(item => {
+                racRealmApi.listAll().then(ro => {
+                    this.realms = Object.values(ro.extra.list).map(item => {
                         return {
                             value: item.id,
                             title: item.name,
@@ -106,8 +106,8 @@ export default {
         show: function(...params) {
             this.$refs.baseEditForm.show(...params);
         },
-        changeModel(domainId) {
-            racSysApi.list({ domainId: domainId }).then(ro => {
+        changeModel(realmId) {
+            racSysApi.list({ realmId: realmId }).then(ro => {
                 this.syss = Object.values(ro.extra.list).map(item => {
                     return {
                         value: item.id,
@@ -115,7 +115,7 @@ export default {
                     };
                 });
             });
-            if (!domainId) {
+            if (!realmId) {
                 this.syss = [];
             }
         },

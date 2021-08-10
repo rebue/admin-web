@@ -2,15 +2,15 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                <a-tabs :activeKey="curRealmId" @change="handleRealmChanged">
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                         <crud-table
-                            :ref="`crudTable.${domain.id}`"
+                            :ref="`crudTable.${realm.id}`"
                             :commands="tableCommands"
                             :actions="tableActions"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId }"
+                            :query="{ realmId: curRealmId }"
                             :scrollX="600"
                             :defaultPagination="false"
                             @moveUp="handleMoveUp"
@@ -31,7 +31,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDomainApi, racRoleApi } from '@/api/Api';
+import { racRealmApi, racRoleApi } from '@/api/Api';
 import ManagePermForm from './ManagePermForm.vue';
 
 export default {
@@ -123,8 +123,8 @@ export default {
 
         return {
             loading: false,
-            curDomainId: '',
-            domains: [],
+            curRealmId: '',
+            realms: [],
             columns,
             managePermFormVisible: false,
             curRole: {},
@@ -132,7 +132,7 @@ export default {
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -145,11 +145,11 @@ export default {
          */
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    if (!this.curRealmId) this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
@@ -162,8 +162,8 @@ export default {
         /**
          * 处理改变领域的事件
          */
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /** 处理角色启用或禁用 */
         handleRoleCheck(record) {
@@ -202,7 +202,7 @@ export default {
          */
         handleAdd() {
             this.editForm.show(EditFormTypeDic.Add, {
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
             });
         },
         /**

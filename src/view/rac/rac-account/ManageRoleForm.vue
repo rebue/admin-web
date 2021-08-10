@@ -162,7 +162,7 @@ export default {
                 const data = {
                     pageNum: current ?? 1,
                     pageSize,
-                    domainId: this.account.domainId,
+                    realmId: this.account.realmId,
                     accountId: this.account.id,
                     addableKeywords: this.addableKeywords,
                     existKeywords: this.existKeywords,

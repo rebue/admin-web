@@ -1,7 +1,7 @@
 /**
  * 领域
  */
-export class RacDomainMo {
+export class RacRealmMo {
     /** ID */
     id = '';
     /** 名称 */

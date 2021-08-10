@@ -2,14 +2,14 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs :activeKey="curDomainId" @change="handleDomainChanged">
-                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                <a-tabs :activeKey="curRealmId" @change="handleRealmChanged">
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                         <crud-table
-                            :ref="`crudTable.${domain.id}`"
+                            :ref="`crudTable.${realm.id}`"
                             :commands="tableCommands"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId }"
+                            :query="{ realmId: curRealmId }"
                             :scrollX="600"
                             :scrollY="600"
                             :expandable="true"
@@ -43,7 +43,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import PermGroupEditForm from '../rac-perm-group/EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { PermTreeNodeTypeDic } from '@/dic/PermTreeNodeTypeDic';
-import { racDomainApi, racPermGroupApi, racPermApi } from '@/api/Api';
+import { racRealmApi, racPermGroupApi, racPermApi } from '@/api/Api';
 import UrnEditForm from './UrnEditForm.vue';
 import ManageMenuForm from './ManageMenuForm.vue';
 import ManagerCommand from './ManagerCommand.vue';
@@ -179,8 +179,8 @@ export default {
 
         return {
             loading: false,
-            curDomainId: '',
-            domains: [],
+            curRealmId: '',
+            realms: [],
             columns,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
@@ -190,7 +190,7 @@ export default {
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -204,11 +204,11 @@ export default {
          */
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    if (!this.curDomainId) this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    if (!this.curRealmId) this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
@@ -221,8 +221,8 @@ export default {
         /**
          * 处理改变领域的事件
          */
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /** 处理权限启用或禁用 */
         handlePermCheck(record) {
@@ -283,7 +283,7 @@ export default {
          * 处理添加分组的事件
          */
         handlePermGroupAdd() {
-            this.permGroupEditForm.show(EditFormTypeDic.Add, { domainId: this.curDomainId });
+            this.permGroupEditForm.show(EditFormTypeDic.Add, { realmId: this.curRealmId });
         },
         /**
          * 处理编辑分组的事件
@@ -305,7 +305,7 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, { domainId: record.domainId, groupId: record.id });
+            this.editForm.show(EditFormTypeDic.Add, { realmId: record.realmId, groupId: record.id });
         },
         /**
          * 处理编辑权限的事件

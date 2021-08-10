@@ -2,16 +2,16 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                    <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+                <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                         <crud-table
                             :showKeywords="true"
-                            :ref="`crudTable.${domain.id}`"
+                            :ref="`crudTable.${realm.id}`"
                             :commands="tableCommands"
                             :actions="tableActions"
                             :columns="columns"
                             :api="api"
-                            :query="{ domainId: curDomainId, deep: true }"
+                            :query="{ realmId: curRealmId, deep: true }"
                             :scrollX="600"
                             :expandable="true"
                         >
@@ -35,7 +35,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi } from '@/api/Api';
+import { racRealmApi } from '@/api/Api';
 import { racOrgApi } from '@/api/Api';
 import { OrgTypeDic } from '@/dic/OrgTypeDic';
 import AccountManageForm from './AccountManageForm.vue';
@@ -117,8 +117,8 @@ export default {
 
         return {
             loading: false,
-            curDomainId: '',
-            domains: [],
+            curRealmId: '',
+            realms: [],
             columns,
             addToOrgVisible: false,
             curRecord: {},
@@ -127,7 +127,7 @@ export default {
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -137,11 +137,11 @@ export default {
     methods: {
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
         },
@@ -151,15 +151,15 @@ export default {
         refreshTableData() {
             this.crudTable.refreshData();
         },
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /**
          * 处理添加组织的事件
          */
         handleAdd() {
             this.editForm.show(EditFormTypeDic.Add, {
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
             });
         },
         /**将用户添加到组织中 */
@@ -189,7 +189,7 @@ export default {
         handleAddChild(record) {
             this.loading = true;
             this.editForm.show(EditFormTypeDic.Add, {
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
                 parentId: record.id,
                 parentFullName: record.fullName,
             });
@@ -201,7 +201,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.domain-tabs {
+.realm-tabs {
     overflow: visible; // 否则表格的分页选择框展开时会被遮挡
 }
 </style>

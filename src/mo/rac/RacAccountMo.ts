@@ -145,12 +145,12 @@ export class RacAccountMo {
     /**
      * 领域ID
      */
-    domainId = '';
+    realmId = '';
 
     /**
      * 领域
      */
-    domain = '';
+    realm = '';
 
     /**
      * 锁定原因

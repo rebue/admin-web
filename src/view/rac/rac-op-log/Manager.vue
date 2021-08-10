@@ -1,11 +1,11 @@
 <template>
     <base-manager ref="baseManager">
         <template #managerCard>
-            <a-tabs class="domain-tabs" :activeKey="curDomainId" @change="handleDomainChanged">
-                <a-tab-pane v-for="domain in domains" :key="domain.id" :tab="domain.name">
+            <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
+                <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                     <crud-table
                         :showKeywords="true"
-                        :ref="`crudTable.${domain.id}`"
+                        :ref="`crudTable.${realm.id}`"
                         :columns="columns"
                         :api="api"
                         :query="query"
@@ -36,7 +36,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racDomainApi, racOpLogApi } from '@/api/Api';
+import { racRealmApi, racOpLogApi } from '@/api/Api';
 import { OpTypeDic } from '@/dic/OpTypeDic';
 import moment from 'moment';
 
@@ -112,7 +112,7 @@ export default {
                         {text}
                         <template slot="content">
                             <p>系统名称：{record.sysName}</p>
-                            <p>领域ID：{record.domainId}</p>
+                            <p>领域ID：{record.realmId}</p>
                             <p>菜单：{record.menu}</p>
                             <p>系统备注：{record.remark}</p>
                         </template>
@@ -153,14 +153,14 @@ export default {
         ];
         return {
             loading: false,
-            curDomainId: '',
+            curRealmId: '',
             query: {},
-            domains: [],
+            realms: [],
         };
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curDomainId][0];
+            return this.$refs['crudTable.' + this.curRealmId][0];
         },
     },
     mounted() {
@@ -180,14 +180,14 @@ export default {
          */
         refreshData() {
             this.loading = true;
-            racDomainApi
+            racRealmApi
                 .listAll()
                 .then(ro => {
-                    this.domains = ro.extra.list;
-                    if (!this.curDomainId) {
-                        this.curDomainId = this.domains[0].id;
+                    this.realms = ro.extra.list;
+                    if (!this.curRealmId) {
+                        this.curRealmId = this.realms[0].id;
                         this.query = {
-                            domainId: this.curDomainId,
+                            realmId: this.curRealmId,
                         };
                     }
                 })
@@ -202,11 +202,11 @@ export default {
         /**
          * 处理改变领域的事件
          */
-        handleDomainChanged(domainId) {
-            this.curDomainId = domainId;
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
             this.query = {
                 ...this.query,
-                domainId: this.curDomainId,
+                realmId: this.curRealmId,
             };
         },
         /**
@@ -245,7 +245,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.domain-tabs {
+.realm-tabs {
     overflow: visible; // 否则表格的分页选择框展开时会被遮挡
 }
 </style>
