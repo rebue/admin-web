@@ -177,7 +177,8 @@ export default {
                             const data = {
                                 key: addableList[i].id,
                                 title: `${addableList[i].name}`,
-                                description: `${addableList[i].remark}`,
+                                description:
+                                    `${addableList[i].remark}` === 'undefined' ? '' : `${addableList[i].remark}`,
                             };
                             for (const exist of existList) {
                                 targetKeys.push(exist.roleId);
