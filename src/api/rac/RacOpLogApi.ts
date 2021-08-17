@@ -6,7 +6,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacOpLogApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/op-log';
+    baseUrn = '/rac-svr/rac/op-log';
     /**
      * 获取分页列表
      */

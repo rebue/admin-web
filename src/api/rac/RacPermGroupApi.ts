@@ -7,7 +7,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacPermApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/perm-group';
+    baseUrn = '/rac-svr/rac/perm-group';
 
     /** 启用权限分组 */
     enable(id: string, isEnabled: boolean): Promise<Ro> {

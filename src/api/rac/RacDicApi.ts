@@ -10,7 +10,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacDicApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/dic';
+    baseUrn = '/rac-svr/rac/dic';
 
     /**
      * 获取分页所有列表

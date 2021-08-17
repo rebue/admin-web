@@ -10,7 +10,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacPermApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/perm';
+    baseUrn = '/rac-svr/rac/perm';
     /** 启用权限 */
     enable(id: string, isEnabled: boolean): Promise<Ro> {
         return request.post({ url: this.baseUrn + '/enable', data: { id, isEnabled } });

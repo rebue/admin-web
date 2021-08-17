@@ -10,6 +10,6 @@ export default class RacAgentSignInApi {
      * 通过账户名称登录
      */
     signIn(to: AgentSignInTo): Promise<Ro> {
-        return request.post({ url: '/rac/agent-sign-in/sign-in', data: to });
+        return request.post({ url: '/rac-svr/rac/agent-sign-in/sign-in', data: to });
     }
 }
