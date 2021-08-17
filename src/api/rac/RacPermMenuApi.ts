@@ -7,7 +7,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacPermMenuApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/perm-menu';
+    baseUrn = '/rac-svr/rac/perm-menu';
     /**
      * 添加/修改权限菜单
      */

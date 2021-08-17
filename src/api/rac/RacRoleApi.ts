@@ -8,7 +8,7 @@ import { RacRoleMo } from '@/mo/rac/RacRoleMo';
 
 export default class RacRoleApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/role';
+    baseUrn = '/rac-svr/rac/role';
 
     /**
      * 添加角色权限关系

@@ -9,7 +9,7 @@ import { RacAccountEnableMo } from '@/mo/rac/RacAccountEnableMo';
 
 export default class RacAccountApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/account';
+    baseUrn = '/rac-svr/rac/account';
 
     /**
      * 获取分页列表
@@ -63,6 +63,6 @@ export default class RacAccountApi extends BaseCrudApi {
      * 获取当前账户信息
      */
     getCurAccountInfo(): Promise<Ro> {
-        return request.get({ url: '/rac/account/get-cur-account-info' });
+        return request.get({ url: '/rac-svr/rac/account/get-cur-account-info' });
     }
 }

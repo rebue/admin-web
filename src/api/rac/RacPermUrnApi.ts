@@ -8,7 +8,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacPermUrnApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/perm-urn';
+    baseUrn = '/rac-svr/rac/perm-urn';
 
     /**
      * 添加修改URN

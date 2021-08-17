@@ -9,6 +9,6 @@ export default class RacAgentSignOutApi {
      * 通过账户名称登录
      */
     signOut(): Promise<Ro> {
-        return request.post({ url: '/rac/agent-sign-out/sign-out' });
+        return request.post({ url: '/rac-svr/rac/agent-sign-out/sign-out' });
     }
 }

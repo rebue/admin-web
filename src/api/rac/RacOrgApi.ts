@@ -9,7 +9,7 @@ import request from '@/util/request';
 
 export default class RacOrgApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/org';
+    baseUrn = '/rac-svr/rac/org';
     /**添加组织账户关系*/
     addOrgAccount(mo): Promise<Ro> {
         return request.post({ url: this.baseUrn + '/addOrgAccount', data: mo });

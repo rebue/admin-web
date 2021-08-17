@@ -5,5 +5,5 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacDicItemApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac/dic-item';
+    baseUrn = '/rac-svr/rac/dic-item';
 }
