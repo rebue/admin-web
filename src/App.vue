@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :getPopupContainer="getPopupContainer" :locale="zhCN">
+    <a-config-provider :getPopupContainer="getPopupContainer">
         <div id="app">
             <router-view />
         </div>

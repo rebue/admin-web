@@ -194,6 +194,7 @@ export default {
             realms: [],
             data: this.api,
             columns,
+            moment,
             chinese,
         };
     },
@@ -206,7 +207,6 @@ export default {
         this.refreshData();
     },
     methods: {
-        moment,
         /**
          * 限制选择时间范围
          * 只能选择今天当天之后的时间

@@ -161,6 +161,7 @@ export default {
             query: {},
             realms: [],
             chinese,
+            moment,
         };
     },
     computed: {
@@ -172,7 +173,6 @@ export default {
         this.refreshData();
     },
     methods: {
-        moment,
         /**
          * 限制选择时间范围
          * 只能选择今天当天之后的时间
