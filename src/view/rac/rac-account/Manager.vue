@@ -316,6 +316,7 @@ export default {
                 orgId: this.curOrgId,
                 realmId: this.curRealmId,
                 groupId: record.id,
+                isTester: false,
             });
         },
         /**
