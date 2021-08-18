@@ -19,7 +19,7 @@
             v-on="$listeners"
             @cancel="handleCancel"
         >
-            <a-table :columns="columns" :data-source="data" :pagination="false" size="middle" bordered>
+            <a-table :columns="columns" :data-source="data" :pagination="false" size="middle" bordered >
                 <template v-for="col in cols" :slot="col" slot-scope="text, record, index">
                     <div :key="col" :class="{ divHeight: record.editable }">
                         <label v-if="record.editable && rules[col].required" style="color: red; font-size: 20px"
@@ -59,7 +59,7 @@
                         <span v-if="record.editable">
                             <a @click="() => save(record.key)">保存</a>
                             <a-divider type="vertical" />
-                            <a-popconfirm title="确定要取消吗?" @confirm="() => cancel(record.key)">
+                            <a-popconfirm title="确定要取消吗?" @confirm="() => cancel(record.key)" ok-text="确定" cancel-text="取消">
                                 <a>取消</a>
                             </a-popconfirm>
                         </span>
@@ -68,7 +68,7 @@
                         </span>
                         <a-divider type="vertical" v-if="!record.editable" />
                         <span v-if="!record.editable">
-                            <a-popconfirm title="确定要删除吗?" @confirm="() => del(record)">
+                            <a-popconfirm title="确定要删除吗?" @confirm="() => del(record)" ok-text="确定" cancel-text="取消">
                                 <a :disabled="editingkey !== ''">删除</a>
                             </a-popconfirm>
                         </span>
@@ -109,7 +109,7 @@ export default {
             required: true,
         },
         /**
-         * 必须包含下面这个一列
+         * columns中必须包含下面这个一列
          * {
                 title: '操作',
                 dataIndex: 'operation',
@@ -192,7 +192,8 @@ export default {
                     // }
                 });
             } else {
-                this.$emit('close');
+                //多余了
+               // this.$emit('close');
             }
         },
     },
