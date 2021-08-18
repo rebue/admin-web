@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :getPopupContainer="getPopupContainer">
+    <a-config-provider :getPopupContainer="getPopupContainer" :locale="zhCN">
         <div id="app">
             <router-view />
         </div>
@@ -15,6 +15,7 @@ import FullScreen from 'vue-fullscreen';
 import Fragment from 'vue-fragment';
 import VueDraggableResizable from 'vue-draggable-resizable';
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
+import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN';
 // SVG组件
 import SvgIcon from '@/component/rebue/SvgIcon.vue';
 // 引入SVG文件资源
@@ -35,6 +36,12 @@ Vue.use(SvgIcon);
 
 export default {
     name: 'App',
+    data() {
+        return {
+            zhCN,
+        };
+    },
+
     methods: {
         getPopupContainer(el, dialogContext) {
             if (dialogContext) {

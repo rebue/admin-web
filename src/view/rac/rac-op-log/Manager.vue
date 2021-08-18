@@ -15,6 +15,7 @@
                         <template #keywordsLeft>
                             <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
                             <a-range-picker
+                                :locale="chinese"
                                 format="YYYY-MM-DD HH:mm:ss"
                                 :show-time="{
                                     hideDisabledOptions: true,
@@ -38,7 +39,10 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi, racOpLogApi } from '@/api/Api';
 import { OpTypeDic } from '@/dic/OpTypeDic';
+import chinese from 'ant-design-vue/es/date-picker/locale/zh_CN';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh_cn');
 
 const opTypeDic = Object.values(OpTypeDic).map(item => {
     return {
@@ -156,6 +160,7 @@ export default {
             curRealmId: '',
             query: {},
             realms: [],
+            chinese,
         };
     },
     computed: {

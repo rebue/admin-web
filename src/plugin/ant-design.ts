@@ -4,6 +4,7 @@ import {
     Button,
     Card,
     ConfigProvider,
+    LocaleProvider,
     Divider,
     FormModel,
     Icon,
@@ -41,6 +42,7 @@ Vue.component('icon-font', IconFont);
 
 // 国际化
 Vue.use(ConfigProvider);
+Vue.use(LocaleProvider);
 
 // 布局
 Vue.use(Row);
