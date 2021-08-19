@@ -116,8 +116,8 @@ export default {
                 title: '系统名称',
                 ellipsis: true,
                 width: 150,
-                customRender: (text, record) => (
-                    <a-popover overlayClassName="mystyle" title={text + '详情'}>
+                /*  customRender: (text, record) => (
+                    <a-popover overlayClassName="mystyle" arrow-point-at-center title={text + '详情'}>
                         {text}
                         <template slot="content">
                             <p>系统名称：{record.sysName}</p>
@@ -126,7 +126,7 @@ export default {
                             <p>系统备注：{record.remark}</p>
                         </template>
                     </a-popover>
-                ),
+                ), */
             },
             {
                 dataIndex: 'opType',
