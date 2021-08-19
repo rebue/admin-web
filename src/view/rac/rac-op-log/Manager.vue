@@ -33,7 +33,6 @@
         </template>
     </base-manager>
 </template>
-
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
@@ -73,10 +72,13 @@ export default {
                             <p>账户ID：{record.accountId}</p>
                             <p>账户名：{record.signInName}</p>
                             <p>手机号：{record.signInMobile}</p>
-                            <p>邮箱：{record.signInEmail}</p>
-                            <p>账户昵称：{record.signInNickname}</p>
-                            <p>微信昵称：{record.wxNickname}</p>
-                            <p>QQ昵称：{record.qqNickname}</p>
+                            邮箱：{record.signInEmail}
+                            <br />
+                            账户昵称：{record.signInNickname}
+                            <br />
+                            微信昵称：{record.wxNickname}
+                            <br />
+                            QQ昵称：{record.qqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -97,10 +99,13 @@ export default {
                             <p>代理人账户ID：{record.agentId}</p>
                             <p>代理人账户名：{record.agentSignInName}</p>
                             <p>代理人手机号：{record.agentSignInMobile}</p>
-                            <p>代理人邮箱：{record.agentSignInEmail}</p>
-                            <p>代理人账户昵称：{record.agentSignInNickname}</p>
-                            <p>代理人微信昵称：{record.agentwxNickname}</p>
-                            <p>代理人QQ昵称：{record.agentqqNickname}</p>
+                            代理人邮箱：{record.agentSignInEmail}
+                            <br />
+                            代理人账户昵称：{record.agentSignInNickname}
+                            <br />
+                            代理人微信昵称：{record.agentwxNickname}
+                            <br />
+                            代理人QQ昵称：{record.agentqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -112,7 +117,7 @@ export default {
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
-                    <a-popover title={text + '详情'}>
+                    <a-popover overlayClassName="mystyle" title={text + '详情'}>
                         {text}
                         <template slot="content">
                             <p>系统名称：{record.sysName}</p>
@@ -136,7 +141,7 @@ export default {
                 //     { text: OpTypeDic.modify, value: OpTypeDic.modify },
                 // ],
                 customRender: (text, record) => (
-                    <a-popover title={text + '详情'}>
+                    <a-popover overlayClassName="mystyle" title={text + '详情'}>
                         {text}
                         <template slot="content">
                             <p>操作标题：{record.opTitle}</p>
@@ -252,5 +257,11 @@ export default {
 <style lang="less" scoped>
 .realm-tabs {
     overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+}
+</style>
+<style type="text/css">
+.mystyle {
+    width: 50%;
+    right: 200px;
 }
 </style>

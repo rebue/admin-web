@@ -87,10 +87,12 @@ export default {
                         <template slot="content">
                             <p>账户名：{record.lockSignInName}</p>
                             <p>手机号：{record.lockSignInMobile}</p>
-                            <p>邮箱：{record.lockSignInEmail}</p>
                             <p>账户昵称：{record.lockSignInNickname}</p>
-                            <p>微信昵称：{record.lockwxNickname}</p>
-                            <p>QQ昵称：{record.lockqqNickname}</p>
+                            邮箱：{record.lockSignInEmail}
+                            <br />
+                            微信昵称：{record.lockwxNickname}
+                            <br />
+                            QQ昵称：{record.lockqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -112,10 +114,12 @@ export default {
                         <template slot="content">
                             <p>账户名：{record.lockAgentSignInName}</p>
                             <p>手机号：{record.lockAgentSignInMobile}</p>
-                            <p>邮箱：{record.lockAgentSignInEmail}</p>
                             <p>账户昵称：{record.lockAgentSignInNickname}</p>
-                            <p>微信昵称：{record.lockAgentwxNickname}</p>
-                            <p>QQ昵称：{record.lockAgentqqNickname}</p>
+                            邮箱：{record.lockAgentSignInEmail}
+                            <br />
+                            微信昵称：{record.lockAgentwxNickname}
+                            <br />
+                            QQ昵称：{record.lockAgentqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -143,10 +147,12 @@ export default {
                         <template slot="content">
                             <p>账户名：{record.unlockSignInName}</p>
                             <p>手机号：{record.unlockSignInMobile}</p>
-                            <p>邮箱：{record.unlockSignInEmail}</p>
                             <p>账户昵称：{record.unlockSignInNickname}</p>
-                            <p>微信昵称：{record.unlockwxNickname}</p>
-                            <p>QQ昵称：{record.unlockqqNickname}</p>
+                            邮箱：{record.unlockSignInEmail}
+                            <br />
+                            微信昵称：{record.unlockwxNickname}
+                            <br />
+                            QQ昵称：{record.unlockqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -169,10 +175,12 @@ export default {
                         <template slot="content">
                             <p>账户名：{record.unlockAgentSignInName}</p>
                             <p>手机号：{record.unlockAgentSignInMobile}</p>
-                            <p>邮箱：{record.uunlockAgentSignInEmail}</p>
                             <p>账户昵称：{record.unlockAgentSignInNickname}</p>
-                            <p>微信昵称：{record.unlockAgentwxNickname}</p>
-                            <p>QQ昵称：{record.unlockAgentqqNickname}</p>
+                            邮箱：{record.uunlockAgentSignInEmail}
+                            <br />
+                            微信昵称：{record.unlockAgentwxNickname}
+                            <br />
+                            QQ昵称：{record.unlockAgentqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -286,5 +294,11 @@ export default {
 <style lang="less" scoped>
 .realm-tabs {
     overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+}
+</style>
+<style type="text/css">
+.mystyle {
+    width: 50%;
+    right: 200px;
 }
 </style>
