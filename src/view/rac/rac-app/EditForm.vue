@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="系统"
+        title="应用"
         :editFormType.sync="editFormType"
         :model.sync="model"
         :formItems="formItems"
@@ -15,7 +15,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racSysApi } from '@/api/Api';
+import { racAppApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm';
 
 export default {
@@ -23,16 +23,16 @@ export default {
         BaseEditForm,
     },
     data() {
-        this.api = racSysApi;
+        this.api = racAppApi;
         return {
             editFormType: EditFormTypeDic.None,
             model: {},
             rules: {
                 id: [
-                    { required: true, message: '请输入系统编码', trigger: 'blur', transform: val => val && val.trim() },
+                    { required: true, message: '请输入应用编码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 name: [
-                    { required: true, message: '请输入系统名称', trigger: 'blur', transform: val => val && val.trim() },
+                    { required: true, message: '请输入应用名称', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
         };

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { racSysApi } from '@/api/Api';
+import { racAppApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { forEachTree } from '@/util/tree';
 
@@ -31,7 +31,7 @@ export default {
         BaseModal,
     },
     props: {
-        curSys: {
+        curApp: {
             type: Object,
             required: false,
         },
@@ -41,7 +41,7 @@ export default {
         },
     },
     data() {
-        this.api = racSysApi;
+        this.api = racAppApi;
 
         return {
             loading: false,
@@ -69,7 +69,7 @@ export default {
             this.loading = true;
             const menu = JSON.stringify(this.dataSource);
             this.$nextTick(() => {
-                const data = { id: this.curSys.id, menu };
+                const data = { id: this.curApp.id, menu };
                 this.api
                     .modify(data)
                     .then(() => {

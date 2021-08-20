@@ -28,7 +28,7 @@ const list = [
         groupId: '1',
         isEnabled: true,
         seqNo: 0,
-        remark: '查看系统的基础信息',
+        remark: '查看应用的基础信息',
     },
     {
         id: '11',
@@ -37,7 +37,7 @@ const list = [
         groupId: '1',
         isEnabled: true,
         seqNo: 1,
-        remark: '管理系统的基础信息',
+        remark: '管理应用的基础信息',
     },
     {
         id: '20',

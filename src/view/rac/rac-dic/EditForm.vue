@@ -16,7 +16,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi, racSysApi, racRealmApi } from '@/api/Api';
+import { racDicApi, racAppApi, racRealmApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     data() {
         this.api = racDicApi;
         return {
-            syss: [],
+            apps: [],
             editFormType: EditFormTypeDic.None,
             model: {},
             realms: [],
@@ -65,10 +65,10 @@ export default {
                     radios: this.realms,
                 },
                 {
-                    dataIndex: 'sysId',
-                    title: '系统ID',
+                    dataIndex: 'appId',
+                    title: '应用ID',
                     type: 'radioGroup',
-                    radios: this.syss,
+                    radios: this.apps,
                 },
                 { dataIndex: 'remark', title: '备注' },
             ];
@@ -91,7 +91,7 @@ export default {
     methods: {
         handleShow() {
             this.realms = [];
-            this.syss = [];
+            this.apps = [];
             this.$nextTick(() => {
                 racRealmApi.listAll().then(ro => {
                     this.realms = Object.values(ro.extra.list).map(item => {
@@ -107,8 +107,8 @@ export default {
             this.$refs.baseEditForm.show(...params);
         },
         changeModel(realmId) {
-            racSysApi.list({ realmId: realmId }).then(ro => {
-                this.syss = Object.values(ro.extra.list).map(item => {
+            racAppApi.list({ realmId: realmId }).then(ro => {
+                this.apps = Object.values(ro.extra.list).map(item => {
                     return {
                         value: item.id,
                         title: item.name,
@@ -116,7 +116,7 @@ export default {
                 });
             });
             if (!realmId) {
-                this.syss = [];
+                this.apps = [];
             }
         },
     },

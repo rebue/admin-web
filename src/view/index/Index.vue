@@ -75,7 +75,7 @@
                             </el-dropdown-item>
                             <el-dropdown-item command="ChangePswd"> <a-icon type="key" /> 修改密码 </el-dropdown-item>
                             <el-dropdown-item command="SignOut" divided>
-                                <a-icon type="logout" /> 退出系统
+                                <a-icon type="logout" /> 退出应用
                             </el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -101,14 +101,14 @@
 
 <script>
 import { observer } from 'mobx-vue';
-import { getSysId } from '@/util/cookie';
+import { getAppId } from '@/util/cookie';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { Ellipsis } from '@/component/ant-design-pro';
 import { i18nRender } from '@/locale';
 import defaultSettings from '@/config/defaultSettings';
 import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
-import { SysIdDic } from '@/dic/SysIdDic';
+import { AppIdDic } from '@/dic/AppIdDic';
 import { removeJwtToken } from '@/util/cookie';
 import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
@@ -122,9 +122,9 @@ export default observer({
         ImageUploader,
     },
     data() {
-        const sysId = getSysId();
-        if (sysId === SysIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
-        else if (sysId === SysIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
+        const appId = getAppId();
+        if (appId === AppIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
+        else if (appId === AppIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
         return {
             accountStore,
             settingStore,
@@ -182,11 +182,11 @@ export default observer({
                 /** 修改密码 */
                 case 'ChangePswd':
                     break;
-                /**退出系统 */
+                /**退出应用 */
                 case 'SignOut':
                     this.$confirm({
                         title: '提示',
-                        content: '你确定要退出系统吗?',
+                        content: '你确定要退出应用吗?',
                         maskClosable: true,
                         onOk: () => {
                             removeJwtToken();

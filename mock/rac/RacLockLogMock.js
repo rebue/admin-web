@@ -11,7 +11,7 @@ const mockList = Mock.mock({
         "accountName": "@name()",
         "lockOpName": "@name()",
         "unlockOpName": "@name()",
-        "realmName": "@pick(['默认系统'])",
+        "realmName": "@pick(['默认应用'])",
         //'opType': '@pick(["锁定", "启用"])',
         //'opTitle': '@title()',
         //'opDetail': '@cparagraph',

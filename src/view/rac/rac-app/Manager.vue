@@ -20,7 +20,7 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-menus-form :curSys.sync="curSys" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
+        <manage-menus-form :curApp.sync="curApp" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -30,7 +30,7 @@ import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
-import { racSysApi } from '@/api/Api';
+import { racAppApi } from '@/api/Api';
 import ManageMenusForm from './ManageMenusForm.vue';
 
 export default {
@@ -42,7 +42,7 @@ export default {
         ManageMenusForm,
     },
     data() {
-        this.api = racSysApi;
+        this.api = racAppApi;
         const columns = [
             {
                 dataIndex: 'no',
@@ -108,7 +108,7 @@ export default {
             loading: false,
             curRealmId: '',
             manageMenusFormVisible: false,
-            curSys: {},
+            curApp: {},
             realms: [],
             columns,
         };
@@ -143,7 +143,7 @@ export default {
             this.curRealmId = realmId;
         },
         /**
-         * 处理添加系统的事件
+         * 处理添加应用的事件
          */
         handleAdd() {
             this.editForm.show(EditFormTypeDic.Add, {
@@ -151,13 +151,13 @@ export default {
             });
         },
         /**
-         * 处理编辑系统的事件
+         * 处理编辑应用的事件
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
-         * 处理删除系统的事件
+         * 处理删除应用的事件
          */
         handleDel(record) {
             this.loading = true;
@@ -166,10 +166,10 @@ export default {
             });
         },
         /**
-         * 处理系统菜单的事件
+         * 处理应用菜单的事件
          */
         handleMenus(record) {
-            this.curSys = record;
+            this.curApp = record;
             this.manageMenusFormVisible = true;
         },
         handleEditFormClose() {

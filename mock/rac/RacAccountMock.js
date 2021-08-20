@@ -14,7 +14,7 @@ const list = [
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
             '/base/rac-realm',
-            '/base/rac-sys',
+            '/base/rac-app',
             '/base/rac-perm',
             '/base/rac-role',
             '/account/rac-org',
@@ -51,7 +51,7 @@ module.exports = {
                 const keyAndName = cookie.split('=');
                 const key = keyAndName[0].trim();
                 const name = keyAndName[1].trim();
-                if (key === 'sys_id') {
+                if (key === 'app_id') {
                     switch (name) {
                         case 'platform-admin-web':
                             accountId = '1';

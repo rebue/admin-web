@@ -1,8 +1,8 @@
 export class RacLockLogMo {
     /**
-     * 系统ID
+     * 应用ID
      */
-    sysId = '';
+    appId = '';
 
     /**
      * 锁定账户的账户ID

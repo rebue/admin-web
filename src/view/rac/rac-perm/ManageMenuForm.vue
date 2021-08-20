@@ -2,7 +2,7 @@
     <fragment>
         <base-modal
             ref="baseModal"
-            title="请选择系统并勾选菜单"
+            title="请选择应用并勾选菜单"
             :loading="loading"
             :visible="visible"
             v-bind="$attrs"
@@ -12,8 +12,8 @@
         >
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <a-tabs :activeKey="curSysId" @change="handleSysChanged">
-                        <a-tab-pane v-for="sys in syss" :key="sys.id" :tab="sys.name">
+                    <a-tabs :activeKey="curAppId" @change="handleAppChanged">
+                        <a-tab-pane v-for="app in apps" :key="app.id" :tab="app.name">
                             <a-tooltip title="全部展开">
                                 <a-button type="link" size="large" @click="expandAll">
                                     <icon-font type="rebue-expand-all" />
@@ -28,7 +28,7 @@
                             <p></p>
                             <div style="height: 500px">
                                 <a-tree
-                                    :ref="`treeData.${sys.id}`"
+                                    :ref="`treeData.${app.id}`"
                                     v-model="checkedKeys"
                                     checkable
                                     :expanded-keys="expandedKeys"
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { racSysApi, racPermMenuApi } from '@/api/Api';
+import { racAppApi, racPermMenuApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { forEachTree } from '@/util/tree';
 import BaseManager from '@/component/rebue/BaseManager.vue';
@@ -73,7 +73,7 @@ export default {
         },
     },
     data() {
-        this.api = racSysApi;
+        this.api = racAppApi;
 
         return {
             loading: false,
@@ -85,13 +85,13 @@ export default {
             checkedKeys: [],
             selectedKeys: [],
             ids: [],
-            syss: [],
-            curSysId: '',
+            apps: [],
+            curAppId: '',
         };
     },
     computed: {
         treeData() {
-            return this.$refs['treeData.' + this.curSysId][0];
+            return this.$refs['treeData.' + this.curAppId][0];
         },
     },
     mounted() {
@@ -107,19 +107,19 @@ export default {
             });
         },
         /**
-         * 刷新领域下的系统
+         * 刷新领域下的应用
          */
         refreshTableData() {
             this.loading = true;
             this.dataSource = [];
             this.checkedKeys = [];
-            this.curSysId = '';
+            this.curAppId = '';
             const data = { realmId: this.curRealmId };
             this.api
                 .list(data)
                 .then(ro => {
-                    this.syss = ro.extra.list;
-                    if (!this.curSysId) this.curSysId = this.syss[0].id;
+                    this.apps = ro.extra.list;
+                    if (!this.curAppId) this.curAppId = this.apps[0].id;
                     this.dataSource = JSON.parse(ro.extra.list[0].menu);
                 })
                 .finally(() => {
@@ -133,14 +133,14 @@ export default {
                 });
         },
         /**
-         * 刷新系统菜单
+         * 刷新应用菜单
          */
         refreshTreeData() {
             this.loading = true;
             this.dataSource = [];
             this.checkedKeys = [];
             this.api
-                .getById(this.curSysId)
+                .getById(this.curAppId)
                 .then(ro => {
                     this.dataSource = JSON.parse(ro.extra.one.menu);
                 })
@@ -156,10 +156,10 @@ export default {
                 });
         },
         /**
-         * 处理改变系统的事件
+         * 处理改变应用的事件
          */
-        handleSysChanged(sysId) {
-            this.curSysId = sysId;
+        handleAppChanged(appId) {
+            this.curAppId = appId;
             this.refreshTreeData();
         },
         /**
@@ -167,7 +167,7 @@ export default {
          */
         getPermMenu() {
             const checkedKeys = [];
-            const data = { sysId: this.curSysId, permId: this.perm.id };
+            const data = { appId: this.curAppId, permId: this.perm.id };
             racPermMenuApi
                 .listPermMenu(data)
                 .then(ro => {
@@ -186,7 +186,7 @@ export default {
         handleAdd() {
             this.$nextTick(() => {
                 this.loading = true;
-                const data = { sysId: this.curSysId, permId: this.perm.id, menuUrns: this.checkedKeys };
+                const data = { appId: this.curAppId, permId: this.perm.id, menuUrns: this.checkedKeys };
                 racPermMenuApi
                     .addPermMenuUrn(data)
                     .then(() => {

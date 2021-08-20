@@ -5,7 +5,7 @@ const list = [
     {
         id: 'default',
         name: '默认领域',
-        remark: '系统和账户的默认领域',
+        remark: '应用和账户的默认领域',
     },
     {
         id: 'platform',

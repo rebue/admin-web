@@ -1,5 +1,5 @@
 import RacRealmApi from './rac/RacRealmApi';
-import RacSysApi from './rac/RacSysApi';
+import RacAppApi from './rac/RacAppApi';
 import RacPermGroupApi from './rac/RacPermGroupApi';
 import RacPermApi from './rac/RacPermApi';
 import RacSignInApi from './rac/RacSignInApi';
@@ -17,7 +17,7 @@ import RacDicItemApi from './rac/RacDicItemApi';
 import RacPermCommandApi from './rac/RacPermCommandApi';
 
 export const racRealmApi = new RacRealmApi();
-export const racSysApi = new RacSysApi();
+export const racAppApi = new RacAppApi();
 export const racPermGroupApi = new RacPermGroupApi();
 export const racPermApi = new RacPermApi();
 export const racRoleApi = new RacRoleApi();

@@ -29,14 +29,14 @@
 <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
 import md5 from 'crypto-js/md5';
-import { setSysId } from '@/util/cookie';
+import { setAppId } from '@/util/cookie';
 import { racSignInApi } from '@/api/Api';
 export default {
     components: {
         //
     },
     props: {
-        sysId: {
+        appId: {
             type: String,
             default: () => '',
         },
@@ -46,8 +46,8 @@ export default {
         return {
             /** 登录后要中转的地址 */
             redirect: undefined,
-            /** 定义当前登录页面所对应的系统 */
-            //sysId: SysIdDic.OpsAdminWeb,
+            /** 定义当前登录页面所对应的应用 */
+            //appId: AppIdDic.OpsAdminWeb,
             loading: false,
             show: true,
             form: {
@@ -133,12 +133,12 @@ export default {
                 if (valid) {
                     this.api
                         .signInByAccountName({
-                            sysId: this.sysId,
+                            appId: this.appId,
                             accountName: this.form.accountName,
                             signInPswd: md5(this.form.signInPswd).toString(),
                         })
                         .then(() => {
-                            setSysId(this.sysId);
+                            setAppId(this.appId);
                             window.location.href = this.redirect ? '#' + this.redirect : '';
                         })
                         .finally(() => (this.loading = false));

@@ -6,7 +6,7 @@
                 v-show="!orgFold"
                 v-model.trim="keywords"
                 :loading="loading"
-                placeholder="关键字"
+                placeholder="根组织关键字"
                 @search="refreshData"
             />
         </div>

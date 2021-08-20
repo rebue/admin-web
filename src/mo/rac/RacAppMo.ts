@@ -1,7 +1,7 @@
 /**
  * 领域
  */
-export class RacSysMo {
+export class RacAppMo {
     /** ID */
     id = '';
     /** 名称 */

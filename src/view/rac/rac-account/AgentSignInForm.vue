@@ -9,9 +9,9 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="targetSysId" label="登录系统" prop="targetSysId">
-                <a-radio-group v-model="model.targetSysId" button-style="solid" @change="onChange">
-                    <a-radio-button v-for="(item, index) in syses" :value="item.id" :key="index">
+            <a-form-model-item key="targetAppId" label="登录应用" prop="targetAppId">
+                <a-radio-group v-model="model.targetAppId" button-style="solid" @change="onChange">
+                    <a-radio-button v-for="(item, index) in appes" :value="item.id" :key="index">
                         {{ item.name }}
                     </a-radio-button>
                 </a-radio-group>
@@ -22,7 +22,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racAgentSignInApi, racSysApi } from '@/api/Api';
+import { racAgentSignInApi, racAppApi } from '@/api/Api';
 
 export default {
     components: {
@@ -40,10 +40,10 @@ export default {
     },
     data() {
         this.rules = {
-            targetSysId: [
+            targetAppId: [
                 {
                     required: true,
-                    message: '请选择登录系统',
+                    message: '请选择登录应用',
                     trigger: ['change', 'blur'],
                 },
             ],
@@ -61,7 +61,7 @@ export default {
         return {
             loading: false,
             model: {},
-            syses: [],
+            appes: [],
         };
     },
     methods: {
@@ -69,10 +69,10 @@ export default {
             this.$nextTick(() => {
                 this.loading = true;
                 this.$refs.form.resetFields();
-                racSysApi
+                racAppApi
                     .list({ realmId: this.realmId })
                     .then(ro => {
-                        this.syses = ro.extra.list;
+                        this.appes = ro.extra.list;
                     })
                     .catch(() => (this.visible = false))
                     .finally(() => {
@@ -87,13 +87,13 @@ export default {
                     racAgentSignInApi
                         .signIn({
                             accountId: this.record.id,
-                            sysId: this.model.targetSysId,
+                            appId: this.model.targetAppId,
                             curUrl: window.location.href,
                         })
                         .then(() => {
-                            for (const sys of this.syses) {
-                                if (sys.id === this.model.targetSysId) {
-                                    window.location.href = sys.url;
+                            for (const app of this.appes) {
+                                if (app.id === this.model.targetAppId) {
+                                    window.location.href = app.url;
                                     break;
                                 }
                             }
@@ -108,7 +108,7 @@ export default {
             });
         },
         onChange(e) {
-            this.model = { ...this.model, targetSysId: e.target.value };
+            this.model = { ...this.model, targetAppId: e.target.value };
         },
     },
 };

@@ -1,7 +1,7 @@
 /**
- * 系统ID
+ * 应用ID
  */
-export enum SysIdDic {
+export enum AppIdDic {
     /** 未定义 */
     None = 'none',
     /** 平台后台管理 */

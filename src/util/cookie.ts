@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import { jwtTokenKey, sysIdKey } from '@/env';
-import { SysIdDic } from '@/dic/SysIdDic';
+import { jwtTokenKey, appIdKey } from '@/env';
+import { AppIdDic } from '@/dic/AppIdDic';
 
 /** JWT */
 export function hasJwtToken(): boolean {
@@ -10,13 +10,13 @@ export function removeJwtToken() {
     return Cookies.remove(jwtTokenKey);
 }
 
-/** SYS_ID */
-export function setSysId(sysId: SysIdDic) {
-    return Cookies.set(sysIdKey, sysId);
+/** APP_ID */
+export function setAppId(appId: AppIdDic) {
+    return Cookies.set(appIdKey, appId);
 }
-export function getSysId() {
-    return Cookies.get(sysIdKey);
+export function getAppId() {
+    return Cookies.get(appIdKey);
 }
-export function removeSysId() {
-    return Cookies.remove(sysIdKey);
+export function removeAppId() {
+    return Cookies.remove(appIdKey);
 }

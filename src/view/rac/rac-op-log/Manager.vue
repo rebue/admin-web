@@ -111,19 +111,19 @@ export default {
                 ),
             },
             {
-                dataIndex: 'sysName',
-                key: 'sysName',
-                title: '系统名称',
+                dataIndex: 'appName',
+                key: 'appName',
+                title: '应用名称',
                 ellipsis: true,
                 width: 150,
                 /*  customRender: (text, record) => (
                     <a-popover overlayClassName="mystyle" arrow-point-at-center title={text + '详情'}>
                         {text}
                         <template slot="content">
-                            <p>系统名称：{record.sysName}</p>
+                            <p>应用名称：{record.appName}</p>
                             <p>领域ID：{record.realmId}</p>
                             <p>菜单：{record.menu}</p>
-                            <p>系统备注：{record.remark}</p>
+                            <p>应用备注：{record.remark}</p>
                         </template>
                     </a-popover>
                 ), */

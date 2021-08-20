@@ -17,13 +17,13 @@ const list = [
     },
 ];
 
-const listAllRacSys = () => list;
+const listAllRacApp = () => list;
 
 module.exports = {
-    listAllRacSys,
+    listAllRacApp,
     routes: {
         /** 添加 */
-        'POST /rac/sys': (req, res, u, b) => {
+        'POST /rac/app': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             list.push(body);
             return res.json({
@@ -35,7 +35,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/sys': (req, res, u, b) => {
+        'PUT /rac/app': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -51,7 +51,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/sys': (req, res, u) => {
+        'DELETE /rac/app': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -71,7 +71,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/sys/get-by-id': (req, res, u) => {
+        'GET /rac/app/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -95,7 +95,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac/sys/list': (req, res, u, b) => {
+        'GET /rac/app/list': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

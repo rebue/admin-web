@@ -5,16 +5,16 @@
         </div>
         <div class="main">
             <div class="login-card">
-                <public-sign-in :sysId="sysId" class="form"></public-sign-in>
+                <public-sign-in :appId="appId" class="form"></public-sign-in>
             </div>
         </div>
-        <div class="footer">相关系统链接: <router-link to="/sign-in/platform">平台管理系统</router-link></div>
+        <div class="footer">相关应用链接: <router-link to="/sign-in/platform">平台管理应用</router-link></div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>
 </template>
 
 <script>
-import { SysIdDic } from '@/dic/SysIdDic';
+import { AppIdDic } from '@/dic/AppIdDic';
 import PublicSignIn from '@/view/sign-in/comm/PublicSignIn.vue';
 
 export default {
@@ -25,8 +25,8 @@ export default {
         return {
             /** 登录后要中转的地址 */
             redirect: undefined,
-            /** 定义当前登录页面所对应的系统 */
-            sysId: SysIdDic.OpsAdminWeb,
+            /** 定义当前登录页面所对应的应用 */
+            appId: AppIdDic.OpsAdminWeb,
             loading: false,
         };
     },

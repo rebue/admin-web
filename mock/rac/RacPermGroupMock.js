@@ -12,11 +12,11 @@ const list = [
     },
     {
         id: '1',
-        name: '基础配置-系统',
+        name: '基础配置-应用',
         realmId: 'platform',
         isEnabled: true,
         seqNo: 1,
-        remark: '系统的基础信息',
+        remark: '应用的基础信息',
     },
     {
         id: '2',

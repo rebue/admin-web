@@ -8,8 +8,8 @@ export class RacDicMo {
     name = '';
     /*** 领域ID*/
     realmId = '';
-    /*** 系统ID*/
-    sysId = '';
+    /*** 应用ID*/
+    appId = '';
     /*** 字典备注*/
     remark = '';
     /** 字典项列表 */

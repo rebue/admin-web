@@ -27,12 +27,12 @@ import EditDicItemForm from './EditDicItemForm.vue';
 import EditForm from './EditForm.vue';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racDicApi, racDicItemApi, racSysApi, racRealmApi } from '@/api/Api';
+import { racDicApi, racDicItemApi, racAppApi, racRealmApi } from '@/api/Api';
 
 let realms = [];
-let syss = [];
-racSysApi.list().then(ro => {
-    syss = Object.values(ro.extra.list).map(item => {
+let apps = [];
+racAppApi.list().then(ro => {
+    apps = Object.values(ro.extra.list).map(item => {
         return {
             value: item.id,
             text: item.name,
@@ -65,8 +65,8 @@ export default {
         //         };
         //     });
         // });
-        // racSysApi.list().then(ro => {
-        //     this.syss = Object.values(ro.extra.list).map(item => {
+        // racAppApi.list().then(ro => {
+        //     this.apps = Object.values(ro.extra.list).map(item => {
         //         return {
         //             value: item.id,
         //             text: item.name,
@@ -87,7 +87,7 @@ export default {
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
-            syss: syss,
+            apps: apps,
         };
     },
     computed: {
@@ -131,12 +131,12 @@ export default {
                     filters: this.realms,
                 },
                 {
-                    dataIndex: 'sysId',
-                    key: 'sysIds',
-                    title: '系统',
+                    dataIndex: 'appId',
+                    key: 'appIds',
+                    title: '应用',
                     with: 120,
                     ellipsis: true,
-                    filters: this.syss,
+                    filters: this.apps,
                 },
                 {
                     dataIndex: 'remark',
@@ -201,8 +201,8 @@ export default {
         //         };
         //     });
         // });
-        // racSysApi.list().then((ro) => {
-        //     this.syss = Object.values(ro.extra.list).map((item) => {
+        // racAppApi.list().then((ro) => {
+        //     this.apps = Object.values(ro.extra.list).map((item) => {
         //         return {
         //             value: item.id,
         //             text: item.name,

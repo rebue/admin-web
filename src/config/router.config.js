@@ -1,5 +1,5 @@
-import { getSysId } from '@/util/cookie';
-import { SysIdDic } from '@/dic/SysIdDic';
+import { getAppId } from '@/util/cookie';
+import { AppIdDic } from '@/dic/AppIdDic';
 
 const RouteView = {
     name: 'RouteView',
@@ -15,7 +15,7 @@ export const constantRouters = [
         path: '/sign-in',
         name: 'sign-in',
         component: RouteView,
-        redirect: () => (getSysId() === SysIdDic.PlatformAdminWeb ? '/sign-in/platform' : '/sign-in/ops'),
+        redirect: () => (getAppId() === AppIdDic.PlatformAdminWeb ? '/sign-in/platform' : '/sign-in/ops'),
         children: [
             {
                 path: '/sign-in/platform',
@@ -46,7 +46,7 @@ export const constantRouters = [
                 component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
                 hidden: true,
             },
-            /** 平台管理系统 */
+            /** 平台管理应用 */
             {
                 path: '/base',
                 name: 'base',
@@ -63,11 +63,11 @@ export const constantRouters = [
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },
                     {
-                        path: '/base/rac-sys',
-                        name: 'rac-sys',
-                        component: () => import('@/view/rac/rac-sys/Manager.vue'),
+                        path: '/base/rac-app',
+                        name: 'rac-app',
+                        component: () => import('@/view/rac/rac-app/Manager.vue'),
                         hidden: true,
-                        meta: { title: '系统', keepAlive: true, icon: 'appstore' },
+                        meta: { title: '应用', keepAlive: true, icon: 'appstore' },
                     },
                     {
                         path: '/base/rac-perm',
@@ -140,7 +140,7 @@ export const constantRouters = [
                     },
                 ],
             },
-            /** 运营管理系统 */
+            /** 运营管理应用 */
             {
                 path: '/user',
                 name: 'user',

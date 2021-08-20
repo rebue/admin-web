@@ -1,7 +1,7 @@
 /**
- * 系统类型
+ * 应用类型
  */
-export enum SysDic {
+export enum AppDic {
     // /** 未定义 */
     // None = '',
     /** 平台后台管理 */
@@ -11,16 +11,16 @@ export enum SysDic {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace SysDic {
+export namespace AppDic {
     // eslint-disable-next-line no-inner-declarations
-    export function getName(val: SysDic): string {
+    export function getName(val: AppDic): string {
         switch (val) {
-            // case SysDic.None:
-            //     return '默认系统';
-            case SysDic.OpsAdminWeb:
-                return '运营系统';
-            case SysDic.PlatformAdminWeb:
-                return '平台系统';
+            // case AppDic.None:
+            //     return '默认应用';
+            case AppDic.OpsAdminWeb:
+                return '运营应用';
+            case AppDic.PlatformAdminWeb:
+                return '平台应用';
             default:
                 return '未定义';
         }

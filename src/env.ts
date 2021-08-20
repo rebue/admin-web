@@ -20,7 +20,7 @@ export const requestBaseUrl =
 
 /** JWT Token的Key */
 export const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
-export const sysIdKey = process.env.VUE_APP_SYS_ID_KEY;
+export const appIdKey = process.env.VUE_APP_APP_ID_KEY;
 
 /** 是否模拟网络延迟 */
 export const isSimulateNetDelay: boolean = JSON.parse(process.env.VUE_APP_SIMULATE_NET_DELAY);
