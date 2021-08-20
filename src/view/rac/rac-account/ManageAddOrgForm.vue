@@ -172,7 +172,7 @@ export default {
                 const data = { accountIds, orgId };
                 this.api
                     .addOrgAccount(data)
-                    .then(ro => {
+                    .then(() => {
                         this.loading = false;
                     })
                     .finally(() => {
