@@ -31,7 +31,7 @@ const router = new VueRouter({
 // };
 
 /** 不检查JWT Token的路径列表 */
-const uncheckJwtTokenPaths = ['/sign-in'];
+const uncheckJwtTokenPaths = ['/sign-in', '/unifiedLogin'];
 /**
  * 路由跳转前置钩子
  */
