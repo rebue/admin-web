@@ -21,7 +21,7 @@
                     <p class="h100 flex-1 flex-box al-c ju-c cu-p" :class="'active'"
                        @click="showBox = 'password'">账号登录</p>
                 </div>
-                <form id="form" :action="pathPrefix + '/login/dologin'" method="POST" @keyup.enter="submit"
+                <form id="form" :action="loginUrl" method="POST" @keyup.enter="submit"
                       v-show="showBox === 'password'">
                     <div class="w100 pl40 pr40 pt40 pb40">
                         <!-- 输入框 -->
@@ -61,8 +61,8 @@
                         <input name="state" :value="state" hidden>
                         <input name="redirectUri" :value="redirectUri" hidden>
                         <button class="w100" type="primary" :loading="loading"
-                                   native-type="button"
-                                   @click="submit">立 即 登 录
+                                native-type="button"
+                                @click="submit">立 即 登 录
                         </button>
                     </div>
                 </form>
@@ -86,7 +86,7 @@ export default {
             if (this.disabled) {
                 return
             }
-            this.password = window.btoa(this.password)
+            // this.password = window.btoa(this.password)
             this.$nextTick(function () {
                 document.querySelector('#form').submit()
             })
@@ -103,11 +103,10 @@ export default {
         return {
             // 加载中
             loading: false,
-
             // 用户名
-            name: "foo",
+            name: "",
             // 密码
-            password: "bar",
+            password: "",
             // 记住
             remember: false,
             // 忘记密码URL
@@ -123,12 +122,8 @@ export default {
             state: "todoState",
             // 直接登录的时候后端需要使用该参数
             redirectUri: "555",
-
             // 错误信息提示：值为空不会显示
             error: "",
-
-            // http://122.9.114.33:9000/auth2/backend/oidc/authorize?response_type=code&redirect_uri=http%253A%252F%252F172.20.10.116%253A8080%252Fwap%252F&state=5j1NaPRpw_Vr14QHHajDpszwclppuGSjbmLdsGr0Vdw&client_id=aftersale&scope=openid&method=login_page&dingtalk_agent_id=1187584953
-            // 显示账密窗口或钉钉扫码 password / qr
             showBox: "password",
             // AppKey
             appid: "[[${dingtalkAppKey}]]",
@@ -136,7 +131,8 @@ export default {
             gotoUrl: "[[${dingtalkRedirectUri}]]",
             // 是否启用扫码事件监听
             isListening: false,
-            pathPrefix: "[[${loginPageConfig.pathPrefix}]]",
+            loginUrl: "http://localhost:10080/oap-svr/oidc/login?foo=1",
+            // loginUrl: "http://localhost:9970/oidc/login",
             // 头部logo
             //enableAppLogo为true表示展示第三方应用的logo，false表示统一身份认证
             enableAppLogo: false,
