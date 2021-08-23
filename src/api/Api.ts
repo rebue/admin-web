@@ -15,6 +15,7 @@ import RacPermMenuApi from './rac/RacPermMenuApi';
 import RacDicApi from './rac/RacDicApi';
 import RacDicItemApi from './rac/RacDicItemApi';
 import RacPermCommandApi from './rac/RacPermCommandApi';
+import RacVerifitionApi from './rac/RacVerifitionApi';
 
 export const racRealmApi = new RacRealmApi();
 export const racAppApi = new RacAppApi();
@@ -33,3 +34,4 @@ export const racPermMenuApi = new RacPermMenuApi();
 export const racDicApi = new RacDicApi();
 export const racDicItemApi = new RacDicItemApi();
 export const racPermCommandApi = new RacPermCommandApi();
+export const racVerifitionApi = new RacVerifitionApi();

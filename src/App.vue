@@ -4,11 +4,6 @@
             <router-view />
         </div>
     </a-config-provider>
-    <!-- <a-locale-provider :locale="locale">
-        <div id="app">
-            <router-view />
-        </div>
-    </a-locale-provider> -->
 </template>
 
 <script>
@@ -21,12 +16,13 @@ import Fragment from 'vue-fragment';
 import VueDraggableResizable from 'vue-draggable-resizable';
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import enUS from 'ant-design-vue/es/locale/en_US';
 // SVG组件
 import SvgIcon from '@/component/rebue/SvgIcon.vue';
 // 引入SVG文件资源
 import '@/asset/svg/index';
 
-moment.locale('zh-cn');
+moment.locale('en');
 
 // 注册焦点插件
 Vue.use(VueFocus);
@@ -49,6 +45,7 @@ export default {
 
     methods: {
         getPopupContainer(el, dialogContext) {
+            console.log('dialogContext', dialogContext);
             if (dialogContext) {
                 return dialogContext.getDialogWrap();
             } else {
