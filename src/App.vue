@@ -40,6 +40,7 @@ export default {
         //const { LocaleProvider, locales } = window.antd;
         return {
             locale: zhCN,
+            enUS,
         };
     },
 

@@ -219,7 +219,7 @@ export default {
             if (direction === 'right') {
                 racOrgApi
                     .addOrgAccount({ orgId: this.record.id, accountIds: moveKeys })
-                    .then(ro => {
+                    .then(() => {
                         console.log('添加完成');
                     })
                     .finally(() => {
@@ -229,7 +229,7 @@ export default {
             } else {
                 racOrgApi
                     .delOrgAccount({ orgId: this.record.id, accountIds: moveKeys })
-                    .then(ro => {
+                    .then(() => {
                         console.log('移除完成');
                     })
                     .finally(() => {

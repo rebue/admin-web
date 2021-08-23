@@ -201,7 +201,7 @@ export default {
                 const data = { accountIds, orgId };
                 this.api
                     .delOrgAccount(data)
-                    .then(ro => {
+                    .then(() => {
                         this.loading = false;
                     })
                     .finally(() => {

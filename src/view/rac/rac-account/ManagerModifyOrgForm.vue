@@ -176,7 +176,7 @@ export default {
                 const data = { accountId, orgId, modifyOrgId };
                 this.api
                     .modifyOrgAccount(data)
-                    .then(ro => {
+                    .then(() => {
                         //
                     })
                     .finally(() => {

@@ -1,7 +1,6 @@
 import { getAppId } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
-
-import UnifiedLogin from "@/view/unified/UnifiedLogin";
+import UnifiedLogin from '@/view/unified/UnifiedLogin';
 
 const RouteView = {
     name: 'RouteView',
@@ -16,7 +15,7 @@ export const constantRouters = [
     {
         path: '/unifiedLogin',
         name: 'unifiedLogin',
-        component: UnifiedLogin
+        component: UnifiedLogin,
     },
     {
         path: '/sign-in',
