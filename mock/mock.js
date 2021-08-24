@@ -10,6 +10,8 @@ const mock = {
     ...require('./rac/RacOrgMock').routes,
     ...require('./rac/RacOpLogMock').routes,
     ...require('./rac/RacLockLogMock').routes,
+    ...require('./rac/RacVerifitionMock').routes,
+
 };
 
 // console.log('mock', mock);

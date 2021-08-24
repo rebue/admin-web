@@ -16,6 +16,13 @@
                             <template #prefix><a-icon type="key"/></template>
                         </a-input-password>
                     </a-form-model-item>
+                    <Verify
+                        ref="verify"
+                        mode="pop"
+                        :captcha-type="'blockPuzzle'"
+                        :img-size="{ width: '400px', height: '200px' }"
+                        @success="handleVerifySuccess"
+                    />
                     <a-button :loading="loading" type="primary" block @click="doSubmit" class="sign">登录</a-button>
                 </a-form-model>
             </div>
@@ -30,10 +37,12 @@
 <script>
 import md5 from 'crypto-js/md5';
 import { setAppId } from '@/util/cookie';
-import { racSignInApi } from '@/api/Api';
+import { racSignInApi, racVerifitionApi } from '@/api/Api';
+import Verify from '@/component/rebue/verifition/Verify.vue';
+
 export default {
     components: {
-        //
+        Verify,
     },
     props: {
         appId: {
@@ -62,6 +71,7 @@ export default {
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
                 ],
             },
+            captcha: '',
         };
     },
     watch: {
@@ -126,6 +136,12 @@ export default {
             this.get_wx_qrcode();
         },
         doSubmit() {
+            // 验证码逻辑
+            // if(!this.captcha) {
+            //     this.$refs.verify.show()
+            //     return;
+            // }
+
             console.log('doSubmit!');
             this.loading = true;
 
@@ -150,6 +166,10 @@ export default {
                 }
             });
         },
+        handleVerifySuccess(res) {
+            let { captchaVerification } = res;
+            this.captcha = captchaVerification;
+        },
     },
 };
 </script>
@@ -159,7 +179,7 @@ export default {
     height: 450px;
 }
 .sign {
-    margin-top: 90px;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 .footer {

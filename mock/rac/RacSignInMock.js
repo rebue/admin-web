@@ -23,4 +23,4 @@ const signIn = (req, res, u, b) => {
     });
 };
 
-module.exports = { routes: { 'POST /rac/sign-in/sign-in-by-account-name': signIn } };
+module.exports = { routes: { 'POST /rac-svr/rac/sign-in/sign-in-by-account-name': signIn } };
