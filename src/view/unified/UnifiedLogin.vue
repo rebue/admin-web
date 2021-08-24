@@ -147,9 +147,6 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-@import './UnifiedLogin.css';
-@import './base.css';
-@import './element.css';
-</style>
+<style scoped src="./base.css"></style>
+<style scoped src="./element.css"></style>
+<style scoped src="./UnifiedLogin.css"></style>
