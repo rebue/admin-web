@@ -9,10 +9,10 @@ export default class RacVerifitionApi extends BaseCrudApi {
     baseUrn = '/rac-svr/rac';
     //   获取验证图片  以及token
     reqGet(data) {
-        return request.post({ url: '/captcha/get', data });
+        return request.post({ url: this.baseUrn + '/captcha/get', data });
     }
     // 滑动或者点选验证
     reqCheck(data) {
-        return request.post({ url: '/captcha/check', data });
+        return request.post({ url: this.baseUrn + '/captcha/check', data });
     }
 }
