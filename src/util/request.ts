@@ -68,11 +68,6 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
     return instance
         .request(config)
         .then(resp => {
-            //验证码兼容处理
-            if (resp.data.repCode === '0000') {
-                return resp.data;
-            }
-
             //console.log('response', resp);
 
             const ro = resp.data as Ro;

@@ -282,7 +282,7 @@ export default {
           'token': this.backToken
         }
         racVerifitionApi.reqCheck(data).then(res => {
-          if (res.repCode == '0000') {
+          if (res.result == 1) {
             this.moveBlockBackgroundColor = '#5cb85c'
             this.leftBarBorderColor = '#5cb85c'
             this.iconColor = '#fff'
@@ -355,20 +355,21 @@ export default {
         ts: Date.now(), // 现在的时间戳
       }
       racVerifitionApi.reqGet(data).then(res => {
-        if (res.repCode == '0000') {
-          this.backImgBase = res.repData.originalImageBase64
-          this.blockBackImgBase = res.repData.jigsawImageBase64
-          this.backToken = res.repData.token
-          this.secretKey = res.repData.secretKey
+        let {originalImageBase64, jigsawImageBase64, token, secretKey} = res?.extra?.dataVo
+        if (res.result == 1) {
+          this.backImgBase = originalImageBase64
+          this.blockBackImgBase = jigsawImageBase64
+          this.backToken = token
+          this.secretKey = secretKey
         } else {
-          this.tipWords = res.repMsg
+          this.tipWords = res.msg
         }
 
         // 判断接口请求次数是否失效
-        if (res.repCode == '6201') {
-          this.backImgBase = null
-          this.blockBackImgBase = null
-        }
+        // if (res.repCode == '6201') {
+        //   this.backImgBase = null
+        //   this.blockBackImgBase = null
+        // }
       })
     },
   },

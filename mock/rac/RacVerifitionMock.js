@@ -2,57 +2,59 @@ const jigsawImageBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAC8AAACbCAYAAADyfMLPAAAIFUlEQ
 const getCaptcha = (req, res, u, b) => {
     const body = (b && b.body) || req.body;
     return res.json({
-        repCode:'0000',
-        repMsg:null,
-        repData:{
-            captchaId:null,
-            projectCode:null,
-            captchaType:null,
-            captchaOriginalPath:null,
-            captchaFontType:null,
-            captchaFontSize:null,
-            jigsawImageBase64, //图片
-            originalImageBase64:'', //图片
-            point: null,
-            pointJson: null,
-            pointList: null,
-            projectCode: null,
-            result: false,
-            secretKey: 'SFagzlk2zkCLkZp1',
-            token: '08808fdd1fee4e59b548818c7cc1a2a8',
-            wordList: null
+        result:1,
+        msg:'',
+        extra:{
+            dataVo:{
+                captchaId:null,
+                projectCode:null,
+                captchaType:null,
+                captchaOriginalPath:null,
+                captchaFontType:null,
+                captchaFontSize:null,
+                jigsawImageBase64, //图片
+                originalImageBase64:'', //图片
+                point: null,
+                pointJson: null,
+                pointList: null,
+                projectCode: null,
+                result: false,
+                secretKey: 'SFagzlk2zkCLkZp1',
+                token: '08808fdd1fee4e59b548818c7cc1a2a8',
+                wordList: null
+            }
         }
     })
 }
 const checkCaptcha = (req, res, u, b) => {
     const body = (b && b.body) || req.body;
     return res.json({
-        'repCode':'0000',
-        'repMsg':null,
-        'repData':{
-            'captchaId':null,
-            'projectCode':null,
-            'captchaType':'blockPuzzle',
-            'captchaOriginalPath':null,
-            'captchaFontType':null,
-            'captchaFontSize':null,
-            'secretKey':null,
-            'originalImageBase64':null,
-            'point':null,
-            'jigsawImageBase64':null,
-            'wordList':null,
-            'pointList':null,
-            'pointJson':'wClJtu6MRBAN/B7uS6FC1wyHh8pVPmm+xjMlpwP9+TM=',
-            'token':'8100967e52194a039a4426a2a803e8eb',
-            'result':true,'captchaVerification':null
-        },
-        'success':true,
-        'error':false
+        result:1,
+        msg:'',
+        extra:{
+            dataVo:{
+                'captchaId':null,
+                'projectCode':null,
+                'captchaType':'blockPuzzle',
+                'captchaOriginalPath':null,
+                'captchaFontType':null,
+                'captchaFontSize':null,
+                'secretKey':null,
+                'originalImageBase64':null,
+                'point':null,
+                'jigsawImageBase64':null,
+                'wordList':null,
+                'pointList':null,
+                'pointJson':'wClJtu6MRBAN/B7uS6FC1wyHh8pVPmm+xjMlpwP9+TM=',
+                'token':'8100967e52194a039a4426a2a803e8eb',
+                'result':true,'captchaVerification':null
+            }
+        }
     })
 }
 module.exports = {
     routes: { 
-        'POST /rac-svr/rac/captcha/get': getCaptcha,
-        'POST /rac-svr/rac/captcha/check': checkCaptcha
+        'POST /cap-svr/cap/captcha/get': getCaptcha,
+        'POST /cap-svr/cap/captcha/check': checkCaptcha
     }
 }

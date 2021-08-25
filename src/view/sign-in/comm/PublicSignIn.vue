@@ -136,17 +136,17 @@ export default {
             this.get_wx_qrcode();
         },
         doSubmit() {
-            //验证码逻辑
-            if (!this.captcha) {
-                this.$refs.verify.show();
-                return;
-            }
-
             console.log('doSubmit!');
             this.loading = true;
 
             this.$refs.form.validate(valid => {
                 if (valid) {
+                    //表单校验成功后，验证码逻辑
+                    if (!this.captcha) {
+                        this.$refs.verify.show();
+                        this.$refs.verify.refresh();
+                        return;
+                    }
                     this.api
                         .signInByAccountName({
                             appId: this.appId,
@@ -157,7 +157,11 @@ export default {
                             setAppId(this.appId);
                             window.location.href = this.redirect ? '#' + this.redirect : '';
                         })
-                        .finally(() => (this.loading = false));
+                        .finally(() => {
+                            this.loading = false;
+                            // 登录无论成功或者失败都清除验证码
+                            // this.captcha = null
+                        });
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框
@@ -169,6 +173,7 @@ export default {
         handleVerifySuccess(res) {
             let { captchaVerification } = res;
             this.captcha = captchaVerification;
+            this.doSubmit();
         },
     },
 };
