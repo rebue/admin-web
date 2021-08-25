@@ -5,10 +5,12 @@
 </template>
 
 <script>
+// http://localhost:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=test1&state=RECOMMENDED&redirect_uri=http%3A%2F%2Flocalhost%3A13080%2Fadmin-web%2F%23%2Fdemo
+import request from '@/util/request';
+
 export default {
     name: 'Demo',
     data() {
-        // http://localhost:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=test1&state=RECOMMENDED&redirect_uri=http%3A%2F%2Flocalhost%3A13080%2Fadmin-web%2F%23%2Fdemo
         return {
             msg: '',
         };
@@ -21,6 +23,15 @@ export default {
             this.msg = '无code参数';
             return;
         }
+
+        request
+            .get({
+                url: '/orp-svr/oidc/callback?code=' + code,
+            })
+            .then(console.log);
+        const obj = {};
+        obj.aaa = '1';
+        request.get({}).then(console.log);
     },
     methods: {
         getCode() {

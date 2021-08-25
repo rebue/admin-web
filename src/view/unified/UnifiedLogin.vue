@@ -21,7 +21,7 @@
                     <p class="h100 flex-1 flex-box al-c ju-c cu-p" :class="'active'"
                        @click="showBox = 'password'">账号登录</p>
                 </div>
-                <form id="form" :action="pathPrefix + '/login/dologin'" method="POST" @keyup.enter="submit"
+                <form id="form" :action="pathPrefix" method="POST" @keyup.enter="submit"
                       v-show="showBox === 'password'">
                     <div class="w100 pl40 pr40 pt40 pb40">
                         <!-- 输入框 -->
@@ -136,7 +136,7 @@ export default {
             gotoUrl: "[[${dingtalkRedirectUri}]]",
             // 是否启用扫码事件监听
             isListening: false,
-            pathPrefix: "[[${loginPageConfig.pathPrefix}]]",
+            pathPrefix: "http://localhost:10080/oap-svr/oidc/login",
             // 头部logo
             //enableAppLogo为true表示展示第三方应用的logo，false表示统一身份认证
             enableAppLogo: false,
@@ -147,6 +147,7 @@ export default {
     }
 }
 </script>
+
+<style scoped src="./UnifiedLogin.css"></style>
 <style scoped src="./base.css"></style>
 <style scoped src="./element.css"></style>
-<style scoped src="./UnifiedLogin.css"></style>
