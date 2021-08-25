@@ -1,60 +1,63 @@
 <template>
   <div style="position: relative;">
-    <div
-      v-if="type === '2'"
-      class="verify-img-out"
-      :style="{height: (parseInt(setSize.imgHeight) + vSpace) + 'px'}"
-    >
+    <a-spin :spinning="pending">
+      <a-icon slot="indicator" type="loading" style="font-size: 24px" spin />
       <div
-        class="verify-img-panel"
-        :style="{width: setSize.imgWidth,
-                 height: setSize.imgHeight,}"
+        v-if="type === '2'"
+        class="verify-img-out"
+        :style="{height: (parseInt(setSize.imgHeight) + vSpace) + 'px'}"
       >
-        <img :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg" alt="" style="width:100%;height:100%;display:block">
-        <div v-show="showRefresh" class="verify-refresh" @click="refresh"><i class="iconfont icon-refresh" />
-        </div>
-        <transition name="tips">
-          <span v-if="tipWords" class="verify-tips" :class="passFlag ?'suc-bg':'err-bg'">{{ tipWords }}</span>
-        </transition>
-      </div>
-    </div>
-    <!-- 公共部分 -->
-    <div
-      class="verify-bar-area"
-      :style="{width: setSize.imgWidth,
-               height: barSize.height,
-               'line-height':barSize.height}"
-    >
-      <span class="verify-msg" v-text="text" />
-      <div
-        class="verify-left-bar"
-        :style="{width: (leftBarWidth!==undefined)?leftBarWidth: barSize.height, height: barSize.height, 'border-color': leftBarBorderColor, transaction: transitionWidth}"
-      >
-        <span class="verify-msg" v-text="finishText" />
         <div
-          class="verify-move-block"
-          :style="{width: barSize.height, height: barSize.height, 'background-color': moveBlockBackgroundColor, left: moveBlockLeft, transition: transitionLeft}"
-          @touchstart="start"
-          @mousedown="start"
+          class="verify-img-panel"
+          :style="{width: setSize.imgWidth,
+                  height: setSize.imgHeight,}"
         >
-          <i
-            :class="['verify-icon iconfont', iconClass]"
-            :style="{color: iconColor}"
-          />
+          <img :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg" alt="" style="width:100%;height:100%;display:block">
+          <div v-show="showRefresh" class="verify-refresh" @click="refresh"><i class="iconfont icon-refresh" />
+          </div>
+          <transition name="tips">
+            <span v-if="tipWords" class="verify-tips" :class="passFlag ?'suc-bg':'err-bg'">{{ tipWords }}</span>
+          </transition>
+        </div>
+      </div>
+      <!-- 公共部分 -->
+      <div
+        class="verify-bar-area"
+        :style="{width: setSize.imgWidth,
+                height: barSize.height,
+                'line-height':barSize.height}"
+      >
+        <span class="verify-msg" v-text="text" />
+        <div
+          class="verify-left-bar"
+          :style="{width: (leftBarWidth!==undefined)?leftBarWidth: barSize.height, height: barSize.height, 'border-color': leftBarBorderColor, transaction: transitionWidth}"
+        >
+          <span class="verify-msg" v-text="finishText" />
           <div
-            v-if="type === '2'"
-            class="verify-sub-block"
-            :style="{'width':Math.floor(parseInt(setSize.imgWidth)*47/310)+ 'px',
-                     'height': setSize.imgHeight,
-                     'top':'-' + (parseInt(setSize.imgHeight) + vSpace) + 'px',
-                     'background-size': setSize.imgWidth + ' ' + setSize.imgHeight,
-            }"
+            class="verify-move-block"
+            :style="{width: barSize.height, height: barSize.height, 'background-color': moveBlockBackgroundColor, left: moveBlockLeft, transition: transitionLeft}"
+            @touchstart="start"
+            @mousedown="start"
           >
-            <img :src="'data:image/png;base64,'+blockBackImgBase" alt="" style="width:100%;height:100%;display:block">
+            <i
+              :class="['verify-icon iconfont', iconClass]"
+              :style="{color: iconColor}"
+            />
+            <div
+              v-if="type === '2'"
+              class="verify-sub-block"
+              :style="{'width':Math.floor(parseInt(setSize.imgWidth)*47/310)+ 'px',
+                      'height': setSize.imgHeight,
+                      'top':'-' + (parseInt(setSize.imgHeight) + vSpace) + 'px',
+                      'background-size': setSize.imgWidth + ' ' + setSize.imgHeight,
+              }"
+            >
+              <img :src="'data:image/png;base64,'+blockBackImgBase" alt="" style="width:100%;height:100%;display:block">
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </a-spin>
   </div>
 </template>
 <script type="text/babel">
@@ -154,7 +157,8 @@ export default {
       isEnd: false,		// 是够验证完成
       showRefresh: true,
       transitionLeft: '',
-      transitionWidth: ''
+      transitionWidth: '',
+      pending: false
     }
   },
   computed: {
@@ -281,6 +285,7 @@ export default {
           'pointJson': this.secretKey ? aesEncrypt(JSON.stringify({ x: moveLeftDistance, y: 5.0 }), this.secretKey) : JSON.stringify({ x: moveLeftDistance, y: 5.0 }),
           'token': this.backToken
         }
+        this.pending = true
         racVerifitionApi.reqCheck(data).then(res => {
           if (res.result == 1) {
             this.moveBlockBackgroundColor = '#5cb85c'
@@ -320,6 +325,8 @@ export default {
             setTimeout(() => {
               this.tipWords = ''
             }, 1000)
+        }).finally(()=>{
+          this.pending = false
         })
         this.status = false
       }
@@ -356,6 +363,7 @@ export default {
         clientUid: localStorage.getItem('slider'),
         ts: Date.now(), // 现在的时间戳
       }
+      this.pending = true
       racVerifitionApi.reqGet(data).then(res => {
         let {originalImageBase64, jigsawImageBase64, token, secretKey} = res?.extra?.dataVo
         if (res.result == 1) {
@@ -374,6 +382,8 @@ export default {
         // }
       }).catch(err=>{
         this.tipWords = err.msg
+      }).finally(()=>{
+        this.pending = false
       })
     },
   },
