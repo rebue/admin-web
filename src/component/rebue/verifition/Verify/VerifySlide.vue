@@ -293,7 +293,7 @@ export default {
               setTimeout(() => {
                 this.$parent.clickShow = false
                 this.refresh()
-              }, 1500)
+              }, 1000)
             }
             this.passFlag = true
             this.tipWords = `${((this.endMovetime - this.startMoveTime) / 1000).toFixed(2)}s验证成功`
@@ -301,9 +301,12 @@ export default {
             setTimeout(() => {
               this.tipWords = ''
               this.$parent.closeBox()
-              this.$parent.$emit('success', { captchaVerification })
+              this.$parent.$emit('success', res)
             }, 1000)
           } else {
+            
+          }
+        }).catch((err) => {
             this.moveBlockBackgroundColor = '#d9534f'
             this.leftBarBorderColor = '#d9534f'
             this.iconColor = '#fff'
@@ -317,7 +320,6 @@ export default {
             setTimeout(() => {
               this.tipWords = ''
             }, 1000)
-          }
         })
         this.status = false
       }
@@ -362,7 +364,7 @@ export default {
           this.backToken = token
           this.secretKey = secretKey
         } else {
-          this.tipWords = res.msg
+         
         }
 
         // 判断接口请求次数是否失效
@@ -370,6 +372,8 @@ export default {
         //   this.backImgBase = null
         //   this.blockBackImgBase = null
         // }
+      }).catch(err=>{
+        this.tipWords = err.msg
       })
     },
   },

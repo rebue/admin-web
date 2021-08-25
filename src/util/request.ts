@@ -79,7 +79,7 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
             }
         })
         .catch(err => {
-            console.dir('response error', err);
+            console.log('response error', err);
             // 错误提示信息
             const msg =
                 (err.response && err.response.status && codeMessage[err.response.status]) ||
