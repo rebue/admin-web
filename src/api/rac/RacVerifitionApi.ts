@@ -6,7 +6,7 @@ import BaseCrudApi from '../comm/BaseCrudApi';
 
 export default class RacVerifitionApi extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/rac-svr/rac';
+    baseUrn = '/cap-svr/cap';
     //   获取验证图片  以及token
     reqGet(data) {
         return request.post({ url: this.baseUrn + '/captcha/get', data });

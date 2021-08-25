@@ -136,11 +136,11 @@ export default {
             this.get_wx_qrcode();
         },
         doSubmit() {
-            // 验证码逻辑
-            // if(!this.captcha) {
-            //     this.$refs.verify.show()
-            //     return;
-            // }
+            //验证码逻辑
+            if (!this.captcha) {
+                this.$refs.verify.show();
+                return;
+            }
 
             console.log('doSubmit!');
             this.loading = true;
