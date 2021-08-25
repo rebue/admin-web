@@ -34,7 +34,7 @@ module.exports = {
     listAllRacPermGroup,
     routes: {
         /** 添加 */
-        'POST /rac/perm-group': (req, res, u, b) => {
+        'POST /rac-svr/perm-group': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             body.id = new Date().getTime() + '';
             list.push(body);
@@ -47,7 +47,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/perm-group': (req, res, u, b) => {
+        'PUT /rac-svr/perm-group': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -63,7 +63,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/perm-group': (req, res, u) => {
+        'DELETE /rac-svr/perm-group': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -84,7 +84,7 @@ module.exports = {
             }
         },
         /** 启用或禁用 */
-        'POST /rac/perm-group/enable': (req, res, u, b) => {
+        'POST /rac-svr/perm-group/enable': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {
@@ -101,7 +101,7 @@ module.exports = {
             }
         },
         /** 上移 */
-        'POST /rac/perm-group/move-up': (req, res, u, b) => {
+        'POST /rac-svr/perm-group/move-up': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {
@@ -122,7 +122,7 @@ module.exports = {
             }
         },
         /** 下移 */
-        'POST /rac/perm-group/move-down': (req, res, u, b) => {
+        'POST /rac-svr/perm-group/move-down': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {
@@ -142,7 +142,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/perm-group/get-by-id': (req, res, u) => {
+        'GET /rac-svr/perm-group/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -166,7 +166,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac/perm-group/list': (req, res, u, b) => {
+        'GET /rac-svr/perm-group/list': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

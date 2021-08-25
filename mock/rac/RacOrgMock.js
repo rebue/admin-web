@@ -17,7 +17,7 @@ module.exports = {
     listAllRacOrg,
     routes: {
         /** 添加 */
-        'POST /rac/org': (req, res, u, b) => {
+        'POST /rac-svr/org': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             body.id = new Date().getTime() + '';
             list.push(body);
@@ -30,7 +30,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/org': (req, res, u, b) => {
+        'PUT /rac-svr/org': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -46,7 +46,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/org': (req, res, u) => {
+        'DELETE /rac-svr/org': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -66,7 +66,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/org/get-by-id': (req, res, u) => {
+        'GET /rac-svr/org/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -90,7 +90,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac/org/page': (req, res, u, b) => {
+        'GET /rac-svr/org/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

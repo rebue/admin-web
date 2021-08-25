@@ -23,7 +23,7 @@ module.exports = {
     listAllRacApp,
     routes: {
         /** 添加 */
-        'POST /rac/app': (req, res, u, b) => {
+        'POST /rac-svr/app': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             list.push(body);
             return res.json({
@@ -35,7 +35,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac/app': (req, res, u, b) => {
+        'PUT /rac-svr/app': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -51,7 +51,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac/app': (req, res, u) => {
+        'DELETE /rac-svr/app': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -71,7 +71,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac/app/get-by-id': (req, res, u) => {
+        'GET /rac-svr/app/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -95,7 +95,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac/app/list': (req, res, u, b) => {
+        'GET /rac-svr/app/list': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

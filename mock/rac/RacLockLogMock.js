@@ -28,7 +28,7 @@ module.exports = {
     opLockLoglist,
     routes: {
         /** 查询记录 */
-        'GET /rac/lock-log/page': (req, res, u, b) => {
+        'GET /rac-svr/lock-log/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
