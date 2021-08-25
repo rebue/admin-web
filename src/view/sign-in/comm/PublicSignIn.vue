@@ -22,6 +22,7 @@
                         :captcha-type="'blockPuzzle'"
                         :img-size="{ width: '400px', height: '200px' }"
                         @success="handleVerifySuccess"
+                        @error="handleVerifyError"
                     />
                     <a-button :loading="loading" type="primary" block @click="doSubmit" class="sign">登录</a-button>
                 </a-form-model>
@@ -71,7 +72,7 @@ export default {
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
                 ],
             },
-            captcha: '',
+            captcha: '', //验证码
         };
     },
     watch: {
@@ -144,7 +145,7 @@ export default {
                     //表单校验成功后，验证码逻辑
                     if (!this.captcha) {
                         this.$refs.verify.show();
-                        this.$refs.verify.refresh();
+                        this.loading = false;
                         return;
                     }
                     this.api
@@ -152,15 +153,19 @@ export default {
                             appId: this.appId,
                             accountName: this.form.accountName,
                             signInPswd: md5(this.form.signInPswd).toString(),
+                            token: this.captcha,
                         })
                         .then(() => {
                             setAppId(this.appId);
                             window.location.href = this.redirect ? '#' + this.redirect : '';
                         })
+                        .catch(() => {
+                            //登录失败，清除验证码
+                            this.captcha = null;
+                            // this.$refs.verify.refresh();
+                        })
                         .finally(() => {
                             this.loading = false;
-                            // 登录无论成功或者失败都清除验证码
-                            // this.captcha = null
                         });
                 } else {
                     this.$nextTick(() => {
@@ -171,9 +176,12 @@ export default {
             });
         },
         handleVerifySuccess(res) {
-            let { captchaVerification } = res;
-            this.captcha = captchaVerification;
+            let { token } = res?.extra?.dataVo;
+            this.captcha = token;
             this.doSubmit();
+        },
+        handleVerifyError() {
+            this.captcha = '';
         },
     },
 };
