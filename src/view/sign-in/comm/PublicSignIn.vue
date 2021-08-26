@@ -153,7 +153,7 @@ export default {
                             appId: this.appId,
                             accountName: this.form.accountName,
                             signInPswd: md5(this.form.signInPswd).toString(),
-                            token: this.captcha,
+                            verification: this.captcha,
                         })
                         .then(() => {
                             setAppId(this.appId);
@@ -176,9 +176,14 @@ export default {
             });
         },
         handleVerifySuccess(res) {
-            let { token } = res?.extra?.dataVo;
-            this.captcha = token;
+            this.captcha = res.captchaVerification;
             this.doSubmit();
+            // const verif = {
+            //     captchaVerification: res.captchaVerification,
+            // };
+            // racVerifitionApi.reqVerify(verif).then((ro) => {
+
+            // });
         },
         handleVerifyError() {
             this.captcha = '';

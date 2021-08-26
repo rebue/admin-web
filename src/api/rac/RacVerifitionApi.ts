@@ -15,4 +15,8 @@ export default class RacVerifitionApi extends BaseCrudApi {
     reqCheck(data) {
         return request.post({ url: this.baseUrn + '/captcha/check', data });
     }
+    // 登录校验验证，不需要只用于测试
+    reqVerify(data) {
+        return request.post({ url: this.baseUrn + '/captcha/verify', data });
+    }
 }

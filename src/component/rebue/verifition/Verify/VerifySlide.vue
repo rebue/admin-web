@@ -306,7 +306,7 @@ export default {
             setTimeout(() => {
               this.tipWords = ''
               this.$parent.closeBox()
-              this.$parent.$emit('success', res)
+              this.$parent.$emit('success', {captchaVerification})
             }, 1000)
           } else {
             
