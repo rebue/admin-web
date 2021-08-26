@@ -48,13 +48,6 @@
                             </div>
                         </div>
 
-                        <!-- 记住、忘记密码 -->
-                        <!-- <div class="w100 mt20 font-14 flex-box al-c">
-                        <el-checkbox v-model="remember">记住用户名</el-checkbox>
-                        <span class="flex-1"></span>
-                        <a class="grey hover" :href="forgetUrl">忘记密码？</a>
-                      </div> -->
-
                         <!-- 错误信息提示：error值为空不会显示 -->
                         <p class="w100 mt20 mb10 red font-14" v-text="error"></p>
                         <!-- 登录按钮，异步中调用loading，true防止用户多次点击，结束异步变回false -->
@@ -86,7 +79,6 @@ export default {
             if (this.disabled) {
                 return
             }
-            this.password = window.btoa(this.password)
             this.$nextTick(function () {
                 document.querySelector('#form').submit()
             })
@@ -101,33 +93,19 @@ export default {
     },
     data() {
         return {
-            // 加载中
             loading: false,
-
-            // 用户名
-            name: "foo",
-            // 密码
-            password: "bar",
-            // 记住
+            name: "adminer",
+            password: "123456",
             remember: false,
-            // 忘记密码URL
-            forgetUrl: "",
-
-            // 是否显示验证码
             showVerCode: false,
-            // 验证码
             verCode: "",
-            // 验证码图片时间戳
             time: new Date().getTime(),
             // state用于区分：直接登录/第三方登录
             state: "todoState",
             // 直接登录的时候后端需要使用该参数
             redirectUri: "555",
-
             // 错误信息提示：值为空不会显示
             error: "",
-
-            // http://122.9.114.33:9000/auth2/backend/oidc/authorize?response_type=code&redirect_uri=http%253A%252F%252F172.20.10.116%253A8080%252Fwap%252F&state=5j1NaPRpw_Vr14QHHajDpszwclppuGSjbmLdsGr0Vdw&client_id=aftersale&scope=openid&method=login_page&dingtalk_agent_id=1187584953
             // 显示账密窗口或钉钉扫码 password / qr
             showBox: "password",
             // AppKey

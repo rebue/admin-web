@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// http://localhost:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=test1&state=RECOMMENDED&redirect_uri=http%3A%2F%2Flocalhost%3A13080%2Fadmin-web%2F%23%2Fdemo
+// http://localhost:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=unified-auth&state=RECOMMENDED&redirect_uri=http%3A%2F%2Flocalhost%3A13080%2Fadmin-web%2F%23%2Fdemo
 import request from '@/util/request';
 
 export default {
