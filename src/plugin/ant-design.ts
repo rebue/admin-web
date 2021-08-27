@@ -33,6 +33,7 @@ import {
     Transfer,
     Drawer,
     Space,
+    Upload,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -95,5 +96,7 @@ Vue.use(Tooltip);
 
 // 头像
 Vue.use(Avatar);
+//上传
+Vue.use(Upload);
 
 Vue.prototype.$confirm = Modal.confirm;

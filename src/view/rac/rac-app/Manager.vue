@@ -19,6 +19,7 @@
                 </a-tabs>
             </template>
         </base-manager>
+
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-menus-form :curApp.sync="curApp" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
     </fragment>
@@ -61,6 +62,46 @@ export default {
                 dataIndex: 'id',
                 title: '编码',
                 width: 180,
+            },
+            {
+                dataIndex: 'isAdd',
+                title: '是否接入统一应用平台',
+                width: 180,
+                ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popconfirm
+                        title={record.isAdd ? '确认移除统一应用平台?' : '确认接入统一应用平台？'}
+                        visible={record.addVisible}
+                        onVisibleChange={visible => {
+                            this.handleAddVisibleChange(visible, record);
+                        }}
+                        onConfirm={() => {
+                            this.confirmAdd(record);
+                        }}
+                    >
+                        <a-switch checked={record.isAdd} checked-children="是" un-checked-children="否"></a-switch>
+                    </a-popconfirm>
+                ),
+            },
+            {
+                dataIndex: 'isEnabled',
+                title: '是否在应用平台启用',
+                width: 180,
+                ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popconfirm
+                        title={record.isEnabled ? '确认在应用平台禁用？' : '确认在应用平台启用？'}
+                        visible={record.enabledVisible}
+                        onVisibleChange={visible => {
+                            this.handleEnableVisibleChange(visible, record);
+                        }}
+                        onConfirm={() => {
+                            this.confirmEnable(record);
+                        }}
+                    >
+                        <a-switch checked={record.isEnabled} checked-children="是" un-checked-children="否"></a-switch>
+                    </a-popconfirm>
+                ),
             },
             {
                 dataIndex: 'remark',
@@ -123,6 +164,26 @@ export default {
         this.refreshData();
     },
     methods: {
+        confirmAdd(record) {
+            //发起请求
+            setTimeout(() => {
+                this.$set(record, 'isAdd', !record.isAdd);
+            });
+        },
+        // 	显示隐藏的回调
+        handleAddVisibleChange(visible, record) {
+            this.$set(record, 'addVisible', visible);
+        },
+        confirmEnable(record) {
+            //发起请求
+            setTimeout(() => {
+                this.$set(record, 'isEnabled', !record.isEnabled);
+            });
+        },
+        // 	显示隐藏的回调
+        handleEnableVisibleChange(visible, record) {
+            this.$set(record, 'enabledVisible', visible);
+        },
         refreshData() {
             this.loading = true;
             racRealmApi

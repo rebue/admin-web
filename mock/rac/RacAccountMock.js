@@ -198,5 +198,22 @@ module.exports = {
                 },
             });
         },
+        'POST /rac-svr/rac/account/upload-avatar': (req, res, u, b) => {
+            return res.json({
+                result:1,
+                msg:'上传头像成功',
+                success:true
+            });
+        },
+        //通用上传接口
+        'POST /oss-svr/oss/obj/upload': (req, res, u, b) => {
+            return res.json({
+                    "result":1,
+                    "msg":"上传对象成功",
+                    "extra":{"id":"906445814724034561","objType":"png","objSize":"0","url":"http://172.20.10.154:9000/oss-obj/906445814724034561.png?a=1630055651049","creatorId":"10","createDatetime":"2021-08-27 17:14:11","objName":"avatar.png","objGroup":"1"},
+                    "success":true
+                }
+            );
+        }
     },
 };
