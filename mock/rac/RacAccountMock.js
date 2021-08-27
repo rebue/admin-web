@@ -5,7 +5,7 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: '10',
+        id: '1',
         realmId: 'platform',
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
@@ -24,7 +24,7 @@ const list = [
         ],
     },
     {
-        id: '20',
+        id: '2',
         realmId: 'ops',
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
@@ -43,8 +43,8 @@ module.exports = {
     findRacAccountBySignInName,
     listRacAccount,
     routes: {
-        'GET /rac-svr/account/list': listRacAccount,
-        'GET /rac-svr/account/get-cur-account-info': (req, res, u) => {
+        'GET /rac-svr/rac/account/list': listRacAccount,
+        'GET /rac-svr/rac/account/get-cur-account-info': (req, res, u) => {
             const cookies = req.headers.cookie.split(';');
             let accountId;
             for (const cookie of cookies) {
@@ -81,7 +81,7 @@ module.exports = {
             }
         },
         /** 添加 */
-        'POST /rac-svr/account': (req, res, u, b) => {
+        'POST /rac-svr/rac/account': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             body.id = new Date().getTime() + '';
             list.push(body);
@@ -94,7 +94,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac-svr/account': (req, res, u, b) => {
+        'PUT /rac-svr/rac/account': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -110,7 +110,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac-svr/account': (req, res, u) => {
+        'DELETE /rac-svr/rac/account': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -131,7 +131,7 @@ module.exports = {
             }
         },
         /** 启用或禁用 */
-        'POST /rac-svr/account/enable': (req, res, u, b) => {
+        'PUT /rac-svr/rac/account/enable': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {
@@ -147,7 +147,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac-svr/account/get-by-id': (req, res, u) => {
+        'GET /rac-svr/rac/account/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -171,7 +171,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac-svr/account/page': (req, res, u, b) => {
+        'GET /rac-svr/rac/account/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

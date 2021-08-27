@@ -92,7 +92,7 @@
             :width="180"
             :height="180"
             :noRotate="false"
-            url="/rac/account/upload-avatar"
+            url="/rac-svr/rac/account/upload-avatar"
             @crop-upload-success="handleCropUploadSuccess"
             @crop-upload-fail="handleCropUploadFail"
         />
