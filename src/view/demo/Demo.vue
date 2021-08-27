@@ -29,8 +29,6 @@ export default {
                 url: '/orp-svr/oidc/callback?code=' + code,
             })
             .then(console.log);
-        const obj = {};
-        obj.aaa = '1';
         request.get({}).then(console.log);
     },
     methods: {

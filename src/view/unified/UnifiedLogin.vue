@@ -38,14 +38,6 @@
                                        placeholder="密码">
                             </div>
                             <div class="horizontal-line" v-if="showVerCode"></div>
-                            <div class="w100 mt10 pl10 pr10 flex-box al-c btn-box" v-if="showVerCode"
-                                 style="position: relative">
-                                <input name="verificationCode" v-model="verCode" class="mr10 font-18"
-                                       style="width: 130px;" type="text"
-                                       placeholder="验证码">
-                                <img class="cu-p ver-img" :src="verImg" alt=""
-                                     @click="function(){time = new Date().getTime()}">
-                            </div>
                         </div>
 
                         <!-- 错误信息提示：error值为空不会显示 -->
@@ -72,6 +64,7 @@
 <script>
 // import {Button} from './element.js';
 
+import md5 from 'crypto-js/md5';
 export default {
     name: "UnifiedLogin",
     methods: {
@@ -80,7 +73,7 @@ export default {
                 return
             }
             this.$nextTick(function () {
-                document.querySelector('#form').submit()
+                document.querySelector('#form').submit();
             })
         },
         // 登录
@@ -95,7 +88,7 @@ export default {
         return {
             loading: false,
             name: "adminer",
-            password: "123456",
+            password: md5("123456"),
             remember: false,
             showVerCode: false,
             verCode: "",
