@@ -2,6 +2,7 @@ import { getAppId } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
+import AppOpsIndex from '@/view/app-ops/Index.vue';
 
 const RouteView = {
     name: 'RouteView',
@@ -13,6 +14,11 @@ const RouteView = {
  * @type { *[] }
  */
 export const constantRouters = [
+    {
+        path: '/app-ops/index',
+        name: 'app-ops-index',
+        component: AppOpsIndex,
+    },
     {
         path: '/demo',
         name: 'demo',
