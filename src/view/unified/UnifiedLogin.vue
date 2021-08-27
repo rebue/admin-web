@@ -107,7 +107,7 @@ export default {
             gotoUrl: "[[${dingtalkRedirectUri}]]",
             // 是否启用扫码事件监听
             isListening: false,
-            pathPrefix: "http://localhost:10080/oap-svr/oidc/login",
+            pathPrefix: "http://127.0.0.1:10080/oap-svr/oidc/login",
             // 头部logo
             //enableAppLogo为true表示展示第三方应用的logo，false表示统一身份认证
             enableAppLogo: false,

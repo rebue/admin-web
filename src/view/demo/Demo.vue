@@ -1,11 +1,16 @@
 <template>
     <div>
-        {{ msg }}
+        <div>
+            {{ msg }}
+        </div>
+        <div>
+            {{ accessToken }}
+        </div>
     </div>
 </template>
 
 <script>
-// http://localhost:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=unified-auth&state=RECOMMENDED&redirect_uri=http%3A%2F%2Flocalhost%3A13080%2Fadmin-web%2F%23%2Fdemo
+// http://127.0.0.1:10080/oap-svr/oidc/authorize?scope=openid&response_type=code&client_id=unified-auth&state=RECOMMENDED&redirect_uri=http%3A%2F%2F127.0.0.1%3A13080%2Fadmin-web%2F%23%2Fdemo
 import request from '@/util/request';
 
 export default {
@@ -13,6 +18,7 @@ export default {
     data() {
         return {
             msg: '',
+            accessToken: '',
         };
     },
     created() {
@@ -28,8 +34,11 @@ export default {
             .get({
                 url: '/orp-svr/oidc/callback?code=' + code,
             })
-            .then(console.log);
-        request.get({}).then(console.log);
+            .then(result => {
+                if (result.result === 1) {
+                    this.accessToken = result.extra;
+                }
+            });
     },
     methods: {
         getCode() {
