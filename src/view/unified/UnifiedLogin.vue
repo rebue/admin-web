@@ -21,8 +21,7 @@
                     <p class="h100 flex-1 flex-box al-c ju-c cu-p" :class="'active'"
                        @click="showBox = 'password'">账号登录</p>
                 </div>
-                <form id="form" :action="pathPrefix" method="POST" @keyup.enter="submit"
-                      v-show="showBox === 'password'">
+                <div id="form" v-show="showBox === 'password'">
                     <div class="w100 pl40 pr40 pt40 pb40">
                         <!-- 输入框 -->
                         <div class="pl30 pr30 pt10 pb10 bg-w radius-4">
@@ -45,12 +44,11 @@
                         <!-- 登录按钮，异步中调用loading，true防止用户多次点击，结束异步变回false -->
                         <input name="state" :value="state" hidden>
                         <input name="redirectUri" :value="redirectUri" hidden>
-                        <button class="w100" type="primary" :loading="loading"
-                                   native-type="button"
-                                   @click="submit">立 即 登 录
+                        <button class="w100" type="primary" :loading="loading" native-type="button" @click="submit">
+                            立 即 登 录
                         </button>
                     </div>
-                </form>
+                </div>
 
                 <div class="w100 pl40 pr40 pt40 pb40" v-show="showBox == 'qr'">
                     <div id="ding-qr"></div>
@@ -60,21 +58,31 @@
         </div>
     </div>
 </template>
-
 <script>
-// import {Button} from './element.js';
+import request from '@/util/request';
 
-import md5 from 'crypto-js/md5';
 export default {
     name: "UnifiedLogin",
     methods: {
         submit() {
+            console.log('submit1');
             if (this.disabled) {
-                return
+                return;
             }
-            this.$nextTick(function () {
-                document.querySelector('#form').submit();
-            })
+            console.log('submit2');
+            request
+                .post({
+                    url: '/oap-svr/oidc/login',
+                    data: {
+                        loginName: this.name,
+                        password: this.password,
+                    }
+                })
+                .then(r => {
+                    if (r.result === 1) {
+                        window.location.replace(r.extra);
+                    }
+                });
         },
         // 登录
         login() {
@@ -88,7 +96,7 @@ export default {
         return {
             loading: false,
             name: "adminer",
-            password: md5("123456"),
+            password: "123456",
             remember: false,
             showVerCode: false,
             verCode: "",
