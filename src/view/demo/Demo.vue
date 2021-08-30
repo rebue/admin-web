@@ -30,9 +30,10 @@ export default {
             return;
         }
 
+        const redirectUri = encodeURIComponent('http://127.0.0.1:13080/admin-web/#/demo');
         request
             .get({
-                url: '/orp-svr/oidc/callback?code=' + code,
+                url: '/orp-svr/oidc/callback?code=' + code + '&redirectUri=' + redirectUri,
             })
             .then(result => {
                 if (result.result === 1) {
