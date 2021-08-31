@@ -22,16 +22,18 @@
 
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-menus-form :curApp.sync="curApp" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
+        <edit-auth-form ref="editAuthForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
+import EditAuthForm from './EditAuthForm';
+
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-import { racAppApi } from '@/api/Api';
+import { racRealmApi, racAppApi, oapAppApi } from '@/api/Api';
 import ManageMenusForm from './ManageMenusForm.vue';
 
 export default {
@@ -39,6 +41,7 @@ export default {
     components: {
         BaseManager,
         EditForm,
+        EditAuthForm,
         CrudTable,
         ManageMenusForm,
     },
@@ -64,45 +67,45 @@ export default {
                 width: 180,
             },
             {
-                dataIndex: 'isAdd',
-                title: '是否接入统一应用平台',
+                dataIndex: 'isAccess',
+                title: '是否接入',
                 width: 180,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popconfirm
-                        title={record.isAdd ? '确认移除统一应用平台?' : '确认接入统一应用平台？'}
+                        title={record.isAccess ? '确认移除?' : '确认接入？'}
                         visible={record.addVisible}
                         onVisibleChange={visible => {
-                            this.handleAddVisibleChange(visible, record);
+                            this.handleAccessVisibleChange(visible, record);
                         }}
                         onConfirm={() => {
-                            this.confirmAdd(record);
+                            this.confirmAccess(record);
                         }}
                     >
-                        <a-switch checked={record.isAdd} checked-children="是" un-checked-children="否"></a-switch>
+                        <a-switch checked={record.isAccess} checked-children="是" un-checked-children="否"></a-switch>
                     </a-popconfirm>
                 ),
             },
-            {
-                dataIndex: 'isEnabled',
-                title: '是否在应用平台启用',
-                width: 180,
-                ellipsis: true,
-                customRender: (text, record) => (
-                    <a-popconfirm
-                        title={record.isEnabled ? '确认在应用平台禁用？' : '确认在应用平台启用？'}
-                        visible={record.enabledVisible}
-                        onVisibleChange={visible => {
-                            this.handleEnableVisibleChange(visible, record);
-                        }}
-                        onConfirm={() => {
-                            this.confirmEnable(record);
-                        }}
-                    >
-                        <a-switch checked={record.isEnabled} checked-children="是" un-checked-children="否"></a-switch>
-                    </a-popconfirm>
-                ),
-            },
+            // {
+            //     dataIndex: 'isEnabled',
+            //     title: '是否在应用平台启用',
+            //     width: 180,
+            //     ellipsis: true,
+            //     customRender: (text, record) => (
+            //         <a-popconfirm
+            //             title={record.isEnabled ? '确认在应用平台禁用？' : '确认在应用平台启用？'}
+            //             visible={record.enabledVisible}
+            //             onVisibleChange={visible => {
+            //                 this.handleEnableVisibleChange(visible, record);
+            //             }}
+            //             onConfirm={() => {
+            //                 this.confirmEnable(record);
+            //             }}
+            //         >
+            //             <a-switch checked={record.isEnabled} checked-children="是" un-checked-children="否"></a-switch>
+            //         </a-popconfirm>
+            //     ),
+            // },
             {
                 dataIndex: 'remark',
                 title: '备注',
@@ -143,6 +146,17 @@ export default {
                 title: '菜单',
                 onClick: record => this.handleMenus(record),
             },
+            {
+                type: 'a',
+                title: '认证',
+                onClick: record => this.handleAuth(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除认证',
+                confirmTitle: '你确定要删除认证吗?',
+                onClick: record => this.handleDeleteAuth(record),
+            },
         ];
 
         return {
@@ -164,25 +178,15 @@ export default {
         this.refreshData();
     },
     methods: {
-        confirmAdd(record) {
+        confirmAccess(record) {
             //发起请求
             setTimeout(() => {
-                this.$set(record, 'isAdd', !record.isAdd);
+                this.$set(record, 'isAccess', !record.isAccess);
             });
         },
         // 	显示隐藏的回调
-        handleAddVisibleChange(visible, record) {
+        handleAccessVisibleChange(visible, record) {
             this.$set(record, 'addVisible', visible);
-        },
-        confirmEnable(record) {
-            //发起请求
-            setTimeout(() => {
-                this.$set(record, 'isEnabled', !record.isEnabled);
-            });
-        },
-        // 	显示隐藏的回调
-        handleEnableVisibleChange(visible, record) {
-            this.$set(record, 'enabledVisible', visible);
         },
         refreshData() {
             this.loading = true;
@@ -235,6 +239,26 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        handleAuth(record) {
+            oapAppApi.getByAppId(record.id).then(ro => {
+                let item = {
+                    appId: record.id,
+                    name: record.name,
+                };
+                if (ro?.extra) {
+                    item = { ...item, ...ro.extra };
+                    this.$refs.editAuthForm.show(EditFormTypeDic.Modify, item);
+                    return;
+                }
+                this.$refs.editAuthForm.show(EditFormTypeDic.Add, item);
+            });
+        },
+        handleDeleteAuth(record) {
+            this.loading = true;
+            oapAppApi.delById(record.id).finally(() => {
+                this.refreshTableData();
+            });
         },
     },
 };

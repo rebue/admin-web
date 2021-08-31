@@ -12,11 +12,11 @@
             :width="750"
         >
             <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                <a-form-model-item label="应用名称" prop="name">
-                    <a-input v-model.trim="model.name" />
-                </a-form-model-item>
-                <a-form-model-item label="应用编号" prop="id">
+                <a-form-model-item label="编码" prop="id">
                     <a-input v-model.trim="model.id" :disabled="editFormType === EditFormTypeDic.Modify" />
+                </a-form-model-item>
+                <a-form-model-item label="名称" prop="name">
+                    <a-input v-model.trim="model.name" />
                 </a-form-model-item>
                 <a-form-model-item label="URL" prop="url">
                     <a-input v-model.trim="model.url" />
@@ -24,25 +24,13 @@
                 <a-form-model-item label="领域ID" prop="realmId" v-show="false">
                     <a-input v-model.trim="model.realmId" type="hidden" />
                 </a-form-model-item>
-                <a-form-model-item label="Secret" prop="secret">
-                    <a-input v-model.trim="model.secret" />
-                </a-form-model-item>
-                <a-form-model-item label="Client-Id" prop="clientId">
-                    <a-input v-model.trim="model['clientId']" />
-                </a-form-model-item>
-                <a-form-model-item label="Redirect-URL" prop="redirectUrl">
-                    <a-input v-model.trim="model['redirectUrl']" type="textarea" />
-                </a-form-model-item>
-                <a-form-model-item label="IP白名单" prop="ipWhiteList">
-                    <a-input v-model.trim="model['ipWhiteList']" type="textarea" />
-                </a-form-model-item>
                 <a-form-model-item label="备注" prop="remark">
                     <a-input v-model.trim="model.remark" type="textarea" />
                 </a-form-model-item>
-                <a-form-model-item label="应用图片" prop="logo">
-                    <a-input v-model.trim="model.logo" type="hidden" />
+                <a-form-model-item label="应用图片" prop="objId">
+                    <a-input v-model.trim="model.objId" type="hidden" />
                     <a-upload
-                        name="logo"
+                        name="objId"
                         list-type="picture-card"
                         class="avatar-uploader"
                         :show-upload-list="false"
@@ -68,22 +56,13 @@ import { racAppApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { message } from 'ant-design-vue';
 
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
 const modelSource = {
-    name: '',
     id: '',
+    name: '',
     url: '',
     realmId: '',
-    secret: '',
-    clientId: '',
-    redirectUrl: '',
-    ipWhiteList: '',
     remark: '',
-    logo: '',
+    objId: '',
 };
 export default {
     components: {
@@ -133,9 +112,8 @@ export default {
             this.model = {
                 ...modelSource,
                 ...record,
-                redirectUrl: record.redirectUrl ? record.redirectUrl.join('\n') : '',
-                ipWhiteList: record.ipWhiteList ? record.ipWhiteList.join('\n') : '',
             };
+
             this.visible = true;
         },
         handleShow() {
@@ -147,18 +125,19 @@ export default {
                     this.api
                         .getById(this.model.id)
                         .then(ro => {
-                            const { redirectUrl, ipWhiteList } = ro.extra.one;
                             this.model = {
                                 ...ro.extra.one,
-                                redirectUrl: redirectUrl ? redirectUrl.join('\n') : '',
-                                ipWhiteList: ipWhiteList ? ipWhiteList.join('\n') : '',
                             };
+                            // 图片初始化
+                            this.logoURL = ro.extra.one?.obj?.url;
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
                             this.loading = false;
                         });
                 } else {
+                    // 图片初始化
+                    this.logoURL = '';
                     this.loading = false;
                 }
             });
@@ -170,8 +149,6 @@ export default {
                 if (valid) {
                     //处理重定向URL，IP白名单
                     const data = { ...this.model };
-                    data['redirectUrl'] = this.linetoArr(data['redirectUrl']);
-                    data['ipWhiteList'] = this.linetoArr(data['ipWhiteList']);
 
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
@@ -201,12 +178,9 @@ export default {
             if (info.file.status === 'done') {
                 // Get this url from response in real world.
                 const res = info.file.response;
-                this.model.logo = res.extra.id;
-                // this.logoURL = res.extra.url
-                getBase64(info.file.originFileObj, imageUrl => {
-                    this.logoURL = imageUrl;
-                    this.logoLoading = false;
-                });
+                this.model.objId = res.extra.id;
+                this.logoURL = res.extra.url;
+                this.logoLoading = false;
             }
         },
         beforeUpload(file) {
