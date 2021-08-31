@@ -4,10 +4,13 @@ import { constantRouters } from '@/config/router.config';
 import { hasJwtToken } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
+// import { racVerifitionApi } from '@/api/Api';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: constantRouters,
+    // mode: "history",
     /**
      * 当切换到新路由时，页面滚到的行为
      * 注意: 这个功能只在支持 history.pushState 的浏览器中可用。
@@ -41,6 +44,16 @@ router.beforeEach(async (to, from, next) => {
     console.log('from', from);
     console.log('next', next);
 
+    // if (from.name === null && to.query.code && to.query.state) {
+    //     const params = {
+    //         code: to.query.code,
+    //         redirectUri: window.localStorage.getItem("fullPath")
+    //     };
+    //     // const { extra } =
+    //     await racVerifitionApi.reqGetTokenFromCode(params);
+    //     // window.sessionStorage.setItem("jwt_token", String(extra));
+    // }
+
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
 
@@ -48,7 +61,12 @@ router.beforeEach(async (to, from, next) => {
     if (!uncheckJwtTokenPaths.find(item => to.path.startsWith(item)) && !hasJwtToken()) {
         console.log('需要登录');
         next(`/sign-in?redirect=${to.path}`);
-        return;
+        // const fullPath = encodeURIComponent(window.location.href);
+        // if (fullPath.indexOf("code=") === -1) {
+        //     window.localStorage.setItem("fullPath", window.location.href);
+        // }
+        // window.location.replace(`${process.env.VUE_APP_AUTH_URL}${fullPath}`);
+        // return;
     }
 
     next();

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
-import { isSimulateNetDelay, requestBaseUrl } from '@/env';
+import { isSimulateNetDelay, requestBaseUrl, xHTTPMethodOverride } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
@@ -47,6 +47,15 @@ instance.interceptors.request.use(
         config.paramsSerializer = params => {
             return qs.stringify(params);
         };
+
+        // 是否开启了delete、put等请求转换为post
+        if (xHTTPMethodOverride) {
+            if (config.method == 'delete' || config.method == 'put') {
+                config.headers['X-HTTP-Method-Override'] = config.method.toUpperCase();
+                config.method = 'post';
+            }
+            // console.log(config);
+        }
 
         return config;
     },

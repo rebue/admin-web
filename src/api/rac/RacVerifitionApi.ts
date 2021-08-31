@@ -19,4 +19,8 @@ export default class RacVerifitionApi extends BaseCrudApi {
     reqVerify(data) {
         return request.post({ url: this.baseUrn + '/captcha/verify', data });
     }
+    // 通过code获取token
+    // reqGetTokenFromCode(params) {
+    //     return request.get({ url: '/orp-svr/oidc/callback', params: params });
+    // }
 }

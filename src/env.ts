@@ -27,3 +27,6 @@ export const isSimulateNetDelay: boolean = JSON.parse(process.env.VUE_APP_SIMULA
 
 /**  iconfont.cn中项目库的地址 */
 export const iconFontUrl = process.env.VUE_APP_ICON_FONT_URL;
+
+/** 是否开启将delete、put等请求转换为post请求 */
+export const xHTTPMethodOverride = process.env.VUE_APP_X_HTTP_METHOD_OVERRIDE || false;
