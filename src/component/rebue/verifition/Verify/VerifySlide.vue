@@ -308,8 +308,6 @@ export default {
               this.$parent.closeBox()
               this.$parent.$emit('success', {captchaVerification})
             }, 1000)
-          } else {
-            
           }
         }).catch((err) => {
             this.moveBlockBackgroundColor = '#d9534f'
@@ -371,8 +369,6 @@ export default {
           this.blockBackImgBase = jigsawImageBase64
           this.backToken = token
           this.secretKey = secretKey
-        } else {
-         
         }
 
         // 判断接口请求次数是否失效
@@ -382,6 +378,12 @@ export default {
         // }
       }).catch(err=>{
         this.tipWords = err.msg
+
+        // 验证码get异常处理
+        this.backToken = ''
+        this.secretKey = ''
+        this.backImgBase = ''
+        this.blockBackImgBase = ''
       }).finally(()=>{
         this.pending = false
       })
