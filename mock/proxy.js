@@ -1,9 +1,10 @@
 const config = {
+    mock: "",
     host: "http://127.0.0.1:10080/",
     luqing: "http://172.20.11.113:10080/",
     yuanman: "http://172.20.11.244:10080"
 }
-const target = config.host
+const target = config.mock
 
 module.exports = {
     proxy: {
