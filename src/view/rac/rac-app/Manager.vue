@@ -67,54 +67,34 @@ export default {
                 width: 180,
             },
             {
-                dataIndex: 'isAccess',
-                title: '是否接入',
-                width: 180,
-                ellipsis: true,
-                customRender: (text, record) => (
-                    <a-popconfirm
-                        title={record.isAccess ? '确认移除?' : '确认接入？'}
-                        visible={record.addVisible}
-                        onVisibleChange={visible => {
-                            this.handleAccessVisibleChange(visible, record);
-                        }}
-                        onConfirm={() => {
-                            this.confirmAccess(record);
-                        }}
-                    >
-                        <a-switch checked={record.isAccess} checked-children="是" un-checked-children="否"></a-switch>
-                    </a-popconfirm>
-                ),
-            },
-            // {
-            //     dataIndex: 'isEnabled',
-            //     title: '是否在应用平台启用',
-            //     width: 180,
-            //     ellipsis: true,
-            //     customRender: (text, record) => (
-            //         <a-popconfirm
-            //             title={record.isEnabled ? '确认在应用平台禁用？' : '确认在应用平台启用？'}
-            //             visible={record.enabledVisible}
-            //             onVisibleChange={visible => {
-            //                 this.handleEnableVisibleChange(visible, record);
-            //             }}
-            //             onConfirm={() => {
-            //                 this.confirmEnable(record);
-            //             }}
-            //         >
-            //             <a-switch checked={record.isEnabled} checked-children="是" un-checked-children="否"></a-switch>
-            //         </a-popconfirm>
-            //     ),
-            // },
-            {
                 dataIndex: 'remark',
                 title: '备注',
                 ellipsis: true,
             },
             {
+                dataIndex: 'isEnabled',
+                title: '启用',
+                width: 180,
+                ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popconfirm
+                        title={record.isEnabled ? '确认在应用平台禁用？' : '确认在应用平台启用？'}
+                        visible={record.enabledVisible}
+                        onVisibleChange={visible => {
+                            this.handleEnableVisibleChange(visible, record);
+                        }}
+                        onConfirm={e => {
+                            this.confirmEnable(e, record);
+                        }}
+                    >
+                        <a-switch checked={record.isEnabled} checked-children="启" un-checked-children="禁"></a-switch>
+                    </a-popconfirm>
+                ),
+            },
+            {
                 dataIndex: 'action',
                 title: '操作',
-                width: 160,
+                width: 300,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -151,12 +131,12 @@ export default {
                 title: '认证',
                 onClick: record => this.handleAuth(record),
             },
-            {
-                type: 'confirm',
-                title: '删除认证',
-                confirmTitle: '你确定要删除认证吗?',
-                onClick: record => this.handleDeleteAuth(record),
-            },
+            // {
+            //     type: 'confirm',
+            //     title: '删除认证',
+            //     confirmTitle: '你确定要删除认证吗?',
+            //     onClick: record => this.handleDeleteAuth(record),
+            // },
         ];
 
         return {
@@ -178,15 +158,22 @@ export default {
         this.refreshData();
     },
     methods: {
-        confirmAccess(record) {
-            //发起请求
-            setTimeout(() => {
-                this.$set(record, 'isAccess', !record.isAccess);
-            });
+        confirmEnable(e, record) {
+            const isEnabled = !record.isEnabled;
+            //调用启用禁用接口
+            racAppApi
+                .enable({
+                    id: record.id,
+                    isEnabled,
+                })
+                .then(() => {
+                    this.$set(record, 'isEnabled', isEnabled);
+                    //或者重新加载table
+                });
         },
         // 	显示隐藏的回调
-        handleAccessVisibleChange(visible, record) {
-            this.$set(record, 'addVisible', visible);
+        handleEnableVisibleChange(visible, record) {
+            this.$set(record, 'enabledVisible', visible);
         },
         refreshData() {
             this.loading = true;

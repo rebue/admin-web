@@ -11,15 +11,10 @@
             @ok="handleOk"
             :width="750"
         >
+            <a-button type="primary" icon="reload" style="float:right">重置</a-button>
             <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
                 <a-form-model-item label="应用名称" prop="name">
                     <a-input :value="model.name" disabled />
-                </a-form-model-item>
-                <a-form-model-item label="是否启用" required>
-                    <a-radio-group name="radioGroup" :default-value="false" v-model="model.isEnabled">
-                        <a-radio :value="true">是</a-radio>
-                        <a-radio :value="false">否</a-radio>
-                    </a-radio-group>
                 </a-form-model-item>
                 <a-form-model-item label="应用ID(AppID)" prop="clientId">
                     <a-input v-model.trim="model['clientId']" />
@@ -27,9 +22,6 @@
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
                     <a-input v-model.trim="model.secret" />
                 </a-form-model-item>
-                <!-- <a-form-model-item label="安全域名" prop="redirectUris">
-                    <a-input v-model.trim="model['redirectUris']" type="textarea" />
-                </a-form-model-item> -->
                 <a-form-model-item label="安全域名" required>
                     <a-form-model-item
                         v-for="(item, index) in model.redirectUris"
@@ -52,9 +44,6 @@
                     </a-form-model-item>
                 </a-form-model-item>
 
-                <!-- <a-form-model-item label="IP白名单" prop="ipAddrs">
-                    <a-input v-model.trim="model['ipAddrs']" type="textarea" />
-                </a-form-model-item> -->
                 <a-form-model-item label="IP白名单" required>
                     <a-form-model-item
                         v-for="(item, index) in model.ipAddrs"
@@ -88,7 +77,6 @@ import BaseModal from '@/component/rebue/BaseModal.vue';
 
 const modelSource = {
     appId: '',
-    isEnabled: false,
     clientId: '',
     secret: '',
     redirectUris: [

@@ -7,7 +7,6 @@ const list = [
         realmId: 'platform',
         menuUrn: 'http://127.0.0.1:13080/menus/platform',
         remark: '对平台的后台管理提供最基本的功能',
-        isAdd: false,
         isEnabled: false
     },
     {
@@ -16,7 +15,6 @@ const list = [
         realmId: 'ops',
         menuUrn: 'http://127.0.0.1:13080/menus/ops',
         remark: '对平台的后台管理提供最基本的功能',
-        isAdd: false,
         isEnabled: false
     },
 ];
@@ -43,7 +41,7 @@ module.exports = {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
-                list.splice(replacedIndex, 1, body);
+                list.splice(replacedIndex, 1, { ...list[replacedIndex], ...body});
                 return res.json({
                     result: 1,
                     msg: '修改成功',
@@ -114,5 +112,22 @@ module.exports = {
                 },
             });
         },
+        /** 启用或禁用 */
+        'POST /rac-svr/rac/app/enable': (req, res, u, b) => {
+            const body = (b && b.body) || req.body;
+            const findIndex = list.findIndex(item => item.id === body.id);
+            if (findIndex !== -1) {
+                list[findIndex].isEnabled = body.isEnabled;
+                return res.json({
+                    result: 1,
+                    msg: body.isEnabled ? '启用' : '禁用' + '成功',
+                });
+            } else {
+                return res.json({
+                    result: -1,
+                    msg: body.isEnabled ? '启用' : '禁用' + '失败，找不到要修改的记录',
+                });
+            }
+        }
     },
 };
