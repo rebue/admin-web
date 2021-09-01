@@ -8,32 +8,34 @@
             v-bind="$attrs"
             v-on="$listeners"
             @show="handleShow"
-            @ok="handleOk"
+            @ok="handleSubmit"
             :width="750"
         >
-            <a-button type="primary" icon="reload" style="float:right">重置</a-button>
             <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
                 <a-form-model-item label="应用名称" prop="name">
                     <a-input :value="model.name" disabled />
                 </a-form-model-item>
+                <a-form-model-item label="认证">
+                    <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked />
+                </a-form-model-item>
                 <a-form-model-item label="应用ID(AppID)" prop="clientId">
-                    <a-input v-model.trim="model['clientId']" />
+                    <a-input v-model.trim="model['clientId']" :disabled="disabled" />
                 </a-form-model-item>
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
-                    <a-input v-model.trim="model.secret" />
+                    <a-input v-model.trim="model.secret" :disabled="disabled" />
                 </a-form-model-item>
-                <a-form-model-item label="安全域名" required>
+                <a-form-model-item label="安全域名" :required="enable">
                     <a-form-model-item
                         v-for="(item, index) in model.redirectUris"
                         :key="'redirectUris' + item.key"
                         :prop="'redirectUris.' + index + '.value'"
                         :rules="{
-                            required: true,
+                            required: enable,
                             message: '请输入安全域名',
                             trigger: 'blur',
                         }"
                     >
-                        <a-input v-model.trim="item.value" style="width:85%" />
+                        <a-input v-model.trim="item.value" style="width:85%" :disabled="disabled" />
                         <a-icon class="dynamic-add-button" type="plus-circle" @click="addUri(index)" />
                         <a-icon
                             v-if="model.redirectUris.length > 1"
@@ -44,18 +46,18 @@
                     </a-form-model-item>
                 </a-form-model-item>
 
-                <a-form-model-item label="IP白名单" required>
+                <a-form-model-item label="IP白名单" :required="enable">
                     <a-form-model-item
                         v-for="(item, index) in model.ipAddrs"
                         :key="'ipAddrs' + item.key"
                         :prop="'ipAddrs.' + index + '.value'"
                         :rules="{
-                            required: true,
+                            required: enable,
                             message: '请输入IP白名单',
                             trigger: 'blur',
                         }"
                     >
-                        <a-input v-model.trim="item.value" style="width:85%" />
+                        <a-input v-model.trim="item.value" style="width:85%" :disabled="disabled" />
                         <a-icon class="dynamic-add-button" type="plus-circle" @click="addIp(index)" />
                         <a-icon
                             v-if="model.ipAddrs.length > 1"
@@ -114,15 +116,24 @@ export default {
             EditFormTypeDic,
             editFormType: EditFormTypeDic.None,
             model: { ...JSON.parse(JSON.stringify(modelSource)) },
-            rules: {
+            enable: true,
+        };
+    },
+    computed: {
+        rules() {
+            const rules = {
                 clientId: [
                     { required: true, message: '请输入应用ID', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 secret: [
                     { required: true, message: '请输入应用钥', trigger: 'blur', transform: val => val && val.trim() },
                 ],
-            },
-        };
+            };
+            return this.enable ? rules : {};
+        },
+        disabled() {
+            return !this.enable;
+        },
     },
     methods: {
         linetoArr(val) {
@@ -219,7 +230,27 @@ export default {
                 }
             });
         },
+        handleSubmit() {
+            if (this.enable) {
+                this.handleOk();
+            } else {
+                if (this.editFormType === EditFormTypeDic.Add) {
+                    //不认证，添加，提交，直接关闭弹窗
+                    this.visible = false;
+                } else if (this.editFormType === EditFormTypeDic.Modify) {
+                    //不认证，修改，提交，删除认证
+                    this.loading = true;
+                    this.api
+                        .delById(this.model.id)
+                        .then(() => (this.visible = false))
+                        .finally(() => (this.loading = false));
+                }
+            }
+        },
         addUri(index) {
+            if (this.disabled) {
+                return;
+            }
             const item = {
                 key: new Date().getTime(),
                 label: '',
@@ -232,9 +263,15 @@ export default {
             this.model.redirectUris.splice(index + 1, 0, item);
         },
         removeUri(index) {
+            if (this.disabled) {
+                return;
+            }
             this.model.redirectUris.splice(index, 1);
         },
         addIp(index) {
+            if (this.disabled) {
+                return;
+            }
             // 插入空项
             //递增， 解决dom复用问题
             const item = {
@@ -249,6 +286,9 @@ export default {
             this.model.ipAddrs.splice(index + 1, 0, item);
         },
         removeIp(index) {
+            if (this.disabled) {
+                return;
+            }
             this.model.ipAddrs.splice(index, 1);
         },
     },

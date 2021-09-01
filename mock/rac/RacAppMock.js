@@ -113,7 +113,7 @@ module.exports = {
             });
         },
         /** 启用或禁用 */
-        'POST /rac-svr/rac/app/enable': (req, res, u, b) => {
+        'PUT /rac-svr/rac/app/enable': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {

@@ -27,10 +27,10 @@
                 <a-form-model-item label="备注" prop="remark">
                     <a-input v-model.trim="model.remark" type="textarea" />
                 </a-form-model-item>
-                <a-form-model-item label="应用图片" prop="objId">
-                    <a-input v-model.trim="model.objId" type="hidden" />
+                <a-form-model-item label="应用图片" prop="imgUrl">
+                    <a-input v-model.trim="model.imgUrl" type="hidden" />
                     <a-upload
-                        name="objId"
+                        name="avatar"
                         list-type="picture-card"
                         class="avatar-uploader"
                         :show-upload-list="false"
@@ -39,9 +39,9 @@
                         accept="image/*"
                         @change="handleUploadChange"
                     >
-                        <img v-if="logoURL" :src="logoURL" alt="avatar" width="80" height="80" />
+                        <img v-if="model.imgUrl" :src="model.imgUrl" alt="avatar" width="80" height="80" />
                         <div v-else>
-                            <a-icon :type="logoLoading ? 'loading' : 'plus'" />
+                            <a-icon :type="imgLoading ? 'loading' : 'plus'" />
                         </div>
                     </a-upload>
                 </a-form-model-item>
@@ -62,7 +62,7 @@ const modelSource = {
     url: '',
     realmId: '',
     remark: '',
-    objId: '',
+    imgUrl: '',
 };
 export default {
     components: {
@@ -94,8 +94,7 @@ export default {
                     { required: true, message: '请输入应用名称', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
-            logoURL: '',
-            logoLoading: false,
+            imgLoading: false,
         };
     },
     methods: {
@@ -172,16 +171,15 @@ export default {
         },
         handleUploadChange(info) {
             if (info.file.status === 'uploading') {
-                this.logoLoading = true;
+                this.imgLoading = true;
                 return;
             }
             if (info.file.status === 'done') {
                 // Get this url from response in real world.
                 const res = info.file.response;
-                this.model.objId = res.extra.id;
-                this.logoURL = res.extra.url;
-                this.logoLoading = false;
+                this.model.imgUrl = res.extra.url;
             }
+            this.imgLoading = false;
         },
         beforeUpload(file) {
             const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';

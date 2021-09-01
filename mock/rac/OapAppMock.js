@@ -3,13 +3,13 @@ const { parse } = require('url');
 const list = [
     {
         appId: 'platform-admin-web',
-        id: 'xxx',
-        clientId: "test-app",
-        ipAddrs: ["http://baidu/.com", "http://baidu/.com"],
-        isEnabled: false,
-        name: "平台后台管理",
-        redirectUris: ["http://baidu/.com", "http://baidu/.com"],
-        secret: "test-app-secrert"
+        // id: 'xxx',
+        // clientId: "test-app",
+        // ipAddrs: ["http://baidu/.com", "http://baidu/.com"],
+        // isEnabled: false,
+        // name: "平台后台管理",
+        // redirectUris: ["http://baidu/.com", "http://baidu/.com"],
+        // secret: "test-app-secrert"
     },
     // {
     //     appId: 'ops-admin-web',
