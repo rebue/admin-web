@@ -2,7 +2,6 @@ import { getAppId } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
-import AppOpsIndex from '@/view/app-ops/Index.vue';
 
 const RouteView = {
     name: 'RouteView',
@@ -15,9 +14,37 @@ const RouteView = {
  */
 export const constantRouters = [
     {
-        path: '/app-ops/index',
-        name: 'app-ops-index',
-        component: AppOpsIndex,
+        // 个人应用平台
+        path: '/app',
+        name: 'app',
+        component: () => import('@/view/app/Index.vue'),
+        redirect: '/app/index',
+        children: [
+            {
+                path: '/app/index',
+                name: 'app-index',
+                meta: { title: '我的应用', keepAlive: false },
+                component: () => import('@/view/app/index/Index.vue'),
+            },
+            {
+                path: '/app/mine',
+                name: 'app-mine',
+                meta: { title: '个人中心', keepAlive: false },
+                component: () => import('@/view/app/mine/Mine.vue'),
+            },
+            {
+                path: '/app/auth',
+                name: 'app-auth',
+                meta: { title: '关联认证', keepAlive: false },
+                component: () => import('@/view/app/auth/Auth.vue'),
+            },
+            {
+                path: '/app/log',
+                name: 'app-log',
+                meta: { title: '操作日志', keepAlive: false },
+                component: () => import('@/view/app/log/Log.vue'),
+            },
+        ],
     },
     {
         path: '/demo',
