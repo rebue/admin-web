@@ -12,8 +12,8 @@
             :width="750"
         >
             <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                <a-form-model-item label="应用名称" prop="name">
-                    <a-input :value="model.name" disabled />
+                <a-form-model-item label="应用名称">
+                    <a-input :value="model.appName" disabled />
                 </a-form-model-item>
                 <a-form-model-item label="认证">
                     <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked />
@@ -24,13 +24,13 @@
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
                     <a-input v-model.trim="model.secret" :disabled="disabled" />
                 </a-form-model-item>
-                <a-form-model-item label="安全域名" :required="enable">
+                <a-form-model-item label="安全域名" required>
                     <a-form-model-item
                         v-for="(item, index) in model.redirectUris"
                         :key="'redirectUris' + item.key"
                         :prop="'redirectUris.' + index + '.value'"
                         :rules="{
-                            required: enable,
+                            required: true,
                             message: '请输入安全域名',
                             trigger: 'blur',
                         }"
@@ -46,13 +46,13 @@
                     </a-form-model-item>
                 </a-form-model-item>
 
-                <a-form-model-item label="IP白名单" :required="enable">
+                <a-form-model-item label="IP白名单" required>
                     <a-form-model-item
                         v-for="(item, index) in model.ipAddrs"
                         :key="'ipAddrs' + item.key"
                         :prop="'ipAddrs.' + index + '.value'"
                         :rules="{
-                            required: enable,
+                            required: true,
                             message: '请输入IP白名单',
                             trigger: 'blur',
                         }"
@@ -76,9 +76,10 @@
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { oapAppApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
-
+// 表单空数据结构
 const modelSource = {
     appId: '',
+    appName: '',
     clientId: '',
     secret: '',
     redirectUris: [
@@ -116,21 +117,18 @@ export default {
             EditFormTypeDic,
             editFormType: EditFormTypeDic.None,
             model: { ...JSON.parse(JSON.stringify(modelSource)) },
-            enable: true,
-        };
-    },
-    computed: {
-        rules() {
-            const rules = {
+            rules: {
                 clientId: [
                     { required: true, message: '请输入应用ID', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 secret: [
                     { required: true, message: '请输入应用钥', trigger: 'blur', transform: val => val && val.trim() },
                 ],
-            };
-            return this.enable ? rules : {};
-        },
+            },
+            enable: true, // false不认证：表单域会disabled, 表单清除校验，禁用点击添加和删除
+        };
+    },
+    computed: {
         disabled() {
             return !this.enable;
         },
@@ -144,27 +142,40 @@ export default {
             });
         },
         formatList(list) {
-            return list.map((v, index) => {
-                return {
-                    value: v,
-                    key: new Date().getTime() + index,
-                };
-            });
+            if (list.length) {
+                return list.map((v, index) => {
+                    return {
+                        value: v,
+                        key: new Date().getTime() + index,
+                    };
+                });
+            } else {
+                return [
+                    {
+                        value: '',
+                        key: new Date().getTime(),
+                    },
+                ];
+            }
+        },
+        formatDetail(detail) {
+            const { redirectUris, ipAddrs } = detail;
+            if (redirectUris) {
+                detail.redirectUris = this.formatList(redirectUris);
+            }
+            if (ipAddrs) {
+                detail.ipAddrs = this.formatList(ipAddrs);
+            }
+            return detail;
         },
         show: function(editFormType, record) {
             this.editFormType = editFormType;
-            const { redirectUris, ipAddrs } = record;
-            if (redirectUris) {
-                record.redirectUris = this.formatList(redirectUris);
-            }
-            if (ipAddrs) {
-                record.ipAddrs = this.formatList(ipAddrs);
-            }
             this.model = {
                 ...JSON.parse(JSON.stringify(modelSource)),
-                ...JSON.parse(JSON.stringify(record)),
+                ...JSON.parse(JSON.stringify(this.formatDetail(record))),
             };
             this.visible = true;
+            this.enable = true;
         },
         handleShow() {
             this.$nextTick(() => {
@@ -175,16 +186,9 @@ export default {
                     this.api
                         .getByAppId(this.model.appId)
                         .then(ro => {
-                            const { redirectUris, ipAddrs } = ro.extra;
-                            if (redirectUris) {
-                                ro.extra.redirectUris = this.formatList(redirectUris);
-                            }
-                            if (ipAddrs) {
-                                ro.extra.ipAddrs = this.formatList(ipAddrs);
-                            }
                             this.model = {
-                                ...JSON.parse(JSON.stringify(modelSource)),
-                                ...JSON.parse(JSON.stringify(ro.extra)),
+                                ...JSON.parse(JSON.stringify(this.model)),
+                                ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
                             };
                         })
                         .catch(() => (this.visible = false))
@@ -290,6 +294,13 @@ export default {
                 return;
             }
             this.model.ipAddrs.splice(index, 1);
+        },
+    },
+    watch: {
+        enable(val) {
+            if (!val) {
+                this.$refs.form.clearValidate();
+            }
         },
     },
 };

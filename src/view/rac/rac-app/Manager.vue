@@ -131,12 +131,6 @@ export default {
                 title: '认证',
                 onClick: record => this.handleAuth(record),
             },
-            // {
-            //     type: 'confirm',
-            //     title: '删除认证',
-            //     confirmTitle: '你确定要删除认证吗?',
-            //     onClick: record => this.handleDeleteAuth(record),
-            // },
         ];
 
         return {
@@ -158,6 +152,9 @@ export default {
         this.refreshData();
     },
     methods: {
+        /**
+         * 启用禁用确认
+         */
         confirmEnable(e, record) {
             const isEnabled = !record.isEnabled;
             //调用启用禁用接口
@@ -227,11 +224,15 @@ export default {
         handleEditFormClose() {
             this.refreshTableData();
         },
+        /**
+         * 处理应用认证的事件
+         */
         handleAuth(record) {
+            //根据appId查询认证信息，判断是展示添加弹窗还是编辑弹窗
             oapAppApi.getByAppId(record.id).then(ro => {
                 let item = {
-                    appId: record.id,
-                    name: record.name,
+                    appId: record.id, // 添加认证需要appId
+                    appName: record.name, //把应用名称带到弹窗
                 };
                 if (ro?.extra) {
                     item = { ...item, ...ro.extra };
@@ -239,12 +240,6 @@ export default {
                     return;
                 }
                 this.$refs.editAuthForm.show(EditFormTypeDic.Add, item);
-            });
-        },
-        handleDeleteAuth(record) {
-            this.loading = true;
-            oapAppApi.delById(record.id).finally(() => {
-                this.refreshTableData();
             });
         },
     },
