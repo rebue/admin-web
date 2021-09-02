@@ -20,4 +20,10 @@ export default class OapAppApi extends BaseCrudApi {
     existById(id: string): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/exist-by-id?id=' + id });
     }
+    /**
+     * 查询所有应用以及认证应用
+     */
+    listAndTripartite(): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/list-and-tripartite' });
+    }
 }
