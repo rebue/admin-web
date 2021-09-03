@@ -34,6 +34,7 @@ import {
     Drawer,
     Space,
     Upload,
+    Calendar,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -98,5 +99,7 @@ Vue.use(Tooltip);
 Vue.use(Avatar);
 //上传
 Vue.use(Upload);
+
+Vue.use(Calendar);
 
 Vue.prototype.$confirm = Modal.confirm;
