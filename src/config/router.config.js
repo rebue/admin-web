@@ -72,6 +72,11 @@ export const constantRouters = [
                 name: 'ops-sign-in',
                 component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
             },
+            {
+                path: '/sign-in/unified',
+                name: 'unified-sign-in',
+                component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
+            },
         ],
     },
     {

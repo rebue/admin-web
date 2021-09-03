@@ -143,11 +143,11 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //表单校验成功后，验证码逻辑
-                    // if (!this.captcha) {
-                    //     this.$refs.verify.show();
-                    //     this.loading = false;
-                    //     return;
-                    // }
+                    if (!this.captcha) {
+                        this.$refs.verify.show();
+                        this.loading = false;
+                        return;
+                    }
                     this.api
                         .signInByAccountName({
                             appId: this.appId,
