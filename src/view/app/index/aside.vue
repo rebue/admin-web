@@ -7,7 +7,7 @@
             <span class="font-14">2017118007</span>
         </div>
         <div class="time-wrap">
-            <a-icon type="clock-circle" class="clock" />
+            <img :src="require('../assets/img/clock.png')" />
             <div>
                 <div class="hour" v-text="hour"></div>
                 <span class="font-14" v-text="date"></span>
@@ -102,10 +102,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
-}
-.clock {
-    font-size: 88px;
-    font-weight: normal;
 }
 .hour {
     font-size: 40px;
