@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('./logo.png')" alt="" width="207" height="70" class="logo" />
+            <img :src="require('./logo.png')" alt="" width="207" height="78" class="logo" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -89,8 +89,8 @@ export default {
         }
     }
     .footer {
-        height: 70px;
-        line-height: 70px;
+        height: 170px;
+        line-height: 170px;
         text-align: center;
         vertical-align: middle;
         color: #a2a1a1;

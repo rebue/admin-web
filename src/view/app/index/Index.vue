@@ -16,7 +16,13 @@
                             :key="index"
                         >
                             <a class="block flex-box flex-col al-c link-item" :href="item.url" target="_blank">
-                                <img :src="item.imgUrl || defaultImg()" alt="" width="56px" height="56px" />
+                                <img
+                                    :src="item.imgUrl || defaultImg()"
+                                    alt=""
+                                    width="56px"
+                                    height="56px"
+                                    class="item-logo"
+                                />
                                 <div class="w80 mt10 font-14 tx-c ellipsis-2">{{ item.name }}</div>
                             </a>
                         </a-col>
@@ -38,7 +44,13 @@
                             :key="index"
                         >
                             <a class="block flex-box flex-col al-c radius-4 link-item" :href="item.url" target="_blank">
-                                <img :src="item.imgUrl || defaultImg()" alt="" width="60px" height="60px" />
+                                <img
+                                    :src="item.imgUrl || defaultImg()"
+                                    alt=""
+                                    width="56px"
+                                    height="56px"
+                                    class="item-logo"
+                                />
                                 <div class="w80 mt10 font-14 tx-c ellipsis-2">{{ item.name }}</div>
                             </a>
                         </a-col>
@@ -136,6 +148,9 @@ export default {
     }
     .link-item {
         margin-bottom: 57px;
+    }
+    .item-logo {
+        border-radius: 50%;
     }
 }
 </style>
