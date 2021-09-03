@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import Header from '@/component/app/Header.vue';
+import { racMenuAction } from '@/action/Action';
 export default {
     name: 'app',
     components: { Header },
@@ -19,6 +20,9 @@ export default {
     },
     watch: {},
     methods: {},
+    mounted() {
+        racMenuAction.refreshAccountInfo();
+    },
 };
 </script>
 

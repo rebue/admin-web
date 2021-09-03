@@ -8,7 +8,7 @@
                         <img :src="require('../assets/img/safety.png')" width="20" height="24" />
                         <span class="font-20">已认证系统（{{ authedList.length }}个)</span>
                     </div>
-                    <a-row>
+                    <a-row class="content">
                         <a-col
                             class="flex-box al-c ju-c mb20"
                             :span="4"
@@ -36,7 +36,7 @@
                         <img :src="require('../assets/img/unsafety.png')" width="20" height="24" />
                         <span class="font-20">未认证系统（{{ unauthList.length }}个）</span>
                     </div>
-                    <a-row>
+                    <a-row class="content">
                         <a-col
                             class="flex-box al-c ju-c mb20"
                             :span="4"
@@ -78,7 +78,7 @@ export default {
         };
     },
     created() {
-        this.fetchAuthList();
+        this.loopFetch();
     },
     methods: {
         defaultImg() {
@@ -86,6 +86,7 @@ export default {
         },
         fetchAuthList() {
             this.loading = true;
+            //加上处理轮询
             oapAppApi
                 .listAndTripartite()
                 .then(ro => {
@@ -123,6 +124,11 @@ export default {
                     this.loading = false;
                 });
         },
+        // 轮询加载
+        loopFetch() {
+            this.fetchAuthList();
+            setTimeout(this.loopFetch, process.env.VUE_APP_APP_OPS_LOOP * 60 * 1000);
+        },
     },
 };
 </script>
@@ -151,6 +157,9 @@ export default {
     }
     .item-logo {
         border-radius: 50%;
+    }
+    .content {
+        min-height: 100px;
     }
 }
 </style>

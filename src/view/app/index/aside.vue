@@ -1,10 +1,15 @@
 <template>
     <div class="aside-wrap">
         <div class="user-wrap">
-            <a-avatar :size="75" icon="user" class="avatar" src="" />
-            <span class="font-18 user-name">陈亿辛</span>
-            <span class="font-14" style="margin-right:25px;">机电工程学院</span>
-            <span class="font-14">2017118007</span>
+            <a-avatar
+                :size="75"
+                class="avatar"
+                :icon="accountStore.avatar ? accountStore.avatar : 'user'"
+                :src="accountStore.avatar ? accountStore.avatar : undefined"
+            />
+            <span class="font-18 user-name">{{ accountStore.nickname }}</span>
+            <span class="font-14" style="margin-right:25px;">学院名称XXXX</span>
+            <span class="font-14">学号XXXX</span>
         </div>
         <div class="time-wrap">
             <img :src="require('../assets/img/clock.png')" />
@@ -29,12 +34,14 @@
 
 <script lang="ts">
 import moment from 'moment';
+import { accountStore } from '@/store/Store';
 export default {
     name: 'app-aside',
     components: {},
     props: {},
     data() {
         return {
+            accountStore,
             loading: true,
             currentTime: moment(),
             hour: '',
