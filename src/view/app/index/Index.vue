@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { oapAppApi } from '@/api/Api';
-import Aside from './aside.vue';
+import Aside from './Aside.vue';
 export default {
     name: 'app-index',
     components: {
