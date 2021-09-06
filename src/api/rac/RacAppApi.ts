@@ -11,4 +11,14 @@ export default class RacAppApi extends BaseCrudApi {
     enable(mo): Promise<Ro> {
         return request.put({ url: this.baseUrn + '/enable', data: mo });
     }
+
+    /** 上移 */
+    moveUp(id: string): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/move-up', data: { id } });
+    }
+
+    /** 下移 */
+    moveDown(id: string): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/move-down', data: { id } });
+    }
 }
