@@ -11,7 +11,9 @@
             </div>
         </div>
         <div class="header-user">
-            <img :src="require('../../view/app/assets/img/logout.png')" @click="logout"/>
+            <a-popconfirm title="确定要退出吗?" @confirm="() => logout()" ok-text="确定" cancel-text="取消">
+                <img :src="require('../../view/app/assets/img/logout.png')" />
+            </a-popconfirm>
         </div>
         </div>
     </header>
