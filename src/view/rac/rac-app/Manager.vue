@@ -13,6 +13,8 @@
                             :query="{ realmId: curRealmId }"
                             :scrollX="600"
                             :defaultPagination="false"
+                            @moveUp="handleMoveUp"
+                            @moveDown="handleMoveDown"
                         >
                         </crud-table>
                     </a-tab-pane>
@@ -74,7 +76,7 @@ export default {
             {
                 dataIndex: 'isEnabled',
                 title: '启用',
-                width: 180,
+                width: 80,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popconfirm
@@ -94,9 +96,17 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 300,
+                width: 200,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
+            },
+            {
+                dataIndex: 'sort',
+                align: 'center',
+                title: '排序',
+                width: 100,
+                fixed: 'right',
+                scopedSlots: { customRender: 'sort' },
             },
         ];
 
@@ -240,6 +250,26 @@ export default {
                     return;
                 }
                 this.$refs.editAuthForm.show(EditFormTypeDic.Add, item);
+            });
+        },
+        /**
+         * 上移
+         */
+        handleMoveUp(record) {
+            this.loading = true;
+            this.api.moveUp(record.id).finally(() => {
+                this.refreshTableData();
+                this.loading = false;
+            });
+        },
+        /**
+         * 下移
+         */
+        handleMoveDown(record) {
+            this.loading = true;
+            this.api.moveDown(record.id).finally(() => {
+                this.refreshTableData();
+                this.loading = false;
             });
         },
     },
