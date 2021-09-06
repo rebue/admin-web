@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('./logo.png')" alt="" width="207" height="70" class="logo" />
+            <img :src="require('./logo.png')" alt="" class="logo" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -9,6 +9,7 @@
             </div>
         </div>
         <div class="main">
+            <img :src="require('./makeup.png')" alt="" class="makeup" />
             <div class="login-card">
                 <public-sign-in class="form"></public-sign-in>
             </div>
@@ -34,18 +35,21 @@ export default {
 
 <style lang="less" scoped>
 .body {
+    min-width: 1300px;
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: #fff;
     .header {
         height: 70px;
-        margin: 50px 0;
+        margin: 20px 0;
         font-size: 24px;
         display: flex;
         align-items: flex-end;
         color: #000;
         .logo {
+            width: 207px;
+            height: 78px;
             margin-left: 55px;
         }
         .divider {
@@ -68,29 +72,30 @@ export default {
     }
     .main {
         flex-grow: 1;
-        min-height: 740px;
+        background: url(./bg.png) no-repeat;
+        background-size: cover;
         background-color: #3e78ed;
         position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .makeup {
+            width: 54%;
+            height: 84%;
+        }
         .login-card {
             width: 480px;
             height: 529px;
+            margin: 20px 0;
             padding: 50px;
-            position: absolute;
-            left: auto;
-            right: 160px;
-            top: 50%;
-            transform: translateY(-50%);
-            // display: flex;
-            // flex-direction: column;
-            // justify-content: center; /* 水平居中 */
-            // align-items: center; /* 垂直居中 */
+            margin-right: 100px;
             background-color: #fff;
             border-radius: 10px;
         }
     }
     .footer {
-        height: 70px;
-        line-height: 70px;
+        height: 50px;
+        line-height: 50px;
         text-align: center;
         vertical-align: middle;
         color: #a2a1a1;
