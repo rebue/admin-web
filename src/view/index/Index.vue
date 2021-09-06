@@ -96,6 +96,11 @@
             @crop-upload-success="handleCropUploadSuccess"
             @crop-upload-fail="handleCropUploadFail"
         />
+        <change-pswd-form
+            :record="{ id: accountStore.accountId }"
+            :visible.sync="changePswdFormVisible"
+            @close="refreshAccountInfo"
+        />
     </fragment>
 </template>
 
@@ -112,6 +117,7 @@ import { AppIdDic } from '@/dic/AppIdDic';
 import { removeJwtToken } from '@/util/cookie';
 import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
+import ChangePswdForm from '@/view/rac/rac-account/ChangePswdForm.vue';
 
 export default observer({
     name: 'Index',
@@ -120,6 +126,7 @@ export default observer({
         Ellipsis,
         SettingDrawer,
         ImageUploader,
+        ChangePswdForm,
     },
     data() {
         const appId = getAppId();
@@ -149,6 +156,7 @@ export default observer({
                 hideCopyButton: false,
             },
             showImageUploader: false,
+            changePswdFormVisible: false,
         };
     },
     computed: {
@@ -157,7 +165,7 @@ export default observer({
         },
     },
     mounted() {
-        racMenuAction.refreshAccountInfo();
+        this.refreshAccountInfo();
     },
     methods: {
         i18nRender,
@@ -181,6 +189,7 @@ export default observer({
                     break;
                 /** 修改密码 */
                 case 'ChangePswd':
+                    this.changePswdFormVisible = true;
                     break;
                 /**退出应用 */
                 case 'SignOut':
@@ -208,7 +217,7 @@ export default observer({
             console.log('-------- upload success --------');
             console.log(jsonData);
             console.log('field: ' + field);
-            racMenuAction.refreshAccountInfo();
+            this.refreshAccountInfo();
         },
         /**
          * upload fail
@@ -251,6 +260,9 @@ export default observer({
                     }
                     break;
             }
+        },
+        refreshAccountInfo() {
+            racMenuAction.refreshAccountInfo();
         },
     },
 });
