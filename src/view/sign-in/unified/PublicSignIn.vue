@@ -8,7 +8,7 @@
                             size="large"
                             v-autofocus
                             v-model.trim="form.accountName"
-                            placeholder="请输入账号"
+                            placeholder="请输入账号/手机号"
                             class="input"
                         >
                             <template #prefix><a-icon type="user"/></template>
