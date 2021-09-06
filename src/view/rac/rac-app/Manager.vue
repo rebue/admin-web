@@ -94,6 +94,13 @@ export default {
                 ),
             },
             {
+                dataIndex: 'isCertified',
+                title: '是否认证',
+                width: 120,
+                ellipsis: true,
+                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
+            },
+            {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
@@ -220,9 +227,14 @@ export default {
          */
         handleDel(record) {
             this.loading = true;
-            this.api.delById(record.id).finally(() => {
-                this.refreshTableData();
-            });
+            this.api
+                .delById(record.id)
+                .then(() => {
+                    this.refreshTableData();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         /**
          * 处理应用菜单的事件
@@ -257,20 +269,28 @@ export default {
          */
         handleMoveUp(record) {
             this.loading = true;
-            this.api.moveUp(record.id).finally(() => {
-                this.refreshTableData();
-                this.loading = false;
-            });
+            this.api
+                .moveUp(record.id)
+                .then(() => {
+                    this.refreshTableData();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         /**
          * 下移
          */
         handleMoveDown(record) {
             this.loading = true;
-            this.api.moveDown(record.id).finally(() => {
-                this.refreshTableData();
-                this.loading = false;
-            });
+            this.api
+                .moveDown(record.id)
+                .then(() => {
+                    this.refreshTableData();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
 };
