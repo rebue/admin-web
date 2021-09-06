@@ -35,7 +35,7 @@ export default {
                     path: '/app/mine',
                 },
                 {
-                    name: '关联认证',
+                    name: '安全中心',
                     path: '/app/auth',
                 },
                 {
