@@ -42,7 +42,7 @@ export const constantRouters = [
                 path: '/app/log',
                 name: 'app-log',
                 meta: { title: '操作日志', keepAlive: false },
-                component: () => import('@/view/app/log/Log.vue'),
+                component: () => import('@/view/app/log/Index.vue'),
             },
         ],
     },

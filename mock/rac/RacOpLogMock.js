@@ -8,7 +8,7 @@ const mockList = Mock.mock({
         'id|+1': 10000000,
         'realmId|+1': ['default', 'platform', 'ops'],
         "accountId|1-1000000": 193201,
-        "accountName": "@name()",
+        "signInName": "@name()",
         'opType': '@pick(["登录", "注册", "操作", "查询"])',
         'opTitle': '@title()',
         'opDetail': '@cparagraph',
@@ -22,7 +22,7 @@ module.exports = {
     opLoglist,
     routes: {
         /** 查询记录 */
-        'GET /rac-svr/op-log/page': (req, res, u, b) => {
+        'GET /rac-svr/rac/op-log/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
