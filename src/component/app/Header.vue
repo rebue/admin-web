@@ -34,7 +34,7 @@ export default {
                 },
                 {
                     name: '个人中心',
-                    path: '/app/mine',
+                    path: '/app/person-center',
                 },
                 {
                     name: '安全中心',

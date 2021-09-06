@@ -27,10 +27,10 @@ export const constantRouters = [
                 component: () => import('@/view/app/index/Index.vue'),
             },
             {
-                path: '/app/mine',
-                name: 'app-mine',
+                path: '/app/person-center',
+                name: 'app-person-center',
                 meta: { title: '个人中心', keepAlive: false },
-                component: () => import('@/view/app/mine/Mine.vue'),
+                component: () => import('@/view/app/person-center/Index.vue'),
             },
             {
                 path: '/app/auth',

@@ -6,6 +6,7 @@ import {
     ConfigProvider,
     LocaleProvider,
     Divider,
+    Form,
     FormModel,
     Icon,
     Input,
@@ -35,6 +36,8 @@ import {
     Space,
     Upload,
     Calendar,
+    Empty,
+    List,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -62,6 +65,7 @@ Vue.use(Spin);
 Vue.use(Space);
 
 // 表单
+Vue.use(Form);
 Vue.use(FormModel);
 Vue.use(Input);
 Vue.use(DatePicker);
@@ -101,5 +105,9 @@ Vue.use(Avatar);
 Vue.use(Upload);
 
 Vue.use(Calendar);
+
+Vue.use(Empty);
+
+Vue.use(List);
 
 Vue.prototype.$confirm = Modal.confirm;
