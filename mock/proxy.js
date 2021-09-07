@@ -4,7 +4,7 @@ const config = {
     luqing: "http://172.20.11.113:10080/",
     yuanman: "http://172.20.11.244:10080"
 }
-const target = config.yuanman
+const target = config.host
 
 module.exports = {
     proxy: {
