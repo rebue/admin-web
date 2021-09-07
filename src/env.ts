@@ -18,7 +18,7 @@ export const requestBaseUrl = (function() {
         ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
             (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443));
 
-    return empty ? '' : result + ':' + process.env.VUE_APP_REQUEST_BASE_PORT;
+    return empty ? result : result + ':' + process.env.VUE_APP_REQUEST_BASE_PORT;
 })();
 
 /** JWT Token的Key */
