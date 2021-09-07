@@ -7,16 +7,19 @@ export const requestBaseHost = process.env.VUE_APP_REQUEST_BASE_HOST;
 /** 请求基础URL的端口号部分 */
 export const requestBasePort = process.env.VUE_APP_REQUEST_BASE_PORT;
 /** 请求基础URL */
-export const requestBaseUrl =
-    process.env.VUE_APP_REQUEST_BASE_SCHEME +
-    '://' +
-    process.env.VUE_APP_REQUEST_BASE_HOST +
-    (process.env.VUE_APP_REQUEST_BASE_PORT &&
-    process.env.VUE_APP_REQUEST_BASE_PORT.trim() !== '' &&
-    ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
-        (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443))
-        ? ''
-        : ':' + process.env.VUE_APP_REQUEST_BASE_PORT);
+export const requestBaseUrl = (function() {
+    if (process.env.VUE_APP_REQUEST_CUSTOMIZE === 'enable') {
+        return '';
+    }
+    const result = process.env.VUE_APP_REQUEST_BASE_SCHEME + '://' + process.env.VUE_APP_REQUEST_BASE_HOST;
+    const empty =
+        process.env.VUE_APP_REQUEST_BASE_PORT &&
+        process.env.VUE_APP_REQUEST_BASE_PORT.trim() !== '' &&
+        ((process.env.VUE_APP_REQUEST_BASE_SCHEME === 'http' && process.env.VUE_APP_REQUEST_BASE_PORT === 80) ||
+            (process.env.VUE_APP_REQUEST_BASE_SCHEME === 'https' && process.env.VUE_APP_REQUEST_BASE_PORT === 443));
+
+    return empty ? '' : result + ':' + process.env.VUE_APP_REQUEST_BASE_PORT;
+})();
 
 /** JWT Token的Key */
 export const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
