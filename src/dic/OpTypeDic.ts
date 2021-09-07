@@ -13,7 +13,7 @@ export enum OpTypeDic {
     /**启用 */
     enable = '启用',
     /**禁用 */
-    disEnale = '禁用',
+    disenale = '禁用',
     /**删除 */
     delete = '删除',
 }
