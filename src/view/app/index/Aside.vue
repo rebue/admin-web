@@ -32,7 +32,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script >
 import moment from 'moment';
 import { accountStore } from '@/store/Store';
 export default {
