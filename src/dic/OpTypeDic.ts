@@ -10,4 +10,5 @@ export enum OpTypeDic {
     add = '添加',
     /**未定义 */
     modify = '修改',
+    delete = '删除',
 }
