@@ -73,8 +73,8 @@ export default {
     data() {
         return {
             loading: true,
-            authedList: [] as object[],
-            unauthList: [] as object[],
+            authedList: [],
+            unauthList: [],
         };
     },
     created() {
