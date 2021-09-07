@@ -2378,7 +2378,7 @@ babel-plugin-transform-object-rest-spread@^6.26.0:
     babel-plugin-syntax-object-rest-spread "^6.8.0"
     babel-runtime "^6.26.0"
 
-babel-runtime@6.x, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
+babel-runtime@6.x, babel-runtime@^6.11.6, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbabel-runtime%2Fdownload%2Fbabel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -10415,6 +10415,13 @@ vue-i18n@^8.22.4:
   version "8.23.0"
   resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.23.0.tgz#4a65681a1dfe716d47e1d00ddbd6e0b88ea36735"
   integrity sha1-SmVoGh3+cW1H4dAN29bguI6jZzU=
+
+vue-image-crop-upload@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/vue-image-crop-upload/-/vue-image-crop-upload-3.0.3.tgz#0183cf8ebee30c08afba09a6fcb0a8fcd395e236"
+  integrity sha512-VeBsU0oI1hXeCvdpnu19DM/r3KTlI8SUXTxsHsU4MhDXR0ahRziiL9tf4FbILGx+gRVNZhGbl32yuM6TiaGNhA==
+  dependencies:
+    babel-runtime "^6.11.6"
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":
   version "16.1.2"

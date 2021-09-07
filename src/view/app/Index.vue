@@ -8,7 +8,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import Header from '@/component/app/Header.vue';
 import { racMenuAction } from '@/action/Action';
 export default {

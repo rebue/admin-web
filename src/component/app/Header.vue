@@ -19,8 +19,8 @@
     </header>
 </template>
 
-<script lang="ts">
-import { removeJwtToken } from '@/util/cookie'; 
+<script >
+import { removeJwtToken } from '@/util/cookie';
 export default {
     name: 'app-header',
     components: {},
