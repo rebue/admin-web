@@ -67,13 +67,15 @@
 </template>
 
 <script>
+import { when } from 'mobx';
+import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/rac/rac-account/ChangePswdForm.vue';
 import { racAccountApi } from '@/api/Api';
 
-export default {
+export default observer({
     name: 'app-person-center-index',
     components: {
         ImageUploader,
@@ -96,6 +98,15 @@ export default {
             changePswdFormVisible: false,
             account: {},
         };
+    },
+    mounted() {
+        when(
+            () => this.accountStore && this.accountStore.accountId,
+            () =>
+                racAccountApi.getById(this.accountStore.accountId).then(ro => {
+                    this.account = ro.extra.one;
+                })
+        );
     },
     methods: {
         refreshAccountInfo() {
@@ -125,22 +136,22 @@ export default {
             console.log('field: ' + field);
         },
     },
-    watch: {
-        accountStore: {
-            handler(val, old) {
-                // 用observer包裹，为啥只执行一次。
-                // accountStore是异步获取的，放在mounted会有执行顺序问题，所以放在watch
-                if (val && val.accountId) {
-                    racAccountApi.getById(val.accountId).then(ro => {
-                        this.account = ro.extra.one;
-                    });
-                }
-            },
-            immediate: true,
-            deep: true,
-        },
-    },
-};
+    // watch: {
+    //     accountStore: {
+    //         handler(val, old) {
+    //             // 用observer包裹，为啥只执行一次。
+    //             // accountStore是异步获取的，放在mounted会有执行顺序问题，所以放在watch
+    //             if (val && val.accountId) {
+    //                 racAccountApi.getById(val.accountId).then(ro => {
+    //                     this.account = ro.extra.one;
+    //                 });
+    //             }
+    //         },
+    //         immediate: true,
+    //         deep: true,
+    //     },
+    // },
+});
 </script>
 <style scoped>
 .avatar {
