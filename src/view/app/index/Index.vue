@@ -61,7 +61,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { oapAppApi } from '@/api/Api';
 import Aside from './Aside.vue';
 export default {
