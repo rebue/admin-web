@@ -6,9 +6,14 @@ export enum OpTypeDic {
     login = '登录',
     /** 注册 */
     register = '注册',
-    /** 操作 */
+    /** 添加 */
     add = '添加',
-    /**未定义 */
+    /**修改 */
     modify = '修改',
+    /**启用 */
+    enable = '启用',
+    /**禁用 */
+    disEnale = '禁用',
+    /**删除 */
     delete = '删除',
 }
