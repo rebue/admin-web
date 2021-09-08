@@ -1,8 +1,8 @@
 const config = {
     mock: "",
-    host: "http://127.0.0.1:10080/",
-    luqing: "http://172.20.11.113:10080/",
-    yuanman: "http://172.20.11.244:10080"
+    host: "http://127.0.0.1:10085/",
+    luqing: "http://172.20.11.113:10085",
+    yuanman: "http://172.20.11.244:10085"
 }
 const target = config.host
 

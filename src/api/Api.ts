@@ -18,6 +18,7 @@ import RacPermCommandApi from './rac/RacPermCommandApi';
 import RacVerifitionApi from './rac/RacVerifitionApi';
 import OapAppApi from './oap/OapAppApi';
 import RacUserApi from './rac/RacUserApi';
+import RacSignInUnlockApi from './rac/RacSignInUnlockApi';
 
 export const racRealmApi = new RacRealmApi();
 export const racAppApi = new RacAppApi();
@@ -39,3 +40,4 @@ export const racPermCommandApi = new RacPermCommandApi();
 export const racVerifitionApi = new RacVerifitionApi();
 export const oapAppApi = new OapAppApi();
 export const racUserApi = new RacUserApi();
+export const racSignInUnlockApi = new RacSignInUnlockApi();

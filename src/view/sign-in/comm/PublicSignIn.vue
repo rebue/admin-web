@@ -142,12 +142,16 @@ export default {
 
             this.$refs.form.validate(valid => {
                 if (valid) {
+                    //第一次密码输入错误后需要进行验证码校验
+                    // console.log("detail",this.detail);
+                    //if(this.detail){
                     //表单校验成功后，验证码逻辑
                     if (!this.captcha) {
                         this.$refs.verify.show();
                         this.loading = false;
                         return;
                     }
+                    // }
                     this.api
                         .signInByAccountName({
                             appId: this.appId,
@@ -155,7 +159,9 @@ export default {
                             signInPswd: md5(this.form.signInPswd).toString(),
                             verification: this.captcha,
                         })
-                        .then(() => {
+                        .then(ro => {
+                            console.log('kkkkkk', ro);
+                            this.detail = ro.detail ? ro.detail : false;
                             setAppId(this.appId);
                             window.location.href = this.redirect ? '#' + this.redirect : '#/base/rac-realm';
                         })
