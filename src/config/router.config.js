@@ -87,7 +87,7 @@ export const constantRouters = [
         path: '/',
         name: 'index',
         component: () => import('@/view/index/Index.vue'),
-        redirect: '/base/rac-realm',
+        redirect: '/app/index',
         children: [
             {
                 path: '/person-center',

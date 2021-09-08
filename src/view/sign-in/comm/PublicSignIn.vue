@@ -157,7 +157,7 @@ export default {
                         })
                         .then(() => {
                             setAppId(this.appId);
-                            window.location.href = this.redirect ? '#' + this.redirect : '';
+                            window.location.href = this.redirect ? '#' + this.redirect : '#/base/rac-realm';
                         })
                         .catch(() => {
                             //登录失败，清除验证码
