@@ -21,6 +21,7 @@ import enUS from 'ant-design-vue/es/locale/en_US';
 import SvgIcon from '@/component/rebue/SvgIcon.vue';
 // 引入SVG文件资源
 import '@/asset/svg/index';
+import '@/component/rebue/dialog';
 
 moment.locale('en');
 
