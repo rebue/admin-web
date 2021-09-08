@@ -186,7 +186,7 @@ export const constantRouters = [
                         name: 'lock-log',
                         component: () => import('@/view/rac/rac-lock-log/Manager.vue'),
                         hidden: true,
-                        meta: { title: '锁定日志', keepAlive: true, icon: 'apartment' },
+                        meta: { title: '账户启/禁用日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
                         path: '/log/op-log',
