@@ -5,83 +5,30 @@ const { parse } = require('url');
 
 const list = [
     {
-        id: '1',
-        realmId: 'platform',
-        signInName: 'super',
-        signInPswd: '43b90920409618f188bfc6923f16b9fa',
-        signInNickname: '平台管理员',
-        sign:
-            'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
-        menus: [
-            '/base/rac-realm',
-            '/base/rac-app',
-            '/base/rac-perm',
-            '/base/rac-role',
-            '/account/rac-org',
-            '/account/rac-account',
-            '/log/lock-log',
-            '/log/op-log',
-        ],
-    },
-    {
-        id: '2',
-        realmId: 'ops',
-        signInName: 'admin',
-        signInPswd: '52569c045dc348f12dfc4c85000ad832',
-        signInNickname: '运营管理员',
-        sign:
-            'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
-        menus: ['/user/ops-org', '/user/ops-account', '/user/ops-user']
-    },
+        'id': '833',
+        'idType': 'baa9l8',
+        'mobile': '13713883144',
+        'isVerifiedMobile': false,
+        'email': '明.汪@gmail.com',
+        'isVerifiedEmail': false,
+        'realName': '子骞.黎',
+        'isVerifiedRealname': false,
+        'idCard': '210216197304273039',
+        'isVerifiedIdcard': false,
+        'sex': 1,
+        'updateTimestamp': 1631003031598,
+        'createTimestamp': 1631003031598
+    }
 ];
 
-const listRacAccount = () => list;
-
-const findRacAccountBySignInName = signInName => list.find(item => item.signInName === signInName);
+const listRacUser = () => list;
 
 module.exports = {
-    findRacAccountBySignInName,
-    listRacAccount,
+    listRacUser,
     routes: {
-        'GET /rac-svr/rac/account/list': listRacAccount,
-        'GET /rac-svr/rac/account/get-cur-account-info': (req, res, u) => {
-            const cookies = req.headers.cookie.split(';');
-            let accountId;
-            for (const cookie of cookies) {
-                const keyAndName = cookie.split('=');
-                const key = keyAndName[0].trim();
-                const name = keyAndName[1].trim();
-                if (key === 'app_id') {
-                    switch (name) {
-                        case 'platform-admin-web':
-                            accountId = '1';
-                            break;
-                        case 'ops-admin-web':
-                            accountId = '2';
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                }
-            }
-
-            const eo = list.find(item => item.id === accountId);
-            if (eo) {
-                return res.json({
-                    result: 1,
-                    msg: '获取当前账户信息成功',
-                    extra: eo,
-                });
-            } else {
-                return res.json({
-                    result: 1,
-                    msg: '查询失败',
-                });
-            }
-        },
+        'GET /rac-svr/rac/user/list': listRacUser,
         /** 添加 */
-        'POST /rac-svr/rac/account': (req, res, u, b) => {
+        'POST /rac-svr/rac/user': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             body.id = new Date().getTime() + '';
             list.push(body);
@@ -94,7 +41,7 @@ module.exports = {
             });
         },
         /** 修改 */
-        'PUT /rac-svr/rac/account': (req, res, u, b) => {
+        'PUT /rac-svr/rac/user': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const replacedIndex = list.findIndex(item => item.id === body.id);
             if (replacedIndex !== -1) {
@@ -110,7 +57,7 @@ module.exports = {
                 });
             }
         },
-        'DELETE /rac-svr/rac/account': (req, res, u) => {
+        'DELETE /rac-svr/rac/user': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -131,7 +78,7 @@ module.exports = {
             }
         },
         /** 启用或禁用 */
-        'PUT /rac-svr/rac/account/enable': (req, res, u, b) => {
+        'PUT /rac-svr/rac/user/enable': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             const findIndex = list.findIndex(item => item.id === body.id);
             if (findIndex !== -1) {
@@ -147,7 +94,7 @@ module.exports = {
                 });
             }
         },
-        'GET /rac-svr/rac/account/get-by-id': (req, res, u) => {
+        'GET /rac-svr/rac/user/get-by-id': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -171,7 +118,7 @@ module.exports = {
             }
         },
         /** 查询记录 */
-        'GET /rac-svr/rac/account/page': (req, res, u, b) => {
+        'GET /rac-svr/rac/user/page': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -197,23 +144,6 @@ module.exports = {
                     },
                 },
             });
-        },
-        'POST /rac-svr/rac/account/upload-avatar': (req, res, u, b) => {
-            return res.json({
-                result:1,
-                msg:'上传头像成功',
-                success:true
-            });
-        },
-        //通用上传接口
-        'POST /oss-svr/oss/obj/upload': (req, res, u, b) => {
-            return res.json({
-                    "result":1,
-                    "msg":"上传对象成功",
-                    "extra":{"id":"906445814724034561","objType":"png","objSize":"0","url":"http://172.20.10.154:9000/oss-obj/906445814724034561.png?a=1630055651049","creatorId":"10","createDatetime":"2021-08-27 17:14:11","objName":"avatar.png","objGroup":"1"},
-                    "success":true
-                }
-            );
         }
     },
 };

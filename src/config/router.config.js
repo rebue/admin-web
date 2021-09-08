@@ -35,8 +35,8 @@ export const constantRouters = [
             {
                 path: '/app/auth',
                 name: 'app-auth',
-                meta: { title: '关联认证', keepAlive: false },
-                component: () => import('@/view/app/auth/Auth.vue'),
+                meta: { title: '安全中心', keepAlive: false },
+                component: () => import('@/view/app/security-center/Index.vue'),
             },
             {
                 path: '/app/log',
@@ -212,6 +212,13 @@ export const constantRouters = [
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户', keepAlive: true, icon: 'user' },
+                    },
+                    {
+                        path: '/user/ops-user',
+                        name: 'ops-user',
+                        component: () => import('@/view/rac/rac-user/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '用户', keepAlive: true, icon: 'user' },
                     },
                 ],
             },
