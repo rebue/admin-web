@@ -6,7 +6,7 @@
                     <a-form-model-item label="用户名" prop="realName" key="realName">
                         <a-input v-model.trim="model.realName" placeholder="" />
                     </a-form-model-item>
-                    <a-form-model-item label="身份证信息" prop="idCard" key="idCard">
+                    <a-form-model-item label="身份证号" prop="idCard" key="idCard">
                         <a-input v-model.trim="model.idCard" placeholder="" />
                     </a-form-model-item>
                     <a-form-model-item :wrapperCol="{ span: 13, offset: 7 }">
@@ -17,7 +17,7 @@
             <a-col :span="12">
                 <div v-if="detail.id">
                     <p>用户名: {{ detail.realName }}</p>
-                    <p>身份证信息: {{ detail.realName }}</p>
+                    <p>身份证号: {{ detail.realName }}</p>
                     <p>性别: {{ detail.sex == 0 ? '男' : '女' }}</p>
                     <p>手机号码: {{ detail.mobile }}</p>
                     <p>电子邮箱: {{ detail.email }}</p>
@@ -28,6 +28,7 @@
 </template>
 <script>
 import { racUserApi } from '@/api/Api';
+import { isIdCard } from '@/util/validator';
 export default {
     props: {
         callback: {
@@ -52,7 +53,26 @@ export default {
                 idCard: '',
             },
             rules: {
-                realName: [{ required: true, message: '请输入用户名', trigger: 'blur', transform: val => val.trim() }],
+                realName: [
+                    { required: true, message: '请输入用户名', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+                idCard: [
+                    {
+                        required: true,
+                        message: '请输入身份证号',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (!isIdCard(value)) {
+                                callback(new Error('身份证号不合法'));
+                                return false;
+                            }
+                            callback();
+                        },
+                    },
+                ],
             },
             loading: false,
             detail: {},

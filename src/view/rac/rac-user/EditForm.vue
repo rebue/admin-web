@@ -18,6 +18,7 @@
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racUserApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
+import { isIdCard, isPhone, isEmail } from '@/util/validator';
 
 export default {
     components: {
@@ -30,43 +31,48 @@ export default {
                 { required: true, message: '请输入用户名', trigger: 'blur', transform: val => val && val.trim() },
             ],
             idCard: [
-                { required: true, message: '请输入身份证信息', trigger: 'blur', transform: val => val && val.trim() },
+                {
+                    required: true,
+                    message: '请输入身份证号',
+                    trigger: 'blur',
+                    transform: val => val && val.trim(),
+                },
+                {
+                    validator: (rule, value, callback) => {
+                        if (!isIdCard(value)) {
+                            callback(new Error('身份证号不合法'));
+                            return false;
+                        }
+                        callback();
+                    },
+                },
             ],
-            // mobile: [
-            //     { required: true, message: '请输入手机号码', trigger: 'blur', transform: val => val && val.trim() },
-            // ],
-            // email: [
-            //     { required: true, message: '请输入电子邮箱', trigger: 'blur', transform: val => val && val.trim() },
-            // ],
-
-            // signInPswdAgain: [
-            //     {
-            //         required: true,
-            //         message: '请输入登录密码(再次确认)',
-            //         trigger: ['change', 'blur'],
-            //         validator: (rule, value, callback) => {
-            //             if (this.editFormType === 'modify') {
-            //                 callback();
-            //                 return;
-            //             }
-
-            //             if (value === undefined) value = '';
-
-            //             value = value.trim();
-            //             if (value === '') {
-            //                 callback(new Error('请输入登录密码(再次确认)'));
-            //                 return;
-            //             }
-
-            //             if (value !== this.$refs.baseEditForm.model.signInPswd) {
-            //                 callback(new Error('两次输入的登录密码不相同'));
-            //                 return;
-            //             }
-
-            //             callback();
-            //         },
-            //     },
-            // ],
+            mobile: [
+                {
+                    validator: (rule, value, callback) => {
+                        if (value) {
+                            if (!isPhone(value)) {
+                                callback(new Error('手机号不合法'));
+                                return false;
+                            }
+                        }
+                        callback();
+                    },
+                },
+            ],
+            email: [
+                {
+                    validator: (rule, value, callback) => {
+                        if (value) {
+                            if (!isEmail(value)) {
+                                callback(new Error('电子邮箱不合法'));
+                                return false;
+                            }
+                        }
+                        callback();
+                    },
+                },
+            ],
         };
         this.modifyRules = {
             realName: [
@@ -88,7 +94,7 @@ export default {
         formItems() {
             return [
                 { dataIndex: 'realName', title: '用户名' },
-                { dataIndex: 'idCard', title: '身份证信息' },
+                { dataIndex: 'idCard', title: '身份证号' },
                 { dataIndex: 'mobile', title: '手机号码' },
                 { dataIndex: 'email', title: '电子邮箱' },
             ];

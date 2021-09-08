@@ -4,7 +4,7 @@
             <a-form-model-item label="用户名" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />
             </a-form-model-item>
-            <a-form-model-item label="身份证信息" prop="idCard" key="idCard">
+            <a-form-model-item label="身份证号" prop="idCard" key="idCard">
                 <a-input v-model.trim="model.idCard" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="手机号码" prop="mobile" key="mobile">
@@ -22,6 +22,8 @@
 <script>
 import { racUserApi } from '@/api/Api';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { isIdCard, isPhone, isEmail } from '@/util/validator';
+
 export default {
     props: {
         editFormType: {
@@ -49,7 +51,52 @@ export default {
                 email: '',
             },
             rules: {
-                realName: [{ required: true, message: '请输入用户名', trigger: 'blur', transform: val => val.trim() }],
+                realName: [
+                    { required: true, message: '请输入用户名', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+                idCard: [
+                    {
+                        required: true,
+                        message: '请输入身份证号',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (!isIdCard(value)) {
+                                callback(new Error('身份证号不合法'));
+                                return false;
+                            }
+                            callback();
+                        },
+                    },
+                ],
+                mobile: [
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value) {
+                                if (!isPhone(value)) {
+                                    callback(new Error('手机号不合法'));
+                                    return false;
+                                }
+                            }
+                            callback();
+                        },
+                    },
+                ],
+                email: [
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value) {
+                                if (!isEmail(value)) {
+                                    callback(new Error('电子邮箱不合法'));
+                                    return false;
+                                }
+                            }
+                            callback();
+                        },
+                    },
+                ],
             },
             loading: false,
         };
