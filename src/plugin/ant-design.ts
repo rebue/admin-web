@@ -38,6 +38,7 @@ import {
     Calendar,
     Empty,
     List,
+    Steps,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -109,5 +110,7 @@ Vue.use(Calendar);
 Vue.use(Empty);
 
 Vue.use(List);
+
+Vue.use(Steps);
 
 Vue.prototype.$confirm = Modal.confirm;

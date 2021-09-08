@@ -8,10 +8,12 @@
               :wrapClassName="wrapClassName"
               :dialogClass="dialogClass"
               :maskClosable="maskClosable"
+              :destroyOnClose="destroyOnClose"
               :footer="footer"
               @cancel="closeDialog"
               @ok="handleOk">
               <ui-dialog-content ref="dialogContent"></ui-dialog-content>
+              
         </a-modal>
     </div>
 </template>
@@ -32,6 +34,10 @@ export default {
     maskClosable: { // 是否可通过点击遮罩关闭 Dialog
       type: Boolean,
       default: true
+    },
+    destroyOnClose: { // 是否可通过点击遮罩关闭 Dialog
+      type: Boolean,
+      default: false
     },
     footer:String
   },

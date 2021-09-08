@@ -17,7 +17,6 @@ export default class RacUserApi extends BaseCrudApi {
     add(mo): Promise<Ro> {
         // 克隆到一个临时变量再改变属性的值，避免直接修改model引起页面改变
         const tempMo = { ...mo };
-        tempMo.signInPswd = md5(mo.signInPswd).toString();
         return super.add(tempMo);
     }
 
@@ -42,11 +41,10 @@ export default class RacUserApi extends BaseCrudApi {
             data: { id, isEnabled, lockReason, unlockReason },
         });
     }
-
-    /**
-     * 获取当前用户信息
-     */
-    getCurUserInfo(): Promise<Ro> {
-        return request.get({ url: '/rac-svr/rac/user/get-cur-User-info' });
+    getByRealNameAndIdCard(mo): Promise<Ro> {
+        return request.get({
+            url: this.baseUrn + '/get-by-realName-idCard',
+            params: mo,
+        });
     }
 }

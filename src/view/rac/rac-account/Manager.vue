@@ -311,13 +311,35 @@ export default {
          * 处理添加账户的事件
          */
         handleAdd(record) {
-            this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, {
-                orgId: this.curOrgId,
-                realmId: this.curRealmId,
-                groupId: record.id,
-                isTester: false,
-            });
+            const that = this;
+            this.$showDialog(
+                require('./add/Index.vue').default,
+                {
+                    data() {
+                        return {
+                            realmId: that.curRealmId,
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '新建账号',
+                    width: '50%',
+                    footer: null,
+                    destroyOnClose: true,
+                }
+            );
+            // this.crudTable.expand(record.id);
+            // this.editForm.show(EditFormTypeDic.Add, {
+            //     orgId: this.curOrgId,
+            //     realmId: this.curRealmId,
+            //     groupId: record.id,
+            //     isTester: false,
+            // });
         },
         /**
          * 处理管理组织事件

@@ -11,9 +11,9 @@ const list = [
         'isVerifiedMobile': false,
         'email': '明.汪@gmail.com',
         'isVerifiedEmail': false,
-        'realName': '子骞.黎',
+        'realName': '2',
         'isVerifiedRealname': false,
-        'idCard': '210216197304273039',
+        'idCard': '2',
         'isVerifiedIdcard': false,
         'sex': 1,
         'updateTimestamp': 1631003031598,
@@ -144,6 +144,31 @@ module.exports = {
                     },
                 },
             });
+        },
+
+        /** 根据姓名和身份张号查询用户信息  */
+        'GET /rac-svr/rac/user/get-by-realName-idCard': (req, res, u, b) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            const eo = list.find(item => (item.realName === params.realName && item.idCard === params.idCard));
+            if (eo) {
+                return res.json({
+                    result: 1,
+                    msg: '查询成功',
+                    extra: {
+                        eo,
+                    },
+                });
+            } else {
+                return res.json({
+                    result: 1,
+                    msg: '查询失败',
+                });
+            }
         }
     },
 };
