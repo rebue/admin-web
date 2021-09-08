@@ -32,7 +32,6 @@ export default {
             idCard: [
                 { required: true, message: '请输入身份证信息', trigger: 'blur', transform: val => val && val.trim() },
             ],
-            sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
             // mobile: [
             //     { required: true, message: '请输入手机号码', trigger: 'blur', transform: val => val && val.trim() },
             // ],
@@ -90,21 +89,6 @@ export default {
             return [
                 { dataIndex: 'realName', title: '用户名' },
                 { dataIndex: 'idCard', title: '身份证信息' },
-                {
-                    dataIndex: 'sex',
-                    title: '性别',
-                    type: 'radioGroup',
-                    radios: [
-                        {
-                            value: 1,
-                            title: '男',
-                        },
-                        {
-                            value: 2,
-                            title: '女',
-                        },
-                    ],
-                },
                 { dataIndex: 'mobile', title: '手机号码' },
                 { dataIndex: 'email', title: '电子邮箱' },
             ];
