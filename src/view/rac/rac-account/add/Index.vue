@@ -98,10 +98,11 @@ export default {
     },
     computed: {
         extraModel() {
-            const { userId, realmId } = this;
+            const { userId, realmId, orgId } = this;
             return {
                 userId,
                 realmId,
+                orgId,
             };
         },
     },

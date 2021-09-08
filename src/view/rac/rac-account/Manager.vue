@@ -318,6 +318,7 @@ export default {
                     data() {
                         return {
                             realmId: that.curRealmId,
+                            orgId: this.curOrgId,
                         };
                     },
                     methods: {
