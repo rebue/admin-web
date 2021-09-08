@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from '@/App.vue';
-import '@/registerServiceWorker';
+// import '@/registerServiceWorker';
 import router from '@/router/router';
 import '@/plugin/vue-i18n';
 import '@/plugin/element-ui';
