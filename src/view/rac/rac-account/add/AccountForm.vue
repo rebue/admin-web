@@ -121,7 +121,7 @@ export default {
                 signInName: '',
                 signInPswd: '',
                 signInPswdAgain: '',
-                isTester: '',
+                isTester: false,
                 remark: '',
                 id: '',
                 realmId: '',
