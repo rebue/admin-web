@@ -147,7 +147,7 @@ module.exports = {
         },
 
         /** 根据姓名和身份张号查询用户信息  */
-        'GET /rac-svr/rac/user/get-by-realName-idCard': (req, res, u, b) => {
+        'GET /rac-svr/rac/user/get-by-real-name-id-card': (req, res, u, b) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

@@ -74,7 +74,7 @@ export default {
                     return this.api
                         .getByRealNameAndIdCard({ ...this.model })
                         .then(ro => {
-                            this.detail = ro.extra.one;
+                            this.detail = ro.extra;
                             this.callback && this.callback(ro);
                             successFn && successFn(ro);
                         })

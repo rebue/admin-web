@@ -43,7 +43,7 @@ export default class RacUserApi extends BaseCrudApi {
     }
     getByRealNameAndIdCard(mo): Promise<Ro> {
         return request.get({
-            url: this.baseUrn + '/get-by-realName-idCard',
+            url: this.baseUrn + '/get-by-real-name-id-card',
             params: mo,
         });
     }
