@@ -70,7 +70,7 @@ export default {
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    this.record.lockAccountId = this.record.id;
+                    this.record.lockUserId = this.record.id;
                     racUserApi
                         .enable(this.record)
                         .then(() => this.$emit('update:visible', false))
