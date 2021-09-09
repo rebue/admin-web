@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
-import { hasJwtToken } from '@/util/cookie';
+import { hasJwtToken, getAppId } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
 // import { racVerifitionApi } from '@/api/Api';
@@ -60,7 +60,12 @@ router.beforeEach(async (to, from, next) => {
     // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
     if (!uncheckJwtTokenPaths.find(item => to.path.startsWith(item)) && !hasJwtToken()) {
         console.log('需要登录');
-        next(`/sign-in?redirect=${to.path}`);
+        if (getAppId()) {
+            next(`/sign-in?redirect=${to.path}`);
+        } else {
+            window.location.reload(); // 刷新当前页面 router.go(0)
+        }
+
         // const fullPath = encodeURIComponent(window.location.href);
         // if (fullPath.indexOf("code=") === -1) {
         //     window.localStorage.setItem("fullPath", window.location.href);
