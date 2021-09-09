@@ -15,9 +15,7 @@
                     "
                 >
                     <a-tab-pane key="add-tab" tab="新建用户">
-                        <div>
-                            <user-form ref="userForm" key="userForm" v-if="activeTab === 'add-tab'" />
-                        </div>
+                        <user-form ref="userForm" key="userForm" v-if="activeTab === 'add-tab'" />
                     </a-tab-pane>
                     <a-tab-pane key="choose-tab" tab="选择已有用户" force-render>
                         <div>
@@ -43,7 +41,6 @@
             <!-- 第二步 创建账号 -->
             <div class="steps-content" v-show="current == 1">
                 <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
-
                 <div class="steps-action ant-modal-footer">
                     <a-button @click="prev">
                         上一步
@@ -53,24 +50,20 @@
                     </a-button>
                 </div>
             </div>
+            <!-- 第三步 完成 -->
+            <div class="steps-content" v-show="current == 2">
+                <a-result status="success" sub-title="新建账号成功">
+                    <template #icon>
+                        <a-icon type="smile" theme="twoTone" />
+                    </template>
+                </a-result>
+                <div class="steps-action ant-modal-footer">
+                    <a-button type="primary" @click="done">
+                        完成
+                    </a-button>
+                </div>
+            </div>
         </div>
-
-        <!-- <div class="steps-action ant-modal-footer">
-           
-            <a-button v-if="current > 0" @click="prev">
-                上一步
-            </a-button>
-            <a-button v-if="current < steps.length - 1" type="primary" @click="next">
-                下一步
-            </a-button>
-            <a-button
-                v-if="current == steps.length - 1"
-                type="primary"
-                @click="submit"
-            >
-                提交
-            </a-button>
-        </div> -->
     </div>
 </template>
 <script>
@@ -89,6 +82,9 @@ export default {
                 },
                 {
                     title: '新建账号',
+                },
+                {
+                    title: '完成',
                 },
             ],
             userId: '',
@@ -133,10 +129,13 @@ export default {
         submitAccount() {
             this.$refs.accountForm.ok(null, ro => {
                 setTimeout(() => {
-                    this.closeDialog();
                     this.callback && this.callback();
                 }, 1000);
+                this.next();
             });
+        },
+        done() {
+            this.closeDialog();
         },
     },
 };
