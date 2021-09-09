@@ -11,4 +11,10 @@ export default class RacSignInUnlockApi {
     signInLockRecord(id: string): Promise<Ro> {
         return request.post({ url: '/rac-svr/rac/sign-in/sign-in-lock-record?id=' + id });
     }
+    /**
+     * 通过账户ID解锁登录锁定
+     */
+    page(qo): Promise<Ro> {
+        return request.get({ url: '/rac-svr/rac/sign-in/sign-in-lock-record', params: qo });
+    }
 }
