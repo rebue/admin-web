@@ -97,7 +97,10 @@ export default observer({
             accountStore,
             showImageUploader: false,
             changePswdFormVisible: false,
-            account: {},
+            account: {
+                user: {},
+                org: {},
+            },
         };
     },
     mounted() {
@@ -105,6 +108,9 @@ export default observer({
             () => this.accountStore && this.accountStore.accountId,
             () =>
                 racAccountApi.getById(this.accountStore.accountId).then(ro => {
+                    const { user, org } = ro.extra.one;
+                    ro.extra.one.user = user ? user : {};
+                    ro.extra.one.org = org ? org : {};
                     this.account = ro.extra.one;
                 })
         );

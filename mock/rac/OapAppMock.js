@@ -10,6 +10,7 @@ const list = [
         // name: "平台后台管理",
         // redirectUris: ["http://baidu/.com", "http://baidu/.com"],
         // secret: "test-app-secrert"
+       
     },
     // {
     //     appId: 'ops-admin-web',
@@ -21,6 +22,34 @@ const list = [
     //     // isAdd: false,
     //     // isEnabled: false
     // },
+    {
+        "id": 705,
+        "idType": "ftob4m",
+        "appId": "176",
+        "clientId": "176",
+        "secret": "1h73he",
+        "createTimestamp": 1630647342711,
+        "updateTimestamp": 1630647342711,
+        "isEnabled": true,
+        "objId": 881
+    },
+    {
+        "id": "176",
+        "idType": "6sxcid",
+        "name": "健柏.顾",
+        "remark": "9feqjy",
+        "url": "www.xn---xn--zzv-d33pw32i.net",
+        "menu": "258suw",
+        "realmId": "176",
+        "realm": {
+            "id": "176",
+            "idType": "32f1dz",
+            "name": "健柏.顾",
+            "remark": "pmie7h"
+        },
+        "isEnabled": true,
+        "imgUrl": "www.xn---xn--zzv-d33pw32i.net"
+    }
 ];
 
 const listAllRacApp = () => list;
@@ -159,6 +188,23 @@ module.exports = {
                 extra: {
                     list: list.filter(item => item.realmId === params.realmId),
                 },
+            });
+        },
+        'GET /oap-svr/oap/app/list-and-tripartite': (req, res, u, b) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+
+            return res.json({
+                result: 1,
+                msg: '查询列表成功',
+                extra: {
+                    "oapAppList": list.filter((v)=>{
+                        return v.isEnabled && v.isCertified
+                    }),
+                    "racAppList": list
+                }
             });
         },
     },

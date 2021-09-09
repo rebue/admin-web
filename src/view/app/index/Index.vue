@@ -18,6 +18,11 @@
                             <a class="block flex-box flex-col al-c link-item" :href="item.url" target="_blank">
                                 <img
                                     :src="item.imgUrl || defaultImg()"
+                                    @error="
+                                        () => {
+                                            item.imgUrl = defaultImg();
+                                        }
+                                    "
                                     alt=""
                                     width="56px"
                                     height="56px"
@@ -46,6 +51,11 @@
                             <a class="block flex-box flex-col al-c radius-4 link-item" :href="item.url" target="_blank">
                                 <img
                                     :src="item.imgUrl || defaultImg()"
+                                    @error="
+                                        () => {
+                                            item.imgUrl = defaultImg();
+                                        }
+                                    "
                                     alt=""
                                     width="56px"
                                     height="56px"
@@ -106,7 +116,7 @@ export default {
                     racAppList.forEach(v => {
                         //启用
                         if (v.isEnabled) {
-                            if (oapAppMap[v.id]) {
+                            if (oapAppMap[v.id] && v.isCertified) {
                                 //已认证
                                 authedList.push(v);
                             } else {
