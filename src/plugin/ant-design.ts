@@ -39,6 +39,7 @@ import {
     Empty,
     List,
     Steps,
+    Result,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -112,5 +113,6 @@ Vue.use(Empty);
 Vue.use(List);
 
 Vue.use(Steps);
+Vue.use(Result);
 
 Vue.prototype.$confirm = Modal.confirm;

@@ -94,9 +94,11 @@ export default {
                     return this.api
                         .getByRealNameAndIdCard({ ...this.model })
                         .then(ro => {
-                            this.detail = ro.extra;
-                            this.callback && this.callback(ro);
-                            successFn && successFn(ro);
+                            if (ro.extra) {
+                                this.detail = ro.extra;
+                                this.callback && this.callback(ro);
+                                successFn && successFn(ro);
+                            }
                         })
                         .finally(() => {
                             this.loading = false;

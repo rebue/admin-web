@@ -9,11 +9,11 @@ const list = [
         'idType': 'baa9l8',
         'mobile': '13713883144',
         'isVerifiedMobile': false,
-        'email': '明.汪@gmail.com',
+        'email': '234@gmail.com',
         'isVerifiedEmail': false,
         'realName': '2',
         'isVerifiedRealname': false,
-        'idCard': '2',
+        'idCard': '234567892345678923',
         'isVerifiedIdcard': false,
         'sex': 1,
         'updateTimestamp': 1631003031598,
@@ -160,7 +160,7 @@ module.exports = {
                     result: 1,
                     msg: '查询成功',
                     extra: {
-                        eo,
+                        ...eo,
                     },
                 });
             } else {
