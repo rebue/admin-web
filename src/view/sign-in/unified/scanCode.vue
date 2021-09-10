@@ -36,19 +36,18 @@ export default {
         };
     },
     mounted() {
-        this.modelVlaue = this.codeType == '微信' ? '手机微信扫码登录' : '手机钉钉扫码登录';
+        var _this = this;
+        _this.modelVlaue = _this.codeType == '微信' ? '手机微信扫码登录' : '手机钉钉扫码登录';
         const s = document.createElement('script');
         s.type = 'text/javascript';
         s.src =
-            this.codeType == '微信'
+            _this.codeType == '微信'
                 ? 'http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js'
                 : 'https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js';
         document.body.appendChild(s);
-        this.$nextTick(() => {
-            setTimeout(() => {
-                this.codeType == '微信' ? this.wxLoginInit() : this.ddLoginInit();
-            }, 100);
-        });
+        s.onload = function() {
+            _this.codeType == '微信' ? _this.wxLoginInit() : _this.ddLoginInit();
+        };
     },
     methods: {
         //点击账号登录事件

@@ -11,7 +11,7 @@
         <div class="main">
             <img :src="require('./makeup.png')" alt="" class="makeup" />
             <div class="login-card">
-                <public-sign-in v-if="photoShow" class="form"></public-sign-in>
+                <public-sign-in v-if="phoneShow" class="form"></public-sign-in>
                 <scanCode v-else :codeType="codeType" :numberLoginShow="numberLoginShow" :key="codeType"></scanCode>
                 <div class="scan-code-card">
                     <div class="top-list">
@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            photoShow: true,
+            phoneShow: true,
             codeType: '微信',
         };
     },
@@ -55,17 +55,17 @@ export default {
     methods: {
         //微信扫码点击事件
         vxScanCodeClick() {
-            this.photoShow = false;
+            this.phoneShow = false;
             this.codeType = '微信';
         },
         //钉钉扫码点击事件
         ddScanCodeClick() {
-            this.photoShow = false;
+            this.phoneShow = false;
             this.codeType = '钉钉';
         },
         //点击账号登录事件
         numberLoginShow() {
-            this.photoShow = true;
+            this.phoneShow = true;
         },
         //扫码成功之后做的处理
         handleCodeLogin(code) {
@@ -73,6 +73,7 @@ export default {
             // axios.get(`https://oapi.dingtalk.com/user/getuserinfo?access_token=${token}&code=${code}`)
             // .then(function (response) {
             // })
+            console.log(code);
             this.$router.push({ path: '/app/index' });
         },
     },
