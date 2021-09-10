@@ -10,10 +10,13 @@
               :maskClosable="maskClosable"
               :destroyOnClose="destroyOnClose"
               :footer="footer"
+              okText="提交"
+              :ok-button-props="{ props: { icon: 'check' } }"
+              cancelText="返回"
+              :cancel-button-props="{ props: { icon: 'rollback' } }"
               @cancel="closeDialog"
               @ok="handleOk">
               <ui-dialog-content ref="dialogContent"></ui-dialog-content>
-              
         </a-modal>
     </div>
 </template>
@@ -62,7 +65,10 @@ export default {
         if(this.$refs.dialogContent.ok) {
           this.$refs.dialogContent.ok()
         }
-        this.closeDialog()
+        else {
+          this.closeDialog()
+        }
+        
     }
   },
   watch: {
