@@ -11,25 +11,71 @@
         <div class="main">
             <img :src="require('./makeup.png')" alt="" class="makeup" />
             <div class="login-card">
-                <public-sign-in class="form"></public-sign-in>
+                <public-sign-in v-if="photoShow" class="form"></public-sign-in>
+                <scanCode v-else :codeType="codeType" :numberLoginShow="numberLoginShow" :key="codeType"></scanCode>
+                <div class="scan-code-card">
+                    <div class="top-list">
+                        <span @click="vxScanCodeClick">微信扫码登录</span>
+                        <span>|</span>
+                        <span @click="ddScanCodeClick">钉钉扫码登录</span>
+                    </div>
+                    <div class="mid-list">
+                        <img src="./loginIcon.png" alt="" />
+                    </div>
+                    <div class="bottom-list">
+                        注：未注册手机验证后自动登录 注册即代表同意《服务条款》
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">技术支持 迈越公司版权所有 @ 2021.</div>
     </div>
 </template>
-
 <script>
 import PublicSignIn from './PublicSignIn.vue';
-import request from '@/util/request';
-
+import scanCode from './scanCode.vue';
 export default {
     components: {
         PublicSignIn,
+        scanCode,
     },
     data() {
-        return {};
+        return {
+            photoShow: true,
+            codeType: '微信',
+        };
     },
-    mothods: {},
+    mounted() {
+        const { code } = this.$route.query;
+        if (code) {
+            this.photoShow = false;
+            this.handleCodeLogin(code);
+        }
+    },
+    methods: {
+        //微信扫码点击事件
+        vxScanCodeClick() {
+            this.photoShow = false;
+            this.codeType = '微信';
+        },
+        //钉钉扫码点击事件
+        ddScanCodeClick() {
+            this.photoShow = false;
+            this.codeType = '钉钉';
+        },
+        //点击账号登录事件
+        numberLoginShow() {
+            this.photoShow = true;
+        },
+        //扫码成功之后做的处理
+        handleCodeLogin(code) {
+            // let token = '89f0fd7c99f5367fb5d562feae110d55'
+            // axios.get(`https://oapi.dingtalk.com/user/getuserinfo?access_token=${token}&code=${code}`)
+            // .then(function (response) {
+            // })
+            this.$router.push({ path: '/app/index' });
+        },
+    },
 };
 </script>
 
@@ -87,10 +133,49 @@ export default {
             width: 480px;
             height: 529px;
             margin: 20px 0;
-            padding: 50px;
+            padding: 40px;
             margin-right: 100px;
             background-color: #fff;
             border-radius: 10px;
+            position: relative;
+            .scan-code-card {
+                position: absolute;
+                left: 0;
+                bottom: 6%;
+                margin-top: 70px;
+                width: 100%;
+                height: 80px;
+                .top-list {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #7aa8f2;
+                    span:nth-child(2) {
+                        margin: 0 5px;
+                    }
+                    span:first-child,
+                    span:last-child {
+                        cursor: pointer;
+                    }
+                }
+                .mid-list {
+                    width: 100%;
+                    height: 45px;
+                    margin: 6px 0 6px;
+                    display: flex;
+                    justify-content: center;
+                }
+                .bottom-list {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #d2d2d3;
+                }
+            }
         }
     }
     .footer {

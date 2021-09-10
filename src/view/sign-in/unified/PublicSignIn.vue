@@ -1,6 +1,6 @@
 <template>
     <a-tabs default-active-key="1" @change="callback" class="tabs">
-        <a-tab-pane key="1" tab="账号登录">
+        <a-tab-pane key="1" tab="账号密码登录">
             <div v-if="show" class="sign">
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
                     <a-form-model-item prop="accountName" class="sign">
@@ -22,18 +22,51 @@
                     <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
                         >登录</a-button
                     >
-                    <a-checkbox class="remenber">记住登录状态</a-checkbox>
+                    <!-- <a-checkbox class="remenber">记住登录状态</a-checkbox> -->
                 </a-form-model>
             </div>
         </a-tab-pane>
-        <a-tab-pane key="2" tab="扫码登录">
-            <div id="wx-login-box" style="width: 350px"></div>
+        <a-tab-pane key="2" tab="手机短信登录">
+            <!-- <div id="login_container" style="width: 350px"></div> -->
+            <div v-if="!show" class="sign newSign">
+                <a-form-model ref="form" class="form" :model="form1">
+                    <a-form-model-item prop="accountName" class="sign">
+                        <a-select
+                            default-value="1"
+                            style="width: 85px;margin-right:12px;"
+                            size="large"
+                            class="inputSelect"
+                        >
+                            <a-select-option value="1">
+                                +86
+                            </a-select-option>
+                        </a-select>
+                        <a-input
+                            size="large"
+                            style="width: 300px"
+                            v-model.trim="form1.accountName"
+                            placeholder="手机号"
+                            class="input"
+                        >
+                        </a-input>
+                    </a-form-model-item>
+                    <a-form-model-item prop="signInPswd" class="comFromStyle">
+                        <a-input size="large" v-model="form1.signInPswd" placeholder="请输入验证码" class="input">
+                        </a-input>
+                        <div class="clickCode" @click="clickCode()">获取验证码</div>
+                    </a-form-model-item>
+                    <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
+                        >登录</a-button
+                    >
+                </a-form-model>
+            </div>
         </a-tab-pane>
     </a-tabs>
 </template>
-
+<script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
 <script>
 import request from '@/util/request';
+// import axios from 'axios'
 export default {
     components: {},
     props: {},
@@ -42,6 +75,11 @@ export default {
             loading: false,
             show: true,
             form: {
+                accountName: '',
+                signInPswd: '',
+            },
+            form1: {
+                accountFirst: '',
                 accountName: '',
                 signInPswd: '',
             },
@@ -55,6 +93,7 @@ export default {
             },
         };
     },
+    mounted() {},
     methods: {
         callback(key) {
             this.show = !this.show;
@@ -87,6 +126,8 @@ export default {
                 }
             });
         },
+        //点击获取验证码事件
+        clickCode() {},
     },
 };
 </script>
@@ -120,5 +161,25 @@ export default {
 .remenber {
     margin: 20px 0;
     float: right;
+}
+.newSign .ant-input-lg {
+    height: 56px;
+}
+.newSign >>> .ant-select-lg .ant-select-selection__rendered {
+    line-height: 56px;
+}
+.newSign >>> .ant-select-lg .ant-select-selection--single {
+    height: 56px;
+}
+.comFromStyle {
+    position: relative;
+}
+.clickCode {
+    position: absolute;
+    right: 10px;
+    top: -12px;
+    font-size: 18px;
+    color: #7aa8f2;
+    cursor: pointer;
 }
 </style>
