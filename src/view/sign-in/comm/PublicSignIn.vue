@@ -72,6 +72,7 @@ export default {
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
                 ],
             },
+            isNeedCaptcha: false,
             captcha: '', //验证码
         };
     },
