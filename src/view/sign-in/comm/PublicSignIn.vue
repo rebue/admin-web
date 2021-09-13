@@ -72,7 +72,6 @@ export default {
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
                 ],
             },
-            isNeedCaptcha: false,
             captcha: '', //验证码
         };
     },
@@ -147,7 +146,7 @@ export default {
                     // console.log("detail",this.detail);
                     //if(this.detail){
                     //表单校验成功后，验证码逻辑
-                    if (!this.captcha) {
+                    if (sessionStorage.getItem('isNeedCaptcha') && !this.captcha) {
                         this.$refs.verify.show();
                         this.loading = false;
                         return;
@@ -162,6 +161,7 @@ export default {
                         })
                         .then(ro => {
                             console.log('kkkkkk', ro);
+                            sessionStorage.removeItem('isNeedCaptcha');
                             this.detail = ro.detail ? ro.detail : false;
                             setAppId(this.appId);
                             window.location.href = this.redirect ? '#' + this.redirect : '#/base/rac-realm';
@@ -169,6 +169,7 @@ export default {
                         .catch(() => {
                             //登录失败，清除验证码
                             this.captcha = null;
+                            sessionStorage.setItem('isNeedCaptcha', true);
                             // this.$refs.verify.refresh();
                         })
                         .finally(() => {
