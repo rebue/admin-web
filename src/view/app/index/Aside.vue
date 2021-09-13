@@ -8,8 +8,10 @@
                 :src="accountStore.avatar ? accountStore.avatar : undefined"
             />
             <span class="font-18 user-name">{{ accountStore.nickname }}</span>
-            <span class="font-14" style="margin-right:25px;">学院名称XXXX</span>
-            <span class="font-14">学号XXXX</span>
+            <span class="font-14" style="margin-right:25px;" v-if="accountStore.orgFullName"
+                >学院名称{{ accountStore.orgFullName }}</span
+            >
+            <span class="font-14" v-if="accountStore.code">学号{{ accountStore.code }}</span>
         </div>
         <div class="time-wrap">
             <img :src="require('../assets/img/clock.png')" />
