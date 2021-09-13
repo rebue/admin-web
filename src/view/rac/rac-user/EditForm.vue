@@ -93,6 +93,7 @@ export default {
     computed: {
         formItems() {
             return [
+                { dataIndex: 'code', title: '用户编码' },
                 { dataIndex: 'realName', title: '用户名' },
                 { dataIndex: 'idCard', title: '身份证号' },
                 { dataIndex: 'mobile', title: '手机号码' },

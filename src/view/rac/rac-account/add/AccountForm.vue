@@ -1,6 +1,9 @@
 <template>
     <a-spin :spinning="loading">
         <a-form-model ref="accountEditform" :model="model" :rules="rules" v-bind="formLayout">
+            <a-form-model-item label="账号编码" prop="code">
+                <a-input v-model.trim="model.code" placeholder="" />
+            </a-form-model-item>
             <a-form-model-item label="登录昵称" prop="signInNickname">
                 <a-input v-model.trim="model.signInNickname" placeholder="" />
             </a-form-model-item>
@@ -117,6 +120,7 @@ export default {
         return {
             EditFormTypeDic,
             model: {
+                code: '',
                 signInNickname: '',
                 signInName: '',
                 signInPswd: '',

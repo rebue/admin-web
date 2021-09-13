@@ -16,6 +16,7 @@
             </a-col>
             <a-col :span="12">
                 <div v-if="detail.id">
+                    <p>用户编码: {{ detail.code }}</p>
                     <p>用户名: {{ detail.realName }}</p>
                     <p>身份证号: {{ detail.realName }}</p>
                     <p>性别: {{ detail.sex == 0 ? '男' : '女' }}</p>
