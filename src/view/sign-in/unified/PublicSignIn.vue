@@ -54,7 +54,8 @@
                     <a-form-model-item prop="phoneCodeNumber" class="comFromStyle">
                         <a-input size="large" v-model="form.phoneCodeNumber" placeholder="请输入验证码" class="input">
                         </a-input>
-                        <div class="clickCode" @click="clickCode()">获取验证码</div>
+                        <div class="clickCode" v-if="!isCodeLoading" @click="clickCode()">获取验证码</div>
+                        <div class="clickSecond" v-else>{{ second }}s</div>
                     </a-form-model-item>
                     <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
                         >登录</a-button
@@ -64,10 +65,10 @@
         </a-tab-pane>
     </a-tabs>
 </template>
-<script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
 <script>
 import request from '@/util/request';
 import { isPhone } from '@/util/validator';
+const SECOND = 60;
 // import axios from 'axios'
 export default {
     components: {},
@@ -77,6 +78,8 @@ export default {
             loading: false,
             show: true,
             tabKey: 1,
+            isCodeLoading: false,
+            second: SECOND,
             phoneAreaNumber: ['+86', '+91', '+99'],
             form: {
                 accountName: '',
@@ -94,7 +97,6 @@ export default {
                     { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
                 ],
                 phoneNumber: [
-                    { required: true, message: '请输入手机号', trigger: 'blur', transform: val => val.trim() },
                     {
                         validator: (rule, value, callback) => {
                             if (value) {
@@ -106,14 +108,24 @@ export default {
                             callback();
                         },
                     },
+                    { required: true, message: '请输入手机号', trigger: 'blur', transform: val => val.trim() },
                 ],
                 phoneCodeNumber: [
                     { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val.trim() },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (this.form.phoneNumber == '') {
+                                this.$refs.form.validateField('phoneNumber');
+                            } else {
+                                callback();
+                            }
+                        },
+                        trigger: 'change',
+                    },
                 ],
             },
         };
     },
-    mounted() {},
     methods: {
         //TAB切换事件
         callback(key) {
@@ -158,7 +170,37 @@ export default {
             });
         },
         //点击获取验证码事件
-        clickCode() {},
+        clickCode() {
+            //判断手机号码是不是空 或者是不是 正常的手机号
+            if (this.form.phoneNumber == '') {
+                this.$refs.form.validateField('phoneNumber');
+                return;
+            } else if (!isPhone(this.form.phoneNumber)) {
+                this.$refs.form.validateField('phoneNumber');
+                return;
+            }
+            this.isCodeLoading = true;
+            this.$refs.form.clearValidate('phoneNumber'); //当手机没问题的时候 就取消tips
+            this.countDown(this.second, val => {
+                this.second = val;
+                if (val === 0) {
+                    this.second = SECOND;
+                    this.isCodeLoading = false;
+                }
+            });
+        },
+        countDown(second, cb, immediate = false) {
+            if (immediate) {
+                if (second == 0) {
+                    return;
+                }
+                second = second - 1;
+                cb && cb(second);
+            }
+            setTimeout(() => {
+                this.countDown(second, cb, true);
+            }, 1000);
+        },
     },
 };
 </script>
@@ -212,5 +254,12 @@ export default {
     font-size: 18px;
     color: #7aa8f2;
     cursor: pointer;
+}
+.clickSecond {
+    position: absolute;
+    right: 10px;
+    top: -12px;
+    font-size: 18px;
+    color: #7aa8f2;
 }
 </style>
