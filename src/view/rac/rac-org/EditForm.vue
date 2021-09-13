@@ -71,7 +71,7 @@ export default {
             editFormType: EditFormTypeDic.None,
             model: {},
             formItems: [
-                { dataIndex: 'id', title: '编码', type: 'hidden' },
+                { dataIndex: 'id', title: 'ID', type: 'hidden' },
                 { dataIndex: 'realmId', title: '领域ID', type: 'hidden' },
                 { dataIndex: 'code', title: '编码' },
                 { dataIndex: 'name', title: '名称' },
