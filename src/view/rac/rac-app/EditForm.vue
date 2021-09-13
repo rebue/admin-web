@@ -29,9 +29,9 @@
                 </a-form-model-item>
                 <a-form-model-item label="应用图片" prop="imgUrl">
                     <a-input v-model.trim="model.imgUrl" type="hidden" />
-                    <div v-if="avatar == ''" class="uploadClick" @click="uploadClick()">+</div>
+                    <div v-if="model.imgUrl == ''" class="uploadClick" @click="uploadClick()">+</div>
                     <div v-else class="uploadImg" @click="uploadClick()">
-                        <img :src="avatar" alt="" />
+                        <img :src="model.imgUrl" alt="" />
                     </div>
 
                     <image-uploader
@@ -39,7 +39,7 @@
                         :width="180"
                         :height="180"
                         :noRotate="false"
-                        url="/rac-svr/rac/account/upload-avatar"
+                        url="/oss-svr/oss/obj/upload"
                         @crop-upload-success="handleCropUploadSuccess"
                         @crop-upload-fail="handleCropUploadFail"
                         @crop-success="cropSuccess"
@@ -98,7 +98,6 @@ export default {
         };
         return {
             showImageUploader: false,
-            avatar: '',
             visible: false,
             loading: false,
             EditFormTypeDic,
@@ -122,8 +121,7 @@ export default {
         },
         cropSuccess(imgDataUrl) {
             //imgDataUrl其实就是经过base64转码过的图片
-            this.avatar = imgDataUrl;
-            console.log(imgDataUrl);
+            this.model.imgUrl = imgDataUrl;
         },
         /**
          * upload success
@@ -156,7 +154,6 @@ export default {
         },
         show: function(editFormType, record) {
             this.editFormType = editFormType;
-
             this.model = {
                 ...modelSource,
                 ...record,
