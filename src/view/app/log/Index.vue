@@ -3,7 +3,7 @@
         <template #managerCard>
             <crud-table
                 :showKeywords="true"
-                :ref="crudTable"
+                ref="crudTable"
                 :columns="columns"
                 :api="api"
                 :query="query"
@@ -31,6 +31,8 @@
     </base-manager>
 </template>
 <script>
+import { when } from 'mobx';
+import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
@@ -46,7 +48,7 @@ const opTypeDic = Object.values(OpTypeDic).map(item => {
         text: item,
     };
 });
-export default {
+export default observer({
     name: 'Manager',
     components: {
         BaseManager,
@@ -170,15 +172,34 @@ export default {
             return this.$refs['crudTable'];
         },
     },
+    mounted() {
+        when(
+            () => this.accountStore && this.accountStore.accountId,
+            () => {
+                const val = this.accountStore;
+                if (val && val.realmId) {
+                    this.curRealmId = val.realmId;
+                    this.query = {
+                        ...this.query,
+                        realmId: this.curRealmId,
+                        accountId: val.accountId,
+                    };
+                    return;
+                }
+                if (val && val.accountId) {
+                    racAccountApi.getById(val.accountId).then(ro => {
+                        this.curRealmId = ro.extra.one.realmId;
+                        this.query = {
+                            ...this.query,
+                            realmId: this.curRealmId,
+                            accountId: val.accountId,
+                        };
+                    });
+                }
+            }
+        );
+    },
     methods: {
-        /**
-         * 限制选择时间范围
-         * 只能选择今天当天之后的时间
-         */
-        disabledDate(current) {
-            return current && current > moment().endOf('day');
-        },
-
         /**
          * 刷新表格数据
          */
@@ -186,15 +207,6 @@ export default {
             this.crudTable.refreshData();
         },
         /**
-         * 处理改变领域的事件
-         */
-        handleRealmChanged(realmId) {
-            this.curRealmId = realmId;
-            this.query = {
-                ...this.query,
-                realmId: this.curRealmId,
-            };
-        },
         /**
          * 弹出日历和关闭日历的回调
          */
@@ -228,32 +240,7 @@ export default {
             }
         },
     },
-    watch: {
-        accountStore: {
-            handler(val, old) {
-                //用observer包裹，为啥只执行一次。
-                // accountStore是异步获取的，放在mounted会有执行顺序问题，所以放在watch
-                if (val && val.realmId) {
-                    this.curRealmId = val.curRealmId;
-                    this.query = {
-                        realmId: this.curRealmId,
-                    };
-                    return;
-                }
-                if (val && val.accountId) {
-                    racAccountApi.getById(val.accountId).then(ro => {
-                        this.curRealmId = ro.extra.one.realmId;
-                        this.query = {
-                            realmId: this.curRealmId,
-                        };
-                    });
-                }
-            },
-            immediate: true,
-            deep: true,
-        },
-    },
-};
+});
 </script>
 <style lang="less" scoped>
 .realm-tabs {
