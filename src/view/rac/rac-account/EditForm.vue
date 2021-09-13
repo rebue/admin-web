@@ -83,6 +83,7 @@ export default {
     computed: {
         formItems() {
             return [
+                { dataIndex: 'code', title: '账号编码' },
                 { dataIndex: 'signInNickname', title: '登录昵称' },
                 { dataIndex: 'signInName', title: '登录名称' },
                 {

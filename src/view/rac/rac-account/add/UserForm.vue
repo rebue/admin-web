@@ -1,6 +1,9 @@
 <template>
     <a-spin :spinning="loading">
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+            <a-form-model-item label="用户编码" prop="code" key="code">
+                <a-input v-model.trim="model.code" placeholder="" />
+            </a-form-model-item>
             <a-form-model-item label="用户名" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />
             </a-form-model-item>
@@ -45,6 +48,7 @@ export default {
         this.api = racUserApi;
         return {
             model: {
+                code: '',
                 realName: '',
                 idCard: '',
                 mobile: '',
