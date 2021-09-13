@@ -22,7 +22,8 @@
                     <a-input v-model.trim="model['clientId']" :disabled="disabled" />
                 </a-form-model-item>
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
-                    <a-input v-model.trim="model.secret" :disabled="disabled" />
+                    <a-input v-model.trim="model.secret" disabled style="width:65%;margin-right:20px;" />
+                    <a-button type="primary" html-type="submit" @click="secretClick()">{{ secretName }}</a-button>
                 </a-form-model-item>
                 <a-form-model-item label="安全域名" required>
                     <a-form-model-item
@@ -71,7 +72,6 @@
         </base-modal>
     </fragment>
 </template>
-
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { oapAppApi } from '@/api/Api';
@@ -126,6 +126,7 @@ export default {
                 ],
             },
             enable: true, // false不认证：表单域会disabled, 表单清除校验，禁用点击添加和删除
+            secretName: '生产密钥',
         };
     },
     computed: {
@@ -134,6 +135,86 @@ export default {
         },
     },
     methods: {
+        secretClick() {
+            this.model.secret = this.randomWord(false, 16);
+        },
+        randomWord(randomFlag, min, max) {
+            let str = '';
+            let range = min;
+            const arr = [
+                '0',
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                'a',
+                'b',
+                'c',
+                'd',
+                'e',
+                'f',
+                'g',
+                'h',
+                'i',
+                'j',
+                'k',
+                'l',
+                'm',
+                'n',
+                'o',
+                'p',
+                'q',
+                'r',
+                's',
+                't',
+                'u',
+                'v',
+                'w',
+                'x',
+                'y',
+                'z',
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F',
+                'G',
+                'H',
+                'I',
+                'J',
+                'K',
+                'L',
+                'M',
+                'N',
+                'O',
+                'P',
+                'Q',
+                'R',
+                'S',
+                'T',
+                'U',
+                'V',
+                'W',
+                'X',
+                'Y',
+                'Z',
+            ];
+            if (randomFlag) {
+                range = Math.round(Math.random() * (max - min)) + min;
+            }
+            let pos = '';
+            for (let i = 0; i < range; i++) {
+                pos = Math.round(Math.random() * (arr.length - 1));
+                str += arr[pos];
+            }
+            return str;
+        },
         linetoArr(val) {
             //处理textarea值为数组
             const arr = val.split(/\n/);
@@ -190,10 +271,14 @@ export default {
                                 ...JSON.parse(JSON.stringify(this.model)),
                                 ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
                             };
+                            this.model.secret = '****************';
+                            this.secretName = '更新密钥';
                         })
-                        .catch(() => (this.visible = false))
+                        .catch(() => ((this.visible = false), (this.secretName = '生产密钥'), (this.model.secret = '')))
                         .finally(() => {
                             this.loading = false;
+                            this.secretName = '生产密钥';
+                            this.model.secret = '';
                         });
                 } else {
                     this.loading = false;

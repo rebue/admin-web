@@ -20,7 +20,7 @@
                         <span @click="ddScanCodeClick">钉钉扫码登录</span>
                     </div>
                     <div class="mid-list">
-                        <img src="./loginIcon.png" alt="" />
+                        <!-- <img src="./loginIcon.png" alt="" /> -->
                     </div>
                     <div class="bottom-list">
                         注：未注册手机验证后自动登录 注册即代表同意《服务条款》
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">技术支持 迈越公司版权所有 @ 2021.</div>
+        <div class="footer">桂ICP备08001078号-2</div>
     </div>
 </template>
 <script>
@@ -142,7 +142,7 @@ export default {
             .scan-code-card {
                 position: absolute;
                 left: 0;
-                bottom: 6%;
+                bottom: 0%;
                 margin-top: 70px;
                 width: 100%;
                 height: 80px;
@@ -163,7 +163,7 @@ export default {
                 }
                 .mid-list {
                     width: 100%;
-                    height: 45px;
+                    height: 0px;
                     margin: 6px 0 6px;
                     display: flex;
                     justify-content: center;

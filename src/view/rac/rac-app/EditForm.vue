@@ -29,7 +29,22 @@
                 </a-form-model-item>
                 <a-form-model-item label="应用图片" prop="imgUrl">
                     <a-input v-model.trim="model.imgUrl" type="hidden" />
-                    <a-upload
+                    <div v-if="avatar == ''" class="uploadClick" @click="uploadClick()">+</div>
+                    <div v-else class="uploadImg" @click="uploadClick()">
+                        <img :src="avatar" alt="" />
+                    </div>
+
+                    <image-uploader
+                        v-model="showImageUploader"
+                        :width="180"
+                        :height="180"
+                        :noRotate="false"
+                        url="/rac-svr/rac/account/upload-avatar"
+                        @crop-upload-success="handleCropUploadSuccess"
+                        @crop-upload-fail="handleCropUploadFail"
+                        @crop-success="cropSuccess"
+                    />
+                    <!-- <a-upload
                         name="avatar"
                         list-type="picture-card"
                         class="avatar-uploader"
@@ -43,7 +58,7 @@
                         <div v-else>
                             <a-icon :type="imgLoading ? 'loading' : 'plus'" />
                         </div>
-                    </a-upload>
+                    </a-upload> -->
                 </a-form-model-item>
             </a-form-model>
         </base-modal>
@@ -55,7 +70,7 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racAppApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { message } from 'ant-design-vue';
-
+import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 const modelSource = {
     id: '',
     name: '',
@@ -67,6 +82,7 @@ const modelSource = {
 export default {
     components: {
         BaseModal,
+        ImageUploader,
     },
     data() {
         this.api = racAppApi;
@@ -81,6 +97,8 @@ export default {
             },
         };
         return {
+            showImageUploader: false,
+            avatar: '',
             visible: false,
             loading: false,
             EditFormTypeDic,
@@ -98,6 +116,37 @@ export default {
         };
     },
     methods: {
+        //点击显示上传图片组件
+        uploadClick() {
+            this.showImageUploader = true;
+        },
+        cropSuccess(imgDataUrl) {
+            //imgDataUrl其实就是经过base64转码过的图片
+            this.avatar = imgDataUrl;
+            console.log(imgDataUrl);
+        },
+        /**
+         * upload success
+         *
+         * [param] jsonData  server api return data, already json encode
+         * [param] field
+         */
+        handleCropUploadSuccess(jsonData, field) {
+            console.log('-------- upload success --------');
+            console.log(jsonData);
+            console.log('field: ' + field);
+        },
+        /**
+         * upload fail
+         *
+         * [param] status    server api return error status, like 500
+         * [param] field
+         */
+        handleCropUploadFail(status, field) {
+            console.log('-------- upload fail --------');
+            console.log(status);
+            console.log('field: ' + field);
+        },
         linetoArr(val) {
             //处理textarea值为数组
             const arr = val.split(/\n/);
@@ -195,3 +244,24 @@ export default {
     },
 };
 </script>
+<style lang="less">
+.uploadClick {
+    width: 80px;
+    height: 80px;
+    border: 1px dotted #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+}
+.uploadImg {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    img {
+        width: 100%;
+    }
+}
+</style>

@@ -69,6 +69,13 @@ export default {
                 width: 180,
             },
             {
+                dataIndex: 'isCertified',
+                title: '是否认证',
+                width: 120,
+                ellipsis: true,
+                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
+            },
+            {
                 dataIndex: 'remark',
                 title: '备注',
                 ellipsis: true,
@@ -92,13 +99,6 @@ export default {
                         <a-switch checked={record.isEnabled} checked-children="启" un-checked-children="禁"></a-switch>
                     </a-popconfirm>
                 ),
-            },
-            {
-                dataIndex: 'isCertified',
-                title: '是否认证',
-                width: 120,
-                ellipsis: true,
-                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
             },
             {
                 dataIndex: 'action',
