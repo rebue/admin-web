@@ -211,6 +211,9 @@ export default {
             this.curRecord = record;
             this.enabledFormVisible = true;
         },
+        handleEditFormClose() {
+            this.refreshTableData();
+        },
     },
 };
 </script>

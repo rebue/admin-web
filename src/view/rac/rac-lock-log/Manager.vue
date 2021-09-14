@@ -97,7 +97,7 @@ export default {
             },
             {
                 dataIndex: 'lockAgentSignInName',
-                title: '代理启用操作员',
+                title: '代理禁用操作员',
                 width: 130,
                 ellipsis: true,
                 customRender: (text, record) => (
