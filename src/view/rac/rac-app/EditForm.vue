@@ -29,20 +29,26 @@
                 </a-form-model-item>
                 <a-form-model-item label="应用图片" prop="imgUrl">
                     <a-input v-model.trim="model.imgUrl" type="hidden" />
-                    <div v-if="model.imgUrl == ''" class="uploadClick" @click="uploadClick()">+</div>
-                    <div v-else class="uploadImg" @click="uploadClick()">
+                    <div
+                        v-if="model.imgUrl != '' && model.imgUrl != undefined"
+                        class="uploadImg"
+                        @click="uploadClick()"
+                    >
                         <img :src="model.imgUrl" alt="" />
                     </div>
+                    <div v-else class="uploadClick" @click="uploadClick()">+</div>
 
                     <image-uploader
                         v-model="showImageUploader"
                         :width="180"
                         :height="180"
                         :noRotate="false"
+                        :params="params"
                         url="/oss-svr/oss/obj/upload"
                         @crop-upload-success="handleCropUploadSuccess"
                         @crop-upload-fail="handleCropUploadFail"
                         @crop-success="cropSuccess"
+                        @src-file-set="srcFileSet"
                     />
                     <!-- <a-upload
                         name="avatar"
@@ -112,6 +118,10 @@ export default {
                 ],
             },
             imgLoading: false,
+            storagePhoto: '',
+            params: {
+                orignFileName: '',
+            },
         };
     },
     methods: {
@@ -121,7 +131,10 @@ export default {
         },
         cropSuccess(imgDataUrl) {
             //imgDataUrl其实就是经过base64转码过的图片
-            this.model.imgUrl = imgDataUrl;
+            this.storagePhoto = imgDataUrl;
+        },
+        srcFileSet(fileName) {
+            this.params.orignFileName = fileName;
         },
         /**
          * upload success
@@ -133,6 +146,10 @@ export default {
             console.log('-------- upload success --------');
             console.log(jsonData);
             console.log('field: ' + field);
+            //成功
+            if (jsonData.result == 1) {
+                this.model.imgUrl = jsonData?.extra.url;
+            }
         },
         /**
          * upload fail
@@ -194,7 +211,6 @@ export default {
                 if (valid) {
                     //处理重定向URL，IP白名单
                     const data = { ...this.model };
-
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
                             .add(data)
@@ -257,6 +273,8 @@ export default {
     width: 80px;
     height: 80px;
     cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
     img {
         width: 100%;
     }
