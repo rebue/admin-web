@@ -187,7 +187,7 @@ export default {
     },
     closeBox() {
       this.clickShow = false
-      this.refresh()
+      // this.refresh()
     },
     show() {
       if (this.mode == 'pop') {
