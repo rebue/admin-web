@@ -13,8 +13,8 @@ const RouteView = {
  * @type { *[] }
  */
 export const constantRouters = [
+    /**个人应用平台*/
     {
-        // 个人应用平台
         path: '/app',
         name: 'app',
         component: () => import('@/view/app/Index.vue'),

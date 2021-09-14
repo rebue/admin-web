@@ -8,11 +8,11 @@ export default class RacSignInUnlockApi {
     /**
      * 通过账户ID解锁登录锁定
      */
-    signInLockRecord(id: string): Promise<Ro> {
-        return request.post({ url: '/rac-svr/rac/sign-in/sign-in-lock-record?id=' + id });
+    signInLockRecord(data): Promise<Ro> {
+        return request.post({ url: '/rac-svr/rac/sign-in/sign-in-lock-record', data: data });
     }
     /**
-     * 通过账户ID解锁登录锁定
+     * 通过账户条件查询被登录锁定的账户
      */
     page(qo): Promise<Ro> {
         return request.get({ url: '/rac-svr/rac/sign-in/sign-in-lock-record', params: qo });

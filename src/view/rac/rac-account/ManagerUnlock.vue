@@ -31,6 +31,7 @@
                 </a-tabs>
             </template>
         </base-manager>
+        <unlock-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -39,6 +40,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import OrgTree from '../rac-org/Tree';
 import { racRealmApi, racAccountApi, racSignInUnlockApi } from '@/api/Api';
+import UnlockForm from './UnlockForm.vue';
 
 export default {
     name: 'Manager',
@@ -46,17 +48,18 @@ export default {
         CrudTable,
         BaseManager,
         OrgTree,
+        UnlockForm,
     },
     data() {
         this.api = racSignInUnlockApi;
         const columns = [
-            {
-                dataIndex: 'no',
-                title: '#',
-                width: 50,
-                fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
-            },
+            // {
+            //     dataIndex: 'no',
+            //     title: '#',
+            //     width: 50,
+            //     fixed: 'left',
+            //     scopedSlots: { customRender: 'serial' },
+            // },
             {
                 dataIndex: 'signInName',
                 title: '登录名称',
@@ -68,11 +71,9 @@ export default {
                         <template slot="content">
                             <p>账户ID：{record.id}</p>
                             <p>账户名：{record.signInName}</p>
-                            <p>手机号：：{record.signInMobile}</p>
+                            <p>手机号：{record.signInMobile}</p>
                             <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
-                            <p>微信昵称：{record.wxNickname}</p>
-                            <p>QQ昵称：{record.qqNickname}</p>
                         </template>
                     </a-popover>
                 ),
@@ -80,7 +81,7 @@ export default {
             {
                 dataIndex: 'nickname',
                 title: '昵称',
-                width: 120,
+                width: 100,
                 ellipsis: true,
                 customRender: (text, record) => {
                     //FIXME 在编辑的时候，昵称输入框删除完之后会报错，浏览窗口动不了
@@ -104,8 +105,20 @@ export default {
                 },
             },
             {
-                dataIndex: 'remark',
-                title: '备注',
+                dataIndex: 'lockReason',
+                title: '锁定原因',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'lockDatetime',
+                title: '锁定时间',
+                width: 165,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'autoUnlockDatetime',
+                title: '自动解锁时间',
+                width: 165,
                 ellipsis: true,
             },
             {
@@ -130,6 +143,7 @@ export default {
             showOrg: false,
             curRealmId: '',
             curOrgId: undefined,
+            enabledFormVisible: false,
             realms: [],
             columns,
             curRecord: {},
@@ -194,10 +208,8 @@ export default {
         /** 处理账户解锁 */
         handleAccountCheck(record) {
             this.loading = true;
-            racSignInUnlockApi.signInLockRecord(record.id).finally(() => {
-                this.refreshTableData();
-                this.loading = false;
-            });
+            this.curRecord = record;
+            this.enabledFormVisible = true;
         },
     },
 };

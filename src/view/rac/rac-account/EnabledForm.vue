@@ -9,8 +9,8 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="unlockReason" label="解锁原因" prop="unlockReason">
-                <a-input v-autofocus v-model.trim="model.unlockReason" placeholder="请输入解锁原因" />
+            <a-form-model-item key="unlockReason" label="启用原因" prop="unlockReason">
+                <a-input v-autofocus v-model.trim="model.unlockReason" placeholder="请输入启用原因" />
             </a-form-model-item>
         </a-form-model>
     </base-modal>
@@ -37,7 +37,7 @@ export default {
     data() {
         this.rules = {
             unlockReason: [
-                { required: true, message: '请输入解锁原因', trigger: 'blur', transform: val => val && val.trim() },
+                { required: true, message: '请输入启用原因', trigger: 'blur', transform: val => val && val.trim() },
             ],
         };
         this.formLayout = {
