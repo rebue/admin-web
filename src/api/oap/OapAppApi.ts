@@ -21,6 +21,12 @@ export default class OapAppApi extends BaseCrudApi {
         return request.get({ url: this.baseUrn + '/exist-by-id?id=' + id });
     }
     /**
+     * 生成应用secret
+     */
+    getAppSecret(): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-app-secret' });
+    }
+    /**
      * 查询所有应用以及认证应用
      */
     listAndTripartite(): Promise<Ro> {
