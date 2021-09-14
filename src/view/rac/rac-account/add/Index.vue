@@ -1,45 +1,56 @@
 <template>
     <div class="account-add-user-index-wrap">
-        <a-steps :current="current">
+        <a-steps :current="current" class="steps">
             <a-step v-for="item in steps" :key="item.title" :title="item.title" />
         </a-steps>
-        <div>
-            <!-- 第一步 选择用户 -->
+        <div class="panel">
+            <!-- 第一步 选择方式 -->
             <div class="steps-content" v-show="current == 0">
-                <a-tabs
-                    v-model="activeTab"
-                    @change="
-                        () => {
-                            userId = '';
+                <a-list-item class="nav" @click="changeActiveTab('add-tab')">
+                    <a-list-item-meta>
+                        <div slot="avatar">
+                            <a-icon type="user-add" :style="{ fontSize: '30px', color: '#1890ff' }" />
+                        </div>
+                        <a slot="title" href="https://www.antdv.com/">新建用户</a>
+                        <div slot="description">XXXX</div>
+                    </a-list-item-meta>
+                    <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
+                </a-list-item>
+                <a-list-item class="nav" @click="changeActiveTab('choose-tab')">
+                    <a-list-item-meta>
+                        <div slot="avatar">
+                            <a-icon type="solution" :style="{ fontSize: '30px', color: '#1890ff' }" />
+                        </div>
+                        <a slot="title" href="https://www.antdv.com/">选择已有用户</a>
+                        <div slot="description">XXXX</div>
+                    </a-list-item-meta>
+                    <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
+                </a-list-item>
+            </div>
+            <!-- 第二步 选择用户 -->
+            <div class="steps-content" v-show="current == 1">
+                <user-form ref="userForm" :key="activeTab" v-if="activeTab.includes('add-tab')" />
+                <user-get
+                    ref="queryForm"
+                    :key="activeTab"
+                    v-if="activeTab.includes('choose-tab')"
+                    :callback="
+                        ro => {
+                            userId = ro.extra.id;
                         }
                     "
-                >
-                    <a-tab-pane key="add-tab" tab="新建用户">
-                        <user-form ref="userForm" key="userForm" v-if="activeTab === 'add-tab'" />
-                    </a-tab-pane>
-                    <a-tab-pane key="choose-tab" tab="选择已有用户" force-render>
-                        <div>
-                            <user-get
-                                ref="queryForm"
-                                key="queryForm"
-                                v-if="activeTab === 'choose-tab'"
-                                :callback="
-                                    ro => {
-                                        userId = ro.extra.id;
-                                    }
-                                "
-                            />
-                        </div>
-                    </a-tab-pane>
-                </a-tabs>
+                />
                 <div class="steps-action ant-modal-footer">
+                    <a-button @click="prev">
+                        上一步
+                    </a-button>
                     <a-button type="primary" @click="submitUser">
                         下一步
                     </a-button>
                 </div>
             </div>
-            <!-- 第二步 创建账号 -->
-            <div class="steps-content" v-show="current == 1">
+            <!-- 第三步 创建账号 -->
+            <div class="steps-content" v-show="current == 2">
                 <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
                 <div class="steps-action ant-modal-footer">
                     <a-button @click="prev">
@@ -50,8 +61,8 @@
                     </a-button>
                 </div>
             </div>
-            <!-- 第三步 完成 -->
-            <div class="steps-content" v-show="current == 2">
+            <!-- 第四步 完成 -->
+            <div class="steps-content" v-show="current == 3">
                 <a-result status="success" sub-title="新建账号成功">
                     <template #icon>
                         <a-icon type="smile" theme="twoTone" />
@@ -78,6 +89,9 @@ export default {
             current: 0,
             steps: [
                 {
+                    title: '选择方式',
+                },
+                {
                     title: '选择用户',
                 },
                 {
@@ -87,6 +101,7 @@ export default {
                     title: '完成',
                 },
             ],
+
             userId: '',
             activeTab: 'add-tab',
             loading: true,
@@ -108,6 +123,11 @@ export default {
         },
         prev() {
             this.current--;
+        },
+        changeActiveTab(val) {
+            this.activeTab = val + new Date(); //用做tab key
+            this.userId = '';
+            this.next();
         },
         submit() {
             console.log('--提交');
@@ -143,9 +163,25 @@ export default {
 
 <style scoped>
 .account-add-user-index-wrap {
-    padding: 10px 10px 0;
+    margin: -24px;
 }
-.steps-content {
-    margin-top: 20px;
+.steps {
+    padding: 24px 44px;
+    background: #f5f5f5;
+}
+.panel {
+    padding: 20px 44px 20px;
+}
+.nav {
+    height: 88px;
+    margin-bottom: 10px;
+    padding: 0 40px;
+    border: 1px solid #ededed;
+    border-radius: 2px;
+    background-color: #fafafa;
+}
+.nav:hover {
+    border-color: #f4f4f4;
+    background-color: #fdfdfd;
 }
 </style>

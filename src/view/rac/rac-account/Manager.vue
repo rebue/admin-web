@@ -329,9 +329,10 @@ export default {
                 },
                 {
                     title: '新建账号',
-                    width: '50%',
+                    width: '60%',
                     footer: null,
                     destroyOnClose: true,
+                    wrapClassName: 'account-add-dialog-wrap',
                 }
             );
             // this.crudTable.expand(record.id);

@@ -8,10 +8,10 @@
                 <a-input v-model.trim="model.signInNickname" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="登录名称" prop="signInName">
-                <a-input v-model.trim="model.signInName" placeholder="" />
+                <a-input v-model.trim="model.signInName" placeholder="" key="signInName" />
             </a-form-model-item>
             <a-form-model-item label="登录密码" prop="signInPswd" v-show="editFormType === EditFormTypeDic.Add">
-                <a-input-password v-model.trim="model.signInPswd" placeholder="" />
+                <a-input-password v-model.trim="model.signInPswd" placeholder="" key="signInPswd" />
             </a-form-model-item>
             <a-form-model-item
                 label="登录密码(再次确认)"

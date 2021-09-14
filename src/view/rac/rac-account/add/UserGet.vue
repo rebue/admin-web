@@ -1,7 +1,7 @@
 <template>
     <a-spin :spinning="loading">
         <a-row>
-            <a-col :span="12">
+            <a-col>
                 <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
                     <a-form-model-item label="用户名称" prop="realName" key="realName">
                         <a-input v-model.trim="model.realName" placeholder="" />
@@ -14,15 +14,31 @@
                     </a-form-model-item>
                 </a-form-model>
             </a-col>
-            <a-col :span="12">
-                <div v-if="detail.id">
-                    <p>用户编码: {{ detail.code }}</p>
-                    <p>用户名称: {{ detail.realName }}</p>
-                    <p>身份证号: {{ detail.realName }}</p>
-                    <p>性别: {{ detail.sex == 0 ? '男' : '女' }}</p>
-                    <p>手机号码: {{ detail.mobile }}</p>
-                    <p>电子邮箱: {{ detail.email }}</p>
-                </div>
+            <a-col class="detail-wrap" v-if="detail.id">
+                <a-row class="item">
+                    <a-col :span="7" class="label">用户编码：</a-col>
+                    <a-col :span="17" class="value">{{ detail.code || '-' }}</a-col>
+                </a-row>
+                <a-row class="item">
+                    <a-col :span="7" class="label">用户名称：</a-col>
+                    <a-col :span="17" class="value">{{ detail.realName }}</a-col>
+                </a-row>
+                <a-row class="item">
+                    <a-col :span="7" class="label">身份证号：</a-col>
+                    <a-col :span="17" class="value">{{ detail.idCard }}</a-col>
+                </a-row>
+                <a-row class="item">
+                    <a-col :span="7" class="label">性别：</a-col>
+                    <a-col :span="17" class="value">{{ detail.sex == 0 ? '男' : '女' }}</a-col>
+                </a-row>
+                <a-row class="item">
+                    <a-col :span="7" class="label">手机号码：</a-col>
+                    <a-col :span="17" class="value">{{ detail.mobile }}</a-col>
+                </a-row>
+                <a-row class="item">
+                    <a-col :span="7" class="label">电子邮箱：</a-col>
+                    <a-col :span="17" class="value">{{ detail.email }}</a-col>
+                </a-row>
             </a-col>
         </a-row>
     </a-spin>
@@ -115,3 +131,17 @@ export default {
     },
 };
 </script>
+<style scoped>
+.detail-wrap {
+    margin: 50px 0;
+}
+.item {
+    margin-bottom: 15px;
+}
+.label {
+    text-align: right;
+}
+.value {
+    padding: 0 12px;
+}
+</style>
