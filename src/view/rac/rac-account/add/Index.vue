@@ -137,7 +137,7 @@ export default {
                 this.next();
                 return;
             }
-            if (this.activeTab == 'add-tab') {
+            if (this.activeTab.includes('add-tab')) {
                 this.$refs.userForm.ok(null, ro => {
                     this.userId = ro.extra.id;
                     this.next();
