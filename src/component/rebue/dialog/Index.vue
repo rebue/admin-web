@@ -7,6 +7,7 @@
               :width="width"
               :wrapClassName="wrapClassName"
               :dialogClass="dialogClass"
+              :closable="closable"
               :maskClosable="maskClosable"
               :destroyOnClose="destroyOnClose"
               :footer="footer"
@@ -34,6 +35,10 @@ export default {
     width: String, // Dialog 的宽度
     wrapClassName: String,
     dialogClass: String,
+    closable: { // 是否显示右上角的关闭按钮	
+      type: Boolean,
+      default: true
+    },
     maskClosable: { // 是否可通过点击遮罩关闭 Dialog
       type: Boolean,
       default: true
