@@ -99,7 +99,7 @@ export default {
                     visible: this.editFormType === EditFormTypeDic.Add,
                 },
                 { dataIndex: 'isTester', title: '测试者', type: 'switch' },
-                { dataIndex: 'remark', title: '账户备注' },
+                { dataIndex: 'remark', title: '备注' },
                 { dataIndex: 'id', title: '编码', type: 'hidden' },
                 { dataIndex: 'realmId', title: '领域ID', type: 'hidden' },
                 { dataIndex: 'orgId', title: '组织ID', type: 'hidden' },

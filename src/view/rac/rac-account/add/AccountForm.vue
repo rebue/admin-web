@@ -23,7 +23,7 @@
             <a-form-model-item label="测试者" prop="isTester">
                 <a-switch v-model.trim="model.isTester" checked-children="是" un-checked-children="否" />
             </a-form-model-item>
-            <a-form-model-item label="账号备注" prop="remark">
+            <a-form-model-item label="备注" prop="remark">
                 <a-input v-model.trim="model.remark" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="编码" prop="id" v-show="false">
