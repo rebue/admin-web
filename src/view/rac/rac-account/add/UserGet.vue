@@ -16,10 +16,6 @@
             </a-col>
             <a-col class="detail-wrap" v-if="detail.id">
                 <a-row class="item">
-                    <a-col :span="7" class="label">用户编码：</a-col>
-                    <a-col :span="17" class="value">{{ detail.code || '-' }}</a-col>
-                </a-row>
-                <a-row class="item">
                     <a-col :span="7" class="label">用户名称：</a-col>
                     <a-col :span="17" class="value">{{ detail.realName }}</a-col>
                 </a-row>
