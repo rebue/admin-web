@@ -64,15 +64,15 @@ export default {
                             <p>手机号：{record.signInMobile}</p>
                             <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
-                            <p>锁定原因：{record.lockReason}</p>
-                            <p>解锁原因：{record.unlockReason}</p>
+                            <p>禁用原因：{record.lockReason}</p>
+                            <p>启用原因：{record.unlockReason}</p>
                         </template>
                     </a-popover>
                 ),
             },
             {
                 dataIndex: 'locksignInName',
-                title: '锁定操作员',
+                title: '禁用操作员',
                 ellipsis: true,
                 width: 120,
                 customRender: (text, record) => (
@@ -91,7 +91,7 @@ export default {
             },
             {
                 dataIndex: 'lockAgentSignInName',
-                title: '代理锁定操作员',
+                title: '代理禁用操作员',
                 width: 130,
                 ellipsis: true,
                 customRender: (text, record) => (
@@ -118,7 +118,7 @@ export default {
             },
             {
                 dataIndex: 'lockDatetime',
-                title: '锁定时间',
+                title: '禁用时间',
                 ellipsis: true,
                 width: 165,
                 sorter: true,
@@ -126,7 +126,7 @@ export default {
             },
             {
                 dataIndex: 'unlocksignInName',
-                title: '解锁操作员',
+                title: '启用操作员',
                 width: 120,
                 ellipsis: true,
                 customRender: (text, record) => (
@@ -151,7 +151,7 @@ export default {
             },
             {
                 dataIndex: 'unlockAgentSignInName',
-                title: '代理解锁操作员',
+                title: '代理启用操作员',
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
@@ -179,7 +179,7 @@ export default {
             },
             {
                 dataIndex: 'unlockDatetime',
-                title: '解锁时间',
+                title: '启用时间',
                 ellipsis: true,
                 width: 165,
                 sorter: true,

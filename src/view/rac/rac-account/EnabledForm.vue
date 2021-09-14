@@ -9,8 +9,8 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="unlockReason" label="启用原因" prop="unlockReason">
-                <a-input v-autofocus v-model.trim="model.unlockReason" placeholder="请输入启用原因" />
+            <a-form-model-item key="enableReason" label="启用原因" prop="enableReason">
+                <a-input v-autofocus v-model.trim="model.enableReason" placeholder="请输入启用原因" />
             </a-form-model-item>
         </a-form-model>
     </base-modal>
@@ -36,7 +36,7 @@ export default {
     },
     data() {
         this.rules = {
-            unlockReason: [
+            enableReason: [
                 { required: true, message: '请输入启用原因', trigger: 'blur', transform: val => val && val.trim() },
             ],
         };
@@ -53,7 +53,7 @@ export default {
         return {
             loading: false,
             model: {
-                unlockReason: '',
+                enableReason: '',
             },
         };
     },
@@ -65,12 +65,12 @@ export default {
             });
         },
         handleOk() {
-            this.record.unlockReason = this.model.unlockReason;
+            this.record.enableReason = this.model.enableReason;
 
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    this.record.lockAccountId = this.record.id;
+                    this.record.accountId = this.record.id;
                     racAccountApi
                         .enable(this.record)
                         .then(() => this.$emit('update:visible', false))

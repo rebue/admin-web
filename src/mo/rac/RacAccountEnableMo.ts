@@ -17,37 +17,37 @@ export class RacAccountEnableMo {
     isEnabled = false;
 
     /**
-     * 锁定账户的账户ID
+     * 禁用账户的账户ID
      */
-    lockAccountId = '';
+    accountId = '';
 
     /**
-     * 锁定操作员的账户ID
+     * 禁用操作员的账户ID
      */
-    lockOpId = '';
+    disableOpId = '';
 
     /**
-     * 锁定原因
+     * 禁用原因
      */
-    lockReason = '';
+    disableReason = '';
 
     /**
-     * 锁定时间
+     * 禁用时间
      */
-    lockDatetime = '';
+    disableDatetime = '';
 
     /**
-     * 解锁原因
+     * 启用原因
      */
-    unlockReason = '';
+    enableReason = '';
 
     /**
-     * 解锁时间
+     * 启用时间
      */
-    unlockDatetime = '';
+    eableDatetime = '';
 
     /**
-     * 解锁操作员的账户ID
+     * 启用操作员的账户ID
      */
-    unlockOpId = '';
+    eableOpId = '';
 }
