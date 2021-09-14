@@ -4,7 +4,7 @@
             <a-form-model-item label="用户编码" prop="code" key="code">
                 <a-input v-model.trim="model.code" placeholder="" />
             </a-form-model-item>
-            <a-form-model-item label="用户名" prop="realName" key="realName">
+            <a-form-model-item label="用户名称" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="身份证号" prop="idCard" key="idCard">
@@ -56,7 +56,7 @@ export default {
             },
             rules: {
                 realName: [
-                    { required: true, message: '请输入用户名', trigger: 'blur', transform: val => val && val.trim() },
+                    { required: true, message: '请输入用户名称', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 idCard: [
                     {

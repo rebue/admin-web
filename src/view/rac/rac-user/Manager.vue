@@ -60,13 +60,13 @@ export default {
             },
             {
                 dataIndex: 'realName',
-                title: '用户名',
+                title: '用户名称',
                 width: 120,
                 fixed: 'left',
             },
             {
                 dataIndex: 'idCard',
-                title: '身份证信息',
+                title: '身份证号',
                 ellipsis: true,
             },
             {
