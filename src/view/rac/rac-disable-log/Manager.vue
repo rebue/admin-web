@@ -71,6 +71,52 @@ export default {
                 ),
             },
             {
+                dataIndex: 'locksignInName',
+                title: '锁定操作员',
+                ellipsis: true,
+                width: 120,
+                customRender: (text, record) => (
+                    <a-popover
+                        title={(record.lockSignInName || record.lockSignInMobile || record.lockSignInEmail) + '详情'}
+                    >
+                        {record.lockSignInName || record.lockSignInMobile || record.lockSignInEmail}
+                        <template slot="content">
+                            <p>账户名：{record.lockSignInName}</p>
+                            <p>手机号：{record.lockSignInMobile}</p>
+                            <p>账户昵称：{record.lockSignInNickname}</p>
+                            邮箱：{record.lockSignInEmail}
+                        </template>
+                    </a-popover>
+                ),
+            },
+            {
+                dataIndex: 'lockAgentSignInName',
+                title: '代理锁定操作员',
+                width: 130,
+                ellipsis: true,
+                customRender: (text, record) => (
+                    <a-popover
+                        title={
+                            (record.lockAgentSignInName ||
+                                record.lockAgentSignInMobile ||
+                                record.lockAgentSignInEmail) + '详情'
+                        }
+                    >
+                        {record.lockAgentSignInName || record.lockAgentSignInMobile || record.lockAgentSignInEmail}
+                        <template slot="content">
+                            <p>账户名：{record.lockAgentSignInName}</p>
+                            <p>手机号：{record.lockAgentSignInMobile}</p>
+                            <p>账户昵称：{record.lockAgentSignInNickname}</p>
+                            邮箱：{record.lockAgentSignInEmail}
+                            <br />
+                            微信昵称：{record.lockAgentwxNickname}
+                            <br />
+                            QQ昵称：{record.lockAgentqqNickname}
+                        </template>
+                    </a-popover>
+                ),
+            },
+            {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
                 ellipsis: true,
@@ -95,6 +141,10 @@ export default {
                             <p>手机号：{record.unlockSignInMobile}</p>
                             <p>账户昵称：{record.unlockSignInNickname}</p>
                             邮箱：{record.unlockSignInEmail}
+                            <br />
+                            微信昵称：{record.unlockwxNickname}
+                            <br />
+                            QQ昵称：{record.unlockqqNickname}
                         </template>
                     </a-popover>
                 ),
@@ -119,16 +169,13 @@ export default {
                             <p>手机号：{record.unlockAgentSignInMobile}</p>
                             <p>账户昵称：{record.unlockAgentSignInNickname}</p>
                             邮箱：{record.uunlockAgentSignInEmail}
+                            <br />
+                            微信昵称：{record.unlockAgentwxNickname}
+                            <br />
+                            QQ昵称：{record.unlockAgentqqNickname}
                         </template>
                     </a-popover>
                 ),
-            },
-            {
-                dataIndex: 'autoUnlockDatetime',
-                title: '自动解锁时间',
-                ellipsis: true,
-                width: 165,
-                sorter: true,
             },
             {
                 dataIndex: 'unlockDatetime',
