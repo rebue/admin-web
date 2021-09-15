@@ -190,6 +190,13 @@ export const constantRouters = [
                         meta: { title: '账户解锁日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
+                        path: '/log/disable-log',
+                        name: 'disable-log',
+                        component: () => import('@/view/rac/rac-disable-log/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账户启/禁用日志', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
                         path: '/log/op-log',
                         name: 'op-log',
                         component: () => import('@/view/rac/rac-op-log/Manager.vue'),

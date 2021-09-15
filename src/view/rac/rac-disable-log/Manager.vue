@@ -36,7 +36,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi, racLockLogApi } from '@/api/Api';
+import { racRealmApi, racDisableLogApi } from '@/api/Api';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh_cn');
@@ -48,7 +48,7 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racLockLogApi;
+        this.api = racDisableLogApi;
         const columns = [
             {
                 dataIndex: 'signInName',
