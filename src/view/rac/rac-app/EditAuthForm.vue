@@ -18,7 +18,7 @@
                 <a-form-model-item label="认证">
                     <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked />
                 </a-form-model-item>
-                <a-form-model-item label="应用ID(AppID)" prop="clientId">
+                <a-form-model-item label="应用ID(clientId)" prop="clientId">
                     <a-input v-model.trim="model['clientId']" disabled style="width:85%" />
                     <a-icon class="copyIconStyle" type="copy" @click="copyClick(model.clientId)" />
                 </a-form-model-item>

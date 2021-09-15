@@ -252,12 +252,11 @@ export default {
         handleAuth(record) {
             //根据appId查询认证信息，判断是展示添加弹窗还是编辑弹窗
             oapAppApi.getByAppId(record.id).then(ro => {
-                const item = {
+                let item = {
                     appId: record.id, // 添加认证需要appId
                     appName: record.name, //把应用名称带到弹窗
-                    clientId: ro?.extra.appId,
-                    secret: ro?.extra.secret,
                 };
+                item = { ...item, ...ro.extra };
                 if (ro?.extra.id != undefined) {
                     this.$refs.editAuthForm.show(EditFormTypeDic.Modify, item);
                     return;
