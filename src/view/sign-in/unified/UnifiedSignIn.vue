@@ -23,7 +23,7 @@
                         <!-- <img src="./loginIcon.png" alt="" /> -->
                     </div>
                     <div class="bottom-list">
-                        注：未注册手机验证后自动登录 注册即代表同意《服务条款》
+                        <!-- 注：未注册手机验证后自动登录 注册即代表同意《服务条款》 -->
                     </div>
                 </div>
             </div>

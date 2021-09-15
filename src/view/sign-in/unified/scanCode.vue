@@ -15,6 +15,10 @@
             <div class="loginBox">
                 <div id="login_container"></div>
             </div>
+            <div class="vxTips" v-if="codeType == '微信'">
+                请使用微信扫描二维码登录
+                <div class="iconCss" @click="refreshClick()"><a-icon type="sync" class="icon" />刷新</div>
+            </div>
         </div>
     </div>
 </template>
@@ -57,7 +61,7 @@ export default {
         // 钉钉扫码接口
         ddLoginInit() {
             let url = encodeURIComponent('http://127.0.0.1:13080/admin-web/#/sign-in/unified'); //此处url写钉钉回调地址
-            let appid = 'dinggm0fx8u7agmucbij'; //填写自己在钉钉开发者平台配的appid
+            let appid = process.env.VUE_APP_DD_CODE_APPID; //填写自己在钉钉开发者平台配的appid
             let goto = encodeURIComponent(
                 `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}`
             );
@@ -86,7 +90,7 @@ export default {
             const obj = new WxLogin({
                 self_redirect: false,
                 id: 'login_container',
-                appid: 'wx25d6c6c863c8629a',
+                appid: process.env.VUE_APP_VX_CODE_APPID,
                 scope: 'snsapi_login',
                 redirect_uri: encodeURIComponent('https://khadmin.cocmis.cn/host/pcLogin?type=wxredirect'),
                 state: Math.ceil(Math.random() * 1000),
@@ -94,6 +98,10 @@ export default {
                 href:
                     'data:text/css;base64,Ym9keXsKICAgIGhlaWdodDogMjkwcHg7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwp9Ci5pbXBvd2VyQm94IC5zdGF0dXNfYnJvd3NlcnsKICAgIGRpc3BsYXk6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnFyY29kZXsKICAgIGhlaWdodDogMjQwcHg7CiAgICB3aWR0aDogMjQwcHg7CiAgICBtYXJnaW46IDA7CiAgICBib3JkZXI6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnRpdGxlewpkaXNwbGF5OiBub25lOwp9Ci5pbXBvd2VyQm94IC5pbmZvewp3aWR0aDogMTAwJTsKfQ==',
             });
+        },
+        //刷新微信二维码
+        refreshClick() {
+            this.wxLoginInit();
         },
     },
 };
@@ -114,6 +122,7 @@ export default {
     }
     .codeBox {
         width: 100%;
+        position: relative;
         .topLogo {
             width: 100%;
             height: 55px;
@@ -144,6 +153,22 @@ export default {
             height: 290px;
             display: flex;
             justify-content: center;
+        }
+        .vxTips {
+            position: absolute;
+            left: 23%;
+            bottom: -1%;
+            color: #898d90;
+            font-size: 14px;
+            .iconCss {
+                color: #38adff;
+                cursor: pointer;
+                float: right;
+                margin-left: 5px;
+                .icon {
+                    margin-right: 2px;
+                }
+            }
         }
     }
 }

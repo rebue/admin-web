@@ -22,7 +22,7 @@
                     <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
                         >登录</a-button
                     >
-                    <!-- <a-checkbox class="remenber">记住登录状态</a-checkbox> -->
+                    <a-checkbox class="remenber">记住登录状态</a-checkbox>
                 </a-form-model>
             </div>
         </a-tab-pane>
@@ -69,7 +69,6 @@
 import request from '@/util/request';
 import { isPhone } from '@/util/validator';
 const SECOND = 60;
-// import axios from 'axios'
 export default {
     components: {},
     props: {},
@@ -180,7 +179,7 @@ export default {
                 return;
             }
             this.isCodeLoading = true;
-            this.$refs.form.clearValidate('phoneNumber'); //当手机没问题的时候 就取消tips
+            this.$refs.form.clearValidate('phoneNumber'); //当手机号没问题的时候 就取消tips
             this.countDown(this.second, val => {
                 this.second = val;
                 if (val === 0) {

@@ -23,15 +23,10 @@
                     <a-icon class="copyIconStyle" type="copy" @click="copyClick(model.clientId)" />
                 </a-form-model-item>
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
-                    <a-input v-model.trim="model.secret" disabled :style="secretStyle" />
-                    <a-icon
-                        class="copyIconStyle"
-                        v-show="model.secret != '******'"
-                        type="copy"
-                        @click="copyClick(model.secret)"
-                    />
-                    <a-button v-show="model.secret == '******'" type="primary" html-type="submit" @click="secretClick()"
-                        >重置
+                    <a-input v-show="secretShow" v-model.trim="model.secret" disabled style="width:85%" />
+                    <a-icon class="copyIconStyle" v-show="secretShow" type="copy" @click="copyClick(model.secret)" />
+                    <a-button v-show="!secretShow" type="primary" html-type="submit" @click="secretClick()"
+                        >更新
                     </a-button>
                 </a-form-model-item>
                 <a-form-model-item label="安全域名" required>
@@ -126,16 +121,16 @@ export default {
             EditFormTypeDic,
             editFormType: EditFormTypeDic.None,
             model: { ...JSON.parse(JSON.stringify(modelSource)) },
+            secretShow: false,
             rules: {
-                clientId: [
-                    { required: true, message: '请输入应用ID', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                secret: [
-                    { required: true, message: '请输入应用钥', trigger: 'blur', transform: val => val && val.trim() },
-                ],
+                // clientId: [
+                //     { required: true, message: '请输入应用ID', trigger: 'blur', transform: val => val && val.trim() },
+                // ],
+                // secret: [
+                //     { required: true, message: '请输入应用钥', trigger: 'blur', transform: val => val && val.trim() },
+                // ],
             },
             enable: true, // false不认证：表单域会disabled, 表单清除校验，禁用点击添加和删除
-            secretStyle: 'width:85%',
         };
     },
     computed: {
@@ -203,7 +198,7 @@ export default {
         secretClick() {
             this.api.getAppSecret().then(res => {
                 this.model.secret = res?.extra.secret;
-                this.secretStyle = 'width:85%';
+                this.secretShow = true;
             });
         },
         handleShow() {
@@ -218,15 +213,14 @@ export default {
                                 ...JSON.parse(JSON.stringify(this.model)),
                                 ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
                             };
-                            this.secretStyle = 'width:70%;margin-right:20px';
-                            this.model.secret = '******';
+                            this.secretShow = false;
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
                             this.loading = false;
                         });
                 } else {
-                    this.secretStyle = 'width:85%';
+                    this.secretShow = true;
                     this.loading = false;
                 }
             });
@@ -244,7 +238,7 @@ export default {
                     data.ipAddrs = data.ipAddrs.map(v => {
                         return v.value;
                     });
-                    if (data.secret == '******') {
+                    if (!this.secretShow) {
                         delete data.secret;
                     }
                     if (this.editFormType === EditFormTypeDic.Add) {

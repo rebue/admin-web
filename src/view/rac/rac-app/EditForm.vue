@@ -36,7 +36,9 @@
                     >
                         <img :src="model.imgUrl" alt="" />
                     </div>
-                    <div v-else class="uploadClick" @click="uploadClick()">+</div>
+                    <div v-else class="uploadClick" @click="uploadClick()">
+                        <a-icon type="plus" />
+                    </div>
 
                     <image-uploader
                         v-model="showImageUploader"
@@ -259,19 +261,21 @@ export default {
 </script>
 <style lang="less">
 .uploadClick {
-    width: 80px;
-    height: 80px;
-    border: 1px dotted #ccc;
+    width: 90px;
+    height: 90px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
     color: #ddd;
+    background-color: #fafafa;
     cursor: pointer;
 }
 .uploadImg {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     cursor: pointer;
     border-radius: 5px;
     overflow: hidden;
