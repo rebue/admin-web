@@ -143,7 +143,7 @@ export default {
                 if (valid) {
                     request
                         .post({
-                            url: this.tabKey == 1 ? '/oap-svr/oidc/login' : '/oap-svr/oidc/login',
+                            url: this.tabKey == 1 ? '/oap-svr/oap/login' : '/oap-svr/oap/login',
                             data:
                                 this.tabKey == 1
                                     ? { loginName: this.form.accountName, password: this.form.signInPswd }
