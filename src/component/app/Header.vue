@@ -32,10 +32,10 @@ export default {
                     name: '我的应用',
                     path: '/app/index',
                 },
-                {
-                    name: '个人中心',
-                    path: '/app/person-center',
-                },
+                // {
+                //     name: '个人中心',
+                //     path: '/app/person-center',
+                // },
                 {
                     name: '安全中心',
                     path: '/app/auth',

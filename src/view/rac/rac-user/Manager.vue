@@ -124,16 +124,16 @@ export default {
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
             },
-            {
-                type: 'more',
-                items: [
-                    {
-                        type: 'a',
-                        title: '管理账号',
-                        onClick: record => this.handleManageAccount(record),
-                    },
-                ],
-            },
+            // {
+            //     type: 'more',
+            //     items: [
+            //         {
+            //             type: 'a',
+            //             title: '管理账号',
+            //             onClick: record => this.handleManageAccount(record),
+            //         },
+            //     ],
+            // },
         ];
 
         return {

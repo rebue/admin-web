@@ -3,7 +3,12 @@
         <a-form-model-item key="mobile" label="手机号" prop="mobile">
             <a-input v-model.trim="model.mobile" placeholder="" />
         </a-form-model-item>
-        <a-form-model-item key="newMobile" label="新手机号" prop="mobile" v-if="editFormType === 'modify'">
+        <a-form-model-item
+            key="newMobile"
+            label="新手机号"
+            prop="mobile"
+            v-if="editFormType === EditFormTypeDic.Modify"
+        >
             <a-input v-model.trim="model.newMobile" placeholder="" />
         </a-form-model-item>
         <a-form-model-item key="verifyCode" label="验证码" prop="verifyCode">
@@ -22,6 +27,8 @@
 </template>
 <script>
 import { isPhone } from '@/util/validator';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+
 const SECOND = 5;
 export default {
     name: 'app-security-center-phone',
@@ -38,6 +45,7 @@ export default {
             },
         };
         return {
+            EditFormTypeDic,
             //form表单
             model: {
                 mobile: '',
@@ -61,7 +69,7 @@ export default {
                 ],
                 newMobile: [
                     {
-                        required: this.editFormType === 'modify',
+                        required: this.editFormType === EditFormTypeDic.Modify,
                         message: '请输入新手机号',
                         trigger: 'blur',
                         transform: val => val.trim(),
@@ -91,9 +99,12 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //发请求
-                    //then
-                    this.callback && this.callback();
-                    this.closeDialog();
+                    // 绑定，更换绑定，解除绑定
+                    //EditFormTypeDic.Add, EditFormTypeDic.Modify, EditFormTypeDic.Delete
+                    this.callback &&
+                        this.callback({ ...this.model }).finally(() => {
+                            this.closeDialog();
+                        });
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框

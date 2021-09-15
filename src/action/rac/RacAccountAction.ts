@@ -37,7 +37,8 @@ export class RacAccountAction {
         accountStore.isTester = ra.isTester;
 
         // 设置菜单
-        const menus = constantRouters.find(item => item.path === '/').children;
+        let menus = constantRouters.find(item => item.path === '/').children;
+        menus = JSON.parse(JSON.stringify(menus));
         for (const menu of ra.menus) {
             const sections = menu.split('/');
             const section1 = sections[1];

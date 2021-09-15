@@ -58,7 +58,7 @@
                     <a-form-item label="用户名">{{ account.user.realName }}</a-form-item>
                     <a-form-item label="手机号码">{{ account.user.mobile }}</a-form-item>
                     <a-form-item label="电子邮箱">{{ account.user.email }}</a-form-item>
-                    <a-form-item label="性别">{{ account.user.sex }}</a-form-item>
+                    <a-form-item label="性别">{{ account.user.sex == 1 ? '男' : '女' }}</a-form-item>
                     <a-form-item label="身份证信息">{{ account.user.idCard }}</a-form-item>
                     <a-form-item label="所属组织">{{ account.org.name }}</a-form-item>
                 </a-form>

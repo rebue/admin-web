@@ -25,7 +25,7 @@
                 </a-row>
                 <a-row class="item">
                     <a-col :span="7" class="label">性别：</a-col>
-                    <a-col :span="17" class="value">{{ detail.sex == 0 ? '男' : '女' }}</a-col>
+                    <a-col :span="17" class="value">{{ detail.sex == 1 ? '男' : '女' }}</a-col>
                 </a-row>
                 <a-row class="item">
                     <a-col :span="7" class="label">手机号码：</a-col>

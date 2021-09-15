@@ -10,6 +10,8 @@ export enum EditFormTypeDic {
     Modify = 'modify',
     /** 查看 */
     View = 'view',
+    /** 删除 */
+    Delete = 'delete',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -23,6 +25,8 @@ export namespace EditFormTypeDic {
                 return '修改';
             case EditFormTypeDic.View:
                 return '查看';
+            case EditFormTypeDic.Delete:
+                return '删除';
             default:
                 return '未定义';
         }
