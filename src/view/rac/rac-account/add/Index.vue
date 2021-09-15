@@ -11,7 +11,7 @@
                         <div slot="avatar">
                             <a-icon type="user-add" :style="{ fontSize: '30px', color: '#1890ff' }" />
                         </div>
-                        <a slot="title" href="https://www.antdv.com/">新建用户</a>
+                        <span slot="title">新建用户</span>
                         <div slot="description">XXXX</div>
                     </a-list-item-meta>
                     <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
@@ -21,7 +21,7 @@
                         <div slot="avatar">
                             <a-icon type="solution" :style="{ fontSize: '30px', color: '#1890ff' }" />
                         </div>
-                        <a slot="title" href="https://www.antdv.com/">选择已有用户</a>
+                        <span slot="title">选择已有用户</span>
                         <div slot="description">XXXX</div>
                     </a-list-item-meta>
                     <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
