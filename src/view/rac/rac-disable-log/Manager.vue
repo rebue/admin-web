@@ -64,60 +64,65 @@ export default {
                             <p>手机号：{record.signInMobile}</p>
                             <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
-                            <p>禁用原因：{record.lockReason}</p>
-                            <p>启用原因：{record.unlockReason}</p>
+                            <p>禁用原因：{record.disableReason}</p>
+                            <p>启用原因：{record.enableReason}</p>
                         </template>
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'locksignInName',
+                dataIndex: 'disableSignInName',
                 title: '禁用操作员',
                 ellipsis: true,
                 width: 120,
                 customRender: (text, record) => (
                     <a-popover
-                        title={(record.lockSignInName || record.lockSignInMobile || record.lockSignInEmail) + '详情'}
+                        title={
+                            (record.disableSignInName || record.disableSignInMobile || record.disableSignInEmail) +
+                            '详情'
+                        }
                     >
-                        {record.lockSignInName || record.lockSignInMobile || record.lockSignInEmail}
+                        {record.disableSignInName || record.disableSignInMobile || record.disableSignInEmail}
                         <template slot="content">
-                            <p>账户名：{record.lockSignInName}</p>
-                            <p>手机号：{record.lockSignInMobile}</p>
-                            <p>账户昵称：{record.lockSignInNickname}</p>
-                            邮箱：{record.lockSignInEmail}
+                            <p>账户名：{record.disableSignInName}</p>
+                            <p>手机号：{record.disableSignInMobile}</p>
+                            <p>账户昵称：{record.disableSignInNickname}</p>
+                            邮箱：{record.disableSignInEmail}
                         </template>
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'lockAgentSignInName',
+                dataIndex: 'disableAgentSignInName',
                 title: '代理禁用操作员',
                 width: 130,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
                         title={
-                            (record.lockAgentSignInName ||
-                                record.lockAgentSignInMobile ||
-                                record.lockAgentSignInEmail) + '详情'
+                            (record.disableAgentSignInNickname ||
+                                record.disableAgentSignInMobile ||
+                                record.disableAgentSignInEmail) + '详情'
                         }
                     >
-                        {record.lockAgentSignInName || record.lockAgentSignInMobile || record.lockAgentSignInEmail}
+                        {record.disableAgentSignInNickname ||
+                            record.disableAgentSignInMobile ||
+                            record.disableAgentSignInEmail}
                         <template slot="content">
-                            <p>账户名：{record.lockAgentSignInName}</p>
-                            <p>手机号：{record.lockAgentSignInMobile}</p>
-                            <p>账户昵称：{record.lockAgentSignInNickname}</p>
-                            邮箱：{record.lockAgentSignInEmail}
+                            <p>账户名：{record.disableAgentSignInName}</p>
+                            <p>手机号：{record.disableAgentSignInMobile}</p>
+                            <p>账户昵称：{record.disableAgentSignInNickname}</p>
+                            邮箱：{record.disableAgentSignInEmail}
                             <br />
-                            微信昵称：{record.lockAgentwxNickname}
+                            微信昵称：{record.disableAgentwxNickname}
                             <br />
-                            QQ昵称：{record.lockAgentqqNickname}
+                            QQ昵称：{record.disableAgentqqNickname}
                         </template>
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'lockDatetime',
+                dataIndex: 'disableDatetime',
                 title: '禁用时间',
                 ellipsis: true,
                 width: 165,
@@ -125,60 +130,60 @@ export default {
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
             {
-                dataIndex: 'unlocksignInName',
+                dataIndex: 'enableSignInName',
                 title: '启用操作员',
                 width: 120,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
                         title={
-                            (record.unlockSignInName || record.unlockSignInMobile || record.unlockSignInEmail) + '详情'
+                            (record.enableSignInName || record.enableSignInMobile || record.enableSignInEmail) + '详情'
                         }
                     >
-                        {record.unlockSignInName || record.unlockSignInMobile || record.unlockSignInEmail}
+                        {record.enableSignInName || record.enableSignInMobile || record.enableSignInEmail}
                         <template slot="content">
-                            <p>账户名：{record.unlockSignInName}</p>
-                            <p>手机号：{record.unlockSignInMobile}</p>
-                            <p>账户昵称：{record.unlockSignInNickname}</p>
-                            邮箱：{record.unlockSignInEmail}
+                            <p>账户名：{record.enableSignInName}</p>
+                            <p>手机号：{record.enableSignInMobile}</p>
+                            <p>账户昵称：{record.enableSignInNickname}</p>
+                            邮箱：{record.enableSignInEmail}
                             <br />
-                            微信昵称：{record.unlockwxNickname}
+                            微信昵称：{record.enablewxNickname}
                             <br />
-                            QQ昵称：{record.unlockqqNickname}
+                            QQ昵称：{record.enableqqNickname}
                         </template>
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'unlockAgentSignInName',
+                dataIndex: 'enableAgentSignInName',
                 title: '代理启用操作员',
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
                         title={
-                            (record.unlockAgentSignInName ||
-                                record.unlockAgentSignInMobile ||
-                                record.unlockAgentSignInEmail) + '详情'
+                            (record.enableAgentSignInName ||
+                                record.enableAgentSignInMobile ||
+                                record.enableAgentSignInEmail) + '详情'
                         }
                     >
-                        {record.unlockAgentSignInName ||
-                            record.unlockAgentSignInMobile ||
-                            record.unlockAgentSignInEmail}
+                        {record.enableAgentSignInName ||
+                            record.enableAgentSignInMobile ||
+                            record.enableAgentSignInEmail}
                         <template slot="content">
-                            <p>账户名：{record.unlockAgentSignInName}</p>
-                            <p>手机号：{record.unlockAgentSignInMobile}</p>
-                            <p>账户昵称：{record.unlockAgentSignInNickname}</p>
-                            邮箱：{record.uunlockAgentSignInEmail}
+                            <p>账户名：{record.enableAgentSignInName}</p>
+                            <p>手机号：{record.enableAgentSignInMobile}</p>
+                            <p>账户昵称：{record.enableAgentSignInNickname}</p>
+                            邮箱：{record.enableAgentSignInEmail}
                             <br />
-                            微信昵称：{record.unlockAgentwxNickname}
+                            微信昵称：{record.enableAgentwxNickname}
                             <br />
-                            QQ昵称：{record.unlockAgentqqNickname}
+                            QQ昵称：{record.enableAgentqqNickname}
                         </template>
                     </a-popover>
                 ),
             },
             {
-                dataIndex: 'unlockDatetime',
+                dataIndex: 'enableDatetime',
                 title: '启用时间',
                 ellipsis: true,
                 width: 165,
