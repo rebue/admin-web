@@ -5,14 +5,14 @@
         </a-steps>
         <div class="panel">
             <!-- 第一步 选择方式 -->
-            <div class="steps-content" v-show="current == 0">
+            <div class="steps-content choose-type" v-show="current == 0">
                 <a-list-item class="nav" @click="changeActiveTab('add-tab')">
                     <a-list-item-meta>
                         <div slot="avatar">
                             <a-icon type="user-add" :style="{ fontSize: '30px', color: '#1890ff' }" />
                         </div>
                         <span slot="title">新建用户</span>
-                        <div slot="description">XXXX</div>
+                        <div slot="description">填写表单提交创建用户</div>
                     </a-list-item-meta>
                     <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
                 </a-list-item>
@@ -22,24 +22,26 @@
                             <a-icon type="solution" :style="{ fontSize: '30px', color: '#1890ff' }" />
                         </div>
                         <span slot="title">选择已有用户</span>
-                        <div slot="description">XXXX</div>
+                        <div slot="description">根据用户名称，身份证号查询已有用户信息</div>
                     </a-list-item-meta>
                     <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
                 </a-list-item>
             </div>
             <!-- 第二步 选择用户 -->
-            <div class="steps-content" v-show="current == 1">
-                <user-form ref="userForm" :key="activeTab" v-if="activeTab.includes('add-tab')" />
-                <user-get
-                    ref="queryForm"
-                    :key="activeTab"
-                    v-if="activeTab.includes('choose-tab')"
-                    :callback="
-                        ro => {
-                            userId = ro.extra.id;
-                        }
-                    "
-                />
+            <div class="steps-content bind-user" v-show="current == 1">
+                <div class="form">
+                    <user-form ref="userForm" :key="activeTab" v-if="activeTab.includes('add-tab')" />
+                    <user-get
+                        ref="queryForm"
+                        :key="activeTab"
+                        v-if="activeTab.includes('choose-tab')"
+                        :callback="
+                            ro => {
+                                userId = ro.extra.id;
+                            }
+                        "
+                    />
+                </div>
                 <div class="steps-action ant-modal-footer">
                     <a-button @click="prev">
                         上一步
@@ -50,8 +52,10 @@
                 </div>
             </div>
             <!-- 第三步 创建账号 -->
-            <div class="steps-content" v-show="current == 2">
-                <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
+            <div class="steps-content add-account" v-show="current == 2">
+                <div class="form">
+                    <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
+                </div>
                 <div class="steps-action ant-modal-footer">
                     <a-button @click="prev">
                         上一步
@@ -62,8 +66,8 @@
                 </div>
             </div>
             <!-- 第四步 完成 -->
-            <div class="steps-content" v-show="current == 3">
-                <a-result status="success" sub-title="新建账号成功">
+            <div class="steps-content finish-wrap" v-show="current == 3">
+                <a-result class="result" status="success" sub-title="新建账号成功">
                     <template #icon>
                         <a-icon type="smile" theme="twoTone" />
                     </template>
@@ -174,7 +178,7 @@ export default {
 }
 .nav {
     height: 88px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 0 40px;
     border: 1px solid #ededed;
     border-radius: 2px;
@@ -183,5 +187,17 @@ export default {
 .nav:hover {
     border-color: #f4f4f4;
     background-color: #fdfdfd;
+}
+.choose-type {
+    padding: 100px 50px;
+}
+.bind-user .form {
+    margin: 100px 50px;
+}
+.add-account .form {
+    margin: 100px 0;
+}
+.finish-wrap .result {
+    margin: 100px 10px;
 }
 </style>
