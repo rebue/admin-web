@@ -130,6 +130,11 @@ export default {
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
             {
+                dataIndex: 'disableReason',
+                title: '禁用原因',
+                ellipsis: true,
+            },
+            {
                 dataIndex: 'enableSignInName',
                 title: '启用操作员',
                 width: 120,
@@ -189,6 +194,11 @@ export default {
                 width: 165,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
+            },
+            {
+                dataIndex: 'enableReason',
+                title: '启用原因',
+                ellipsis: true,
             },
         ];
 
