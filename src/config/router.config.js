@@ -167,14 +167,14 @@ export const constantRouters = [
                     },
                     {
                         path: '/account/rac-user',
-                        name: 'ops-user',
+                        name: 'rac-user',
                         component: () => import('@/view/rac/rac-user/Manager.vue'),
                         hidden: true,
                         meta: { title: '用户', keepAlive: true, icon: 'user' },
                     },
                     {
-                        path: '/account/rac-accountUnlock',
-                        name: 'rac-accountUnlock',
+                        path: '/account/rac-account-unlock',
+                        name: 'rac-account-unlock',
                         component: () => import('@/view/rac/rac-account/ManagerUnlock.vue'),
                         hidden: true,
                         meta: { title: '解锁', keepAlive: true, icon: 'user' },
