@@ -143,11 +143,11 @@ export default {
             account: {},
             EditFormTypeDic,
             //手机号
-            isVerifiedMobile: true,
-            isVerifiedWechat: true,
-            isVerifiedDing: true,
-            isVerifiedPswd: true,
-            isVerifiedEmail: true,
+            isVerifiedMobile: false,
+            isVerifiedWechat: false,
+            isVerifiedDing: false,
+            isVerifiedPswd: false,
+            isVerifiedEmail: false,
         };
     },
     methods: {
