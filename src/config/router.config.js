@@ -15,6 +15,11 @@ const RouteView = {
 export const constantRouters = [
     /**个人应用平台菜单*/
     {
+        path: '/scanTransfer',
+        name: 'scanTransfer',
+        component: () => import('@/view/app/security-center/ScanTransfer.vue'),
+    },
+    {
         path: '/app',
         name: 'app',
         meta: { title: '个人应用平台菜单', keepAlive: true, icon: 'setting' },

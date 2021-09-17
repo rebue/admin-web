@@ -80,22 +80,13 @@
                                 <a-icon type="dingding" />
                             </div>
                             <span slot="title">钉钉绑定</span>
-                            <span slot="description" v-if="isVerifiedDing">已设置：1599462300</span>
+                            <span slot="description" v-if="account.ddUnionId">已绑定</span>
                             <div slot="description" v-else>
                                 <span>未绑定</span>
                             </div>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <!-- <a-popconfirm
-                                title="确定解除钉钉绑定吗?"
-                                @confirm="() => unbindDing()"
-                                ok-text="确定"
-                                cancel-text="取消"
-                                v-if="isVerifiedDing"
-                            >
-                                <a-button key="delete">解除绑定</a-button>
-                            </a-popconfirm> -->
-                            <a-button key="delete" v-if="isVerifiedDing" @click="unbindDing">解除绑定</a-button>
+                            <a-button key="delete" v-if="account.ddUnionId" @click="unbindDing">解除绑定</a-button>
                             <a-button key="add" type="primary" v-else @click="bindDing">绑定</a-button>
                         </div>
                     </a-list-item>
@@ -126,13 +117,15 @@
 </template>
 
 <script>
+import { when } from 'mobx';
+import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import { racAccountApi } from '@/api/Api';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import Aside from './Aside.vue';
 
-export default {
+export default observer({
     name: 'app-security-center-index',
     components: {
         Aside,
@@ -150,11 +143,27 @@ export default {
             isVerifiedEmail: false,
         };
     },
+    mounted() {
+        when(
+            () => this.accountStore && this.accountStore.accountId,
+            () =>
+                racAccountApi.getById(this.accountStore.accountId).then(ro => {
+                    const { user, org } = ro.extra.one;
+                    ro.extra.one.user = user ? user : {};
+                    ro.extra.one.org = org ? org : {};
+                    this.account = ro.extra.one;
+                })
+        );
+    },
     methods: {
         refreshAccountInfo() {
             racMenuAction.refreshAccountInfo();
         },
-
+        getAccountInfo() {
+            racAccountApi.getById(this.accountStore.accountId).then(ro => {
+                this.account = ro.extra.one;
+            });
+        },
         // 手机号
         bindPhone() {
             const that = this;
@@ -281,15 +290,22 @@ export default {
             this.$showDialog(
                 require('./Dingding.vue').default,
                 {
+                    data() {
+                        return {
+                            eventType: 'account-bind',
+                            title: '钉钉绑定',
+                        };
+                    },
                     methods: {
                         callback() {
                             console.log('----callback');
-                            that.isVerifiedDing = true;
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },
                 {
-                    title: '绑定钉钉',
+                    title: '钉钉绑定',
                     footer: null,
                     width: '500px',
                 }
@@ -298,23 +314,25 @@ export default {
         unbindDing() {
             const that = this;
             this.$showDialog(
-                require('./Phone.vue').default,
+                require('./Dingding.vue').default,
                 {
                     data() {
                         return {
-                            editFormType: EditFormTypeDic.None,
+                            eventType: 'account-unbind',
+                            title: '钉钉解除绑定',
                         };
                     },
                     methods: {
-                        async callback(params) {
-                            //发起解除绑定请求
-                            await racAccountApi.getById(that.accountStore.accountId);
-                            that.isVerifiedDing = false;
+                        callback() {
+                            console.log('----callback');
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },
                 {
-                    title: '手机号验证解除绑定钉钉',
+                    title: '钉钉解除绑定',
+                    footer: null,
                     width: '500px',
                 }
             );
@@ -364,22 +382,7 @@ export default {
             );
         },
     },
-    watch: {
-        accountStore: {
-            handler(val, old) {
-                // 用observer包裹，为啥只执行一次。
-                // accountStore是异步获取的，放在mounted会有执行顺序问题，所以放在watch
-                if (val && val.accountId) {
-                    racAccountApi.getById(val.accountId).then(ro => {
-                        this.account = ro.extra.one;
-                    });
-                }
-            },
-            immediate: true,
-            deep: true,
-        },
-    },
-};
+});
 </script>
 <style scoped>
 .avatar {
