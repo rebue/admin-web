@@ -1,34 +1,82 @@
 <template>
-    <div>
-        <wx-login-code :option="option" v-if="false"></wx-login-code>
+    <div class="wechat-body">
+        <a-spin :spinning="loading">
+            <wx-login-code :option="option" v-if="state && !status"></wx-login-code>
+            <a-result status="success" :title="title + '成功'" v-if="status == 'success'">
+                <template #extra>
+                    <a-button key="cancel" type="primary" @click="ok">
+                        关闭
+                    </a-button>
+                </template>
+            </a-result>
+            <a-result status="error" :title="title + '失败'" v-if="status == 'error'">
+                <template #extra>
+                    <a-button key="cancel" type="primary" @click="closeDialog">
+                        关闭
+                    </a-button>
+                    <!-- <a-button key="cancel" type="primary" @click="tryAgain">
+                        再试一次
+                    </a-button> -->
+                </template>
+            </a-result>
+        </a-spin>
     </div>
 </template>
 <script>
 import WxLoginCode from './WXLoginCode.vue';
 import request from '@/util/request';
-
-export default {
+// import { when } from 'mobx';
+import { observer } from 'mobx-vue';
+const getQueryVariable = function(url, variable) {
+    const query = url.split('?')[1];
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return false;
+};
+export default observer({
     name: 'app-security-center-wechat',
     components: {
         WxLoginCode,
     },
     data() {
         return {
-            option: {
-                self_redirect: false,
-                appid: process.env.VUE_APP_VX_CODE_APPID,
-                scope: 'snsapi_login',
-                redirect_uri: encodeURIComponent('https://khadmin.cocmis.cn/host/pcLogin?type=wxredirect'),
-                state: Math.ceil(Math.random() * 1000),
-                style: 'black',
-                href:
-                    'data:text/css;base64,IGJvZHkgewogICAgIGhlaWdodDogYXV0bzsKIH0KIC5pbXBvd2VyQm94IC5xcmNvZGUgewogICAgaGVpZ2h0OiBhdXRvOwogICAgd2lkdGg6IGF1dG87CiAgICBtYXgtd2lkdGg6IDEwMCU7CiAgICBtYXJnaW46IDA7CiAgICBib3JkZXI6IG5vbmU7Cn0=',
-                // href: 'data:text/css;base64,Ym9keXsKICAgIGhlaWdodDogMjkwcHg7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwp9Ci5pbXBvd2VyQm94IC5zdGF0dXNfYnJvd3NlcnsKICAgIGRpc3BsYXk6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnFyY29kZXsKICAgIGhlaWdodDogMjQwcHg7CiAgICB3aWR0aDogMjQwcHg7CiAgICBtYXJnaW46IDA7CiAgICBib3JkZXI6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnRpdGxlewpkaXNwbGF5OiBub25lOwp9Ci5pbXBvd2VyQm94IC5pbmZvewp3aWR0aDogMTAwJTsKfQ==',
-            },
+            state: '',
+            loading: false,
+            status: '',
         };
     },
+    computed: {
+        redirectUri() {
+            const callbackUrl = encodeURIComponent(
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
+            );
+            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
+        },
+        option() {
+            return {
+                self_redirect: true,
+                appid: process.env.VUE_APP_WX_CODE_APPID,
+                scope: 'snsapi_login',
+                redirect_uri: encodeURIComponent(this.redirectUri),
+                state: this.state,
+                style: 'black',
+            };
+        },
+    },
     mounted() {
-        this.getQrcode();
+        this.$nextTick(() => {
+            this.getQrcode();
+        });
+        if (typeof window.addEventListener != 'undefined') {
+            window.addEventListener('message', this.handleMessage, false);
+        } else if (typeof window.attachEvent != 'undefined') {
+            window.attachEvent('onmessage', this.handleMessage);
+        }
     },
     methods: {
         ok() {
@@ -38,20 +86,56 @@ export default {
             this.callback && this.callback();
             this.closeDialog();
         },
+        handleMessage(event) {
+            this.loading = true;
+            const origin = event.origin;
+            console.log('---------origin', event.origin);
+            if (origin == location.origin) {
+                console.log('---------接收到子窗口的新消息了', event.data);
+                if (event.data.event === 'wechat-open-bind' || event.data.event === 'wechat-open-unbind') {
+                    const { result } = event.data;
+                    if (result === 'success') {
+                        this.status = result;
+                    } else if (result === 'error') {
+                        this.status = result;
+                    }
+                }
+                this.loading = false;
+            }
+        },
         getQrcode() {
-            const redirectUri = `${process.env.VUE_APP_VX_REDIRECT_URL}/orp-svr/orp/get-user-info/wechat-open/${process.env.VUE_APP_VX_CODE_APPID}`;
-            return request
+            this.loading = true;
+            request
                 .get({
-                    url: `/orp-svr/orp/get-auth-url/wechat-open/${process.env.VUE_APP_VX_CODE_APPID}`,
+                    url: `/orp-svr/orp/get-auth-url/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
                     params: {
-                        redirectUri,
+                        redirectUri: this.redirectUri,
                     },
                 })
                 .then(ro => {
-                    console.log('---res', ro.detail);
-                    window.open(ro.detail);
+                    console.log('---------res', ro.detail);
+                    // window.open(ro.detail);
+                    this.state = getQueryVariable(ro.detail, 'state');
+                })
+                .finally(() => {
+                    this.loading = false;
                 });
         },
     },
-};
+    beforeDestroy() {
+        if (typeof window.addEventListener != 'undefined') {
+            window.removeEventListener('message', this.handleMessage, false);
+        } else if (typeof window.attachEvent != 'undefined') {
+            window.detachEvent('onmessage', this.handleMessage);
+        }
+    },
+});
 </script>
+<style scoped>
+.wechat-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+</style>

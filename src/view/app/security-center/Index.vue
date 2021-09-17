@@ -53,23 +53,14 @@
                                 <a-icon type="wechat" />
                             </div>
                             <span slot="title">微信绑定</span>
-                            <span slot="description" v-if="isVerifiedWechat">已设置：1599462300</span>
+                            <span slot="description" v-if="account.wxUnionId">已绑定</span>
                             <div slot="description" v-else>
                                 <span>未绑定</span>
                                 <p>绑定微信号码，随时查看账号安全信息</p>
                             </div>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <!-- <a-popconfirm
-                                title="确定解除微信绑定吗?"
-                                @confirm="() => unbindWechat()"
-                                ok-text="确定"
-                                cancel-text="取消"
-                                v-if="isVerifiedWechat"
-                            >
-                                <a-button>解除绑定</a-button>
-                            </a-popconfirm> -->
-                            <a-button key="delete" v-if="isVerifiedWechat" @click="unbindWechat">解除绑定</a-button>
+                            <a-button key="delete" v-if="account.wxUnionId" @click="unbindWechat">解除绑定</a-button>
                             <a-button key="add" type="primary" v-else @click="bindWechat">绑定</a-button>
                         </div>
                     </a-list-item>
@@ -226,10 +217,10 @@ export default observer({
                         };
                     },
                     methods: {
-                        async callback(params) {
-                            //发起解除绑定请求
-                            await racAccountApi.getById(that.accountStore.accountId);
-                            that.isVerifiedMobile = true;
+                        callback() {
+                            console.log('----callback');
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },
@@ -245,15 +236,23 @@ export default observer({
             this.$showDialog(
                 require('./Wechat.vue').default,
                 {
+                    data() {
+                        return {
+                            eventType: 'account-bind',
+                            title: '微信绑定',
+                            accountId: that.accountStore.accountId,
+                        };
+                    },
                     methods: {
                         callback() {
                             console.log('----callback');
-                            that.isVerifiedWechat = true;
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },
                 {
-                    title: '绑定微信',
+                    title: '微信绑定',
                     footer: null,
                     width: '500px',
                 }
@@ -262,23 +261,26 @@ export default observer({
         unbindWechat() {
             const that = this;
             this.$showDialog(
-                require('./Phone.vue').default,
+                require('./Wechat.vue').default,
                 {
                     data() {
                         return {
-                            editFormType: EditFormTypeDic.None,
+                            eventType: 'account-unbind',
+                            title: '微信解除绑定',
+                            accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
-                        async callback(params) {
-                            //发起解除绑定请求
-                            await racAccountApi.getById(that.accountStore.accountId);
-                            that.isVerifiedWechat = false;
+                        callback() {
+                            console.log('----callback');
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },
                 {
-                    title: '手机号验证解除绑定微信',
+                    title: '微信解除绑定',
+                    footer: null,
                     width: '500px',
                 }
             );
