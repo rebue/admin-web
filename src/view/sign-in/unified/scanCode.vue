@@ -90,7 +90,7 @@ export default {
             const obj = new WxLogin({
                 self_redirect: false,
                 id: 'login_container',
-                appid: process.env.VUE_APP_VX_CODE_APPID,
+                appid: process.env.VUE_APP_WX_CODE_APPID,
                 scope: 'snsapi_login',
                 redirect_uri: encodeURIComponent('https://khadmin.cocmis.cn/host/pcLogin?type=wxredirect'),
                 state: Math.ceil(Math.random() * 1000),
