@@ -1,7 +1,7 @@
 <template>
     <div class="ding-body">
         <a-spin :spinning="loading">
-            <dd-login-code :option="option" v-if="goto && !loginTmpCodeUrl"></dd-login-code>
+            <dd-login-code :option="option" v-if="goto && !status"></dd-login-code>
             <iframe :src="loginTmpCodeUrl" frameborder="0" v-if="loginTmpCodeUrl" width="0" height="0"></iframe>
             <a-result status="success" :title="title + '成功'" v-if="status == 'success'">
                 <template #extra>
@@ -101,9 +101,6 @@ export default observer({
         },
         getQrcode() {
             this.loading = true;
-            // 微信扫码点击登录后跳转到的中转页面
-            // http://www.abc.com/admin-web/#/scanTransfer 映射到 http://172.20.10.44:13080/admin-web/#/scanTransfer
-            // const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}${process.env.VUE_APP_PUBLIC_PATH}%23/scanTransfer`;
             const callbackUrl = encodeURIComponent(
                 `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
             );
