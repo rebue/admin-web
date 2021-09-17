@@ -82,11 +82,8 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
             const ro = resp.data as Ro;
             if (ro.result > 0) {
                 if (ro.msg) {
-                    // prompt优先级
-                    // 全局强制
-                    // 单个api强制提示
                     // post put delete 默认提示，GET默认不提示
-                    if (process.env.VUE_APP_API_PROMPT === 'true' || config.method != 'GET') {
+                    if (config.method != 'GET') {
                         message.info(ro.msg);
                     }
                 }
