@@ -14,16 +14,13 @@
                     <a-button key="cancel" type="primary" @click="closeDialog">
                         关闭
                     </a-button>
-                    <!-- <a-button key="cancel" type="primary" @click="tryAgain">
-                        再试一次
-                    </a-button> -->
                 </template>
             </a-result>
         </a-spin>
     </div>
 </template>
 <script>
-import WxLoginCode from './WXLoginCode.vue';
+import WxLoginCode from '@/component/app/WXLoginCode.vue';
 import request from '@/util/request';
 // import { when } from 'mobx';
 import { observer } from 'mobx-vue';
@@ -72,6 +69,7 @@ export default observer({
         this.$nextTick(() => {
             this.getQrcode();
         });
+
         if (typeof window.addEventListener != 'undefined') {
             window.addEventListener('message', this.handleMessage, false);
         } else if (typeof window.attachEvent != 'undefined') {
@@ -114,7 +112,6 @@ export default observer({
                 })
                 .then(ro => {
                     console.log('---------res', ro.detail);
-                    // window.open(ro.detail);
                     this.state = getQueryVariable(ro.detail, 'state');
                 })
                 .finally(() => {

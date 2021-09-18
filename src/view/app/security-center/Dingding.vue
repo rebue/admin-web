@@ -15,9 +15,6 @@
                     <a-button key="cancel" type="primary" @click="closeDialog">
                         关闭
                     </a-button>
-                    <!-- <a-button key="cancel" type="primary" @click="tryAgain">
-                        再试一次
-                    </a-button> -->
                 </template>
             </a-result>
         </a-spin>
@@ -25,7 +22,7 @@
 </template>
 <script>
 import { accountStore } from '@/store/Store';
-import DdLoginCode from './DDLoginCode.vue';
+import DdLoginCode from '@/component/app/DDLoginCode.vue';
 import request from '@/util/request';
 import { when } from 'mobx';
 import { observer } from 'mobx-vue';
@@ -119,12 +116,6 @@ export default observer({
                 .finally(() => {
                     this.loading = false;
                 });
-        },
-        tryAgain() {
-            this.goto = null;
-            this.loginTmpCodeUrl = '';
-            this.status = '';
-            this.getQrcode();
         },
     },
     beforeDestroy() {
