@@ -26,9 +26,6 @@ export default {
     data() {
         this.api = racAccountApi;
         this.addRules = {
-            signInNickname: [
-                { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
-            ],
             signInName: [
                 { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
             ],
