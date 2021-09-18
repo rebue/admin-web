@@ -25,6 +25,8 @@
 <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
 <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
+import request from '@/util/request';
+import { accountStore } from '@/store/Store';
 export default {
     props: {
         codeType: {
@@ -37,6 +39,7 @@ export default {
     data() {
         return {
             modelVlaue: '手机微信扫码登录',
+            accountStore,
         };
     },
     mounted() {
@@ -60,29 +63,63 @@ export default {
         },
         // 钉钉扫码接口
         ddLoginInit() {
-            let url = encodeURIComponent('http://127.0.0.1:13080/admin-web/#/sign-in/unified'); //此处url写钉钉回调地址
-            let appid = process.env.VUE_APP_DD_CODE_APPID; //填写自己在钉钉开发者平台配的appid
-            let goto = encodeURIComponent(
-                `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}`
+            const callbackUrl = encodeURIComponent(
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
             );
-            let obj = DDLogin({
-                id: 'login_container', //对应刚刚的div盒子id
-                goto: goto,
-                style: 'border:none;background-color:#FFFFFF;',
-                width: 395,
-                height: 290,
-            });
-            let handleMessage = event => {
-                let origin = event.origin;
-                if (origin == 'https://login.dingtalk.com') {
-                    let loginTmpCode = event.data;
-                    window.location.href = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}&loginTmpCode=${loginTmpCode}`;
-                }
-            };
-            if (typeof window.addEventListener != 'undefined') {
-                window.addEventListener('message', handleMessage, false);
-            } else if (typeof window.attachEvent != 'undefined') {
-                window.attachEvent('onmessage', handleMessage);
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/platform-admin-web`;
+            request
+                .get({
+                    url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
+                    params: {
+                        redirectUri: redirectUri,
+                    },
+                })
+                .then(ro => {
+                    console.log('---------res', ro.detail);
+                    this.goto = ro.detail; // 需要编码，获取到内嵌扫码的goto结构路径，后端生成state
+                    let goto = encodeURIComponent(this.goto);
+                    let obj = DDLogin({
+                        id: 'login_container', //对应刚刚的div盒子id
+                        goto: goto,
+                        style: 'border:none;background-color:#FFFFFF;',
+                        width: 395,
+                        height: 290,
+                    });
+                    if (typeof window.addEventListener != 'undefined') {
+                        window.addEventListener('message', this.handleMessage, false);
+                    } else if (typeof window.attachEvent != 'undefined') {
+                        window.attachEvent('onmessage', this.handleMessage);
+                    }
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+
+            // let url = encodeURIComponent('http://127.0.0.1:13080/admin-web/#/sign-in/unified'); //此处url写钉钉回调地址
+            // let appid = process.env.VUE_APP_DD_CODE_APPID; //填写自己在钉钉开发者平台配的appid
+
+            // let handleMessage = event => {
+            //     let origin = event.origin;
+            //     if (origin == 'https://login.dingtalk.com') {
+            //         let loginTmpCode = event.data;
+            //         window.location.href =
+            // `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}&loginTmpCode=${loginTmpCode}`;
+            //     }
+            // };
+        },
+        handleMessage(event) {
+            const origin = event.origin;
+            console.log('---------origin', event);
+            if (origin == 'https://login.dingtalk.com') {
+                //判断是否来自ddLogin扫码事件。
+                const loginTmpCode = event.data;
+                //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
+                // window.open(`${this.goto}&loginTmpCode=${loginTmpCode}`)
+
+                this.loginTmpCodeUrl = `${this.goto}&loginTmpCode=${loginTmpCode}`;
+                window.open(this.loginTmpCodeUrl);
+                this.loading = true;
+                console.log('---------loginTmpCode', loginTmpCode, this.loginTmpCodeUrl);
             }
         },
         //微信扫码功能
