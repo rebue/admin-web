@@ -142,9 +142,6 @@ export default {
             manageOrgFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
-            curRealmId: '',
-            curOrgId: undefined,
-            realms: [],
             columns,
             curRecord: {},
         };
@@ -183,12 +180,7 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, {
-                orgId: this.curOrgId,
-                realmId: this.curRealmId,
-                groupId: record.id,
-                isTester: false,
-            });
+            this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
          * 处理管理组织事件
