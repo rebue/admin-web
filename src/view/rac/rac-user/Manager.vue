@@ -73,6 +73,7 @@ export default {
                 dataIndex: 'sex',
                 title: '性别',
                 ellipsis: true,
+                customRender: (text, record) => <span>{record.sex == 1 ? '男' : '女'}</span>,
             },
             {
                 dataIndex: 'mobile',
