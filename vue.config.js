@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-09 14:27:26
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-22 08:35:59
+ * @LastEditTime: 2021-09-22 09:13:04
  * @FilePath: \admin-web\vue.config.js
  */
 const path = require('path');
@@ -46,6 +46,7 @@ module.exports = {
         before(app) {
             apiMocker(app, path.resolve('./mock/mock'));
         },
+        //配置是否关闭用于DNS重绑定的HTTP请求的HOST检查 因为用到钉钉和微信扫码登录 所以将其设置为true
         disableHostCheck: true,
     },
     publicPath: process.env.VUE_APP_PUBLIC_PATH,
