@@ -1,3 +1,9 @@
+/*
+ * @Date: 2021-09-09 14:27:26
+ * @LastEditors: likelin
+ * @LastEditTime: 2021-09-22 08:35:59
+ * @FilePath: \admin-web\vue.config.js
+ */
 const path = require('path');
 const apiMocker = require('mocker-api');
 
@@ -40,6 +46,7 @@ module.exports = {
         before(app) {
             apiMocker(app, path.resolve('./mock/mock'));
         },
+        disableHostCheck: true,
     },
     publicPath: process.env.VUE_APP_PUBLIC_PATH,
     css: {

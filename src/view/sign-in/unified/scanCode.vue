@@ -66,7 +66,7 @@ export default {
             const callbackUrl = encodeURIComponent(
                 `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
             );
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/platform-admin-web`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/login-marge`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
