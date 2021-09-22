@@ -63,10 +63,7 @@ export default {
         },
         // 钉钉扫码接口
         ddLoginInit() {
-            const callbackUrl = encodeURIComponent(
-                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
-            );
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/login-marge`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/unified-auth`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
@@ -114,12 +111,9 @@ export default {
                 //判断是否来自ddLogin扫码事件。
                 const loginTmpCode = event.data;
                 //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
-                // window.open(`${this.goto}&loginTmpCode=${loginTmpCode}`)
+                window.location.replace(`${this.goto}&loginTmpCode=${loginTmpCode}`);
 
                 this.loginTmpCodeUrl = `${this.goto}&loginTmpCode=${loginTmpCode}`;
-                window.open(this.loginTmpCodeUrl);
-                this.loading = true;
-                console.log('---------loginTmpCode', loginTmpCode, this.loginTmpCodeUrl);
             }
         },
         //微信扫码功能
