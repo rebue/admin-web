@@ -1,6 +1,8 @@
 export interface GetAccountInfoRa {
     /** 账户ID */
     id: string;
+    /** 账户编码 */
+    code: string;
     /** 账户昵称 */
     nickname: string;
     /** 账户头像 */
@@ -19,4 +21,6 @@ export interface GetAccountInfoRa {
     isTester: boolean;
     /** 菜单列表 */
     menus: string[];
+    /** 用户信息 */
+    user: Record<string, any>;
 }

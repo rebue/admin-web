@@ -26,6 +26,7 @@ export class RacAccountAction {
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
         accountStore.accountId = ra.id;
+        accountStore.code = ra.code;
         accountStore.nickname = ra.nickname;
         accountStore.avatar = ra.avatar;
         accountStore.agentAccountId = ra.agentAccountId;
@@ -35,6 +36,8 @@ export class RacAccountAction {
         accountStore.orgId = ra.orgId;
         accountStore.orgFullName = ra.orgFullName;
         accountStore.isTester = ra.isTester;
+        // 用户信息
+        accountStore.user = { ...ra.user };
 
         // 设置菜单
         let menus = constantRouters.find(item => item.path === '/').children;
