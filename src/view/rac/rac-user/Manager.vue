@@ -73,6 +73,7 @@ export default {
                 dataIndex: 'sex',
                 title: '性别',
                 ellipsis: true,
+                customRender: (text, record) => <span>{record.sex == 1 ? '男' : '女'}</span>,
             },
             {
                 dataIndex: 'mobile',
@@ -141,9 +142,6 @@ export default {
             manageOrgFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
-            curRealmId: '',
-            curOrgId: undefined,
-            realms: [],
             columns,
             curRecord: {},
         };
@@ -182,12 +180,7 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, {
-                orgId: this.curOrgId,
-                realmId: this.curRealmId,
-                groupId: record.id,
-                isTester: false,
-            });
+            this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
          * 处理管理组织事件

@@ -125,7 +125,7 @@ export default {
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         return this.api
-                            .add(this.model)
+                            .add({ ...this.model })
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
@@ -133,7 +133,7 @@ export default {
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         return this.api
-                            .modify(this.model)
+                            .modify({ ...this.model })
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);

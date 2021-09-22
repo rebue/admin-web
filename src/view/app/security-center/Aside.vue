@@ -24,17 +24,23 @@
                 <a-icon type="man" v-if="false" style="color: #00d3ff" />
                 <a-icon type="woman" v-else style="color: #fb85bc" />
             </span>
-            <span class="font-14" style="margin-right:25px;" v-if="accountStore.orgFullName"
-                >学院名称{{ accountStore.orgFullName }}</span
-            >
-            <span class="font-14" v-if="accountStore.code">学号{{ accountStore.code }}</span>
+            <span class="font-14" style="margin-right:25px;" v-if="accountStore.orgFullName">{{
+                accountStore.orgFullName
+            }}</span>
+            <span class="font-14" v-if="accountStore.code">{{ accountStore.code }}</span>
         </div>
         <div class="personal-wrap">
-            <div class="item"><a-icon class="icon" type="mobile" /><span>手机</span><span>XXXXXX</span></div>
-            <div class="item"><a-icon class="icon" type="mail" /><span>邮箱</span><span>XXXXXX</span></div>
-            <div class="item"><a-icon class="icon" type="idcard" /><span>身份</span><span>XXXXXXXX</span></div>
             <div class="item">
-                <a-icon class="icon" type="team" /><span>组织</span><span>组织组织组织组织组织</span>
+                <a-icon class="icon" type="mobile" /><span>手机</span><span>{{ accountStore.user.mobile }}</span>
+            </div>
+            <div class="item">
+                <a-icon class="icon" type="mail" /><span>邮箱</span><span>{{ accountStore.user.email }}</span>
+            </div>
+            <div class="item">
+                <a-icon class="icon" type="idcard" /><span>身份</span><span>{{ accountStore.user.idCard }}</span>
+            </div>
+            <div class="item">
+                <a-icon class="icon" type="team" /><span>组织</span><span>{{ accountStore.orgFullName }}</span>
             </div>
         </div>
         <div class="calendar-wrap">

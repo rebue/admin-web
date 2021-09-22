@@ -4,6 +4,9 @@ export default class AccountStore {
     /** 账户ID */
     @observable
     accountId = '';
+    /** 账户编码 */
+    @observable
+    code = '';
     /** 账户昵称 */
     @observable
     nickname = '';
@@ -31,4 +34,7 @@ export default class AccountStore {
     /** 菜单列表 */
     @observable
     menus: string[] = [];
+    /** 用户信息 */
+    @observable
+    user = {};
 }
