@@ -57,7 +57,7 @@
                     <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
                 </div>
                 <div class="steps-action ant-modal-footer">
-                    <a-button @click="prev">
+                    <a-button @click="fromAccountToUser">
                         上一步
                     </a-button>
                     <a-button type="primary" @click="submitAccount">
@@ -108,6 +108,7 @@ export default {
 
             userId: '',
             activeTab: 'add-tab',
+            cacheUserFormModel: {},
             loading: true,
         };
     },
@@ -136,18 +137,33 @@ export default {
         submit() {
             console.log('--提交');
         },
+        fromAccountToUser() {
+            this.prev();
+            this.cacheUserFormModel = { ...this.$refs.userForm.model };
+        },
+        validateUserModel() {
+            const model = { ...this.$refs.userForm.model };
+            return Object.keys(this.cacheUserFormModel).every(key => {
+                return this.cacheUserFormModel[key] === model[key];
+            });
+        },
         submitUser() {
-            if (this.userId) {
-                this.next();
-                return;
-            }
             if (this.activeTab.includes('add-tab')) {
-                this.$refs.userForm.ok(null, ro => {
-                    this.userId = ro.extra.id;
+                if (this.userId && this.validateUserModel()) {
+                    // 创建过，回到上一步，校验创建信息和该次信息是否一致
                     this.next();
-                });
+                } else {
+                    this.$refs.userForm.ok(null, ro => {
+                        this.userId = ro.extra.id;
+                        this.next();
+                    });
+                }
             } else {
-                this.$refs.queryForm.validate();
+                if (this.userId) {
+                    this.next();
+                } else {
+                    this.$refs.queryForm.validate();
+                }
             }
         },
         submitAccount() {
