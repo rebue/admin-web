@@ -187,7 +187,7 @@ export default {
     },
     closeBox() {
       this.clickShow = false
-      this.refresh()
+      // this.refresh()    fix bug 关闭不需要重新请求
     },
     show() {
       if (this.mode == 'pop') {

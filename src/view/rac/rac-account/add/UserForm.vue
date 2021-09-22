@@ -25,12 +25,6 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { isIdCard, isPhone, isEmail } from '@/util/validator';
 
 export default {
-    props: {
-        editFormType: {
-            type: String,
-            default: () => EditFormTypeDic.Add,
-        },
-    },
     data() {
         this.formLayout = {
             labelCol: {
@@ -44,6 +38,7 @@ export default {
         };
         this.api = racUserApi;
         return {
+            editFormType: EditFormTypeDic.Add,
             model: {
                 realName: '',
                 idCard: '',
@@ -129,6 +124,7 @@ export default {
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
+                                this.closeDialog && this.closeDialog(); //针对弹窗
                             })
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
@@ -137,6 +133,7 @@ export default {
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
+                                this.closeDialog && this.closeDialog(); //针对弹窗
                             })
                             .finally(() => (this.loading = false));
                     }

@@ -16,14 +16,6 @@
                             <template #prefix><a-icon type="key"/></template>
                         </a-input-password>
                     </a-form-model-item>
-                    <Verify
-                        ref="verify"
-                        mode="pop"
-                        :captcha-type="'blockPuzzle'"
-                        :img-size="{ width: '400px', height: '200px' }"
-                        @success="handleVerifySuccess"
-                        @error="handleVerifyError"
-                    />
                     <a-button :loading="loading" type="primary" block @click="doSubmit" class="sign">登录</a-button>
                 </a-form-model>
             </div>
@@ -39,12 +31,9 @@
 import md5 from 'crypto-js/md5';
 import { setAppId } from '@/util/cookie';
 import { racSignInApi, racVerifitionApi } from '@/api/Api';
-import Verify from '@/component/rebue/verifition/Verify.vue';
 
 export default {
-    components: {
-        Verify,
-    },
+    components: {},
     props: {
         appId: {
             type: String,
@@ -143,15 +132,29 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //第一次密码输入错误后需要进行验证码校验
-                    // console.log("detail",this.detail);
-                    //if(this.detail){
                     //表单校验成功后，验证码逻辑
                     if (sessionStorage.getItem('isNeedCaptcha') && !this.captcha) {
-                        this.$refs.verify.show();
+                        const that = this;
+                        const { handleVerifySuccess, handleVerifyError } = this;
+                        this.$showDialog(
+                            require('./Verify.vue').default,
+                            {
+                                methods: {
+                                    handleVerifySuccess: handleVerifySuccess.bind(that),
+                                    handleVerifyError: handleVerifyError.bind(that),
+                                },
+                            },
+                            {
+                                title: '请完成安全验证',
+                                footer: null,
+                                // closable: false,
+                                width: 450,
+                                wrapClassName: 'verify-modal-wrap',
+                            }
+                        );
                         this.loading = false;
                         return;
                     }
-                    // }
                     this.api
                         .signInByAccountName({
                             appId: this.appId,
@@ -170,7 +173,6 @@ export default {
                             //登录失败，清除验证码
                             this.captcha = null;
                             sessionStorage.setItem('isNeedCaptcha', true);
-                            // this.$refs.verify.refresh();
                         })
                         .finally(() => {
                             this.loading = false;
@@ -213,5 +215,9 @@ export default {
     padding: 10px;
     color: white;
     text-align: center;
+}
+</style>
+<style>
+.verify-modal-wrap .ant-modal-body {
 }
 </style>

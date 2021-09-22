@@ -180,7 +180,21 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            this.editForm.show(EditFormTypeDic.Add, {});
+            // this.editForm.show(EditFormTypeDic.Add, {});
+            const that = this;
+            this.$showDialog(
+                require('@/view/rac/rac-account/add/UserForm.vue').default,
+                {
+                    methods: {
+                        callback() {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '创建用户',
+                }
+            );
         },
         /**
          * 处理管理组织事件
@@ -194,7 +208,27 @@ export default {
          */
         handleEdit(record) {
             this.curRecord = record;
-            this.editForm.show(EditFormTypeDic.Modify, { ...record });
+            // this.editForm.show(EditFormTypeDic.Modify, { ...record });
+            const that = this;
+            this.$showDialog(
+                require('@/view/rac/rac-account/add/UserForm.vue').default,
+                {
+                    data() {
+                        return {
+                            editFormType: EditFormTypeDic.Modify,
+                            model: record,
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '编辑用户',
+                }
+            );
         },
         handleEditFormClose() {
             this.refreshTableData();
