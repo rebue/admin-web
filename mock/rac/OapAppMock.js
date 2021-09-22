@@ -38,7 +38,7 @@ const list = [
         "idType": "6sxcid",
         "name": "健柏.顾",
         "remark": "9feqjy",
-        "url": "www.xn---xn--zzv-d33pw32i.net",
+        "url": "http://127.0.0.1:13080/admin-web/#/base/rac-realm",
         "menu": "258suw",
         "realmId": "176",
         "realm": {
