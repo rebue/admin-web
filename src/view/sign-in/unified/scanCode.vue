@@ -15,16 +15,27 @@
             <div class="loginBox">
                 <div id="login_container"></div>
             </div>
-            <div class="vxTips" v-if="codeType == '微信'">
+            <!-- <div class="vxTips" v-if="codeType == '微信'">
                 请使用微信扫描二维码登录
                 <div class="iconCss" @click="refreshClick()"><a-icon type="sync" class="icon" />刷新</div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
 <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
+const getQueryVariable = function(url, variable) {
+    const query = url.split('?')[1];
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return false;
+};
 import request from '@/util/request';
 import { accountStore } from '@/store/Store';
 export default {
@@ -63,7 +74,7 @@ export default {
         },
         // 钉钉扫码接口
         ddLoginInit() {
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/unified-auth`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/login`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
@@ -72,7 +83,6 @@ export default {
                     },
                 })
                 .then(ro => {
-                    console.log('---------res', ro.detail);
                     this.goto = ro.detail; // 需要编码，获取到内嵌扫码的goto结构路径，后端生成state
                     let goto = encodeURIComponent(this.goto);
                     let obj = DDLogin({
@@ -83,52 +93,60 @@ export default {
                         height: 290,
                     });
                     if (typeof window.addEventListener != 'undefined') {
-                        window.addEventListener('message', this.handleMessage, false);
+                        window.addEventListener('message', this.ddhandleMessage, false);
                     } else if (typeof window.attachEvent != 'undefined') {
-                        window.attachEvent('onmessage', this.handleMessage);
+                        window.attachEvent('onmessage', this.ddhandleMessage);
                     }
                 })
                 .finally(() => {
                     this.loading = false;
                 });
-
-            // let url = encodeURIComponent('http://127.0.0.1:13080/admin-web/#/sign-in/unified'); //此处url写钉钉回调地址
-            // let appid = process.env.VUE_APP_DD_CODE_APPID; //填写自己在钉钉开发者平台配的appid
-
-            // let handleMessage = event => {
-            //     let origin = event.origin;
-            //     if (origin == 'https://login.dingtalk.com') {
-            //         let loginTmpCode = event.data;
-            //         window.location.href =
-            // `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${url}&loginTmpCode=${loginTmpCode}`;
-            //     }
-            // };
         },
-        handleMessage(event) {
+        ddhandleMessage(event) {
             const origin = event.origin;
-            console.log('---------origin', event);
             if (origin == 'https://login.dingtalk.com') {
                 //判断是否来自ddLogin扫码事件。
                 const loginTmpCode = event.data;
                 //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
                 window.location.replace(`${this.goto}&loginTmpCode=${loginTmpCode}`);
-
-                this.loginTmpCodeUrl = `${this.goto}&loginTmpCode=${loginTmpCode}`;
             }
         },
         //微信扫码功能
         wxLoginInit() {
-            const obj = new WxLogin({
-                self_redirect: false,
-                id: 'login_container',
-                appid: process.env.VUE_APP_WX_CODE_APPID,
-                scope: 'snsapi_login',
-                redirect_uri: encodeURIComponent('https://khadmin.cocmis.cn/host/pcLogin?type=wxredirect'),
-                state: Math.ceil(Math.random() * 1000),
-                style: 'black',
-                href:
-                    'data:text/css;base64,Ym9keXsKICAgIGhlaWdodDogMjkwcHg7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwp9Ci5pbXBvd2VyQm94IC5zdGF0dXNfYnJvd3NlcnsKICAgIGRpc3BsYXk6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnFyY29kZXsKICAgIGhlaWdodDogMjQwcHg7CiAgICB3aWR0aDogMjQwcHg7CiAgICBtYXJnaW46IDA7CiAgICBib3JkZXI6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnRpdGxlewpkaXNwbGF5OiBub25lOwp9Ci5pbXBvd2VyQm94IC5pbmZvewp3aWR0aDogMTAwJTsKfQ==',
-            });
+            const redirectUri = `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/login`;
+            request
+                .get({
+                    url: `/orp-svr/orp/get-auth-url/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
+                    params: {
+                        redirectUri: redirectUri,
+                    },
+                })
+                .then(ro => {
+                    const obj = new WxLogin({
+                        self_redirect: false,
+                        id: 'login_container',
+                        appid: process.env.VUE_APP_WX_CODE_APPID,
+                        scope: 'snsapi_login',
+                        redirect_uri: encodeURIComponent(redirectUri),
+                        state: getQueryVariable(ro.detail, 'state'),
+                        style: 'black',
+                        href: 'data:text/css;base64,LmltcG93ZXJCb3ggLnRpdGxlIHsNCiAgICBkaXNwbGF5OiBub25lOw0KfQ==',
+                    });
+                    // document.getElementsByTagName('iframe')[0].width = '395';
+                    // document.getElementsByTagName('iframe')[0].height = '290';
+                    if (typeof window.addEventListener != 'undefined') {
+                        window.addEventListener('message', this.vxhandleMessage, false);
+                    } else if (typeof window.attachEvent != 'undefined') {
+                        window.attachEvent('onmessage', this.vxhandleMessage);
+                    }
+                })
+                .finally(() => {});
+        },
+        vxhandleMessage(event) {
+            const origin = event.origin;
+            // const loginTmpCode = event.data;
+            // //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
+            // window.location.replace(`${this.goto}&loginTmpCode=${loginTmpCode}`);
         },
         //刷新微信二维码
         refreshClick() {
