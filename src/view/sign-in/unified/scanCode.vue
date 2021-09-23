@@ -74,7 +74,7 @@ export default {
         },
         // 钉钉扫码接口
         ddLoginInit() {
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/login`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/unified-auth`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
@@ -113,7 +113,7 @@ export default {
         },
         //微信扫码功能
         wxLoginInit() {
-            const redirectUri = `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/login`;
+            const redirectUri = `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/unified-auth`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,

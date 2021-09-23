@@ -85,6 +85,7 @@ export default {
 .aside-wrap {
     flex: 0 0 300px;
     border-radius: 10px;
+    overflow: hidden;
 }
 .user-wrap {
     height: 240px;
