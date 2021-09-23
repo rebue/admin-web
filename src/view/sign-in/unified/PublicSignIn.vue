@@ -68,6 +68,7 @@
 <script>
 import request from '@/util/request';
 import { isPhone } from '@/util/validator';
+import md5 from 'crypto-js/md5';
 const SECOND = 60;
 export default {
     components: {},
@@ -145,7 +146,10 @@ export default {
                             url: this.tabKey == 1 ? '/oap-svr/oap/login' : '/oap-svr/oap/login',
                             data:
                                 this.tabKey == 1
-                                    ? { loginName: this.form.accountName, password: this.form.signInPswd }
+                                    ? {
+                                          loginName: this.form.accountName,
+                                          password: md5(this.form.signInPswd).toString(),
+                                      }
                                     : {
                                           phoneAreaNumber: this.form.phoneAreaNumber,
                                           phoneNumber: this.form.phoneNumber,
