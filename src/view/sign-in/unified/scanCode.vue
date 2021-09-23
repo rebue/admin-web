@@ -122,15 +122,18 @@ export default {
                     },
                 })
                 .then(ro => {
-                    const obj = new WxLogin({
+                    let stateData = getQueryVariable(ro.detail, 'state');
+                    // console.log(stateData)
+                    let obj = new WxLogin({
                         self_redirect: false,
                         id: 'login_container',
                         appid: process.env.VUE_APP_WX_CODE_APPID,
                         scope: 'snsapi_login',
                         redirect_uri: encodeURIComponent(redirectUri),
-                        state: getQueryVariable(ro.detail, 'state'),
                         style: 'black',
-                        href: 'data:text/css;base64,LmltcG93ZXJCb3ggLnRpdGxlIHsNCiAgICBkaXNwbGF5OiBub25lOw0KfQ==',
+                        state: stateData,
+                        href:
+                            'data:text/css;base64,Ym9keXsKICAgIGhlaWdodDogMjkwcHg7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwp9Ci5pbXBvd2VyQm94IC5zdGF0dXNfYnJvd3NlcnsKICAgIGRpc3BsYXk6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnFyY29kZXsKICAgIGhlaWdodDogMjQwcHg7CiAgICB3aWR0aDogMjQwcHg7CiAgICBtYXJnaW46IDA7CiAgICBib3JkZXI6IG5vbmU7Cn0KLmltcG93ZXJCb3ggLnRpdGxlewpkaXNwbGF5OiBub25lOwp9Ci5pbXBvd2VyQm94IC5pbmZvewp3aWR0aDogMTAwJTsKfQ==',
                     });
                     // document.getElementsByTagName('iframe')[0].width = '395';
                     // document.getElementsByTagName('iframe')[0].height = '290';
