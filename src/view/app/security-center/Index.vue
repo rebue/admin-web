@@ -239,7 +239,6 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
-                            title: '微信绑定',
                             accountId: that.accountStore.accountId,
                         };
                     },
@@ -266,7 +265,6 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
-                            title: '微信解除绑定',
                             accountId: that.accountStore.accountId,
                         };
                     },
@@ -295,7 +293,6 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
-                            title: '钉钉绑定',
                         };
                     },
                     methods: {
@@ -321,7 +318,6 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
-                            title: '钉钉解除绑定',
                         };
                     },
                     methods: {

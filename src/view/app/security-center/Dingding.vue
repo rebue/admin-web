@@ -3,14 +3,14 @@
         <a-spin :spinning="loading">
             <dd-login-code :option="option" v-if="goto && !status"></dd-login-code>
             <iframe :src="loginTmpCodeUrl" frameborder="0" v-if="loginTmpCodeUrl" width="0" height="0"></iframe>
-            <a-result status="success" :title="title + '成功'" v-if="status == 'success'">
+            <a-result status="success" :title="statusMsg" v-if="status == 'success'">
                 <template #extra>
                     <a-button key="cancel" type="primary" @click="ok">
                         关闭
                     </a-button>
                 </template>
             </a-result>
-            <a-result status="error" :title="title + '失败'" v-if="status == 'error'">
+            <a-result status="error" :title="statusMsg" v-if="status == 'error'">
                 <template #extra>
                     <a-button key="cancel" type="primary" @click="closeDialog">
                         关闭
@@ -38,6 +38,7 @@ export default observer({
             loginTmpCodeUrl: '',
             loading: false,
             status: '',
+            statusMsg: '',
         };
     },
     computed: {
@@ -86,12 +87,13 @@ export default observer({
             } else if (origin == location.origin) {
                 console.log('---------接收到子窗口的新消息了', event.data);
                 if (event.data.event === 'ding-talk-bind' || event.data.event === 'ding-talk-unbind') {
-                    const { result } = event.data;
+                    const { result, msg } = event.data;
                     if (result === 'success') {
                         this.status = result;
                     } else if (result === 'error') {
                         this.status = result;
                     }
+                    this.statusMsg = msg;
                 }
                 this.loading = false;
             }
