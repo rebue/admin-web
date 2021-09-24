@@ -1,7 +1,7 @@
 <template>
     <div class="wechat-body">
         <a-spin :spinning="loading">
-            <wx-login-code :option="option" v-if="state && !status"></wx-login-code>
+            <wx-login-code :option="option" v-if="option.state && !status"></wx-login-code>
             <a-result status="success" :title="statusMsg" v-if="status == 'success'">
                 <template #extra>
                     <a-button key="success-cancel" type="primary" @click="ok">
