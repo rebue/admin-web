@@ -24,7 +24,7 @@ export default {
     },
     mounted() {
         const script = document.createElement('script');
-        script.src = '//g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js';
+        script.src = `${location.protocol}//g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js`;
         script.onload = () => {
             window.DDLogin({
                 ...this.defaultOption,
