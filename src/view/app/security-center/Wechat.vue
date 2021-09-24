@@ -4,14 +4,14 @@
             <wx-login-code :option="option" v-if="state && !status"></wx-login-code>
             <a-result status="success" :title="statusMsg" v-if="status == 'success'">
                 <template #extra>
-                    <a-button key="cancel" type="primary" @click="ok">
+                    <a-button key="success-cancel" type="primary" @click="ok">
                         关闭
                     </a-button>
                 </template>
             </a-result>
             <a-result status="error" :title="statusMsg" v-if="status == 'error'">
                 <template #extra>
-                    <a-button key="cancel" type="primary" @click="closeDialog">
+                    <a-button key="error-cancel" type="primary" @click="closeDialog">
                         关闭
                     </a-button>
                 </template>
