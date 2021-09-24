@@ -51,7 +51,7 @@ export default observer({
     computed: {
         redirectUri() {
             const callbackUrl = encodeURIComponent(
-                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
             );
             return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
         },
