@@ -6,6 +6,7 @@
  */
 const path = require('path');
 const apiMocker = require('mocker-api');
+const CopyPlugin = require("copy-webpack-plugin");
 
 // 设置请求的基础URL
 process.env.VUE_APP_REQUEST_BASE_URL =
@@ -39,6 +40,11 @@ module.exports = {
             .options({
                 symbolId: 'icon-[name]',
             });
+    },
+    configureWebpack(config){
+        config.plugins.push(new CopyPlugin(
+            [{ from: path.resolve(__dirname,'./src/view/app/security-center/wechat.css'), to: 'css' }]
+        ))
     },
     devServer: {
         // 调试时自动打开浏览器

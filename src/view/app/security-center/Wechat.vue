@@ -63,6 +63,7 @@ export default observer({
                 redirect_uri: encodeURIComponent(this.redirectUri),
                 state: this.state,
                 style: 'black',
+                href: encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`),
             };
         },
     },
