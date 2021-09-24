@@ -27,7 +27,7 @@ export default {
     },
     mounted() {
         const script = document.createElement('script');
-        script.src = 'http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
+        script.src = '//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
         script.onload = () => {
             new window.WxLogin({
                 ...this.defaultOption,
