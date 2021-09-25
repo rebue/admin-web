@@ -142,11 +142,6 @@ export default {
                 },
             },
             {
-                dataIndex: 'remark',
-                title: '备注',
-                ellipsis: true,
-            },
-            {
                 dataIndex: 'isEnabled',
                 align: 'center',
                 title: '启用',
