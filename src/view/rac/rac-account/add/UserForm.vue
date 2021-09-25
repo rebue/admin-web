@@ -1,7 +1,7 @@
 <template>
     <a-spin :spinning="loading">
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item label="用户名称" prop="realName" key="realName">
+            <a-form-model-item label="姓名" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="身份证号" prop="idCard" key="idCard">
@@ -47,7 +47,7 @@ export default {
             },
             rules: {
                 realName: [
-                    { required: true, message: '请输入用户名称', trigger: 'blur', transform: val => val && val.trim() },
+                    { required: true, message: '请输入姓名', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 idCard: [
                     {

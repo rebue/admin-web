@@ -60,7 +60,7 @@ export default {
             },
             {
                 dataIndex: 'realName',
-                title: '用户名称',
+                title: '姓名',
                 width: 120,
                 fixed: 'left',
             },

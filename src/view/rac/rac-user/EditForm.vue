@@ -27,9 +27,7 @@ export default {
     data() {
         this.api = racUserApi;
         this.addRules = {
-            realName: [
-                { required: true, message: '请输入用户名称', trigger: 'blur', transform: val => val && val.trim() },
-            ],
+            realName: [{ required: true, message: '请输入姓名', trigger: 'blur', transform: val => val && val.trim() }],
             idCard: [
                 {
                     required: true,
@@ -93,7 +91,7 @@ export default {
     computed: {
         formItems() {
             return [
-                { dataIndex: 'realName', title: '用户名称' },
+                { dataIndex: 'realName', title: '姓名' },
                 { dataIndex: 'idCard', title: '身份证号' },
                 { dataIndex: 'mobile', title: '手机号码' },
                 { dataIndex: 'email', title: '电子邮箱' },
