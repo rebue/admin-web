@@ -15,7 +15,7 @@ export class RacAccountMo {
     isEnabled = false;
 
     /**
-     * 登录名称
+     * 登录账号
      */
     signInName = '';
 

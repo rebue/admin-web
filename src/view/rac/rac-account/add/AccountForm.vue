@@ -7,7 +7,7 @@
             <a-form-model-item label="登录昵称" prop="signInNickname">
                 <a-input v-model.trim="model.signInNickname" placeholder="" />
             </a-form-model-item>
-            <a-form-model-item label="登录名称" prop="signInName">
+            <a-form-model-item label="登录账号" prop="signInName">
                 <a-input v-model.trim="model.signInName" placeholder="" key="signInName" />
             </a-form-model-item>
             <a-form-model-item label="登录密码" prop="signInPswd" v-show="editFormType === EditFormTypeDic.Add">
@@ -70,7 +70,7 @@ export default {
         this.api = racAccountApi;
         this.addRules = {
             signInName: [
-                { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
+                { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val && val.trim() },
             ],
             signInPswd: [
                 { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
@@ -108,7 +108,7 @@ export default {
             signInName: [
                 {
                     required: true,
-                    message: '请输入登录名称',
+                    message: '请输入登录账号',
                     trigger: 'blur',
                     transform: val => val && val.trim(),
                 },

@@ -27,7 +27,7 @@ export default {
         this.api = racAccountApi;
         this.addRules = {
             signInName: [
-                { required: true, message: '请输入登录名称', trigger: 'blur', transform: val => val && val.trim() },
+                { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val && val.trim() },
             ],
             signInPswd: [
                 { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
@@ -65,7 +65,7 @@ export default {
             signInName: [
                 {
                     required: true,
-                    message: '请输入登录名称',
+                    message: '请输入登录账号',
                     trigger: 'blur',
                     transform: val => val && val.trim(),
                 },
@@ -82,7 +82,7 @@ export default {
             return [
                 { dataIndex: 'code', title: '账号编码' },
                 { dataIndex: 'signInNickname', title: '登录昵称' },
-                { dataIndex: 'signInName', title: '登录名称' },
+                { dataIndex: 'signInName', title: '登录账号' },
                 {
                     dataIndex: 'signInPswd',
                     title: '登录密码',
