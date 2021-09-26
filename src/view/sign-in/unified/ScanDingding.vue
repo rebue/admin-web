@@ -75,7 +75,7 @@ export default observer({
         getQrcode() {
             this.loading = true;
             const callbackUrl = encodeURIComponent(
-                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
             );
             const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/unified-auth?callbackUrl=${callbackUrl}`;
             request

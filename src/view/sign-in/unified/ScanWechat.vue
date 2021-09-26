@@ -39,7 +39,7 @@ export default observer({
     computed: {
         redirectUri() {
             const callbackUrl = encodeURIComponent(
-                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}#/scanTransfer`
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
             );
             return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/unified-auth?callbackUrl=${callbackUrl}`;
         },
