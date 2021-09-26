@@ -30,7 +30,7 @@
             <!-- 第二步 选择用户 -->
             <div class="steps-content bind-user" v-show="current == 1">
                 <div class="form">
-                    <user-form ref="userForm" :key="activeTab" v-if="activeTab.includes('add-tab')" />
+                    <user-form ref="userForm" :key="activeTab" :inline="true" v-if="activeTab.includes('add-tab')" />
                     <user-get
                         ref="queryForm"
                         :key="activeTab"
