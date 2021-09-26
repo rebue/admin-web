@@ -217,6 +217,23 @@ export const constantRouters = [
                     },
                 ],
             },
+            {
+                path: '/user-synchro',
+                name: 'user-synchro',
+                meta: { title: '账号同步', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/user-synchro/account',
+                children: [
+                    {
+                        path: '/user-synchro/account',
+                        name: '/user-synchro/account',
+                        component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账号同步', keepAlive: true, icon: 'apartment' },
+                    },
+                ],
+            },
             /** 运营管理应用 */
             {
                 path: '/user',
