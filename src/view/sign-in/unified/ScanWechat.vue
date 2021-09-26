@@ -99,7 +99,7 @@ export default observer({
                     console.log('---------res', ro.detail);
                     // this.goto = ro.detail.replace(/(^https)/,'http')
                     // console.log('--thisgoto', this.goto)
-                    this.state = getQueryVariable(ro.detail, 'state');
+                    this.state = getQueryVariable(ro.detail, 'state').replace('#wechat_redirect', '');
                 })
                 .finally(() => {
                     this.loading = false;

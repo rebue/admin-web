@@ -1,5 +1,22 @@
-.impowerBox .qrcode {width: 200px;}
+.impowerBox .qrcode {
+    width: 230px;
+    height: 230px;
+    border: none;
+}
 .impowerBox .title {display: none;}
-.impowerBox .info {width: 200px;}
 .status_icon {display: none}
-.impowerBox .status {text-align: center;} 
+.impowerBox .status {
+    text-align: center;
+    color: #898d90;
+} 
+.js_wx_default_tip p:first-child::after {
+    content: '刷新';
+    display: inline-block;
+    padding-left: 5px;
+    color: #40a9ff;
+    cursor: pointer;
+}
+
+.js_wx_default_tip p:last-child {
+    display: none;
+}

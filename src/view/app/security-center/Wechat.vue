@@ -63,7 +63,7 @@ export default observer({
                 redirect_uri: encodeURIComponent(this.redirectUri),
                 state: this.state,
                 style: 'black',
-                href: encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`),
+                href: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`,
             };
         },
     },
@@ -115,7 +115,7 @@ export default observer({
                 })
                 .then(ro => {
                     console.log('---------res', ro.detail);
-                    this.state = getQueryVariable(ro.detail, 'state');
+                    this.state = getQueryVariable(ro.detail, 'state').replace('#wechat_redirect', '');
                 })
                 .finally(() => {
                     this.loading = false;
