@@ -191,6 +191,11 @@ export default {
                 items: [
                     {
                         type: 'a',
+                        title: '重置密码',
+                        onClick: record => this.handleResetPswd(record),
+                    },
+                    {
+                        type: 'a',
                         title: '修改密码',
                         onClick: record => this.handleChangePswd(record),
                     },
@@ -296,6 +301,18 @@ export default {
                 this.curRecord.isEnabled = !record.isEnabled;
                 this.enabledFormVisible = true;
             }
+        },
+        /** 处理重置密码 */
+        handleResetPswd(record) {
+            this.$confirm({
+                title: '重置密码',
+                content: '你确定要重置密码吗？',
+                onOk: () => {
+                    racAccountApi.resetSignInPswd(record.id).then(() => {
+                        this.refreshTableData();
+                    });
+                },
+            });
         },
         /** 处理修改密码 */
         handleChangePswd(record) {

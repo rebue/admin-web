@@ -26,7 +26,15 @@ export default class RacAccountApi extends BaseCrudApi {
         tempMo.signInPswd = md5(mo.signInPswd).toString();
         return super.add(tempMo);
     }
-
+    /**
+     * 重置登录密码
+     */
+    resetSignInPswd(id: string): Promise<Ro> {
+        return request.put({
+            url: this.baseUrn + '/reset-sign-in-pswd',
+            data: { id },
+        });
+    }
     /**
      * 修改登录密码
      */
