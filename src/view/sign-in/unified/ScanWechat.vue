@@ -51,10 +51,7 @@ export default observer({
                 redirect_uri: encodeURIComponent(this.redirectUri),
                 state: this.state,
                 style: 'black',
-                href: encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`),
-                // href: 'https://172.20.10.44:9528/static/css/wechat.css',
-                // href: 'https://auth.maiyuesoft.com/static/css/wechat.css'
-                // href: 'http://auth.maiyuesoft.com/dist/static/css/wechat.css'
+                href: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat-login.css`,
             };
         },
     },
@@ -102,7 +99,7 @@ export default observer({
                     console.log('---------res', ro.detail);
                     // this.goto = ro.detail.replace(/(^https)/,'http')
                     // console.log('--thisgoto', this.goto)
-                    this.state = getQueryVariable(ro.detail, 'state');
+                    this.state = getQueryVariable(ro.detail, 'state').replace('#wechat_redirect', '');
                 })
                 .finally(() => {
                     this.loading = false;

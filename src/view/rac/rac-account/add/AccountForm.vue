@@ -55,6 +55,11 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        // 内嵌
+        inline: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         this.formLayout = {
@@ -166,6 +171,9 @@ export default {
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
+                                if (!this.inline) {
+                                    this.closeDialog && this.closeDialog();
+                                }
                             })
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
@@ -174,6 +182,9 @@ export default {
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
+                                if (!this.inline) {
+                                    this.closeDialog && this.closeDialog();
+                                }
                             })
                             .finally(() => (this.loading = false));
                     }
