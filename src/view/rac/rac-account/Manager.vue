@@ -313,7 +313,7 @@ export default {
                     data() {
                         return {
                             realmId: that.curRealmId,
-                            orgId: this.curOrgId,
+                            orgId: that.curOrgId,
                         };
                     },
                     methods: {
