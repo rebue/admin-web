@@ -43,7 +43,10 @@ module.exports = {
     },
     configureWebpack(config){
         config.plugins.push(new CopyPlugin(
-            [{ from: path.resolve(__dirname,'./src/view/app/security-center/wechat.css'), to: 'css' }]
+            [
+                { from: path.resolve(__dirname,'./src/view/app/security-center/wechat.css'), to: 'css' },
+                { from: path.resolve(__dirname,'./src/view/sign-in/unified/wechat-login.css'), to: 'css' }
+            ]
         ))
     },
     devServer: {
