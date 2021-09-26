@@ -12,7 +12,10 @@
             <img :src="require('./makeup.png')" alt="" class="makeup" />
             <div class="login-card">
                 <public-sign-in v-if="phoneShow" class="form"></public-sign-in>
-                <scanCode v-else :codeType="codeType" :numberLoginShow="numberLoginShow" :key="codeType"></scanCode>
+                <template v-else>
+                    <div class="munberLongin" @click="phoneShow = true">账号登录</div>
+                    <scanCode :codeType="codeType" :key="codeType"></scanCode>
+                </template>
                 <div class="scan-code-card">
                     <div class="top-list">
                         <span @click="vxScanCodeClick">微信扫码登录</span>
@@ -62,10 +65,6 @@ export default {
         ddScanCodeClick() {
             this.phoneShow = false;
             this.codeType = '钉钉';
-        },
-        //点击账号登录事件
-        numberLoginShow() {
-            this.phoneShow = true;
         },
         //扫码成功之后做的处理
         handleCodeLogin(code) {
@@ -139,6 +138,15 @@ export default {
             background-color: #fff;
             border-radius: 10px;
             position: relative;
+            .munberLongin {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                font-size: 16px;
+                font-weight: 400;
+                color: #7aa8f2;
+                cursor: pointer;
+            }
             .scan-code-card {
                 position: absolute;
                 left: 0;

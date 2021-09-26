@@ -3,7 +3,7 @@
         <a-row>
             <a-col>
                 <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                    <a-form-model-item label="用户名称" prop="realName" key="realName">
+                    <a-form-model-item label="姓名" prop="realName" key="realName">
                         <a-input v-model.trim="model.realName" placeholder="" />
                     </a-form-model-item>
                     <a-form-model-item label="身份证号" prop="idCard" key="idCard">
@@ -16,7 +16,7 @@
             </a-col>
             <a-col class="detail-wrap" v-if="detail.id">
                 <a-row class="item">
-                    <a-col :span="7" class="label">用户名称：</a-col>
+                    <a-col :span="7" class="label">姓名：</a-col>
                     <a-col :span="17" class="value">{{ detail.realName }}</a-col>
                 </a-row>
                 <a-row class="item">
@@ -67,7 +67,7 @@ export default {
             },
             rules: {
                 realName: [
-                    { required: true, message: '请输入用户名称', trigger: 'blur', transform: val => val && val.trim() },
+                    { required: true, message: '请输入姓名', trigger: 'blur', transform: val => val && val.trim() },
                 ],
                 idCard: [
                     {

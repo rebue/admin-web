@@ -1,24 +1,23 @@
 <template>
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-        <a-form-model-item key="oldSignInPswd" label="旧密码" prop="oldSignInPswd">
+        <a-form-model-item key="signInPswd" label="旧密码" prop="signInPswd">
             <a-input-password
                 v-autofocus
-                v-model.trim="model.oldSignInPswd"
+                v-model.trim="model.signInPswd"
                 placeholder="请输入旧密码"
                 autocomplete="new-password"
             />
         </a-form-model-item>
-        <a-form-model-item key="signInPswd" label="新密码" prop="signInPswd">
+        <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
             <a-input-password
-                v-autofocus
-                v-model.trim="model.signInPswd"
+                v-model.trim="model.newSignInPswd"
                 placeholder="请输入新密码"
                 autocomplete="new-password"
             />
         </a-form-model-item>
-        <a-form-model-item key="signInPswdAgain" label="确认新密码" prop="signInPswdAgain">
+        <a-form-model-item key="newSignInPswdAgain" label="确认新密码" prop="newSignInPswdAgain">
             <a-input-password
-                v-model.trim="model.signInPswdAgain"
+                v-model.trim="model.newSignInPswdAgain"
                 placeholder="请再次输入新密码(确认)"
                 autocomplete="new-password"
             />
@@ -28,18 +27,19 @@
 
 <script>
 import { racAccountApi } from '@/api/Api';
+import md5 from 'crypto-js/md5';
 
 export default {
     name: 'app-security-center-pwsd',
     data() {
         this.rules = {
-            oldSignInPswd: [
+            signInPswd: [
                 { required: true, message: '请输入旧密码', trigger: 'blur', transform: val => val && val.trim() },
             ],
-            signInPswd: [
+            newSignInPswd: [
                 { required: true, message: '请输入新密码', trigger: 'blur', transform: val => val && val.trim() },
             ],
-            signInPswdAgain: [
+            newSignInPswdAgain: [
                 {
                     required: true,
                     trigger: ['change', 'blur'],
@@ -52,7 +52,7 @@ export default {
                             return;
                         }
 
-                        if (value !== this.model.signInPswd) {
+                        if (value !== this.model.newSignInPswd) {
                             callback(new Error('两次输入的密码不相同'));
                             return;
                         }
@@ -75,9 +75,9 @@ export default {
         return {
             loading: false,
             model: {
-                oldSignInPswd: '',
                 signInPswd: '',
-                signInPswdAgain: '',
+                newSignInPswd: '',
+                newSignInPswdAgain: '',
             },
         };
     },
@@ -87,7 +87,11 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racAccountApi
-                        .modifySignInPswd(this.record.id, this.model.signInPswd)
+                        .modifySignInPswdByOld({
+                            id: this.record.id,
+                            signInPswd: md5(this.model.signInPswd).toString(),
+                            newSignInPswd: md5(this.model.newSignInPswd).toString(),
+                        })
                         .then(() => {
                             this.callback && this.callback();
                             this.closeDialog();

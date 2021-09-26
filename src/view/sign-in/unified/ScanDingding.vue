@@ -3,28 +3,14 @@
         <a-spin :spinning="loading">
             <dd-login-code :option="option" v-if="goto && !status"></dd-login-code>
             <iframe :src="loginTmpCodeUrl" frameborder="0" v-if="loginTmpCodeUrl" width="0" height="0"></iframe>
-            <a-result status="success" :title="statusMsg" v-if="status == 'success'">
-                <template #extra>
-                    <a-button key="success-cancel" type="primary" @click="ok">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
-            <a-result status="error" :title="statusMsg" v-if="status == 'error'">
-                <template #extra>
-                    <a-button key="error-cancel" type="primary" @click="closeDialog">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
+            <a-result status="success" :title="statusMsg" v-if="status == 'success'"> </a-result>
+            <a-result status="error" :title="statusMsg" v-if="status == 'error'"> </a-result>
         </a-spin>
     </div>
 </template>
 <script>
-import { accountStore } from '@/store/Store';
 import DdLoginCode from '@/component/app/DDLoginCode.vue';
 import request from '@/util/request';
-import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 export default observer({
     name: 'app-security-center-dingding',
@@ -33,7 +19,6 @@ export default observer({
     },
     data() {
         return {
-            accountStore,
             goto: '',
             loginTmpCodeUrl: '',
             loading: false,
@@ -52,14 +37,7 @@ export default observer({
         },
     },
     mounted() {
-        when(
-            () => this.accountStore && this.accountStore.accountId,
-            () => {
-                console.log('----this.accountStore.accountId', this.accountStore.accountId);
-                this.getQrcode();
-            }
-        );
-
+        this.getQrcode();
         if (typeof window.addEventListener != 'undefined') {
             window.addEventListener('message', this.handleMessage, false);
         } else if (typeof window.attachEvent != 'undefined') {
@@ -67,11 +45,6 @@ export default observer({
         }
     },
     methods: {
-        ok() {
-            console.log('---------submit');
-            this.callback && this.callback();
-            this.closeDialog();
-        },
         handleMessage(event) {
             const origin = event.origin;
             console.log('---------origin', event.origin);
@@ -86,10 +59,11 @@ export default observer({
                 console.log('---------loginTmpCode', loginTmpCode, this.loginTmpCodeUrl);
             } else if (origin == location.origin) {
                 console.log('---------接收到子窗口的新消息了', event.data);
-                if (event.data.event === 'ding-talk-bind' || event.data.event === 'ding-talk-unbind') {
-                    const { result, msg } = event.data;
+                if (event.data.event === 'ding-talk-sign-in') {
+                    const { result, msg, url } = event.data;
                     if (result === 'success') {
                         this.status = result;
+                        window.location.replace(url);
                     } else if (result === 'error') {
                         this.status = result;
                     }
@@ -103,7 +77,7 @@ export default observer({
             const callbackUrl = encodeURIComponent(
                 `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
             );
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountStore.accountId}?callbackUrl=${callbackUrl}`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/unified-auth?callbackUrl=${callbackUrl}`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,

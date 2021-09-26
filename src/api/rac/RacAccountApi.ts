@@ -38,6 +38,16 @@ export default class RacAccountApi extends BaseCrudApi {
     }
 
     /**
+     * 修改登录密码
+     */
+    modifySignInPswdByOld(mo): Promise<Ro> {
+        return request.put({
+            url: this.baseUrn + '/modify-sign-in-by-old-pswd',
+            data: mo,
+        });
+    }
+
+    /**
      * 启用账户
      */
     enable(record: RacAccountEnableMo): Promise<Ro> {

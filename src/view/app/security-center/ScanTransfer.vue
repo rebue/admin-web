@@ -1,6 +1,6 @@
 <template>
     <div>
-        扫码中转窗口
+        <!-- 扫码中转窗口 -->
     </div>
 </template>
 <script>

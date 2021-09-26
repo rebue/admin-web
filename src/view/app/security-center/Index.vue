@@ -15,16 +15,10 @@
                                 <a-icon type="lock" />
                             </div>
                             <span slot="title">修改密码</span>
-                            <span slot="description" v-if="isVerifiedPswd">密码安全系数： 高</span>
-                            <span slot="description" v-else>未设置</span>
+                            <span slot="description">密码安全系数： 高</span>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <a-button key="modify" v-if="isVerifiedPswd" @click="changePswd(EditFormTypeDic.Modify)"
-                                >修改密码</a-button
-                            >
-                            <a-button key="add" type="primary" v-else @click="changePswd(EditFormTypeDic.Add)"
-                                >设置密码</a-button
-                            >
+                            <a-button key="modify" type="primary" @click="changePswd">修改密码</a-button>
                         </div>
                     </a-list-item>
                     <!-- 手机号 -->
@@ -130,7 +124,6 @@ export default observer({
             isVerifiedMobile: false,
             isVerifiedWechat: false,
             isVerifiedDing: false,
-            isVerifiedPswd: false,
             isVerifiedEmail: false,
         };
     },
@@ -218,7 +211,6 @@ export default observer({
                     },
                     methods: {
                         callback() {
-                            console.log('----callback');
                             that.refreshAccountInfo();
                             that.getAccountInfo();
                         },
@@ -239,13 +231,11 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
-                            title: '微信绑定',
                             accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
                         callback() {
-                            console.log('----callback');
                             that.refreshAccountInfo();
                             that.getAccountInfo();
                         },
@@ -266,13 +256,11 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
-                            title: '微信解除绑定',
                             accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
                         callback() {
-                            console.log('----callback');
                             that.refreshAccountInfo();
                             that.getAccountInfo();
                         },
@@ -295,12 +283,10 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
-                            title: '钉钉绑定',
                         };
                     },
                     methods: {
                         callback() {
-                            console.log('----callback');
                             that.refreshAccountInfo();
                             that.getAccountInfo();
                         },
@@ -321,12 +307,10 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
-                            title: '钉钉解除绑定',
                         };
                     },
                     methods: {
                         callback() {
-                            console.log('----callback');
                             that.refreshAccountInfo();
                             that.getAccountInfo();
                         },
@@ -355,8 +339,8 @@ export default observer({
                     },
                     methods: {
                         callback() {
-                            // reload
-                            that.isVerifiedPswd = true;
+                            that.refreshAccountInfo();
+                            that.getAccountInfo();
                         },
                     },
                 },

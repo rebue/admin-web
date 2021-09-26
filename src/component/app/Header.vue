@@ -52,7 +52,7 @@ export default {
         logout(){
             //退出清除cookie jwt_token
             removeJwtToken()
-            this.$router.go(0)
+            window.location.reload()
         }
     },
 };

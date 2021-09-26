@@ -2,27 +2,15 @@
     <div class="wechat-body">
         <a-spin :spinning="loading">
             <wx-login-code :option="option" v-if="option.state && !status"></wx-login-code>
-            <a-result status="success" :title="statusMsg" v-if="status == 'success'">
-                <template #extra>
-                    <a-button key="success-cancel" type="primary" @click="ok">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
-            <a-result status="error" :title="statusMsg" v-if="status == 'error'">
-                <template #extra>
-                    <a-button key="error-cancel" type="primary" @click="closeDialog">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
+            <!-- <iframe :src="goto" frameborder="0" v-if="goto" width="300" height="400"></iframe> -->
+            <a-result status="success" :title="statusMsg" v-if="status == 'success'"> </a-result>
+            <a-result status="error" :title="statusMsg" v-if="status == 'error'"> </a-result>
         </a-spin>
     </div>
 </template>
 <script>
 import WxLoginCode from '@/component/app/WXLoginCode.vue';
 import request from '@/util/request';
-// import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 const getQueryVariable = function(url, variable) {
     const query = url.split('?')[1];
@@ -36,7 +24,7 @@ const getQueryVariable = function(url, variable) {
     return false;
 };
 export default observer({
-    name: 'app-security-center-wechat',
+    name: 'sign-in-unified-wechat',
     components: {
         WxLoginCode,
     },
@@ -53,7 +41,7 @@ export default observer({
             const callbackUrl = encodeURIComponent(
                 `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
             );
-            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
+            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/unified-auth?callbackUrl=${callbackUrl}`;
         },
         option() {
             return {
@@ -64,6 +52,9 @@ export default observer({
                 state: this.state,
                 style: 'black',
                 href: encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`),
+                // href: 'https://172.20.10.44:9528/static/css/wechat.css',
+                // href: 'https://auth.maiyuesoft.com/static/css/wechat.css'
+                // href: 'http://auth.maiyuesoft.com/dist/static/css/wechat.css'
             };
         },
     },
@@ -79,23 +70,17 @@ export default observer({
         }
     },
     methods: {
-        ok() {
-            console.log('--submit');
-            //发请求
-            //then
-            this.callback && this.callback();
-            this.closeDialog();
-        },
         handleMessage(event) {
             this.loading = true;
             const origin = event.origin;
             console.log('---------origin', event.origin);
             if (origin == location.origin) {
                 console.log('---------接收到子窗口的新消息了', event.data);
-                if (event.data.event === 'wechat-open-bind' || event.data.event === 'wechat-open-unbind') {
-                    const { result, msg } = event.data;
+                if (event.data.event === 'wechat-open-sign-in') {
+                    const { result, msg, url } = event.data;
                     if (result === 'success') {
                         this.status = result;
+                        window.location.replace(url);
                     } else if (result === 'error') {
                         this.status = result;
                     }
@@ -115,6 +100,8 @@ export default observer({
                 })
                 .then(ro => {
                     console.log('---------res', ro.detail);
+                    // this.goto = ro.detail.replace(/(^https)/,'http')
+                    // console.log('--thisgoto', this.goto)
                     this.state = getQueryVariable(ro.detail, 'state');
                 })
                 .finally(() => {

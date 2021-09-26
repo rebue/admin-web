@@ -97,7 +97,7 @@ export default {
             },
             {
                 dataIndex: 'signInName',
-                title: '登录名称',
+                title: '登录账号',
                 width: 120,
                 fixed: 'left',
                 customRender: (text, record) => (
@@ -140,11 +140,6 @@ export default {
                         </fragment>
                     );
                 },
-            },
-            {
-                dataIndex: 'remark',
-                title: '备注',
-                ellipsis: true,
             },
             {
                 dataIndex: 'isEnabled',

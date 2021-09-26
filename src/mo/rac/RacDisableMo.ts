@@ -35,7 +35,7 @@ export class RacDisableMo {
     enableOpId = '';
 
     /**
-     * 登录名称
+     * 登录账号
      */
     signInName = '';
 
@@ -63,7 +63,7 @@ export class RacDisableMo {
     qqNickname = '';
 
     /**
-     * 禁用人登录名称
+     * 禁用人登录账号
      */
     disableSignInName = '';
     /**
@@ -88,7 +88,7 @@ export class RacDisableMo {
     disableqqNickname = '';
 
     /**
-     * 代理禁用人登录名称
+     * 代理禁用人登录账号
      */
     disableAgentSignInName = '';
 
@@ -120,7 +120,7 @@ export class RacDisableMo {
     disableAgentqqNickname = '';
 
     /**
-     * 启用人登录名称
+     * 启用人登录账号
      */
     enableSignInName = '';
 
@@ -150,7 +150,7 @@ export class RacDisableMo {
     enableqqNickname = '';
 
     /**
-     * 代理启用人登录名称
+     * 代理启用人登录账号
      */
     enableAgentSignInName = '';
 

@@ -22,7 +22,7 @@
                             <a-icon type="solution" :style="{ fontSize: '30px', color: '#1890ff' }" />
                         </div>
                         <span slot="title">选择已有用户</span>
-                        <div slot="description">根据用户名称，身份证号查询已有用户信息</div>
+                        <div slot="description">根据姓名，身份证号查询已有用户信息</div>
                     </a-list-item-meta>
                     <div><a-icon type="right" :style="{ fontSize: '30px', color: '#ddd' }" /></div>
                 </a-list-item>
