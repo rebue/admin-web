@@ -1,6 +1,6 @@
 <template>
     <a-drawer
-        :title="'用户(' + user.realName + ')的账号'"
+        :title="'用户(' + user.realName + ')的用户'"
         placement="right"
         :closable="true"
         :mask="true"
@@ -14,7 +14,9 @@
     >
         <div class="table-commands">
             <slot name="commands">
-                <a-button style="margin-right: 50px" type="primary" icon="plus" @click="handleAdd"> 添加 </a-button>
+                <a-button style="margin-right: 50px" type="primary" icon="plus" @click="handleAddUser()">
+                    添加
+                </a-button>
             </slot>
         </div>
         <p></p>
@@ -26,24 +28,55 @@
             :rowKey="(account, index) => (account.id ? account.id : index)"
             :pagination="false"
         >
+            <span slot="action" slot-scope="text, record">
+                <template v-for="(item, index) in tableActions">
+                    <span :key="index">
+                        <a-dropdown>
+                            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                更多 <a-icon type="down" />
+                            </a>
+                            <a-menu slot="overlay">
+                                <template v-for="(moreItem, moreIndex) in item.items">
+                                    <a-menu-item :key="moreIndex">
+                                        <a @click="moreItem.onClick(record)">{{ moreItem.title }}</a>
+                                    </a-menu-item>
+                                </template>
+                            </a-menu>
+                        </a-dropdown>
+                    </span>
+                </template>
+            </span>
         </a-table>
-        <manage-add-account-form
-            :visible.sync="manageAddAccountFormVisible"
-            :user.sync="user"
-            :width="width"
-            :existAccountIds="existAccountIds"
-            @close="refreshData()"
+        <editUser-form
+            v-if="managerModifyOrgFormVisible"
+            :modifyOrgId="modifyOrgId"
+            :hideHandleModify="hideHandleModify"
+            @close="refreshData"
+        ></editUser-form>
+        <!-- 修改密码 -->
+        <change-pswd-form :record="modifyOrgId" :visible.sync="changePswdFormVisible" @close="refreshData" />
+        <!-- 组织 -->
+        <manage-org-form
+            ref="manageOrgForm"
+            :account="modifyOrgId"
+            :visible.sync="manageOrgFormVisible"
+            @close="refreshData"
         />
     </a-drawer>
 </template>
 
 <script>
 import { racAccountApi } from '@/api/Api';
-import ManageAddAccountForm from './ManageAddAccountForm.vue';
-
+// import ManageAddUserForm from './ManageAddUserForm.vue';
+import ChangePswdForm from './ChangePswdForm.vue';
+import EditUserForm from './EditUserForm.vue';
+import ManageOrgForm from './ManageOrgForm.vue';
 export default {
     components: {
-        ManageAddAccountForm,
+        // ManageAddUserForm,
+        EditUserForm,
+        ChangePswdForm,
+        ManageOrgForm,
     },
     props: {
         user: {
@@ -57,17 +90,20 @@ export default {
     },
     data() {
         this.width = 550;
-        this.api = racAccountApi;
         const columns = [
             {
-                dataIndex: 'name',
+                dataIndex: 'signInName',
                 title: '账号名称',
                 fixed: 'left',
                 scopedSlots: { customRender: 'tagName' },
             },
             {
-                dataIndex: 'fullName',
+                dataIndex: 'signInNickname',
                 title: '账号全称',
+            },
+            {
+                dataIndex: 'realmId',
+                title: '领域ID',
             },
             {
                 dataIndex: 'action',
@@ -77,6 +113,28 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
+        this.tableActions = [
+            {
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '修改密码',
+                        onClick: record => this.handleChangePswd(record),
+                    },
+                    {
+                        type: 'a',
+                        title: '修改账号',
+                        onClick: record => this.handleModify(record),
+                    },
+                    {
+                        type: 'a',
+                        title: '管理组织',
+                        onClick: record => this.handleManageAccount(record),
+                    },
+                ],
+            },
+        ];
         return {
             loading: false,
             dataSource: [],
@@ -84,12 +142,17 @@ export default {
             columns,
             showAccount: false,
             manageAddAccountFormVisible: false,
+            managerModifyOrgFormVisible: false,
+            manageOrgFormVisible: false,
+            changePswdFormVisible: false,
+            modifyOrgId: {},
         };
     },
     computed: {},
     watch: {
         visible(val) {
             if (val) {
+                console.log(val);
                 this.$nextTick(() => {
                     this.refreshData();
                 });
@@ -107,11 +170,11 @@ export default {
                 this.loading = true;
                 const { id } = { ...this.user };
                 const userId = id;
-                const data = { userId, deep: false };
-                // if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
-                this.api
-                    .listByUserId(data)
+                const data = { userId };
+                racAccountApi
+                    .getUserList(data)
                     .then(ro => {
+                        console.log(ro);
                         this.dataSource = ro.extra.list;
                     })
                     .finally(() => {
@@ -123,12 +186,35 @@ export default {
                     });
             });
         },
+        //修改账号信息
+        handleModify(orgMo) {
+            this.modifyOrgId = orgMo;
+            this.managerModifyOrgFormVisible = true;
+        },
+        /** 处理修改密码 */
+        handleChangePswd(record) {
+            this.modifyOrgId = record;
+            this.changePswdFormVisible = true;
+        },
+        /**
+         * 处理管理组织事件
+         */
+        handleManageAccount(record) {
+            this.modifyOrgId = record;
+            this.manageOrgFormVisible = true;
+        },
+        //关闭修改账号信息
+        hideHandleModify() {
+            this.managerModifyOrgFormVisible = false;
+            this.refreshData();
+        },
         /**切换抽屉时动画结束后的回调 */
         afterVisibleChange(val) {
             console.log('visible', val);
         },
         //关闭抽屉
         onClose() {
+            this.hideHandleModify();
             this.$emit('update:visible', false);
         },
         /**
@@ -142,6 +228,34 @@ export default {
         handleCancel() {
             this.$emit('update:visible', false);
             this.$emit('close');
+        },
+        /**
+         * 处理添加账户的事件
+         */
+        handleAddUser(record) {
+            const that = this;
+            this.$showDialog(
+                require('./add/AccountForm.vue').default,
+                {
+                    data() {
+                        return {
+                            accouuntId: that.user.id,
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshData();
+                        },
+                    },
+                },
+                {
+                    title: '新建账号',
+                    width: '60%',
+                    footer: null,
+                    destroyOnClose: true,
+                    wrapClassName: 'account-add-dialog-wrap',
+                }
+            );
         },
     },
 };

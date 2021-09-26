@@ -77,4 +77,10 @@ export default class RacAccountApi extends BaseCrudApi {
     getCurAccountInfo(): Promise<Ro> {
         return request.get({ url: '/rac-svr/rac/account/get-cur-account-info' });
     }
+    /**
+     * 查询用户的子账号
+     */
+    getUserList(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-by-user-id', params: params });
+    }
 }

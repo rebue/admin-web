@@ -37,7 +37,6 @@ import EnabledForm from './EnabledForm.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racUserApi } from '@/api/Api';
 import ManageAccountForm from './ManageAccountForm.vue';
-
 export default {
     name: 'Manager',
     components: {
@@ -86,21 +85,21 @@ export default {
                 ellipsis: true,
             },
 
-            {
-                dataIndex: 'isEnabled',
-                align: 'center',
-                title: '启用',
-                width: 70,
-                fixed: 'right',
-                customRender: (text, record) => (
-                    <a-switch
-                        checked={record.isEnabled}
-                        checkedChildren="启"
-                        unCheckedChildren="禁"
-                        onClick={() => this.handleUserCheck(record)}
-                    />
-                ),
-            },
+            // {
+            //     dataIndex: 'isEnabled',
+            //     align: 'center',
+            //     title: '启用',
+            //     width: 70,
+            //     fixed: 'right',
+            //     customRender: (text, record) => (
+            //         <a-switch
+            //             checked={record.isEnabled}
+            //             checkedChildren="启"
+            //             unCheckedChildren="禁"
+            //             onClick={() => this.handleUserCheck(record)}
+            //         />
+            //     ),
+            // },
             {
                 dataIndex: 'action',
                 title: '操作',
@@ -125,16 +124,16 @@ export default {
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
             },
-            // {
-            //     type: 'more',
-            //     items: [
-            //         {
-            //             type: 'a',
-            //             title: '管理账号',
-            //             onClick: record => this.handleManageAccount(record),
-            //         },
-            //     ],
-            // },
+            {
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '管理账号',
+                        onClick: record => this.handleManageAccount(record),
+                    },
+                ],
+            },
         ];
 
         return {

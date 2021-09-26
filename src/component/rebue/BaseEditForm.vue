@@ -107,6 +107,8 @@ export default {
             visible: false,
         };
     },
+    mounted(){
+    },
     computed: {
         fullTitle() {
             return (
@@ -118,6 +120,13 @@ export default {
         form() {
             return this.$refs.form;
         },
+    },
+    watch: {
+        visible(newval){
+            if(!newval){
+                this.$emit('isShowVisible', this.visible);
+            }
+        }
     },
     methods: {
         show(editFormType, model) {
