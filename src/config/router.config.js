@@ -86,10 +86,6 @@ export const constantRouters = [
         ],
     },
     {
-        path: '/404',
-        component: () => import('@/view/404/404.vue'),
-    },
-    {
         path: '/',
         name: 'index',
         component: () => import('@/view/index/Index.vue'),
@@ -329,6 +325,10 @@ export const constantRouters = [
                 ],
             },
         ],
+    },
+    {
+        path: '/404',
+        component: () => import('@/view/404/404.vue'),
     },
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404' },

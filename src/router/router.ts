@@ -9,8 +9,9 @@ import { oapOidcApi } from '@/api/Api';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+    mode: 'history',
+    base: process.env.VUE_APP_PUBLIC_PATH,
     routes: constantRouters,
-    // mode: "history",
     /**
      * 当切换到新路由时，页面滚到的行为
      * 注意: 这个功能只在支持 history.pushState 的浏览器中可用。
@@ -46,7 +47,7 @@ router.beforeEach(async (to, from, next) => {
 
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
-
+    console.log('---to.path', to.path);
     //白名单免登录
     if (uncheckJwtTokenPaths.find(path => to.path.startsWith(path))) {
         next();
