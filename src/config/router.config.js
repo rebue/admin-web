@@ -226,8 +226,8 @@ export const constantRouters = [
                 redirect: '/user-synchro/account',
                 children: [
                     {
-                        path: '/user-synchro/account',
-                        name: '/user-synchro/account',
+                        path: '/user-synchro/account-sy',
+                        name: 'account-sy',
                         component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
                         hidden: true,
                         meta: { title: '账号同步', keepAlive: true, icon: 'apartment' },
