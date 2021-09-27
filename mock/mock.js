@@ -11,8 +11,11 @@ const mock = {
     ...require('./rac/RacOpLogMock').routes,
     ...require('./rac/RacLockLogMock').routes,
     ...require('./rac/RacVerifitionMock').routes,
+    ...require('./rac/RacUserMock').routes,
     ...require('./rac/OapAppMock').routes,
-    ...require('./rac/RacUserMock').routes
+    ...require('./rac/OapOidcMock').routes,
+
+
 };
 
 // console.log('mock', mock);
