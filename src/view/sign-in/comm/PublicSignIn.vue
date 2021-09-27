@@ -167,7 +167,11 @@ export default {
                             sessionStorage.removeItem('isNeedCaptcha');
                             this.detail = ro.detail ? ro.detail : false;
                             setAppId(this.appId);
-                            window.location.href = this.redirect ? '#' + this.redirect : '#/base/rac-realm';
+                            if (this.redirect) {
+                                window.location.href = this.redirect;
+                            } else {
+                                this.$router.push('/base/rac-realm');
+                            }
                         })
                         .catch(() => {
                             //登录失败，清除验证码

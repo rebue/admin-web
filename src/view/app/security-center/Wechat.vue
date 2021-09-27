@@ -50,9 +50,7 @@ export default observer({
     },
     computed: {
         redirectUri() {
-            const callbackUrl = encodeURIComponent(
-                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}?u=1#/scanTransfer`
-            );
+            const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
             return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
         },
         option() {
@@ -63,7 +61,7 @@ export default observer({
                 redirect_uri: encodeURIComponent(this.redirectUri),
                 state: this.state,
                 style: 'black',
-                href: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}css/wechat.css`,
+                href: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/css/wechat.css`,
             };
         },
     },
