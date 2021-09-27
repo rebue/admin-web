@@ -9,19 +9,33 @@
         @ok="handleOk"
         :width="1000"
     >
-        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+        <a-form-model ref="form" :model="model" v-bind="formLayout">
             <slot name="formItems">
-                <a-form-model-item key="policyName" label="策略名称" prop="policyName">
-                    <a-input v-model.trim="model.policyName" :placeholder="'请输入策略名称'" />
-                </a-form-model-item>
                 <a-row>
                     <a-col :span="12">
-                        <a-form-model-item key="sourceName" label="来源" prop="sourceName">
-                            <a-input v-model.trim="model.sourceName" :placeholder="'请输入来源名称'" />
+                        <a-form-model-item key="name" label="策略名称" prop="name">
+                            <a-input v-model.trim="model.name" :placeholder="'请输入策略名称'" />
                         </a-form-model-item>
-                        <a-form-model-item key="sourceSelectVlaue" label="连接器" prop="sourceSelectVlaue">
+                    </a-col>
+                    <a-col :span="12">
+                        <a-form-model-item key="isEnabled" label="启用" prop="isEnabled">
+                            <a-switch
+                                :checked="model.isEnabled"
+                                checkedChildren="启"
+                                unCheckedChildren="禁"
+                                @click="switchClick()"
+                            />
+                        </a-form-model-item>
+                    </a-col>
+                </a-row>
+                <a-row>
+                    <a-col :span="12">
+                        <a-form-model-item key="srcName" label="来源" prop="srcName">
+                            <a-input v-model.trim="model.srcName" :placeholder="'请输入来源名称'" />
+                        </a-form-model-item>
+                        <a-form-model-item key="srcConnId" label="连接器" prop="srcConnId">
                             <div class="selectStyle">
-                                <a-select v-model="sourceSelectVlaue" placeholder="请选择">
+                                <a-select v-model="sourceSelectVlaue" placeholder="请选择" @change="sourceSelectstart">
                                     <a-select-option
                                         :value="item.value"
                                         v-for="(item, index) in sourceSelect"
@@ -32,27 +46,38 @@
                                     </a-select-option>
                                 </a-select>
                                 <span class="clickIcon" @click="addUserClick()"><a-icon type="plus"/></span>
-                                <!-- <span class="clickIcon"><a-icon type="minus"/></span> -->
+                                <span
+                                    class="clickIcon"
+                                    :class="sourceSelectVlaue == undefined ? 'huiclickIcon' : ''"
+                                    @click="minusUserClick(sourceSelectVlaue, 'start')"
+                                    ><a-icon type="minus"
+                                /></span>
                                 <span
                                     class="clickIcon"
                                     @click="editUserClick(sourceSelectVlaue)"
                                     :class="sourceSelectVlaue == undefined ? 'huiclickIcon' : ''"
                                     ><a-icon type="edit"
                                 /></span>
-                                <a-button type="primary" size="small">链接测试</a-button>
+                                <a-button
+                                    type="primary"
+                                    size="small"
+                                    @click="linkTextClick(sourceSelectVlaue, 'start')"
+                                    :disabled="startBtnDisabled"
+                                    >链接测试</a-button
+                                >
                             </div>
                         </a-form-model-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-model-item key="endName" label="目的" prop="endName">
-                            <a-input v-model.trim="model.endName" :placeholder="'请输入目的名称'" />
+                        <a-form-model-item key="dstName" label="目的" prop="dstName">
+                            <a-input v-model.trim="model.dstName" :placeholder="'请输入目的名称'" />
                         </a-form-model-item>
-                        <a-form-model-item key="sourceSelectEndVlaue" label="连接器" prop="sourceSelectEndVlaue">
+                        <a-form-model-item key="dstConnId" label="连接器" prop="dstConnId">
                             <div class="selectStyle">
-                                <a-select v-model="sourceSelectEndVlaue" placeholder="请选择">
+                                <a-select v-model="sourceSelectEndVlaue" placeholder="请选择" @change="sourceSelectEnd">
                                     <a-select-option
                                         :value="item.value"
-                                        v-for="(item, index) in sourceendSelect"
+                                        v-for="(item, index) in sourceSelect"
                                         :key="index"
                                         style="width:80px"
                                     >
@@ -60,14 +85,25 @@
                                     </a-select-option>
                                 </a-select>
                                 <span class="clickIcon" @click="addUserClick()"><a-icon type="plus"/></span>
-                                <!-- <span class="clickIcon"><a-icon type="minus"/></span> -->
+                                <span
+                                    class="clickIcon"
+                                    :class="sourceSelectEndVlaue == undefined ? 'huiclickIcon' : ''"
+                                    @click="minusUserClick(sourceSelectEndVlaue, 'end')"
+                                    ><a-icon type="minus"
+                                /></span>
                                 <span
                                     class="clickIcon"
                                     @click="editUserClick(sourceSelectEndVlaue)"
                                     :class="sourceSelectEndVlaue == undefined ? 'huiclickIcon' : ''"
                                     ><a-icon type="edit"
                                 /></span>
-                                <a-button type="primary" size="small">链接测试</a-button>
+                                <a-button
+                                    type="primary"
+                                    size="small"
+                                    @click="linkTextClick(sourceSelectEndVlaue, 'end')"
+                                    :disabled="endBtnDisabled"
+                                    >链接测试</a-button
+                                >
                             </div>
                         </a-form-model-item>
                     </a-col>
@@ -77,7 +113,12 @@
                     <a-col :span="12">
                         <a-form-model-item label="选择表" v-for="(item, index) in tableField" :key="index">
                             <div class="startSelect">
-                                <a-select v-model="item.startSurface.model" placeholder="请选择表">
+                                <a-select
+                                    v-model="item.startSurface.model"
+                                    placeholder="请选择表"
+                                    :disabled="startDisabled"
+                                    @change="startChange"
+                                >
                                     <a-select-option
                                         :value="childItem.value"
                                         v-for="(childItem, childIndex) in item.startSurface.selectData"
@@ -105,12 +146,17 @@
                                         {{ childTtem.name }}
                                     </a-select-option>
                                 </a-select>
-                                <span class="clickIcon" @click="addendSelect(index)"><a-icon type="plus-circle"/></span>
+                                <span class="clickIcon" @click="addendSelect(index, 'start')"
+                                    ><a-icon type="plus-circle"
+                                /></span>
                                 <!-- <span class="clickIconminus" @click="minusendSelect(index)"
                                     ><a-icon type="minus-circle"
                                 /></span> -->
                             </div>
-                            <span class="clickStart" v-show="index == tableField.length - 1" @click="addbiaoSelect()"
+                            <span
+                                class="clickStart"
+                                v-show="index == tableField.length - 1"
+                                @click="addbiaoSelect('start')"
                                 ><a-icon type="plus-circle"
                             /></span>
                         </a-form-model-item>
@@ -118,7 +164,12 @@
                     <a-col :span="12">
                         <a-form-model-item label="选择表" v-for="(item, index) in tableFieldEnd" :key="index">
                             <div class="startSelect">
-                                <a-select v-model="item.startSurface.model" placeholder="请选择表">
+                                <a-select
+                                    v-model="item.startSurface.model"
+                                    placeholder="请选择表"
+                                    :disabled="endDisabled"
+                                    @change="endChange"
+                                >
                                     <a-select-option
                                         :value="childItem.value"
                                         v-for="(childItem, childIndex) in item.startSurface.selectData"
@@ -128,7 +179,6 @@
                                         {{ childItem.name }}
                                     </a-select-option>
                                 </a-select>
-                                <!-- <span class="clickStart" @click="addendSelect()"><a-icon type="plus-circle"/></span> -->
                             </div>
                             <div class="endSelect">
                                 <a-select
@@ -147,11 +197,16 @@
                                         {{ childTtem.name }}
                                     </a-select-option>
                                 </a-select>
-                                <!-- <span class="clickIcon" @click="addendSelect(index)"><a-icon type="plus-circle"/></span> -->
+                                <span class="clickIcon" @click="addendSelect(index, 'end')"
+                                    ><a-icon type="plus-circle"
+                                /></span>
                             </div>
-                            <!-- <span class="clickStart" v-show="index == tableFieldEnd.length - 1" @click="addbiaoSelect()"
+                            <span
+                                class="clickStart"
+                                v-show="index == tableFieldEnd.length - 1"
+                                @click="addbiaoSelect('end')"
                                 ><a-icon type="plus-circle"
-                            /></span> -->
+                            /></span>
                         </a-form-model-item>
                     </a-col>
                 </a-row>
@@ -187,6 +242,8 @@
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import { etlConnApi, etlStrategyApi } from '@/api/Api';
+import router from '@/router/router';
 export default {
     components: {
         BaseModal,
@@ -200,22 +257,23 @@ export default {
             type: String,
             default: () => '',
         },
-        model: {
-            type: Object,
-            required: true,
-        },
         formItems: {
             type: Array,
             default: () => [],
         },
-        rules: {
-            type: Object,
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            default: () => {},
-        },
         api: {
             type: Object,
             required: true,
+        },
+        defaultPagination: {
+            type: [Boolean, Object],
+            default: function() {
+                return {
+                    pageSize: 10,
+                    pageSizeOptions: ['5', '10', '20', '30'],
+                    showSizeChanger: true,
+                };
+            },
         },
     },
     data() {
@@ -236,42 +294,81 @@ export default {
             confirmLoading: false,
             linksurface1: '',
             linksurface2: '',
+            model: {
+                isEnabled: false,
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入策略名称', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+                srcConnId: [
+                    {
+                        required: true,
+                        message: '请输入来源的连接器ID',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                srcName: [
+                    { required: true, message: '请输入来源名称', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+                dstConnId: [
+                    {
+                        required: true,
+                        message: '请输入目的的连接器ID',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                dstName: [
+                    { required: true, message: '请输入目的名称', trigger: 'blur', transform: val => val && val.trim() },
+                ],
+            },
             dataModel: {},
             formDatabase: [
                 {
-                    dataIndex: 'connectorName',
-                    title: '连接器名',
+                    dataIndex: 'name',
+                    title: '数据库连接器名称',
                 },
                 {
-                    dataIndex: 'databaseName',
-                    title: '数据库名称',
-                },
-                {
-                    dataIndex: 'databaseType',
+                    dataIndex: 'dbType',
                     title: '数据库类型',
                 },
                 {
+                    dataIndex: 'dbName',
+                    title: '数据库名称',
+                },
+                {
                     dataIndex: 'host',
-                    title: '主机',
+                    title: '主机名称',
                 },
                 {
                     dataIndex: 'port',
-                    title: '端口',
+                    title: '端口号',
                 },
                 {
-                    dataIndex: 'user',
-                    title: '用户名',
+                    dataIndex: 'userName',
+                    title: '用户名称',
                 },
                 {
-                    dataIndex: 'password',
-                    title: '密码',
+                    dataIndex: 'userPswd',
+                    title: '用户密码',
+                },
+                {
+                    dataIndex: 'remark',
+                    title: '源备注',
                 },
             ],
             databaseRules: {
-                connectorName: [
-                    { required: true, message: '请输入连接器名', trigger: 'blur', transform: val => val && val.trim() },
+                name: [
+                    {
+                        required: true,
+                        message: '请输入数据库连接器名称',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
                 ],
-                databaseName: [
+                dbName: [
                     {
                         required: true,
                         message: '请输入数据库名称',
@@ -279,7 +376,7 @@ export default {
                         transform: val => val && val.trim(),
                     },
                 ],
-                databaseType: [
+                dbType: [
                     {
                         required: true,
                         message: '请输入数据库类型',
@@ -287,73 +384,53 @@ export default {
                         transform: val => val && val.trim(),
                     },
                 ],
+                host: [
+                    {
+                        required: true,
+                        message: '请输入主机名称',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                port: [
+                    {
+                        required: true,
+                        message: '请输入端口号',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                userName: [
+                    {
+                        required: true,
+                        message: '请输入用户名称',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                userPswd: [
+                    {
+                        required: true,
+                        message: '请输入用户密码',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
             },
             sourceSelectVlaue: undefined,
             sourceSelectEndVlaue: undefined,
-            sourceSelect: [
-                {
-                    name: '数据库1',
-                    value: '数据库1',
-                },
-                {
-                    name: '数据库2',
-                    value: '数据库2',
-                },
-            ],
-            sourceendSelect: [
-                {
-                    name: '数据库1-1',
-                    value: '数据库1-1',
-                },
-                {
-                    name: '数据库2-2',
-                    value: '数据库2-2',
-                },
-            ],
-            tableField: [
-                {
-                    startSurface: {
-                        selectData: [
-                            {
-                                name: 'bigdata',
-                                value: 'bigdata',
-                            },
-                        ],
-                    },
-                    endSurface: [
-                        {
-                            selectData: [
-                                {
-                                    name: 'childbigdata1',
-                                    value: 'childbigdata1',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-            tableFieldEnd: [
-                {
-                    startSurface: {
-                        selectData: [
-                            {
-                                name: 'bigdata',
-                                value: 'bigdata',
-                            },
-                        ],
-                    },
-                    endSurface: [
-                        {
-                            selectData: [
-                                {
-                                    name: 'childbigdata1',
-                                    value: 'childbigdata1',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
+            startDisabled: true,
+            endDisabled: true,
+            startBtnDisabled: true,
+            endBtnDisabled: true,
+            startSql: '',
+            sourceSelect: [],
+            tableField: [],
+            tableFieldEnd: [],
+            startTableNmae: [],
+            endTableNmae: [],
+            startColumusName: [],
+            endColumusName: [],
         };
     },
     computed: {
@@ -372,15 +449,15 @@ export default {
         },
     },
     watch: {
-        visible(newval, oldval) {
+        visible(newval) {
             if (newval) {
                 this.tableField = [
                     {
                         startSurface: {
                             selectData: [
                                 {
-                                    name: 'bigdata',
-                                    value: 'bigdata',
+                                    name: '',
+                                    value: '',
                                 },
                             ],
                         },
@@ -388,8 +465,8 @@ export default {
                             {
                                 selectData: [
                                     {
-                                        name: 'childbigdata1',
-                                        value: 'childbigdata1',
+                                        name: '',
+                                        value: '',
                                     },
                                 ],
                             },
@@ -401,8 +478,8 @@ export default {
                         startSurface: {
                             selectData: [
                                 {
-                                    name: 'bigdata',
-                                    value: 'bigdata',
+                                    name: '',
+                                    value: '',
                                 },
                             ],
                         },
@@ -410,8 +487,8 @@ export default {
                             {
                                 selectData: [
                                     {
-                                        name: 'childbigdata1',
-                                        value: 'childbigdata1',
+                                        name: '',
+                                        value: '',
                                     },
                                 ],
                             },
@@ -422,14 +499,43 @@ export default {
         },
     },
     methods: {
+        switchClick() {
+            if (this.model.isEnabled == true) {
+                this.model.isEnabled = false;
+            } else {
+                this.model.isEnabled = true;
+            }
+        },
         addUserClick() {
             this.dataModel = {};
             this.databaseVisible = true;
+        },
+        minusUserClick(id) {
+            etlConnApi.getdeleteConn(id).then(() => {
+                this.getSeePageFun();
+                if (this.sourceSelectVlaue == id) {
+                    this.sourceSelectVlaue = undefined;
+                }
+                if (this.sourceSelectEndVlaue == id) {
+                    this.sourceSelectEndVlaue = undefined;
+                }
+            });
+        },
+        sourceSelectstart(e) {
+            this.startBtnDisabled = false;
+            this.sourceSelectVlaue = e;
+            this.model.srcConnId = e;
+        },
+        sourceSelectEnd(e) {
+            this.endBtnDisabled = false;
+            this.sourceSelectEndVlaue = e;
+            this.model.dstConnId = e;
         },
         editUserClick(editState) {
             if (editState == undefined) {
                 return;
             }
+            // etlConnApi.modify
             this.dataModel = this.model;
             this.dataModel.connectorName = `${editState}`;
             this.databaseVisible = true;
@@ -452,6 +558,8 @@ export default {
             this.$nextTick(() => {
                 this.loading = true;
                 this.$refs.form.resetFields();
+                this.getSeePageFun();
+                console.log(this.editFormType === EditFormTypeDic.Modify);
                 if (this.editFormType === EditFormTypeDic.Modify) {
                     this.api
                         .getById(this.model.id)
@@ -482,12 +590,12 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
-                        this.api
+                        etlStrategyApi
                             .add(this.model)
                             .then(() => (this.visible = false))
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        this.api
+                        etlStrategyApi
                             .modify(this.model)
                             .then(() => (this.visible = false))
                             .finally(() => (this.loading = false));
@@ -503,7 +611,13 @@ export default {
         datahandleOk(e) {
             this.$refs.dataform.validate(valid => {
                 if (valid) {
-                    this.databaseVisible = false;
+                    etlConnApi
+                        .getAddConn(this.dataModel)
+                        .then(() => {
+                            this.getSeePageFun();
+                            this.databaseVisible = false;
+                        })
+                        .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框
@@ -512,101 +626,159 @@ export default {
                 }
             });
         },
+        //数据库连接器信息
+        getSeePageFun() {
+            etlConnApi.list().then(ro => {
+                const pageData = ro.extra.list;
+                const newArray = [];
+                pageData.map(item => {
+                    newArray.push({
+                        name: item.dbName,
+                        value: item.id,
+                    });
+                });
+                this.sourceSelect = newArray;
+            });
+        },
+        linkTextClick(id, type) {
+            etlConnApi.getTestConnectionById(id).then(ro => {
+                if (ro.extra.value) {
+                    this.startSql = id;
+                    etlConnApi.getTableNameById(id).then(res => {
+                        const data = res.extra.list,
+                            newData = [];
+                        data.map(item => {
+                            newData.push({
+                                name: item,
+                                value: item,
+                            });
+                        });
+                        if (type == 'start') {
+                            this.startTableNmae = newData;
+                            this.tableField = [
+                                {
+                                    startSurface: {
+                                        model: undefined,
+                                        selectData: newData,
+                                    },
+                                    endSurface: [
+                                        {
+                                            model: undefined,
+                                            selectData: [
+                                                {
+                                                    name: '',
+                                                    value: '',
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ];
+                            this.startDisabled = false;
+                        } else if (type == 'end') {
+                            this.endTableNmae = newData;
+                            this.tableFieldEnd = [
+                                {
+                                    startSurface: {
+                                        model: undefined,
+                                        selectData: newData,
+                                    },
+                                    endSurface: [
+                                        {
+                                            model: undefined,
+                                            selectData: [
+                                                {
+                                                    name: '',
+                                                    value: '',
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ];
+                            this.endDisabled = false;
+                        }
+                    });
+                }
+            });
+        },
+        //来源表获取字段接口
+        startChange(e) {
+            etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
+                const data = ro.extra.list,
+                    newData = [];
+                data.map(item => {
+                    newData.push({
+                        name: item,
+                        value: item,
+                    });
+                });
+                this.startColumusName = newData;
+                if (this.tableField.length == 1) {
+                    this.tableField[0].endSurface[0].selectData = newData;
+                    this.tableField[0].endSurface[0].model = undefined;
+                }
+            });
+        },
+        //目的表获取字段接口
+        endChange(e) {
+            etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
+                const data = ro.extra.list,
+                    newData = [];
+                data.map(item => {
+                    newData.push({
+                        name: item,
+                        value: item,
+                    });
+                });
+                this.endColumusName = newData;
+                if (this.tableFieldEnd.length == 1) {
+                    this.tableFieldEnd[0].endSurface[0].selectData = newData;
+                    this.tableFieldEnd[0].endSurface[0].model = undefined;
+                }
+            });
+        },
         //添加来源表
-        addbiaoSelect() {
-            this.tableField.push({
-                startSurface: {
-                    selectData: [
+        addbiaoSelect(type) {
+            if (type == 'start') {
+                this.tableField.push({
+                    startSurface: {
+                        model: undefined,
+                        selectData: this.startTableNmae,
+                    },
+                    endSurface: [
                         {
-                            name: 'bigdata',
-                            value: 'bigdata',
+                            model: undefined,
+                            selectData: this.startColumusName,
                         },
                     ],
-                },
-                endSurface: [
-                    {
-                        selectData: [
-                            {
-                                name: 'childbigdata1',
-                                value: 'childbigdata1',
-                            },
-                        ],
+                });
+            } else {
+                this.tableFieldEnd.push({
+                    startSurface: {
+                        model: undefined,
+                        selectData: this.endTableNmae,
                     },
-                ],
-            });
-            this.tableFieldEnd.push({
-                startSurface: {
-                    selectData: [
+                    endSurface: [
                         {
-                            name: 'bigdata',
-                            value: 'bigdata',
+                            model: undefined,
+                            selectData: this.endColumusName,
                         },
                     ],
-                },
-                endSurface: [
-                    {
-                        selectData: [
-                            {
-                                name: 'childbigdata1',
-                                value: 'childbigdata1',
-                            },
-                        ],
-                    },
-                ],
-            });
+                });
+            }
         },
         //添加来源表的字段
-        addendSelect(index) {
-            this.tableField[index].endSurface.push({
-                selectData: [
-                    {
-                        name: 'childbigdata2',
-                        value: 'childbigdata2',
-                    },
-                ],
-            });
-            this.tableFieldEnd[index].endSurface.push({
-                selectData: [
-                    {
-                        name: 'childbigdata2',
-                        value: 'childbigdata2',
-                    },
-                ],
-            });
-        },
-        //添加来源表
-        addEndbiaoSelect() {
-            this.tableFieldEnd.push({
-                startSurface: {
-                    selectData: [
-                        {
-                            name: 'bigdata',
-                            value: 'bigdata',
-                        },
-                    ],
-                },
-                endSurface: [
-                    {
-                        selectData: [
-                            {
-                                name: 'childbigdata1',
-                                value: 'childbigdata1',
-                            },
-                        ],
-                    },
-                ],
-            });
-        },
-        //添加目的表的字段
-        addendSelectB(index) {
-            this.tableFieldEnd[index].endSurface.push({
-                selectData: [
-                    {
-                        name: 'childbigdata2',
-                        value: 'childbigdata2',
-                    },
-                ],
-            });
+        addendSelect(index, type) {
+            if (type == 'start') {
+                this.tableField[index].endSurface.push({
+                    selectData: this.startColumusName,
+                });
+            } else {
+                this.tableFieldEnd[index].endSurface.push({
+                    selectData: this.endColumusName,
+                });
+            }
         },
     },
 };
@@ -618,7 +790,7 @@ export default {
         width: 45%;
     }
     .clickIcon {
-        margin: 0 10px;
+        margin: 0 4px;
         cursor: pointer;
     }
     .huiclickIcon {

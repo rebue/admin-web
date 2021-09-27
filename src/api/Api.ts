@@ -21,6 +21,8 @@ import RacUserApi from './rac/RacUserApi';
 import RacSignInUnlockApi from './rac/RacSignInUnlockApi';
 import OapAppApi from './oap/OapAppApi';
 import OapOidcApi from './oap/OapOidcApi';
+import EtlStrategyApi from './etl/EtlStrategyApi';
+import EtlConnApi from './etl/EtlConnApi';
 
 export const racRealmApi = new RacRealmApi();
 export const racAppApi = new RacAppApi();
@@ -45,3 +47,5 @@ export const racUserApi = new RacUserApi();
 export const racSignInUnlockApi = new RacSignInUnlockApi();
 export const oapAppApi = new OapAppApi();
 export const oapOidcApi = new OapOidcApi();
+export const etlStrategyApi = new EtlStrategyApi();
+export const etlConnApi = new EtlConnApi();
