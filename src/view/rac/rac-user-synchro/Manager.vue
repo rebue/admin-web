@@ -9,7 +9,6 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
                 >
                 </crud-table>
             </template>
@@ -23,7 +22,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
+import { etlStrategyApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -33,7 +32,7 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        this.api = etlStrategyApi;
         const columns = [
             // {
             //     dataIndex: 'no',
@@ -49,12 +48,12 @@ export default {
                 fixed: 'left',
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'srcName',
                 title: '来源',
                 width: 140,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'dstName',
                 title: '目的',
                 ellipsis: true,
             },
