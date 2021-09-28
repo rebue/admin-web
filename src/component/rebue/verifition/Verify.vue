@@ -102,8 +102,6 @@ export default {
       verifyType: undefined,
       // 所用组件类型
       componentType: undefined,
-      // 默认图片
-      defaultImg: require('./image/default.jpg')
     }
   },
   computed: {
