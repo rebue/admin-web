@@ -1,6 +1,9 @@
 import { observable } from 'mobx';
 
 export default class AccountStore {
+    /** 领域ID */
+    @observable
+    realmId = '';
     /** 账户ID */
     @observable
     accountId = '';

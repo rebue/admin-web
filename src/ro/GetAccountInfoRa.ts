@@ -1,4 +1,6 @@
 export interface GetAccountInfoRa {
+    /** 领域ID */
+    realmId: string;
     /** 账户ID */
     id: string;
     /** 账户编码 */
