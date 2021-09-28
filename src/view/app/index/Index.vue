@@ -170,6 +170,8 @@ export default {
     }
     .content {
         min-height: 100px;
+        display: flex;
+        flex-flow: wrap;
     }
 }
 </style>
