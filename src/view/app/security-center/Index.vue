@@ -104,7 +104,6 @@
 </template>
 
 <script>
-import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
@@ -264,6 +263,7 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
+                            accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
@@ -287,6 +287,7 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
+                            accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {

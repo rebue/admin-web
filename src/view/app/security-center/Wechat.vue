@@ -22,7 +22,6 @@
 <script>
 import WxLoginCode from '@/component/app/WXLoginCode.vue';
 import request from '@/util/request';
-// import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 const getQueryVariable = function(url, variable) {
     const query = url.split('?')[1];

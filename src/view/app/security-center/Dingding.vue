@@ -21,10 +21,8 @@
     </div>
 </template>
 <script>
-import { accountStore } from '@/store/Store';
 import DdLoginCode from '@/component/app/DDLoginCode.vue';
 import request from '@/util/request';
-import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 export default observer({
     name: 'app-security-center-dingding',
@@ -33,7 +31,6 @@ export default observer({
     },
     data() {
         return {
-            accountStore,
             goto: '',
             loginTmpCodeUrl: '',
             loading: false,
@@ -52,14 +49,9 @@ export default observer({
         },
     },
     mounted() {
-        when(
-            () => this.accountStore && this.accountStore.accountId,
-            () => {
-                console.log('----this.accountStore.accountId', this.accountStore.accountId);
-                this.getQrcode();
-            }
-        );
-
+        this.$nextTick(() => {
+            this.getQrcode();
+        });
         if (typeof window.addEventListener != 'undefined') {
             window.addEventListener('message', this.handleMessage, false);
         } else if (typeof window.attachEvent != 'undefined') {
@@ -101,7 +93,7 @@ export default observer({
         getQrcode() {
             this.loading = true;
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountStore.accountId}?callbackUrl=${callbackUrl}`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
