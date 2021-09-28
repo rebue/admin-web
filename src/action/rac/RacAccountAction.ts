@@ -25,6 +25,7 @@ export class RacAccountAction {
         console.log('getCurAccountInfoSuccess', ro);
 
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
+        accountStore.realmId = ra.realmId;
         accountStore.accountId = ra.id;
         accountStore.code = ra.code;
         accountStore.nickname = ra.nickname;
@@ -39,6 +40,10 @@ export class RacAccountAction {
         // 用户信息
         accountStore.user = { ...ra.user };
 
+        // 绑定的微信UnionId
+        accountStore.wxUnionId = ra.wxUnionId;
+        // 绑定的钉钉UnionId
+        accountStore.ddUnionId = ra.ddUnionId;
         // 设置菜单
         let menus = constantRouters.find(item => item.path === '/').children;
         menus = JSON.parse(JSON.stringify(menus));

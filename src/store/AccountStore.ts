@@ -40,4 +40,10 @@ export default class AccountStore {
     /** 用户信息 */
     @observable
     user = {};
+    /** 绑定的微信UnionId */
+    @observable
+    wxUnionId = '';
+    /** 绑定的钉钉UnionId */
+    @observable
+    ddUnionId = '';
 }
