@@ -8,10 +8,8 @@
                 :src="accountStore.avatar ? accountStore.avatar : undefined"
             />
             <span class="font-18 user-name">{{ accountStore.nickname }}</span>
-            <span class="font-14" style="margin-right:25px;" v-if="accountStore.orgFullName">{{
-                accountStore.orgFullName
-            }}</span>
-            <span class="font-14" v-if="accountStore.code">{{ accountStore.code }}</span>
+            <span class="font-14 org-name" v-if="accountStore.orgFullName">{{ accountStore.orgFullName }}</span>
+            <span class="font-14 code" v-if="accountStore.code">{{ accountStore.code }}</span>
         </div>
         <div class="time-wrap">
             <img :src="require('../assets/img/clock.png')" />
@@ -140,5 +138,8 @@ export default {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     box-shadow: 0px 8px 10px 0px #a3bce2;
+}
+.org-name + .code {
+    margin-left: 25px;
 }
 </style>
