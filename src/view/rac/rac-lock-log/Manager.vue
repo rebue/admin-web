@@ -64,8 +64,6 @@ export default {
                             <p>手机号：{record.signInMobile}</p>
                             <p>邮箱：{record.signInEmail}</p>
                             <p>账户昵称：{record.signInNickname}</p>
-                            <p>锁定原因：{record.lockReason}</p>
-                            <p>解锁原因：{record.unlockReason}</p>
                         </template>
                     </a-popover>
                 ),
@@ -77,6 +75,12 @@ export default {
                 width: 165,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
+            },
+            {
+                dataIndex: 'lockReason',
+                title: '锁定原因',
+                ellipsis: true,
+                width: 220,
             },
             {
                 dataIndex: 'unlocksignInName',
@@ -98,6 +102,12 @@ export default {
                         </template>
                     </a-popover>
                 ),
+            },
+            {
+                dataIndex: 'unlockReason',
+                title: '解锁原因',
+                ellipsis: true,
+                width: 220,
             },
             {
                 dataIndex: 'unlockAgentSignInName',

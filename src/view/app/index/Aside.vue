@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="day-wrap">
-            <span class="month">{{ daysInMonth }} April</span>
+            <span class="month">{{ daysInMonth }} {{ dayEngelish }}</span>
             <span class="font-12 day" v-text="day">tuesday </span>
         </div>
         <div class="calendar-wrap">
@@ -50,6 +50,7 @@ export default {
             date: '',
             day: '',
             daysInMonth: '',
+            dayEngelish: '',
             interval: null,
         };
     },
@@ -60,6 +61,7 @@ export default {
                 this.date = val.format('l');
                 this.day = val.format('dddd');
                 this.daysInMonth = val.daysInMonth();
+                this.dayEngelish = val._d.toDateString().split(' ')[1];
             },
             immediate: true,
         },

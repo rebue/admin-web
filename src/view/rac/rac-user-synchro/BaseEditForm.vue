@@ -149,9 +149,9 @@
                                 <span class="clickIcon" @click="addendSelect(index, 'start')"
                                     ><a-icon type="plus-circle"
                                 /></span>
-                                <!-- <span class="clickIconminus" @click="minusendSelect(index)"
+                                <span class="clickIconminus" @click="minusendSelect(index, 'start')"
                                     ><a-icon type="minus-circle"
-                                /></span> -->
+                                /></span>
                             </div>
                             <span
                                 class="clickStart"
@@ -200,6 +200,9 @@
                                 <span class="clickIcon" @click="addendSelect(index, 'end')"
                                     ><a-icon type="plus-circle"
                                 /></span>
+                                <span class="clickIconminus" @click="minusendSelect(index, 'end')"
+                                    ><a-icon type="minus-circle"
+                                /></span>
                             </div>
                             <span
                                 class="clickStart"
@@ -213,7 +216,7 @@
             </slot>
         </a-form-model>
         <a-modal
-            title="添加数据库"
+            :title="dataBaseTitle + '数据库'"
             :visible="databaseVisible"
             :confirm-loading="confirmLoading"
             @ok="datahandleOk"
@@ -227,7 +230,22 @@
                         :label="formItem.title"
                         :prop="formItem.dataIndex"
                     >
+                        <a-select
+                            v-if="formItem.type == 'select'"
+                            placeholder="请选择关联表字段"
+                            v-model="dataModel[formItem.dataIndex]"
+                        >
+                            <a-select-option
+                                :value="childTtem.value"
+                                v-for="(childTtem, childIndex) in formItem.selectData"
+                                :key="childIndex"
+                                style="width:80px"
+                            >
+                                {{ childTtem.name }}
+                            </a-select-option>
+                        </a-select>
                         <a-input
+                            v-else
                             v-model.trim="dataModel[formItem.dataIndex]"
                             :placeholder="'请输入' + formItem.title"
                             :type="formItem.type"
@@ -243,7 +261,6 @@
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { etlConnApi, etlStrategyApi } from '@/api/Api';
-import router from '@/router/router';
 export default {
     components: {
         BaseModal,
@@ -294,35 +311,9 @@ export default {
             confirmLoading: false,
             linksurface1: '',
             linksurface2: '',
+            dataBaseTitle: '添加',
             model: {
                 isEnabled: false,
-            },
-            rules: {
-                name: [
-                    { required: true, message: '请输入策略名称', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                srcConnId: [
-                    {
-                        required: true,
-                        message: '请输入来源的连接器ID',
-                        trigger: 'blur',
-                        transform: val => val && val.trim(),
-                    },
-                ],
-                srcName: [
-                    { required: true, message: '请输入来源名称', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                dstConnId: [
-                    {
-                        required: true,
-                        message: '请输入目的的连接器ID',
-                        trigger: 'blur',
-                        transform: val => val && val.trim(),
-                    },
-                ],
-                dstName: [
-                    { required: true, message: '请输入目的名称', trigger: 'blur', transform: val => val && val.trim() },
-                ],
             },
             dataModel: {},
             formDatabase: [
@@ -333,6 +324,17 @@ export default {
                 {
                     dataIndex: 'dbType',
                     title: '数据库类型',
+                    type: 'select',
+                    selectData: [
+                        {
+                            name: 'mysql',
+                            value: 0,
+                        },
+                        {
+                            name: 'oracle',
+                            value: 1,
+                        },
+                    ],
                 },
                 {
                     dataIndex: 'dbName',
@@ -380,8 +382,7 @@ export default {
                     {
                         required: true,
                         message: '请输入数据库类型',
-                        trigger: 'blur',
-                        transform: val => val && val.trim(),
+                        trigger: ['change', 'blur'],
                     },
                 ],
                 host: [
@@ -397,7 +398,6 @@ export default {
                         required: true,
                         message: '请输入端口号',
                         trigger: 'blur',
-                        transform: val => val && val.trim(),
                     },
                 ],
                 userName: [
@@ -448,9 +448,111 @@ export default {
             return this.$refs.dataform;
         },
     },
-    watch: {
-        visible(newval) {
-            if (newval) {
+    methods: {
+        switchClick() {
+            if (this.model.isEnabled == true) {
+                this.model.isEnabled = false;
+            } else {
+                this.model.isEnabled = true;
+            }
+        },
+        addUserClick() {
+            this.dataBaseTitle = '添加';
+            this.dataModel = {};
+            this.databaseVisible = true;
+        },
+        minusUserClick(id) {
+            etlConnApi.getdeleteConn(id).then(() => {
+                this.getSeePageFun();
+                if (this.sourceSelectVlaue == id) {
+                    this.sourceSelectVlaue = undefined;
+                }
+                if (this.sourceSelectEndVlaue == id) {
+                    this.sourceSelectEndVlaue = undefined;
+                }
+            });
+        },
+        sourceSelectstart(e) {
+            this.startBtnDisabled = false;
+            this.sourceSelectVlaue = e;
+            this.model.srcConnId = e;
+        },
+        sourceSelectEnd(e) {
+            this.endBtnDisabled = false;
+            this.sourceSelectEndVlaue = e;
+            this.model.dstConnId = e;
+        },
+        editUserClick(editState) {
+            if (editState == undefined) {
+                return;
+            }
+            this.dataBaseTitle = '编辑';
+            this.sourceSelect.map(item => {
+                if (item.id == editState) {
+                    this.dataModel = item;
+                }
+            });
+            this.databaseVisible = true;
+        },
+        handleCancel() {
+            this.databaseVisible = false;
+        },
+        show(editFormType, model) {
+            console.log(editFormType, model);
+            this.$emit('update:editFormType', editFormType);
+            // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
+            if (editFormType === EditFormTypeDic.Add) {
+                this.model = {
+                    isEnabled: false,
+                };
+                this.tableField = [
+                    {
+                        startSurface: {
+                            selectData: [
+                                {
+                                    name: '',
+                                    value: '',
+                                },
+                            ],
+                        },
+                        endSurface: [
+                            {
+                                selectData: [
+                                    {
+                                        name: '',
+                                        value: '',
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ];
+                this.tableFieldEnd = [
+                    {
+                        startSurface: {
+                            selectData: [
+                                {
+                                    name: '',
+                                    value: '',
+                                },
+                            ],
+                        },
+                        endSurface: [
+                            {
+                                selectData: [
+                                    {
+                                        name: '',
+                                        value: '',
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ];
+            } else {
+                this.model = model;
+                this.sourceSelectVlaue = this.model.srcConnId;
+                this.sourceSelectEndVlaue = this.model.dstConnId;
                 this.tableField = [
                     {
                         startSurface: {
@@ -496,62 +598,6 @@ export default {
                     },
                 ];
             }
-        },
-    },
-    methods: {
-        switchClick() {
-            if (this.model.isEnabled == true) {
-                this.model.isEnabled = false;
-            } else {
-                this.model.isEnabled = true;
-            }
-        },
-        addUserClick() {
-            this.dataModel = {};
-            this.databaseVisible = true;
-        },
-        minusUserClick(id) {
-            etlConnApi.getdeleteConn(id).then(() => {
-                this.getSeePageFun();
-                if (this.sourceSelectVlaue == id) {
-                    this.sourceSelectVlaue = undefined;
-                }
-                if (this.sourceSelectEndVlaue == id) {
-                    this.sourceSelectEndVlaue = undefined;
-                }
-            });
-        },
-        sourceSelectstart(e) {
-            this.startBtnDisabled = false;
-            this.sourceSelectVlaue = e;
-            this.model.srcConnId = e;
-        },
-        sourceSelectEnd(e) {
-            this.endBtnDisabled = false;
-            this.sourceSelectEndVlaue = e;
-            this.model.dstConnId = e;
-        },
-        editUserClick(editState) {
-            if (editState == undefined) {
-                return;
-            }
-            // etlConnApi.modify
-            this.dataModel = this.model;
-            this.dataModel.connectorName = `${editState}`;
-            this.databaseVisible = true;
-        },
-        handleCancel(e) {
-            this.databaseVisible = false;
-        },
-        show(editFormType, model) {
-            this.$emit('update:editFormType', editFormType);
-            // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
-            if (editFormType === EditFormTypeDic.Add) {
-                for (const formItem of this.formItems) {
-                    if (!(formItem.dataIndex in model)) model[formItem.dataIndex] = undefined;
-                }
-            }
-            this.$emit('update:model', model);
             this.visible = true;
         },
         handleShow() {
@@ -587,37 +633,55 @@ export default {
         },
         handleOk() {
             this.loading = true;
-            this.$refs.form.validate(valid => {
-                if (valid) {
-                    if (this.editFormType === EditFormTypeDic.Add) {
-                        etlStrategyApi
-                            .add(this.model)
-                            .then(() => (this.visible = false))
-                            .finally(() => (this.loading = false));
-                    } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        etlStrategyApi
-                            .modify(this.model)
-                            .then(() => (this.visible = false))
-                            .finally(() => (this.loading = false));
-                    }
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
-                }
+            this.model.srcTableNames = {};
+            this.model.dstTableNames = {};
+            this.tableField.map(item => {
+                this.model.srcTableNames[item.startSurface.model] = [];
+                item.endSurface.map(childItem => {
+                    this.model.srcTableNames[item.startSurface.model].push(childItem.model);
+                });
             });
+            this.tableFieldEnd.map(item => {
+                this.model.dstTableNames[item.startSurface.model] = [];
+                item.endSurface.map(childItem => {
+                    this.model.dstTableNames[item.startSurface.model].push(childItem.model);
+                });
+            });
+            if (this.editFormType === EditFormTypeDic.Add) {
+                this.model.srcTableNames = JSON.stringify(this.model.srcTableNames);
+                this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
+                console.log(this.model);
+                etlStrategyApi
+                    .add(this.model)
+                    .then(() => (this.visible = false))
+                    .finally(() => (this.loading = false));
+            } else if (this.editFormType === EditFormTypeDic.Modify) {
+                etlStrategyApi
+                    .modify(this.model)
+                    .then(() => (this.visible = false))
+                    .finally(() => (this.loading = false));
+            }
         },
         datahandleOk(e) {
             this.$refs.dataform.validate(valid => {
                 if (valid) {
-                    etlConnApi
-                        .getAddConn(this.dataModel)
-                        .then(() => {
-                            this.getSeePageFun();
-                            this.databaseVisible = false;
-                        })
-                        .finally(() => (this.loading = false));
+                    if (this.dataBaseTitle == '添加') {
+                        etlConnApi
+                            .getAddConn(this.dataModel)
+                            .then(() => {
+                                this.getSeePageFun();
+                                this.databaseVisible = false;
+                            })
+                            .finally(() => (this.loading = false));
+                    } else {
+                        etlConnApi
+                            .modify(this.dataModel)
+                            .then(() => {
+                                this.getSeePageFun();
+                                this.databaseVisible = false;
+                            })
+                            .finally(() => (this.loading = false));
+                    }
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框
@@ -630,14 +694,10 @@ export default {
         getSeePageFun() {
             etlConnApi.list().then(ro => {
                 const pageData = ro.extra.list;
-                const newArray = [];
                 pageData.map(item => {
-                    newArray.push({
-                        name: item.dbName,
-                        value: item.id,
-                    });
+                    (item.name = item.dbName), (item.value = item.id);
                 });
-                this.sourceSelect = newArray;
+                this.sourceSelect = pageData;
             });
         },
         linkTextClick(id, type) {
@@ -675,6 +735,7 @@ export default {
                                 },
                             ];
                             this.startDisabled = false;
+                            this.$message.success('链接成功');
                         } else if (type == 'end') {
                             this.endTableNmae = newData;
                             this.tableFieldEnd = [
@@ -697,6 +758,7 @@ export default {
                                 },
                             ];
                             this.endDisabled = false;
+                            this.$message.success('链接成功');
                         }
                     });
                 }
@@ -780,6 +842,10 @@ export default {
                 });
             }
         },
+        //删除字段
+        minusendSelect(index, type) {
+            console.log(index, type);
+        },
     },
 };
 </script>
@@ -808,12 +874,13 @@ export default {
     position: relative;
     .clickIcon {
         position: absolute;
-        right: -20%;
+        right: 45%;
+        bottom: -30px;
         cursor: pointer;
     }
     .clickIconminus {
         position: absolute;
-        right: -40%;
+        right: -20%;
         cursor: pointer;
     }
 }
