@@ -1,3 +1,9 @@
+/*
+ * @Date: 2021-09-27 10:56:59
+ * @LastEditors: likelin
+ * @LastEditTime: 2021-09-28 18:44:33
+ * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
+ */
 /**
  * 同步策略相关请求
  */
@@ -7,4 +13,79 @@ import { Ro } from '@/ro/Ro';
 export default class EtlStrategyApi extends BaseCrudApi {
     /** 请求的基础链接 */
     baseUrn = '/etl-svr/etl/sync-strategy';
+    /**
+     * 根据id获取信息
+     */
+    getById(id: string): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-by-id?id=' + id }).then(ro => {
+            const data = ro.extra.one;
+            let tableName = [],
+                tableEndName = [];
+            data.strategyDetailList.map(item => {
+                tableName.push(item.srcTableName);
+                tableEndName.push(item.dstTableName);
+            });
+            tableName = Array.from(new Set(tableName));
+            tableEndName = Array.from(new Set(tableEndName));
+            const tableArray = [],
+                tableEndArray = [];
+            tableName.map((item, index) => {
+                tableArray.push({
+                    startSurface: {
+                        model: item,
+                    },
+                    endSurface: [],
+                });
+                data.strategyDetailList.map(childItem => {
+                    if (item == childItem.srcTableName) {
+                        tableArray[index].endSurface.push({
+                            model: childItem.srcFieldName,
+                        });
+                    }
+                });
+            });
+            tableEndName.map((item, index) => {
+                tableEndArray.push({
+                    startSurface: {
+                        model: item,
+                    },
+                    endSurface: [],
+                });
+                data.strategyDetailList.map(childItem => {
+                    if (item == childItem.srcTableName) {
+                        tableEndArray[index].endSurface.push({
+                            model: childItem.srcFieldName,
+                        });
+                    }
+                });
+            });
+            // 删除转换前的属性
+            delete data.strategyDetailList;
+            data.srcTableArray = tableArray;
+            data.dstTableArray = tableEndArray;
+            return ro;
+        });
+    }
 }
+// this.tableField = [
+//     {
+//         startSurface: {
+//             selectData: [
+//                 {
+//                     name: '',
+//                     value: '',
+//                 },
+//             ],
+//         },
+//         endSurface: [
+//             {
+//                 selectData: [
+//                     {
+//                         name: '',
+//                         value: '',
+//                     },
+//                 ],
+//             },
+//         ],
+//     },
+// ];

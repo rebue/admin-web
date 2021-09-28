@@ -154,6 +154,14 @@ export default {
                 this.curRecord.isEnabled = !record.isEnabled;
                 this.enabledFormVisible = true;
             }
+            const data = {
+                id: record.id,
+                isEnabled: record.isEnabled,
+            };
+            etlStrategyApi
+                .modify(data)
+                .then(() => console.log(1))
+                .finally(() => (this.loading = false));
         },
     },
 };
