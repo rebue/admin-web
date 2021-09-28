@@ -205,15 +205,15 @@ export default {
     background-color: #fdfdfd;
 }
 .choose-type {
-    padding: 100px 50px;
+    padding: 50px 50px;
 }
 .bind-user .form {
-    margin: 100px 50px;
+    margin: 50px 50px;
 }
 .add-account .form {
-    margin: 100px 0;
+    margin: 50px 0;
 }
 .finish-wrap .result {
-    margin: 100px 10px;
+    margin: 50px 10px;
 }
 </style>
