@@ -15,6 +15,7 @@ module.exports = {
         '/orp-svr/(.*)': target,
         '/cap-svr/(.*)': target,
         '/oss-svr/(.*)': target,
+        '/etl-svr/(.*)': target,
     },
     pathRewrite: {
         '^/(\\w*)/': '/', // 请求独立的微服务地址将路径中第一节去掉
