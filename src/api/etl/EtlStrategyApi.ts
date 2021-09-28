@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-28 18:44:33
+ * @LastEditTime: 2021-09-28 19:12:39
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -33,6 +33,7 @@ export default class EtlStrategyApi extends BaseCrudApi {
                 tableArray.push({
                     startSurface: {
                         model: item,
+                        selectData: [],
                     },
                     endSurface: [],
                 });
@@ -40,6 +41,7 @@ export default class EtlStrategyApi extends BaseCrudApi {
                     if (item == childItem.srcTableName) {
                         tableArray[index].endSurface.push({
                             model: childItem.srcFieldName,
+                            selectData: [],
                         });
                     }
                 });
@@ -48,6 +50,7 @@ export default class EtlStrategyApi extends BaseCrudApi {
                 tableEndArray.push({
                     startSurface: {
                         model: item,
+                        selectData: [],
                     },
                     endSurface: [],
                 });
@@ -55,6 +58,7 @@ export default class EtlStrategyApi extends BaseCrudApi {
                     if (item == childItem.srcTableName) {
                         tableEndArray[index].endSurface.push({
                             model: childItem.srcFieldName,
+                            selectData: [],
                         });
                     }
                 });

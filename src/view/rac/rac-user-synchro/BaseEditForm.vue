@@ -585,8 +585,9 @@ export default {
                             this.endDisabled = false;
                             this.startBtnDisabled = false;
                             this.endBtnDisabled = false;
-                            this.getSrcTableName(ro.extra.one.srcConnId);
-                            this.getSrcTableName(ro.extra.one.dstConnId);
+                            this.getSrcTableName(ro.extra.one.srcConnId, 'start');
+                            this.getSrcTableName(ro.extra.one.dstConnId, 'end');
+                            this.getColumuscName(ro.extra.one.srcConnId);
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
@@ -598,18 +599,32 @@ export default {
             });
         },
         //回显获取表下拉框数据接口
-        getSrcTableName(id) {
+        getSrcTableName(id, type) {
             etlConnApi.getTableNameById(id).then(ro => {
-                console.log(ro);
-                const newArrayName = this.tableField;
-                newArrayName.map((item, index) => {
-                    // item.startSurface.selectData: [
-                    //                 {
-                    //                     name: '',
-                    //                     value: '',
-                    //                 },
-                    //             ],
-                    console.log(item);
+                const selectDatas = [];
+                ro.extra.list.map(item => {
+                    selectDatas.push({
+                        name: item,
+                        value: item,
+                    });
+                });
+                const newArrayName = type == 'start' ? this.tableField : this.tableFieldEnd;
+                newArrayName.map(item => {
+                    item.startSurface.selectData = selectDatas;
+                });
+            });
+        },
+        //回显获取表的字段下拉框数据接口
+        getColumuscName(id) {
+            this.tableField.map((item, index) => {
+                etlConnApi.getColumusNameById(id, item.startSurface.model).then(ro => {
+                    const selectDatas = [];
+                    ro.extra.list.map(item => {
+                        selectDatas.push({
+                            name: item,
+                            value: item,
+                        });
+                    });
                 });
             });
         },
@@ -618,14 +633,17 @@ export default {
             this.loading = true;
             this.model.srcTableNames = {};
             this.model.dstTableNames = {};
+            this.model.srcDstMap = {};
             this.tableField.map(item => {
                 this.model.srcTableNames[item.startSurface.model] = [];
+                this.model.srcDstMap[item.startSurface.model] = '';
                 item.endSurface.map(childItem => {
                     this.model.srcTableNames[item.startSurface.model].push(childItem.model);
                 });
             });
-            this.tableFieldEnd.map(item => {
+            this.tableFieldEnd.map((item, index) => {
                 this.model.dstTableNames[item.startSurface.model] = [];
+                this.model.srcDstMap[this.tableField[index].startSurface.model] = item.startSurface.model;
                 item.endSurface.map(childItem => {
                     this.model.dstTableNames[item.startSurface.model].push(childItem.model);
                 });
@@ -633,6 +651,7 @@ export default {
             if (this.editFormType === EditFormTypeDic.Add) {
                 this.model.srcTableNames = JSON.stringify(this.model.srcTableNames);
                 this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
+                this.model.srcDstMap = JSON.stringify(this.model.srcDstMap);
                 etlStrategyApi
                     .add(this.model)
                     .then(() => (this.visible = false))
