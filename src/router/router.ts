@@ -59,14 +59,8 @@ router.beforeEach(async (to, from, next) => {
             //------start
             //走认证
             //第一步 获取认证
-            //前端路由页面
-            const callbackUri = encodeURIComponent(location.href);
-            //后端接口
-            const redirect_uri = encodeURIComponent(
-                `${location.origin}/orp-svr/oidc/callback?callbackUri=${callbackUri}`
-            );
             const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                redirect_uri: redirect_uri,
+                redirect_uri: '本应用不用加 测试',
             });
             if (result > 0) {
                 //第二步 请求认证
