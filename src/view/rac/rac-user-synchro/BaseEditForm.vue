@@ -123,7 +123,7 @@
                                         :value="childItem.value"
                                         v-for="(childItem, childIndex) in item.startSurface.selectData"
                                         :key="childIndex"
-                                        style="width:80px"
+                                        style="width:100px"
                                     >
                                         {{ childItem.name }}
                                     </a-select-option>
@@ -141,7 +141,7 @@
                                         :value="childTtem.value"
                                         v-for="(childTtem, childIndex) in childEndItem.selectData"
                                         :key="childIndex"
-                                        style="width:80px"
+                                        style="width:100px"
                                     >
                                         {{ childTtem.name }}
                                     </a-select-option>
@@ -222,7 +222,7 @@
             @ok="datahandleOk"
             @cancel="handleCancel"
         >
-            <a-form-model ref="dataform" :model="dataModel" :rules="databaseRules" v-bind="formLayout">
+            <a-form-model ref="dataform" :model="dataModel" :rules="databaseRules" v-bind="dataFormLayout">
                 <slot name="formItems">
                     <a-form-model-item
                         v-for="formItem in formDatabase"
@@ -278,10 +278,6 @@ export default {
             type: Array,
             default: () => [],
         },
-        api: {
-            type: Object,
-            required: true,
-        },
         defaultPagination: {
             type: [Boolean, Object],
             default: function() {
@@ -295,6 +291,16 @@ export default {
     },
     data() {
         this.formLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 5 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 17 },
+            },
+        };
+        this.dataFormLayout = {
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 7 },
@@ -449,6 +455,7 @@ export default {
         },
     },
     methods: {
+        //是否启用
         switchClick() {
             if (this.model.isEnabled == true) {
                 this.model.isEnabled = false;
@@ -456,11 +463,13 @@ export default {
                 this.model.isEnabled = true;
             }
         },
+        //点击添加数据库弹窗
         addUserClick() {
             this.dataBaseTitle = '添加';
             this.dataModel = {};
             this.databaseVisible = true;
         },
+        //删除指定数据库
         minusUserClick(id) {
             etlConnApi.getdeleteConn(id).then(() => {
                 this.getSeePageFun();
@@ -472,16 +481,19 @@ export default {
                 }
             });
         },
+        //来源表数据下拉框
         sourceSelectstart(e) {
             this.startBtnDisabled = false;
             this.sourceSelectVlaue = e;
             this.model.srcConnId = e;
         },
+        //目的表数据下拉框
         sourceSelectEnd(e) {
             this.endBtnDisabled = false;
             this.sourceSelectEndVlaue = e;
             this.model.dstConnId = e;
         },
+        //编辑数据库信息
         editUserClick(editState) {
             if (editState == undefined) {
                 return;
@@ -494,65 +506,20 @@ export default {
             });
             this.databaseVisible = true;
         },
+        //关闭数据库弹窗
         handleCancel() {
             this.databaseVisible = false;
         },
         show(editFormType, model) {
-            console.log(editFormType, model);
             this.$emit('update:editFormType', editFormType);
+            this.model.id = model.id;
             // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
             if (editFormType === EditFormTypeDic.Add) {
                 this.model = {
                     isEnabled: false,
                 };
-                this.tableField = [
-                    {
-                        startSurface: {
-                            selectData: [
-                                {
-                                    name: '',
-                                    value: '',
-                                },
-                            ],
-                        },
-                        endSurface: [
-                            {
-                                selectData: [
-                                    {
-                                        name: '',
-                                        value: '',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ];
-                this.tableFieldEnd = [
-                    {
-                        startSurface: {
-                            selectData: [
-                                {
-                                    name: '',
-                                    value: '',
-                                },
-                            ],
-                        },
-                        endSurface: [
-                            {
-                                selectData: [
-                                    {
-                                        name: '',
-                                        value: '',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ];
-            } else {
-                this.model = model;
-                this.sourceSelectVlaue = this.model.srcConnId;
-                this.sourceSelectEndVlaue = this.model.dstConnId;
+                this.sourceSelectVlaue = undefined;
+                this.sourceSelectEndVlaue = undefined;
                 this.tableField = [
                     {
                         startSurface: {
@@ -605,12 +572,22 @@ export default {
                 this.loading = true;
                 this.$refs.form.resetFields();
                 this.getSeePageFun();
-                console.log(this.editFormType === EditFormTypeDic.Modify);
                 if (this.editFormType === EditFormTypeDic.Modify) {
-                    this.api
+                    etlStrategyApi
                         .getById(this.model.id)
                         .then(ro => {
-                            this.$emit('update:model', ro.extra.one);
+                            this.model = ro.extra.one;
+                            this.sourceSelectVlaue = ro.extra.one.srcConnId;
+                            this.sourceSelectEndVlaue = ro.extra.one.dstConnId;
+                            this.tableField = ro.extra.one.srcTableArray;
+                            this.tableFieldEnd = ro.extra.one.dstTableArray;
+                            this.startDisabled = false;
+                            this.endDisabled = false;
+                            this.startBtnDisabled = false;
+                            this.endBtnDisabled = false;
+                            this.getSrcTableName(ro.extra.one.srcConnId, 'start');
+                            this.getSrcTableName(ro.extra.one.dstConnId, 'end');
+                            this.getColumuscName(ro.extra.one.srcConnId);
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
@@ -621,28 +598,52 @@ export default {
                 }
             });
         },
-        handleClickRadio(newValue, formItem) {
-            if (this.oldValue === newValue) {
-                this.$emit('update:model', { ...this.model, [formItem.dataIndex]: '' });
-            }
-            this.oldValue = newValue;
+        //回显获取表下拉框数据接口
+        getSrcTableName(id, type) {
+            etlConnApi.getTableNameById(id).then(ro => {
+                const selectDatas = [];
+                ro.extra.list.map(item => {
+                    selectDatas.push({
+                        name: item,
+                        value: item,
+                    });
+                });
+                const newArrayName = type == 'start' ? this.tableField : this.tableFieldEnd;
+                newArrayName.map(item => {
+                    item.startSurface.selectData = selectDatas;
+                });
+            });
         },
-        handleRadioGroupChanged(e, formItem) {
-            this.$emit('update:model', { ...this.model, [formItem.dataIndex]: e.target.value });
-            this.oldValue = e.target.value;
+        //回显获取表的字段下拉框数据接口
+        getColumuscName(id) {
+            this.tableField.map((item, index) => {
+                etlConnApi.getColumusNameById(id, item.startSurface.model).then(ro => {
+                    const selectDatas = [];
+                    ro.extra.list.map(item => {
+                        selectDatas.push({
+                            name: item,
+                            value: item,
+                        });
+                    });
+                });
+            });
         },
+        //点击提交
         handleOk() {
             this.loading = true;
             this.model.srcTableNames = {};
             this.model.dstTableNames = {};
+            this.model.srcDstMap = {};
             this.tableField.map(item => {
                 this.model.srcTableNames[item.startSurface.model] = [];
+                this.model.srcDstMap[item.startSurface.model] = '';
                 item.endSurface.map(childItem => {
                     this.model.srcTableNames[item.startSurface.model].push(childItem.model);
                 });
             });
-            this.tableFieldEnd.map(item => {
+            this.tableFieldEnd.map((item, index) => {
                 this.model.dstTableNames[item.startSurface.model] = [];
+                this.model.srcDstMap[this.tableField[index].startSurface.model] = item.startSurface.model;
                 item.endSurface.map(childItem => {
                     this.model.dstTableNames[item.startSurface.model].push(childItem.model);
                 });
@@ -650,7 +651,7 @@ export default {
             if (this.editFormType === EditFormTypeDic.Add) {
                 this.model.srcTableNames = JSON.stringify(this.model.srcTableNames);
                 this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
-                console.log(this.model);
+                this.model.srcDstMap = JSON.stringify(this.model.srcDstMap);
                 etlStrategyApi
                     .add(this.model)
                     .then(() => (this.visible = false))
@@ -662,6 +663,7 @@ export default {
                     .finally(() => (this.loading = false));
             }
         },
+        //点击添加数据库
         datahandleOk(e) {
             this.$refs.dataform.validate(valid => {
                 if (valid) {
@@ -700,6 +702,7 @@ export default {
                 this.sourceSelect = pageData;
             });
         },
+        //点击链接测试按钮
         linkTextClick(id, type) {
             etlConnApi.getTestConnectionById(id).then(ro => {
                 if (ro.extra.value) {
@@ -844,7 +847,19 @@ export default {
         },
         //删除字段
         minusendSelect(index, type) {
-            console.log(index, type);
+            if (type == 'start') {
+                if (index != 0 && this.tableField[index].endSurface.length == 1) {
+                    this.tableField.splice(index, 1);
+                    return;
+                }
+                this.tableField[index].endSurface.pop();
+            } else {
+                if (index != 0 && this.tableFieldEnd[index].endSurface.length == 1) {
+                    this.tableFieldEnd.splice(index, 1);
+                    return;
+                }
+                this.tableFieldEnd[index].endSurface.pop();
+            }
         },
     },
 };
@@ -886,7 +901,7 @@ export default {
 }
 .clickStart {
     position: relative;
-    bottom: 0;
+    bottom: 9px;
     left: 17%;
 }
 </style>
