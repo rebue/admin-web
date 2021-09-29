@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-29 10:57:35
+ * @LastEditTime: 2021-09-29 11:23:07
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -101,5 +101,17 @@ export default class EtlStrategyApi extends BaseCrudApi {
             clidData.dstTableArray = tableEndArray;
             return ro;
         });
+    }
+    /**
+     * 修改
+     */
+    modify(mo): Promise<Ro> {
+        delete mo.srcTableArray;
+        delete mo.dstTableArray;
+        delete mo.dstTableName;
+        delete mo.srcTableName;
+        delete mo.srcFieldsMap;
+        delete mo.dstFieldsMap;
+        return request.put({ url: this.baseUrn, data: mo });
     }
 }

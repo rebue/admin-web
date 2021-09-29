@@ -643,8 +643,6 @@ export default {
                     .then(() => (this.visible = false))
                     .finally(() => (this.loading = false));
             } else if (this.editFormType === EditFormTypeDic.Modify) {
-                delete this.model.srcTableArray;
-                delete this.model.dstTableArray;
                 etlStrategyApi
                     .modify(this.model)
                     .then(() => (this.visible = false))
