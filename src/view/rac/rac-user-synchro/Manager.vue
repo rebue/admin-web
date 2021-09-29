@@ -159,7 +159,7 @@ export default {
                 isEnabled: record.isEnabled,
             };
             etlStrategyApi
-                .modify(data)
+                .enable(data)
                 .then(() => console.log(1))
                 .finally(() => (this.loading = false));
         },

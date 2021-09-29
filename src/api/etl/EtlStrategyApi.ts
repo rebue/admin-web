@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-29 11:23:07
+ * @LastEditTime: 2021-09-29 12:23:51
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -86,15 +86,16 @@ export default class EtlStrategyApi extends BaseCrudApi {
                         value: fieldItem,
                     });
                 });
-                clidData.strategyDetailList.map((childItem: { dstTableName: any; srcFieldName: any }) => {
+                clidData.strategyDetailList.map((childItem: { dstTableName: any; dstFieldName: any }) => {
                     if (item == childItem.dstTableName) {
                         tableEndArray[index].endSurface.push({
-                            model: childItem.srcFieldName,
+                            model: childItem.dstFieldName,
                             selectData: fieldEndSelect[item],
                         });
                     }
                 });
             });
+            console.log(tableEndArray);
             // 删除转换前的属性
             delete clidData.strategyDetailList;
             clidData.srcTableArray = tableArray;
@@ -113,5 +114,11 @@ export default class EtlStrategyApi extends BaseCrudApi {
         delete mo.srcFieldsMap;
         delete mo.dstFieldsMap;
         return request.put({ url: this.baseUrn, data: mo });
+    }
+    /**
+     * 启动
+     */
+    enable(mo): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/enable', data: mo });
     }
 }
