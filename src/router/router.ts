@@ -60,7 +60,7 @@ router.beforeEach(async (to, from, next) => {
             //走认证
             //第一步 获取认证
             const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                redirect_uri: '本应用不用加 测试',
+                redirectUri: '本应用不用加 测试',
             });
             if (result > 0) {
                 //第二步 请求认证
