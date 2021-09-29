@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-28 19:12:39
+ * @LastEditTime: 2021-09-29 08:41:15
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -18,17 +18,17 @@ export default class EtlStrategyApi extends BaseCrudApi {
      */
     getById(id: string): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/get-by-id?id=' + id }).then(ro => {
-            const data = ro.extra.one;
-            let tableName = [],
-                tableEndName = [];
-            data.strategyDetailList.map(item => {
+            const data: any = ro.extra;
+            let tableName: any = [],
+                tableEndName: any = [];
+            data.one.strategyDetailList.map(item => {
                 tableName.push(item.srcTableName);
                 tableEndName.push(item.dstTableName);
             });
             tableName = Array.from(new Set(tableName));
             tableEndName = Array.from(new Set(tableEndName));
-            const tableArray = [],
-                tableEndArray = [];
+            const tableArray: any = [],
+                tableEndArray: any = [];
             tableName.map((item, index) => {
                 tableArray.push({
                     startSurface: {
@@ -71,25 +71,3 @@ export default class EtlStrategyApi extends BaseCrudApi {
         });
     }
 }
-// this.tableField = [
-//     {
-//         startSurface: {
-//             selectData: [
-//                 {
-//                     name: '',
-//                     value: '',
-//                 },
-//             ],
-//         },
-//         endSurface: [
-//             {
-//                 selectData: [
-//                     {
-//                         name: '',
-//                         value: '',
-//                     },
-//                 ],
-//             },
-//         ],
-//     },
-// ];
