@@ -44,7 +44,6 @@ export default {
             signInPswdAgain: [
                 {
                     required: true,
-                    message: '请输入登录密码(再次确认)',
                     trigger: ['change', 'blur'],
                     validator: (rule, value, callback) => {
                         if (this.editFormType === 'modify') {
