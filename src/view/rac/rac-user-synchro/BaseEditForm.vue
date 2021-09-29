@@ -634,10 +634,10 @@ export default {
                     this.model.dstTableNames[item.startSurface.model].push(childItem.model);
                 });
             });
+            this.model.srcTableNames = JSON.stringify(this.model.srcTableNames);
+            this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
+            this.model.srcDstMap = JSON.stringify(this.model.srcDstMap);
             if (this.editFormType === EditFormTypeDic.Add) {
-                this.model.srcTableNames = JSON.stringify(this.model.srcTableNames);
-                this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
-                this.model.srcDstMap = JSON.stringify(this.model.srcDstMap);
                 etlStrategyApi
                     .add(this.model)
                     .then(() => (this.visible = false))
