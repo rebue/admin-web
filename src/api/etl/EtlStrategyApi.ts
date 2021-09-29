@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-29 08:41:15
+ * @LastEditTime: 2021-09-29 10:33:06
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -19,54 +19,86 @@ export default class EtlStrategyApi extends BaseCrudApi {
     getById(id: string): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/get-by-id?id=' + id }).then(ro => {
             const data: any = ro.extra;
+            const clidData = data.one;
+            console.log(clidData);
             let tableName: any = [],
                 tableEndName: any = [];
-            data.one.strategyDetailList.map(item => {
+            const tableSelect: any = [],
+                tableEndSelect: any = [];
+            clidData.strategyDetailList.map((item: { srcTableName: any; dstTableName: any }) => {
                 tableName.push(item.srcTableName);
                 tableEndName.push(item.dstTableName);
+            });
+            clidData.srcTableNames.map((item: any) => {
+                tableSelect.push({
+                    name: item,
+                    value: item,
+                });
+            });
+            clidData.dstTableNames.map((item: any) => {
+                tableEndSelect.push({
+                    name: item,
+                    value: item,
+                });
             });
             tableName = Array.from(new Set(tableName));
             tableEndName = Array.from(new Set(tableEndName));
             const tableArray: any = [],
-                tableEndArray: any = [];
-            tableName.map((item, index) => {
+                fieldSelect: any = {},
+                tableEndArray: any = [],
+                fieldEndSelect: any = [];
+            tableName.map((item: any, index: string | number) => {
                 tableArray.push({
                     startSurface: {
                         model: item,
-                        selectData: [],
+                        selectData: tableSelect,
                     },
                     endSurface: [],
                 });
-                data.strategyDetailList.map(childItem => {
+                fieldSelect[item] = [];
+                clidData.srcFieldsMap[item].map(fieldItem => {
+                    fieldSelect[item].push({
+                        name: fieldItem,
+                        value: fieldItem,
+                    });
+                });
+                clidData.strategyDetailList.map((childItem: { srcTableName: any; srcFieldName: any }) => {
                     if (item == childItem.srcTableName) {
                         tableArray[index].endSurface.push({
                             model: childItem.srcFieldName,
-                            selectData: [],
+                            selectData: fieldSelect[item],
                         });
                     }
                 });
             });
-            tableEndName.map((item, index) => {
+            tableEndName.map((item: any, index: string | number) => {
                 tableEndArray.push({
                     startSurface: {
                         model: item,
-                        selectData: [],
+                        selectData: tableEndSelect,
                     },
                     endSurface: [],
                 });
-                data.strategyDetailList.map(childItem => {
-                    if (item == childItem.srcTableName) {
+                fieldEndSelect[item] = [];
+                clidData.dstFieldsMap[item].map(fieldItem => {
+                    fieldEndSelect[item].push({
+                        name: fieldItem,
+                        value: fieldItem,
+                    });
+                });
+                clidData.strategyDetailList.map((childItem: { dstTableName: any; srcFieldName: any }) => {
+                    if (item == childItem.dstTableName) {
                         tableEndArray[index].endSurface.push({
                             model: childItem.srcFieldName,
-                            selectData: [],
+                            selectData: fieldEndSelect[item],
                         });
                     }
                 });
             });
             // 删除转换前的属性
-            delete data.strategyDetailList;
-            data.srcTableArray = tableArray;
-            data.dstTableArray = tableEndArray;
+            delete clidData.strategyDetailList;
+            clidData.srcTableArray = tableArray;
+            clidData.dstTableArray = tableEndArray;
             return ro;
         });
     }

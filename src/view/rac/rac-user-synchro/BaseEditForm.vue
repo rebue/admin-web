@@ -117,7 +117,7 @@
                                     v-model="item.startSurface.model"
                                     placeholder="请选择表"
                                     :disabled="startDisabled"
-                                    @change="startChange"
+                                    @change="startChange($event, index)"
                                 >
                                     <a-select-option
                                         :value="childItem.value"
@@ -168,7 +168,7 @@
                                     v-model="item.startSurface.model"
                                     placeholder="请选择表"
                                     :disabled="endDisabled"
-                                    @change="endChange"
+                                    @change="endChange($event, index)"
                                 >
                                     <a-select-option
                                         :value="childItem.value"
@@ -430,6 +430,7 @@ export default {
             startBtnDisabled: true,
             endBtnDisabled: true,
             startSql: '',
+            endSql: '',
             sourceSelect: [],
             tableField: [],
             tableFieldEnd: [],
@@ -523,21 +524,11 @@ export default {
                 this.tableField = [
                     {
                         startSurface: {
-                            selectData: [
-                                {
-                                    name: '',
-                                    value: '',
-                                },
-                            ],
+                            selectData: [],
                         },
                         endSurface: [
                             {
-                                selectData: [
-                                    {
-                                        name: '',
-                                        value: '',
-                                    },
-                                ],
+                                selectData: [],
                             },
                         ],
                     },
@@ -545,21 +536,11 @@ export default {
                 this.tableFieldEnd = [
                     {
                         startSurface: {
-                            selectData: [
-                                {
-                                    name: '',
-                                    value: '',
-                                },
-                            ],
+                            selectData: [],
                         },
                         endSurface: [
                             {
-                                selectData: [
-                                    {
-                                        name: '',
-                                        value: '',
-                                    },
-                                ],
+                                selectData: [],
                             },
                         ],
                     },
@@ -587,7 +568,7 @@ export default {
                             this.endBtnDisabled = false;
                             this.getSrcTableName(ro.extra.one.srcConnId, 'start');
                             this.getSrcTableName(ro.extra.one.dstConnId, 'end');
-                            this.getColumuscName(ro.extra.one.srcConnId);
+                            // this.getColumuscName(ro.extra.one.srcConnId);
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
@@ -625,6 +606,7 @@ export default {
                             value: item,
                         });
                     });
+                    item.endSurface[index].selectData = selectDatas;
                 });
             });
         },
@@ -657,6 +639,8 @@ export default {
                     .then(() => (this.visible = false))
                     .finally(() => (this.loading = false));
             } else if (this.editFormType === EditFormTypeDic.Modify) {
+                delete this.model.srcTableArray;
+                delete this.model.dstTableArray;
                 etlStrategyApi
                     .modify(this.model)
                     .then(() => (this.visible = false))
@@ -664,7 +648,7 @@ export default {
             }
         },
         //点击添加数据库
-        datahandleOk(e) {
+        datahandleOk() {
             this.$refs.dataform.validate(valid => {
                 if (valid) {
                     if (this.dataBaseTitle == '添加') {
@@ -706,7 +690,6 @@ export default {
         linkTextClick(id, type) {
             etlConnApi.getTestConnectionById(id).then(ro => {
                 if (ro.extra.value) {
-                    this.startSql = id;
                     etlConnApi.getTableNameById(id).then(res => {
                         const data = res.extra.list,
                             newData = [];
@@ -717,6 +700,7 @@ export default {
                             });
                         });
                         if (type == 'start') {
+                            this.startSql = id;
                             this.startTableNmae = newData;
                             this.tableField = [
                                 {
@@ -727,12 +711,7 @@ export default {
                                     endSurface: [
                                         {
                                             model: undefined,
-                                            selectData: [
-                                                {
-                                                    name: '',
-                                                    value: '',
-                                                },
-                                            ],
+                                            selectData: [],
                                         },
                                     ],
                                 },
@@ -740,6 +719,7 @@ export default {
                             this.startDisabled = false;
                             this.$message.success('链接成功');
                         } else if (type == 'end') {
+                            this.endSql = id;
                             this.endTableNmae = newData;
                             this.tableFieldEnd = [
                                 {
@@ -750,12 +730,7 @@ export default {
                                     endSurface: [
                                         {
                                             model: undefined,
-                                            selectData: [
-                                                {
-                                                    name: '',
-                                                    value: '',
-                                                },
-                                            ],
+                                            selectData: [],
                                         },
                                     ],
                                 },
@@ -768,7 +743,7 @@ export default {
             });
         },
         //来源表获取字段接口
-        startChange(e) {
+        startChange(e, index) {
             etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
                 const data = ro.extra.list,
                     newData = [];
@@ -778,16 +753,19 @@ export default {
                         value: item,
                     });
                 });
-                this.startColumusName = newData;
-                if (this.tableField.length == 1) {
-                    this.tableField[0].endSurface[0].selectData = newData;
-                    this.tableField[0].endSurface[0].model = undefined;
-                }
+                this.tableField[index].endSurface.map(item => {
+                    item.selectData = newData;
+                });
+                // this.startColumusName = newData;
+                // if (this.tableField.length == 1) {
+                //     this.tableField[0].endSurface[0].selectData = newData;
+                //     this.tableField[0].endSurface[0].model = undefined;
+                // }
             });
         },
         //目的表获取字段接口
-        endChange(e) {
-            etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
+        endChange(e, index) {
+            etlConnApi.getColumusNameById(this.endSql, e).then(ro => {
                 const data = ro.extra.list,
                     newData = [];
                 data.map(item => {
@@ -796,14 +774,17 @@ export default {
                         value: item,
                     });
                 });
-                this.endColumusName = newData;
-                if (this.tableFieldEnd.length == 1) {
-                    this.tableFieldEnd[0].endSurface[0].selectData = newData;
-                    this.tableFieldEnd[0].endSurface[0].model = undefined;
-                }
+                this.tableFieldEnd[index].endSurface.map(item => {
+                    item.selectData = newData;
+                });
+                // this.endColumusName = newData;
+                // if (this.tableFieldEnd.length == 1) {
+                //     this.tableFieldEnd[0].endSurface[0].selectData = newData;
+                //     this.tableFieldEnd[0].endSurface[0].model = undefined;
+                // }
             });
         },
-        //添加来源表
+        //添加表
         addbiaoSelect(type) {
             if (type == 'start') {
                 this.tableField.push({
@@ -814,7 +795,7 @@ export default {
                     endSurface: [
                         {
                             model: undefined,
-                            selectData: this.startColumusName,
+                            selectData: [],
                         },
                     ],
                 });
@@ -827,21 +808,23 @@ export default {
                     endSurface: [
                         {
                             model: undefined,
-                            selectData: this.endColumusName,
+                            selectData: [],
                         },
                     ],
                 });
             }
         },
-        //添加来源表的字段
+        //添加表的字段
         addendSelect(index, type) {
             if (type == 'start') {
+                const newSelectData = this.tableField[index].endSurface[0].selectData;
                 this.tableField[index].endSurface.push({
-                    selectData: this.startColumusName,
+                    selectData: newSelectData,
                 });
             } else {
+                const newSelectData = this.tableFieldEnd[index].endSurface[0].selectData;
                 this.tableFieldEnd[index].endSurface.push({
-                    selectData: this.endColumusName,
+                    selectData: newSelectData,
                 });
             }
         },

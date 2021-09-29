@@ -17,6 +17,7 @@
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/no-explicit-any": ["off"],
         "consistent-this": ["error", "that"],
         "camelcase": "off",
         "@typescript-eslint/camelcase": 0
