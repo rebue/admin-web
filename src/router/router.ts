@@ -9,7 +9,7 @@ import { oapOidcApi } from '@/api/Api';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.VUE_APP_PUBLIC_PATH,
     routes: constantRouters,
     /**
