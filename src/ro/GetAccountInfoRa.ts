@@ -1,4 +1,6 @@
 export interface GetAccountInfoRa {
+    /** 领域ID */
+    realmId: string;
     /** 账户ID */
     id: string;
     /** 账户编码 */
@@ -23,4 +25,8 @@ export interface GetAccountInfoRa {
     menus: string[];
     /** 用户信息 */
     user: Record<string, any>;
+    /** 绑定的微信UnionId */
+    wxUnionId: string;
+    /** 绑定的钉钉UnionId */
+    ddUnionId: string;
 }

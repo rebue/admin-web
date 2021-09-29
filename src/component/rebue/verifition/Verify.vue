@@ -102,8 +102,6 @@ export default {
       verifyType: undefined,
       // 所用组件类型
       componentType: undefined,
-      // 默认图片
-      defaultImg: require('./image/default.jpg')
     }
   },
   computed: {
@@ -364,8 +362,7 @@ export default {
         -webkit-box-sizing: content-box;
         -moz-box-sizing: content-box;
         box-sizing: content-box;
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
+        border: 1px solid #ddd;
         border-radius: 3px;
         position: relative;
     }

@@ -102,13 +102,13 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                 '未知错误:' + err;
             message.error(msg);
             if (err.response && err.response.status) {
-                if (err.response.status === 401) {
-                    router.push({ path: `/sign-in?redirect=${router.currentRoute.path}` });
-                    return;
-                } else if (err.response.status === 403) {
-                    router.push({ path: `/` });
-                    return;
-                }
+                // if (err.response.status === 401) {
+                //     router.push({ path: `/sign-in?redirect=${router.currentRoute.path}` });
+                //     return;
+                // } else if (err.response.status === 403) {
+                //     router.push({ path: `/` });
+                //     return;
+                // }
                 return Promise.reject({ result: 0, msg, code: err.response.status });
             } else if (err.code && codeMessage[err.code]) {
                 return Promise.reject({ result: 0, msg, code: err.code });

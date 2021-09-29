@@ -4,13 +4,14 @@ import { constantRouters } from '@/config/router.config';
 import { hasJwtToken, getAppId } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
-// import { racVerifitionApi } from '@/api/Api';
+import { oapOidcApi } from '@/api/Api';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+    mode: 'history',
+    base: process.env.VUE_APP_PUBLIC_PATH,
     routes: constantRouters,
-    // mode: "history",
     /**
      * 当切换到新路由时，页面滚到的行为
      * 注意: 这个功能只在支持 history.pushState 的浏览器中可用。
@@ -44,37 +45,40 @@ router.beforeEach(async (to, from, next) => {
     console.log('from', from);
     console.log('next', next);
 
-    // if (from.name === null && to.query.code && to.query.state) {
-    //     const params = {
-    //         code: to.query.code,
-    //         redirectUri: window.localStorage.getItem("fullPath")
-    //     };
-    //     // const { extra } =
-    //     await racVerifitionApi.reqGetTokenFromCode(params);
-    //     // window.sessionStorage.setItem("jwt_token", String(extra));
-    // }
-
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
-
-    // 如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
-    if (!uncheckJwtTokenPaths.find(item => to.path.startsWith(item)) && !hasJwtToken()) {
-        console.log('需要登录');
-        if (getAppId()) {
-            next(`/sign-in?redirect=${to.path}`);
+    console.log('---to.path', to.path);
+    //白名单免登录
+    if (uncheckJwtTokenPaths.find(path => to.path.startsWith(path))) {
+        next();
+    } else {
+        //需登录
+        //如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
+        if (!hasJwtToken()) {
+            // ???走认证vs走自己登录页
+            //------start
+            //走认证
+            //第一步 获取认证
+            //前端路由页面
+            const callbackUri = encodeURIComponent(location.href);
+            //后端接口
+            const redirect_uri = encodeURIComponent(
+                `${location.origin}/orp-svr/oidc/callback?callbackUri=${callbackUri}`
+            );
+            const { result, detail } = await oapOidcApi.getOidcOauthUri({
+                redirect_uri: redirect_uri,
+            });
+            if (result > 0) {
+                //第二步 请求认证
+                window.location.replace(detail);
+            } else {
+                next(false);
+            }
         } else {
-            window.location.reload(); // 刷新当前页面 router.go(0)
+            //已登录
+            next();
         }
-
-        // const fullPath = encodeURIComponent(window.location.href);
-        // if (fullPath.indexOf("code=") === -1) {
-        //     window.localStorage.setItem("fullPath", window.location.href);
-        // }
-        // window.location.replace(`${process.env.VUE_APP_AUTH_URL}${fullPath}`);
-        // return;
     }
-
-    next();
 });
 
 export default router;

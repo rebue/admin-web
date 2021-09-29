@@ -47,14 +47,16 @@
                                 <a-icon type="wechat" />
                             </div>
                             <span slot="title">微信绑定</span>
-                            <span slot="description" v-if="account.wxUnionId">已绑定</span>
+                            <span slot="description" v-if="accountStore.wxUnionId">已绑定</span>
                             <div slot="description" v-else>
                                 <span>未绑定</span>
                                 <p>绑定微信号码，随时查看账号安全信息</p>
                             </div>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <a-button key="delete" v-if="account.wxUnionId" @click="unbindWechat">解除绑定</a-button>
+                            <a-button key="delete" v-if="accountStore.wxUnionId" @click="unbindWechat"
+                                >解除绑定</a-button
+                            >
                             <a-button key="add" type="primary" v-else @click="bindWechat">绑定</a-button>
                         </div>
                     </a-list-item>
@@ -65,13 +67,13 @@
                                 <a-icon type="dingding" />
                             </div>
                             <span slot="title">钉钉绑定</span>
-                            <span slot="description" v-if="account.ddUnionId">已绑定</span>
+                            <span slot="description" v-if="accountStore.ddUnionId">已绑定</span>
                             <div slot="description" v-else>
                                 <span>未绑定</span>
                             </div>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <a-button key="delete" v-if="account.ddUnionId" @click="unbindDing">解除绑定</a-button>
+                            <a-button key="delete" v-if="accountStore.ddUnionId" @click="unbindDing">解除绑定</a-button>
                             <a-button key="add" type="primary" v-else @click="bindDing">绑定</a-button>
                         </div>
                     </a-list-item>
@@ -102,7 +104,6 @@
 </template>
 
 <script>
-import { when } from 'mobx';
 import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
@@ -118,7 +119,6 @@ export default observer({
     data() {
         return {
             accountStore,
-            account: {},
             EditFormTypeDic,
             //手机号
             isVerifiedMobile: false,
@@ -127,26 +127,9 @@ export default observer({
             isVerifiedEmail: false,
         };
     },
-    mounted() {
-        when(
-            () => this.accountStore && this.accountStore.accountId,
-            () =>
-                racAccountApi.getById(this.accountStore.accountId).then(ro => {
-                    const { user, org } = ro.extra.one;
-                    ro.extra.one.user = user ? user : {};
-                    ro.extra.one.org = org ? org : {};
-                    this.account = ro.extra.one;
-                })
-        );
-    },
     methods: {
         refreshAccountInfo() {
             racMenuAction.refreshAccountInfo();
-        },
-        getAccountInfo() {
-            racAccountApi.getById(this.accountStore.accountId).then(ro => {
-                this.account = ro.extra.one;
-            });
         },
         // 手机号
         bindPhone() {
@@ -212,7 +195,6 @@ export default observer({
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },
@@ -237,7 +219,6 @@ export default observer({
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },
@@ -262,7 +243,6 @@ export default observer({
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },
@@ -283,12 +263,12 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-bind',
+                            accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },
@@ -307,12 +287,12 @@ export default observer({
                     data() {
                         return {
                             eventType: 'account-unbind',
+                            accountId: that.accountStore.accountId,
                         };
                     },
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },
@@ -333,14 +313,13 @@ export default observer({
                     data() {
                         return {
                             record: {
-                                id: that.account.id,
+                                id: that.accountStore.accountId,
                             },
                         };
                     },
                     methods: {
                         callback() {
                             that.refreshAccountInfo();
-                            that.getAccountInfo();
                         },
                     },
                 },

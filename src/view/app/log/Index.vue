@@ -9,7 +9,7 @@
                 :query="query"
                 :scrollX="600"
                 :expandable="false"
-                v-if="curRealmId"
+                v-if="query.realmId"
             >
                 <!-- :empty-in-table="false" -->
                 <template #keywordsLeft>
@@ -162,8 +162,9 @@ export default observer({
         return {
             accountStore,
             loading: false,
-            curRealmId: '',
-            query: {},
+            query: {
+                realmId: '',
+            },
             moment,
         };
     },
@@ -178,23 +179,11 @@ export default observer({
             () => {
                 const val = this.accountStore;
                 if (val && val.realmId) {
-                    this.curRealmId = val.realmId;
                     this.query = {
                         ...this.query,
-                        realmId: this.curRealmId,
+                        realmId: val.realmId,
                         accountId: val.accountId,
                     };
-                    return;
-                }
-                if (val && val.accountId) {
-                    racAccountApi.getById(val.accountId).then(ro => {
-                        this.curRealmId = ro.extra.one.realmId;
-                        this.query = {
-                            ...this.query,
-                            realmId: this.curRealmId,
-                            accountId: val.accountId,
-                        };
-                    });
                 }
             }
         );

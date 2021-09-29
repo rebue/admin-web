@@ -26,7 +26,6 @@
     </a-tabs>
 </template>
 
-<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
 import md5 from 'crypto-js/md5';
 import { setAppId } from '@/util/cookie';
@@ -83,7 +82,7 @@ export default {
         //FIXME 引入js慢一步，第一次切换微信选项时报错，待解决
         const s = document.createElement('script');
         s.type = 'text/javascript';
-        s.src = 'http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
+        s.src = '//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
         document.body.appendChild(s);
         this.$nextTick(() => {
             setTimeout(() => {
@@ -167,7 +166,11 @@ export default {
                             sessionStorage.removeItem('isNeedCaptcha');
                             this.detail = ro.detail ? ro.detail : false;
                             setAppId(this.appId);
-                            window.location.href = this.redirect ? '#' + this.redirect : '#/base/rac-realm';
+                            if (this.redirect) {
+                                window.location.href = this.redirect;
+                            } else {
+                                this.$router.push('/base/rac-realm');
+                            }
                         })
                         .catch(() => {
                             //登录失败，清除验证码

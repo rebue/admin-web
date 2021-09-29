@@ -158,6 +158,8 @@ export default {
                         })
                         .then(r => {
                             if (r.result === 1) {
+                                // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
+                                console.log('----登录成功 repalce', r);
                                 window.location.replace(r.extra);
                             }
                         })

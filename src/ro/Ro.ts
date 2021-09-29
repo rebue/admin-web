@@ -3,4 +3,5 @@ export interface Ro {
     msg: string;
     code: string;
     extra: object;
+    detail: string;
 }

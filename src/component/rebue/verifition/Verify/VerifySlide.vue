@@ -12,7 +12,7 @@
           :style="{width: setSize.imgWidth,
                   height: setSize.imgHeight,}"
         >
-          <img :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg" alt="" style="width:100%;height:100%;display:block">
+          <img :src="backImgBase?('data:image/png;base64,'+backImgBase):defaultImg" alt="" style="width:100%;height:100%;display:block" v-if="backImgBase">
           <div v-show="showRefresh" class="verify-refresh" @click="refresh"><i class="iconfont icon-refresh" />
           </div>
           <transition name="tips">
@@ -52,7 +52,7 @@
                       'background-size': setSize.imgWidth + ' ' + setSize.imgHeight,
               }"
             >
-              <img :src="'data:image/png;base64,'+blockBackImgBase" alt="" style="width:100%;height:100%;display:block">
+              <img :src="blockBackImgBase?('data:image/png;base64,'+blockBackImgBase):''" alt="" style="width:100%;height:100%;display:block" v-if="blockBackImgBase">
             </div>
           </div>
         </div>

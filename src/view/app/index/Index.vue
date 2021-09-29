@@ -28,7 +28,9 @@
                                     height="56px"
                                     class="item-logo"
                                 />
-                                <div class="w80 mt10 font-14 tx-c ellipsis-2">{{ item.name }}</div>
+                                <div class="mt10 font-14 tx-c ellipsis-2 app-name" :title="item.name">
+                                    {{ item.name }}
+                                </div>
                             </a>
                         </a-col>
                     </a-row>
@@ -61,7 +63,9 @@
                                     height="56px"
                                     class="item-logo"
                                 />
-                                <div class="w80 mt10 font-14 tx-c ellipsis-2">{{ item.name }}</div>
+                                <div class="mt10 font-14 tx-c ellipsis-2 app-name" :title="item.name">
+                                    {{ item.name }}
+                                </div>
                             </a>
                         </a-col>
                     </a-row>
@@ -170,6 +174,12 @@ export default {
     }
     .content {
         min-height: 100px;
+        display: flex;
+        flex-flow: wrap;
+    }
+    .app-name {
+        width: 4em;
+        word-break: break-word;
     }
 }
 </style>
