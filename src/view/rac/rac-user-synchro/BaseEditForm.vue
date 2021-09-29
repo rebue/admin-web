@@ -519,6 +519,10 @@ export default {
                 this.model = {
                     isEnabled: false,
                 };
+                this.startDisabled = true;
+                this.endDisabled = true;
+                this.startBtnDisabled = true;
+                this.endBtnDisabled = true;
                 this.sourceSelectVlaue = undefined;
                 this.sourceSelectEndVlaue = undefined;
                 this.tableField = [

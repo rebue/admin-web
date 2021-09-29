@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 10:56:59
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-29 10:33:06
+ * @LastEditTime: 2021-09-29 10:57:35
  * @FilePath: \admin-web\src\api\etl\EtlStrategyApi.ts
  */
 /**
@@ -29,13 +29,13 @@ export default class EtlStrategyApi extends BaseCrudApi {
                 tableName.push(item.srcTableName);
                 tableEndName.push(item.dstTableName);
             });
-            clidData.srcTableNames.map((item: any) => {
+            clidData.srcTableName.map((item: any) => {
                 tableSelect.push({
                     name: item,
                     value: item,
                 });
             });
-            clidData.dstTableNames.map((item: any) => {
+            clidData.dstTableName.map((item: any) => {
                 tableEndSelect.push({
                     name: item,
                     value: item,
