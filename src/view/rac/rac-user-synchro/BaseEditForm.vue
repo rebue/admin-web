@@ -559,7 +559,9 @@ export default {
                         .then(ro => {
                             this.model = ro.extra.one;
                             this.sourceSelectVlaue = ro.extra.one.srcConnId;
+                            this.startSql = ro.extra.one.srcConnId;
                             this.sourceSelectEndVlaue = ro.extra.one.dstConnId;
+                            this.endSql = ro.extra.one.dstConnId;
                             this.tableField = ro.extra.one.srcTableArray;
                             this.tableFieldEnd = ro.extra.one.dstTableArray;
                             this.startDisabled = false;
@@ -706,6 +708,7 @@ export default {
         },
         //来源表获取字段接口
         startChange(e, index) {
+            console.log(e);
             etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
                 const data = ro.extra.list,
                     newData = [];
@@ -715,14 +718,15 @@ export default {
                         value: item,
                     });
                 });
-                this.tableField[index].endSurface.map(item => {
-                    item.selectData = newData;
-                });
-                // this.startColumusName = newData;
-                // if (this.tableField.length == 1) {
-                //     this.tableField[0].endSurface[0].selectData = newData;
-                //     this.tableField[0].endSurface[0].model = undefined;
-                // }
+                this.tableField[index].endSurface = [
+                    {
+                        model: undefined,
+                        selectData: newData,
+                    },
+                ];
+                // this.tableField[index].endSurface.map(item => {
+                //     item.selectData = newData;
+                // });
             });
         },
         //目的表获取字段接口
@@ -736,21 +740,21 @@ export default {
                         value: item,
                     });
                 });
-                this.tableFieldEnd[index].endSurface.map(item => {
-                    item.selectData = newData;
-                });
-                // this.endColumusName = newData;
-                // if (this.tableFieldEnd.length == 1) {
-                //     this.tableFieldEnd[0].endSurface[0].selectData = newData;
-                //     this.tableFieldEnd[0].endSurface[0].model = undefined;
-                // }
+                this.tableFieldEnd[index].endSurface = [
+                    {
+                        model: undefined,
+                        selectData: newData,
+                    },
+                ];
+                // this.tableFieldEnd[index].endSurface.map(item => {
+                //     item.selectData = newData;
+                // });
             });
         },
         //添加表
         addbiaoSelect(type) {
             if (type == 'start') {
                 const newData = this.tableField[0].startSurface.selectData;
-                this.startSql = this.model.srcConnId;
                 this.tableField.push({
                     startSurface: {
                         model: undefined,
@@ -765,7 +769,6 @@ export default {
                 });
             } else {
                 const newData = this.tableFieldEnd[0].startSurface.selectData;
-                this.endSql = this.model.dstConnId;
                 this.tableFieldEnd.push({
                     startSurface: {
                         model: undefined,
