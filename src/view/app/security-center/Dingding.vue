@@ -92,7 +92,9 @@ export default observer({
         },
         getQrcode() {
             this.loading = true;
-            const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
+            const callbackUrl = encodeURIComponent(
+                `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/#/scanTransfer`
+            );
             const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
             request
                 .get({

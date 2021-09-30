@@ -66,6 +66,7 @@ export default {
             {
                 dataIndex: 'idCard',
                 title: '身份证号',
+                width: 220,
                 ellipsis: true,
             },
             {
@@ -82,6 +83,7 @@ export default {
             {
                 dataIndex: 'email',
                 title: '电子邮箱',
+                width: 220,
                 ellipsis: true,
             },
 

@@ -142,6 +142,11 @@ export default {
                 },
             },
             {
+                dataIndex: 'realName',
+                title: '用户姓名',
+                align: 'center',
+            },
+            {
                 dataIndex: 'isEnabled',
                 align: 'center',
                 title: '启用',

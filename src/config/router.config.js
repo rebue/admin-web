@@ -98,6 +98,13 @@ export const constantRouters = [
                 component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
                 hidden: true,
             },
+            {
+                path: '/system-static',
+                name: 'system-static',
+                meta: { title: '系统概况', keepAlive: true, icon: 'setting' },
+                component: () => import('@/view/rac/rac-system/SystemStatic.vue'),
+                hidden: true,
+            },
             /** 平台管理应用 */
             {
                 path: '/base',

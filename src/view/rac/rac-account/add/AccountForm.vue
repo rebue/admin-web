@@ -83,7 +83,6 @@ export default {
             signInPswdAgain: [
                 {
                     required: true,
-                    message: '请输入登录密码(再次确认)',
                     trigger: ['change', 'blur'],
                     validator: (rule, value, callback) => {
                         if (this.editFormType === 'modify') {
@@ -99,7 +98,7 @@ export default {
                             return;
                         }
 
-                        if (value !== this.$refs.accountEditform.model.signInPswd) {
+                        if (value !== this.model.signInPswd) {
                             callback(new Error('两次输入的登录密码不相同'));
                             return;
                         }

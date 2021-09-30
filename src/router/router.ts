@@ -9,8 +9,8 @@ import { oapOidcApi } from '@/api/Api';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.VUE_APP_PUBLIC_PATH,
+    // mode: 'history',
+    // base: process.env.VUE_APP_PUBLIC_PATH,
     routes: constantRouters,
     /**
      * 当切换到新路由时，页面滚到的行为
