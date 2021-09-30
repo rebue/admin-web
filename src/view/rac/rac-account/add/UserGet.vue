@@ -109,9 +109,12 @@ export default {
                         .then(ro => {
                             if (ro.extra) {
                                 this.detail = ro.extra;
-                                this.callback && this.callback(ro);
-                                successFn && successFn(ro);
+                            } else {
+                                this.detail = {};
+                                this.$message.error('未查询到该用户');
                             }
+                            this.callback && this.callback(ro);
+                            successFn && successFn(ro);
                         })
                         .finally(() => {
                             this.loading = false;
