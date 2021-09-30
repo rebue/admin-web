@@ -1,3 +1,9 @@
+/*
+ * @Date: 2021-09-29 10:38:47
+ * @LastEditors: likelin
+ * @LastEditTime: 2021-09-29 20:18:21
+ * @FilePath: \admin-web\src\api\Api.ts
+ */
 import RacRealmApi from './rac/RacRealmApi';
 import RacAppApi from './rac/RacAppApi';
 import RacPermGroupApi from './rac/RacPermGroupApi';
@@ -23,6 +29,7 @@ import OapAppApi from './oap/OapAppApi';
 import OapOidcApi from './oap/OapOidcApi';
 import EtlStrategyApi from './etl/EtlStrategyApi';
 import EtlConnApi from './etl/EtlConnApi';
+import RacStatusApi from './rac/RacStatusApi';
 
 export const racRealmApi = new RacRealmApi();
 export const racAppApi = new RacAppApi();
@@ -49,3 +56,4 @@ export const oapAppApi = new OapAppApi();
 export const oapOidcApi = new OapOidcApi();
 export const etlStrategyApi = new EtlStrategyApi();
 export const etlConnApi = new EtlConnApi();
+export const racStatusApi = new RacStatusApi();
