@@ -17,10 +17,15 @@ const list = [
             '/base/rac-app',
             '/base/rac-perm',
             '/base/rac-role',
+            '/base/rac-dic',
             '/account/rac-org',
             '/account/rac-account',
+            '/account/rac-user',
+            '/account/rac-account-unlock',
             '/log/lock-log',
+            '/log/disable-log',
             '/log/op-log',
+            '/user-synchro/account-sy'
         ],
     },
     {
