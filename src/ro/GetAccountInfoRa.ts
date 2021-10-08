@@ -6,7 +6,7 @@ export interface GetAccountInfoRa {
     /** 账户编码 */
     code: string;
     /** 账户昵称 */
-    nickname: string;
+    signInNickname: string;
     /** 账户头像 */
     avatar: string;
     /** 代理账户ID */

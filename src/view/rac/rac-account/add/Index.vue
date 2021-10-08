@@ -37,7 +37,7 @@
                         v-if="activeTab.includes('choose-tab')"
                         :callback="
                             ro => {
-                                userId = ro.extra.id;
+                                userId = ro.extra ? ro.extra.id : '';
                             }
                         "
                     />
@@ -154,15 +154,20 @@ export default {
                     this.next();
                 } else {
                     this.$refs.userForm.ok(null, ro => {
-                        this.userId = ro.extra.id;
-                        this.next();
+                        this.userId = ro.extra ? ro.extra.id : '';
+                        if (this.userId) {
+                            this.next();
+                        }
                     });
                 }
             } else {
                 if (this.userId) {
                     this.next();
                 } else {
-                    this.$refs.queryForm.validate();
+                    const valid = this.$refs.queryForm.validate();
+                    if (valid) {
+                        this.$message.info('点击查询按钮，查询用户信息');
+                    }
                 }
             }
         },

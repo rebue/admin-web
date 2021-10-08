@@ -23,11 +23,22 @@
                     <a-icon class="copyIconStyle" type="copy" @click="copyClick(model.clientId)" />
                 </a-form-model-item>
                 <a-form-model-item label="应用密钥(AppSecret)" prop="secret">
-                    <a-input v-show="secretShow" v-model.trim="model.secret" disabled style="width:85%" />
-                    <a-icon class="copyIconStyle" v-show="secretShow" type="copy" @click="copyClick(model.secret)" />
-                    <a-button v-show="!secretShow" type="primary" html-type="submit" @click="secretClick()"
+                    <a-input v-if="secretShow" v-model.trim="model.secret" disabled style="width:85%" />
+                    <a-icon class="copyIconStyle" v-if="secretShow" type="copy" @click="copyClick(model.secret)" />
+                    <a-button
+                        v-if="editFormType === EditFormTypeDic.Modify"
+                        type="link"
+                        icon="sync"
+                        @click="secretClick"
                         >更新
                     </a-button>
+                    <a-alert
+                        v-if="secretShow"
+                        size="small"
+                        type="warning"
+                        banner
+                        message="复制 应用密钥 保存下来，方便后续使用"
+                    />
                 </a-form-model-item>
                 <a-form-model-item label="安全域名" required>
                     <a-form-model-item
@@ -196,9 +207,16 @@ export default {
         },
         //点击重置密钥事件
         secretClick() {
-            this.api.getAppSecret().then(res => {
-                this.model.secret = res?.extra.secret;
-                this.secretShow = true;
+            const that = this;
+            this.$confirm({
+                title: '你确认要更新应用密钥吗？',
+                content: '应用密钥会在提交表单后生效, 所有使用旧应用密钥的接口会在提交表单后失效',
+                onOk() {
+                    that.api.getAppSecret().then(res => {
+                        that.model.secret = res?.extra.secret;
+                        that.secretShow = true;
+                    });
+                },
             });
         },
         handleShow() {
