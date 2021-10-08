@@ -5,7 +5,7 @@
                 <a-input v-model.trim="model.code" placeholder="" />
             </a-form-model-item>
             <a-form-model-item label="选择领域" prop="field">
-                <a-select :default-value="fieldData[0]" @change="handleChange">
+                <a-select v-model="model.realmId" @change="handleChange">
                     <a-select-option v-for="fieldData in fieldData" :key="fieldData">
                         {{ fieldData }}
                     </a-select-option>
@@ -50,9 +50,8 @@
     </a-spin>
 </template>
 <script>
-import { racAccountApi } from '@/api/Api';
+import { racAccountApi, racRealmApi } from '@/api/Api';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-const fieldData = ['default', 'platform', 'ops'];
 export default {
     props: {
         editFormType: {
@@ -128,13 +127,13 @@ export default {
                 isTester: false,
                 remark: '',
                 id: '',
-                realmId: fieldData[0],
+                realmId: '',
                 orgId: '',
                 userId: this.accouuntId,
             },
             rules: this.addRules,
             loading: false,
-            fieldData,
+            fieldData: [],
         };
     },
     mounted() {
@@ -144,9 +143,20 @@ export default {
             this.rules = this.addRules;
         }
         this.model.userId = this.accouuntId;
-        console.log(this.model.userId);
+        this.getReamFun();
     },
     methods: {
+        getReamFun() {
+            racRealmApi.listAll().then(ro => {
+                const data = ro.extra.list;
+                const newArray = [];
+                data.map(item => {
+                    newArray.push(item.name);
+                });
+                this.fieldData = newArray;
+                this.model.realmId = newArray[0];
+            });
+        },
         ok(e, successFn) {
             console.log(this.model);
             this.loading = true;

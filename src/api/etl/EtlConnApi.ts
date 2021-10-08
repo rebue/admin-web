@@ -1,7 +1,7 @@
 /*
  * @Date: 2021-09-27 15:57:36
  * @LastEditors: likelin
- * @LastEditTime: 2021-09-27 17:26:24
+ * @LastEditTime: 2021-09-30 09:13:18
  * @FilePath: \admin-web\src\api\etl\EtlConnApi.ts
  */
 /**
@@ -25,7 +25,6 @@ export default class EtlStrategyApi extends BaseCrudApi {
     /** 链接测试接口 */
     getTestConnectionById(id): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/test-connection-by-id?id=' + id });
-        // return request.get({ url: this.baseUrn + '/get-table-name-by-id?id=' + id });
     }
     /** 获取表名接口 */
     getTableNameById(id): Promise<Ro> {

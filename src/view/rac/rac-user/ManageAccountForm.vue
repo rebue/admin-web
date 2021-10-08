@@ -99,11 +99,11 @@ export default {
             },
             {
                 dataIndex: 'signInNickname',
-                title: '账号全称',
+                title: '昵称',
             },
             {
                 dataIndex: 'realmId',
-                title: '领域ID',
+                title: '领域名称',
             },
             {
                 dataIndex: 'action',
@@ -232,7 +232,7 @@ export default {
         /**
          * 处理添加账户的事件
          */
-        handleAddUser(record) {
+        handleAddUser() {
             const that = this;
             this.$showDialog(
                 require('./add/AccountForm.vue').default,

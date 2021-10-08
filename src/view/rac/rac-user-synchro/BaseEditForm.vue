@@ -11,12 +11,12 @@
     >
         <a-form-model ref="form" :model="model" v-bind="formLayout">
             <slot name="formItems">
-                <a-row>
-                    <a-col :span="12">
-                        <a-form-model-item key="name" label="策略名称" prop="name">
-                            <a-input v-model.trim="model.name" :placeholder="'请输入策略名称'" />
-                        </a-form-model-item>
-                    </a-col>
+                <!-- <a-row>
+                    <a-col :span="12"> -->
+                <a-form-model-item key="name" label="策略名称" prop="name" class="lengthInput">
+                    <a-input v-model.trim="model.name" :placeholder="'请输入策略名称'" />
+                </a-form-model-item>
+                <!-- </a-col>
                     <a-col :span="12">
                         <a-form-model-item key="isEnabled" label="启用" prop="isEnabled">
                             <a-switch
@@ -27,7 +27,7 @@
                             />
                         </a-form-model-item>
                     </a-col>
-                </a-row>
+                </a-row> -->
                 <a-row>
                     <a-col :span="12">
                         <a-form-model-item key="srcName" label="来源" prop="srcName">
@@ -318,9 +318,7 @@ export default {
             linksurface1: '',
             linksurface2: '',
             dataBaseTitle: '添加',
-            model: {
-                isEnabled: false,
-            },
+            model: {},
             dataModel: {},
             formDatabase: [
                 {
@@ -452,14 +450,6 @@ export default {
         },
     },
     methods: {
-        //是否启用
-        switchClick() {
-            if (this.model.isEnabled == true) {
-                this.model.isEnabled = false;
-            } else {
-                this.model.isEnabled = true;
-            }
-        },
         //点击添加数据库弹窗
         addUserClick() {
             this.dataBaseTitle = '添加';
@@ -496,11 +486,14 @@ export default {
                 return;
             }
             this.dataBaseTitle = '编辑';
-            this.sourceSelect.map(item => {
-                if (item.id == editState) {
-                    this.dataModel = item;
-                }
-            });
+            etlConnApi
+                .getById(editState)
+                .then(ro => {
+                    this.dataModel = ro.extra.one;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
             this.databaseVisible = true;
         },
         //关闭数据库弹窗
@@ -512,9 +505,7 @@ export default {
             this.model.id = model.id;
             // 添加时给model初始化属性，否则输入后移开焦点，输入的内容会被清空
             if (editFormType === EditFormTypeDic.Add) {
-                this.model = {
-                    isEnabled: false,
-                };
+                this.model = {};
                 this.startDisabled = true;
                 this.endDisabled = true;
                 this.startBtnDisabled = true;
@@ -566,8 +557,8 @@ export default {
                             this.tableFieldEnd = ro.extra.one.dstTableArray;
                             this.startDisabled = false;
                             this.endDisabled = false;
-                            this.startBtnDisabled = false;
-                            this.endBtnDisabled = false;
+                            this.startBtnDisabled = true;
+                            this.endBtnDisabled = true;
                         })
                         .catch(() => (this.visible = false))
                         .finally(() => {
@@ -602,6 +593,7 @@ export default {
             this.model.dstTableNames = JSON.stringify(this.model.dstTableNames);
             this.model.srcDstMap = JSON.stringify(this.model.srcDstMap);
             if (this.editFormType === EditFormTypeDic.Add) {
+                this.model.isEnabled = false;
                 etlStrategyApi
                     .add(this.model)
                     .then(() => (this.visible = false))
@@ -703,6 +695,8 @@ export default {
                             this.$message.success('链接成功');
                         }
                     });
+                } else {
+                    this.$message.error('链接失败');
                 }
             });
         },
@@ -724,9 +718,6 @@ export default {
                         selectData: newData,
                     },
                 ];
-                // this.tableField[index].endSurface.map(item => {
-                //     item.selectData = newData;
-                // });
             });
         },
         //目的表获取字段接口
@@ -746,9 +737,6 @@ export default {
                         selectData: newData,
                     },
                 ];
-                // this.tableFieldEnd[index].endSurface.map(item => {
-                //     item.selectData = newData;
-                // });
             });
         },
         //添加表
@@ -817,6 +805,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.lengthInput {
+    /deep/ .ant-form-item-label {
+        width: 10.5% !important;
+    }
+    /deep/ .ant-form-item-control-wrapper {
+        width: 85.1% !important;
+    }
+}
 .selectStyle {
     position: relative;
     .ant-select {

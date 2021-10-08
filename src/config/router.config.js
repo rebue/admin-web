@@ -135,13 +135,13 @@ export const constantRouters = [
                         hidden: true,
                         meta: { title: '权限', keepAlive: true, icon: 'deployment-unit' },
                     },
-                    {
-                        path: '/base/rac-status',
-                        name: 'rac-status',
-                        component: () => import('@/view/rac/rac-status/Manager.vue'),
-                        hidden: true,
-                        meta: { title: '身份', keepAlive: true, icon: 'smile' },
-                    },
+                    // {
+                    //     path: '/base/rac-status',
+                    //     name: 'rac-status',
+                    //     component: () => import('@/view/rac/rac-status/Manager.vue'),
+                    //     hidden: true,
+                    //     meta: { title: '身份', keepAlive: true, icon: 'smile' },
+                    // },
                     {
                         path: '/base/rac-role',
                         name: 'rac-role',
