@@ -233,14 +233,14 @@ export const constantRouters = [
                 meta: { title: '账号同步', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/user-synchro/account',
+                redirect: '/user-synchro/account-sy',
                 children: [
                     {
                         path: '/user-synchro/account-sy',
                         name: 'account-sy',
                         component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
                         hidden: true,
-                        meta: { title: '账号同步', keepAlive: true, icon: 'apartment' },
+                        meta: { title: '策略', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },

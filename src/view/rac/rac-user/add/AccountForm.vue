@@ -6,8 +6,8 @@
             </a-form-model-item>
             <a-form-model-item label="选择领域" prop="field">
                 <a-select v-model="model.realmId" @change="handleChange">
-                    <a-select-option v-for="fieldData in fieldData" :key="fieldData">
-                        {{ fieldData }}
+                    <a-select-option v-for="fieldData in fieldData" :key="fieldData.value">
+                        {{ fieldData.name }}
                     </a-select-option>
                 </a-select>
             </a-form-model-item>
@@ -151,10 +151,13 @@ export default {
                 const data = ro.extra.list;
                 const newArray = [];
                 data.map(item => {
-                    newArray.push(item.name);
+                    newArray.push({
+                        name: item.name,
+                        value: item.id,
+                    });
                 });
                 this.fieldData = newArray;
-                this.model.realmId = newArray[0];
+                this.model.realmId = newArray[0].value;
             });
         },
         ok(e, successFn) {

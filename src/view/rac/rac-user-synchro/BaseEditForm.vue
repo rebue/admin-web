@@ -700,7 +700,7 @@ export default {
                 }
             });
         },
-        //来源表获取字段接口
+        /**来源表获取字段接口 */
         startChange(e, index) {
             console.log(e);
             etlConnApi.getColumusNameById(this.startSql, e).then(ro => {
@@ -788,12 +788,18 @@ export default {
         //删除字段
         minusendSelect(index, type) {
             if (type == 'start') {
+                if (this.tableField.length == 1 && this.tableField[index].endSurface.length == 1) {
+                    return;
+                }
                 if (index != 0 && this.tableField[index].endSurface.length == 1) {
                     this.tableField.splice(index, 1);
                     return;
                 }
                 this.tableField[index].endSurface.pop();
             } else {
+                if (this.tableFieldEnd.length == 1 && this.tableFieldEnd[index].endSurface.length == 1) {
+                    return;
+                }
                 if (index != 0 && this.tableFieldEnd[index].endSurface.length == 1) {
                     this.tableFieldEnd.splice(index, 1);
                     return;

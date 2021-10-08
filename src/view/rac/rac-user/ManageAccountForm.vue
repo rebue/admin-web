@@ -1,6 +1,6 @@
 <template>
     <a-drawer
-        :title="'用户(' + user.realName + ')的用户'"
+        :title="'用户(' + user.realName + ')的账户'"
         placement="right"
         :closable="true"
         :mask="true"
@@ -66,11 +66,11 @@
 </template>
 
 <script>
-import { racAccountApi } from '@/api/Api';
+import { racAccountApi, racRealmApi } from '@/api/Api';
 // import ManageAddUserForm from './ManageAddUserForm.vue';
-import ChangePswdForm from './ChangePswdForm.vue';
+import ChangePswdForm from '../rac-account/ChangePswdForm.vue';
 import EditUserForm from './EditUserForm.vue';
-import ManageOrgForm from './ManageOrgForm.vue';
+import ManageOrgForm from '../rac-account/ManageOrgForm.vue';
 export default {
     components: {
         // ManageAddUserForm,
@@ -138,6 +138,7 @@ export default {
         return {
             loading: false,
             dataSource: [],
+            fieldData: [],
             existAccountIds: [],
             columns,
             showAccount: false,
@@ -154,6 +155,7 @@ export default {
             if (val) {
                 console.log(val);
                 this.$nextTick(() => {
+                    this.getReamFun();
                     this.refreshData();
                 });
             }
@@ -164,6 +166,19 @@ export default {
         // this.managerModifyAccountForm = this.$refs.managerModifyAccountForm;
     },
     methods: {
+        getReamFun() {
+            racRealmApi.listAll().then(ro => {
+                const data = ro.extra.list;
+                const newArray = [];
+                data.map(item => {
+                    newArray.push({
+                        name: item.name,
+                        value: item.id,
+                    });
+                });
+                this.fieldData = newArray;
+            });
+        },
         /** 刷新数据 */
         refreshData() {
             this.$nextTick(() => {
@@ -174,8 +189,15 @@ export default {
                 racAccountApi
                     .getUserList(data)
                     .then(ro => {
-                        console.log(ro);
-                        this.dataSource = ro.extra.list;
+                        racRealmApi.listAll().then(res => {
+                            const data = res.extra.list;
+                            this.dataSource = ro.extra.list;
+                            this.dataSource.map((item, index) => {
+                                if (item.realmId == data[index].id) {
+                                    item.realmId = data[index].name;
+                                }
+                            });
+                        });
                     })
                     .finally(() => {
                         this.existAccountIds = [];
@@ -186,7 +208,7 @@ export default {
                     });
             });
         },
-        //修改账号信息
+        /** 修改账号信息 */
         handleModify(orgMo) {
             this.modifyOrgId = orgMo;
             this.managerModifyOrgFormVisible = true;
