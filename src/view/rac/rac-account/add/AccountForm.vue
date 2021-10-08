@@ -77,6 +77,9 @@ export default {
             signInName: [
                 { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val && val.trim() },
             ],
+            signInNickname: [
+                { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
+            ],
             signInPswd: [
                 { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
             ],
@@ -116,6 +119,9 @@ export default {
                     trigger: 'blur',
                     transform: val => val && val.trim(),
                 },
+            ],
+            signInNickname: [
+                { required: true, message: '请输入登录昵称', trigger: 'blur', transform: val => val && val.trim() },
             ],
         };
         return {
