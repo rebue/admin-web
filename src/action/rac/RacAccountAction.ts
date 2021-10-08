@@ -28,7 +28,7 @@ export class RacAccountAction {
         accountStore.realmId = ra.realmId;
         accountStore.accountId = ra.id;
         accountStore.code = ra.code;
-        accountStore.nickname = ra.nickname;
+        accountStore.nickname = ra.signInNickname;
         accountStore.avatar = ra.avatar;
         accountStore.agentAccountId = ra.agentAccountId;
         accountStore.agentNickname = ra.agentNickname;
