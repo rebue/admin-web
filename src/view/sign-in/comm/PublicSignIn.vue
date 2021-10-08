@@ -8,7 +8,7 @@
                 <a-form-model ref="form" class="form" :model="form" :rules="rules">
                     <a-form-model-item prop="accountName" class="sign">
                         <a-input v-autofocus v-model.trim="form.accountName" placeholder="请输入登录账号">
-                            <template #prefix><a-icon type="account"/></template>
+                            <template #prefix><a-icon type="user"/></template>
                         </a-input>
                     </a-form-model-item>
                     <a-form-model-item prop="signInPswd">
