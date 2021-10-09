@@ -193,7 +193,8 @@ export default {
                     .then(ro => {
                         this.dataSource = ro.extra.list;
                         this.dataSource.map((item, index) => {
-                            if (item.realmName == this.fieldData[index].id) {
+                            console.log(item);
+                            if (item.realmId == this.fieldData[index].value) {
                                 item.realmName = this.fieldData[index].name;
                             }
                         });
