@@ -13,12 +13,55 @@ const RouteView = {
  * @type { *[] }
  */
 export const constantRouters = [
-    /**个人应用平台菜单*/
+    /**扫码中转中间页*/
     {
         path: '/scanTransfer',
         name: 'scanTransfer',
         component: () => import('@/view/app/security-center/ScanTransfer.vue'),
     },
+    /**登录*/
+    {
+        path: '/sign-in',
+        name: 'sign-in',
+        component: RouteView,
+        redirect: () => {
+            const pathname = location.pathname;
+            let appId = '';
+            Object.values(AppIdDic).forEach(val => {
+                if (pathname.endsWith(`/${val}/`)) {
+                    appId = val;
+                }
+            });
+            switch (appId) {
+                case AppIdDic.PlatformAdminWeb:
+                    return '/sign-in/platform';
+                case AppIdDic.OpsAdminWeb:
+                    return '/sign-in/ops';
+                case AppIdDic.UnifiedAuth:
+                    return '/sign-in/unified';
+                default:
+                    return '/sign-in/unified';
+            }
+        },
+        children: [
+            {
+                path: '/sign-in/platform',
+                name: 'platform-sign-in',
+                component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
+            },
+            {
+                path: '/sign-in/ops',
+                name: 'ops-sign-in',
+                component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
+            },
+            {
+                path: '/sign-in/unified',
+                name: 'unified-sign-in',
+                component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
+            },
+        ],
+    },
+    /**统一应用系统*/
     {
         path: '/app',
         name: 'app',
@@ -62,29 +105,7 @@ export const constantRouters = [
         name: 'unifiedLogin',
         component: UnifiedLogin,
     },
-    {
-        path: '/sign-in',
-        name: 'sign-in',
-        component: RouteView,
-        redirect: () => (getAppId() === AppIdDic.PlatformAdminWeb ? '/sign-in/platform' : '/sign-in/ops'),
-        children: [
-            {
-                path: '/sign-in/platform',
-                name: 'platform-sign-in',
-                component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
-            },
-            {
-                path: '/sign-in/ops',
-                name: 'ops-sign-in',
-                component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
-            },
-            {
-                path: '/sign-in/unified',
-                name: 'unified-sign-in',
-                component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
-            },
-        ],
-    },
+
     {
         path: '/',
         name: 'index',

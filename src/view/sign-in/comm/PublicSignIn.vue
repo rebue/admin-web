@@ -169,7 +169,8 @@ export default {
                             if (this.redirect) {
                                 window.location.href = this.redirect;
                             } else {
-                                this.$router.push('/base/rac-realm');
+                                window.location.href = `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/${this.appId}/#/base/rac-realm`;
+                                // this.$router.push(`/${this.appId}/#/base/rac-realm`);
                             }
                         })
                         .catch(() => {
