@@ -106,7 +106,6 @@
 
 <script>
 import { observer } from 'mobx-vue';
-import { getAppId } from '@/util/cookie';
 import ProLayout, { SettingDrawer } from '@ant-design-vue/pro-layout';
 import { Ellipsis } from '@/component/ant-design-pro';
 import { i18nRender } from '@/locale';
@@ -129,7 +128,13 @@ export default observer({
         ChangePswdForm,
     },
     data() {
-        const appId = getAppId();
+        const pathname = location.pathname;
+        let appId = '';
+        Object.values(AppIdDic).forEach(val => {
+            if (pathname.endsWith(`/${val}/`)) {
+                appId = val;
+            }
+        });
         if (appId === AppIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
         else if (appId === AppIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
         return {

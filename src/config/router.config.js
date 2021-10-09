@@ -1,4 +1,3 @@
-import { getAppId } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';

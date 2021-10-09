@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
-import { hasJwtToken, getAppId } from '@/util/cookie';
+import { hasJwtToken } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
 import { oapOidcApi } from '@/api/Api';

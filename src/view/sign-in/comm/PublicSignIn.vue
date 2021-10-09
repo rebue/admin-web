@@ -28,7 +28,7 @@
 
 <script>
 import md5 from 'crypto-js/md5';
-import { setAppId } from '@/util/cookie';
+// import { setAppId } from '@/util/cookie';
 import { racSignInApi, racVerifitionApi } from '@/api/Api';
 
 export default {
@@ -165,7 +165,7 @@ export default {
                             console.log('kkkkkk', ro);
                             sessionStorage.removeItem('isNeedCaptcha');
                             this.detail = ro.detail ? ro.detail : false;
-                            setAppId(this.appId);
+                            // setAppId(this.appId);
                             if (this.redirect) {
                                 window.location.href = this.redirect;
                             } else {
