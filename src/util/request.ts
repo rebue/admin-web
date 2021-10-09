@@ -4,6 +4,7 @@ import { isSimulateNetDelay, requestBaseUrl, xHTTPMethodOverride } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
+import { AppIdDic } from '@/dic/AppIdDic';
 
 const codeMessage = {
     ETIMEDOUT: '请求超时，请稍后重试',
@@ -35,14 +36,26 @@ const instance = axios.create({
 // request interceptor
 instance.interceptors.request.use(
     config => {
-        // console.log('request config', config);
+        console.log('request config', config);
+
+        /** 根据路径获取appId, 放到请求头里*/
+        // location.pathname /admin-web/platform-admin-web/   /platform-admin-web/
+        const pathname = location.pathname;
+        let appId = '';
+        Object.values(AppIdDic).forEach(val => {
+            if (pathname.endsWith(`/${val}/`)) {
+                appId = val;
+            }
+        });
+        if (appId) {
+            config.headers['App-Id'] = appId;
+        }
 
         // 是否模拟网络延迟
         if (isSimulateNetDelay) {
             console.log('模拟网络延迟');
             return new Promise(resolve => setTimeout(() => resolve(config), 1000));
         }
-
         // 默认参数序列化方法传递数组参数的时候会缺失索引
         config.paramsSerializer = params => {
             return qs.stringify(params);

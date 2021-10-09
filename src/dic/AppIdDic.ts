@@ -8,4 +8,6 @@ export enum AppIdDic {
     PlatformAdminWeb = 'platform-admin-web',
     /** 运营后台管理 */
     OpsAdminWeb = 'ops-admin-web',
+    /** 统一应用系统 */
+    UnifiedAuth = 'unified-auth',
 }

@@ -8,7 +8,11 @@
                 <public-sign-in :appId="appId" class="form"></public-sign-in>
             </div>
         </div>
-        <div class="footer">相关应用链接: <router-link to="/sign-in/ops">运营管理应用</router-link></div>
+        <div class="footer">
+            相关应用链接:
+            <a :href="opsLoginUrl">运营管理应用</a>
+            <!-- <router-link to="/sign-in/ops">运营管理应用</router-link> -->
+        </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>
 </template>
@@ -28,6 +32,7 @@ export default {
             /** 定义当前登录页面所对应的应用 */
             appId: AppIdDic.PlatformAdminWeb,
             loading: false,
+            opsLoginUrl: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/${AppIdDic.OpsAdminWeb}/#/sign-in/ops`,
         };
     },
     watch: {
