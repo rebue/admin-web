@@ -102,7 +102,7 @@ export default {
                 title: '昵称',
             },
             {
-                dataIndex: 'realmId',
+                dataIndex: 'realmName',
                 title: '领域名称',
             },
             {
@@ -155,11 +155,13 @@ export default {
             if (val) {
                 console.log(val);
                 this.$nextTick(() => {
-                    this.getReamFun();
                     this.refreshData();
                 });
             }
         },
+    },
+    created() {
+        this.getReamFun();
     },
     mounted() {
         // this.manageAddAccountForm = this.$refs.manageAddAccountForm;
@@ -189,14 +191,11 @@ export default {
                 racAccountApi
                     .getUserList(data)
                     .then(ro => {
-                        racRealmApi.listAll().then(res => {
-                            const data = res.extra.list;
-                            this.dataSource = ro.extra.list;
-                            this.dataSource.map((item, index) => {
-                                if (item.realmId == data[index].id) {
-                                    item.realmId = data[index].name;
-                                }
-                            });
+                        this.dataSource = ro.extra.list;
+                        this.dataSource.map((item, index) => {
+                            if (item.realmName == this.fieldData[index].id) {
+                                item.realmName = this.fieldData[index].name;
+                            }
                         });
                     })
                     .finally(() => {
