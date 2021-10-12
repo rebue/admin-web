@@ -91,4 +91,35 @@ export default class RacAccountApi extends BaseCrudApi {
     getUserList(params): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/get-by-user-id', params: params });
     }
+    /**
+     * 查询账号的映射账号列表
+     */
+    getMapAccountList(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-account-by-union-id', params: params });
+    }
+
+    /**
+     * 用于映射账号模块，查询账号列表
+     */
+    getAccountByUser(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-account-by-user', params: params });
+    }
+    /**
+     * 用于映射账号模块，添加账号映射
+     */
+    addUnionMapper(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/add-union-mapper',
+            data,
+        });
+    }
+    /**
+     * 用于映射账号模块，添加账号映射
+     */
+    delUnionMapper(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/del-union-mapper',
+            data,
+        });
+    }
 }

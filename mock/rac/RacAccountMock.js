@@ -27,6 +27,7 @@ const list = [
             '/log/op-log',
             '/user-synchro/account-sy'
         ],
+        unionId:'1'
     },
     {
         id: '2',
@@ -110,9 +111,9 @@ const list = [
             "idType": "af028j",
             "name": "子骞.黎",
             "remark": "hjee2k"
-        }
+        },
+        unionId:'1'
     }
-
 ];
 
 const listRacAccount = () => list;
@@ -294,6 +295,72 @@ module.exports = {
                     "success":true
                 }
             );
-        }
+        },
+        'GET /rac-svr/rac/account/get-account-by-union-id': (req, res, u) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+            // const eo = list.find(item => item.id === params.accountId);
+            const result = list.filter(item => item.unionId === params.unionId);
+            if (result) {
+                return res.json({
+                    result: 1,
+                    msg: '获取映射账户信息成功',
+                    extra: {
+                        list: result
+                    },
+                });
+            } else {
+                return res.json({
+                    result: 1,
+                    msg: '查询失败',
+                });
+            }
+        },
+        'GET /rac-svr/rac/account/get-account-by-user': (req, res, u) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            const { pageNum, pageSize } = params;
+
+            let l = list.filter(item => item.realmId === params.realmId);
+            let total = l.length;
+
+            const begin = (pageNum - 1) * pageSize;
+            const end = begin + (pageSize - 0);
+            l = l.slice(begin, end);
+
+            return res.json({
+                result: 1,
+                msg: '查询列表成功',
+                extra: {
+                    page: {
+                        total,
+                        list: l,
+                    },
+                },
+            });
+        },
+        'POST /rac-svr/rac/account/add-union-mapper': (req, res, u) => {
+            return res.json({
+                result: 1,
+                msg: '添加成功',
+                extra: '',
+            });
+        },
+        'POST /rac-svr/rac/account/del-union-mapper': (req, res, u) => {
+            return res.json({
+                result: 1,
+                msg: '删除成功',
+                extra: '',
+            });
+        },
+        
+        
     },
 };

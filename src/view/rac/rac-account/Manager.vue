@@ -207,12 +207,17 @@ export default {
                     {
                         type: 'a',
                         title: '管理组织',
-                        onClick: record => this.handleManageAccount(record),
+                        onClick: record => this.handleManageOrg(record),
                     },
                     {
                         type: 'a',
                         title: '管理角色',
                         onClick: record => this.handleManageRole(record),
+                    },
+                    {
+                        type: 'a',
+                        title: '映射账号',
+                        onClick: record => this.handleManageAccount(record),
                     },
                     {
                         type: 'a',
@@ -363,7 +368,7 @@ export default {
         /**
          * 处理管理组织事件
          */
-        handleManageAccount(record) {
+        handleManageOrg(record) {
             this.curRecord = record;
             this.manageOrgFormVisible = true;
         },
@@ -373,6 +378,26 @@ export default {
         handleManageRole(record) {
             this.curRecord = record;
             this.manageRoleFormVisible = true;
+        },
+        /**
+         * 处理映射账号事件
+         */
+        handleManageAccount(record) {
+            this.curRecord = record;
+            this.$showDrawer(
+                require('./ManageAccountForm.vue').default,
+                {
+                    data() {
+                        return {
+                            account: record,
+                        };
+                    },
+                },
+                {
+                    title: `账号(${record.signInName})的映射账号`,
+                    width: '50%',
+                }
+            );
         },
         /**
          * 处理代理登录事件
