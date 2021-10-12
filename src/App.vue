@@ -22,6 +22,7 @@ import SvgIcon from '@/component/rebue/SvgIcon.vue';
 // 引入SVG文件资源
 import '@/asset/svg/index';
 import '@/component/rebue/dialog';
+import '@/component/rebue/drawer';
 
 moment.locale('en');
 
