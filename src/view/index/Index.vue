@@ -203,8 +203,17 @@ export default observer({
                         content: '你确定要退出应用吗?',
                         maskClosable: true,
                         onOk: () => {
+                            //当前标签页是被a标签，_blank或者window.open的方式打开，window.close才生效。
+                            //是从统一应用系统a标签，_blank过来的，可以直接window.close关闭标签页
+                            window.close();
+
+                            // 其他情况，如通过平台/运营登录页登录，360能关闭当前标签页。火狐 safai, chrome只是替换了成了空白页
+                            const myWindow = window.open('about:blank', '_self', '', true).close();
+
+                            /** 注释清除cookie
                             removeJwtToken();
                             this.$router.push({ path: '/sign-in' });
+                            */
                         },
                     });
                     break;
