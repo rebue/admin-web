@@ -21,20 +21,6 @@
 import { racAccountApi } from '@/api/Api';
 
 export default {
-    // props: {
-    //     account: {
-    //         type: Object,
-    //         required: false,
-    //     },
-    //     realmId: {
-    //         type: String,
-    //         required: true,
-    //     },
-    //     existOrgIds: {
-    //         type: Array,
-    //         default: () => [],
-    //     },
-    // },
     data() {
         this.api = racAccountApi;
         const columns = [
@@ -62,12 +48,13 @@ export default {
                 pageSizeOptions: ['5', '10', '20', '30'],
                 showSizeChanger: true,
             },
+            //通过弹窗传入accountId，realmId, mapAccountId
             accountId: '',
             realmId: '',
+            mapAccountId: '', //在该领域已经映射过的账号ID
         };
     },
     mounted() {
-        //
         this.$nextTick(() => {
             this.refreshData();
         });
@@ -85,6 +72,7 @@ export default {
                 .getAccountByUser(qo)
                 .then(ro => {
                     this.total = ro.extra.page.total - 0;
+                    // 变更映射时，处理映射的项禁止点击
                     this.dataSource = ro.extra.page.list.map(node => {
                         let flat = false;
                         if (node.id == this.mapAccountId) {
@@ -110,6 +98,7 @@ export default {
             const that = this;
             return {
                 type: 'radio',
+                // 变更映射时，处理映射的项禁止点击
                 getCheckboxProps: item => ({ props: { disabled: item.disabled } }),
                 onSelect(record, selected) {
                     that.handleItemSelect(record, selected);
@@ -119,22 +108,6 @@ export default {
         handleItemSelect(record, selected) {
             this.curRow = selected ? record : null;
         },
-        //  getRowSelection({ disabled, selectedKeys, itemSelectAll, itemSelect }) {
-        //     return {
-        //         getCheckboxProps: item => ({ props: { disabled: disabled || item.disabled } }),
-        //         onSelectAll(selected, selectedRows) {
-        //             const treeSelectedKeys = selectedRows.filter(item => !item.disabled).map(({ key }) => key);
-        //             const diffKeys = selected
-        //                 ? difference(treeSelectedKeys, selectedKeys)
-        //                 : difference(selectedKeys, treeSelectedKeys);
-        //             itemSelectAll(diffKeys, selected);
-        //         },
-        //         onSelect({ key }, selected) {
-        //             itemSelect(key, selected);
-        //         },
-        //         selectedRowKeys: selectedKeys,
-        //     };
-        // },
         /**
          * 添加
          */

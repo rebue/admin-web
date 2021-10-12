@@ -60,12 +60,12 @@ export default {
             realmList: [],
             dataSource: [],
             columns,
+            // 通过弹出传入account
             account: {},
         };
     },
     computed: {},
     mounted() {
-        console.log('---ddd');
         this.unionId = this.account.unionId;
         this.refreshData();
     },
@@ -75,7 +75,7 @@ export default {
             this.loading = true;
             try {
                 await racRealmApi.listAll().then(res => {
-                    //过滤掉
+                    //过滤掉操作账号对应领域
                     const realmList = res.extra.list.filter(v => {
                         return v.id != this.account.realmId;
                     });
@@ -101,20 +101,16 @@ export default {
                         const result = JSON.parse(JSON.stringify(this.dataSource));
                         this.realmList.forEach((v, index) => {
                             const item = mapAccountList.find(account => {
-                                console.log('----account', account);
                                 return v.id == account.realmId;
                             });
                             if (item) {
-                                console.log('----item', item);
                                 result[index] = {
                                     ...result[index],
                                     ...item,
                                 };
                             }
                         });
-                        console.log('----result', result);
                         this.dataSource = result;
-                        console.log('-----this.dataSource', this.dataSource);
                     });
                 } catch {
                     this.loading = false;
@@ -195,8 +191,3 @@ export default {
     },
 };
 </script>
-<style lang="less" scoped>
-.defaultRow {
-    font-weight: bolder;
-}
-</style>
