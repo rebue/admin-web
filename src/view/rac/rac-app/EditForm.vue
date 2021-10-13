@@ -18,6 +18,21 @@
                 <a-form-model-item label="名称" prop="name">
                     <a-input v-model.trim="model.name" />
                 </a-form-model-item>
+                <a-form-model-item label="认证">
+                    <a-select placeholder="请选择应用" v-model="model.authnType">
+                        <a-select-option v-for="(item, index) in autoEnable" :key="index" :value="index">
+                            {{ item }}
+                        </a-select-option>
+                    </a-select>
+                    <!-- <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked /> -->
+                </a-form-model-item>
+                <a-form-model-item label="标签">
+                    <a-select mode="multiple" v-model="model.dicItemIds" showArrow>
+                        <a-select-option v-for="(item, index) in labelSelect" :key="index" :value="item.id">
+                            {{ item.name }}
+                        </a-select-option>
+                    </a-select>
+                </a-form-model-item>
                 <a-form-model-item label="URL" prop="url">
                     <a-input v-model.trim="model.url" />
                 </a-form-model-item>
@@ -75,7 +90,7 @@
 
 <script>
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racAppApi } from '@/api/Api';
+import { racAppApi, racDicApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
 import { message } from 'ant-design-vue';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
@@ -124,9 +139,29 @@ export default {
             params: {
                 orignFileName: '',
             },
+            labelSelect: [],
+            autoEnable: ['未认证', '共用cookie（内部系统）', '授权码', '凭证'],
         };
     },
     methods: {
+        /**请求标签下拉框内容 */
+        getRacDicApiFun() {
+            racDicApi.page().then(ro => {
+                const data = ro.extra.page.list,
+                    newArray = [];
+                data.map(item => {
+                    if (item.dicKey == 'ApplyLabel') {
+                        item.children.map(childItem => {
+                            newArray.push({
+                                name: childItem.name,
+                                id: childItem.id,
+                            });
+                        });
+                    }
+                });
+                this.labelSelect = newArray;
+            });
+        },
         //点击显示上传图片组件
         uploadClick() {
             this.showImageUploader = true;
@@ -177,7 +212,7 @@ export default {
                 ...modelSource,
                 ...record,
             };
-
+            this.getRacDicApiFun();
             this.visible = true;
         },
         handleShow() {
@@ -189,9 +224,15 @@ export default {
                     this.api
                         .getById(this.model.id)
                         .then(ro => {
+                            const dicItemIds = [];
+                            ro.extra.one.appLabelList?.map(item => {
+                                dicItemIds.push(item.id);
+                            });
                             this.model = {
                                 ...ro.extra.one,
+                                dicItemIds,
                             };
+                            console.log(this.model);
                             // 图片初始化
                             this.logoURL = ro.extra.one?.obj?.url;
                         })

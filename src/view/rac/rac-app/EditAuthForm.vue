@@ -16,7 +16,12 @@
                     <a-input :value="model.appName" disabled />
                 </a-form-model-item>
                 <a-form-model-item label="认证">
-                    <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked />
+                    <a-select placeholder="请选择应用" v-model="model.authnType">
+                        <a-select-option v-for="(item, index) in autoEnable" :key="index" :value="index">
+                            {{ item }}
+                        </a-select-option>
+                    </a-select>
+                    <!-- <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked /> -->
                 </a-form-model-item>
                 <a-form-model-item label="应用ID(clientId)" prop="clientId">
                     <a-input v-model.trim="model['clientId']" disabled style="width:85%" />
@@ -142,6 +147,7 @@ export default {
                 // ],
             },
             enable: true, // false不认证：表单域会disabled, 表单清除校验，禁用点击添加和删除
+            autoEnable: ['未认证', '共用cookie', 'OIDC/OAuth', 'CAS'],
         };
     },
     computed: {
