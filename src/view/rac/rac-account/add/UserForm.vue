@@ -1,6 +1,6 @@
 <template>
     <a-spin :spinning="loading">
-        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+        <a-form-model ref="userForm" :model="model" :rules="rules" v-bind="formLayout">
             <a-form-model-item label="姓名" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />
             </a-form-model-item>
@@ -116,7 +116,7 @@ export default {
         },
         ok(e, successFn) {
             this.loading = true;
-            this.$refs.form.validate(valid => {
+            this.$refs.userForm.validate(valid => {
                 if (valid) {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         return this.api
