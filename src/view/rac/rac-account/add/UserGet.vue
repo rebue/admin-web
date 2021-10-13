@@ -1,47 +1,32 @@
 <template>
-    <a-spin :spinning="loading">
-        <a-row>
-            <a-col>
-                <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-                    <a-form-model-item label="姓名" prop="realName" key="realName">
-                        <a-input v-model.trim="model.realName" placeholder="" />
-                    </a-form-model-item>
-                    <a-form-model-item label="身份证号" prop="idCard" key="idCard">
-                        <a-input v-model.trim="model.idCard" placeholder="" />
-                    </a-form-model-item>
-                    <a-form-model-item :wrapperCol="{ span: 13, offset: 7 }">
-                        <a-button type="primary" @click="ok">查询</a-button>
-                    </a-form-model-item>
-                </a-form-model>
-            </a-col>
-            <a-col class="detail-wrap" v-if="detail.id">
-                <a-row class="item">
-                    <a-col :span="7" class="label">姓名：</a-col>
-                    <a-col :span="17" class="value">{{ detail.realName }}</a-col>
-                </a-row>
-                <a-row class="item">
-                    <a-col :span="7" class="label">身份证号：</a-col>
-                    <a-col :span="17" class="value">{{ detail.idCard }}</a-col>
-                </a-row>
-                <a-row class="item">
-                    <a-col :span="7" class="label">性别：</a-col>
-                    <a-col :span="17" class="value">{{ detail.sex == 1 ? '男' : '女' }}</a-col>
-                </a-row>
-                <a-row class="item">
-                    <a-col :span="7" class="label">手机号码：</a-col>
-                    <a-col :span="17" class="value">{{ detail.mobile }}</a-col>
-                </a-row>
-                <a-row class="item">
-                    <a-col :span="7" class="label">电子邮箱：</a-col>
-                    <a-col :span="17" class="value">{{ detail.email }}</a-col>
-                </a-row>
-            </a-col>
-        </a-row>
-    </a-spin>
+    <fragment>
+        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+            <a-form-model-item label="" prop="userId" key="userId">
+                <p style="font-weight: bold; font-size: 15px;margin-bottom:0">请查询并选择用户</p>
+                <a-select
+                    show-search
+                    label-in-value
+                    :value="model.userId"
+                    placeholder="请输入姓名,身份证号查询"
+                    style="width: 100%"
+                    :filter-option="false"
+                    :not-found-content="loading ? undefined : '暂无数据，请再次查询'"
+                    @search="fetchUser"
+                    @change="handleChange"
+                >
+                    <a-spin v-if="loading" slot="notFoundContent" size="small" />
+                    <a-select-option v-for="d in dataSource" :value="d.id" :key="d.id">
+                        {{ d.realName }} {{ d.idCard ? `(${d.idCard})` : '' }}
+                    </a-select-option>
+                </a-select>
+            </a-form-model-item>
+        </a-form-model>
+    </fragment>
 </template>
 <script>
 import { racUserApi } from '@/api/Api';
-import { isIdCard } from '@/util/validator';
+import debounce from 'lodash/debounce';
+
 export default {
     props: {
         callback: {
@@ -52,80 +37,54 @@ export default {
         this.formLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 7 },
+                // sm: { span: 7 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 13 },
+                sm: { span: 14, offset: 5 },
             },
         };
         this.api = racUserApi;
+        this.fetchUser = debounce(this.fetchUser, 800);
         return {
             model: {
-                realName: '',
-                idCard: '',
+                userId: undefined,
             },
             rules: {
-                realName: [
-                    { required: true, message: '请输入姓名', trigger: 'blur', transform: val => val && val.trim() },
-                ],
-                idCard: [
-                    {
-                        required: true,
-                        message: '请输入身份证号',
-                        trigger: 'blur',
-                        transform: val => val && val.trim(),
-                    },
-                    {
-                        validator: (rule, value, callback) => {
-                            if (!isIdCard(value)) {
-                                callback(new Error('身份证号不合法'));
-                                return false;
-                            }
-                            callback();
-                        },
-                    },
-                ],
+                userId: [{ required: true, message: '请输入姓名,身份证号查询', trigger: 'change' }],
             },
             loading: false,
-            detail: {},
+            dataSource: [],
         };
     },
     methods: {
+        fetchUser(value) {
+            this.dataSource = [];
+            this.loading = true;
+            this.api
+                .page({
+                    // pageNum: 1
+                    // pageSize: 10
+                    keywords: value,
+                })
+                .then(ro => {
+                    this.dataSource = ro.extra.page.list;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        handleChange(value) {
+            this.model.userId = value;
+            this.dataSource = [];
+            this.loading = false;
+        },
         validate() {
             let valid = false;
             this.$refs.form.validate(val => {
                 valid = val;
             });
             return valid;
-        },
-        ok(e, successFn) {
-            this.loading = true;
-            this.$refs.form.validate(valid => {
-                if (valid) {
-                    //查询信息
-                    return this.api
-                        .getByRealNameAndIdCard({ ...this.model })
-                        .then(ro => {
-                            if (ro.extra) {
-                                this.detail = ro.extra;
-                            } else {
-                                this.detail = {};
-                                this.$message.error('未查询到该用户');
-                            }
-                            this.callback && this.callback(ro);
-                            successFn && successFn(ro);
-                        })
-                        .finally(() => {
-                            this.loading = false;
-                        });
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
-                }
-            });
         },
     },
 };

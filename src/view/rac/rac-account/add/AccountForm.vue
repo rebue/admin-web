@@ -166,6 +166,13 @@ export default {
                     });
             }
         },
+        validate() {
+            let valid = false;
+            this.$refs.accountEditform.validate(val => {
+                valid = val;
+            });
+            return valid;
+        },
         ok(e, successFn) {
             this.loading = true;
             this.$refs.accountEditform.validate(valid => {
