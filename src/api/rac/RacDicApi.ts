@@ -37,17 +37,25 @@ export default class RacDicApi extends BaseCrudApi {
                                 const substring = itemList[j].treeCode.substring(0, len);
                                 //树编码相同则添加
                                 if (itemList[i].treeCode === substring) {
-                                    //没有childern属性则添加
                                     if (!itemList[i].children) {
                                         itemList[i].children = [];
                                     }
                                     itemList[i].children?.push(itemList[j]);
+
                                     continue;
                                 }
                             }
                         }
                     }
+                    const children = itemList[i].children;
+                    if (children) {
+                        const maxSeqNo = children?.length;
+                        children[maxSeqNo - 1].maxSeqNo = maxSeqNo - 1;
+                    }
                 }
+                itemList.map(item => {
+                    item.seqNo = Number(item.treeCode.slice(-3));
+                });
             }
             // 将字典项加入字典中
             for (const dicItem of itemList as RacDicItemMo[]) {
@@ -59,12 +67,18 @@ export default class RacDicApi extends BaseCrudApi {
                     }
                 }
             }
+            dicList?.map((item, index) => {
+                const childrenList = item.children;
+                if (childrenList) {
+                    const maxSeqNo = childrenList?.length;
+                    childrenList[maxSeqNo - 1].maxSeqNo = maxSeqNo - 1;
+                }
+            });
             // 删除转换前的属性
             delete extra.dicList;
             delete extra.itemList;
             extra.page.list = list;
-            console.log(ro);
-
+            console.log(list);
             return ro;
         });
     }

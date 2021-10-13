@@ -14,4 +14,8 @@ export class RacDicItemMo {
     remark = '';
     /** 字典项列表 */
     children?: RacDicItemMo[];
+    /** 字典项列最大值 */
+    maxSeqNo: number | undefined;
+    /**当前字典项顺序 */
+    seqNo: number | undefined;
 }

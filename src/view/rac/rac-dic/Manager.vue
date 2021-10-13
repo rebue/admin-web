@@ -12,6 +12,8 @@
                     :scrollY="600"
                     :expandable="true"
                     :showKeywords="true"
+                    @moveUp="handleMoveUp"
+                    @moveDown="handleMoveDown"
                 >
                 </crud-table>
             </template>
@@ -25,7 +27,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import EditDicItemForm from './EditDicItemForm.vue';
 import EditForm from './EditForm.vue';
-import CrudTable from '@/component/rebue/CrudTable.vue';
+import CrudTable from './dicCrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDicApi, racDicItemApi, racAppApi, racRealmApi } from '@/api/Api';
 
@@ -186,6 +188,14 @@ export default {
                         }
                     },
                 },
+                {
+                    dataIndex: 'sort',
+                    align: 'center',
+                    title: '排序',
+                    width: 100,
+                    fixed: 'right',
+                    scopedSlots: { customRender: 'sort' },
+                },
             ];
         },
     },
@@ -273,6 +283,24 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        /**
+         * 上移
+         */
+        handleMoveUp(record) {
+            this.loading = true;
+            racDicItemApi.moveUp(record.id).finally(() => {
+                this.refreshTableData();
+            });
+        },
+        /**
+         * 下移
+         */
+        handleMoveDown(record) {
+            this.loading = true;
+            racDicItemApi.moveDown(record.id).finally(() => {
+                this.refreshTableData();
+            });
         },
     },
 };

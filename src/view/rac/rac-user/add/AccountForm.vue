@@ -42,7 +42,6 @@
             <a-form-model-item label="组织ID" prop="orgId" v-show="false">
                 <a-input v-model.trim="model.orgId" placeholder="" />
             </a-form-model-item>
-
             <a-form-model-item :wrapperCol="{ span: 13, offset: 7 }">
                 <a-button type="primary" @click="ok">提交</a-button>
             </a-form-model-item>
@@ -167,7 +166,6 @@ export default {
             });
         },
         ok(e, successFn) {
-            console.log(this.model);
             this.loading = true;
             this.$refs.accountEditform.validate(valid => {
                 if (valid) {
