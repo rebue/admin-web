@@ -1,6 +1,6 @@
 <template>
     <a-spin :spinning="loading">
-        <a-divider style="margin-bottom:30px">关联新建用户</a-divider>
+        <!-- <a-divider style="margin-bottom:30px">关联新建用户</a-divider> -->
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
             <a-form-model-item label="姓名" prop="realName" key="realName">
                 <a-input v-model.trim="model.realName" placeholder="" />

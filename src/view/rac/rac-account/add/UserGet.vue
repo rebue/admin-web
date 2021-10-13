@@ -1,16 +1,16 @@
 <template>
     <fragment>
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item label="" prop="userId" key="userId">
-                <p style="font-weight: bold; font-size: 15px;margin-bottom:0">请查询并选择用户</p>
+            <a-form-model-item label="关联用户" key="userId">
+                <!-- <p style="font-weight: bold; font-size: 15px;margin-bottom:0">请查询并选择用户</p> -->
                 <a-select
                     show-search
                     label-in-value
                     :value="model.userId"
-                    placeholder="请输入姓名,身份证号查询"
+                    placeholder="请输入 姓名 或 身份证号 查询并点选用户"
                     style="width: 100%"
                     :filter-option="false"
-                    :not-found-content="loading ? undefined : '暂无数据，请再次查询'"
+                    :not-found-content="loading ? undefined : '暂无数据'"
                     @search="fetchUser"
                     @change="handleChange"
                 >
@@ -28,20 +28,15 @@ import { racUserApi } from '@/api/Api';
 import debounce from 'lodash/debounce';
 
 export default {
-    props: {
-        callback: {
-            type: Function,
-        },
-    },
     data() {
         this.formLayout = {
             labelCol: {
                 xs: { span: 24 },
-                // sm: { span: 7 },
+                sm: { span: 7 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 14, offset: 5 },
+                sm: { span: 13 },
             },
         };
         this.api = racUserApi;
@@ -49,9 +44,6 @@ export default {
         return {
             model: {
                 userId: undefined,
-            },
-            rules: {
-                userId: [{ required: true, message: '请输入姓名,身份证号查询', trigger: 'change' }],
             },
             loading: false,
             dataSource: [],
