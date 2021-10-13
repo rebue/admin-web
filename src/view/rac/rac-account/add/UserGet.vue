@@ -1,13 +1,13 @@
 <template>
     <fragment>
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item label="关联用户" key="userId">
+            <a-form-model-item label="选择用户" prop="userId" key="userId">
                 <!-- <p style="font-weight: bold; font-size: 15px;margin-bottom:0">请查询并选择用户</p> -->
                 <a-select
                     show-search
                     label-in-value
                     :value="model.userId"
-                    placeholder="请输入 姓名 或 身份证号 查询并点选用户"
+                    placeholder="请输入 姓名 或 身份证号 查询"
                     style="width: 100%"
                     :filter-option="false"
                     :not-found-content="loading ? undefined : '暂无数据'"
@@ -44,6 +44,9 @@ export default {
         return {
             model: {
                 userId: undefined,
+            },
+            rules: {
+                userId: [{ required: true, message: '请输入 姓名 或者 身份证号 查询', trigger: 'change' }],
             },
             loading: false,
             dataSource: [],

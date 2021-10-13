@@ -1,7 +1,7 @@
 <template>
     <div class="account-add-user-index-wrap">
         <a-steps :current="current" class="steps">
-            <a-step v-for="item in steps" :key="item.title" :title="item.title" />
+            <a-step v-for="item in steps" :key="item" :title="item" />
         </a-steps>
         <div class="panel">
             <!-- 第一步 账户 -->
@@ -17,52 +17,38 @@
             </div>
             <!-- 第二步 用户 -->
             <div class="steps-content bind-user" v-show="current == 1">
-                <template v-if="activeTab.includes('add-tab')">
-                    <div class="form">
-                        <user-form ref="userForm" :key="activeTab" :inline="true" />
-                        <a-col :span="13" :offset="7">
-                            <a-button
-                                size="small"
-                                type="link"
-                                icon="retweet"
-                                @click="changeActiveTab('choose-tab')"
-                                style="float:right;"
-                                >去选择用户</a-button
+                <div class="ant-form form">
+                    <a-row class="ant-form-item">
+                        <a-col :span="7" class="ant-form-item-label"><label>关联方式</label></a-col>
+                        <a-col :span="17" class="ant-form-item-control-wrapper">
+                            <a-radio-group
+                                button-style="solid"
+                                v-model="radioVal"
+                                @change="changeActiveTab($event.target.value)"
                             >
+                                <a-radio-button value="no-tab">
+                                    不关联用户
+                                </a-radio-button>
+                                <a-radio-button value="choose-tab">
+                                    关联已存在用户
+                                </a-radio-button>
+                                <a-radio-button value="add-tab">
+                                    关联新建用户
+                                </a-radio-button>
+                            </a-radio-group>
                         </a-col>
-                    </div>
-                    <div class="steps-action ant-modal-footer">
-                        <a-button @click="prev">
-                            上一步
-                        </a-button>
-                        <a-button type="primary" @click="submitAddUser">
-                            提交
-                        </a-button>
-                    </div>
-                </template>
-                <template v-else>
-                    <div class="form">
-                        <user-get ref="selectedUserForm" :key="activeTab" />
-                        <a-col :span="13" :offset="7">
-                            <a-button
-                                size="small"
-                                type="link"
-                                icon="retweet"
-                                @click="changeActiveTab('add-tab')"
-                                style="float:right"
-                                >去新建用户</a-button
-                            >
-                        </a-col>
-                    </div>
-                    <div class="steps-action ant-modal-footer">
-                        <a-button @click="prev">
-                            上一步
-                        </a-button>
-                        <a-button type="primary" @click="submitSelectedUser">
-                            提交
-                        </a-button>
-                    </div>
-                </template>
+                    </a-row>
+                    <user-get ref="selectedUserForm" :key="activeTab" v-if="activeTab.includes('choose-tab')" />
+                    <user-form ref="userForm" :key="activeTab" :inline="true" v-if="activeTab.includes('add-tab')" />
+                </div>
+                <div class="steps-action ant-modal-footer">
+                    <a-button @click="prev">
+                        上一步
+                    </a-button>
+                    <a-button type="primary" @click="submit">
+                        提交
+                    </a-button>
+                </div>
             </div>
 
             <!-- 第三步 完成 -->
@@ -91,20 +77,16 @@ export default {
     data() {
         return {
             current: 0,
-            steps: [
-                {
-                    title: '账户',
-                },
-                {
-                    title: '用户',
-                },
-                {
-                    title: '完成',
-                },
-            ],
+            steps: ['账户', '用户', '完成'],
             userId: '',
-            activeTab: 'choose-tab',
+            radioVal: 'no-tab',
+            activeTab: 'no-tab',
             loading: true,
+            radioStyle: {
+                display: 'block',
+                height: '30px',
+                lineHeight: '30px',
+            },
         };
     },
     computed: {
@@ -124,10 +106,12 @@ export default {
         prev() {
             this.current--;
         },
-        changeActiveTab(val) {
+        changeActiveTab(value) {
             this.userId = '';
-            this.activeTab = val + new Date(); //用做tab key
+            this.radioVal = value;
+            this.activeTab = value + new Date(); //用做tab key
         },
+        //新建用户提交
         submitAddUser() {
             this.$refs.userForm.ok(null, ro => {
                 this.userId = ro.extra ? ro.extra.id : '';
@@ -137,15 +121,19 @@ export default {
                 }
             });
         },
+        //选择用户提交
         submitSelectedUser() {
-            this.userId = this.$refs.selectedUserForm.model.userId;
-            this.submitAccount();
+            const valid = this.$refs.selectedUserForm.validate();
+            if (valid) {
+                this.userId = this.$refs.selectedUserForm.model.userId;
+                this.submitAccount();
+            }
         },
         // 校验账号表单
         validateAccount() {
             const valid = this.$refs.accountForm.validate();
             if (valid) {
-                this.changeActiveTab('choose-tab');
+                this.changeActiveTab('no-tab');
                 this.next();
             }
         },
@@ -157,6 +145,19 @@ export default {
                 }, 1000);
                 this.next();
             });
+        },
+        submit() {
+            switch (this.radioVal) {
+                case 'no-tab':
+                    this.submitAccount();
+                    break;
+                case 'choose-tab':
+                    this.submitSelectedUser();
+                    break;
+                case 'add-tab':
+                    this.submitAddUser();
+                    break;
+            }
         },
     },
 };
@@ -188,11 +189,13 @@ export default {
 
 .bind-user .form {
     margin: 50px 50px 70px;
+    min-height: 300px;
 }
 .add-account .form {
     margin: 50px 0;
 }
 .finish-wrap .result {
     margin: 50px 10px;
+    min-height: 300px;
 }
 </style>
