@@ -2,7 +2,6 @@
     <fragment>
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
             <a-form-model-item label="选择用户" prop="userId" key="userId">
-                <!-- <p style="font-weight: bold; font-size: 15px;margin-bottom:0">请查询并选择用户</p> -->
                 <a-select
                     show-search
                     label-in-value

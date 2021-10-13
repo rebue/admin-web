@@ -10,9 +10,7 @@
                     <account-form ref="accountForm" key="accountForm" :extraModel="extraModel" />
                 </div>
                 <div class="steps-action ant-modal-footer">
-                    <a-button type="primary" @click="validateAccount">
-                        下一步
-                    </a-button>
+                    <a-button type="primary" @click="validateAccount">下一步</a-button>
                 </div>
             </div>
             <!-- 第二步 用户 -->
@@ -28,15 +26,9 @@
                                 v-model="radioVal"
                                 @change="changeActiveTab($event.target.value)"
                             >
-                                <a-radio-button value="no-tab">
-                                    不关联用户
-                                </a-radio-button>
-                                <a-radio-button value="choose-tab">
-                                    关联已存在用户
-                                </a-radio-button>
-                                <a-radio-button value="add-tab">
-                                    关联新建用户
-                                </a-radio-button>
+                                <a-radio-button value="no-tab">不关联用户</a-radio-button>
+                                <a-radio-button value="choose-tab">关联已存在用户</a-radio-button>
+                                <a-radio-button value="add-tab">关联新建用户</a-radio-button>
                             </a-radio-group>
                         </a-col>
                     </a-row>
@@ -44,12 +36,8 @@
                     <user-form ref="userForm" :key="activeTab" :inline="true" v-if="activeTab.includes('add-tab')" />
                 </div>
                 <div class="steps-action ant-modal-footer">
-                    <a-button @click="prev">
-                        上一步
-                    </a-button>
-                    <a-button type="primary" @click="submit">
-                        提交
-                    </a-button>
+                    <a-button @click="prev">上一步</a-button>
+                    <a-button type="primary" @click="submit">提交</a-button>
                 </div>
             </div>
 
@@ -61,9 +49,7 @@
                     </template>
                 </a-result>
                 <div class="steps-action ant-modal-footer">
-                    <a-button type="primary" @click="closeDialog">
-                        完成
-                    </a-button>
+                    <a-button type="primary" @click="closeDialog">完成</a-button>
                 </div>
             </div>
         </div>

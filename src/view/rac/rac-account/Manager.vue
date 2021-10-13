@@ -357,13 +357,6 @@ export default {
                     wrapClassName: 'account-add-dialog-wrap',
                 }
             );
-            // this.crudTable.expand(record.id);
-            // this.editForm.show(EditFormTypeDic.Add, {
-            //     orgId: this.curOrgId,
-            //     realmId: this.curRealmId,
-            //     groupId: record.id,
-            //     isTester: false,
-            // });
         },
         /**
          * 处理管理组织事件
