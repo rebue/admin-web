@@ -18,9 +18,11 @@
             <!-- 第二步 用户 -->
             <div class="steps-content bind-user" v-show="current == 1">
                 <div class="ant-form form">
-                    <a-row class="ant-form-item">
-                        <a-col :span="7" class="ant-form-item-label"><label>关联方式</label></a-col>
-                        <a-col :span="17" class="ant-form-item-control-wrapper">
+                    <a-row type="flex" align="middle" class="ant-form-item">
+                        <a-col :span="7" class="ant-form-item-label"
+                            ><label class="ant-form-item-required">关联方式</label></a-col
+                        >
+                        <a-col :span="17">
                             <a-radio-group
                                 button-style="solid"
                                 v-model="radioVal"
@@ -80,13 +82,9 @@ export default {
             steps: ['账户', '用户', '完成'],
             userId: '',
             radioVal: 'no-tab',
+            // activeTab用与重置表单
             activeTab: 'no-tab',
             loading: true,
-            radioStyle: {
-                display: 'block',
-                height: '30px',
-                lineHeight: '30px',
-            },
         };
     },
     computed: {
