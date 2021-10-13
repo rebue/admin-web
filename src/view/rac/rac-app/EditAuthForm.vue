@@ -147,7 +147,7 @@ export default {
                 // ],
             },
             enable: true, // false不认证：表单域会disabled, 表单清除校验，禁用点击添加和删除
-            autoEnable: ['未认证', '共用cookie', 'OIDC/OAuth', 'CAS'],
+            autoEnable: ['未认证', '共用cookie（内部系统）', '授权码', '凭证'],
         };
     },
     computed: {
@@ -233,9 +233,11 @@ export default {
                     this.api
                         .getByAppId(this.model.appId)
                         .then(ro => {
+                            const authnType = ro.extra.racAppMo.authnType;
                             this.model = {
                                 ...JSON.parse(JSON.stringify(this.model)),
                                 ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
+                                authnType,
                             };
                             this.secretShow = false;
                         })

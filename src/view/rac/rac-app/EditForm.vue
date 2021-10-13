@@ -18,14 +18,6 @@
                 <a-form-model-item label="名称" prop="name">
                     <a-input v-model.trim="model.name" />
                 </a-form-model-item>
-                <a-form-model-item label="认证">
-                    <a-select placeholder="请选择应用" v-model="model.authnType">
-                        <a-select-option v-for="(item, index) in autoEnable" :key="index" :value="index">
-                            {{ item }}
-                        </a-select-option>
-                    </a-select>
-                    <!-- <a-switch v-model="enable" checked-children="认证" un-checked-children="不认证" default-checked /> -->
-                </a-form-model-item>
                 <a-form-model-item label="标签">
                     <a-select mode="multiple" v-model="model.dicItemIds" showArrow>
                         <a-select-option v-for="(item, index) in labelSelect" :key="index" :value="item.id">
@@ -253,7 +245,8 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //处理重定向URL，IP白名单
-                    const data = { ...this.model };
+                    const authnType = 0;
+                    const data = { ...this.model, authnType };
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
                             .add(data)
