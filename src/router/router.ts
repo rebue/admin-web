@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
 import { hasJwtToken } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
-
 import { oapOidcApi } from '@/api/Api';
+import { getAppIdByUrl } from '@/util/common';
 
 Vue.use(VueRouter);
 
@@ -47,6 +47,14 @@ router.beforeEach(async (to, from, next) => {
 
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
+
+    // 当前页面路径没有appId的话去404页面
+    const appId = getAppIdByUrl();
+    if (!appId && to.path != '/404') {
+        next('/404');
+        return;
+    }
+
     console.log('---to.path', to.path);
     //白名单免登录
     if (uncheckJwtTokenPaths.find(path => to.path.startsWith(path))) {
