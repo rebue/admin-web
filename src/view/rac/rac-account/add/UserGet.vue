@@ -57,7 +57,7 @@ export default {
             this.api
                 .page({
                     // pageNum: 1
-                    // pageSize: 10
+                    pageSize: 100,
                     keywords: value,
                 })
                 .then(ro => {
