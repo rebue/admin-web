@@ -90,6 +90,7 @@ export default {
     },
     data() {
         this.width = 550;
+        const that = this;
         const columns = [
             {
                 dataIndex: 'signInName',
@@ -102,8 +103,15 @@ export default {
                 title: '昵称',
             },
             {
-                dataIndex: 'realmName',
+                dataIndex: 'realmId',
                 title: '领域名称',
+                customRender: text => {
+                    for (const v of that.realmList) {
+                        if (v.id == text) {
+                            return v.name;
+                        }
+                    }
+                },
             },
             {
                 dataIndex: 'action',
@@ -138,7 +146,7 @@ export default {
         return {
             loading: false,
             dataSource: [],
-            fieldData: [],
+            realmList: [],
             existAccountIds: [],
             columns,
             showAccount: false,
@@ -161,24 +169,16 @@ export default {
         },
     },
     created() {
-        this.getReamFun();
+        this.getRealmList();
     },
     mounted() {
         // this.manageAddAccountForm = this.$refs.manageAddAccountForm;
         // this.managerModifyAccountForm = this.$refs.managerModifyAccountForm;
     },
     methods: {
-        getReamFun() {
+        getRealmList() {
             racRealmApi.listAll().then(ro => {
-                const data = ro.extra.list;
-                const newArray = [];
-                data.map(item => {
-                    newArray.push({
-                        name: item.name,
-                        value: item.id,
-                    });
-                });
-                this.fieldData = newArray;
+                this.realmList = ro.extra.list;
             });
         },
         /** 刷新数据 */
@@ -192,12 +192,6 @@ export default {
                     .getUserList(data)
                     .then(ro => {
                         this.dataSource = ro.extra.list;
-                        this.dataSource.map((item, index) => {
-                            console.log(item);
-                            if (item.realmId == this.fieldData[index].value) {
-                                item.realmName = this.fieldData[index].name;
-                            }
-                        });
                     })
                     .finally(() => {
                         this.existAccountIds = [];
