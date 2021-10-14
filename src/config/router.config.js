@@ -245,7 +245,7 @@ export const constantRouters = [
             {
                 path: '/user-synchro',
                 name: 'user-synchro',
-                meta: { title: '账号同步', keepAlive: true, icon: 'ant-design' },
+                meta: { title: '数据管理', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
                 redirect: '/user-synchro/account-sy',
@@ -255,7 +255,7 @@ export const constantRouters = [
                         name: 'account-sy',
                         component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
                         hidden: true,
-                        meta: { title: '策略', keepAlive: true, icon: 'apartment' },
+                        meta: { title: '同步策略', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },
