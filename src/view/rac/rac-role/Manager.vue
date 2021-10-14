@@ -23,6 +23,7 @@
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-perm-form :role.sync="curRole" :visible.sync="managePermFormVisible" @close="handleEditFormClose" />
+        <manage-app-form :role.sync="curRole" :visible.sync="manageAppFormVisible" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -33,6 +34,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racRealmApi, racRoleApi } from '@/api/Api';
 import ManagePermForm from './ManagePermForm.vue';
+import ManageAppForm from './ManageAppForm.vue';
 
 export default {
     name: 'Manager',
@@ -41,6 +43,7 @@ export default {
         EditForm,
         CrudTable,
         ManagePermForm,
+        ManageAppForm,
     },
     data() {
         this.api = racRoleApi;
@@ -117,6 +120,11 @@ export default {
                         title: '管理权限',
                         onClick: record => this.handleManagePerm(record),
                     },
+                    {
+                        type: 'a',
+                        title: '管理应用',
+                        onClick: record => this.handleManageApp(record),
+                    },
                 ],
             },
         ];
@@ -127,6 +135,7 @@ export default {
             realms: [],
             columns,
             managePermFormVisible: false,
+            manageAppFormVisible: false,
             curRole: {},
         };
     },
@@ -226,6 +235,13 @@ export default {
         handleManagePerm(record) {
             this.curRole = record;
             this.managePermFormVisible = true;
+        },
+        /**
+         * 处理管理应用的事件
+         */
+        handleManageApp(record) {
+            this.curRole = record;
+            this.manageAppFormVisible = true;
         },
         /**
          * 关闭时触发

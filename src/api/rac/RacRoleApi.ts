@@ -56,4 +56,17 @@ export default class RacRoleApi extends BaseCrudApi {
     listTransferOfRole(qo): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/listTransferOfRole', params: qo });
     }
+
+    /**
+     * 添加角色授权应用
+     */
+    addRoleApp(mo): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/add-role-app', data: mo });
+    }
+    /**
+     * 查询角色已存在的应用关系
+     */
+    listRoleApp(roleId: string): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/list-role-app?roleId=' + roleId });
+    }
 }
