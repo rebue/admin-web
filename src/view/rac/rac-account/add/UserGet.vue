@@ -67,10 +67,7 @@ export default {
                     this.loading = false;
                 });
         },
-        handleChange(value) {
-            this.dataSource = this.dataSource.filter(v => {
-                return v.id == value;
-            });
+        handleChange() {
             this.loading = false;
         },
         validate() {
