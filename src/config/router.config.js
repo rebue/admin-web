@@ -1,6 +1,7 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
+import { getAppIdByUrl } from '@/util/common';
 
 const RouteView = {
     name: 'RouteView',
@@ -24,13 +25,7 @@ export const constantRouters = [
         name: 'sign-in',
         component: RouteView,
         redirect: () => {
-            const pathname = location.pathname;
-            let appId = '';
-            Object.values(AppIdDic).forEach(val => {
-                if (pathname.endsWith(`/${val}/`)) {
-                    appId = val;
-                }
-            });
+            const appId = getAppIdByUrl();
             switch (appId) {
                 case AppIdDic.PlatformAdminWeb:
                     return '/sign-in/platform';
