@@ -92,6 +92,7 @@
             :width="180"
             :height="180"
             :noRotate="false"
+            :headers="{ 'App-Id': getAppIdByUrl() }"
             url="/rac-svr/rac/account/upload-avatar"
             @crop-upload-success="handleCropUploadSuccess"
             @crop-upload-fail="handleCropUploadFail"
@@ -168,6 +169,9 @@ export default observer({
         this.refreshAccountInfo();
     },
     methods: {
+        getAppIdByUrl() {
+            return getAppIdByUrl();
+        },
         i18nRender,
         /** 处理退出代理登录 */
         handleAgentSignOut() {

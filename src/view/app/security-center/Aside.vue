@@ -53,6 +53,7 @@
             :width="180"
             :height="180"
             :noRotate="false"
+            :headers="{ 'App-Id': getAppIdByUrl() }"
             url="/rac-svr/rac/account/upload-avatar"
             @crop-upload-success="handleCropUploadSuccess"
         />
@@ -63,6 +64,7 @@
 import { accountStore } from '@/store/Store';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import { racMenuAction } from '@/action/Action';
+import { getAppIdByUrl } from '@/util/common';
 export default {
     name: 'app-aside',
     components: {
@@ -79,6 +81,9 @@ export default {
     methods: {
         handleCropUploadSuccess() {
             racMenuAction.refreshAccountInfo();
+        },
+        getAppIdByUrl() {
+            return getAppIdByUrl();
         },
     },
 };
