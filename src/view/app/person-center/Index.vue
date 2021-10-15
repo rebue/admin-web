@@ -34,11 +34,13 @@
                         >修改密码</a-button
                     >
                 </div>
+                {{ getAppIdByUrl() }}
                 <image-uploader
                     v-model="showImageUploader"
                     :width="180"
                     :height="180"
                     :noRotate="false"
+                    :headers="{ 'App-Id': getAppIdByUrl() }"
                     url="/rac-svr/rac/account/upload-avatar"
                     @crop-upload-success="handleCropUploadSuccess"
                     @crop-upload-fail="handleCropUploadFail"
@@ -75,6 +77,7 @@ import { racMenuAction } from '@/action/Action';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/rac/rac-account/ChangePswdForm.vue';
 import { racAccountApi } from '@/api/Api';
+import { getAppIdByUrl } from '@/util/common';
 
 export default observer({
     name: 'app-person-center-index',
@@ -116,6 +119,9 @@ export default observer({
         );
     },
     methods: {
+        getAppIdByUrl() {
+            return getAppIdByUrl();
+        },
         refreshAccountInfo() {
             racMenuAction.refreshAccountInfo();
         },

@@ -37,6 +37,7 @@
 <script>
 import PublicSignIn from './PublicSignIn.vue';
 import scanCode from './scanCode.vue';
+import { getAppIdByUrl } from '@/util/common';
 export default {
     components: {
         PublicSignIn,
@@ -73,7 +74,7 @@ export default {
             // .then(function (response) {
             // })
             console.log(code);
-            this.$router.push({ path: '/app/index' });
+            this.$router.push({ path: `/${getAppIdByUrl()}` });
         },
     },
 };

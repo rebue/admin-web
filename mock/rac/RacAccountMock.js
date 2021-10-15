@@ -13,19 +13,19 @@ const list = [
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
-            '/base/rac-realm',
-            '/base/rac-app',
-            '/base/rac-perm',
-            '/base/rac-role',
-            '/base/rac-dic',
-            '/account/rac-org',
-            '/account/rac-account',
-            '/account/rac-user',
-            '/account/rac-account-unlock',
-            '/log/lock-log',
-            '/log/disable-log',
-            '/log/op-log',
-            '/user-synchro/account-sy'
+            '/platform-admin-web/base/rac-realm',
+            '/platform-admin-web/base/rac-app',
+            '/platform-admin-web/base/rac-perm',
+            '/platform-admin-web/base/rac-role',
+            '/platform-admin-web/base/rac-dic',
+            '/platform-admin-web/account/rac-org',
+            '/platform-admin-web/account/rac-account',
+            '/platform-admin-web/account/rac-user',
+            '/platform-admin-web/account/rac-account-unlock',
+            '/platform-admin-web/log/lock-log',
+            '/platform-admin-web/log/disable-log',
+            '/platform-admin-web/log/op-log',
+            '/platform-admin-web/user-synchro/account-sy'
         ],
         unionId:'1'
     },
@@ -37,7 +37,15 @@ const list = [
         signInNickname: '运营管理员',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
-        menus: ['/user/ops-org', '/user/ops-account', '/user/ops-user']
+        menus: [
+            '/ops-admin-web/account/rac-org',
+            '/ops-admin-web/account/rac-account',
+            '/ops-admin-web/account/rac-user',
+            '/ops-admin-web/account/rac-account-unlock',
+            '/ops-admin-web/log/lock-log',
+            '/ops-admin-web/log/disable-log',
+            '/ops-admin-web/log/op-log',
+        ]
     },
     {
         "id": 803,
@@ -126,25 +134,17 @@ module.exports = {
     routes: {
         'GET /rac-svr/rac/account/list': listRacAccount,
         'GET /rac-svr/rac/account/get-cur-account-info': (req, res, u) => {
-            const cookies = req.headers.cookie.split(';');
+            console.log('--req.headers',req.headers)
             let accountId;
-            for (const cookie of cookies) {
-                const keyAndName = cookie.split('=');
-                const key = keyAndName[0].trim();
-                const name = keyAndName[1].trim();
-                if (key === 'app_id') {
-                    switch (name) {
-                        case 'platform-admin-web':
-                            accountId = '1';
-                            break;
-                        case 'ops-admin-web':
-                            accountId = '2';
-                            break;
-                        default:
-                            break;
-                    }
+            switch (req.headers['app-id']) {
+                case 'platform-admin-web':
+                    accountId = '1';
                     break;
-                }
+                case 'ops-admin-web':
+                    accountId = '2';
+                    break;
+                default:
+                    break;
             }
 
             const eo = list.find(item => item.id === accountId);

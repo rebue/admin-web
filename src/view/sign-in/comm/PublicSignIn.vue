@@ -28,8 +28,8 @@
 
 <script>
 import md5 from 'crypto-js/md5';
-// import { setAppId } from '@/util/cookie';
 import { racSignInApi, racVerifitionApi } from '@/api/Api';
+import { getAppIdByUrl } from '@/util/common';
 
 export default {
     components: {},
@@ -125,7 +125,6 @@ export default {
             this.get_wx_qrcode();
         },
         doSubmit() {
-            console.log('doSubmit!');
             this.loading = true;
 
             this.$refs.form.validate(valid => {
@@ -165,12 +164,10 @@ export default {
                             console.log('kkkkkk', ro);
                             sessionStorage.removeItem('isNeedCaptcha');
                             this.detail = ro.detail ? ro.detail : false;
-                            // setAppId(this.appId);
                             if (this.redirect) {
                                 window.location.href = this.redirect;
                             } else {
-                                window.location.href = `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/${this.appId}/#/base/rac-realm`;
-                                // this.$router.push(`/${this.appId}/#/base/rac-realm`);
+                                this.$router.push(`/${getAppIdByUrl()}`);
                             }
                         })
                         .catch(() => {

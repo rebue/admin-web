@@ -5,6 +5,7 @@ import { constantRouters } from '@/config/router.config';
 import { GetAccountInfoRa } from '@/ro/GetAccountInfoRa';
 import { racAccountApi } from '@/api/Api';
 import { settingAction } from '../Action';
+import { getAppIdByUrl } from '@/util/common';
 
 export class RacAccountAction {
     /**
@@ -22,8 +23,6 @@ export class RacAccountAction {
      */
     @action
     getCurAccountInfoSuccess(ro: Ro) {
-        console.log('getCurAccountInfoSuccess', ro);
-
         const ra: GetAccountInfoRa = ro.extra as GetAccountInfoRa;
         accountStore.realmId = ra.realmId;
         accountStore.accountId = ra.id;
@@ -45,10 +44,11 @@ export class RacAccountAction {
         // 绑定的钉钉UnionId
         accountStore.ddUnionId = ra.ddUnionId;
         // 设置菜单
-        let menus = constantRouters.find(item => item.path === '/').children;
+        const appId = getAppIdByUrl();
+        let menus = constantRouters.find(item => item.path === `/${appId}`).children;
         menus = JSON.parse(JSON.stringify(menus));
         for (const menu of ra.menus) {
-            const sections = menu.split('/');
+            const sections = menu.replace(`/${appId}`, '').split('/');
             const section1 = sections[1];
             const section2 = sections[2];
             const section3 = sections[3];
@@ -72,7 +72,6 @@ export class RacAccountAction {
         }
         const menusTemp: string[] = [...menus];
         accountStore.menus = observable(menusTemp);
-        console.log('accountStore.menus', menus);
 
         // 加载账户设置
         settingAction.loadSetting();

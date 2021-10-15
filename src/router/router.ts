@@ -4,13 +4,12 @@ import { constantRouters } from '@/config/router.config';
 import { hasJwtToken } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 import { oapOidcApi } from '@/api/Api';
-import { getAppIdByUrl } from '@/util/common';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    // mode: 'history',
-    // base: process.env.VUE_APP_PUBLIC_PATH,
+    mode: 'history',
+    base: process.env.VUE_APP_PUBLIC_PATH,
     routes: constantRouters,
     /**
      * 当切换到新路由时，页面滚到的行为
@@ -35,7 +34,15 @@ const router = new VueRouter({
 // };
 
 /** 不检查JWT Token的路径列表 */
-const uncheckJwtTokenPaths = ['/sign-in', '/scanTransfer', '/404', '/unifiedLogin', '/demo'];
+const uncheckJwtTokenPaths = [
+    '/platform-admin-web/sign-in/',
+    '/ops-admin-web/sign-in/',
+    '/unified-auth/sign-in/',
+    '/scanTransfer',
+    '/404',
+    '/unifiedLogin',
+    '/demo',
+];
 /**
  * 路由跳转前置钩子
  */
@@ -47,13 +54,6 @@ router.beforeEach(async (to, from, next) => {
 
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
-
-    // 当前页面路径没有appId的话去404页面
-    const appId = getAppIdByUrl();
-    if (!appId && to.path != '/404') {
-        next('/404');
-        return;
-    }
 
     console.log('---to.path', to.path);
     //白名单免登录

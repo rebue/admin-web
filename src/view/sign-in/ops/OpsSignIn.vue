@@ -10,8 +10,7 @@
         </div>
         <div class="footer">
             相关应用链接:
-            <a :href="platformLoginUrl">平台管理应用</a>
-            <!-- <router-link to="/sign-in/platform">平台管理应用</router-link> -->
+            <router-link to="/platform-admin-web/sign-in/platform">平台管理应用</router-link>
         </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>
@@ -32,7 +31,6 @@ export default {
             /** 定义当前登录页面所对应的应用 */
             appId: AppIdDic.OpsAdminWeb,
             loading: false,
-            platformLoginUrl: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/${AppIdDic.PlatformAdminWeb}/#/sign-in/platform`,
         };
     },
     watch: {

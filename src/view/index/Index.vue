@@ -181,7 +181,7 @@ export default observer({
             switch (command) {
                 /** 个人中心 */
                 case 'PersonCenter':
-                    this.$router.push({ path: '/person-center' });
+                    this.$router.push({ path: `/${getAppIdByUrl()}/person-center` });
                     break;
                 /** 上传头像 */
                 case 'UploadAvatar':
@@ -204,11 +204,6 @@ export default observer({
 
                             // 其他情况，如通过平台/运营登录页登录，360能关闭当前标签页。火狐 safai, chrome只是替换了成了空白页
                             const myWindow = window.open('about:blank', '_self', '', true).close();
-
-                            /** 注释清除cookie
-                            removeJwtToken();
-                            this.$router.push({ path: '/sign-in' });
-                            */
                         },
                     });
                     break;

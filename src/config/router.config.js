@@ -1,7 +1,6 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
-import { getAppIdByUrl } from '@/util/common';
 
 const RouteView = {
     name: 'RouteView',
@@ -13,82 +12,6 @@ const RouteView = {
  * @type { *[] }
  */
 export const constantRouters = [
-    /**扫码中转中间页*/
-    {
-        path: '/scanTransfer',
-        name: 'scanTransfer',
-        component: () => import('@/view/app/security-center/ScanTransfer.vue'),
-    },
-    /**登录*/
-    {
-        path: '/sign-in',
-        name: 'sign-in',
-        component: RouteView,
-        redirect: () => {
-            const appId = getAppIdByUrl();
-            switch (appId) {
-                case AppIdDic.PlatformAdminWeb:
-                    return '/sign-in/platform';
-                case AppIdDic.OpsAdminWeb:
-                    return '/sign-in/ops';
-                case AppIdDic.UnifiedAuth:
-                    return '/sign-in/unified';
-                default:
-                    return '/sign-in/unified';
-            }
-        },
-        children: [
-            {
-                path: '/sign-in/platform',
-                name: 'platform-sign-in',
-                component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
-            },
-            {
-                path: '/sign-in/ops',
-                name: 'ops-sign-in',
-                component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
-            },
-            {
-                path: '/sign-in/unified',
-                name: 'unified-sign-in',
-                component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
-            },
-        ],
-    },
-    /**统一应用系统*/
-    {
-        path: '/app',
-        name: 'app',
-        meta: { title: '个人应用平台菜单', keepAlive: true, icon: 'setting' },
-        component: () => import('@/view/app/Index.vue'),
-        redirect: '/app/index',
-        children: [
-            {
-                path: '/app/index',
-                name: 'app-index',
-                meta: { title: '我的应用', keepAlive: false },
-                component: () => import('@/view/app/index/Index.vue'),
-            },
-            {
-                path: '/app/person-center',
-                name: 'app-person-center',
-                meta: { title: '个人中心', keepAlive: false },
-                component: () => import('@/view/app/person-center/Index.vue'),
-            },
-            {
-                path: '/app/auth',
-                name: 'app-auth',
-                meta: { title: '安全中心', keepAlive: false },
-                component: () => import('@/view/app/security-center/Index.vue'),
-            },
-            {
-                path: '/app/log',
-                name: 'app-log',
-                meta: { title: '操作日志', keepAlive: false },
-                component: () => import('@/view/app/log/Index.vue'),
-            },
-        ],
-    },
     {
         path: '/demo',
         name: 'demo',
@@ -99,52 +22,66 @@ export const constantRouters = [
         name: 'unifiedLogin',
         component: UnifiedLogin,
     },
-
+    /**扫码中转中间页*/
     {
-        path: '/',
-        name: 'index',
+        path: '/scanTransfer',
+        name: 'scanTransfer',
+        component: () => import('@/view/app/security-center/ScanTransfer.vue'),
+    },
+
+    /** 平台管理 */
+    /** 登录 */
+    {
+        path: '/platform-admin-web/sign-in/platform',
+        name: 'platform-sign-in',
+        component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
+    },
+    /** 页面 */
+    {
+        path: '/platform-admin-web',
+        name: 'platform-admin-web',
         component: () => import('@/view/index/Index.vue'),
-        redirect: '/app/index',
+        redirect: '/platform-admin-web/base/rac-realm',
         children: [
             {
-                path: '/person-center',
+                path: '/platform-admin-web/person-center',
                 name: 'person-center',
                 meta: { title: '个人中心', keepAlive: true, icon: 'setting' },
                 component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
                 hidden: true,
             },
             {
-                path: '/system-static',
+                path: '/platform-admin-web/system-static',
                 name: 'system-static',
                 meta: { title: '系统概况', keepAlive: true, icon: 'setting' },
                 component: () => import('@/view/rac/rac-system/SystemStatic.vue'),
                 hidden: true,
             },
-            /** 平台管理应用 */
+            /** 配置 */
             {
-                path: '/base',
+                path: '/platform-admin-web/base',
                 name: 'base',
                 meta: { title: '基础', keepAlive: true, icon: 'setting' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/base/rac-realm',
+                redirect: '/platform-admin-web/base/rac-realm',
                 children: [
                     {
-                        path: '/base/rac-realm',
+                        path: '/platform-admin-web/base/rac-realm',
                         name: 'rac-realm',
                         component: () => import('@/view/rac/rac-realm/Manager.vue'),
                         hidden: true,
                         meta: { title: '领域', keepAlive: true, icon: 'global' },
                     },
                     {
-                        path: '/base/rac-app',
+                        path: '/platform-admin-web/base/rac-app',
                         name: 'rac-app',
                         component: () => import('@/view/rac/rac-app/Manager.vue'),
                         hidden: true,
                         meta: { title: '应用', keepAlive: true, icon: 'appstore' },
                     },
                     {
-                        path: '/base/rac-perm',
+                        path: '/platform-admin-web/base/rac-perm',
                         name: 'rac-perm',
                         component: () => import('@/view/rac/rac-perm/Manager.vue'),
                         hidden: true,
@@ -158,14 +95,14 @@ export const constantRouters = [
                     //     meta: { title: '身份', keepAlive: true, icon: 'smile' },
                     // },
                     {
-                        path: '/base/rac-role',
+                        path: '/platform-admin-web/base/rac-role',
                         name: 'rac-role',
                         component: () => import('@/view/rac/rac-role/Manager.vue'),
                         hidden: true,
                         meta: { title: '角色', keepAlive: true, icon: 'smile' },
                     },
                     {
-                        path: '/base/rac-dic',
+                        path: '/platform-admin-web/base/rac-dic',
                         name: 'rac-dic',
                         component: () => import('@/view/rac/rac-dic/Manager.vue'),
                         hidden: true,
@@ -174,36 +111,36 @@ export const constantRouters = [
                 ],
             },
             {
-                path: '/account',
+                path: '/platform-admin-web/account',
                 name: 'account',
                 meta: { title: '账户', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/account/rac-account',
+                redirect: '/platform-admin-web/account/rac-account',
                 children: [
                     {
-                        path: '/account/rac-org',
+                        path: '/platform-admin-web/account/rac-org',
                         name: 'rac-org',
                         component: () => import('@/view/rac/rac-org/Manager.vue'),
                         hidden: true,
                         meta: { title: '组织', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/account/rac-account',
+                        path: '/platform-admin-web/account/rac-account',
                         name: 'rac-account',
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户', keepAlive: true, icon: 'user' },
                     },
                     {
-                        path: '/account/rac-user',
+                        path: '/platform-admin-web/account/rac-user',
                         name: 'rac-user',
                         component: () => import('@/view/rac/rac-user/Manager.vue'),
                         hidden: true,
                         meta: { title: '用户', keepAlive: true, icon: 'user' },
                     },
                     {
-                        path: '/account/rac-account-unlock',
+                        path: '/platform-admin-web/account/rac-account-unlock',
                         name: 'rac-account-unlock',
                         component: () => import('@/view/rac/rac-account/ManagerUnlock.vue'),
                         hidden: true,
@@ -212,29 +149,29 @@ export const constantRouters = [
                 ],
             },
             {
-                path: '/log',
+                path: '/platform-admin-web/log',
                 name: 'log',
                 meta: { title: '日志', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/log/lock-log',
+                redirect: '/platform-admin-web/log/lock-log',
                 children: [
                     {
-                        path: '/log/lock-log',
+                        path: '/platform-admin-web/log/lock-log',
                         name: 'lock-log',
                         component: () => import('@/view/rac/rac-lock-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户解锁日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/log/disable-log',
+                        path: '/platform-admin-web/log/disable-log',
                         name: 'disable-log',
                         component: () => import('@/view/rac/rac-disable-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户启/禁用日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/log/op-log',
+                        path: '/platform-admin-web/log/op-log',
                         name: 'op-log',
                         component: () => import('@/view/rac/rac-op-log/Manager.vue'),
                         hidden: true,
@@ -243,15 +180,15 @@ export const constantRouters = [
                 ],
             },
             {
-                path: '/user-synchro',
+                path: '/platform-admin-web/user-synchro',
                 name: 'user-synchro',
                 meta: { title: '数据管理', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/user-synchro/account-sy',
+                redirect: '/platform-admin-web/user-synchro/account-sy',
                 children: [
                     {
-                        path: '/user-synchro/account-sy',
+                        path: '/platform-admin-web/user-synchro/account-sy',
                         name: 'account-sy',
                         component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
                         hidden: true,
@@ -259,38 +196,61 @@ export const constantRouters = [
                     },
                 ],
             },
-            /** 运营管理应用 */
+        ],
+    },
+    /** 运营管理 */
+    /** 登录 */
+    {
+        path: '/ops-admin-web/sign-in/ops',
+        name: 'ops-sign-in',
+        component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
+    },
+    /** 页面 */
+    {
+        path: '/ops-admin-web',
+        name: 'ops-admin-web',
+        component: () => import('@/view/index/Index.vue'),
+        redirect: '/ops-admin-web/account/rac-account',
+        children: [
             {
-                path: '/user',
-                name: 'user',
-                meta: { title: '用户中心', keepAlive: true, icon: 'ant-design' },
+                path: '/ops-admin-web/person-center',
+                name: 'person-center',
+                meta: { title: '个人中心', keepAlive: true, icon: 'setting' },
+                component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
+                hidden: true,
+            },
+            // 配置
+            {
+                path: '/ops-admin-web/account',
+                name: 'account',
+                meta: { title: '账户', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/user/rac-account',
+                redirect: '/ops-admin-web/account/rac-account',
                 children: [
                     {
-                        path: '/user/ops-org',
-                        name: 'ops-org',
+                        path: '/ops-admin-web/account/rac-org',
+                        name: 'rac-org',
                         component: () => import('@/view/rac/rac-org/Manager.vue'),
                         hidden: true,
                         meta: { title: '组织', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/user/ops-account',
-                        name: 'ops-account',
+                        path: '/ops-admin-web/account/rac-account',
+                        name: 'rac-account',
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户', keepAlive: true, icon: 'user' },
                     },
                     {
-                        path: '/user/ops-user',
-                        name: 'ops-user',
+                        path: '/ops-admin-web/account/rac-user',
+                        name: 'rac-user',
                         component: () => import('@/view/rac/rac-user/Manager.vue'),
                         hidden: true,
                         meta: { title: '用户', keepAlive: true, icon: 'user' },
                     },
                     {
-                        path: '/user/rac-account-unlock',
+                        path: '/ops-admin-web/account/rac-account-unlock',
                         name: 'rac-account-unlock',
                         component: () => import('@/view/rac/rac-account/ManagerUnlock.vue'),
                         hidden: true,
@@ -299,29 +259,29 @@ export const constantRouters = [
                 ],
             },
             {
-                path: '/user-log',
-                name: 'user-log',
+                path: '/ops-admin-web/log',
+                name: 'log',
                 meta: { title: '日志', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/user-log/lock-log',
+                redirect: '/ops-admin-web/log/lock-log',
                 children: [
                     {
-                        path: '/user-log/lock-log',
+                        path: '/ops-admin-web/log/lock-log',
                         name: 'lock-log',
                         component: () => import('@/view/rac/rac-lock-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户解锁日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/user-log/disable-log',
+                        path: '/ops-admin-web/log/disable-log',
                         name: 'disable-log',
                         component: () => import('@/view/rac/rac-disable-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户启/禁用日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/user-log/op-log',
+                        path: '/ops-admin-web/log/op-log',
                         name: 'op-log',
                         component: () => import('@/view/rac/rac-op-log/Manager.vue'),
                         hidden: true,
@@ -329,32 +289,57 @@ export const constantRouters = [
                     },
                 ],
             },
+        ],
+    },
+    /** 统一应用*/
+    /** 登录 */
+    {
+        path: '/unified-auth/sign-in/unified',
+        name: 'unified-sign-in',
+        component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
+    },
+    {
+        path: '/unified-auth',
+        name: 'unified-auth',
+        component: RouteView,
+        redirect: '/unified-auth/app',
+        children: [
             {
-                path: '/ops',
-                name: 'ops',
-                meta: { title: '运营管理', keepAlive: true, icon: 'ant-design' },
-                component: RouteView,
-                hidden: true,
-                redirect: '/user/rac-account',
+                path: '/unified-auth/app',
+                name: 'app',
+                meta: { title: '个人应用平台菜单', keepAlive: true, icon: 'setting' },
+                component: () => import('@/view/app/Index.vue'),
+                redirect: '/unified-auth/app/index',
                 children: [
                     {
-                        path: '/user/ops-org',
-                        name: 'ops-org',
-                        component: () => import('@/view/rac/rac-org/Manager.vue'),
-                        hidden: true,
-                        meta: { title: '组织', keepAlive: true, icon: 'apartment' },
+                        path: '/unified-auth/app/index',
+                        name: 'index',
+                        meta: { title: '我的应用', keepAlive: false },
+                        component: () => import('@/view/app/index/Index.vue'),
                     },
                     {
-                        path: '/user/ops-account',
-                        name: 'ops-account',
-                        component: () => import('@/view/rac/rac-account/Manager.vue'),
-                        hidden: true,
-                        meta: { title: '账户', keepAlive: true, icon: 'user' },
+                        path: '/unified-auth/app/person-center',
+                        name: 'person-center',
+                        meta: { title: '个人中心', keepAlive: false },
+                        component: () => import('@/view/app/person-center/Index.vue'),
+                    },
+                    {
+                        path: '/unified-auth/app/auth',
+                        name: 'auth',
+                        meta: { title: '安全中心', keepAlive: false },
+                        component: () => import('@/view/app/security-center/Index.vue'),
+                    },
+                    {
+                        path: '/unified-auth/app/log',
+                        name: 'log',
+                        meta: { title: '操作日志', keepAlive: false },
+                        component: () => import('@/view/app/log/Index.vue'),
                     },
                 ],
             },
         ],
     },
+    /** 404 */
     {
         path: '/404',
         component: () => import('@/view/404/404.vue'),

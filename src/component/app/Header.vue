@@ -1,7 +1,7 @@
 <template>
     <header class="w100 card-shadow header">
         <div class="flex-box al-c header-main">
-        <router-link class="white router-index" to="/app">
+        <router-link class="white router-index">
             <div class="font-26">统一身份认证平台</div>
             <div class="font-12">UNIFIED AUTHENTICATION PLATFORM</div>
         </router-link>
@@ -21,6 +21,7 @@
 
 <script >
 import { removeJwtToken } from '@/util/cookie';
+import { AppIdDic } from '@/dic/AppIdDic';
 export default {
     name: 'app-header',
     components: {},
@@ -30,19 +31,15 @@ export default {
             linkData: [
                 {
                     name: '我的应用',
-                    path: '/app/index',
+                    path: `/${AppIdDic.UnifiedAuth}/app/index`,
                 },
-                // {
-                //     name: '个人中心',
-                //     path: '/app/person-center',
-                // },
                 {
                     name: '安全中心',
-                    path: '/app/auth',
+                    path: `/${AppIdDic.UnifiedAuth}/app/auth`,
                 },
                 {
                     name: '操作日志',
-                    path: '/app/log',
+                    path: `/${AppIdDic.UnifiedAuth}/app/log`,
                 },
             ],
         };
