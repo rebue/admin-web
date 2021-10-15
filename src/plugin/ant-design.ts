@@ -41,6 +41,7 @@ import {
     Steps,
     Result,
     message,
+    Collapse,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -115,6 +116,9 @@ Vue.use(List);
 
 Vue.use(Steps);
 Vue.use(Result);
+
+// 折叠面板
+Vue.use(Collapse);
 
 Vue.prototype.$confirm = Modal.confirm;
 Vue.prototype.$message = message;

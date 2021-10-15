@@ -67,7 +67,7 @@ export default class RacDicApi extends BaseCrudApi {
                     }
                 }
             }
-            dicList?.map((item, index) => {
+            dicList?.map(item => {
                 const childrenList = item.children;
                 if (childrenList) {
                     const maxSeqNo = childrenList?.length;
@@ -81,5 +81,10 @@ export default class RacDicApi extends BaseCrudApi {
             console.log(list);
             return ro;
         });
+    }
+
+    /** 获取单个字典的信息接口 */
+    getByDicKey(qo): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get-by-dic-key?dicKey=' + qo });
     }
 }
