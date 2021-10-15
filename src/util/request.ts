@@ -4,7 +4,7 @@ import { isSimulateNetDelay, requestBaseUrl, xHTTPMethodOverride } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
-import { AppIdDic } from '@/dic/AppIdDic';
+import { getAppIdByUrl } from '@/util/common';
 
 const codeMessage = {
     ETIMEDOUT: '请求超时，请稍后重试',
@@ -40,13 +40,7 @@ instance.interceptors.request.use(
 
         /** 根据路径获取appId, 放到请求头里*/
         // location.pathname /admin-web/platform-admin-web/   /platform-admin-web/
-        const pathname = location.pathname;
-        let appId = '';
-        Object.values(AppIdDic).forEach(val => {
-            if (pathname.endsWith(`/${val}/`)) {
-                appId = val;
-            }
-        });
+        const appId = getAppIdByUrl();
         if (appId) {
             config.headers['App-Id'] = appId;
         }

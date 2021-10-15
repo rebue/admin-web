@@ -1,6 +1,7 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
+import { getAppIdByUrl } from '@/util/common';
 
 const RouteView = {
     name: 'RouteView',
@@ -24,13 +25,7 @@ export const constantRouters = [
         name: 'sign-in',
         component: RouteView,
         redirect: () => {
-            const pathname = location.pathname;
-            let appId = '';
-            Object.values(AppIdDic).forEach(val => {
-                if (pathname.endsWith(`/${val}/`)) {
-                    appId = val;
-                }
-            });
+            const appId = getAppIdByUrl();
             switch (appId) {
                 case AppIdDic.PlatformAdminWeb:
                     return '/sign-in/platform';
@@ -250,7 +245,7 @@ export const constantRouters = [
             {
                 path: '/user-synchro',
                 name: 'user-synchro',
-                meta: { title: '账号同步', keepAlive: true, icon: 'ant-design' },
+                meta: { title: '数据管理', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
                 redirect: '/user-synchro/account-sy',
@@ -260,7 +255,7 @@ export const constantRouters = [
                         name: 'account-sy',
                         component: () => import('@/view/rac/rac-user-synchro/Manager.vue'),
                         hidden: true,
-                        meta: { title: '策略', keepAlive: true, icon: 'apartment' },
+                        meta: { title: '同步策略', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },

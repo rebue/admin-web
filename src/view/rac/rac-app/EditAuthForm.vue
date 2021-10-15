@@ -31,6 +31,7 @@
                     <a-input v-if="secretShow" v-model.trim="model.secret" disabled style="width:85%" />
                     <a-icon class="copyIconStyle" v-if="secretShow" type="copy" @click="copyClick(model.secret)" />
                     <a-button
+                        class="refresh-btn"
                         v-if="editFormType === EditFormTypeDic.Modify"
                         type="link"
                         icon="sync"
@@ -365,5 +366,9 @@ export default {
 .copyIconStyle {
     cursor: pointer;
     margin: 0 10px;
+}
+.copyIconStyle + .refresh-btn {
+    position: absolute;
+    top: -8px;
 }
 </style>

@@ -101,7 +101,9 @@ export default {
                 this.userId = ro.extra ? ro.extra.id : '';
                 if (this.userId) {
                     //创建好用户, 再去提交账号表单
-                    this.submitAccount();
+                    this.$nextTick(() => {
+                        this.submitAccount();
+                    });
                 }
             });
         },
@@ -110,7 +112,9 @@ export default {
             const valid = this.$refs.selectedUserForm.validate();
             if (valid) {
                 this.userId = this.$refs.selectedUserForm.model.userId;
-                this.submitAccount();
+                this.$nextTick(() => {
+                    this.submitAccount();
+                });
             }
         },
         // 校验账号表单

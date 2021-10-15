@@ -117,6 +117,7 @@ import { removeJwtToken } from '@/util/cookie';
 import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/rac/rac-account/ChangePswdForm.vue';
+import { getAppIdByUrl } from '@/util/common';
 
 export default observer({
     name: 'Index',
@@ -128,13 +129,7 @@ export default observer({
         ChangePswdForm,
     },
     data() {
-        const pathname = location.pathname;
-        let appId = '';
-        Object.values(AppIdDic).forEach(val => {
-            if (pathname.endsWith(`/${val}/`)) {
-                appId = val;
-            }
-        });
+        const appId = getAppIdByUrl();
         if (appId === AppIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
         else if (appId === AppIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
         return {

@@ -4,8 +4,7 @@
             <a-form-model-item label="选择用户" prop="userId" key="userId">
                 <a-select
                     show-search
-                    label-in-value
-                    :value="model.userId"
+                    v-model="model.userId"
                     placeholder="请输入 姓名 或 身份证号 查询"
                     style="width: 100%"
                     :filter-option="false"
@@ -58,7 +57,7 @@ export default {
             this.api
                 .page({
                     // pageNum: 1
-                    // pageSize: 10
+                    pageSize: 100,
                     keywords: value,
                 })
                 .then(ro => {
@@ -68,9 +67,7 @@ export default {
                     this.loading = false;
                 });
         },
-        handleChange(value) {
-            this.model.userId = value;
-            this.dataSource = [];
+        handleChange() {
             this.loading = false;
         },
         validate() {
