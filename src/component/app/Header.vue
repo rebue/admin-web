@@ -1,7 +1,7 @@
 <template>
     <header class="w100 card-shadow header">
         <div class="flex-box al-c header-main">
-        <router-link class="white router-index">
+        <router-link class="white router-index" :to="`/${AppIdDic.UnifiedAuth}`">
             <div class="font-26">统一身份认证平台</div>
             <div class="font-12">UNIFIED AUTHENTICATION PLATFORM</div>
         </router-link>
@@ -28,6 +28,7 @@ export default {
     props: {},
     data() {
         return {
+            AppIdDic,
             linkData: [
                 {
                     name: '我的应用',
