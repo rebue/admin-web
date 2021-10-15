@@ -36,7 +36,7 @@ module.exports = {
             
             if (!false) {
                 //去登录页
-                res.writeHead(302, {'Location': `http://${req.headers.host}/admin-web/#/sign-in/unified`});
+                res.writeHead(302, {'Location': `http://${req.headers.host}/admin-web/unified-auth/sign-in/unified`});
             } else {
                 let redirect_uri = params.redirect_uri
                 redirect_uri = `${redirect_uri}${redirect_uri.includes('?') ? '&' : '?'}state=RECOMMENDED&code=1111` 
