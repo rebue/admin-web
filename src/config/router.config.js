@@ -318,12 +318,6 @@ export const constantRouters = [
                         component: () => import('@/view/app/index/Index.vue'),
                     },
                     {
-                        path: '/unified-auth/app/person-center',
-                        name: 'person-center',
-                        meta: { title: '个人中心', keepAlive: false },
-                        component: () => import('@/view/app/person-center/Index.vue'),
-                    },
-                    {
                         path: '/unified-auth/app/auth',
                         name: 'auth',
                         meta: { title: '安全中心', keepAlive: false },
