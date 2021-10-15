@@ -132,26 +132,15 @@ export default {
                 orignFileName: '',
             },
             labelSelect: [],
-            autoEnable: ['未认证', '共用cookie（内部系统）', '授权码', '凭证'],
         };
     },
     methods: {
         /**请求标签下拉框内容 */
         getRacDicApiFun() {
-            racDicApi.page().then(ro => {
-                const data = ro.extra.page.list,
-                    newArray = [];
-                data.map(item => {
-                    if (item.dicKey == 'ApplyLabel') {
-                        item.children.map(childItem => {
-                            newArray.push({
-                                name: childItem.name,
-                                id: childItem.id,
-                            });
-                        });
-                    }
-                });
-                this.labelSelect = newArray;
+            const params = 'ApplyLabel';
+            racDicApi.getByDicKey(params).then(ro => {
+                const data = ro.extra.dicItems;
+                this.labelSelect = data;
             });
         },
         //点击显示上传图片组件
