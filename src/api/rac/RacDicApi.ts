@@ -67,7 +67,7 @@ export default class RacDicApi extends BaseCrudApi {
                     }
                 }
             }
-            dicList?.map((item, index) => {
+            dicList?.map(item => {
                 const childrenList = item.children;
                 if (childrenList) {
                     const maxSeqNo = childrenList?.length;
