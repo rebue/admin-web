@@ -194,11 +194,12 @@ export default {
             {
                 type: 'more',
                 items: [
-                    {
-                        type: 'a',
-                        title: '重置密码',
-                        onClick: record => this.handleResetPswd(record),
-                    },
+                    // 先注释重置密码，后期再实现
+                    // {
+                    //     type: 'a',
+                    //     title: '重置密码',
+                    //     onClick: record => this.handleResetPswd(record),
+                    // },
                     {
                         type: 'a',
                         title: '修改密码',
