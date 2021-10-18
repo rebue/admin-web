@@ -206,6 +206,11 @@ export default {
                     },
                     {
                         type: 'a',
+                        title: '关联用户',
+                        onClick: record => this.handleManageUser(record),
+                    },
+                    {
+                        type: 'a',
                         title: '管理组织',
                         onClick: record => this.handleManageOrg(record),
                     },
@@ -356,6 +361,33 @@ export default {
                     footer: null,
                     destroyOnClose: true,
                     wrapClassName: 'account-add-dialog-wrap',
+                }
+            );
+        },
+        /**
+         * 处理关联用户事件
+         */
+        handleManageUser(record) {
+            const that = this;
+            this.$showDialog(
+                require('./ChooseUser.vue').default,
+                {
+                    data() {
+                        return {
+                            model: {
+                                id: record.id,
+                                userId: record.userId,
+                            },
+                        };
+                    },
+                    methods: {
+                        callback(ro) {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '关联用户',
                 }
             );
         },

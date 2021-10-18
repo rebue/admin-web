@@ -14,8 +14,11 @@
     >
         <div class="table-commands">
             <slot name="commands">
-                <a-button type="primary" icon="plus" @click="handleAddAccount">
+                <a-button type="primary" icon="plus" @click="handleAddAccount" style="margin-right:10px;">
                     添加
+                </a-button>
+                <a-button type="primary" icon="plus" @click="handleChooseAccount">
+                    选择账户
                 </a-button>
             </slot>
         </div>
@@ -23,15 +26,23 @@
         <a-table
             :columns="columns"
             :data-source="dataSource"
-            v-bind="$attrs"
-            v-on="$listeners"
             :rowKey="(account, index) => (account.id ? account.id : index)"
             :pagination="false"
         >
             <span slot="action" slot-scope="text, record">
                 <template v-for="(item, index) in tableActions">
                     <span :key="index">
-                        <a-dropdown>
+                        <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
+                        <a-popconfirm
+                            v-if="item.type === 'confirm'"
+                            :title="item.confirmTitle"
+                            @confirm="item.onClick(record)"
+                            okText="确定"
+                            cancelText="取消"
+                        >
+                            <a>{{ item.title }}</a>
+                        </a-popconfirm>
+                        <a-dropdown v-if="item.type === 'more'">
                             <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                 更多 <a-icon type="down" />
                             </a>
@@ -43,6 +54,7 @@
                                 </template>
                             </a-menu>
                         </a-dropdown>
+                        <a-divider v-if="index < tableActions.length - 1" type="vertical" />
                     </span>
                 </template>
             </span>
@@ -121,7 +133,14 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
+
         this.tableActions = [
+            {
+                type: 'confirm',
+                title: '移除',
+                confirmTitle: '你确定要移除该账号吗?',
+                onClick: record => this.handleRemoveAccount(record),
+            },
             {
                 type: 'more',
                 items: [
@@ -189,7 +208,7 @@ export default {
                 const userId = id;
                 const data = { userId };
                 racAccountApi
-                    .getUserList(data)
+                    .getAccountListByUser(data)
                     .then(ro => {
                         this.dataSource = ro.extra.list;
                     })
@@ -272,6 +291,46 @@ export default {
                     wrapClassName: 'account-add-dialog-wrap',
                 }
             );
+        },
+        /**
+         * 处理选择账户的事件
+         */
+        handleChooseAccount() {
+            // 用户id,
+            const that = this;
+            this.$showDialog(
+                require('./ChooseAccount.vue').default,
+                {
+                    data() {
+                        return {
+                            userId: that.user.id,
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshData();
+                        },
+                    },
+                },
+                {
+                    title: '选择账号',
+                    width: '40%',
+                    destroyOnClose: true,
+                    wrapClassName: 'account-add-dialog-wrap',
+                }
+            );
+        },
+        /**
+         * 处理移除账户的事件
+         */
+        handleRemoveAccount(record) {
+            racAccountApi
+                .removeUserByAccount({
+                    id: record.id,
+                })
+                .then(() => {
+                    this.refreshData();
+                });
         },
     },
 };

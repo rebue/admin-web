@@ -88,9 +88,17 @@ export default class RacAccountApi extends BaseCrudApi {
     /**
      * 查询用户的子账号
      */
-    getUserList(params): Promise<Ro> {
+    getAccountListByUser(params): Promise<Ro> {
         return request.get({ url: this.baseUrn + '/get-by-user-id', params: params });
     }
+
+    /**
+     * 移除账户关联的用户
+     */
+    removeUserByAccount(data): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/disassociate-user', data: data });
+    }
+
     /**
      * 查询账号的映射账号列表
      */

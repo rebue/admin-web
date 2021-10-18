@@ -4,6 +4,7 @@
             <a-form-model-item label="选择用户" prop="userId" key="userId">
                 <a-select
                     show-search
+                    allowClear
                     v-model="model.userId"
                     placeholder="请输入 姓名 或 身份证号 查询"
                     style="width: 100%"
@@ -22,7 +23,7 @@
     </fragment>
 </template>
 <script>
-import { racUserApi } from '@/api/Api';
+import { racUserApi, racAccountApi } from '@/api/Api';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -39,12 +40,15 @@ export default {
         };
         this.api = racUserApi;
         this.fetchUserList = debounce(this.fetchUserList, 800);
+        this.rules = this.required
+            ? {
+                  userId: [{ required: true, message: '请输入 姓名 或者 身份证号 查询', trigger: 'change' }],
+              }
+            : {};
         return {
             model: {
+                id: undefined,
                 userId: undefined,
-            },
-            rules: {
-                userId: [{ required: true, message: '请输入 姓名 或者 身份证号 查询', trigger: 'change' }],
             },
             loading: false,
             dataSource: [],
@@ -52,7 +56,13 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.fetchUserList();
+            if (this.model.userId) {
+                racUserApi.getById(this.model.userId).then(ro => {
+                    this.dataSource = [ro.extra.one];
+                });
+            } else {
+                this.fetchUserList();
+            }
         });
     },
     methods: {
@@ -75,12 +85,32 @@ export default {
         handleChange() {
             this.loading = false;
         },
-        validate() {
-            let valid = false;
+        ok() {
             this.$refs.form.validate(val => {
-                valid = val;
+                if (val) {
+                    if (this.model.userId) {
+                        racAccountApi
+                            .modify({
+                                id: this.model.id,
+                                userId: this.model.userId,
+                            })
+                            .then(ro => {
+                                this.callback && this.callback(ro);
+                                this.closeDialog();
+                            });
+                    } else {
+                        //移除账户的用户
+                        racAccountApi
+                            .removeUserByAccount({
+                                id: this.model.id,
+                            })
+                            .then(ro => {
+                                this.callback && this.callback(ro);
+                                this.closeDialog();
+                            });
+                    }
+                }
             });
-            return valid;
         },
     },
 };
