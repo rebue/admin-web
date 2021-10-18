@@ -219,11 +219,12 @@ export default {
                         title: '映射账号',
                         onClick: record => this.handleManageAccount(record),
                     },
-                    {
-                        type: 'a',
-                        title: '代理登录',
-                        onClick: record => this.handleAgentSignIn(record),
-                    },
+                    // 先注释代理登录，后期实现
+                    // {
+                    //     type: 'a',
+                    //     title: '代理登录',
+                    //     onClick: record => this.handleAgentSignIn(record),
+                    // },
                 ],
             },
         ];
