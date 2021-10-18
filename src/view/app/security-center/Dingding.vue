@@ -81,6 +81,7 @@ export default observer({
                 if (event.data.event === 'ding-talk-bind' || event.data.event === 'ding-talk-unbind') {
                     const { result, msg } = event.data;
                     if (result === 'success') {
+                        this.callback && this.callback();
                         this.status = result;
                     } else if (result === 'error') {
                         this.status = result;

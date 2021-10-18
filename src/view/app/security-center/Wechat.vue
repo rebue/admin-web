@@ -92,6 +92,7 @@ export default observer({
                 if (event.data.event === 'wechat-open-bind' || event.data.event === 'wechat-open-unbind') {
                     const { result, msg } = event.data;
                     if (result === 'success') {
+                        this.callback && this.callback();
                         this.status = result;
                     } else if (result === 'error') {
                         this.status = result;
