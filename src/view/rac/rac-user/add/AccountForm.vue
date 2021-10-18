@@ -134,7 +134,7 @@ export default {
                 id: '',
                 realmId: '',
                 orgId: '',
-                userId: this.accouuntId,
+                userId: this.userId,
             },
             rules: this.addRules,
             loading: false,
@@ -147,7 +147,7 @@ export default {
         } else {
             this.rules = this.addRules;
         }
-        this.model.userId = this.accouuntId;
+        this.model.userId = this.userId;
         this.getReamFun();
     },
     methods: {

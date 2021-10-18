@@ -14,7 +14,7 @@
     >
         <div class="table-commands">
             <slot name="commands">
-                <a-button style="margin-right: 50px" type="primary" icon="plus" @click="handleAddUser()">
+                <a-button type="primary" icon="plus" @click="handleAddAccount">
                     添加
                 </a-button>
             </slot>
@@ -248,14 +248,14 @@ export default {
         /**
          * 处理添加账户的事件
          */
-        handleAddUser() {
+        handleAddAccount() {
             const that = this;
             this.$showDialog(
                 require('./add/AccountForm.vue').default,
                 {
                     data() {
                         return {
-                            accouuntId: that.user.id,
+                            userId: that.user.id,
                         };
                     },
                     methods: {
