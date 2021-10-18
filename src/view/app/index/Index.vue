@@ -45,30 +45,10 @@
                                             </div>
                                             <div class="tag">
                                                 <a-tag
-                                                    :color="
-                                                        childItem.authnType == 0
-                                                            ? 'red'
-                                                            : item.authnType == 1
-                                                            ? 'blue'
-                                                            : item.authnType == 2
-                                                            ? 'pink'
-                                                            : item.authnType == 3
-                                                            ? 'orange'
-                                                            : 'green'
-                                                    "
+                                                    :color="childItem.tagColor"
                                                     v-show="childItem.isauthName == '已认证'"
                                                 >
-                                                    {{
-                                                        childItem.authnType == 0
-                                                            ? '未认证'
-                                                            : item.authnType == 1
-                                                            ? '共用cookie（内部系统）'
-                                                            : item.authnType == 2
-                                                            ? '授权码'
-                                                            : item.authnType == 3
-                                                            ? '凭证'
-                                                            : 'CAS'
-                                                    }}
+                                                    {{ childItem.tagName }}
                                                 </a-tag>
                                             </div>
                                         </div>
@@ -209,8 +189,6 @@ export default {
                             }
                         }
                     });
-                    console.log(authedList);
-                    console.log(unauthList);
                     this.labelSelect.map(item => {
                         if (item.children) {
                             item.children.map(childItem => {
@@ -226,6 +204,17 @@ export default {
                                 authedList.map(lastItem => {
                                     if (childItem.appId == lastItem.id) {
                                         lastItem.isauthName = '已认证';
+                                        if (lastItem.authnType == 0) {
+                                            (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                                        } else if (lastItem.authnType == 1) {
+                                            (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                                        } else if (lastItem.authnType == 2) {
+                                            (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                                        } else if (lastItem.authnType == 3) {
+                                            (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                                        } else {
+                                            (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                                        }
                                         if (!item.childList) {
                                             item.childList = [];
                                         }
@@ -244,6 +233,17 @@ export default {
                     authedList.map(lastItem => {
                         if (!lastItem.isauthName) {
                             lastItem.isauthName = '已认证';
+                            if (lastItem.authnType == 0) {
+                                (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                            } else if (lastItem.authnType == 1) {
+                                (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                            } else if (lastItem.authnType == 2) {
+                                (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                            } else if (lastItem.authnType == 3) {
+                                (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                            } else {
+                                (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                            }
                             this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
