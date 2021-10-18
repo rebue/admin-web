@@ -234,7 +234,7 @@ export default {
                     this.api
                         .getByAppId(this.model.appId)
                         .then(ro => {
-                            const authnType = ro.extra.racAppMo.authType;
+                            const authnType = ro.extra.racAppMo.authnType;
                             this.model = {
                                 ...JSON.parse(JSON.stringify(this.model)),
                                 ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),

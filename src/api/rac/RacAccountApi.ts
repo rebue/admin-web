@@ -122,4 +122,22 @@ export default class RacAccountApi extends BaseCrudApi {
             data,
         });
     }
+    /**
+     * 管理员解除账户绑定钉钉
+     */
+    getUnbindDingTalk(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/unbind-ding-talk',
+            data,
+        });
+    }
+    /**
+     * 管理员解除账户绑定微信
+     */
+    getUnbindWechatOpen(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/unbind-wechat-open',
+            data,
+        });
+    }
 }

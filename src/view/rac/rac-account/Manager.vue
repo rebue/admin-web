@@ -224,6 +224,16 @@ export default {
                         title: '代理登录',
                         onClick: record => this.handleAgentSignIn(record),
                     },
+                    {
+                        type: 'a',
+                        title: '解绑钉钉',
+                        onClick: record => this.handleUnboundDD(record),
+                    },
+                    {
+                        type: 'a',
+                        title: '解绑微信',
+                        onClick: record => this.handleUnboundWX(record),
+                    },
                 ],
             },
         ];
@@ -418,6 +428,32 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        /** 解除绑定钉钉 */
+        handleUnboundDD(record) {
+            this.$confirm({
+                title: '解绑钉钉',
+                content: '你确定要解除账户绑定钉钉吗？',
+                onOk: () => {
+                    const data = { id: record.id };
+                    this.api.getUnbindDingTalk(data).finally(() => {
+                        this.refreshTableData();
+                    });
+                },
+            });
+        },
+        /** 解除绑定微信 */
+        handleUnboundWX(record) {
+            this.$confirm({
+                title: '解绑微信',
+                content: '你确定要解除账户绑定微信吗？',
+                onOk: () => {
+                    const data = { id: record.id };
+                    this.api.getUnbindWechatOpen(data).finally(() => {
+                        this.refreshTableData();
+                    });
+                },
+            });
         },
     },
 };

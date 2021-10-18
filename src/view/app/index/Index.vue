@@ -5,7 +5,7 @@
             <a-collapse v-model="activeKey" v-if="!loading">
                 <a-collapse-panel v-for="(item, index) in labelList" :key="item" :header="labelSelect[index].name">
                     <a-spin :spinning="loading">
-                        <div class="w100 pt20 pb20 bg-w ">
+                        <div class="w100 bg-w ">
                             <a-row class="content" :gutter="10" v-if="labelSelect[index].childList">
                                 <a-col
                                     class="flex-box al-c ju-c"
@@ -156,6 +156,12 @@ export default {
                 data.map((item, index) => {
                     labelList.push(index++ + '');
                 });
+                labelList.push(labelList.length + '');
+                data.push({
+                    name: '其他',
+                    children: [],
+                    childList: [],
+                });
                 this.labelList = labelList;
                 this.activeKey = labelList;
                 this.labelSelect = data;
@@ -203,6 +209,8 @@ export default {
                             }
                         }
                     });
+                    console.log(authedList);
+                    console.log(unauthList);
                     this.labelSelect.map(item => {
                         if (item.children) {
                             item.children.map(childItem => {
@@ -225,6 +233,18 @@ export default {
                                     }
                                 });
                             });
+                        }
+                    });
+                    unauthList.map(lastItem => {
+                        if (!lastItem.isauthName) {
+                            lastItem.isauthName = '未认证';
+                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
+                        }
+                    });
+                    authedList.map(lastItem => {
+                        if (!lastItem.isauthName) {
+                            lastItem.isauthName = '已认证';
+                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
                     this.loading = false;
@@ -293,6 +313,7 @@ export default {
     border-radius: 5px;
     padding: 5px;
     position: relative;
+    margin-top: 10px;
     .top_card_box {
         display: flex;
         align-items: center;
