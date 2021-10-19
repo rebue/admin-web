@@ -233,6 +233,11 @@ export default {
                     // },
                     {
                         type: 'a',
+                        title: '获取配置信息',
+                        onClick: record => this.getConfig(),
+                    },
+                    {
+                        type: 'a',
                         title: '解绑钉钉',
                         onClick: record => this.handleUnboundDD(record),
                     },
@@ -487,6 +492,12 @@ export default {
                         this.refreshTableData();
                     });
                 },
+            });
+        },
+        /** 解除绑定微信 */
+        getConfig() {
+            this.api.getNacosConfig().then(ro => {
+                console.log('getNacosConfig', ro);
             });
         },
     },
