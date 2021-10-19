@@ -274,10 +274,18 @@ export default {
                             .then(() => (this.visible = false))
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        this.api
-                            .modify(data)
-                            .then(() => (this.visible = false))
-                            .finally(() => (this.loading = false));
+                        console.log(data);
+                        if (data.authnType == 0) {
+                            this.api
+                                .delById(data.id)
+                                .then(() => (this.visible = false))
+                                .finally(() => (this.loading = false));
+                        } else {
+                            this.api
+                                .modify(data)
+                                .then(() => (this.visible = false))
+                                .finally(() => (this.loading = false));
+                        }
                     }
                     this.loading = false;
                 } else {

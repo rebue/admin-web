@@ -323,7 +323,7 @@ export default {
         }
         .title {
             display: inline-block;
-            margin-left: 5px;
+            margin-left: 15px;
             font-size: 14px;
             line-height: 22px;
             font-weight: 500;
@@ -361,10 +361,7 @@ export default {
     }
     .tag {
         display: flex;
-        padding-left: 65px;
-        .ant-tag-pink {
-            font-size: 16px;
-        }
+        padding-left: 75px;
     }
 }
 </style>
