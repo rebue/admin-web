@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
-import { hasJwtToken } from '@/util/cookie';
+import { hasJwtToken, hasAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 import { oapOidcApi } from '@/api/Api';
 
@@ -46,6 +46,19 @@ const uncheckJwtTokenPaths = [
 /**
  * 路由跳转前置钩子
  */
+const oidcAuth = async function(next) {
+    //第一步 获取认证
+    const { result, detail } = await oapOidcApi.getOidcOauthUri({
+        redirectUri: '本应用不用加 测试',
+    });
+    if (result > 0) {
+        //第二步 请求认证
+        window.location.replace(detail);
+    } else {
+        next(false);
+        return;
+    }
+};
 router.beforeEach(async (to, from, next) => {
     console.log('beforeEach: to, from, next');
     console.log('to', to);
@@ -55,30 +68,31 @@ router.beforeEach(async (to, from, next) => {
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
 
-    console.log('---to.path', to.path);
+    // 输入统一登录路径访问登录页面，登录需要cookie clientId
+    if (to.path.startsWith('/unified-auth/sign-in/')) {
+        if (!hasAuthInfo()) {
+            //通过认证，后端设置cookie clientId
+            oidcAuth(next);
+        } else {
+            next();
+            return;
+        }
+    }
     //白名单免登录
     if (uncheckJwtTokenPaths.find(path => to.path.startsWith(path))) {
         next();
+        return;
     } else {
         //需登录
         //如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
         if (!hasJwtToken()) {
             // ???走认证vs走自己登录页
             //------start
-            //走认证
-            //第一步 获取认证
-            const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                redirectUri: '本应用不用加 测试',
-            });
-            if (result > 0) {
-                //第二步 请求认证
-                window.location.replace(detail);
-            } else {
-                next(false);
-            }
+            oidcAuth(next);
         } else {
             //已登录
             next();
+            return;
         }
     }
 });

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { jwtTokenKey, appIdKey } from '@/env';
+import { jwtTokenKey, authInfoKey, appIdKey } from '@/env';
 import { AppIdDic } from '@/dic/AppIdDic';
 
 /** JWT */
@@ -10,7 +10,15 @@ export function removeJwtToken() {
     return Cookies.remove(jwtTokenKey);
 }
 
-/** APP_ID */
+/** auth_info */
+export function hasAuthInfo(): boolean {
+    return Cookies.get(authInfoKey) ? true : false;
+}
+export function removeAuthInfo() {
+    return Cookies.remove(authInfoKey);
+}
+
+/** APP_ID 去掉app_id的cookie了 */
 export function setAppId(appId: AppIdDic) {
     return Cookies.set(appIdKey, appId);
 }

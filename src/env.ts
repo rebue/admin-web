@@ -23,6 +23,7 @@ export const requestBaseUrl = (function() {
 
 /** JWT Token的Key */
 export const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
+export const authInfoKey = process.env.VUE_APP_AUTH_INFO_KEY;
 export const appIdKey = process.env.VUE_APP_APP_ID_KEY;
 
 /** 是否模拟网络延迟 */
