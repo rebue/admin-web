@@ -68,7 +68,10 @@ router.beforeEach(async (to, from, next) => {
     // 处理路由前进、后退不能销毁确认对话框的问题
     Modal.destroyAll();
 
-    // 输入统一登录路径访问登录页面，登录需要cookie clientId
+    /**
+     * 输入路径访问统一登录页，帐密登录报“未找到session信息”：
+     * 无auth_info cookie，需要走认证拿到cookie， 该cookie在帐密登录需要，表示将要登录的应用
+     */
     if (to.path.startsWith('/unified-auth/sign-in/')) {
         if (!hasAuthInfo()) {
             //通过认证，后端设置cookie clientId
