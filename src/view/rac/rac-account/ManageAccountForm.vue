@@ -66,13 +66,23 @@ export default {
     },
     computed: {},
     mounted() {
-        this.unionId = this.account.unionId;
         this.refreshData();
     },
     methods: {
         /** 刷新数据 */
         async refreshData() {
             this.loading = true;
+            // 获取账号详情
+            try {
+                await racAccountApi.getById(this.account.id).then(res => {
+                    this.account = res.extra.one;
+                    this.unionId = this.account.unionId;
+                });
+            } catch {
+                this.loading = false;
+            }
+
+            // 获取领域列表
             try {
                 await racRealmApi.listAll().then(res => {
                     //过滤掉操作账号对应领域
@@ -134,7 +144,6 @@ export default {
                     methods: {
                         callback(ro) {
                             // 添加映射账号之后，回填unionId
-                            that.unionId = ro?.extra?.unionId;
                             that.refreshData();
                         },
                     },
