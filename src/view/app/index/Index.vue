@@ -5,7 +5,7 @@
             <a-collapse v-model="activeKey" v-if="!loading">
                 <a-collapse-panel v-for="(item, index) in labelList" :key="item" :header="labelSelect[index].name">
                     <a-spin :spinning="loading">
-                        <div class="w100 pt20 pb20 bg-w ">
+                        <div class="w100 bg-w ">
                             <a-row class="content" :gutter="10" v-if="labelSelect[index].childList">
                                 <a-col
                                     class="flex-box al-c ju-c"
@@ -45,30 +45,10 @@
                                             </div>
                                             <div class="tag">
                                                 <a-tag
-                                                    :color="
-                                                        childItem.authnType == 0
-                                                            ? 'red'
-                                                            : item.authnType == 1
-                                                            ? 'blue'
-                                                            : item.authnType == 2
-                                                            ? 'pink'
-                                                            : item.authnType == 3
-                                                            ? 'orange'
-                                                            : 'green'
-                                                    "
+                                                    :color="childItem.tagColor"
                                                     v-show="childItem.isauthName == '已认证'"
                                                 >
-                                                    {{
-                                                        childItem.authnType == 0
-                                                            ? '未认证'
-                                                            : item.authnType == 1
-                                                            ? '共用cookie（内部系统）'
-                                                            : item.authnType == 2
-                                                            ? '授权码'
-                                                            : item.authnType == 3
-                                                            ? '凭证'
-                                                            : 'CAS'
-                                                    }}
+                                                    {{ childItem.tagName }}
                                                 </a-tag>
                                             </div>
                                         </div>
@@ -156,6 +136,12 @@ export default {
                 data.map((item, index) => {
                     labelList.push(index++ + '');
                 });
+                labelList.push(labelList.length + '');
+                data.push({
+                    name: '其他',
+                    children: [],
+                    childList: [],
+                });
                 this.labelList = labelList;
                 this.activeKey = labelList;
                 this.labelSelect = data;
@@ -218,6 +204,17 @@ export default {
                                 authedList.map(lastItem => {
                                     if (childItem.appId == lastItem.id) {
                                         lastItem.isauthName = '已认证';
+                                        if (lastItem.authnType == 0) {
+                                            (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                                        } else if (lastItem.authnType == 1) {
+                                            (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                                        } else if (lastItem.authnType == 2) {
+                                            (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                                        } else if (lastItem.authnType == 3) {
+                                            (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                                        } else {
+                                            (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                                        }
                                         if (!item.childList) {
                                             item.childList = [];
                                         }
@@ -225,6 +222,29 @@ export default {
                                     }
                                 });
                             });
+                        }
+                    });
+                    unauthList.map(lastItem => {
+                        if (!lastItem.isauthName) {
+                            lastItem.isauthName = '未认证';
+                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
+                        }
+                    });
+                    authedList.map(lastItem => {
+                        if (!lastItem.isauthName) {
+                            lastItem.isauthName = '已认证';
+                            if (lastItem.authnType == 0) {
+                                (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                            } else if (lastItem.authnType == 1) {
+                                (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                            } else if (lastItem.authnType == 2) {
+                                (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                            } else if (lastItem.authnType == 3) {
+                                (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                            } else {
+                                (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                            }
+                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
                     this.loading = false;
@@ -293,6 +313,7 @@ export default {
     border-radius: 5px;
     padding: 5px;
     position: relative;
+    margin-top: 10px;
     .top_card_box {
         display: flex;
         align-items: center;
