@@ -40,10 +40,8 @@ export default {
             dataSource: [],
             keywords: '',
             curRow: null,
-            pageNum: 1,
-            pageSize: 5,
-            total: 0,
             pagination: {
+                current: 1,
                 pageSize: 10,
                 pageSizeOptions: ['5', '10', '20', '30'],
                 showSizeChanger: true,
@@ -64,14 +62,18 @@ export default {
          * 刷新数据
          */
         refreshData() {
-            const { pageNum, pageSize, accountId, realmId, keywords } = this;
+            const { accountId, realmId, keywords } = this;
+            const { current, pageSize } = this.pagination;
             this.loading = true;
-            const qo = { pageNum, pageSize, accountId, realmId, deep: false };
+            const qo = { pageNum: current, pageSize, accountId, realmId, deep: false };
             if (keywords && keywords.trim() !== '') qo.keywords = keywords.trim();
             racAccountApi
                 .getAccountByUser(qo)
                 .then(ro => {
-                    this.total = ro.extra.page.total - 0;
+                    this.pagination = {
+                        ...this.pagination,
+                        total: ro.extra.page.total - 0,
+                    };
                     // 变更映射时，处理映射的项禁止点击
                     this.dataSource = ro.extra.page.list.map(node => {
                         let flat = false;
