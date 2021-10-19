@@ -148,12 +148,22 @@ export default class RacAccountApi extends BaseCrudApi {
             data,
         });
     }
+
     /**
      * 获取配置信息
      */
     getNacosConfig(): Promise<Ro> {
         return request.get({
             url: '/rac-svr/get/nacos/config',
+        });
+    }
+    /**
+     * 编辑配置信息
+     */
+    setNacosConfig(data): Promise<Ro> {
+        return request.post({
+            url: '/rac-svr/nacos/publish/config',
+            data,
         });
     }
 }

@@ -231,11 +231,11 @@ export default {
                     //     title: '代理登录',
                     //     onClick: record => this.handleAgentSignIn(record),
                     // },
-                    {
-                        type: 'a',
-                        title: '获取配置信息',
-                        onClick: record => this.getConfig(),
-                    },
+                    // {
+                    //     type: 'a',
+                    //     title: '获取配置信息',
+                    //     onClick: record => this.getConfig(),
+                    // },
                     {
                         type: 'a',
                         title: '解绑钉钉',
@@ -494,11 +494,16 @@ export default {
                 },
             });
         },
-        /** 解除绑定微信 */
+        /** 获取配置信息 */
         getConfig() {
-            this.api.getNacosConfig().then(ro => {
-                console.log('getNacosConfig', ro);
-            });
+            this.$showDialog(
+                require('./ConfigForm.vue').default,
+                {},
+                {
+                    title: '配置',
+                    width: '50%',
+                }
+            );
         },
     },
 };
