@@ -1,4 +1,6 @@
 import { AppIdDic } from '@/dic/AppIdDic';
+import { getAppIdByUrl } from '@/util/common';
+
 import UnifiedLogin from '@/view/unified/UnifiedLogin';
 import Demo from '@/view/demo/Demo';
 
@@ -30,7 +32,16 @@ export const constantRouters = [
     },
     {
         path: '/',
-        redirect: '/unified-auth/app/index',
+        redirect() {
+            // 在应用下去路由到path: '/'
+            const App_Id = getAppIdByUrl();
+            if (App_Id) {
+                return `/${getAppIdByUrl()}`;
+            } else {
+                // 手动访问path: '/'， 默认redirect到统一
+                return `/${AppIdDic.UnifiedAuth}`;
+            }
+        },
     },
     /** 平台管理 */
     /** 登录 */
