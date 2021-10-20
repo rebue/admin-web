@@ -360,7 +360,31 @@ module.exports = {
                 extra: '',
             });
         },
-        
-        
+         /**
+         * 获取用户下的账号列表
+         */
+        'GET /rac-svr/rac/account/get-by-user-id': (req, res, u) => {
+            
+        },
+        /**
+         * 移除账号下的用户
+         */
+        'POST /rac-svr/rac/account/disassociate-user': (req, res, u)=>{
+            console.log('---req', req);
+            // let url = u;
+            // if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+            //     url = req.url;
+            // }
+            // const params = parse(url, true).query;
+
+            // const { pageNum, pageSize } = params;
+
+            // let l = list.filter(item => item.realmId === params.realmId);
+            // let total = l.length;
+
+            // const begin = (pageNum - 1) * pageSize;
+            // const end = begin + (pageSize - 0);
+            // l = l.slice(begin, end);
+        }
     },
 };
