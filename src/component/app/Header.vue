@@ -76,6 +76,7 @@ export default {
         color: #fff;
         vertical-align: middle;
         margin-right: 10px;
+        font-size: 16px;
     }
     .header-main {
         margin: 0 auto;
