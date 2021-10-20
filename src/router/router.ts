@@ -54,6 +54,7 @@ const oidcAuth = async function(next) {
     if (result > 0) {
         //第二步 请求认证
         window.location.replace(detail);
+        return;
     } else {
         next(false);
         return;
@@ -76,6 +77,7 @@ router.beforeEach(async (to, from, next) => {
         if (!hasAuthInfo()) {
             //通过认证，后端设置cookie clientId
             oidcAuth(next);
+            return;
         } else {
             next();
             return;
@@ -92,6 +94,7 @@ router.beforeEach(async (to, from, next) => {
             // ???走认证vs走自己登录页
             //------start
             oidcAuth(next);
+            return;
         } else {
             //已登录
             next();
