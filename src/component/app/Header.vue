@@ -20,7 +20,7 @@
 </template>
 
 <script >
-import { removeJwtToken } from '@/util/cookie';
+import { hasAuthInfo, removeAuthInfo, removeJwtToken } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 export default {
     name: 'app-header',
@@ -50,6 +50,10 @@ export default {
         logout(){
             //退出清除cookie jwt_token
             removeJwtToken()
+            // 统一登录 会有cookie auth_info
+            if(hasAuthInfo()) {
+                removeAuthInfo()
+            }
             window.location.reload()
         }
     },
