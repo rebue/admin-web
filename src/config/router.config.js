@@ -28,7 +28,10 @@ export const constantRouters = [
         name: 'scanTransfer',
         component: () => import('@/view/app/security-center/ScanTransfer.vue'),
     },
-
+    {
+        path: '/',
+        redirect: '/unified-auth/app/index',
+    },
     /** 平台管理 */
     /** 登录 */
     {
@@ -87,13 +90,6 @@ export const constantRouters = [
                         hidden: true,
                         meta: { title: '权限', keepAlive: true, icon: 'deployment-unit' },
                     },
-                    // {
-                    //     path: '/base/rac-status',
-                    //     name: 'rac-status',
-                    //     component: () => import('@/view/rac/rac-status/Manager.vue'),
-                    //     hidden: true,
-                    //     meta: { title: '身份', keepAlive: true, icon: 'smile' },
-                    // },
                     {
                         path: '/platform-admin-web/base/rac-role',
                         name: 'rac-role',
@@ -214,7 +210,7 @@ export const constantRouters = [
         children: [
             {
                 path: '/ops-admin-web/person-center',
-                name: 'person-center',
+                name: 'ops-person-center',
                 meta: { title: '个人中心', keepAlive: true, icon: 'setting' },
                 component: () => import('@/view/rac/rac-account/PersonCenter.vue'),
                 hidden: true,
@@ -222,7 +218,7 @@ export const constantRouters = [
             // 配置
             {
                 path: '/ops-admin-web/account',
-                name: 'account',
+                name: 'ops-account',
                 meta: { title: '账户', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
@@ -230,28 +226,28 @@ export const constantRouters = [
                 children: [
                     {
                         path: '/ops-admin-web/account/rac-org',
-                        name: 'rac-org',
+                        name: 'ops-rac-org',
                         component: () => import('@/view/rac/rac-org/Manager.vue'),
                         hidden: true,
                         meta: { title: '组织', keepAlive: true, icon: 'apartment' },
                     },
                     {
                         path: '/ops-admin-web/account/rac-account',
-                        name: 'rac-account',
+                        name: 'ops-rac-account',
                         component: () => import('@/view/rac/rac-account/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户', keepAlive: true, icon: 'user' },
                     },
                     {
                         path: '/ops-admin-web/account/rac-user',
-                        name: 'rac-user',
+                        name: 'ops-rac-user',
                         component: () => import('@/view/rac/rac-user/Manager.vue'),
                         hidden: true,
                         meta: { title: '用户', keepAlive: true, icon: 'user' },
                     },
                     {
                         path: '/ops-admin-web/account/rac-account-unlock',
-                        name: 'rac-account-unlock',
+                        name: 'ops-rac-account-unlock',
                         component: () => import('@/view/rac/rac-account/ManagerUnlock.vue'),
                         hidden: true,
                         meta: { title: '解锁', keepAlive: true, icon: 'user' },
@@ -260,7 +256,7 @@ export const constantRouters = [
             },
             {
                 path: '/ops-admin-web/log',
-                name: 'log',
+                name: 'ops-log',
                 meta: { title: '日志', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
@@ -268,21 +264,21 @@ export const constantRouters = [
                 children: [
                     {
                         path: '/ops-admin-web/log/lock-log',
-                        name: 'lock-log',
+                        name: 'ops-lock-log',
                         component: () => import('@/view/rac/rac-lock-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户解锁日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
                         path: '/ops-admin-web/log/disable-log',
-                        name: 'disable-log',
+                        name: 'ops-disable-log',
                         component: () => import('@/view/rac/rac-disable-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户启/禁用日志', keepAlive: true, icon: 'apartment' },
                     },
                     {
                         path: '/ops-admin-web/log/op-log',
-                        name: 'op-log',
+                        name: 'ops-op-log',
                         component: () => import('@/view/rac/rac-op-log/Manager.vue'),
                         hidden: true,
                         meta: { title: '操作日志', keepAlive: true, icon: 'user' },
@@ -313,19 +309,19 @@ export const constantRouters = [
                 children: [
                     {
                         path: '/unified-auth/app/index',
-                        name: 'index',
+                        name: 'app-index',
                         meta: { title: '我的应用', keepAlive: false },
                         component: () => import('@/view/app/index/Index.vue'),
                     },
                     {
                         path: '/unified-auth/app/auth',
-                        name: 'auth',
+                        name: 'app-auth',
                         meta: { title: '安全中心', keepAlive: false },
                         component: () => import('@/view/app/security-center/Index.vue'),
                     },
                     {
                         path: '/unified-auth/app/log',
-                        name: 'log',
+                        name: 'app-log',
                         meta: { title: '操作日志', keepAlive: false },
                         component: () => import('@/view/app/log/Index.vue'),
                     },

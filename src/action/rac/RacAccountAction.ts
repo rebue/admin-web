@@ -7,6 +7,20 @@ import { racAccountApi } from '@/api/Api';
 import { settingAction } from '../Action';
 import { getAppIdByUrl } from '@/util/common';
 
+const matchRouteHidden = function(perm, listTree) {
+    for (const v of listTree) {
+        if (perm.includes(v.path)) {
+            v.hidden = false;
+        }
+        if (v.children && v.children.length) {
+            matchRouteHidden(perm, v.children);
+            // 处理父级的展示
+            v.hidden = v.children.every(item => {
+                return item.hidden == true;
+            });
+        }
+    }
+};
 export class RacAccountAction {
     /**
      * 刷新账户信息
@@ -47,29 +61,7 @@ export class RacAccountAction {
         const appId = getAppIdByUrl();
         let menus = constantRouters.find(item => item.path === `/${appId}`).children;
         menus = JSON.parse(JSON.stringify(menus));
-        for (const menu of ra.menus) {
-            const sections = menu.replace(`/${appId}`, '').split('/');
-            const section1 = sections[1];
-            const section2 = sections[2];
-            const section3 = sections[3];
-            const section4 = sections[4];
-            const section5 = sections[5];
-            if (!section1) continue;
-            const menu1 = menus.find(item => item.name === section1);
-            menu1.hidden = false;
-            if (!section2) continue;
-            const menu2 = menu1.children.find(item => item.name === section2);
-            menu2.hidden = false;
-            if (!section3) continue;
-            const menu3 = menu1.children.find(item => item.name === section3);
-            menu3.hidden = false;
-            if (!section4) continue;
-            const menu4 = menu1.children.find(item => item.name === section4);
-            menu4.hidden = false;
-            if (!section5) continue;
-            const menu5 = menu1.children.find(item => item.name === section5);
-            menu5.hidden = false;
-        }
+        matchRouteHidden(ra.menus, menus);
         const menusTemp: string[] = [...menus];
         accountStore.menus = observable(menusTemp);
 
