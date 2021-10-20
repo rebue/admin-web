@@ -46,20 +46,6 @@ const uncheckJwtTokenPaths = [
 /**
  * 路由跳转前置钩子
  */
-const oidcAuth = async function(next) {
-    //第一步 获取认证
-    const { result, detail } = await oapOidcApi.getOidcOauthUri({
-        redirectUri: '本应用不用加 测试',
-    });
-    if (result > 0) {
-        //第二步 请求认证
-        window.location.replace(detail);
-        return;
-    } else {
-        next(false);
-        return;
-    }
-};
 router.beforeEach(async (to, from, next) => {
     console.log('beforeEach: to, from, next');
     console.log('to', to);
@@ -76,13 +62,24 @@ router.beforeEach(async (to, from, next) => {
     if (to.path.startsWith('/unified-auth/sign-in/')) {
         if (!hasAuthInfo()) {
             //通过认证，后端设置cookie clientId
-            oidcAuth(next);
-            return;
+            //第一步 获取认证
+            const { result, detail } = await oapOidcApi.getOidcOauthUri({
+                redirectUri: '本应用不用加 测试',
+            });
+            if (result > 0) {
+                //第二步 请求认证
+                window.location.replace(detail);
+                return;
+            } else {
+                next(false);
+                return;
+            }
         } else {
             next();
             return;
         }
     }
+
     //白名单免登录
     if (uncheckJwtTokenPaths.find(path => to.path.startsWith(path))) {
         next();
@@ -93,8 +90,19 @@ router.beforeEach(async (to, from, next) => {
         if (!hasJwtToken()) {
             // ???走认证vs走自己登录页
             //------start
-            oidcAuth(next);
-            return;
+            //通过认证，后端设置cookie clientId
+            //第一步 获取认证
+            const { result, detail } = await oapOidcApi.getOidcOauthUri({
+                redirectUri: '本应用不用加 测试',
+            });
+            if (result > 0) {
+                //第二步 请求认证
+                window.location.replace(detail);
+                return;
+            } else {
+                next(false);
+                return;
+            }
         } else {
             //已登录
             next();
