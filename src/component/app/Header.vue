@@ -11,6 +11,7 @@
             </div>
         </div>
         <div class="header-user">
+            <span class="nickname">{{ accountStore.nickname }}</span>
             <a-popconfirm title="确定要退出吗?" @confirm="() => logout()" ok-text="确定" cancel-text="取消">
                 <img :src="require('../../view/app/assets/img/logout.png')" style="cursor:pointer"/>
             </a-popconfirm>
@@ -22,12 +23,15 @@
 <script >
 import { hasAuthInfo, removeAuthInfo, removeJwtToken } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
+import { accountStore } from '@/store/Store';
+
 export default {
     name: 'app-header',
     components: {},
     props: {},
     data() {
         return {
+            accountStore,
             AppIdDic,
             linkData: [
                 {
@@ -68,6 +72,11 @@ export default {
     top: 0;
     left: 0;
     z-index: 60;
+    .nickname {
+        color: #fff;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
     .header-main {
         margin: 0 auto;
         width: 80%;
