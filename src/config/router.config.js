@@ -203,6 +203,23 @@ export const constantRouters = [
                     },
                 ],
             },
+            {
+                path: '/platform-admin-web/system-manage',
+                name: 'system-manage',
+                meta: { title: '系统管理', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/platform-admin-web/user-system-manage/weChat-config',
+                children: [
+                    {
+                        path: '/platform-admin-web/user-system-manage/weChat-config',
+                        name: 'weChat-config',
+                        component: () => import('@/view/rac/rac-system-manage/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '公众号配置', keepAlive: true, icon: 'apartment' },
+                    },
+                ],
+            },
         ],
     },
     /** 运营管理 */
