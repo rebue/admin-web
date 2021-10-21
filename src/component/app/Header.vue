@@ -24,7 +24,7 @@
 import { hasAuthInfo, removeAuthInfo, removeJwtToken } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 import { accountStore } from '@/store/Store';
-
+import { closeAllWin } from '@/util/winMap'
 export default {
     name: 'app-header',
     components: {},
@@ -52,6 +52,8 @@ export default {
     watch: {},
     methods: {
         logout(){
+            // 关闭打开的应用
+            closeAllWin()
             //退出清除cookie jwt_token
             removeJwtToken()
             // 统一登录 会有cookie auth_info

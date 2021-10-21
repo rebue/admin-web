@@ -13,46 +13,44 @@
                                     v-for="(childItem, childIndex) in labelSelect[index].childList"
                                     :key="childIndex"
                                 >
-                                    <a
+                                    <!-- <a
                                         class="block flex-box flex-col al-c link-item ablea"
                                         :href="childItem.url"
                                         target="_blank"
-                                    >
-                                        <div class="card_box">
-                                            <div class="top_card_box">
-                                                <img
-                                                    :src="childItem.imgUrl || defaultImg()"
-                                                    @error="
-                                                        () => {
-                                                            childItem.imgUrl = defaultImg();
-                                                        }
-                                                    "
-                                                    alt=""
-                                                    width="60px"
-                                                    height="6   0px"
-                                                    class="item-logo"
-                                                />
-                                                <div class="title">{{ childItem.name }}</div>
-                                            </div>
-                                            <div class="auth_type">
-                                                <span
-                                                    class="auth_tag"
-                                                    :class="
-                                                        childItem.isauthName == '已认证' ? 'autoColor' : 'notAutoColor'
-                                                    "
-                                                    >{{ childItem.isauthName }}</span
-                                                >
-                                            </div>
-                                            <div class="tag">
-                                                <a-tag
-                                                    :color="childItem.tagColor"
-                                                    v-show="childItem.isauthName == '已认证'"
-                                                >
-                                                    {{ childItem.tagName }}
-                                                </a-tag>
-                                            </div>
+                                    > -->
+                                    <div class="card_box" @click="openWindow(childItem)">
+                                        <div class="top_card_box">
+                                            <img
+                                                :src="childItem.imgUrl || defaultImg()"
+                                                @error="
+                                                    () => {
+                                                        childItem.imgUrl = defaultImg();
+                                                    }
+                                                "
+                                                alt=""
+                                                width="60px"
+                                                height="6   0px"
+                                                class="item-logo"
+                                            />
+                                            <div class="title">{{ childItem.name }}</div>
                                         </div>
-                                    </a>
+                                        <div class="auth_type">
+                                            <span
+                                                class="auth_tag"
+                                                :class="childItem.isauthName == '已认证' ? 'autoColor' : 'notAutoColor'"
+                                                >{{ childItem.isauthName }}</span
+                                            >
+                                        </div>
+                                        <div class="tag">
+                                            <a-tag
+                                                :color="childItem.tagColor"
+                                                v-show="childItem.isauthName == '已认证'"
+                                            >
+                                                {{ childItem.tagName }}
+                                            </a-tag>
+                                        </div>
+                                    </div>
+                                    <!-- </a> -->
                                 </a-col>
                             </a-row>
                             <div class="noAppCss" v-else>
@@ -104,6 +102,7 @@
 <script>
 import { oapAppApi, racDicApi } from '@/api/Api';
 import Aside from './Aside.vue';
+import { setWin } from '@/util/winMap';
 export default {
     name: 'app-index',
     components: {
@@ -252,6 +251,14 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        /**
+         * 点击打开应用
+         */
+        openWindow(app) {
+            const win = window.open(app.url);
+            // 记录打开的窗口，后续点击退出操作关闭已打开的窗口。
+            setWin(win);
         },
         // 轮询加载
         // loopFetch() {
