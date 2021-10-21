@@ -1,8 +1,10 @@
 <template>
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+        <!-- 手机号在更换和解绑操作中回显 disable -->
         <a-form-model-item key="mobile" label="手机号" prop="mobile">
-            <a-input v-model.trim="model.mobile" placeholder="" />
+            <a-input v-model.trim="model.mobile" placeholder="" :disabled="editFormType !== EditFormTypeDic.Add" />
         </a-form-model-item>
+        <!-- 更换操作，需要新手机号 -->
         <a-form-model-item
             key="newMobile"
             label="新手机号"

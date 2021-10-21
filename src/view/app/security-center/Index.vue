@@ -199,7 +199,7 @@ export default observer({
                     },
                 },
                 {
-                    title: '更新绑定手机号',
+                    title: '更换绑定手机号',
                     width: '500px',
                 }
             );
