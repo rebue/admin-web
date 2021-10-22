@@ -55,6 +55,45 @@ const checkCaptcha = (req, res, u, b) => {
 module.exports = {
     routes: { 
         'POST /cap-svr/cap/captcha/get': getCaptcha,
-        'POST /cap-svr/cap/captcha/check': checkCaptcha
+        'POST /cap-svr/cap/captcha/check': checkCaptcha,
+        'GET /cap-svr/cap/sms/get': (req, res, u, b) => {
+            // setTimeout(()=>{
+            //     return res.json({
+            //         result: 0,
+            //         msg: '查询失败',
+            //         extra: ''
+            //     });
+            // }, 2000)
+            setTimeout(()=>{
+                return res.json({
+                    result: 1,
+                    msg: '查询成功',
+                    extra: ''
+                });
+            }, 2000)
+        },
+        'GET /cap-svr/cap/sms/get': (req, res, u, b) => {
+            // setTimeout(()=>{
+            //     return res.json({
+            //         result: 0,
+            //         msg: '查询失败',
+            //         extra: ''
+            //     });
+            // }, 2000)
+            setTimeout(()=>{
+                return res.json({
+                    result: 1,
+                    msg: '查询成功',
+                    extra: ''
+                });
+            }, 2000)
+        },
+        'POST /orp-svr/orp/bind/mobile': (req, res, u, b) => {
+            return res.json({
+                result: 1,
+                msg: '查询成功',
+                extra: ''
+            });
+        }
     }
 }

@@ -28,11 +28,11 @@
                                 <a-icon type="mobile" />
                             </div>
                             <span slot="title">手机号绑定</span>
-                            <span slot="description" v-if="isVerifiedMobile">已设置：1599462300</span>
+                            <span slot="description" v-if="accountStore.phone">已设置：{{ accountStore.phone }}</span>
                             <span slot="description" v-else>未绑定</span>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <template v-if="isVerifiedMobile">
+                            <template v-if="accountStore.phone">
                                 <a-button key="modify" @click="modifyPhone">更换绑定</a-button>
                                 <a-button key="delete" @click="unbindPhone">解除绑定</a-button>
                             </template>
@@ -120,10 +120,6 @@ export default observer({
         return {
             accountStore,
             EditFormTypeDic,
-            //手机号
-            isVerifiedMobile: false,
-            isVerifiedWechat: false,
-            isVerifiedDing: false,
             isVerifiedEmail: false,
         };
     },
@@ -143,10 +139,8 @@ export default observer({
                         };
                     },
                     methods: {
-                        async callback(params) {
-                            //发起绑定请求
-                            await racAccountApi.getById(that.accountStore.accountId);
-                            that.isVerifiedMobile = true;
+                        callback() {
+                            that.refreshAccountInfo();
                         },
                     },
                 },
@@ -168,10 +162,8 @@ export default observer({
                         };
                     },
                     methods: {
-                        async callback(params) {
-                            //发起解除绑定请求
-                            await racAccountApi.getById(that.accountStore.accountId);
-                            that.isVerifiedMobile = false;
+                        callback() {
+                            that.refreshAccountInfo();
                         },
                     },
                 },
