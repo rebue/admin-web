@@ -113,7 +113,7 @@ const list = [
             "createTimestamp": 1631003031598
         },
         "remark": "c0ypd2",
-        "realmId": "117",
+        realmId: "117",
         "realm": {
             "id": "117",
             "idType": "af028j",
@@ -142,6 +142,9 @@ module.exports = {
                     break;
                 case 'ops-admin-web':
                     accountId = '2';
+                    break;
+                case 'unified-auth':
+                    accountId = '1';
                     break;
                 default:
                     break;

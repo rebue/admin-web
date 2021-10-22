@@ -203,7 +203,8 @@ module.exports = {
                     "oapAppList": list.filter((v)=>{
                         return v.isEnabled && v.isCertified
                     }),
-                    "racAppList": list
+                    "racAppList": list,
+                    racAppLabelList: [{"id":"923390559798427653","dicId":"923116577378664449","name":"学工","treeCode":"001","dicItemKey":"xuegong","updateDatetime":"2021-10-13 11:26:33"},{"id":"923389909341569026","dicId":"923116577378664449","name":"教务","treeCode":"000","dicItemKey":"jiaowu","updateDatetime":"2021-10-13 11:23:58"}]
                 }
             });
         },
