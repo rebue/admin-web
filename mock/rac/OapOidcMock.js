@@ -12,8 +12,8 @@ module.exports = {
             console.log('---req',req.cookie);
             const params = parse(url, true).query;
 
-            if (params.redirect_uri) {
-                redirect_uri = params.redirect_uri
+            if (params.redirectUri) {
+                redirect_uri = params.redirectUri
                 return res.json({
                     result: 1,
                     msg: '查询成功',
@@ -36,7 +36,7 @@ module.exports = {
             const auth_info = 'eyJjbGllbnRJZCI6InVuaWZpZWQtYXV0aCIsInJlZGlyZWN0VXJpIjoiaHR0cHM6Ly9hdXRoLm1haXl1ZXNvZnQuY29tL29ycC1zdnIvb3JwL2NhbGxiYWNrIiwic2NvcGUiOiJvcGVuaWQiLCJzdGF0ZSI6ImUwMmVhZjQ5LWI3MDMtNGQ2OC05ZjNmLWU4MmI1ZDYwYTNmYyJ9'
             const authInfoKey = process.env.VUE_APP_AUTH_INFO_KEY;
             res.cookie(authInfoKey, auth_info, { expires: new Date(Date.now() + 1800000) });
-            if (!false) {
+            if (true) {
                 //去登录页
                 res.writeHead(302, {'Location': `http://${req.headers.host}/admin-web/unified-auth/sign-in/unified`});
             } else {

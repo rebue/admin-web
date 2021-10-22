@@ -54,8 +54,16 @@
                     <a-form-model-item prop="phoneCodeNumber" class="comFromStyle">
                         <a-input size="large" v-model="form.phoneCodeNumber" placeholder="请输入验证码" class="input">
                         </a-input>
-                        <div class="clickCode" v-if="!isCodeLoading" @click="clickCode()">获取验证码</div>
-                        <div class="clickSecond" v-else>{{ second }}s</div>
+                        <a-button
+                            class="code-btn"
+                            type="link"
+                            key="btn"
+                            @click="getCode"
+                            :loading="isCodeLoading"
+                            v-if="!isCounting"
+                            >获取验证码</a-button
+                        >
+                        <a-button class="code-btn" type="link" key="s" v-else>{{ second }}s</a-button>
                     </a-form-model-item>
                     <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
                         >登录</a-button
@@ -79,6 +87,7 @@ export default {
             show: true,
             tabKey: 1,
             isCodeLoading: false,
+            isCounting: false,
             second: SECOND,
             phoneAreaNumber: ['+86', '+91', '+99'],
             form: {
@@ -175,24 +184,42 @@ export default {
             });
         },
         //点击获取验证码事件
-        clickCode() {
-            //判断手机号码是不是空 或者是不是 正常的手机号
-            if (this.form.phoneNumber == '') {
-                this.$refs.form.validateField('phoneNumber');
-                return;
-            } else if (!isPhone(this.form.phoneNumber)) {
-                this.$refs.form.validateField('phoneNumber');
+        async getCode() {
+            if (this.isCodeLoading) {
                 return;
             }
-            this.isCodeLoading = true;
-            this.$refs.form.clearValidate('phoneNumber'); //当手机号没问题的时候 就取消tips
-            this.countDown(this.second, val => {
-                this.second = val;
-                if (val === 0) {
-                    this.second = SECOND;
-                    this.isCodeLoading = false;
-                }
+            // 验证手机号是否输入
+            let valid = true;
+            this.$refs.form.validateField('phoneNumber', (errors, values) => {
+                valid = !errors;
             });
+
+            if (!valid) {
+                return;
+            }
+
+            //获取验证码 请求
+            try {
+                this.isCodeLoading = true;
+                await request.get({
+                    url: '/cap-svr/cap/sms/get',
+                    params: {
+                        mobile: this.form.phoneNumber,
+                    },
+                });
+                this.isCodeLoading = false;
+                this.isCounting = true;
+                // then 验证码倒计时
+                this.countDown(this.second, val => {
+                    this.second = val;
+                    if (val === 0) {
+                        this.second = SECOND;
+                        this.isCounting = false;
+                    }
+                });
+            } catch {
+                this.isCodeLoading = false;
+            }
         },
         countDown(second, cb, immediate = false) {
             if (immediate) {
@@ -252,19 +279,13 @@ export default {
 .comFromStyle {
     position: relative;
 }
-.clickCode {
+.code-btn {
     position: absolute;
     right: 10px;
-    top: -12px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 18px;
     color: #7aa8f2;
     cursor: pointer;
-}
-.clickSecond {
-    position: absolute;
-    right: 10px;
-    top: -12px;
-    font-size: 18px;
-    color: #7aa8f2;
 }
 </style>
