@@ -256,7 +256,7 @@ export default {
          * 点击打开应用
          */
         openWindow(app) {
-            const win = window.open(app.url);
+            const win = window.open(app.url, app.id);
             // 记录打开的窗口，后续点击退出操作关闭已打开的窗口。
             setWin(win);
         },
