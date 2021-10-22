@@ -52,7 +52,7 @@
                         </a-input>
                     </a-form-model-item>
                     <a-form-model-item prop="phoneCodeNumber" class="comFromStyle">
-                        <a-input size="large" v-model="form.phoneCodeNumber" placeholder="请输入验证码" class="input">
+                        <a-input size="large" v-model="form.phoneCodeNumber" placeholder="验证码" class="input">
                         </a-input>
                         <a-button
                             class="code-btn"
@@ -61,7 +61,7 @@
                             @click="getCode"
                             :loading="isCodeLoading"
                             v-if="!isCounting"
-                            >获取验证码</a-button
+                            >发送验证码</a-button
                         >
                         <a-button class="code-btn" type="link" key="s" v-else>{{ second }}s</a-button>
                     </a-form-model-item>
@@ -198,7 +198,7 @@ export default {
                 return;
             }
 
-            //获取验证码 请求
+            //发送验证码 请求
             try {
                 this.isCodeLoading = true;
                 await request.get({
@@ -284,7 +284,7 @@ export default {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
+    font-size: 16px;
     color: #7aa8f2;
     cursor: pointer;
 }

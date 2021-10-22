@@ -16,7 +16,7 @@
         <a-form-model-item key="verifyCode" label="验证码" prop="verifyCode">
             <div class="code">
                 <a-input class="code-input" v-model.trim="model.verifyCode" placeholder="" />
-                <a-button key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting">获取验证码</a-button>
+                <a-button key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting">发送验证码</a-button>
                 <a-button style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
             </div>
         </a-form-model-item>
