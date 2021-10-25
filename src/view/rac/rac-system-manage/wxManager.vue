@@ -9,11 +9,12 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
+                    isNewApiFun="wechatOpenMapList"
                 >
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @close="handleEditFormClose" configType="公众号" />
     </fragment>
 </template>
 
@@ -22,7 +23,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { etlStrategyApi } from '@/api/Api';
+import { oapConfig } from '@/api/Api';
 
 export default {
     name: 'Manager',
@@ -32,7 +33,7 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = etlStrategyApi;
+        this.api = oapConfig;
         const columns = [
             {
                 dataIndex: 'no',
@@ -48,45 +49,15 @@ export default {
                 fixed: 'left',
             },
             {
-                dataIndex: 'type',
-                title: '类型',
-                width: 140,
-            },
-            {
-                dataIndex: 'appid',
+                dataIndex: 'id',
                 title: 'appid',
                 ellipsis: true,
             },
             {
-                dataIndex: 'appsecret',
+                dataIndex: 'secret',
                 title: 'appsecret',
                 ellipsis: true,
             },
-            {
-                dataIndex: 'time',
-                title: '创建时间',
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'beizhu',
-                title: '备注',
-                ellipsis: true,
-            },
-            // {
-            //     dataIndex: 'isEnabled',
-            //     align: 'center',
-            //     title: '启用',
-            //     width: 70,
-            //     fixed: 'right',
-            //     customRender: (text, record) => (
-            //         <a-switch
-            //             checked={record.isEnabled}
-            //             checkedChildren="启"
-            //             unCheckedChildren="禁"
-            //             onClick={() => this.handleUserCheck(record)}
-            //         />
-            //     ),
-            // },
             {
                 dataIndex: 'action',
                 title: '操作',
@@ -135,23 +106,29 @@ export default {
             this.crudTable.refreshData();
         },
         /**
-         * 处理添加领域的事件
+         * 处理添加的事件
          */
         handleAdd() {
             this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
-         * 处理编辑领域的事件
+         * 处理编辑的事件
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
-         * 处理删除领域的事件
+         * 处理删除的事件
          */
         handleDel(record) {
             this.loading = true;
-            this.api.delById(record.id).finally(() => {
+            const configType = 'wechat-open';
+            const data = {
+                oldAppKey: record.id,
+                oldAppSecret: record.secret,
+                configType,
+            };
+            this.api.setNacosDelConfig(data).finally(() => {
                 this.refreshTableData();
             });
         },
@@ -159,25 +136,25 @@ export default {
             this.refreshTableData();
         },
         /** 处理用户启用或禁用 */
-        handleUserCheck(record) {
-            this.loading = true;
-            this.curRecord = record;
-            if (record.isEnabled === true) {
-                this.curRecord.isEnabled = !record.isEnabled;
-                this.disabledFormVisible = true;
-            } else {
-                this.curRecord.isEnabled = !record.isEnabled;
-                this.enabledFormVisible = true;
-            }
-            const data = {
-                id: record.id,
-                isEnabled: record.isEnabled,
-            };
-            etlStrategyApi
-                .enable(data)
-                .then(() => console.log(1))
-                .finally(() => (this.loading = false));
-        },
+        // handleUserCheck(record) {
+        //     this.loading = true;
+        //     this.curRecord = record;
+        //     if (record.isEnabled === true) {
+        //         this.curRecord.isEnabled = !record.isEnabled;
+        //         this.disabledFormVisible = true;
+        //     } else {
+        //         this.curRecord.isEnabled = !record.isEnabled;
+        //         this.enabledFormVisible = true;
+        //     }
+        //     const data = {
+        //         id: record.id,
+        //         isEnabled: record.isEnabled,
+        //     };
+        //     etlStrategyApi
+        //         .enable(data)
+        //         .then(() => console.log(1))
+        //         .finally(() => (this.loading = false));
+        // },
     },
 };
 </script>

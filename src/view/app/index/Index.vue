@@ -1,8 +1,64 @@
 <template>
     <div class="flex-box page index-wrap">
         <Aside />
-        <div class="ml20 mc w140">
-            <a-collapse v-model="activeKey" v-if="!loading">
+        <div class="ml20 mc w140 backgWhite">
+            <div class="tableList" v-for="(item, index) in labelSelect" :key="index">
+                <div class="title">
+                    <span class="name">
+                        {{ item.name }}
+                    </span>
+                    <span class="clickIcon">
+                        展开
+                    </span>
+                </div>
+                <div>
+                    <a-row class="content" :gutter="10" v-if="labelSelect[index].childList">
+                        <a-col
+                            class="flex-box al-c ju-c"
+                            :span="6"
+                            v-for="(childItem, childIndex) in labelSelect[index].childList"
+                            :key="childIndex"
+                        >
+                            <a
+                                class="block flex-box flex-col al-c link-item ablea"
+                                :href="childItem.url"
+                                target="_blank"
+                            >
+                                <div class="card_box">
+                                    <div class="top_card_box">
+                                        <img
+                                            :src="childItem.imgUrl || defaultImg()"
+                                            @error="
+                                                () => {
+                                                    childItem.imgUrl = defaultImg();
+                                                }
+                                            "
+                                            alt=""
+                                            width="60px"
+                                            height="6   0px"
+                                            class="item-logo"
+                                        />
+                                        <div class="title">{{ childItem.name }}</div>
+                                    </div>
+                                    <div class="auth_type">
+                                        <span
+                                            class="auth_tag"
+                                            :class="childItem.isauthName == '已认证' ? 'autoColor' : 'notAutoColor'"
+                                            >{{ childItem.isauthName }}</span
+                                        >
+                                    </div>
+                                    <div class="tag">
+                                        <a-tag :color="childItem.tagColor" v-show="childItem.isauthName == '已认证'">
+                                            {{ childItem.tagName }}
+                                        </a-tag>
+                                    </div>
+                                </div>
+                            </a>
+                        </a-col>
+                    </a-row>
+                </div>
+            </div>
+            <!-- <a-collapse v-model="activeKey" v-if="!loading">
                 <a-collapse-panel v-for="(item, index) in labelList" :key="item" :header="labelSelect[index].name">
                     <a-spin :spinning="loading">
                         <div class="w100 bg-w ">
@@ -59,7 +115,7 @@
                         </div>
                     </a-spin>
                 </a-collapse-panel>
-            </a-collapse>
+            </a-collapse> -->
 
             <!-- <a-spin :spinning="loading">
                 <div class="mt20 w100 pt20 pb20 bg-w card card-shadow">
@@ -270,6 +326,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+.backgWhite {
+    background: #ffffff;
+    box-shadow: 0px 8px 10px 0px #a3bce2;
+    border-radius: 0px 0px 10px 10px;
+    border-top: 4px solid rgba(58, 105, 201, 1);
+}
 .card {
     padding-left: 24px;
     padding-right: 12px;
@@ -312,6 +374,24 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.tableList {
+    padding: 0 30px;
+    .title {
+        font-size: 20px;
+        font-weight: 400;
+        color: #222222;
+        padding: 10px 0;
+        border-bottom: 1px solid #e4e5ea;
+        position: relative;
+        .clickIcon {
+            position: absolute;
+            right: 0;
+            font-size: 18px;
+            font-weight: 400;
+            color: #c2bfbf;
+        }
+    }
 }
 .card_box {
     width: 100%;

@@ -214,9 +214,16 @@ export const constantRouters = [
                     {
                         path: '/platform-admin-web/user-system-manage/weChat-config',
                         name: 'weChat-config',
-                        component: () => import('@/view/rac/rac-system-manage/Manager.vue'),
+                        component: () => import('@/view/rac/rac-system-manage/wxManager.vue'),
                         hidden: true,
                         meta: { title: '公众号配置', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/platform-admin-web/user-system-manage/dingTalk-config',
+                        name: 'dingTalk-config',
+                        component: () => import('@/view/rac/rac-system-manage/ddManager.vue'),
+                        hidden: true,
+                        meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },

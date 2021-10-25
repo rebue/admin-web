@@ -278,6 +278,10 @@ export default observer({
                 };
             },
         },
+        isNewApiFun:{
+            type:[Boolean,String],
+            default:false,
+        }
     },
     data() {
         /** 实现拖曳调整列宽度 */
@@ -418,6 +422,12 @@ export default observer({
                     ? undefined
                     : { orderBy: this.sorter.field + (this.sorter.order === 'descend' ? ' DESC' : '') };
             // 分页查询
+            if(this.isNewApiFun){
+                promise = this.api.getNacosConfig().then(ro => {
+                    this.dataSource = ro.extra[this.isNewApiFun]
+                });
+                return promise.finally(() => (this.loading = false));
+            }
             if (this.pagination) {
                 const { current, pageSize } = this.pagination;
                 const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
