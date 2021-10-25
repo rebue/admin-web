@@ -423,9 +423,20 @@ export default observer({
                     : { orderBy: this.sorter.field + (this.sorter.order === 'descend' ? ' DESC' : '') };
             // 分页查询
             if(this.isNewApiFun){
-                promise = this.api.getNacosConfig().then(ro => {
-                    this.dataSource = ro.extra[this.isNewApiFun]
-                });
+                if(this.isNewApiFun == 'today'){
+                    const data = { ...query};
+                    promise = this.api.getCountSurvey(data).then(ro => {
+                        //根据属性取属性对应的值
+                        let newData = [
+                            ro.extra.id
+                        ];
+                        this.dataSource = newData;
+                    });
+                }else{
+                    promise = this.api.getNacosConfig().then(ro => {
+                        this.dataSource = ro.extra[this.isNewApiFun]
+                    });
+                }
                 return promise.finally(() => (this.loading = false));
             }
             if (this.pagination) {

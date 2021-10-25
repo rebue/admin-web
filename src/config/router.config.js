@@ -227,6 +227,23 @@ export const constantRouters = [
                     },
                 ],
             },
+            {
+                path: '/platform-admin-web/system-survey',
+                name: 'system-survey',
+                meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/platform-admin-web/user-system-survey/todaySurvey',
+                children: [
+                    {
+                        path: '/platform-admin-web/user-system-survey/todaySurvey',
+                        name: 'todaySurvey',
+                        component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
+                    },
+                ],
+            },
         ],
     },
     /** 运营管理 */
