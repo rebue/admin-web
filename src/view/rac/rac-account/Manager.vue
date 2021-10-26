@@ -238,6 +238,11 @@ export default {
                     // },
                     {
                         type: 'a',
+                        title: '解绑手机号',
+                        onClick: record => this.handleUnbindPhone(record),
+                    },
+                    {
+                        type: 'a',
                         title: '解绑钉钉',
                         onClick: record => this.handleUnboundDD(record),
                     },
@@ -467,6 +472,19 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        /** 解除绑定手机号 */
+        handleUnbindPhone(record) {
+            this.$confirm({
+                title: '提示',
+                content: '你确定要解除账户绑定手机号吗？',
+                onOk: () => {
+                    const data = { id: record.id };
+                    this.api.unbindPhone(data).finally(() => {
+                        this.refreshTableData();
+                    });
+                },
+            });
         },
         /** 解除绑定钉钉 */
         handleUnboundDD(record) {

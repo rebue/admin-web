@@ -131,6 +131,15 @@ export default class RacAccountApi extends BaseCrudApi {
         });
     }
     /**
+     * 管理员解除账户绑定手机号
+     */
+    unbindPhone(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/unbind-mobile',
+            data,
+        });
+    }
+    /**
      * 管理员解除账户绑定钉钉
      */
     getUnbindDingTalk(data): Promise<Ro> {
