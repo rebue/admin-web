@@ -23,4 +23,9 @@ export default class RacVerifitionApi extends BaseCrudApi {
     // reqGetTokenFromCode(params) {
     //     return request.get({ url: '/orp-svr/oidc/callback', params: params });
     // }
+
+    /** 发送手机的短信验证码 */
+    sendSMSCode(data) {
+        return request.post({ url: this.baseUrn + '/sms/sending', data });
+    }
 }

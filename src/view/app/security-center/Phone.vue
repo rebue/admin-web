@@ -1,21 +1,12 @@
 <template>
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-        <!-- 手机号在更换和解绑操作中回显 disable -->
+        <!-- 手机号在解绑操作中回显 disable -->
         <a-form-model-item key="mobile" label="手机号" prop="mobile">
             <a-input v-model.trim="model.mobile" placeholder="" :disabled="editFormType !== EditFormTypeDic.Add" />
         </a-form-model-item>
-        <!-- 更换操作，需要新手机号 -->
-        <a-form-model-item
-            key="newMobile"
-            label="新手机号"
-            prop="mobile"
-            v-if="editFormType === EditFormTypeDic.Modify"
-        >
-            <a-input v-model.trim="model.newMobile" placeholder="" />
-        </a-form-model-item>
-        <a-form-model-item key="verifyCode" label="验证码" prop="verifyCode">
+        <a-form-model-item key="code" label="验证码" prop="code">
             <div class="code">
-                <a-input class="code-input" v-model.trim="model.verifyCode" placeholder="" />
+                <a-input class="code-input" v-model.trim="model.code" placeholder="" />
                 <a-button key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting">发送验证码</a-button>
                 <a-button style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
             </div>
@@ -26,6 +17,7 @@
     </a-form-model>
 </template>
 <script>
+import { racAccountApi, racVerifitionApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import request from '@/util/request';
@@ -48,13 +40,14 @@ export default {
             EditFormTypeDic,
             //form表单
             model: {
+                id: '',
                 mobile: '',
-                newMobile: '',
-                verifyCode: '',
+                code: '',
+                bindType: 0, //0绑定，1解绑
             },
             rules: {
                 mobile: [
-                    { required: true, message: '请输入手机号', trigger: 'blur', transform: val => val.trim() },
+                    { required: true, message: '请输入手机号', trigger: 'blur', transform: val => val && val.trim() },
                     {
                         validator: (rule, value, callback) => {
                             if (value) {
@@ -67,27 +60,8 @@ export default {
                         },
                     },
                 ],
-                newMobile: [
-                    {
-                        required: this.editFormType === EditFormTypeDic.Modify,
-                        message: '请输入新手机号',
-                        trigger: 'blur',
-                        transform: val => val.trim(),
-                    },
-                    {
-                        validator: (rule, value, callback) => {
-                            if (value) {
-                                if (!isPhone(value)) {
-                                    callback(new Error('新手机号不合法'));
-                                    return false;
-                                }
-                            }
-                            callback();
-                        },
-                    },
-                ],
-                verifyCode: [
-                    { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val.trim() },
+                code: [
+                    { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
             second: SECOND,
@@ -95,47 +69,38 @@ export default {
             isCounting: false,
         };
     },
+    mounted() {
+        racAccountApi.getById(this.accountId).then(res => {
+            const account = res.extra.one;
+            (this.model.id = account.id), (this.model.mobile = account.signInMobile);
+        });
+    },
     methods: {
         ok() {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //发请求
-                    // 绑定，更换绑定，解除绑定
-                    //EditFormTypeDic.Add, EditFormTypeDic.Modify, EditFormTypeDic.Delete
+                    // 绑定，解除绑定
+                    //EditFormTypeDic.Add,  EditFormTypeDic.Delete
                     if (this.editFormType === EditFormTypeDic.Add) {
-                        request
-                            .post({
-                                url: '/orp-svr/orp/bind/mobile',
-                                data: {
-                                    mobile: this.model.mobile,
-                                    verifyCode: this.model.verifyCode,
-                                },
-                            })
-                            .then(ro => {
-                                this.callback && this.callback(ro);
-                                this.closeDialog && this.closeDialog();
-                            });
-                    } else if (this.editFormType === EditFormTypeDic.Modify) {
-                        request
-                            .post({
-                                url: '/cap-svr/cap/modify/mobile',
-                                data: {
-                                    newMobile: this.model.newMobile,
-                                    verifyCode: this.model.verifyCode,
-                                },
+                        racAccountApi
+                            .bindPhone({
+                                id: this.model.id,
+                                mobile: this.model.mobile,
+                                code: this.model.code,
+                                bindType: 0, //0绑定，1解绑
                             })
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 this.closeDialog && this.closeDialog();
                             });
                     } else if (this.editFormType === EditFormTypeDic.Delete) {
-                        request
-                            .post({
-                                url: '/cap-svr/cap/unbind/mobile',
-                                data: {
-                                    mobile: this.model.mobile,
-                                    verifyCode: this.model.verifyCode,
-                                },
+                        racAccountApi
+                            .bindPhone({
+                                id: this.model.id,
+                                mobile: this.model.mobile,
+                                code: this.model.code,
+                                bindType: 1, //0绑定，1解绑
                             })
                             .then(ro => {
                                 this.callback && this.callback(ro);
@@ -156,17 +121,9 @@ export default {
             }
             // 验证手机号是否输入
             let valid = true;
-            let mobile = this.model.mobile;
-            if (this.editFormType === EditFormTypeDic.Modify) {
-                mobile = this.model.newMobile;
-                this.$refs.form.validateField('newMobile', (errors, values) => {
-                    valid = !errors;
-                });
-            } else {
-                this.$refs.form.validateField('mobile', (errors, values) => {
-                    valid = !errors;
-                });
-            }
+            this.$refs.form.validateField('mobile', (errors, values) => {
+                valid = !errors;
+            });
             if (!valid) {
                 return;
             }
@@ -174,11 +131,8 @@ export default {
             //获取验证码 请求
             try {
                 this.isCodeLoading = true;
-                await request.get({
-                    url: '/cap-svr/cap/sms/get',
-                    params: {
-                        mobile,
-                    },
+                await racVerifitionApi.sendSMSCode({
+                    phoneNumber: this.model.mobile,
                 });
                 this.isCodeLoading = false;
                 this.isCounting = true;

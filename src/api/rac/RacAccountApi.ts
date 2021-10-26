@@ -131,6 +131,16 @@ export default class RacAccountApi extends BaseCrudApi {
         });
     }
     /**
+     * 账号解除账户绑定手机号
+     */
+    bindPhone(data): Promise<Ro> {
+        return request.post({
+            url: this.baseUrn + '/bind-mobile',
+            data,
+        });
+    }
+
+    /**
      * 管理员解除账户绑定手机号
      */
     unbindPhone(data): Promise<Ro> {

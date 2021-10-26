@@ -388,6 +388,26 @@ module.exports = {
             // const begin = (pageNum - 1) * pageSize;
             // const end = begin + (pageSize - 0);
             // l = l.slice(begin, end);
+        },
+        'POST /rac-svr/rac/account/bind-mobile': (req, res, u)=>{
+            const body = (b && b.body) || req.body;
+            //短信验证码 code:'11111'
+            const account = list.find((v)=>{
+                return v.id == body.id
+            })
+            if(body.bindType == 0) {
+                account.signInMobile = body.mobile
+                return res.json({
+                    result: 1,
+                    msg: '绑定成功'
+                });
+            } else if(body.bindType == 1){
+                account.signInMobile = undefined
+                return res.json({
+                    result: 1,
+                    msg: '解绑成功'
+                });
+            }
         }
     },
 };

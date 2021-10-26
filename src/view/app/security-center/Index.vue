@@ -28,15 +28,16 @@
                                 <a-icon type="mobile" />
                             </div>
                             <span slot="title">手机号绑定</span>
-                            <span slot="description" v-if="accountStore.phone">已设置：{{ accountStore.phone }}</span>
+                            <span slot="description" v-if="accountStore.signInMobile"
+                                >已设置：{{ accountStore.signInMobile }}</span
+                            >
                             <span slot="description" v-else>未绑定</span>
                         </a-list-item-meta>
                         <div class="ctrl-wrap">
-                            <template v-if="accountStore.phone">
-                                <a-button key="modify" @click="modifyPhone">更换绑定</a-button>
+                            <template v-if="accountStore.signInMobile">
                                 <a-button key="delete" @click="unbindPhone">解除绑定</a-button>
                             </template>
-                            <a-button key="add" type="primary" v-else @click="bindPhone">绑定</a-button>
+                            <a-button key="add" type="primary" @click="bindPhone" v-else>绑定</a-button>
                         </div>
                     </a-list-item>
 
@@ -135,6 +136,7 @@ export default observer({
                 {
                     data() {
                         return {
+                            accountId: that.accountStore.accountId,
                             editFormType: EditFormTypeDic.Add,
                         };
                     },
@@ -151,13 +153,13 @@ export default observer({
             );
         },
         unbindPhone() {
-            //
             const that = this;
             this.$showDialog(
                 require('./Phone.vue').default,
                 {
                     data() {
                         return {
+                            accountId: that.accountStore.accountId,
                             editFormType: EditFormTypeDic.Delete,
                         };
                     },
@@ -169,29 +171,6 @@ export default observer({
                 },
                 {
                     title: '解除绑定手机号',
-                    width: '500px',
-                }
-            );
-        },
-        modifyPhone() {
-            //
-            const that = this;
-            this.$showDialog(
-                require('./Phone.vue').default,
-                {
-                    data() {
-                        return {
-                            editFormType: EditFormTypeDic.Modify,
-                        };
-                    },
-                    methods: {
-                        callback() {
-                            that.refreshAccountInfo();
-                        },
-                    },
-                },
-                {
-                    title: '更换绑定手机号',
                     width: '500px',
                 }
             );
