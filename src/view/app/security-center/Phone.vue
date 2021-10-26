@@ -21,7 +21,7 @@ import { racAccountApi, racVerifitionApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import request from '@/util/request';
-const SECOND = 5;
+const SECOND = 60;
 export default {
     name: 'app-security-center-mobile',
     components: {},
