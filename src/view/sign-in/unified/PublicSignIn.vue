@@ -22,7 +22,7 @@
                     <a-button size="large" :loading="loading" type="primary" block @click="doSubmit" class="sign-btn"
                         >登录</a-button
                     >
-                    <a-checkbox class="remenber">记住登录状态</a-checkbox>
+                    <!-- <a-checkbox class="remenber">记住登录状态</a-checkbox> -->
                 </a-form-model>
             </div>
         </a-tab-pane>

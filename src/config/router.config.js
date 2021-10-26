@@ -24,6 +24,7 @@ export const constantRouters = [
         name: 'unifiedLogin',
         component: UnifiedLogin,
     },
+
     /**扫码中转中间页*/
     {
         path: '/scanTransfer',
@@ -345,6 +346,12 @@ export const constantRouters = [
         path: '/unified-auth/sign-in/unified',
         name: 'unified-sign-in',
         component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
+    },
+    /**忘记密码*/
+    {
+        path: '/unified-auth/forget-password',
+        name: 'unified-forget-password',
+        component: () => import('@/view/forget-password/Index.vue'),
     },
     {
         path: '/unified-auth',

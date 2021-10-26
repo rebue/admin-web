@@ -39,6 +39,7 @@ const uncheckJwtTokenPaths = [
     '/ops-admin-web/sign-in/',
     '/unified-auth/sign-in/',
     '/scanTransfer',
+    '/unified-auth/forget-password',
     '/404',
     '/unifiedLogin',
     '/demo',
