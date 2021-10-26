@@ -75,8 +75,10 @@
 </template>
 <script>
 import request from '@/util/request';
+import { racVerifitionApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
 import md5 from 'crypto-js/md5';
+
 const SECOND = 60;
 export default {
     components: {},
@@ -201,11 +203,8 @@ export default {
             //发送验证码 请求
             try {
                 this.isCodeLoading = true;
-                await request.get({
-                    url: '/cap-svr/cap/sms/get',
-                    params: {
-                        mobile: this.form.phoneNumber,
-                    },
+                await racVerifitionApi.sendSMSCode({
+                    phoneNumber: this.form.phoneNumber,
                 });
                 this.isCodeLoading = false;
                 this.isCounting = true;
