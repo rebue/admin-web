@@ -57,6 +57,9 @@ export class RacAccountAction {
         accountStore.wxUnionId = ra.wxUnionId;
         // 绑定的钉钉UnionId
         accountStore.ddUnionId = ra.ddUnionId;
+
+        // 绑定的钉钉UnionId
+        accountStore.signInMobile = ra.signInMobile;
         // 设置菜单
         const appId = getAppIdByUrl();
         let menus = constantRouters.find(item => item.path === `/${appId}`).children;

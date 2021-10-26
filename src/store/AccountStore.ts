@@ -46,4 +46,7 @@ export default class AccountStore {
     /** 绑定的钉钉UnionId */
     @observable
     ddUnionId = '';
+    /** 绑定的手机号 */
+    @observable
+    signInMobile = '';
 }

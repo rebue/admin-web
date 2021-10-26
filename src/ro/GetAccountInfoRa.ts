@@ -29,4 +29,6 @@ export interface GetAccountInfoRa {
     wxUnionId: string;
     /** 绑定的钉钉UnionId */
     ddUnionId: string;
+    /** 绑定的手机号 */
+    signInMobile: string;
 }
