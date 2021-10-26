@@ -77,6 +77,7 @@
 import request from '@/util/request';
 import { racVerifitionApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
+import { countDown } from '@/util/common';
 import md5 from 'crypto-js/md5';
 
 const SECOND = 60;
@@ -209,7 +210,7 @@ export default {
                 this.isCodeLoading = false;
                 this.isCounting = true;
                 // then 验证码倒计时
-                this.countDown(this.second, val => {
+                countDown(this.second, val => {
                     this.second = val;
                     if (val === 0) {
                         this.second = SECOND;
@@ -219,18 +220,6 @@ export default {
             } catch {
                 this.isCodeLoading = false;
             }
-        },
-        countDown(second, cb, immediate = false) {
-            if (immediate) {
-                if (second == 0) {
-                    return;
-                }
-                second = second - 1;
-                cb && cb(second);
-            }
-            setTimeout(() => {
-                this.countDown(second, cb, true);
-            }, 1000);
         },
     },
 };

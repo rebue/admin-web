@@ -11,3 +11,17 @@ export function getAppIdByUrl() {
     });
     return appId;
 }
+
+/** 重新发送短信倒计时 */
+export function countDown(second, cb, immediate = false) {
+    if (immediate) {
+        if (second == 0) {
+            return;
+        }
+        second = second - 1;
+        cb && cb(second);
+    }
+    setTimeout(() => {
+        countDown(second, cb, true);
+    }, 1000);
+}
