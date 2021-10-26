@@ -408,6 +408,17 @@ module.exports = {
                     msg: '解绑成功'
                 });
             }
+        },
+        'POST /rac-svr/rac/account/unbind-mobile': (req, res, u)=>{
+            const body = (b && b.body) || req.body;
+            const account = list.find((v)=>{
+                return v.id == body.id
+            })
+            account.signInMobile = undefined
+            return res.json({
+                result: 1,
+                msg: '解绑成功'
+            });
         }
     },
 };
