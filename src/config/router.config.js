@@ -338,6 +338,47 @@ export const constantRouters = [
                     },
                 ],
             },
+            {
+                path: '/ops-admin-web/system-manage',
+                name: 'ops-system-manage',
+                meta: { title: '系统管理', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/ops-admin-web/user-system-manage/weChat-config',
+                children: [
+                    {
+                        path: '/ops-admin-web/user-system-manage/weChat-config',
+                        name: 'ops-weChat-config',
+                        component: () => import('@/view/rac/rac-system-manage/wxManager.vue'),
+                        hidden: true,
+                        meta: { title: '公众号配置', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/ops-admin-web/user-system-manage/dingTalk-config',
+                        name: 'ops-dingTalk-config',
+                        component: () => import('@/view/rac/rac-system-manage/ddManager.vue'),
+                        hidden: true,
+                        meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
+                    },
+                ],
+            },
+            {
+                path: '/ops-admin-web/system-survey',
+                name: 'ops-system-survey',
+                meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
+                component: RouteView,
+                hidden: true,
+                redirect: '/ops-admin-web/user-system-survey/todaySurvey',
+                children: [
+                    {
+                        path: '/ops-admin-web/user-system-survey/todaySurvey',
+                        name: 'ops-todaySurvey',
+                        component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
+                    },
+                ],
+            },
         ],
     },
     /** 统一应用*/
