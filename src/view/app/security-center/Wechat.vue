@@ -23,17 +23,7 @@
 import WxLoginCode from '@/component/app/WXLoginCode.vue';
 import request from '@/util/request';
 import { observer } from 'mobx-vue';
-const getQueryVariable = function(url, variable) {
-    const query = url.split('?')[1];
-    const vars = query.split('&');
-    for (let i = 0; i < vars.length; i++) {
-        const pair = vars[i].split('=');
-        if (pair[0] == variable) {
-            return pair[1];
-        }
-    }
-    return false;
-};
+import { getQueryVariable } from '@/util/common';
 export default observer({
     name: 'app-security-center-wechat',
     components: {

@@ -25,3 +25,16 @@ export function countDown(second, cb, immediate = false) {
         countDown(second, cb, true);
     }, 1000);
 }
+
+// 获取url参数中的某个入参值
+export function getQueryVariable(url, variable) {
+    const query = url.split('?')[1];
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+        const pair = vars[i].split('=');
+        if (pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return false;
+}
