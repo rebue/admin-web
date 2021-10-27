@@ -16,7 +16,9 @@
                     <div class="munberLongin" @click="phoneShow = true">账号登录</div>
                     <scanCode :codeType="codeType" :key="codeType"></scanCode>
                 </template>
-                <router-link to="/unified-auth/forget-password" class="forget-password">忘记密码</router-link>
+                <router-link to="/unified-auth/forget-password" class="forget-password" v-if="phoneShow"
+                    >忘记密码</router-link
+                >
                 <div class="scan-code-card">
                     <div class="top-list">
                         <span @click="vxScanCodeClick">微信扫码登录</span>
