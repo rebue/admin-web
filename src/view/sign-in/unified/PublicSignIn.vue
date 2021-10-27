@@ -51,9 +51,8 @@
                         >
                         </a-input>
                     </a-form-model-item>
-                    <a-form-model-item prop="phoneCodeNumber" class="comFromStyle">
-                        <a-input size="large" v-model="form.phoneCodeNumber" placeholder="验证码" class="input">
-                        </a-input>
+                    <a-form-model-item prop="code" class="comFromStyle">
+                        <a-input size="large" v-model="form.code" placeholder="验证码" class="input"> </a-input>
                         <a-button
                             class="code-btn"
                             type="link"
@@ -94,12 +93,13 @@ export default {
             second: SECOND,
             phoneAreaNumber: ['+86', '+91', '+99'],
             form: {
+                // 帐密
                 accountName: '',
                 signInPswd: '',
-
+                // 手机号
                 phoneAreaNumber: '',
                 phoneNumber: '',
-                phoneCodeNumber: '',
+                code: '',
             },
             rules: {
                 accountName: [
@@ -122,7 +122,7 @@ export default {
                     },
                     { required: true, message: '请输入手机号', trigger: 'blur', transform: val => val.trim() },
                 ],
-                phoneCodeNumber: [
+                code: [
                     { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val.trim() },
                     {
                         validator: (rule, value, callback) => {
@@ -155,17 +155,18 @@ export default {
                 if (valid) {
                     request
                         .post({
-                            url: this.tabKey == 1 ? '/oap-svr/oap/login' : '/oap-svr/oap/login',
+                            url: '/oap-svr/oap/login',
                             data:
                                 this.tabKey == 1
                                     ? {
                                           loginName: this.form.accountName,
                                           password: md5(this.form.signInPswd).toString(),
+                                          loginType: 0,
                                       }
                                     : {
-                                          phoneAreaNumber: this.form.phoneAreaNumber,
                                           phoneNumber: this.form.phoneNumber,
-                                          phoneCodeNumber: this.form.phoneCodeNumber,
+                                          code: this.form.code,
+                                          loginType: 1,
                                       },
                         })
                         .then(r => {
