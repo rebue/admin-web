@@ -7,13 +7,13 @@ import request from '@/util/request';
 
 export default class OapConfig extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/orp-svr/nacos/publish';
+    baseUrn = '/orp-svr/orp/nacos/publish';
     /**
      * 获取配置信息
      */
     getNacosConfig(): Promise<Ro> {
         return request.get({
-            url: '/orp-svr/get/nacos/config',
+            url: '/orp-svr/orp/get/nacos/config',
         });
     }
     /**
