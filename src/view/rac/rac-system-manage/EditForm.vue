@@ -25,8 +25,9 @@
                 <a-form-model-item label="appid" prop="newAppKey">
                     <a-input v-model.trim="model.newAppKey" />
                 </a-form-model-item>
-                <a-form-model-item label="appsecret" prop="newAppSecret">
-                    <a-input v-model.trim="model.newAppSecret" />
+                <a-form-model-item label="appsecret" :prop="secretShow ? 'newAppSecret' : ''">
+                    <a-input v-if="secretShow" v-model.trim="model.newAppSecret" />
+                    <a-button v-else class="refresh-btn" type="link" icon="sync" @click="secretClick()">更新</a-button>
                 </a-form-model-item>
                 <!-- <a-form-model-item label="备注">
                     <a-input v-model.trim="model.textarea" type="textarea" />
@@ -141,12 +142,13 @@ export default {
                 this.loading = true;
                 this.$refs.form.resetFields();
                 if (this.editFormType === EditFormTypeDic.Modify) {
+                    this.secretShow = false;
                     this.model = {
                         oldName: this.model.name,
                         oldAppKey: this.model.id,
-                        oldAppSecret: this.model.secret,
+                        // oldAppSecret: this.model.secret,
                         newAppKey: this.model.id,
-                        newAppSecret: this.model.secret,
+                        // newAppSecret: this.model.secret,
                         newName: this.model.name,
                     };
                     this.loading = false;
@@ -154,6 +156,17 @@ export default {
                     this.secretShow = true;
                     this.loading = false;
                 }
+            });
+        },
+        //点击重置appsecret
+        secretClick() {
+            const that = this;
+            this.$confirm({
+                title: '你确认要更新appSecret吗？',
+                // content: '应用密钥会在提交表单后生效, 所有使用旧应用密钥的接口会在提交表单后失效',
+                onOk() {
+                    that.secretShow = true;
+                },
             });
         },
         handleOk() {
