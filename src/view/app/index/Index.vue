@@ -1,100 +1,56 @@
 <template>
     <div class="flex-box page index-wrap">
         <Aside />
-        <div class="ml20 mc w140">
-            <a-collapse v-model="activeKey" v-if="!loading">
-                <a-collapse-panel v-for="(item, index) in labelList" :key="item" :header="labelSelect[index].name">
-                    <a-spin :spinning="loading">
-                        <div class="w100 bg-w ">
-                            <a-row class="content" :gutter="10" v-if="labelSelect[index].childList">
-                                <a-col
-                                    class="flex-box al-c ju-c"
-                                    :span="6"
-                                    v-for="(childItem, childIndex) in labelSelect[index].childList"
-                                    :key="childIndex"
-                                >
-                                    <!-- <a
-                                        class="block flex-box flex-col al-c link-item ablea"
-                                        :href="childItem.url"
-                                        target="_blank"
-                                    > -->
-                                    <div class="card_box" @click="openWindow(childItem)">
-                                        <div class="top_card_box">
-                                            <img
-                                                :src="childItem.imgUrl || defaultImg()"
-                                                @error="
-                                                    () => {
-                                                        childItem.imgUrl = defaultImg();
-                                                    }
-                                                "
-                                                alt=""
-                                                width="60px"
-                                                height="6   0px"
-                                                class="item-logo"
-                                            />
-                                            <div class="title">{{ childItem.name }}</div>
-                                        </div>
-                                        <div class="auth_type">
-                                            <span
-                                                class="auth_tag"
-                                                :class="childItem.isauthName == '已认证' ? 'autoColor' : 'notAutoColor'"
-                                                >{{ childItem.isauthName }}</span
-                                            >
-                                        </div>
-                                        <div class="tag">
-                                            <a-tag
-                                                :color="childItem.tagColor"
-                                                v-show="childItem.isauthName == '已认证'"
-                                            >
-                                                {{ childItem.tagName }}
-                                            </a-tag>
-                                        </div>
-                                    </div>
-                                    <!-- </a> -->
-                                </a-col>
-                            </a-row>
-                            <div class="noAppCss" v-else>
-                                暂无应用
-                            </div>
-                        </div>
-                    </a-spin>
-                </a-collapse-panel>
-            </a-collapse>
-
-            <!-- <a-spin :spinning="loading">
-                <div class="mt20 w100 pt20 pb20 bg-w card card-shadow">
-                    <div class="title">
-                        <img :src="require('../assets/img/unsafety.png')" width="20" height="24" />
-                        <span class="font-20">未认证系统（{{ unauthList.length }}个）</span>
-                    </div>
-                    <a-row class="content">
-                        <a-col
-                            class="flex-box al-c ju-c mb20"
-                            :span="4"
-                            v-for="(item, index) in unauthList"
-                            :key="index"
-                        >
-                            <a class="block flex-box flex-col al-c radius-4 link-item" :href="item.url" target="_blank">
-                                <img
-                                    :src="item.imgUrl || defaultImg()"
-                                    @error="
-                                        () => {
-                                            item.imgUrl = defaultImg();
-                                        }
-                                    "
-                                    alt=""
-                                    width="56px"
-                                    height="56px"
-                                    class="item-logo"
-                                />
-                                <div class="mt10 font-14 tx-c ellipsis-2 app-name" :title="item.name">
-                                    {{ item.name }}
-                                </div>
-                            </a>
-                        </a-col>
-                    </a-row>
+        <div class="ml20 mc w140 backgWhite scrollBar" v-if="!loading">
+            <div class="tableList" v-for="(item, index) in labelSelect" :key="index">
+                <div class="title" @click="clickShow(index)">
+                    <span class="name">
+                        {{ item.name }}
+                    </span>
+                    <span class="clickIcon">
+                        {{ labelSelect[index].show ? '收起' : '展开' }}
+                        <a-icon type="double-right" :rotate="labelSelect[index].show ? -90 : 90" />
+                    </span>
                 </div>
-            </a-spin> -->
+                <div class="content" v-show="labelSelect[index].show">
+                    <div
+                        class="newCardStyle"
+                        v-for="(childItem, childIndex) in labelSelect[index].childList"
+                        :key="childIndex"
+                    >
+                        <a class="block flex-box flex-col al-c link-item ablea" :href="childItem.url" target="_blank">
+                            <div class="card_box">
+                                <div class="top_card_box">
+                                    <img
+                                        :src="childItem.imgUrl || defaultImg()"
+                                        @error="
+                                            () => {
+                                                childItem.imgUrl = defaultImg();
+                                            }
+                                        "
+                                        alt=""
+                                        class="item-logo"
+                                    />
+                                </div>
+                                <div class="appTitle">
+                                    <div class="autoImg" v-show="childItem.isauthName == '已认证'">
+                                        <img :src="autoImg" alt="" />
+                                    </div>
+                                    <div class="appName">
+                                        {{ childItem.name }}
+                                    </div>
+                                </div>
+                                <div
+                                    class="tag"
+                                    :class="childItem.tagName == '未认证' || !childItem.tagName ? 'huiTag' : ''"
+                                >
+                                    {{ !childItem.tagName ? '未认证' : childItem.tagName }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -111,12 +67,13 @@ export default {
     props: {},
     data() {
         return {
-            loading: true,
+            loading: false,
             authedList: [],
             unauthList: [],
             labelList: [],
             labelSelect: [],
             activeKey: [],
+            autoImg: require(`../assets/img/autoImage.png`),
         };
     },
     created() {
@@ -126,20 +83,31 @@ export default {
         defaultImg() {
             return require(`../assets/img/app1.png`);
         },
+        /**点击展开 */
+        clickShow(index) {
+            this.labelSelect[index].show = !this.labelSelect[index].show;
+        },
         /**请求标签内容 */
         getRacDicApiFun() {
             const params = 'ApplyLabel';
             racDicApi.getByDicKey(params).then(ro => {
-                const data = ro.extra.dicItems,
-                    labelList = [];
+                let data = ro.extra.dicItems;
+                const labelList = [];
                 data.map((item, index) => {
                     labelList.push(index++ + '');
+                    item.show = true;
+                    item.treeCode = Number(item.treeCode);
+                });
+                data = data.sort((a, b) => {
+                    return a.treeCode - b.treeCode;
                 });
                 labelList.push(labelList.length + '');
                 data.push({
                     name: '其他',
+                    show: true,
                     children: [],
                     childList: [],
+                    treeCode: data.length,
                 });
                 this.labelList = labelList;
                 this.activeKey = labelList;
@@ -153,7 +121,6 @@ export default {
             oapAppApi
                 .listAndTripartite()
                 .then(ro => {
-                    console.log(ro.extra);
                     const { oapAppList, racAppLabelList, racAppList } = ro.extra;
                     racAppLabelList.map(item => {
                         this.labelSelect.map(childItem => {
@@ -204,15 +171,15 @@ export default {
                                     if (childItem.appId == lastItem.id) {
                                         lastItem.isauthName = '已认证';
                                         if (lastItem.authnType == 0) {
-                                            (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                                            lastItem.tagName = '未认证';
                                         } else if (lastItem.authnType == 1) {
-                                            (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                                            lastItem.tagName = '共用cookie';
                                         } else if (lastItem.authnType == 2) {
-                                            (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                                            lastItem.tagName = '授权码';
                                         } else if (lastItem.authnType == 3) {
-                                            (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                                            lastItem.tagName = '凭证';
                                         } else {
-                                            (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                                            lastItem.tagName = 'CAS';
                                         }
                                         if (!item.childList) {
                                             item.childList = [];
@@ -233,19 +200,20 @@ export default {
                         if (!lastItem.isauthName) {
                             lastItem.isauthName = '已认证';
                             if (lastItem.authnType == 0) {
-                                (lastItem.tagColor = 'red'), (lastItem.tagName = '未认证');
+                                lastItem.tagName = '未认证';
                             } else if (lastItem.authnType == 1) {
-                                (lastItem.tagColor = 'blue'), (lastItem.tagName = '共用cookie');
+                                lastItem.tagName = '共用cookie';
                             } else if (lastItem.authnType == 2) {
-                                (lastItem.tagColor = 'pink'), (lastItem.tagName = '授权码');
+                                lastItem.tagName = '授权码';
                             } else if (lastItem.authnType == 3) {
-                                (lastItem.tagColor = 'orange'), (lastItem.tagName = '凭证');
+                                lastItem.tagName = '凭证';
                             } else {
-                                (lastItem.tagColor = 'green'), (lastItem.tagName = 'CAS');
+                                lastItem.tagName = 'CAS';
                             }
                             this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
+                    console.log(this.labelSelect);
                     this.loading = false;
                 })
                 .finally(() => {
@@ -270,74 +238,117 @@ export default {
 </script>
 
 <style scoped lang="less">
-.card {
-    padding-left: 24px;
-    padding-right: 12px;
-    border-top: 4px solid #3a69c9;
+.backgWhite {
+    background: #ffffff;
     box-shadow: 0px 8px 10px 0px #a3bce2;
     border-radius: 0px 0px 10px 10px;
-    .title {
-        border-bottom: 1px solid #e4e5ea;
-        padding-bottom: 14px;
-        margin-bottom: 50px;
-        > img {
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-        > span {
-            vertical-align: middle;
-        }
-    }
-    .link-item {
-        margin-bottom: 57px;
-    }
-    .item-logo {
-        border-radius: 50%;
-    }
-    .content {
-        min-height: 100px;
-        display: flex;
-        flex-flow: wrap;
-    }
-    .app-name {
-        width: 4em;
-        word-break: break-word;
-    }
+    border-top: 4px solid rgba(58, 105, 201, 1);
+    height: 791px;
+    overflow: auto;
+}
+.scrollBar::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.scrollBar::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 10px;
+    background-color: #3a69c9;
+    background-image: -webkit-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+}
+.scrollBar::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #ededed;
+    border-radius: 10px;
 }
 .ablea {
     width: 100%;
     height: 100%;
 }
-.noAppCss {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tableList {
+    padding: 0 30px;
+    margin-bottom: 20px;
+    .title {
+        font-size: 20px;
+        font-weight: 400;
+        color: #222222;
+        padding: 10px 0;
+        border-bottom: 1px solid #e4e5ea;
+        position: relative;
+        .clickIcon {
+            position: absolute;
+            right: 0;
+            font-size: 18px;
+            font-weight: 400;
+            color: #c2bfbf;
+            cursor: pointer;
+        }
+    }
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        .newCardStyle {
+            width: 20%;
+        }
+    }
 }
 .card_box {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
+    width: 84%;
+    height: 240px;
+    background: #f6f6f6;
+    border-radius: 6px;
     position: relative;
-    margin-top: 10px;
+    margin-top: 22px;
     .top_card_box {
+        width: 100%;
+        height: 158px;
+        background: rgba(188, 215, 250, 0.7);
+        border-radius: 6px 6px 0px 0px;
         display: flex;
         align-items: center;
+        justify-content: center;
         .item-logo {
-            width: 60px;
-            height: 60px;
+            width: 96%;
+            height: 96%;
         }
-        .title {
-            display: inline-block;
-            margin-left: 15px;
-            font-size: 14px;
-            line-height: 22px;
-            font-weight: 500;
-            color: #182b50;
+    }
+    .appTitle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #333333;
+        text-align: center;
+        padding: 10px 0;
+        position: relative;
+        .appName {
+            width: 60%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        .autoImg {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            margin-right: 10px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
     }
     .auth_type {
@@ -368,7 +379,19 @@ export default {
     }
     .tag {
         display: flex;
-        padding-left: 75px;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        width: 95px;
+        height: 24px;
+        background: #e7ecf7;
+        font-size: 14px;
+        font-weight: 400;
+        color: #678ddc;
+    }
+    .huiTag {
+        background: #e8e8e9 !important;
+        color: #81858c !important;
     }
 }
 </style>
