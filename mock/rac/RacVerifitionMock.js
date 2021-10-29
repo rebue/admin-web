@@ -56,7 +56,7 @@ module.exports = {
     routes: { 
         'POST /cap-svr/cap/captcha/get': getCaptcha,
         'POST /cap-svr/cap/captcha/check': checkCaptcha,
-        'GET /cap-svr/cap/sms/sending': (req, res, u, b) => {
+        'POST /cap-svr/cap/sms/sending': (req, res, u, b) => {
             // setTimeout(()=>{
             //     return res.json({
             //         result: 0,
