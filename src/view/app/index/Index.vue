@@ -18,7 +18,11 @@
                         v-for="(childItem, childIndex) in labelSelect[index].childList"
                         :key="childIndex"
                     >
-                        <a class="block flex-box flex-col al-c link-item ablea" :href="childItem.url" target="_blank">
+                        <a
+                            class="block flex-box flex-col al-c link-item ablea"
+                            href="javascript:void(0)"
+                            @click="openWindow(childItem)"
+                        >
                             <div class="card_box">
                                 <div class="top_card_box">
                                     <img
