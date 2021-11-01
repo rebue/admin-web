@@ -234,8 +234,15 @@ export const constantRouters = [
                 meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/platform-admin-web/user-system-survey/todaySurvey',
+                redirect: '/platform-admin-web/user-system-survey/authentication',
                 children: [
+                    {
+                        path: '/platform-admin-web/user-system-survey/authentication',
+                        name: 'authentication',
+                        component: () => import('@/view/rac/rac-system-survey/Authentication.vue'),
+                        hidden: true,
+                        meta: { title: '认证概况', keepAlive: true, icon: 'apartment' },
+                    },
                     {
                         path: '/platform-admin-web/user-system-survey/todaySurvey',
                         name: 'todaySurvey',
