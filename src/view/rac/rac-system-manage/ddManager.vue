@@ -52,11 +52,11 @@ export default {
                 title: 'appid',
                 ellipsis: true,
             },
-            {
-                dataIndex: 'secret',
-                title: 'appsecret',
-                ellipsis: true,
-            },
+            // {
+            //     dataIndex: 'secret',
+            //     title: 'appsecret',
+            //     ellipsis: true,
+            // },
             {
                 dataIndex: 'action',
                 title: '操作',
@@ -124,7 +124,6 @@ export default {
             const configType = 'ding-talk';
             const data = {
                 oldAppKey: record.id,
-                oldAppSecret: record.secret,
                 configType,
             };
             this.api.setNacosDelConfig(data).finally(() => {

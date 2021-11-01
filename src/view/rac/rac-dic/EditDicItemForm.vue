@@ -30,6 +30,7 @@ export default {
             formItems: [
                 { dataIndex: 'dicItemKey', title: '字典项Key' },
                 { dataIndex: 'name', title: '字典项名称' },
+                { dataIndex: 'dicItemValue', title: '字典项值' },
                 { dataIndex: 'dicId', title: '字典ID', type: 'hidden' },
                 { dataIndex: 'remark', title: '备注' },
             ],

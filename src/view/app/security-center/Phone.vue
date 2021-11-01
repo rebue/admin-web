@@ -44,6 +44,7 @@ export default {
                 id: '',
                 mobile: '',
                 code: '',
+                captchaVerification: '',
                 bindType: 0, //0绑定，1解绑
             },
             rules: {
@@ -116,7 +117,9 @@ export default {
                 }
             });
         },
+        // 手机获取验证码事件
         async getCode() {
+            // 验证码发送中不能再操作
             if (this.isCodeLoading) {
                 return;
             }
@@ -129,11 +132,37 @@ export default {
                 return;
             }
 
-            //获取验证码 请求
+            // 其次 弹出行为验证码
+            const that = this;
+            this.$showDialog(
+                require('@/view/sign-in/comm/Verify.vue').default,
+                {
+                    methods: {
+                        handleVerifySuccess(res) {
+                            that.model.captchaVerification = res.captchaVerification;
+                            that.fetchCode();
+                        },
+                        handleVerifyError() {
+                            that.model.captchaVerification = '';
+                        },
+                    },
+                },
+                {
+                    title: '请完成安全验证',
+                    footer: null,
+                    // closable: false,
+                    width: 450,
+                    wrapClassName: 'verify-modal-wrap',
+                }
+            );
+        },
+        async fetchCode() {
+            //发送短信验证码 请求
             try {
                 this.isCodeLoading = true;
                 await racVerifitionApi.sendSMSCode({
                     phoneNumber: this.model.mobile,
+                    captchaVerification: this.model.captchaVerification,
                 });
                 this.isCodeLoading = false;
                 this.isCounting = true;

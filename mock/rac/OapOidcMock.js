@@ -67,6 +67,10 @@ module.exports = {
         'POST /oap-svr/oap/login': (req, res, u) => {
             console.log('---登录后302', redirect_uri);
             return res.json({
+                result: 0,
+                msg: '查询失败'
+            });
+            return res.json({
                 result: 1,
                 msg: '查询成功',
                 extra:  decodeURIComponent(redirect_uri)

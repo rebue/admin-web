@@ -10,6 +10,7 @@ const list = [
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
+        "signInMobile": "13265019973",
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
@@ -35,6 +36,7 @@ const list = [
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
+        "signInMobile": "18503096697",
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
         menus: [
@@ -51,9 +53,9 @@ const list = [
         "id": 803,
         "idType": "2y5qeu",
         "isEnabled": true,
-        "signInName": "子骞.黎",
+        "signInName": "adminer",
         "signInMobile": "13713883144",
-        "signInEmail": "明.汪@gmail.com",
+        "signInEmail": "adminer@gmail.com",
         "signInPswd": "7ri9c7",
         "signInPswdSalt": "fyc22w",
         "signInNickname": "jc.stark",
@@ -389,7 +391,7 @@ module.exports = {
             // const end = begin + (pageSize - 0);
             // l = l.slice(begin, end);
         },
-        'POST /rac-svr/rac/account/bind-mobile': (req, res, u)=>{
+        'POST /rac-svr/rac/account/bind-mobile': (req, res, u, b)=>{
             const body = (b && b.body) || req.body;
             //短信验证码 code:'11111'
             const account = list.find((v)=>{
@@ -409,7 +411,7 @@ module.exports = {
                 });
             }
         },
-        'POST /rac-svr/rac/account/unbind-mobile': (req, res, u)=>{
+        'POST /rac-svr/rac/account/unbind-mobile': (req, res, u, b)=>{
             const body = (b && b.body) || req.body;
             const account = list.find((v)=>{
                 return v.id == body.id
@@ -419,6 +421,48 @@ module.exports = {
                 result: 1,
                 msg: '解绑成功'
             });
-        }
+        },
+        'POST /rac-svr/forget/check-account-number': (req, res, u, b)=>{
+            const body = (b && b.body) || req.body;
+            const account = list.find((v)=>{
+                return v.signInName == (body.signInName || body.signInMobile || body.signInEmail)
+            })
+            return res.json({
+                result: 1,
+                msg: '账号存在',
+                extra: account
+            });
+
+        },
+        'GET /rac-svr/rac/account/is-phone-exist': (req, res, u)=>{
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '身份认证，手机号存在',
+            });
+        },
+        'POST /rac-svr/forget/sign-in-pswd-to-set': (req, res, u)=>{
+            return res.json({
+                result: 1,
+                msg: '修改密码成功',
+            });
+        },
+        'GET /rac-svr/rac/account/is-email-exist': (req, res, u)=>{
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '身份认证，邮箱存在',
+            });
+        },
     },
 };

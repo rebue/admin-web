@@ -1,5 +1,5 @@
 <template>
-    <div :id="chartName" :style="chartSize"></div>
+    <div :id="chartData.chartId" :style="chartSize"></div>
 </template>
 
 <script>
@@ -8,8 +8,7 @@ import * as echarts from 'echarts';
 export default {
     name: 'BarChart',
     props: {
-        chartName: String,
-        chartData: Object,
+        chartData: Object
     },
     components: {},
     data() {
@@ -29,12 +28,13 @@ export default {
     // destroyed() {},
     methods: {
         createChart() {
-            this.arr = [];
+            let arr = [];
+            let obj = {};
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartName));
+            this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
             // 绘制图表
             for (let i in this.chartData.list) {
-                this.obj = {
+                obj = {
                     name: '访问量',
                     data: this.chartData.list[i],
                     type: 'bar',
@@ -43,7 +43,7 @@ export default {
                         barBorderRadius: [30, 30, 0, 0],
                     },
                 };
-                this.arr.push(this.obj);
+                arr.push(obj);
             }
             var option = {
                 legend: {
@@ -74,7 +74,7 @@ export default {
                 yAxis: {
                     type: 'value',
                 },
-                series: this.arr,
+                series: arr,
             };
 
             this.myChart.setOption(option);

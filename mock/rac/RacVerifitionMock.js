@@ -56,7 +56,7 @@ module.exports = {
     routes: { 
         'POST /cap-svr/cap/captcha/get': getCaptcha,
         'POST /cap-svr/cap/captcha/check': checkCaptcha,
-        'GET /cap-svr/cap/sms/sending': (req, res, u, b) => {
+        'POST /cap-svr/cap/sms/sending': (req, res, u, b) => {
             // setTimeout(()=>{
             //     return res.json({
             //         result: 0,
@@ -71,6 +71,12 @@ module.exports = {
                     detail: '111111'
                 });
             }, 2000)
+        },
+        'POST /cap-svr/cap/sms/verification': (req, res, u, b) => {
+            return res.json({
+                result: 1,
+                msg: '手机验证码验证成功'
+            });
         },
         'POST /orp-svr/orp/bind/mobile': (req, res, u, b) => {
             return res.json({

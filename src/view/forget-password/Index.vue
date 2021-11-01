@@ -11,27 +11,36 @@
         <div class="main">
             <!-- 忘记密码流程 -->
             <!-- 验证账号 -->
-
-            <!-- 身份认证 -->
-            <!-- 设置新密码 -->
-            <!-- 完成 -->
+            <Account @success="next" v-if="step == 0" />
+            <!-- 身份认证，设置操作，完成 -->
+            <Wrap :account="account" v-if="step == 1" />
         </div>
         <div class="footer">桂ICP备08001078号-2</div>
     </div>
 </template>
 <script>
-import { getAppIdByUrl } from '@/util/common';
+import Account from './Account.vue';
+import Wrap from './Wrap.vue';
+
 export default {
+    components: {
+        Account,
+        Wrap,
+    },
     data() {
         return {
-            //
+            step: 0,
+            account: {},
         };
     },
     mounted() {
         //
     },
     methods: {
-        //
+        next(account) {
+            this.step = 1;
+            this.account = account;
+        },
     },
 };
 </script>
@@ -74,6 +83,7 @@ export default {
         }
     }
     .main {
+        padding: 80px 25%;
         flex-grow: 1;
         // background: url(./bg.png) no-repeat;
         // background-size: cover;
@@ -82,8 +92,6 @@ export default {
         border-bottom: 1px solid #ededed;
         position: relative;
         display: flex;
-        // justify-content: space-between;
-        // align-items: center;
     }
     .footer {
         height: 50px;

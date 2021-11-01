@@ -1,5 +1,5 @@
 <template>
-    <div :id="chartName" :style="chartSize"></div>
+    <div :id="chartData.chartId" :style="chartSize"></div>
 </template>
 
 <script>
@@ -8,7 +8,6 @@ import * as echarts from 'echarts';
 export default {
     name: 'LineChart',
     props: {
-        chartName: String,
         chartData: Object,
     },
     components: {},
@@ -30,7 +29,7 @@ export default {
     methods: {
         createChart() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartName));
+            this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
             // 绘制图表
 
             let xData = (function() {

@@ -69,21 +69,13 @@
             <a-col :span="12">
                 <div class="shadow">
                     <h3 class="chart-title">今日访问情况</h3>
-                    <line-chart
-                        chartName="line1"
-                        :chartData="lineChartData"
-                        style="width: 100%; height: 300px;"
-                    ></line-chart>
+                    <echart :chartData="lineChartData"></echart>
                 </div>
             </a-col>
             <a-col :span="12">
                 <div class="shadow">
                     <h3 class="chart-title">今日访问情况</h3>
-                    <bar-chart
-                        chartName="bar1"
-                        :chartData="barChartData"
-                        style="width: 100%; height: 300px;"
-                    ></bar-chart>
+                    <echart :chartData="barChartData"></echart>
                 </div>
             </a-col>
         </a-row>
@@ -91,23 +83,29 @@
 </template>
 
 <script>
-import LineChart from '@/component/echarts/LineChart.vue';
-import BarChart from '@/component/echarts/BarChart.vue';
+// import LineChart from '@/component/echarts/LineChart.vue';
+// import BarChart from '@/component/echarts/BarChart.vue';
+
+import echart from '@/component/echarts/index.vue';
 
 export default {
     name: 'Authentication',
     props: [],
-    components: { LineChart, BarChart },
+    components: { echart },
     data() {
         return {
             infoIndex: 3,
             totalData: {},
             barChartData: {
+                chartId: 'BarChart1',
+                chartType: 'BarChart',
                 legendData: ['访问量'],
                 listName: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                list: [120, 200, 150, 80, 70, 110, 130],
+                list: [[120, 200, 150, 80, 70, 110, 130]],
             },
             lineChartData: {
+                chartId: 'LineChart1',
+                chartType: 'LineChart',
                 legendData: ['访问量'],
                 listName: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                 list: [120, 200, 150, 80, 70, 110, 130],

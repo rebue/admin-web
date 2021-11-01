@@ -226,6 +226,13 @@ export const constantRouters = [
                         hidden: true,
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
+                    {
+                        path: '/platform-admin-web/user-system-manage/levelProtect',
+                        name: 'levelProtect',
+                        component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
+                    },
                 ],
             },
             {
@@ -366,6 +373,13 @@ export const constantRouters = [
                         component: () => import('@/view/rac/rac-system-manage/ddManager.vue'),
                         hidden: true,
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
+                    },
+                    {
+                        path: '/platform-admin-web/user-system-manage/levelProtect',
+                        name: 'levelProtect',
+                        component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },

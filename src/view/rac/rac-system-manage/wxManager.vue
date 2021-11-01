@@ -45,7 +45,7 @@ export default {
             {
                 dataIndex: 'name',
                 title: '名称',
-                width: 150,
+                // width: 150,
                 fixed: 'left',
             },
             {
@@ -53,11 +53,11 @@ export default {
                 title: 'appid',
                 ellipsis: true,
             },
-            {
-                dataIndex: 'secret',
-                title: 'appsecret',
-                ellipsis: true,
-            },
+            // {
+            //     dataIndex: 'secret',
+            //     title: 'appsecret',
+            //     ellipsis: true,
+            // },
             {
                 dataIndex: 'action',
                 title: '操作',
@@ -125,7 +125,6 @@ export default {
             const configType = 'wechat-open';
             const data = {
                 oldAppKey: record.id,
-                oldAppSecret: record.secret,
                 configType,
             };
             this.api.setNacosDelConfig(data).finally(() => {
