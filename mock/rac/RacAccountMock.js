@@ -419,6 +419,49 @@ module.exports = {
                 result: 1,
                 msg: '解绑成功'
             });
-        }
+        },
+        'GET /rac-svr/rac/account/is-account-exist': (req, res, u)=>{
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '账号存在',
+            });
+
+        },
+        'GET /rac-svr/rac/account/is-phone-exist': (req, res, u)=>{
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '身份认证，手机号存在',
+            });
+        },
+        'POST /rac-svr/rac/account/modify-sign-in-pswd-by-forget': (req, res, u)=>{
+            return res.json({
+                result: 1,
+                msg: '修改密码成功',
+            });
+        },
+        'GET /rac-svr/rac/account/is-email-exist': (req, res, u)=>{
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+
+            return res.json({
+                result: 1,
+                msg: '身份认证，邮箱存在',
+            });
+        },
     },
 };

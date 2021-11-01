@@ -36,7 +36,7 @@ import md5 from 'crypto-js/md5';
 
 export default {
     name: 'forget-password-change',
-    props: ['account'],
+    props: ['params'],
     data() {
         this.rules = {
             // signInPswd: [
@@ -89,28 +89,30 @@ export default {
     },
     methods: {
         ok() {
-            this.$emit('success');
-            return;
-            // this.loading = true;
-            // this.$refs.form.validate(valid => {
-            //     if (valid) {
-            //         racAccountApi
-            //             .modifySignInPswdByOld({
-            //                 id: this.account.id,
-            //                 // signInPswd: md5(this.model.signInPswd).toString(),
-            //                 newSignInPswd: md5(this.model.newSignInPswd).toString(),
-            //             })
-            //             .then(() => {
-            //                 this.$emit('success')
-            //             })
-            //             .finally(() => (this.loading = false));
-            //     } else {
-            //         this.$nextTick(() => {
-            //             this.$focusError(); // 设置焦点到第一个提示错误的输入框
-            //             this.loading = false;
-            //         });
-            //     }
-            // });
+            console.log('---从身份认证来', this.params);
+            console.log('---修改密码提交', {
+                newSignInPswd: md5(this.model.newSignInPswd).toString(),
+                ...this.params.model,
+            });
+            this.loading = true;
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    racAccountApi
+                        .modifySignInPswdByForget({
+                            newSignInPswd: md5(this.model.newSignInPswd).toString(),
+                            ...this.params.model,
+                        })
+                        .then(() => {
+                            this.$emit('success');
+                        })
+                        .finally(() => (this.loading = false));
+                } else {
+                    this.$nextTick(() => {
+                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
+                        this.loading = false;
+                    });
+                }
+            });
         },
     },
 };

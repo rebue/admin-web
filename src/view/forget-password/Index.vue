@@ -13,7 +13,7 @@
             <!-- 验证账号 -->
             <Account @success="next" v-if="step == 0" />
             <!-- 身份认证，设置操作，完成 -->
-            <Wrap :accountId="accountId" v-if="step == 1" />
+            <Wrap :account="account" v-if="step == 1" />
         </div>
         <div class="footer">桂ICP备08001078号-2</div>
     </div>
@@ -30,16 +30,16 @@ export default {
     data() {
         return {
             step: 0,
-            accountId: '',
+            account: {},
         };
     },
     mounted() {
         //
     },
     methods: {
-        next(accountId) {
+        next(account) {
             this.step = 1;
-            this.accountId = accountId;
+            this.account = account;
         },
     },
 };

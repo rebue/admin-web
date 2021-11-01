@@ -46,7 +46,7 @@ export default class RacAccountApi extends BaseCrudApi {
     }
 
     /**
-     * 修改登录密码
+     * 通过旧密码，修改登录密码
      */
     modifySignInPswdByOld(mo): Promise<Ro> {
         return request.put({
@@ -166,5 +166,29 @@ export default class RacAccountApi extends BaseCrudApi {
             url: this.baseUrn + '/unbind-wechat-open',
             data,
         });
+    }
+    /**
+     * 忘记密码，验证账号是否存在，并返回账号信息
+     */
+    isAccountExist(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/is-account-exist', params });
+    }
+    /**
+     *忘记密码，身份认证，手机号
+     */
+    isPhoneExist(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/is-phone-exist', params });
+    }
+    /**
+     *忘记密码，修改登录密码
+     */
+    modifySignInPswdByForget(data): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/modify-sign-in-pswd-by-forget', data });
+    }
+    /**
+     *忘记密码，身份认证，邮箱
+     */
+    isEmailExist(params): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/is-email-exist', params });
     }
 }

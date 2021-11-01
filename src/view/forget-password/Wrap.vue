@@ -7,7 +7,7 @@
             <!-- 身份认证 -->
             <Authentication :account="account" @success="next" v-if="current == 0" />
             <!-- 设置新密码 -->
-            <ChangePswdForm :account="account" @success="finish" v-if="current == 1" />
+            <ChangePswdForm :params="authFormData" @success="finish" v-if="current == 1" />
             <!-- 完成 -->
             <div class="steps-content finish-wrap" v-if="current == 2">
                 <a-result class="result" status="success" sub-title="登录密码更新成功">
@@ -23,7 +23,6 @@
     </div>
 </template>
 <script>
-import { racAccountApi } from '@/api/Api';
 import Authentication from './Authentication.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
 
@@ -33,8 +32,8 @@ export default {
         ChangePswdForm,
     },
     props: {
-        accountId: {
-            type: [Number, String],
+        account: {
+            type: Object,
         },
     },
     data() {
@@ -42,29 +41,19 @@ export default {
             current: 0,
             steps: ['身份认证', '设置操作', '完成'],
             loading: true,
-            account: '',
+            authFormData: {},
         };
     },
     methods: {
-        next() {
+        next(authFormData) {
+            this.authFormData = authFormData;
             this.current++;
-        },
-        prev() {
-            this.current--;
         },
         finish() {
             this.current = 2;
         },
         goLogin() {
             this.$router.replace('/unified-auth/sign-in/unified');
-        },
-    },
-    watch: {
-        accountId(val) {
-            // 根据accountId获取有那几种认证方式
-            racAccountApi.getById(val).then(res => {
-                this.account = res.extra.one;
-            });
         },
     },
 };

@@ -38,13 +38,14 @@ const SECOND = 60;
 export default {
     name: 'forget-password-by-phone',
     components: {},
-    props: ['accountId'],
+    props: ['account'],
     data() {
         return {
             model: {
                 id: '',
                 mobile: '',
-                code: '',
+                code: '', //短信验证码
+                captchaVerification: '', //行为验证码
             },
             rules: {
                 code: [
@@ -57,26 +58,24 @@ export default {
         };
     },
     mounted() {
-        racAccountApi.getById(this.accountId).then(res => {
-            const account = res.extra.one;
-            (this.model.id = account.id), (this.model.mobile = account.signInMobile);
-        });
+        //
     },
     methods: {
         ok() {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //发请求
-                    // racAccountApi
-                    //     .bindPhone({
-                    //         id: this.model.id,
-                    //         mobile: this.model.mobile,
-                    //         code: this.model.code,
-                    //     })
-                    //     .then(ro => {
-                    this.callback && this.callback();
-                    this.closeDialog && this.closeDialog();
-                    //     });
+                    racAccountApi
+                        .isPhoneExist({
+                            id: this.model.id,
+                            mobile: this.model.mobile,
+                            code: this.model.code,
+                            captchaVerification: this.model.captchaVerification,
+                        })
+                        .then(ro => {
+                            console.log('--身份认证 手机号 提交数据', this.model);
+                            this.$emit('callback', { ...this.model });
+                        });
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框
@@ -85,24 +84,48 @@ export default {
                 }
             });
         },
+        // 手机登录获取验证码事件
         async getCode() {
+            // 验证码发送中不能再操作
             if (this.isCodeLoading) {
                 return;
             }
-            // 验证手机号是否输入
-            let valid = true;
-            this.$refs.form.validateField('mobile', (errors, values) => {
-                valid = !errors;
-            });
-            if (!valid) {
+            // 首先验证手机号是否输入
+            if (!this.model.mobile) {
                 return;
             }
 
-            //获取验证码 请求
+            // 其次 弹出行为验证码
+            const that = this;
+            this.$showDialog(
+                require('@/view/sign-in/comm/Verify.vue').default,
+                {
+                    methods: {
+                        handleVerifySuccess(res) {
+                            that.model.captchaVerification = res.captchaVerification;
+                            that.fetchCode();
+                        },
+                        handleVerifyError() {
+                            that.model.captchaVerification = '';
+                        },
+                    },
+                },
+                {
+                    title: '请完成安全验证',
+                    footer: null,
+                    // closable: false,
+                    width: 450,
+                    wrapClassName: 'verify-modal-wrap',
+                }
+            );
+        },
+        async fetchCode() {
+            //发送短信验证码 请求
             try {
                 this.isCodeLoading = true;
                 await racVerifitionApi.sendSMSCode({
                     phoneNumber: this.model.mobile,
+                    captchaVerification: this.model.captchaVerification,
                 });
                 this.isCodeLoading = false;
                 this.isCounting = true;
@@ -117,6 +140,16 @@ export default {
             } catch {
                 this.isCodeLoading = false;
             }
+        },
+    },
+    watch: {
+        account: {
+            immediate: true,
+            handler(val) {
+                console.log('--从验证账号来', val);
+                this.model.id = val.id;
+                this.model.mobile = val.signInMobile;
+            },
         },
     },
 };
