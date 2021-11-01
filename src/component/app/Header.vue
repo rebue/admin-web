@@ -25,6 +25,7 @@ import { hasAuthInfo, removeAuthInfo, removeJwtToken } from '@/util/cookie';
 import { AppIdDic } from '@/dic/AppIdDic';
 import { accountStore } from '@/store/Store';
 import { closeAllWin } from '@/util/winMap'
+import { racDicApi, racAccountApi } from '@/api/Api';
 export default {
     name: 'app-header',
     components: {},
@@ -50,6 +51,9 @@ export default {
         };
     },
     watch: {},
+    mounted() {
+        this.getPasswordApiFun()
+    },
     methods: {
         logout(){
             // 关闭打开的应用
@@ -61,7 +65,47 @@ export default {
                 removeAuthInfo()
             }
             window.location.reload()
-        }
+        },
+          /**获取密码过期时长接口和是否是第一次登录接口 */
+        getPasswordApiFun() {
+            racAccountApi.getCurAccountInfo().then(res => {
+                const params = 'levelProtect';
+                racDicApi.getByDicKey(params).then(ro => {
+                    const passworDoverdue = ro.extra.dicItems.find(item => item.dicItemKey === 'passworDoverdue');
+                    const dateEnd = new Date(); //获取当前时间
+                    const dateDiff = dateEnd.getTime() - Number(res.extra.updateTimestamp); //时间差的毫秒数
+                    const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
+                    console.log(dayDiff);
+                    if (dayDiff > Number(passworDoverdue.dicItemValue)) {
+                        this.$warning({
+                            title: '提示',
+                            content: `该账号的密码已经使用超过了${passworDoverdue.dicItemValue}天，根据等保配置，需要强制修改密码。`,
+                            onOk: () => {
+                               this.$router.push({
+                                   path:`/${AppIdDic.UnifiedAuth}/app/auth`,
+                                   query:{passworDoverdue:'isShow'}
+                               });
+                            },
+                        });
+                    }
+                    const passwordTips = ro.extra.dicItems.find(item => item.dicItemKey === 'passwordTips');
+                    if(passwordTips.dicItemValue == 'true' || passwordTips.dicItemValue == true){
+                        if(!res.extra.expirationDatetime){
+                            this.$warning({
+                                title: '提示',
+                                content: `您是第一次登录，根据等保配置，需要强制修改密码。`,
+                                onOk: () => {
+                                this.$router.push({
+                                    path:`/${AppIdDic.UnifiedAuth}/app/auth`,
+                                    query:{passworDoverdue:'isShow'}
+                                });
+                                },
+                            });
+                        }
+                    }
+                });
+            });
+        },
     },
 };
 </script>

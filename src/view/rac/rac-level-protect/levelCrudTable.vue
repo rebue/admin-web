@@ -141,7 +141,8 @@ import { settingAction } from '@/action/Action';
 import { forEachTree } from '@/util/tree';
 import SvgIcon from '@/component/rebue/SvgIcon.vue';
 import EditableCell from './EditableCell.vue';
-import { racDicItemApi } from '@/api/Api';
+import { accountStore } from '@/store/Store';
+import { racDicItemApi, raclevelProtectApi } from '@/api/Api';
 
 export default observer({
     components: { SvgIcon, EditableCell },
@@ -335,7 +336,6 @@ export default observer({
     },
     methods: {
         switchChange(record, value) {
-            console.log(value);
             const data = record;
             data.dicItemValue = value;
             racDicItemApi
@@ -346,8 +346,18 @@ export default observer({
                             item.dicItemValue == value;
                         }
                     });
-                    console.log(this.dataSource);
                     this.visible = false;
+                })
+                .finally(() => (this.loading = false));
+        },
+        setLevelProtect() {
+            const data = {
+                id: accountStore.id,
+            };
+            raclevelProtectApi
+                .setLevelProtect(data)
+                .then(() => {
+                    //
                 })
                 .finally(() => (this.loading = false));
         },
@@ -359,7 +369,7 @@ export default observer({
             data.dicItemValue = value;
             racDicItemApi
                 .modify(data)
-                .then(() => (this.visible = false))
+                .then(() => ((this.visible = false), this.setLevelProtect()))
                 .finally(() => (this.loading = false));
         },
         /**

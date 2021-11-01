@@ -2,6 +2,12 @@
     <div class="flex-box page index-wrap">
         <Aside />
         <div class="ml20 mc w140">
+            <change-pswd-form
+                :record="changePswdId"
+                :passworDoverdue="passworDoverdue"
+                :visible.sync="changePswdFormVisible"
+                @close="handleEditFormClose"
+            />
             <div class="w100 pt20 pb20 bg-w card card-shadow security-center-card">
                 <div class="title">
                     <img :src="require('../assets/img/safety.png')" width="20" height="24" />
@@ -110,19 +116,30 @@ import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import { racAccountApi } from '@/api/Api';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import ChangePswdForm from './ChangePswdForm.vue';
 import Aside from './Aside.vue';
 
 export default observer({
     name: 'app-security-center-index',
     components: {
         Aside,
+        ChangePswdForm,
     },
     data() {
         return {
             accountStore,
             EditFormTypeDic,
             isVerifiedEmail: false,
+            changePswdFormVisible: false,
+            changePswdId: '',
+            passworDoverdue: '',
         };
+    },
+    mounted() {
+        if (this.$route.query?.passworDoverdue == 'isShow') {
+            this.passworDoverdue = 'isShow';
+            this.changePswd();
+        }
     },
     methods: {
         refreshAccountInfo() {
@@ -277,25 +294,30 @@ export default observer({
 
         //修改密码
         changePswd() {
-            const that = this;
-            this.$showDialog(
-                require('./ChangePswdForm.vue').default,
-                {
-                    data() {
-                        return {
-                            record: {
-                                id: that.accountStore.accountId,
-                            },
-                        };
-                    },
-                    methods: {
-                        callback() {
-                            that.refreshAccountInfo();
-                        },
-                    },
-                },
-                { title: '修改密码' }
-            );
+            // const that = this;
+            this.changePswdFormVisible = true;
+            this.changePswdId = this.accountStore.accountId;
+            // this.$showDialog(
+            //     require('./ChangePswdForm.vue').default,
+            //     {
+            //         data() {
+            //             return {
+            //                 record: {
+            //                     id: that.accountStore.accountId,
+            //                 },
+            //                 maskClosable: false,
+            //                 closable: false,
+            //             };
+            //         },
+            //         methods: {
+            //             callback() {
+            //                 // that.refreshAccountInfo();
+            //                 console.log(1);
+            //             },
+            //         },
+            //     },
+            //     { title: '修改密码' }
+            // );
         },
 
         //修改邮箱

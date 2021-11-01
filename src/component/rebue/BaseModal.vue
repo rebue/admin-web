@@ -52,6 +52,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isCancelClick: {
+            type: Boolean,
+            default: true,
+        },
     },
     watch: {
         visible(val) {
@@ -70,6 +74,9 @@ export default {
     },
     methods: {
         handleCancel() {
+            if(!this.isCancelClick){
+                return
+            }
             this.$emit('update:visible', false);
         },
         handleRadio(){

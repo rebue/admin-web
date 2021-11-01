@@ -12,6 +12,13 @@
 import CrudTable from './levelCrudTable.vue';
 import BaseManager from '@/component/rebue/BaseManager';
 import { racDicApi } from '@/api/Api';
+
+// passwordErrors     输入密码错误次数/次
+// lockDuration       账号锁定时长/分钟
+// passwordMinLength  密码最小长度/位数
+// passwordCharacter  密码最少包含字符/种
+// passwordTips       输强制修改密码
+// passworDoverdue    密码过期时长/天
 export default {
     name: 'Manager',
     components: {
