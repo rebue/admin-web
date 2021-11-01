@@ -91,13 +91,13 @@ export default {
                             {record.wxNickname && (
                                 <span>
                                     <br />
-                                    {record.wxNickname + '(微信)'}
+                                    {record.wxNickname + '(微信昵称)'}
                                 </span>
                             )}
                             {record.qqNickname && (
                                 <span>
                                     <br />
-                                    {record.qqNickname + '(QQ)'}
+                                    {record.qqNickname + '(QQ昵称)'}
                                 </span>
                             )}
                         </fragment>
