@@ -28,4 +28,8 @@ export default class RacVerifitionApi extends BaseCrudApi {
     sendSMSCode(data) {
         return request.post({ url: this.baseUrn + '/sms/sending', data });
     }
+    /** 发送手机的短信验证码 */
+    validSMSCode(data) {
+        return request.post({ url: this.baseUrn + '/sms/verification', data });
+    }
 }

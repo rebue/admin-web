@@ -16,7 +16,7 @@
                     </template>
                 </a-result>
                 <div class="steps-action">
-                    <a-button type="primary" block @click="goLogin">重新登录</a-button>
+                    <a-button size="large" type="primary" block @click="goLogin">重新登录</a-button>
                 </div>
             </div>
         </div>

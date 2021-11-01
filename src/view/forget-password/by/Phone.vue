@@ -6,7 +6,7 @@
             </div>
             <h4>手机短信验证码</h4>
         </div>
-        <p>当前手机号{{ model.mobile }}</p>
+        <p>当前手机号{{ model.phoneNumber }}</p>
         <!-- 验证码 -->
         <a-form-model-item key="code" label="" prop="code">
             <div class="code">
@@ -45,7 +45,7 @@ export default {
         return {
             model: {
                 id: '',
-                mobile: '',
+                phoneNumber: '',
                 code: '', //短信验证码
                 captchaVerification: '', //行为验证码
             },
@@ -66,11 +66,11 @@ export default {
         ok() {
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    //发请求
-                    racAccountApi
-                        .isPhoneExist({
-                            id: this.model.id,
-                            mobile: this.model.mobile,
+                    // 简单验证手机和校验码
+                    racVerifitionApi
+                        .validSMSCode({
+                            // id: this.model.id,
+                            phoneNumber: this.model.phoneNumber,
                             code: this.model.code,
                             captchaVerification: this.model.captchaVerification,
                         })
@@ -93,7 +93,7 @@ export default {
                 return;
             }
             // 首先验证手机号是否输入
-            if (!this.model.mobile) {
+            if (!this.model.phoneNumber) {
                 return;
             }
 
@@ -126,7 +126,7 @@ export default {
             try {
                 this.isCodeLoading = true;
                 await racVerifitionApi.sendSMSCode({
-                    phoneNumber: this.model.mobile,
+                    phoneNumber: this.model.phoneNumber,
                     captchaVerification: this.model.captchaVerification,
                 });
                 this.isCodeLoading = false;
@@ -150,7 +150,7 @@ export default {
             handler(val) {
                 console.log('--从验证账号来', val);
                 this.model.id = val.id;
-                this.model.mobile = val.signInMobile;
+                this.model.phoneNumber = val.signInMobile;
             },
         },
     },

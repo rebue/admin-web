@@ -72,6 +72,12 @@ module.exports = {
                 });
             }, 2000)
         },
+        'POST /cap-svr/cap/sms/verification': (req, res, u, b) => {
+            return res.json({
+                result: 1,
+                msg: '手机验证码验证成功'
+            });
+        },
         'POST /orp-svr/orp/bind/mobile': (req, res, u, b) => {
             return res.json({
                 result: 1,

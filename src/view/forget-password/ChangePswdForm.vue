@@ -9,18 +9,18 @@
                 autocomplete="new-password"
             />
         </a-form-model-item> -->
-        <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
+        <a-form-model-item key="signInPswd" label="新密码" prop="signInPswd">
             <a-input-password
                 size="large"
-                v-model.trim="model.newSignInPswd"
+                v-model.trim="model.signInPswd"
                 placeholder="请输入新密码"
                 autocomplete="new-password"
             />
         </a-form-model-item>
-        <a-form-model-item key="newSignInPswdAgain" label="确认新密码" prop="newSignInPswdAgain">
+        <a-form-model-item key="signInPswdAgain" label="确认新密码" prop="signInPswdAgain">
             <a-input-password
                 size="large"
-                v-model.trim="model.newSignInPswdAgain"
+                v-model.trim="model.signInPswdAgain"
                 placeholder="请再次输入新密码(确认)"
                 autocomplete="new-password"
             />
@@ -44,10 +44,10 @@ export default {
             // signInPswd: [
             //     { required: true, message: '请输入旧密码', trigger: 'blur', transform: val => val && val.trim() },
             // ],
-            newSignInPswd: [
+            signInPswd: [
                 { required: true, message: '请输入新密码', trigger: 'blur', transform: val => val && val.trim() },
             ],
-            newSignInPswdAgain: [
+            signInPswdAgain: [
                 {
                     required: true,
                     trigger: ['change', 'blur'],
@@ -60,7 +60,7 @@ export default {
                             return;
                         }
 
-                        if (value !== this.model.newSignInPswd) {
+                        if (value !== this.model.signInPswd) {
                             callback(new Error('两次输入的密码不相同'));
                             return;
                         }
@@ -84,8 +84,8 @@ export default {
             loading: false,
             model: {
                 // signInPswd: '',
-                newSignInPswd: '',
-                newSignInPswdAgain: '',
+                signInPswd: '',
+                signInPswdAgain: '',
             },
         };
     },
@@ -93,7 +93,7 @@ export default {
         ok() {
             console.log('---从身份认证来', this.params);
             console.log('---修改密码提交', {
-                newSignInPswd: md5(this.model.newSignInPswd).toString(),
+                signInPswd: md5(this.model.signInPswd).toString(),
                 ...this.params.model,
             });
             this.loading = true;
@@ -101,7 +101,7 @@ export default {
                 if (valid) {
                     racAccountApi
                         .modifySignInPswdByForget({
-                            newSignInPswd: md5(this.model.newSignInPswd).toString(),
+                            signInPswd: md5(this.model.signInPswd).toString(),
                             ...this.params.model,
                         })
                         .then(() => {

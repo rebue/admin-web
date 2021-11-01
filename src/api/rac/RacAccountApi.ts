@@ -170,20 +170,20 @@ export default class RacAccountApi extends BaseCrudApi {
     /**
      * 忘记密码，验证账号是否存在，并返回账号信息
      */
-    isAccountExist(params): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/is-account-exist', params });
+    checkAccountByForget(data): Promise<Ro> {
+        return request.post({ url: '/rac-svr/forget/check-account-number', data });
     }
     /**
      *忘记密码，身份认证，手机号
      */
-    isPhoneExist(params): Promise<Ro> {
-        return request.get({ url: this.baseUrn + '/is-phone-exist', params });
+    checkPhoneByForget(params): Promise<Ro> {
+        return request.get({ url: '/rac-svr/forget/check-sign-in-mobile', params });
     }
     /**
      *忘记密码，修改登录密码
      */
     modifySignInPswdByForget(data): Promise<Ro> {
-        return request.post({ url: this.baseUrn + '/modify-sign-in-pswd-by-forget', data });
+        return request.post({ url: '/rac-svr/forget/sign-in-pswd-to-set', data });
     }
     /**
      *忘记密码，身份认证，邮箱

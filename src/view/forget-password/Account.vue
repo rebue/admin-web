@@ -1,12 +1,12 @@
 <template>
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout" class="form">
         <!-- 手机号在解绑操作中回显 disable -->
-        <a-form-model-item key="keywords" label="" prop="keywords">
-            <a-input size="large" v-model.trim="model.keywords" placeholder="请输入账号/手机号/邮箱" />
+        <a-form-model-item key="signInName" label="" prop="signInName">
+            <a-input size="large" v-model.trim="model.signInName" placeholder="请输入账号/手机号/邮箱" />
         </a-form-model-item>
-        <a-form-model-item key="code" label="" prop="code">
+        <a-form-model-item key="captchaVerification" label="" prop="captchaVerification">
             <!-- 验证码隐藏域 -->
-            <a-input size="large" class="code-input" v-model.trim="model.code" placeholder="" hidden />
+            <a-input size="large" class="code-input" v-model.trim="model.captchaVerification" placeholder="" hidden />
             <!-- 点击验证弹出行为验证码 -->
             <a-button size="large" block @click="showVerify" v-if="!isValidCode">点击进行验证</a-button>
             <a-button size="large" class="valid-code-success" block v-else
@@ -36,12 +36,19 @@ export default {
         return {
             //form表单
             model: {
-                keywords: '',
-                code: '',
+                signInName: '',
+                captchaVerification: '',
             },
             rules: {
-                keywords: [{ required: true, message: '请输入', trigger: 'blur', transform: val => val && val.trim() }],
-                code: [
+                signInName: [
+                    {
+                        required: true,
+                        message: '请输入账号/手机号/邮箱',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                captchaVerification: [
                     { required: true, message: '请点击进行验证', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
@@ -60,6 +67,15 @@ export default {
     },
     methods: {
         showVerify() {
+            // 首先验证手机号是否输入
+            let valid = true;
+            this.$refs.form.validateField('signInName', (errors, values) => {
+                valid = !errors;
+            });
+
+            if (!valid) {
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('@/view/sign-in/comm/Verify.vue').default,
@@ -78,14 +94,12 @@ export default {
             );
         },
         handleVerifySuccess(res) {
-            this.model.code = res.captchaVerification;
+            this.model.captchaVerification = res.captchaVerification;
             this.isValidCode = true;
         },
         handleVerifyError() {
-            this.model.code = '';
-        },
-        getCode() {
-            this.isValidCode = true;
+            this.isValidCode = false;
+            this.model.captchaVerification = '';
         },
         ok() {
             if (!this.isValidForm) {
@@ -95,22 +109,13 @@ export default {
                 if (valid) {
                     //发请求校验账号是否存在
                     racAccountApi
-                        .isAccountExist({
-                            keywords: this.model.keywords,
-                            code: this.model.code,
+                        .checkAccountByForget({
+                            signInName: this.model.signInName,
+                            captchaVerification: this.model.captchaVerification,
                         })
                         .then(ro => {
                             // 校验成功 得到账号ID
-                            this.$emit(
-                                'success',
-                                {
-                                    id: '1111',
-                                    signInMobile: '13713883144',
-                                    wxUnionId: '117',
-                                    ddUnionId: '117',
-                                    signInEmail: '明.汪@gmail.com',
-                                } || ro.extra.one
-                            );
+                            this.$emit('success', ro.extra);
                         });
                 } else {
                     this.$nextTick(() => {
@@ -119,6 +124,14 @@ export default {
                     });
                 }
             });
+        },
+    },
+    watch: {
+        'model.signInName': {
+            immediate: true,
+            handler(val) {
+                this.handleVerifyError();
+            },
         },
     },
 };
