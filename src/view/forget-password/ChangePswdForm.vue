@@ -11,6 +11,7 @@
         </a-form-model-item> -->
         <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
             <a-input-password
+                size="large"
                 v-model.trim="model.newSignInPswd"
                 placeholder="请输入新密码"
                 autocomplete="new-password"
@@ -18,6 +19,7 @@
         </a-form-model-item>
         <a-form-model-item key="newSignInPswdAgain" label="确认新密码" prop="newSignInPswdAgain">
             <a-input-password
+                size="large"
                 v-model.trim="model.newSignInPswdAgain"
                 placeholder="请再次输入新密码(确认)"
                 autocomplete="new-password"
@@ -25,7 +27,7 @@
         </a-form-model-item>
         <a-form-model-item>
             <!--横向布局 :wrapper-col="{ span: 13, offset: 7 }" -->
-            <a-button type="primary" block @click="ok">提交</a-button>
+            <a-button type="primary" block size="large" @click="ok">提交</a-button>
         </a-form-model-item>
     </a-form-model>
 </template>

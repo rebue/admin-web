@@ -3,10 +3,10 @@
         <a-icon type="safety-certificate" :style="{ fontSize: '50px', color: '#52c41a' }" />
         <p class="tip">为确认是您本人操作，请选择以下任一方式完成身份认证</p>
         <div class="ctrl-wrap">
-            <a-button key="phone" block @click="showModal('byPhone')">使用手机短信验证码</a-button>
-            <a-button key="wechat" block @click="showModal('byWechat')">使用微信</a-button>
-            <a-button key="dingding" block @click="showModal('byDingding')">使用钉钉</a-button>
-            <a-button key="email" block @click="showModal('byEmail')">使用E-mail验证码</a-button>
+            <a-button key="phone" block size="large" @click="showModal('byPhone')">使用手机短信验证码</a-button>
+            <a-button key="wechat" block size="large" @click="showModal('byWechat')">使用微信</a-button>
+            <a-button key="dingding" block size="large" @click="showModal('byDingding')">使用钉钉</a-button>
+            <a-button key="email" block size="large" @click="showModal('byEmail')">使用E-mail验证码</a-button>
         </div>
 
         <base-modal :width="460" :visible.sync="visible" :footer="false" v-if="visible">

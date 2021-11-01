@@ -2,17 +2,19 @@
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout" class="form">
         <!-- 手机号在解绑操作中回显 disable -->
         <a-form-model-item key="keywords" label="" prop="keywords">
-            <a-input v-model.trim="model.keywords" placeholder="请输入账号/手机号/邮箱" />
+            <a-input size="large" v-model.trim="model.keywords" placeholder="请输入账号/手机号/邮箱" />
         </a-form-model-item>
         <a-form-model-item key="code" label="" prop="code">
             <!-- 验证码隐藏域 -->
-            <a-input class="code-input" v-model.trim="model.code" placeholder="" hidden />
+            <a-input size="large" class="code-input" v-model.trim="model.code" placeholder="" hidden />
             <!-- 点击验证弹出行为验证码 -->
-            <a-button block @click="showVerify" v-if="!isValidCode">点击进行验证</a-button>
-            <a-button class="valid-code-success" block v-else><a-icon type="check-circle" /> 验证成功</a-button>
+            <a-button size="large" block @click="showVerify" v-if="!isValidCode">点击进行验证</a-button>
+            <a-button size="large" class="valid-code-success" block v-else
+                ><a-icon type="check-circle" /> 验证成功</a-button
+            >
         </a-form-model-item>
         <a-form-model-item>
-            <a-button type="primary" block :disabled="!isValidForm" @click="ok">下一步</a-button>
+            <a-button size="large" type="primary" block :disabled="!isValidForm" @click="ok">下一步</a-button>
         </a-form-model-item>
     </a-form-model>
 </template>

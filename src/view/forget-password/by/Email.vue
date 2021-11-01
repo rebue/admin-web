@@ -7,15 +7,15 @@
         <!-- 验证码 -->
         <a-form-model-item key="code" label="" prop="code">
             <div class="code">
-                <a-input class="code-input" v-model.trim="model.code" placeholder="验证码" />
-                <a-button key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting"
+                <a-input size="large" class="code-input" v-model.trim="model.code" placeholder="验证码" />
+                <a-button size="large" key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting"
                     >发送邮箱验证码</a-button
                 >
-                <a-button style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
+                <a-button size="large" style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
             </div>
         </a-form-model-item>
         <a-form-model-item>
-            <a-button type="primary" native-type="submit" block @click="ok">提交</a-button>
+            <a-button size="large" type="primary" native-type="submit" block @click="ok">提交</a-button>
         </a-form-model-item>
     </a-form-model>
 </template>
