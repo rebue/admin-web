@@ -4,7 +4,7 @@
             <div class="flex mobile-circle">
                 <a-icon type="mobile" theme="filled" :style="{ fontSize: '30px', color: '#fff' }" />
             </div>
-            <h4>手机短信验证码</h4>
+            <h3 style="color: #666">手机短信验证码</h3>
         </div>
         <p>当前手机号{{ model.phoneNumber }}</p>
         <!-- 验证码 -->
@@ -23,9 +23,9 @@
         <div>
             <div class="qa">
                 <span>Q:</span>
-                <p>收不到短信验证码</p>
+                <p>收不到短信验证码?</p>
             </div>
-            <div class="qa">
+            <div class="qa" style="color: #999">
                 <span>A:</span>
                 <p>请检查手机网络并且核实手机是否屏蔽系统短信，如均正常请重新获取或稍后再试。</p>
             </div>
@@ -187,6 +187,9 @@ export default {
 .qa {
     display: flex;
     align-items: flex-start;
+}
+.qa p {
+    margin-bottom: 0.5em;
 }
 .qa span {
     margin-right: 8px;
