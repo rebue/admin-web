@@ -10,7 +10,7 @@
                 @search="refreshData"
             />
         </div>
-        <a-spin :spinning="loading" class="spin">
+        <a-spin :spinning="loading" class="spin" :style="{ overflowX: 'scroll' }">
             <rebue-tree
                 v-show="orgFold"
                 :fold="true"
