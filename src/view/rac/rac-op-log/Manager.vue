@@ -153,7 +153,7 @@ export default {
                 key: 'opDatetime',
                 title: '操作时间',
                 ellipsis: true,
-                width: 165,
+                width: 250,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
