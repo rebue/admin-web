@@ -17,7 +17,9 @@ export default {
     methods: {
         success(res) {
             this.handleVerifySuccess(res);
-            this.closeDialog();
+            this.$nextTick(() => {
+                this.closeDialog();
+            });
         },
         error() {
             this.handleVerifyError();
