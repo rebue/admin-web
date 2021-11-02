@@ -227,8 +227,8 @@ export const constantRouters = [
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/platform-admin-web/user-system-manage/levelProtect',
-                        name: 'levelProtect',
+                        path: '/platform-admin-web/user-system-manage/level-protect',
+                        name: 'level-protect',
                         component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
@@ -241,11 +241,11 @@ export const constantRouters = [
                 meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/platform-admin-web/user-system-survey/todaySurvey',
+                redirect: '/platform-admin-web/user-system-survey/today-survey',
                 children: [
                     {
-                        path: '/platform-admin-web/user-system-survey/todaySurvey',
-                        name: 'todaySurvey',
+                        path: '/platform-admin-web/user-system-survey/today-survey',
+                        name: 'today-survey',
                         component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
                         hidden: true,
                         meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
@@ -368,8 +368,8 @@ export const constantRouters = [
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/platform-admin-web/user-system-manage/levelProtect',
-                        name: 'levelProtect',
+                        path: '/ops-admin-web/user-system-manage/level-protect',
+                        name: 'ops-level-protect',
                         component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
@@ -382,11 +382,11 @@ export const constantRouters = [
                 meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/ops-admin-web/user-system-survey/todaySurvey',
+                redirect: '/ops-admin-web/user-system-survey/today-survey',
                 children: [
                     {
-                        path: '/ops-admin-web/user-system-survey/todaySurvey',
-                        name: 'ops-todaySurvey',
+                        path: '/ops-admin-web/user-system-survey/today-survey',
+                        name: 'ops-today-survey',
                         component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
                         hidden: true,
                         meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
