@@ -27,9 +27,10 @@
                 :loadedKeys="loadedKeys"
                 @select="handleTreeNodeClick"
             />
+            <!-- v-show="!orgFold" -->
             <a-pagination
                 show-quick-jumper
-                v-show="!orgFold"
+                v-show="total > pageSize"
                 v-model="pageNum"
                 :page-size:sync="pageSize"
                 :total="total"
@@ -80,7 +81,7 @@ export default {
             orgFold: false,
             showOrg: false,
             pageNum: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             keywords: '',
             loadedKeys: [],
