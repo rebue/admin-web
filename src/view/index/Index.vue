@@ -286,3 +286,14 @@ export default observer({
     align-items: center;
 }
 </style>
+<style>
+.ant-pro-basicLayout-children-content-wrap {
+    height: 100%;
+}
+.ant-pro-grid-content {
+    height: 100%;
+}
+.ant-pro-grid-content > div {
+    height: 100%;
+}
+</style>
