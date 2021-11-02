@@ -15,11 +15,15 @@
         </a-col>
         <a-col :span="18">
             <a-card>
-                <a-tabs>
-                    <a-tab-pane tab="委托"></a-tab-pane>
-                    <a-tab-pane tab="被委托"></a-tab-pane>
-                    <a-tab-pane tab="操作日志"></a-tab-pane>
+                <a-tabs v-model="activeKey">
+                    <a-tab-pane tab="安全中心" :key="1"></a-tab-pane>
+                    <a-tab-pane tab="操作日志" :key="2"></a-tab-pane>
+                    <a-tab-pane tab="委托" :key="3"></a-tab-pane>
+                    <a-tab-pane tab="被委托" :key="4"></a-tab-pane>
                 </a-tabs>
+                <div>
+                    <security-center v-if="activeKey === 1" />
+                </div>
             </a-card>
         </a-col>
     </a-row>
@@ -28,11 +32,16 @@
 <script>
 import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
+import SecurityCenter from '@/view/app/security-center/Main.vue';
 export default observer({
     name: 'PersonCenter',
+    components: {
+        SecurityCenter,
+    },
     data() {
         return {
             accountStore,
+            activeKey: 1,
         };
     },
 });

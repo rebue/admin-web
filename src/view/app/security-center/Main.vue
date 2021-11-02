@@ -1,21 +1,89 @@
 <template>
-    <div class="flex-box page index-wrap">
-        <Aside />
-        <div class="ml20 mc w140">
-            <change-pswd-form
-                :record="changePswdId"
-                :passworDoverdue="passworDoverdue"
-                :visible.sync="changePswdFormVisible"
-                @close="handleEditFormClose"
-            />
-            <div class="w100 pt20 pb20 bg-w card card-shadow security-center-card">
-                <div class="title">
-                    <img :src="require('../assets/img/safety.png')" width="20" height="24" />
-                    <span class="font-20">安全中心</span>
+    <div class="content">
+        <!-- 修改密码 -->
+        <a-list-item class="list-item">
+            <a-list-item-meta>
+                <div class="avatar" slot="avatar">
+                    <a-icon type="lock" />
                 </div>
-                <Main />
+                <span slot="title">修改密码</span>
+                <span slot="description">密码安全系数： 高</span>
+            </a-list-item-meta>
+            <div class="ctrl-wrap">
+                <a-button key="modify" type="primary" @click="changePswd">修改密码</a-button>
             </div>
-        </div>
+        </a-list-item>
+        <!-- 手机号 -->
+        <a-list-item class="list-item">
+            <a-list-item-meta>
+                <div class="avatar" slot="avatar">
+                    <a-icon type="mobile" />
+                </div>
+                <span slot="title">手机号绑定</span>
+                <span slot="description" v-if="accountStore.signInMobile">已设置：{{ accountStore.signInMobile }}</span>
+                <span slot="description" v-else>未绑定</span>
+            </a-list-item-meta>
+            <div class="ctrl-wrap">
+                <template v-if="accountStore.signInMobile">
+                    <a-button key="delete" @click="unbindPhone">解除绑定</a-button>
+                </template>
+                <a-button key="add" type="primary" @click="bindPhone" v-else>绑定</a-button>
+            </div>
+        </a-list-item>
+
+        <!-- 微信 -->
+        <a-list-item class="list-item">
+            <a-list-item-meta>
+                <div class="avatar" slot="avatar" style="background-color: #00db6c;">
+                    <a-icon type="wechat" />
+                </div>
+                <span slot="title">微信绑定</span>
+                <span slot="description" v-if="accountStore.wxUnionId">已绑定</span>
+                <div slot="description" v-else>
+                    <span>未绑定</span>
+                    <p>绑定微信号码，随时查看账号安全信息</p>
+                </div>
+            </a-list-item-meta>
+            <div class="ctrl-wrap">
+                <a-button key="delete" v-if="accountStore.wxUnionId" @click="unbindWechat">解除绑定</a-button>
+                <a-button key="add" type="primary" v-else @click="bindWechat">绑定</a-button>
+            </div>
+        </a-list-item>
+        <!-- 钉钉 -->
+        <a-list-item class="list-item">
+            <a-list-item-meta>
+                <div class="avatar" slot="avatar">
+                    <a-icon type="dingding" />
+                </div>
+                <span slot="title">钉钉绑定</span>
+                <span slot="description" v-if="accountStore.ddUnionId">已绑定</span>
+                <div slot="description" v-else>
+                    <span>未绑定</span>
+                </div>
+            </a-list-item-meta>
+            <div class="ctrl-wrap">
+                <a-button key="delete" v-if="accountStore.ddUnionId" @click="unbindDing">解除绑定</a-button>
+                <a-button key="add" type="primary" v-else @click="bindDing">绑定</a-button>
+            </div>
+        </a-list-item>
+
+        <!-- 修改 -->
+        <a-list-item class="list-item">
+            <a-list-item-meta>
+                <div class="avatar" slot="avatar">
+                    <a-icon type="mail" />
+                </div>
+                <span slot="title">修改邮箱</span>
+                <span slot="description" v-if="isVerifiedEmail">密码安全系数： 高</span>
+                <span slot="description" v-else>未设置</span>
+            </a-list-item-meta>
+            <div class="ctrl-wrap">
+                <a-button key="modify" v-if="isVerifiedEmail" @click="changeEmail(EditFormTypeDic.Modify)"
+                    >修改邮箱</a-button
+                >
+                <a-button key="add" type="primary" v-else @click="changeEmail(EditFormTypeDic.Add)">设置邮箱</a-button>
+            </div>
+        </a-list-item>
     </div>
 </template>
 
@@ -24,32 +92,15 @@ import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import ChangePswdForm from './ChangePswdForm.vue';
-import Aside from './Aside.vue';
-import Main from './Main.vue';
 
 export default observer({
-    name: 'app-security-center-index',
-    components: {
-        Aside,
-        ChangePswdForm,
-        Main,
-    },
+    name: 'app-security-center-main',
     data() {
         return {
             accountStore,
             EditFormTypeDic,
             isVerifiedEmail: false,
-            changePswdFormVisible: false,
-            changePswdId: '',
-            passworDoverdue: '',
         };
-    },
-    mounted() {
-        if (this.$route.query?.passworDoverdue == 'isShow') {
-            this.passworDoverdue = 'isShow';
-            this.changePswd();
-        }
     },
     methods: {
         refreshAccountInfo() {
@@ -204,30 +255,25 @@ export default observer({
 
         //修改密码
         changePswd() {
-            // const that = this;
-            this.changePswdFormVisible = true;
-            this.changePswdId = this.accountStore.accountId;
-            // this.$showDialog(
-            //     require('./ChangePswdForm.vue').default,
-            //     {
-            //         data() {
-            //             return {
-            //                 record: {
-            //                     id: that.accountStore.accountId,
-            //                 },
-            //                 maskClosable: false,
-            //                 closable: false,
-            //             };
-            //         },
-            //         methods: {
-            //             callback() {
-            //                 // that.refreshAccountInfo();
-            //                 console.log(1);
-            //             },
-            //         },
-            //     },
-            //     { title: '修改密码' }
-            // );
+            const that = this;
+            this.$showDialog(
+                require('./ChangePswdForm.vue').default,
+                {
+                    data() {
+                        return {
+                            record: {
+                                id: that.accountStore.accountId,
+                            },
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshAccountInfo();
+                        },
+                    },
+                },
+                { title: '修改密码' }
+            );
         },
 
         //修改邮箱
@@ -252,25 +298,28 @@ export default observer({
     },
 });
 </script>
-
-<style scoped lang="less">
-.card {
-    padding-left: 24px;
-    padding-right: 12px;
-    border-top: 4px solid #3a69c9;
-    box-shadow: 0px 8px 10px 0px #a3bce2;
-    border-radius: 0px 0px 10px 10px;
-    .title {
-        border-bottom: 1px solid #e4e5ea;
-        padding-bottom: 14px;
-        margin-bottom: 20px;
-        > img {
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-        > span {
-            vertical-align: middle;
-        }
-    }
+<style scoped>
+.content {
+    min-height: 100px;
+    padding: 0 60px;
+    margin-bottom: 50px;
+}
+.avatar {
+    width: 54px;
+    height: 54px;
+    font-size: 30px;
+    background-color: #2c81f6;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list-item {
+    border-bottom: 1px solid #e7e7e7;
+    padding: 30px 0;
+}
+.ctrl-wrap >>> button {
+    margin-right: 10px;
 }
 </style>
