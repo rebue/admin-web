@@ -1,5 +1,5 @@
 <template>
-    <a-row :gutter="20" type="flex">
+    <a-row :gutter="20">
         <a-col :span="6">
             <a-card title="关于">
                 <div class="avatar">
@@ -23,6 +23,7 @@
                 </a-tabs>
                 <div>
                     <security-center v-if="activeKey === 1" />
+                    <op-log v-if="activeKey === 2" />
                 </div>
             </a-card>
         </a-col>
@@ -33,10 +34,12 @@
 import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import SecurityCenter from '@/view/app/security-center/Main.vue';
+import OpLog from '@/view/app/log/Index.vue';
 export default observer({
     name: 'PersonCenter',
     components: {
         SecurityCenter,
+        OpLog,
     },
     data() {
         return {

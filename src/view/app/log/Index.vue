@@ -86,7 +86,6 @@ export default observer({
                 dataIndex: 'agentSignInName',
                 key: 'agentSignInName',
                 title: '代理账号名称',
-                fixed: 'left',
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
@@ -131,6 +130,7 @@ export default observer({
                 dataIndex: 'opType',
                 key: 'opType',
                 title: '操作类型',
+                width: 150,
                 ellipsis: true,
                 filters: opTypeDic,
                 // [
