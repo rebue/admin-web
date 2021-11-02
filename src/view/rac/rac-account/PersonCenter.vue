@@ -1,5 +1,5 @@
 <template>
-    <a-row :gutter="20">
+    <a-row :gutter="20" type="flex">
         <a-col :span="6">
             <a-card title="关于">
                 <div class="avatar">
@@ -13,8 +13,8 @@
                 </div>
             </a-card>
         </a-col>
-        <a-col :span="18">
-            <a-card>
+        <a-col :span="18" class="height-structh">
+            <a-card class="height-structh">
                 <a-tabs v-model="activeKey">
                     <a-tab-pane tab="安全中心" :key="1"></a-tab-pane>
                     <a-tab-pane tab="操作日志" :key="2"></a-tab-pane>
@@ -47,6 +47,9 @@ export default observer({
 });
 </script>
 <style lang="less" scoped>
+.height-structh {
+    height: 100%;
+}
 .avatar {
     display: flex;
     flex-direction: column;
