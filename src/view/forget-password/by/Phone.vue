@@ -72,7 +72,6 @@ export default {
                             // id: this.model.id,
                             phoneNumber: this.model.phoneNumber,
                             code: this.model.code,
-                            captchaVerification: this.model.captchaVerification,
                         })
                         .then(ro => {
                             console.log('--身份认证 手机号 提交数据', this.model);
