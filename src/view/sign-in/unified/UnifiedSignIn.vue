@@ -51,13 +51,6 @@ export default {
             forgetPswdPath: `/${getAppIdByUrl()}/forget-password`,
         };
     },
-    mounted() {
-        const { code } = this.$route.query;
-        if (code) {
-            this.photoShow = false;
-            this.handleCodeLogin(code);
-        }
-    },
     methods: {
         //微信扫码点击事件
         vxScanCodeClick() {
@@ -68,15 +61,6 @@ export default {
         ddScanCodeClick() {
             this.phoneShow = false;
             this.codeType = '钉钉';
-        },
-        //扫码成功之后做的处理
-        handleCodeLogin(code) {
-            // let token = '89f0fd7c99f5367fb5d562feae110d55'
-            // axios.get(`https://oapi.dingtalk.com/user/getuserinfo?access_token=${token}&code=${code}`)
-            // .then(function (response) {
-            // })
-            console.log(code);
-            this.$router.push({ path: `/${getAppIdByUrl()}` });
         },
     },
 };
