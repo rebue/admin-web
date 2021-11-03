@@ -71,7 +71,7 @@ export default {
                     this.dataSource = [ro.extra.one];
                 });
             } else {
-                this.fetchAccountList();
+                // this.fetchAccountList();
             }
         });
     },

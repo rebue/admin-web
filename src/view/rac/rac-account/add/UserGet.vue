@@ -52,7 +52,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.fetchUserList();
+            // this.fetchUserList();
         });
     },
     methods: {
