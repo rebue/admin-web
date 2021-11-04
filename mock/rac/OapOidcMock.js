@@ -47,7 +47,7 @@ module.exports = {
             res.end();
         },
         // 后端API
-        'GET /orp-svr/oidc/callback': (req, res, u) => {
+        'GET /orp-svr/orp/callback': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
