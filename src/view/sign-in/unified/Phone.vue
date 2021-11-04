@@ -22,17 +22,15 @@
             </a-input>
         </a-form-model-item>
         <a-form-model-item prop="code" class="comFromStyle">
-            <a-input size="large" v-model="phoneForm.code" placeholder="验证码" class="input"> </a-input>
-            <a-button
+            <a-input size="large" v-model="phoneForm.code" placeholder="短信验证码" class="input"> </a-input>
+            <SendSMSCode
+                :phoneNumber="phoneForm.phoneNumber"
+                :captchaVerification.sync="phoneForm.captchaVerification"
+                buttonType="link"
+                buttonSize="large"
+                :validatePhone="validatePhone"
                 class="code-btn"
-                type="link"
-                key="btn"
-                @click="getCode"
-                :loading="isCodeLoading"
-                v-if="!isCounting"
-                >发送验证码</a-button
-            >
-            <a-button class="code-btn" type="link" key="s" v-else>{{ second }}s</a-button>
+            />
         </a-form-model-item>
         <a-button size="large" :loading="loading" type="primary" block @click="doSubmitByPhone" class="sign-btn"
             >登录</a-button
@@ -41,20 +39,18 @@
 </template>
 <script>
 import request from '@/util/request';
-import { racVerifitionApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
-import { countDown } from '@/util/common';
-const SECOND = 60;
+import SendSMSCode from './SendSMSCode.vue';
+
 export default {
-    components: {},
+    components: {
+        SendSMSCode,
+    },
     props: {},
     data() {
         return {
             loading: false,
             // 手机号
-            second: SECOND,
-            isCodeLoading: false,
-            isCounting: false,
             phoneAreaNumber: ['+86', '+91', '+99'],
             phoneForm: {
                 phoneAreaNumber: '',
@@ -134,67 +130,12 @@ export default {
                 }
             });
         },
-        // 手机登录获取验证码事件
-        async getCode() {
-            // 验证码发送中不能再操作
-            if (this.isCodeLoading) {
-                return;
-            }
-            // 首先验证手机号是否输入
-            let valid = true;
+        validatePhone() {
+            let valid = false;
             this.$refs.phoneForm.validateField('phoneNumber', (errors, values) => {
                 valid = !errors;
             });
-
-            if (!valid) {
-                return;
-            }
-
-            // 其次 弹出行为验证码
-            const that = this;
-            this.$showDialog(
-                require('@/view/sign-in/comm/Verify.vue').default,
-                {
-                    methods: {
-                        handleVerifySuccess(res) {
-                            that.phoneForm.captchaVerification = res.captchaVerification;
-                            that.fetchCode();
-                        },
-                        handleVerifyError() {
-                            that.phoneForm.captchaVerification = '';
-                        },
-                    },
-                },
-                {
-                    title: '请完成安全验证',
-                    footer: null,
-                    // closable: false,
-                    width: 450,
-                    wrapClassName: 'verify-modal-wrap',
-                }
-            );
-        },
-        async fetchCode() {
-            //发送短信验证码 请求
-            try {
-                this.isCodeLoading = true;
-                await racVerifitionApi.sendSMSCode({
-                    phoneNumber: this.phoneForm.phoneNumber,
-                    captchaVerification: this.phoneForm.captchaVerification,
-                });
-                this.isCodeLoading = false;
-                this.isCounting = true;
-                // then 验证码倒计时
-                countDown(this.second, val => {
-                    this.second = val;
-                    if (val === 0) {
-                        this.second = SECOND;
-                        this.isCounting = false;
-                    }
-                });
-            } catch {
-                this.isCodeLoading = false;
-            }
+            return valid;
         },
     },
 };
