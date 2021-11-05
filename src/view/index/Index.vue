@@ -98,8 +98,9 @@
             @crop-upload-fail="handleCropUploadFail"
         />
         <change-pswd-form
-            :record="{ id: accountStore.accountId }"
+            :record="accountStore.accountId"
             :visible.sync="changePswdFormVisible"
+            :passworDoverdue="passworDoverdue"
             @close="refreshAccountInfo"
         />
     </fragment>
@@ -117,7 +118,7 @@ import { AppIdDic } from '@/dic/AppIdDic';
 import { removeJwtToken } from '@/util/cookie';
 import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
-import ChangePswdForm from '@/view/rac/rac-account/ChangePswdForm.vue';
+import ChangePswdForm from '@/view/app/security-center/ChangePswdForm.vue';
 import { getAppIdByUrl } from '@/util/common';
 
 export default observer({
@@ -158,6 +159,7 @@ export default observer({
             },
             showImageUploader: false,
             changePswdFormVisible: false,
+            passworDoverdue: '',
         };
     },
     computed: {

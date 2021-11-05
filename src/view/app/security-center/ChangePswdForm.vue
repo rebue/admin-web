@@ -100,6 +100,16 @@ export default {
                             callback(new Error('新密码不能和旧密码相同'));
                             return;
                         }
+                        if (value === this.model.newSignInPswdAgain) {
+                            this.$refs.form.validateField('newSignInPswdAgain');
+                            callback();
+                            return;
+                        }
+                        if (value !== this.model.newSignInPswdAgain && this.model.newSignInPswdAgain.length != 0) {
+                            this.$refs.form.validateField('newSignInPswdAgain');
+                            callback();
+                            return;
+                        }
                         callback();
                     },
                 },

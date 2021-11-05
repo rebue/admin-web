@@ -30,7 +30,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racAccountApi } from '@/api/Api';
+import { racAccountApi, racDicApi } from '@/api/Api';
 
 export default {
     components: {
@@ -45,12 +45,57 @@ export default {
     data() {
         this.rules = {
             signInPswd: [
-                { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val && val.trim() },
+                {
+                    required: true,
+                    // message: '请输入登录密码',
+                    trigger: 'blur',
+                    validator: (rule, value, callback) => {
+                        if (value === undefined) value = '';
+                        value = value.trim();
+                        if (value.length < this.passwordMinLength) {
+                            callback(new Error(`请最少输入${this.passwordMinLength}位数密码`));
+                            return;
+                        }
+                        //字典项里设置的包括多少种字符
+                        if (this.passwordCharacter == 2) {
+                            const pattern = /((?=.*[a-z])(?=.*\d)|(?=[a-z])(?=.*[#@!~%^&*])|(?=.*\d)(?=.*[#@!~%^&*]))[a-z\d#@!~%^&*]/i;
+                            if (!pattern.test(value)) {
+                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                return;
+                            }
+                        }
+                        if (this.passwordCharacter == 3) {
+                            const pattern = /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]/;
+                            if (!pattern.test(value)) {
+                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                return;
+                            }
+                        }
+                        if (this.passwordCharacter == 4) {
+                            const pattern = /(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*])[a-z\d#@!~%^&*]/i;
+                            if (!pattern.test(value)) {
+                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                return;
+                            }
+                        }
+                        if (value === this.model.signInPswdAgain) {
+                            this.$refs.form.validateField('signInPswdAgain');
+                            callback();
+                            return;
+                        }
+                        if (value !== this.model.signInPswdAgain && this.model.signInPswdAgain.length != 0) {
+                            this.$refs.form.validateField('signInPswdAgain');
+                            callback();
+                            return;
+                        }
+                        callback();
+                    },
+                },
             ],
             signInPswdAgain: [
                 {
                     required: true,
-                    trigger: ['change', 'blur'],
+                    trigger: 'blur',
                     validator: (rule, value, callback) => {
                         if (value === undefined) value = '';
                         value = value.trim();
@@ -86,9 +131,26 @@ export default {
                 signInPswd: '',
                 signInPswdAgain: '',
             },
+            wordMinLength: 6,
+            passwordCharacter: 2,
         };
     },
+    mounted() {
+        this.getbyIdFun();
+    },
     methods: {
+        getbyIdFun() {
+            const params = 'levelProtect';
+            racDicApi.getByDicKey(params).then(ro => {
+                ro.extra.dicItems?.map(item => {
+                    if (item.dicItemKey == 'passwordMinLength') {
+                        this.passwordMinLength = item.dicItemValue;
+                    } else if (item.dicItemKey == 'passwordCharacter') {
+                        this.passwordCharacter = item.dicItemValue;
+                    }
+                });
+            });
+        },
         handleShow() {
             this.$nextTick(() => {
                 this.model = {};

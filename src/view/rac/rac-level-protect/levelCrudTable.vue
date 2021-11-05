@@ -346,6 +346,7 @@ export default observer({
                             item.dicItemValue == value;
                         }
                     });
+                    this.setLevelProtect();
                     this.visible = false;
                 })
                 .finally(() => (this.loading = false));
@@ -384,14 +385,10 @@ export default observer({
                     query['hierarchical'] = !this.changeIcon;
                 }
             }
-            const sorter =
-                JSON.stringify(this.sorter) === '{}'
-                    ? undefined
-                    : { orderBy: this.sorter.field + (this.sorter.order === 'descend' ? ' DESC' : '') };
             // 分页查询
             if (this.pagination) {
                 const { current, pageSize } = this.pagination;
-                const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
+                const data = { ...query, pageNum: current ?? 1, pageSize, ...filters };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = this.api.page(data).then(ro => {
                     this.pagination = {
@@ -409,7 +406,7 @@ export default observer({
             }
             // 不分页查询
             else {
-                const data = { ...query, ...filters, ...sorter };
+                const data = { ...query, ...filters };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(ro => {
                     const data = [];
