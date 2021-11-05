@@ -46,7 +46,7 @@ module.exports = {
             }
             res.end();
         },
-        // 后端API
+        // 后端API 此接口已废弃
         'GET /orp-svr/orp/callback': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
@@ -62,7 +62,23 @@ module.exports = {
             });
             res.end();
         },
-
+        // 后端API
+        'GET /orp-svr/orp/auth-code/oidc/unified-auth': (req, res, u) => {
+            let url = u;
+            if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+                url = req.url;
+            }
+            const params = parse(url, true).query;
+            // code,state,callbackUri
+            console.log('---callback',params, params.callbackUri)
+            const jwtTokenKey = process.env.VUE_APP_JWT_TOKEN_KEY;
+            res.cookie(jwtTokenKey, 'xxxx', { expires: new Date(Date.now() + 1800000) });
+            res.writeHead(302, {
+                'Location': params.callbackUri,
+            });
+            res.end();
+        },
+        
         // 统一帐密登录
         'POST /oap-svr/oap/login': (req, res, u) => {
             console.log('---登录后302', redirect_uri);
