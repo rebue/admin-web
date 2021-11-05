@@ -1,3 +1,4 @@
+import { AppIdDic } from './AppIdDic';
 /**
  * 应用类型
  */
@@ -23,6 +24,20 @@ export namespace AppDic {
                 return '平台应用';
             default:
                 return '未定义';
+        }
+    }
+    // 在应用认证里自动生成的clientId
+    // eslint-disable-next-line no-inner-declarations
+    export function getClientId(val): string {
+        switch (val) {
+            case AppIdDic.UnifiedAuth:
+                return 'unified-auth';
+            case AppIdDic.PlatformAdminWeb:
+                return 'platform-admin-web';
+            case AppIdDic.OpsAdminWeb:
+                return 'ops-admin-web';
+            default:
+                return 'unified-auth';
         }
     }
 }

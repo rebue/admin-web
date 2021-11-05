@@ -5,7 +5,7 @@ export function getAppIdByUrl() {
     const pathname = location.pathname;
     let appId = '';
     Object.values(AppIdDic).forEach(val => {
-        if (pathname.includes(`/${val}/`)) {
+        if (pathname.includes(`/${val}`)) {
             appId = val;
         }
     });

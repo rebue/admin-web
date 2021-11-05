@@ -11,7 +11,7 @@ export default class OapOidcApi {
     // getOidcOauthUri(qo): Promise<Ro> {
     //     return request.get({ url: '/orp-svr/orp/get-auth-url/oidc/unified-auth', params: qo });
     // }
-    getOidcOauthUri(qo): Promise<Ro> {
-        return request.get({ url: '/orp-svr/orp/get-auth-url/oidc/platform-admin-web', params: qo });
+    getOidcOauthUri(clientId, qo): Promise<Ro> {
+        return request.get({ url: `/orp-svr/orp/get-auth-url/oidc/${clientId}`, params: qo });
     }
 }
