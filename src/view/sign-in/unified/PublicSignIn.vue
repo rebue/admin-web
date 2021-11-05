@@ -1,7 +1,7 @@
 <template>
     <a-tabs default-active-key="1" @change="callback" class="tabs">
         <a-tab-pane key="1" tab="账号密码登录">
-            <div v-if="show" class="sign">
+            <div v-if="show" class="sign psw-sign">
                 <psw-form />
             </div>
         </a-tab-pane>
@@ -52,22 +52,26 @@ export default {
     text-align: center;
     font-size: 20px;
 }
-.input >>> .ant-input {
+/* 帐密登录样式 */
+.psw-sign >>> .input .ant-input {
     height: 56px;
 }
-.input >>> .ant-input:not(:first-child) {
+.psw-sign >>> .input .ant-input:not(:first-child) {
     padding-left: 40px;
 }
-.sign-btn {
+.psw-sign >>> .sign-btn,
+.phone-sign >>> .sign-btn {
     height: 56px;
     line-height: 56px;
     font-size: 20px;
 }
+
 .remenber {
     margin: 20px 0;
     float: right;
 }
-.phone-sign .ant-input-lg {
+/* 手机登录样式 */
+.phone-sign >>> .ant-input-lg {
     height: 56px;
 }
 .phone-sign >>> .ant-select-lg .ant-select-selection__rendered {
