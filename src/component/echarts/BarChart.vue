@@ -22,20 +22,18 @@ export default {
     },
     computed: {},
     // created() {},
-    mounted() {
-        this.createChart();
-    },
+    // mounted() {},
     // destroyed() {},
     methods: {
         createChart() {
-            let arr = [];
-            let obj = {};
             // 基于准备好的dom，初始化echarts实例
             this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
             // 绘制图表
-            for (let i in this.chartData.list) {
+            let arr = [];
+            let obj = {};
+            for (const i in this.chartData.list) {
                 obj = {
-                    name: '访问量',
+                    name: this.chartData.legendData[i],
                     data: this.chartData.list[i],
                     type: 'bar',
                     barWidth: '30%',
@@ -63,6 +61,7 @@ export default {
                     top: 50,
                     right: 20,
                     bottom: 70,
+                    left: 50,
                     textStyle: {
                         color: '#fff',
                     },

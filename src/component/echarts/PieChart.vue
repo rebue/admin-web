@@ -1,15 +1,14 @@
 <template>
-    <div :id="chartName" :style="chartSize"></div>
+    <div :id="chartData.chartId" :style="chartSize"></div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
 
 export default {
-    name: 'BarChart',
+    name: 'PieChart',
     props: {
-        chartName: String,
-        chartData: Number,
+        chartData: Object,
     },
     components: {},
     data() {
@@ -23,14 +22,12 @@ export default {
     },
     computed: {},
     // created() {},
-    mounted() {
-        this.createChart();
-    },
+    // mounted() {},
     // destroyed() {},
     methods: {
         createChart() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartName));
+            this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
             // 绘制图表
 
             const option = {

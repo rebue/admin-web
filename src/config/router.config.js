@@ -162,8 +162,15 @@ export const constantRouters = [
                 meta: { title: '日志', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/platform-admin-web/log/lock-log',
+                redirect: '/platform-admin-web/log/lock-statistics',
                 children: [
+                    {
+                        path: '/platform-admin-web/log/lock-statistics',
+                        name: 'lock-statistics',
+                        component: () => import('@/view/rac/rac-statistics-log/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '日志统计', keepAlive: true, icon: 'deployment-unit' },
+                    },
                     {
                         path: '/platform-admin-web/log/lock-log',
                         name: 'lock-log',
@@ -246,9 +253,9 @@ export const constantRouters = [
                     {
                         path: '/platform-admin-web/user-system-survey/authentication',
                         name: 'authentication',
-                        component: () => import('@/view/rac/rac-system-survey/Authentication.vue'),
+                        component: () => import('@/view/rac/rac-system-authentication/Manager.vue'),
                         hidden: true,
-                        meta: { title: '认证概况', keepAlive: true, icon: 'apartment' },
+                        meta: { title: '认证概况', keepAlive: true, icon: 'laptop' },
                     },
                     {
                         path: '/platform-admin-web/user-system-survey/todaySurvey',
