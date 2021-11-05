@@ -1,7 +1,7 @@
 <template>
     <fragment>
-        <div class="main">
-            <div class="left">
+        <div class="main" :class="{'multiple-col-wrap': $slots.left}">
+            <div class="left" v-if="$slots.left">
                 <slot name="left" />
             </div>
             <div class="client">
@@ -120,7 +120,6 @@
                         </a-tooltip>
                     </div>
                 </div>
-
                 <a-table
                     :bordered="settingStore.tableBorder"
                     :size="settingStore.tableSize"
@@ -598,10 +597,10 @@ export default observer({
 
 <style lang="less" scoped>
 .main {
-    display: flex;
-    align-items: stretch;
+    // display: flex;
+    // align-items: stretch;
     .client {
-        flex-grow: 1;
+        // flex-grow: 1;
         .table-operator {
             display: flex;
             align-items: center;
@@ -617,7 +616,13 @@ export default observer({
         }
     }
 }
-
+.multiple-col-wrap {
+    display: flex;
+    align-items: stretch;
+    .client {
+        flex-grow: 1;
+    }
+}
 .col-config-checkbox-group {
     display: flex;
     flex-direction: column;

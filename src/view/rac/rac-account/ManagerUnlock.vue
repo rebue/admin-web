@@ -91,13 +91,13 @@ export default {
                             {record.wxNickname && (
                                 <span>
                                     <br />
-                                    {record.wxNickname + '(微信)'}
+                                    {record.wxNickname + '(微信昵称)'}
                                 </span>
                             )}
                             {record.qqNickname && (
                                 <span>
                                     <br />
-                                    {record.qqNickname + '(QQ)'}
+                                    {record.qqNickname + '(QQ昵称)'}
                                 </span>
                             )}
                         </fragment>
@@ -112,13 +112,13 @@ export default {
             {
                 dataIndex: 'lockDatetime',
                 title: '锁定时间',
-                width: 165,
+                width: 220,
                 ellipsis: true,
             },
             {
                 dataIndex: 'autoUnlockDatetime',
                 title: '自动解锁时间',
-                width: 165,
+                width: 220,
                 ellipsis: true,
             },
             {

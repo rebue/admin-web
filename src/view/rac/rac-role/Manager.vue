@@ -63,7 +63,7 @@ export default {
                 dataIndex: 'isEnabled',
                 align: 'center',
                 title: '启用',
-                width: 70,
+                width: 150,
                 fixed: 'right',
                 customRender: (text, record) => (
                     <a-switch
@@ -77,7 +77,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 170,
+                width: 250,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -85,7 +85,7 @@ export default {
                 dataIndex: 'sort',
                 align: 'center',
                 title: '排序',
-                width: 100,
+                width: 150,
                 fixed: 'right',
                 scopedSlots: { customRender: 'sort' },
             },

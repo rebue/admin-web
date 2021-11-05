@@ -51,6 +51,11 @@ export const constantRouters = [
         name: 'platform-sign-in',
         component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
     },
+    {
+        path: '/platform-admin-web/forget-password',
+        name: 'platform-forget-password',
+        component: () => import('@/view/forget-password/Index.vue'),
+    },
     /** 页面 */
     {
         path: '/platform-admin-web',
@@ -234,8 +239,8 @@ export const constantRouters = [
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/platform-admin-web/user-system-manage/levelProtect',
-                        name: 'levelProtect',
+                        path: '/platform-admin-web/user-system-manage/level-protect',
+                        name: 'level-protect',
                         component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
@@ -248,21 +253,21 @@ export const constantRouters = [
                 meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/platform-admin-web/user-system-survey/authentication',
+                redirect: '/platform-admin-web/user-system-survey/today-survey',
                 children: [
+                    {
+                        path: '/platform-admin-web/user-system-survey/today-survey',
+                        name: 'today-survey',
+                        component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
+                        hidden: true,
+                        meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
+                    },
                     {
                         path: '/platform-admin-web/user-system-survey/authentication',
                         name: 'authentication',
                         component: () => import('@/view/rac/rac-system-authentication/Manager.vue'),
                         hidden: true,
                         meta: { title: '认证概况', keepAlive: true, icon: 'laptop' },
-                    },
-                    {
-                        path: '/platform-admin-web/user-system-survey/todaySurvey',
-                        name: 'todaySurvey',
-                        component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
-                        hidden: true,
-                        meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },
                     },
                 ],
             },
@@ -274,6 +279,11 @@ export const constantRouters = [
         path: '/ops-admin-web/sign-in/ops',
         name: 'ops-sign-in',
         component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
+    },
+    {
+        path: '/ops-admin-web/forget-password',
+        name: 'ops-forget-password',
+        component: () => import('@/view/forget-password/Index.vue'),
     },
     /** 页面 */
     {
@@ -382,8 +392,8 @@ export const constantRouters = [
                         meta: { title: '钉钉配置', keepAlive: true, icon: 'apartment' },
                     },
                     {
-                        path: '/platform-admin-web/user-system-manage/levelProtect',
-                        name: 'levelProtect',
+                        path: '/ops-admin-web/user-system-manage/level-protect',
+                        name: 'ops-level-protect',
                         component: () => import('@/view/rac/rac-level-protect/Manager.vue'),
                         hidden: true,
                         meta: { title: '账户密码安全等级配置', keepAlive: true, icon: 'apartment' },
@@ -396,11 +406,11 @@ export const constantRouters = [
                 meta: { title: '系统概况', keepAlive: true, icon: 'ant-design' },
                 component: RouteView,
                 hidden: true,
-                redirect: '/ops-admin-web/user-system-survey/todaySurvey',
+                redirect: '/ops-admin-web/user-system-survey/today-survey',
                 children: [
                     {
-                        path: '/ops-admin-web/user-system-survey/todaySurvey',
-                        name: 'ops-todaySurvey',
+                        path: '/ops-admin-web/user-system-survey/today-survey',
+                        name: 'ops-today-survey',
                         component: () => import('@/view/rac/rac-system-survey/Manager.vue'),
                         hidden: true,
                         meta: { title: '今日账号概况', keepAlive: true, icon: 'apartment' },

@@ -121,4 +121,5 @@ Vue.use(Result);
 Vue.use(Collapse);
 
 Vue.prototype.$confirm = Modal.confirm;
+Vue.prototype.$warning = Modal.warning;
 Vue.prototype.$message = message;

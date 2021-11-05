@@ -26,14 +26,14 @@
                                 v-model="radioVal"
                                 @change="changeActiveTab($event.target.value)"
                             >
-                                <a-radio-button value="no-tab">不关联用户</a-radio-button>
-                                <a-radio-button value="choose-tab">关联已存在用户</a-radio-button>
                                 <a-radio-button value="add-tab">关联新建用户</a-radio-button>
+                                <a-radio-button value="choose-tab">关联已存在用户</a-radio-button>
+                                <a-radio-button value="no-tab">不关联用户</a-radio-button>
                             </a-radio-group>
                         </a-col>
                     </a-row>
-                    <user-get ref="selectedUserForm" :key="activeTab" v-if="activeTab.includes('choose-tab')" />
                     <user-form ref="userForm" :key="activeTab" :inline="true" v-if="activeTab.includes('add-tab')" />
+                    <user-get ref="selectedUserForm" :key="activeTab" v-if="activeTab.includes('choose-tab')" />
                 </div>
                 <div class="steps-action ant-modal-footer">
                     <a-button @click="prev">上一步</a-button>
@@ -67,9 +67,9 @@ export default {
             current: 0,
             steps: ['账户', '用户', '完成'],
             userId: '',
-            radioVal: 'no-tab',
+            radioVal: 'add-tab',
             // activeTab用与重置表单
-            activeTab: 'no-tab',
+            activeTab: 'add-tab',
             loading: true,
         };
     },
@@ -121,7 +121,7 @@ export default {
         validateAccount() {
             const valid = this.$refs.accountForm.validate();
             if (valid) {
-                this.changeActiveTab('no-tab');
+                this.changeActiveTab('add-tab');
                 this.next();
             }
         },

@@ -39,7 +39,10 @@ const uncheckJwtTokenPaths = [
     '/ops-admin-web/sign-in/',
     '/unified-auth/sign-in/',
     '/scanTransfer',
+    '/platform-admin-web/forget-password',
+    '/ops-admin-web/forget-password',
     '/unified-auth/forget-password',
+
     '/404',
     '/unifiedLogin',
     '/demo',
@@ -65,7 +68,11 @@ router.beforeEach(async (to, from, next) => {
             //通过认证，后端设置cookie clientId
             //第一步 获取认证
             const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                redirectUri: '本应用不用加 测试',
+                // redirectUri: encodeURIComponent(`http://172.20.11.244:13080/orp-svr/orp/callback`),
+                //orp/auth-code/oidc/unified-auth
+                redirectUri: encodeURIComponent(
+                    `http://172.20.11.244:13080/orp-svr/orp/auth-code/oidc/platform-admin-web`
+                ),
             });
             if (result > 0) {
                 //第二步 请求认证
@@ -94,7 +101,10 @@ router.beforeEach(async (to, from, next) => {
             //通过认证，后端设置cookie clientId
             //第一步 获取认证
             const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                redirectUri: '本应用不用加 测试',
+                //orp/auth-code/oidc/unified-auth
+                redirectUri: encodeURIComponent(
+                    `http://172.20.11.244:13080/orp-svr/orp/auth-code/oidc/platform-admin-web`
+                ),
             });
             if (result > 0) {
                 //第二步 请求认证

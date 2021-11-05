@@ -9,7 +9,7 @@
             :title="title"
             okText="提交"
             :ok-button-props="{ props: { icon: 'check' } }"
-            cancelText="返回"
+            cancelText="关闭"
             :cancel-button-props="{ props: { icon: 'rollback' } }"
             :width="width"
             :centered="true"
@@ -52,6 +52,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isCancelClick: {
+            type: Boolean,
+            default: true,
+        },
     },
     watch: {
         visible(val) {
@@ -70,6 +74,9 @@ export default {
     },
     methods: {
         handleCancel() {
+            if(!this.isCancelClick){
+                return
+            }
             this.$emit('update:visible', false);
         },
         handleRadio(){

@@ -8,7 +8,10 @@ export default class OapOidcApi {
     /**
      * 获取认证全路径
      */
+    // getOidcOauthUri(qo): Promise<Ro> {
+    //     return request.get({ url: '/orp-svr/orp/get-auth-url/oidc/unified-auth', params: qo });
+    // }
     getOidcOauthUri(qo): Promise<Ro> {
-        return request.get({ url: '/orp-svr/orp/get-auth-url/oidc/unified-auth', params: qo });
+        return request.get({ url: '/orp-svr/orp/get-auth-url/oidc/platform-admin-web', params: qo });
     }
 }

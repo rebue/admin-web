@@ -25,6 +25,7 @@
 <script>
 import Authentication from './Authentication.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
+import { getAppIdByUrl } from '@/util/common';
 
 export default {
     components: {
@@ -53,7 +54,8 @@ export default {
             this.current = 2;
         },
         goLogin() {
-            this.$router.replace('/unified-auth/sign-in/unified');
+            const appId = getAppIdByUrl();
+            this.$router.replace(`/${appId}/sign-in/unified`);
         },
     },
 };

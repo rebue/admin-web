@@ -2,22 +2,18 @@
     <div class="flex-box page index-wrap">
         <Aside />
         <div class="ml20 mc w140 backgWhite scrollBar" v-if="!loading">
-            <div class="tableList" v-for="(item, index) in labelSelect" :key="index">
+            <div class="tableList" v-for="(item, index) in labelSelect" :key="index" v-show="item.childList">
                 <div class="title" @click="clickShow(index)">
                     <span class="name">
                         {{ item.name }}
                     </span>
                     <span class="clickIcon">
-                        {{ labelSelect[index].show ? '收起' : '展开' }}
-                        <a-icon type="double-right" :rotate="labelSelect[index].show ? -90 : 90" />
+                        {{ item.show ? '收起' : '展开' }}
+                        <a-icon type="double-right" :rotate="item.show ? -90 : 90" />
                     </span>
                 </div>
-                <div class="content" v-show="labelSelect[index].show">
-                    <div
-                        class="newCardStyle"
-                        v-for="(childItem, childIndex) in labelSelect[index].childList"
-                        :key="childIndex"
-                    >
+                <div class="content" v-show="item.show">
+                    <div class="newCardStyle" v-for="(childItem, childIndex) in item.childList" :key="childIndex">
                         <a
                             class="block flex-box flex-col al-c link-item ablea"
                             href="javascript:void(0)"
@@ -37,7 +33,7 @@
                                     />
                                 </div>
                                 <div class="appTitle">
-                                    <div class="autoImg" v-show="childItem.isauthName == '已认证'">
+                                    <div class="autoImg" v-show="childItem.tagName != '未认证' && childItem.tagName">
                                         <img :src="autoImg" alt="" />
                                     </div>
                                     <div class="appName">
@@ -176,14 +172,8 @@ export default {
                                         lastItem.isauthName = '已认证';
                                         if (lastItem.authnType == 0) {
                                             lastItem.tagName = '未认证';
-                                        } else if (lastItem.authnType == 1) {
-                                            lastItem.tagName = '共用cookie';
-                                        } else if (lastItem.authnType == 2) {
-                                            lastItem.tagName = '授权码';
-                                        } else if (lastItem.authnType == 3) {
-                                            lastItem.tagName = '凭证';
                                         } else {
-                                            lastItem.tagName = 'CAS';
+                                            lastItem.tagName = '已认证';
                                         }
                                         if (!item.childList) {
                                             item.childList = [];
@@ -205,19 +195,12 @@ export default {
                             lastItem.isauthName = '已认证';
                             if (lastItem.authnType == 0) {
                                 lastItem.tagName = '未认证';
-                            } else if (lastItem.authnType == 1) {
-                                lastItem.tagName = '共用cookie';
-                            } else if (lastItem.authnType == 2) {
-                                lastItem.tagName = '授权码';
-                            } else if (lastItem.authnType == 3) {
-                                lastItem.tagName = '凭证';
                             } else {
-                                lastItem.tagName = 'CAS';
+                                lastItem.tagName = '已认证';
                             }
                             this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
-                    console.log(this.labelSelect);
                     this.loading = false;
                 })
                 .finally(() => {
@@ -282,7 +265,7 @@ export default {
 }
 .tableList {
     padding: 0 30px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     .title {
         font-size: 20px;
         font-weight: 400;
@@ -308,23 +291,23 @@ export default {
     }
 }
 .card_box {
-    width: 84%;
-    height: 240px;
+    width: 70%;
+    height: 180px;
     background: #f6f6f6;
     border-radius: 6px;
     position: relative;
     margin-top: 22px;
     .top_card_box {
         width: 100%;
-        height: 158px;
+        height: 100px;
         background: rgba(188, 215, 250, 0.7);
         border-radius: 6px 6px 0px 0px;
         display: flex;
         align-items: center;
         justify-content: center;
         .item-logo {
-            width: 96%;
-            height: 96%;
+            width: 100%;
+            height: 100%;
         }
     }
     .appTitle {

@@ -9,7 +9,7 @@
             :title="title"
             okText="提交"
             :ok-button-props="{ props: { icon: 'check' } }"
-            cancelText="返回"
+            cancelText="关闭"
             :cancel-button-props="{ props: { icon: 'rollback' } }"
             :width="width"
             :centered="true"

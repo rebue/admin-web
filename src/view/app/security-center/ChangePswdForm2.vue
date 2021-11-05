@@ -1,61 +1,36 @@
 <template>
-    <base-modal
-        ref="baseModal"
-        title="修改账户登录密码"
-        :loading="loading"
-        :isCancelClick="isCancelClick"
-        v-bind="$attrs"
-        v-on="$listeners"
-        @show="handleShow"
-        @ok="handleOk"
-    >
-        <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="signInPswd" label="旧密码" prop="signInPswd">
-                <a-input-password
-                    v-autofocus
-                    v-model.trim="model.signInPswd"
-                    placeholder="请输入旧密码"
-                    autocomplete="new-password"
-                />
-            </a-form-model-item>
-            <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
-                <a-input-password
-                    v-model.trim="model.newSignInPswd"
-                    placeholder="请输入新密码"
-                    autocomplete="new-password"
-                />
-            </a-form-model-item>
-            <a-form-model-item key="newSignInPswdAgain" label="确认新密码" prop="newSignInPswdAgain">
-                <a-input-password
-                    v-model.trim="model.newSignInPswdAgain"
-                    placeholder="请再次输入新密码(确认)"
-                    autocomplete="new-password"
-                />
-            </a-form-model-item>
-        </a-form-model>
-    </base-modal>
+    <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
+        <a-form-model-item key="signInPswd" label="旧密码" prop="signInPswd">
+            <a-input-password
+                v-autofocus
+                v-model.trim="model.signInPswd"
+                placeholder="请输入旧密码"
+                autocomplete="new-password"
+            />
+        </a-form-model-item>
+        <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
+            <a-input-password
+                v-model.trim="model.newSignInPswd"
+                placeholder="请输入新密码"
+                autocomplete="new-password"
+            />
+        </a-form-model-item>
+        <a-form-model-item key="newSignInPswdAgain" label="确认新密码" prop="newSignInPswdAgain">
+            <a-input-password
+                v-model.trim="model.newSignInPswdAgain"
+                placeholder="请再次输入新密码(确认)"
+                autocomplete="new-password"
+            />
+        </a-form-model-item>
+    </a-form-model>
 </template>
 
 <script>
-import BaseModal from '@/component/rebue/BaseModal.vue';
 import { racAccountApi, racDicApi } from '@/api/Api';
 import md5 from 'crypto-js/md5';
 
 export default {
     name: 'app-security-center-pwsd',
-    components: {
-        BaseModal,
-    },
-    props: {
-        record: {
-            type: String,
-            required: true,
-        },
-        passworDoverdue: {
-            type: String,
-            required: true,
-        },
-    },
     data() {
         this.rules = {
             signInPswd: [
@@ -95,10 +70,6 @@ export default {
                                 callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
                                 return;
                             }
-                        }
-                        if (value === this.model.signInPswd) {
-                            callback(new Error('新密码不能和旧密码相同'));
-                            return;
                         }
                         callback();
                     },
@@ -144,14 +115,10 @@ export default {
                 newSignInPswd: '',
                 newSignInPswdAgain: '',
             },
-            wordMinLength: 6,
-            passwordCharacter: 2,
-            isCancelClick: true,
         };
     },
     mounted() {
         this.getbyIdFun();
-        this.isCancelClick = this.passworDoverdue == 'isShow' ? false : true;
     },
     methods: {
         getbyIdFun() {
@@ -166,23 +133,20 @@ export default {
                 });
             });
         },
-        handleShow() {
-            this.$nextTick(() => {
-                this.model = {};
-                this.$refs.form.resetFields();
-            });
-        },
-        handleOk() {
+        ok() {
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
                     racAccountApi
                         .modifySignInPswdByOld({
-                            id: this.record,
+                            id: this.record.id,
                             signInPswd: md5(this.model.signInPswd).toString(),
                             newSignInPswd: md5(this.model.newSignInPswd).toString(),
                         })
-                        .then(() => this.$emit('update:visible', false))
+                        .then(() => {
+                            this.callback && this.callback();
+                            this.closeDialog();
+                        })
                         .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {

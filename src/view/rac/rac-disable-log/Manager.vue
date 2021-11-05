@@ -125,7 +125,7 @@ export default {
                 dataIndex: 'disableDatetime',
                 title: '禁用时间',
                 ellipsis: true,
-                width: 165,
+                width: 220,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
@@ -162,6 +162,7 @@ export default {
             {
                 dataIndex: 'enableAgentSignInName',
                 title: '代理启用操作员',
+                width: 130,
                 ellipsis: true,
                 customRender: (text, record) => (
                     <a-popover
@@ -191,7 +192,7 @@ export default {
                 dataIndex: 'enableDatetime',
                 title: '启用时间',
                 ellipsis: true,
-                width: 165,
+                width: 220,
                 sorter: true,
                 sortDirections: ['ascend', 'descend', 'ascend'],
             },
