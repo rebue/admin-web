@@ -26,7 +26,6 @@
 import request from '@/util/request';
 import md5 from 'crypto-js/md5';
 
-const SECOND = 60;
 export default {
     components: {},
     props: {},
