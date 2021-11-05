@@ -66,7 +66,6 @@ export default {
                         }
                         if (this.passwordCharacter == 3) {
                             const pattern = /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]/;
-                            console.log(pattern.test(value));
                             if (!pattern.test(value)) {
                                 callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
                                 return;
@@ -79,7 +78,16 @@ export default {
                                 return;
                             }
                         }
-
+                        if (value === this.model.signInPswdAgain) {
+                            this.$refs.form.validateField('signInPswdAgain');
+                            callback();
+                            return;
+                        }
+                        if (value !== this.model.signInPswdAgain && this.model.signInPswdAgain.length != 0) {
+                            this.$refs.form.validateField('signInPswdAgain');
+                            callback();
+                            return;
+                        }
                         callback();
                     },
                 },
@@ -87,7 +95,7 @@ export default {
             signInPswdAgain: [
                 {
                     required: true,
-                    trigger: ['change', 'blur'],
+                    trigger: 'blur',
                     validator: (rule, value, callback) => {
                         if (value === undefined) value = '';
                         value = value.trim();

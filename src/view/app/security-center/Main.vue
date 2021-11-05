@@ -1,5 +1,10 @@
 <template>
     <div class="content">
+        <change-pswd-form
+            :record="changePswdId"
+            :passworDoverdue="passworDoverdue"
+            :visible.sync="changePswdFormVisible"
+        />
         <!-- 修改密码 -->
         <a-list-item class="list-item">
             <a-list-item-meta>
@@ -92,6 +97,7 @@ import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import ChangePswdForm from './ChangePswdForm.vue';
 
 export default observer({
     name: 'app-security-center-main',
@@ -100,7 +106,13 @@ export default observer({
             accountStore,
             EditFormTypeDic,
             isVerifiedEmail: false,
+            changePswdFormVisible: false,
+            changePswdId: '',
+            passworDoverdue: '',
         };
+    },
+    components: {
+        ChangePswdForm,
     },
     methods: {
         refreshAccountInfo() {
@@ -255,25 +267,27 @@ export default observer({
 
         //修改密码
         changePswd() {
-            const that = this;
-            this.$showDialog(
-                require('./ChangePswdForm.vue').default,
-                {
-                    data() {
-                        return {
-                            record: {
-                                id: that.accountStore.accountId,
-                            },
-                        };
-                    },
-                    methods: {
-                        callback() {
-                            that.refreshAccountInfo();
-                        },
-                    },
-                },
-                { title: '修改密码' }
-            );
+            this.changePswdId = this.accountStore.accountId;
+            this.changePswdFormVisible = true;
+            // const that = this;
+            // this.$showDialog(
+            //     require('./ChangePswdForm.vue').default,
+            //     {
+            //         data() {
+            //             return {
+            //                 record: {
+            //                     id: that.accountStore.accountId,
+            //                 },
+            //             };
+            //         },
+            //         methods: {
+            //             callback() {
+            //                 that.refreshAccountInfo();
+            //             },
+            //         },
+            //     },
+            //     { title: '修改密码' }
+            // );
         },
 
         //修改邮箱
