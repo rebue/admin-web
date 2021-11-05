@@ -9,7 +9,24 @@
                         :src="accountStore.avatar ? accountStore.avatar : undefined"
                     />
                     <p>{{ accountStore.nickname }}</p>
-                    <p v-if="accountStore.orgFullName !== ''">{{ accountStore.orgFullName }}</p>
+                    <div class="personal-wrap">
+                        <div class="item">
+                            <a-icon class="icon" type="mobile" /><span>手机</span
+                            ><span>{{ accountStore.user.mobile }}</span>
+                        </div>
+                        <div class="item">
+                            <a-icon class="icon" type="mail" /><span>邮箱</span
+                            ><span>{{ accountStore.user.email }}</span>
+                        </div>
+                        <div class="item">
+                            <a-icon class="icon" type="idcard" /><span>身份</span
+                            ><span>{{ accountStore.user.idCard }}</span>
+                        </div>
+                        <div class="item">
+                            <a-icon class="icon" type="team" /><span>组织</span
+                            ><span>{{ accountStore.orgFullName }}</span>
+                        </div>
+                    </div>
                 </div>
             </a-card>
         </a-col>
@@ -57,5 +74,21 @@ export default observer({
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.personal-wrap {
+    color: #666;
+    .item {
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+    }
+    .icon {
+        font-size: 20px;
+        margin: 5px;
+        + span {
+            margin-right: 15px;
+            min-width: 2em;
+        }
+    }
 }
 </style>

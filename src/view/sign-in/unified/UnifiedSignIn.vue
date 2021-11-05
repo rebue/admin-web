@@ -16,9 +16,7 @@
                     <div class="munberLongin" @click="phoneShow = true">账号登录</div>
                     <scanCode :codeType="codeType" :key="codeType"></scanCode>
                 </template>
-                <router-link to="/unified-auth/forget-password" class="forget-password" v-if="phoneShow"
-                    >忘记密码</router-link
-                >
+                <router-link :to="forgetPswdPath" class="forget-password" v-if="phoneShow">忘记密码</router-link>
                 <div class="scan-code-card">
                     <div class="top-list">
                         <span @click="vxScanCodeClick">微信扫码登录</span>
@@ -50,14 +48,8 @@ export default {
         return {
             phoneShow: true,
             codeType: '微信',
+            forgetPswdPath: `/${getAppIdByUrl()}/forget-password`,
         };
-    },
-    mounted() {
-        const { code } = this.$route.query;
-        if (code) {
-            this.photoShow = false;
-            this.handleCodeLogin(code);
-        }
     },
     methods: {
         //微信扫码点击事件
@@ -69,15 +61,6 @@ export default {
         ddScanCodeClick() {
             this.phoneShow = false;
             this.codeType = '钉钉';
-        },
-        //扫码成功之后做的处理
-        handleCodeLogin(code) {
-            // let token = '89f0fd7c99f5367fb5d562feae110d55'
-            // axios.get(`https://oapi.dingtalk.com/user/getuserinfo?access_token=${token}&code=${code}`)
-            // .then(function (response) {
-            // })
-            console.log(code);
-            this.$router.push({ path: `/${getAppIdByUrl()}` });
         },
     },
 };

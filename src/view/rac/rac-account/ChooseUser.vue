@@ -61,7 +61,7 @@ export default {
                     this.dataSource = [ro.extra.one];
                 });
             } else {
-                this.fetchUserList();
+                // this.fetchUserList();
             }
         });
     },

@@ -4,6 +4,8 @@ import { constantRouters } from '@/config/router.config';
 import { hasJwtToken, hasAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 import { oapOidcApi } from '@/api/Api';
+import { getAppIdByUrl } from '@/util/common';
+import { AppDic } from '@/dic/AppDic';
 
 Vue.use(VueRouter);
 
@@ -33,6 +35,34 @@ const router = new VueRouter({
 //     return originalPush.call(this, location).catch(err => err);
 // };
 
+/**类第三方对接统一认证 */
+const oidc = async function(next) {
+    //走认证流程
+    //通过认证，后端设置cookie clientId
+    //第一步 获取认证
+    //应用认证里自动生成的clientId, 以下三个默认写库,前端配置在AppDic中
+    // unified-auth, platform-admin-web, ops-admin-web
+    try {
+        const clientId = AppDic.getClientId(getAppIdByUrl());
+        const { result, detail } = await oapOidcApi.getOidcOauthUri(clientId, {
+            // redirectUri: encodeURIComponent(`http://172.20.11.244:13080/orp-svr/orp/callback`),
+            redirectUri: encodeURIComponent(`${location.origin}/orp-svr/orp/auth-code/oidc/${clientId}`),
+        });
+        if (result > 0) {
+            //第二步 请求认证
+            next && next(false);
+            window.location.replace(detail);
+            return;
+        } else {
+            next && next(false);
+            return;
+        }
+    } catch {
+        next && next(false);
+        return;
+    }
+};
+
 /** 不检查JWT Token的路径列表 */
 const uncheckJwtTokenPaths = [
     '/platform-admin-web/sign-in/',
@@ -60,28 +90,15 @@ router.beforeEach(async (to, from, next) => {
     Modal.destroyAll();
 
     /**
-     * 输入路径访问统一登录页，帐密登录报“未找到session信息”：
+     * 输入登录路径访问统一登录页，帐密登录报“未找到session信息”：
      * 无auth_info cookie，需要走认证拿到cookie， 该cookie在帐密登录需要，表示将要登录的应用
      */
     if (to.path.startsWith('/unified-auth/sign-in/')) {
         if (!hasAuthInfo()) {
             //通过认证，后端设置cookie clientId
             //第一步 获取认证
-            const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                // redirectUri: encodeURIComponent(`http://172.20.11.244:13080/orp-svr/orp/callback`),
-                //orp/auth-code/oidc/unified-auth
-                redirectUri: encodeURIComponent(
-                    `http://172.20.11.244:13080/orp-svr/orp/auth-code/oidc/platform-admin-web`
-                ),
-            });
-            if (result > 0) {
-                //第二步 请求认证
-                window.location.replace(detail);
-                return;
-            } else {
-                next(false);
-                return;
-            }
+            // unified-auth, platform-admin-web, uiapcee071fc86a0003
+            return oidc(next);
         } else {
             next();
             return;
@@ -96,24 +113,7 @@ router.beforeEach(async (to, from, next) => {
         //需登录
         //如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
         if (!hasJwtToken()) {
-            // ???走认证vs走自己登录页
-            //------start
-            //通过认证，后端设置cookie clientId
-            //第一步 获取认证
-            const { result, detail } = await oapOidcApi.getOidcOauthUri({
-                //orp/auth-code/oidc/unified-auth
-                redirectUri: encodeURIComponent(
-                    `http://172.20.11.244:13080/orp-svr/orp/auth-code/oidc/platform-admin-web`
-                ),
-            });
-            if (result > 0) {
-                //第二步 请求认证
-                window.location.replace(detail);
-                return;
-            } else {
-                next(false);
-                return;
-            }
+            return oidc(next);
         } else {
             //已登录
             next();

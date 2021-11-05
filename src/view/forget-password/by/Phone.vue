@@ -9,12 +9,13 @@
         <p>当前手机号{{ model.phoneNumber }}</p>
         <!-- 验证码 -->
         <a-form-model-item key="code" label="" prop="code">
-            <div class="code">
+            <div class="code code-large">
                 <a-input size="large" class="code-input" v-model.trim="model.code" placeholder="短信验证码" />
-                <a-button size="large" key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting"
-                    >发送短信验证码</a-button
-                >
-                <a-button size="large" style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
+                <SendSMSCode
+                    :phoneNumber="model.phoneNumber"
+                    :captchaVerification.sync="model.captchaVerification"
+                    buttonSize="large"
+                />
             </div>
         </a-form-model-item>
         <a-form-model-item>
@@ -33,13 +34,14 @@
     </a-form-model>
 </template>
 <script>
-import { racAccountApi, racVerifitionApi } from '@/api/Api';
-import { countDown } from '@/util/common';
+import { racVerifitionApi } from '@/api/Api';
+import SendSMSCode from '@/view/sign-in/unified/SendSMSCode.vue';
 
-const SECOND = 60;
 export default {
     name: 'forget-password-by-phone',
-    components: {},
+    components: {
+        SendSMSCode,
+    },
     props: ['account'],
     data() {
         return {
@@ -54,9 +56,6 @@ export default {
                     { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
-            second: SECOND,
-            isCodeLoading: false,
-            isCounting: false,
         };
     },
     mounted() {
@@ -84,63 +83,6 @@ export default {
                     });
                 }
             });
-        },
-        // 手机登录获取验证码事件
-        async getCode() {
-            // 验证码发送中不能再操作
-            if (this.isCodeLoading) {
-                return;
-            }
-            // 首先验证手机号是否输入
-            if (!this.model.phoneNumber) {
-                return;
-            }
-
-            // 其次 弹出行为验证码
-            const that = this;
-            this.$showDialog(
-                require('@/view/sign-in/comm/Verify.vue').default,
-                {
-                    methods: {
-                        handleVerifySuccess(res) {
-                            that.model.captchaVerification = res.captchaVerification;
-                            that.fetchCode();
-                        },
-                        handleVerifyError() {
-                            that.model.captchaVerification = '';
-                        },
-                    },
-                },
-                {
-                    title: '请完成安全验证',
-                    footer: null,
-                    // closable: false,
-                    width: 450,
-                    wrapClassName: 'verify-modal-wrap',
-                }
-            );
-        },
-        async fetchCode() {
-            //发送短信验证码 请求
-            try {
-                this.isCodeLoading = true;
-                await racVerifitionApi.sendSMSCode({
-                    phoneNumber: this.model.phoneNumber,
-                    captchaVerification: this.model.captchaVerification,
-                });
-                this.isCodeLoading = false;
-                this.isCounting = true;
-                // then 验证码倒计时
-                countDown(this.second, val => {
-                    this.second = val;
-                    if (val === 0) {
-                        this.second = SECOND;
-                        this.isCounting = false;
-                    }
-                });
-            } catch {
-                this.isCodeLoading = false;
-            }
         },
     },
     watch: {
@@ -179,6 +121,10 @@ export default {
 }
 .code {
     display: flex;
+    align-items: center;
+}
+.code-large {
+    font-size: 16px;
 }
 .code-input {
     margin-right: 10px;

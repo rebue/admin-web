@@ -4,11 +4,14 @@
         <a-form-model-item key="mobile" label="手机号" prop="mobile">
             <a-input v-model.trim="model.mobile" placeholder="" :disabled="editFormType !== EditFormTypeDic.Add" />
         </a-form-model-item>
-        <a-form-model-item key="code" label="验证码" prop="code">
+        <a-form-model-item key="code" label="短信验证码" prop="code">
             <div class="code">
                 <a-input class="code-input" v-model.trim="model.code" placeholder="" />
-                <a-button key="btn" @click="getCode" :loading="isCodeLoading" v-if="!isCounting">发送验证码</a-button>
-                <a-button style="width: 12em;" key="s" v-else>{{ second }}s</a-button>
+                <SendSMSCode
+                    :phoneNumber="model.mobile"
+                    :captchaVerification.sync="model.captchaVerification"
+                    :validatePhone="validatePhone"
+                />
             </div>
         </a-form-model-item>
         <!-- <a-form-model-item :wrapper-col="{ span: 13, offset: 7 }">
@@ -17,15 +20,16 @@
     </a-form-model>
 </template>
 <script>
-import { racAccountApi, racVerifitionApi } from '@/api/Api';
+import { racAccountApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
-import { countDown } from '@/util/common';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import SendSMSCode from '@/view/sign-in/unified/SendSMSCode.vue';
 
-const SECOND = 60;
 export default {
     name: 'app-security-center-mobile',
-    components: {},
+    components: {
+        SendSMSCode,
+    },
     data() {
         this.formLayout = {
             labelCol: {
@@ -66,9 +70,6 @@ export default {
                     { required: true, message: '请输入验证码', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
-            second: SECOND,
-            isCodeLoading: false,
-            isCounting: false,
         };
     },
     mounted() {
@@ -117,66 +118,12 @@ export default {
                 }
             });
         },
-        // 手机获取验证码事件
-        async getCode() {
-            // 验证码发送中不能再操作
-            if (this.isCodeLoading) {
-                return;
-            }
-            // 验证手机号是否输入
-            let valid = true;
+        validatePhone() {
+            let valid = false;
             this.$refs.form.validateField('mobile', (errors, values) => {
                 valid = !errors;
             });
-            if (!valid) {
-                return;
-            }
-
-            // 其次 弹出行为验证码
-            const that = this;
-            this.$showDialog(
-                require('@/view/sign-in/comm/Verify.vue').default,
-                {
-                    methods: {
-                        handleVerifySuccess(res) {
-                            that.model.captchaVerification = res.captchaVerification;
-                            that.fetchCode();
-                        },
-                        handleVerifyError() {
-                            that.model.captchaVerification = '';
-                        },
-                    },
-                },
-                {
-                    title: '请完成安全验证',
-                    footer: null,
-                    // closable: false,
-                    width: 450,
-                    wrapClassName: 'verify-modal-wrap',
-                }
-            );
-        },
-        async fetchCode() {
-            //发送短信验证码 请求
-            try {
-                this.isCodeLoading = true;
-                await racVerifitionApi.sendSMSCode({
-                    phoneNumber: this.model.mobile,
-                    captchaVerification: this.model.captchaVerification,
-                });
-                this.isCodeLoading = false;
-                this.isCounting = true;
-                // then 验证码倒计时
-                countDown(this.second, val => {
-                    this.second = val;
-                    if (val === 0) {
-                        this.second = SECOND;
-                        this.isCounting = false;
-                    }
-                });
-            } catch {
-                this.isCodeLoading = false;
-            }
+            return valid;
         },
     },
 };
@@ -184,6 +131,7 @@ export default {
 <style scoped>
 .code {
     display: flex;
+    align-items: center;
 }
 .code-input {
     margin-right: 10px;
