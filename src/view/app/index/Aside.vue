@@ -12,7 +12,8 @@
             <span class="font-14 code" v-if="accountStore.code">{{ accountStore.code }}</span>
         </div>
         <div class="time-wrap">
-            <img :src="require('../assets/img/clock.png')" />
+            <!-- <img :src="require('../assets/img/clock.png')" /> -->
+            <echart :chartData="clockChart" style="width: 170px; height: 170px;"></echart>
             <div>
                 <div class="hour" v-text="hour"></div>
                 <span class="font-14" v-text="date"></span>
@@ -35,9 +36,10 @@
 <script>
 import moment from 'moment';
 import { accountStore } from '@/store/Store';
+import echart from '@/component/echarts/ClockChart.vue';
 export default {
     name: 'app-aside',
-    components: {},
+    components: { echart },
     props: {},
     data() {
         return {
@@ -50,6 +52,9 @@ export default {
             daysInMonth: '',
             dayEngelish: '',
             interval: null,
+            clockChart: {
+                chartId: 'clockChart',
+            },
         };
     },
     watch: {
@@ -112,6 +117,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    padding-top: 20px;
 }
 .hour {
     font-size: 40px;

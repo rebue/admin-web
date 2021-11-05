@@ -70,7 +70,7 @@
             </a-col>
             <a-col :span="12">
                 <div class="shadow">
-                    <h3 class="chart-title">今日访问情况</h3>
+                    <h3 class="chart-title">今日认证情况</h3>
                     <echart :chartData="barChartData"></echart>
                 </div>
             </a-col>
