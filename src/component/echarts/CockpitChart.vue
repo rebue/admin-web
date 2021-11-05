@@ -72,44 +72,44 @@ export default {
                         formatter: "{a} <br/>{b} : {c}%"
                 },
                 series: [
-                    { //内圆
-                        type: 'pie',
-                        radius: '100%',
-                        center: ['50%', '50%'],
-                        z: 0,
-                        itemStyle: {
-                            normal: {
-                                color: new echarts.graphic.RadialGradient(.5, .5, 1, [{
-                                        offset: 0,
-                                        color: 'rgba(17,24,43,0)'
-                                    },
-                                    {
-                                        offset: .5,
-                                        // color: '#1E2B57'
-                                        color: 'rgba(28,42,91,.6)'
-                                    },
-                                    {
-                                        offset: 1,
-                                        color: '#141C33',
-                                        // color:'rgba(17,24,43,0)'
-                                    }
-                                ], false),
-                                label: {
-                                    show: false
-                                },
-                                labelLine: {
-                                    show: false
-                                }
-                            },
-                        },
-                        hoverAnimation: false,
-                        label: {
-                            show: false,
-                        },
-                        tooltip: {
-                            show: false
-                        }
-                    },
+                    // { //内圆
+                    //     type: 'pie',
+                    //     radius: '100%',
+                    //     center: ['50%', '50%'],
+                    //     z: 0,
+                    //     itemStyle: {
+                    //         normal: {
+                    //             color: new echarts.graphic.RadialGradient(.5, .5, 1, [{
+                    //                     offset: 0,
+                    //                     color: 'rgba(17,24,43,0)'
+                    //                 },
+                    //                 {
+                    //                     offset: .5,
+                    //                     // color: '#1E2B57'
+                    //                     color: 'rgba(28,42,91,.6)'
+                    //                 },
+                    //                 {
+                    //                     offset: 1,
+                    //                     color: '#141C33',
+                    //                     // color:'rgba(17,24,43,0)'
+                    //                 }
+                    //             ], false),
+                    //             label: {
+                    //                 show: false
+                    //             },
+                    //             labelLine: {
+                    //                 show: false
+                    //             }
+                    //         },
+                    //     },
+                    //     hoverAnimation: false,
+                    //     label: {
+                    //         show: false,
+                    //     },
+                    //     tooltip: {
+                    //         show: false
+                    //     }
+                    // },
                     {
                         type: 'gauge',
                         name: '外层辅助',
@@ -126,7 +126,7 @@ export default {
                             show: true,
                             color: '#fff',
                             fontSize: 2 * fontNum,
-                            "offsetCenter": ['0%', "82%"],
+                            "offsetCenter": ['0%', "65%"],
                         },
                         detail: {
                             formatter: function(value) {
@@ -134,7 +134,7 @@ export default {
                                 return '{total|' + num + '}';
                             },
                             rich: rich,
-                            "offsetCenter": ['0%', "104%"],
+                            "offsetCenter": ['0%', "85%"],
                         },
                         data: [ this.chartData.list[1] ],
                         axisLine: {
@@ -169,7 +169,7 @@ export default {
                     },
                     {
                         type: 'gauge',
-                        radius: '73%',
+                        radius: '76%',
                         startAngle: '225',
                         endAngle: '-45',
                         pointer: {
@@ -187,17 +187,14 @@ export default {
                         title: {
                             show: true,
                             color: '#fff',
-                            fontStyle: 'normal',
-                            fontWeight: 'normal',
-                            fontFamily: '微软雅黑',
                             fontSize: 2 * fontNum,
-                            "offsetCenter": ['0%', "30%"],
+                            "offsetCenter": ['0%', "25%"],
                         },
                         axisLine: {
                             show: true,
                             lineStyle: {
                                 color: colorSet,
-                                width: 25,
+                                width: 20,
                                 // shadowBlur: 15,
                                 // shadowColor: '#B0C4DE',
                                 shadowOffsetX: 0,
@@ -225,7 +222,7 @@ export default {
                         name: '灰色内圈', //刻度背景
                         type: 'gauge',
                         z: 2,
-                        radius: '56%',
+                        radius: '64%',
                         startAngle: '225',
                         endAngle: '-45',
                         //center: ["50%", "75%"], //整体的位置设置
@@ -241,10 +238,6 @@ export default {
                         splitLine: {
                             show: false
                         },
-                        // data: [{
-                        //     show: false,
-                        //     value: '80'
-                        // }], //作用不清楚
                         axisLabel: {
                             show: false
                         },
@@ -261,7 +254,7 @@ export default {
                     {
                         name: "白色圈刻度",
                         type: "gauge",
-                        radius: "65%",
+                        radius: "72%",
                         startAngle: 225, //刻度起始
                         endAngle: -45, //刻度结束
                         z: 4,
@@ -297,7 +290,7 @@ export default {
                     },
                     { //内圆
                         type: 'pie',
-                        radius: '55%',
+                        radius: '63%',
                         center: ['50%', '50%'],
                         z: 1,
                         itemStyle: {

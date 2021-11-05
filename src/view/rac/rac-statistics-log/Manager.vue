@@ -1,20 +1,52 @@
 <template>
     <div>
-        <a-card class="manager-card" :bordered="false">
-            <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
-                <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name"></a-tab-pane>
-            </a-tabs>
-            <a-range-picker
-                :ranges="{
-                    Today: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
-                    'This Month': [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss').endOf('month')],
-                }"
-                show-time
-                format="YYYY/MM/DD HH:mm:ss"
-                @change="onChange"
-            />
-            <echart :chartData="lineChartData"></echart>
-        </a-card>
+        <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
+            <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name"></a-tab-pane>
+        </a-tabs>
+        <!-- <a-range-picker
+            :ranges="{
+                Today: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
+                'This Month': [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss').endOf('month')],
+            }"
+            show-time
+            format="YYYY/MM/DD HH:mm:ss"
+            @change="onChange"
+        /> -->
+        <a-row :gutter="[20, 20]">
+            <a-col :span="12">
+                <div class="chart-panel">
+                    <div class="chart-ti">
+                        <h3 class="chart-title">今日访问情况</h3>
+                        <div class="chart-right">
+                            <a-icon type="calendar" />
+                        </div>
+                    </div>
+                    <echart :chartData="lineChartData"></echart>
+                </div>
+            </a-col>
+            <a-col :span="12">
+                <div class="chart-panel">
+                    <div class="chart-ti">
+                        <h3 class="chart-title">今日认证情况</h3>
+                        <div class="chart-right">
+                            <a-icon type="calendar" />
+                        </div>
+                    </div>
+                    <echart :chartData="barChartData"></echart>
+                </div>
+            </a-col>
+            <a-col :span="12">
+                <div class="chart-panel">
+                    <div class="chart-ti">
+                        <h3 class="chart-title">今日登录情况</h3>
+                        <div class="chart-right">
+                            <a-icon type="calendar" />
+                        </div>
+                    </div>
+                    <echart :chartData="pieChartData"></echart>
+                </div>
+            </a-col>
+        </a-row>
     </div>
 </template>
 
@@ -42,11 +74,27 @@ export default {
             lineChartData: {
                 chartId: 'LineChart1',
                 chartType: 'LineChart',
-                legendData: ['访问量', '订单量'],
+                legendData: ['访问量'],
+                listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
+                list: [[509, 917, 2455, 2610, 2719, 3033, 3044, 3185, 2708, 2809, 2117]],
+            },
+            barChartData: {
+                chartId: 'BarChart1',
+                chartType: 'BarChart',
+                legendData: ['认证成功', '认证失败'],
                 listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
                 list: [
-                    [509, 917, 2455, 2610, 2719, 3033, 3044, 3185, 2708, 2809, 2117],
-                    [2136, 3693, 2962, 3810, 3519, 3484, 3915, 3823, 3455, 4310, 4019],
+                    [509, 917, 455, 610, 719, 333, 344, 385, 208, 209, 217],
+                    [0, 1, 0, 2, 0, 0, 3, 0, 3, 0, 4],
+                ],
+            },
+            pieChartData: {
+                chartId: 'PieChart1',
+                chartType: 'PieChart',
+                list: [
+                    { value: 1048, name: '登录成功' },
+                    { value: 5, name: '登陆失败' },
+                    { value: 3, name: '登录异常' },
                 ],
             },
         };
@@ -93,13 +141,19 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.realm-tabs {
-    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
-}
-</style>
-<style type="text/css">
-.mystyle {
-    width: 50%;
-    right: 200px;
+.chart-panel {
+    background: #ffffff;
+    border-radius: 10px;
+    .chart-ti {
+        display: flex;
+        justify-content: space-between;
+        .chart-title {
+            padding: 10px 20px;
+        }
+        .chart-right {
+            font-size: 20px;
+            padding: 5px 20px 0 0;
+        }
+    }
 }
 </style>

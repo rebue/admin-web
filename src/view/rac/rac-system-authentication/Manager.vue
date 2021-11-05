@@ -1,81 +1,96 @@
 <template>
-    <a-card class="manager-card" :bordered="false">
-        <div class="title">账号总概况</div>
+    <div>
         <div class="top-panel">
-            <a-row :gutter="20">
-                <a-col class="gutter-row" :span="8">
-                    <div class="top-li-flex">
-                        <div class="top-li shadow">
-                            <div class="li-title">账号总数</div>
-                            <div class="li-num">9527</div>
-                        </div>
-                    </div>
-                </a-col>
-                <a-col class="gutter-row" :span="8">
-                    <echart :chartData="cockpitChartData"></echart>
-                </a-col>
-                <a-col class="gutter-row" :span="8">
-                    <echart :chartData="approveChartData"></echart>
-                </a-col>
-            </a-row>
+            <div class="top-list">
+                <!-- <div class="lis">
+                    <div class="ti">总人数</div>
+                    <div class="num">2300000</div>
+                </div>
+                <div class="lis">
+                    <div class="ti">总人数</div>
+                    <div class="num">2300000</div>
+                </div>
+                <div class="lis">
+                    <div class="ti">总人数</div>
+                    <div class="num">2300000</div>
+                </div> -->
+                <a-row :gutter="20">
+                    <a-col class="gutter-row" :span="12">
+                        <echart style="width: 300px; height: 300px;" :chartData="cockpitChartData"></echart>
+                    </a-col>
+                    <a-col class="gutter-row" :span="12">
+                        <echart style="width: 300px; height: 300px;" :chartData="approveChartData"></echart>
+                    </a-col>
+                </a-row>
+            </div>
+            <!-- <div class="title">
+                <div>账号总数</div>
+                <div class="num">280个</div>
+            </div> -->
+            <img class="top-bg" :src="require('./top-bg.png')" />
         </div>
-        <div class="title">今日账号数据统计</div>
-        <div class="info-panel">
-            <a-row :gutter="10">
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div class="li-title">添加总数</div>
-                        <div class="li-num">1453</div>
+        <div class="account-panel">
+            <div class="title">账号总概况</div>
+            <div class="account-li">
+                <div class="li-panel">
+                    <img :src="require('./icon01.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">添加总数</div>
                     </div>
-                </a-col>
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div>锁定总数</div>
-                        <div>1245</div>
+                </div>
+                <div class="li-panel">
+                    <img :src="require('./icon02.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">锁定总数</div>
                     </div>
-                </a-col>
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div>修改总数</div>
-                        <div>1245</div>
+                </div>
+                <div class="li-panel">
+                    <img :src="require('./icon03.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">修改总数</div>
                     </div>
-                </a-col>
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div>密码修改总数</div>
-                        <div>1245</div>
+                </div>
+                <div class="li-panel">
+                    <img :src="require('./icon04.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">密码修改总数</div>
                     </div>
-                </a-col>
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div>认证成功总数</div>
-                        <div>1245</div>
+                </div>
+                <div class="li-panel">
+                    <img :src="require('./icon05.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">认证成功总数</div>
                     </div>
-                </a-col>
-                <a-col :span="infoIndex">
-                    <div class="li">
-                        <div>认证失败总数</div>
-                        <div>1245</div>
+                </div>
+                <div class="li-panel">
+                    <img :src="require('./icon06.png')" />
+                    <div class="info">
+                        <div class="num">9527</div>
+                        <div class="ti">认证失败总数</div>
                     </div>
-                </a-col>
-            </a-row>
+                </div>
+            </div>
         </div>
-
         <a-row :gutter="20">
             <a-col :span="12">
-                <div class="shadow">
+                <div class="chart-panel">
                     <h3 class="chart-title">今日访问情况</h3>
                     <echart :chartData="lineChartData"></echart>
                 </div>
             </a-col>
             <a-col :span="12">
-                <div class="shadow">
+                <div class="chart-panel">
                     <h3 class="chart-title">今日认证情况</h3>
                     <echart :chartData="barChartData"></echart>
                 </div>
             </a-col>
         </a-row>
-    </a-card>
+    </div>
 </template>
 
 <script>
@@ -95,7 +110,7 @@ export default {
             cockpitChartData: {
                 chartId: 'Cockpit1',
                 chartType: 'CockpitChart',
-                fontNum: 7,
+                fontNum: 6,
                 list: [
                     { value: 83, name: '登录成功占比' },
                     { value: 15376, name: '登录总次数' },
@@ -104,7 +119,7 @@ export default {
             approveChartData: {
                 chartId: 'Cockpit2',
                 chartType: 'CockpitChart',
-                fontNum: 7,
+                fontNum: 6,
                 list: [
                     { value: 95, name: '认证成功占比' },
                     { value: 5736, name: '总认证数' },
@@ -143,50 +158,102 @@ export default {
 </script>
 
 <style scoped>
-.title {
-    font-size: 22px;
-    color: #1890ff;
-}
 .top-panel {
+    background-color: #5497e7;
+    height: 350px;
+    color: #ffffff;
+    border-radius: 10px;
 }
-.top-panel .top-li-flex {
+.top-panel .title {
+    font-size: 30px;
+}
+.top-panel .title .num {
+    background-color: #1dcb8c;
+    min-width: 120px;
+    height: 45px;
+    text-align: center;
+    border-radius: 4px;
+    margin-left: 20px;
+    padding: 0 20px;
+}
+.top-panel .top-list {
+    display: flex;
+    padding-top: 20px;
+}
+.top-panel .top-list .lis {
+    width: 140px;
+    height: 120px;
+    background: rgba(243, 246, 253, 0.13);
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 300px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50px;
 }
-.top-panel .top-li {
-    height: 100px;
-    padding: 20px;
+.top-panel .top-list .lis .ti {
+    font-size: 18px;
 }
-.top-panel .li-title {
-    color: #1890ff;
+.top-panel .top-list .lis .num {
+    font-size: 30px;
+    font-weight: bold;
 }
-.top-panel .li-num {
-    font-size: 24px;
-    text-align: center;
-    font-weight: 600;
+.top-panel .top-bg {
+    position: absolute;
+    width: 318px;
+    height: 279px;
+    top: -15px;
+    right: 47px;
 }
-.shadow {
-    /* box-shadow: -1px -1px 10px #888888; */
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
+.account-panel {
+    width: 100%;
+    height: 166px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin: 20px 0;
 }
-.info-panel {
-    height: 100px;
-    border-radius: 3px;
-    margin: 20px 0 40px;
-    text-align: center;
+.account-panel .title {
+    font-size: 20px;
+    color: #222222;
+    line-height: 57px;
+    margin-left: 29px;
 }
-.info-panel .li {
-    font-weight: 600;
+.account-panel .account-li {
+    display: flex;
+}
+.account-panel .account-li .li-panel {
+    width: 16.6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* .account-panel .account-li .li-panel::after {
+    content: '';
+    position: relative;
+    right: 0;
+    width: 2px;
+    height: 40px;
+    background: #F1F1F2;
+} */
+.account-panel .account-li .li-panel img {
+    width: 29px;
+    height: 29px;
+    margin-right: 20px;
+}
+.account-panel .account-li .li-panel .info .num {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333333;
+}
+.account-panel .account-li .li-panel .info .ti {
     font-size: 16px;
-    line-height: 28px;
-    padding: 10px 0;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
+    font-weight: 400;
+    color: #a1a0a0;
 }
-.chart-title {
+.chart-panel {
+    background: #ffffff;
+    border-radius: 10px;
+}
+.chart-panel .chart-title {
     padding: 10px 20px;
 }
 </style>
