@@ -1,28 +1,17 @@
 <template>
     <div>
         <div class="top-panel">
-            <div class="top-list">
-                <!-- <div class="lis">
-                    <div class="ti">总人数</div>
-                    <div class="num">2300000</div>
-                </div>
-                <div class="lis">
-                    <div class="ti">总人数</div>
-                    <div class="num">2300000</div>
-                </div>
-                <div class="lis">
-                    <div class="ti">总人数</div>
-                    <div class="num">2300000</div>
-                </div> -->
-                <a-row :gutter="20">
-                    <a-col class="gutter-row" :span="12">
-                        <echart ref="chart" style="width: 300px; height: 300px;" :chartData="cockpitChartData"></echart>
-                    </a-col>
-                    <a-col class="gutter-row" :span="12">
-                        <echart ref="chart" style="width: 300px; height: 300px;" :chartData="approveChartData"></echart>
-                    </a-col>
-                </a-row>
-            </div>
+            <a-row :gutter="20">
+                <a-col :span="5">
+                    <echart ref="chart3" :chartData="accChartData"></echart>
+                </a-col>
+                <a-col :span="5">
+                    <echart ref="chart4" :chartData="cockpitChartData"></echart>
+                </a-col>
+                <a-col :span="5">
+                    <echart ref="chart5" :chartData="approveChartData"></echart>
+                </a-col>
+            </a-row>
             <!-- <div class="title">
                 <div>账号总数</div>
                 <div class="num">280个</div>
@@ -107,6 +96,16 @@ export default {
         return {
             infoIndex: 4,
             totalData: {},
+            accChartData: {
+                chartId: 'AccountChart1',
+                chartType: 'AccountChart',
+                fontNum: 6,
+                list: [
+                    { value: 100, name: '正常账号' },
+                    { value: 10, name: '异常账号' },
+                    { value: 23, name: '封禁账号' },
+                ],
+            },
             cockpitChartData: {
                 chartId: 'Cockpit1',
                 chartType: 'CockpitChart',
@@ -128,7 +127,7 @@ export default {
             barChartData: {
                 chartId: 'BarChart1',
                 chartType: 'BarChart',
-                legendData: ['访问量', '订单量'],
+                legendData: ['待认证数', '认证数'],
                 listName: ['8点', '9点', '10点', '11点', '12点', '13点', '14点'],
                 list: [
                     [10, 200, 150, 80, 70, 110, 130],
@@ -138,7 +137,7 @@ export default {
             lineChartData: {
                 chartId: 'LineChart1',
                 chartType: 'LineChart',
-                legendData: ['访问量', '订单量'],
+                legendData: ['登录量', '访问量'],
                 listName: ['8点', '9点', '10点', '11点', '12点', '13点', '14点'],
                 list: [
                     [10, 200, 150, 80, 70, 110, 130],
@@ -153,6 +152,9 @@ export default {
         window.onresize = () => {
             this.$refs.chart1.reDrawChart();
             this.$refs.chart2.reDrawChart();
+            this.$refs.chart3.reDrawChart();
+            this.$refs.chart4.reDrawChart();
+            this.$refs.chart5.reDrawChart();
         };
     },
     // destroyed() {},
@@ -168,6 +170,7 @@ export default {
     height: 350px;
     color: #ffffff;
     border-radius: 10px;
+    padding-top: 40px;
 }
 .top-panel .title {
     font-size: 30px;
@@ -180,27 +183,6 @@ export default {
     border-radius: 4px;
     margin-left: 20px;
     padding: 0 20px;
-}
-.top-panel .top-list {
-    display: flex;
-    padding-top: 20px;
-}
-.top-panel .top-list .lis {
-    width: 140px;
-    height: 120px;
-    background: rgba(243, 246, 253, 0.13);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 50px;
-}
-.top-panel .top-list .lis .ti {
-    font-size: 18px;
-}
-.top-panel .top-list .lis .num {
-    font-size: 30px;
-    font-weight: bold;
 }
 .top-panel .top-bg {
     position: absolute;

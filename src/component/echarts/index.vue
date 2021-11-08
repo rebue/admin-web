@@ -9,13 +9,22 @@ import LineChart from '@/component/echarts/LineChart.vue';
 import PieChart from '@/component/echarts/PieChart.vue';
 import PoloChart from '@/component/echarts/PoloChart.vue';
 import CockpitChart from '@/component/echarts/CockpitChart.vue';
+import AccountChart from '@/component/echarts/AccountChart.vue';
 
 export default {
     name: 'index',
     props: {
         chartData: Object
     },
-    components: { BarChart, ClockChart, LineChart, PieChart, PoloChart, CockpitChart },
+    components: { 
+        BarChart, 
+        ClockChart, 
+        LineChart, 
+        PieChart, 
+        PoloChart, 
+        CockpitChart, 
+        AccountChart 
+    },
     data() {
         return {
             chartWidth: ''

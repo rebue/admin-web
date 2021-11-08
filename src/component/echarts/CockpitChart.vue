@@ -39,18 +39,18 @@ export default {
             // 绘制图表
             const fontNum = this.chartData.fontNum;
             var colorSet = [
-                [this.chartData.list[0].value/100, '#468EFD'],
+                [this.chartData.list[0].value/100, '#00d88a'],
                 [1, '#15337C']
             ];
             var rich = {
                 white: {
                     fontSize: 4 * fontNum,
-                    color: '#fff',
+                    color: '#10fba6',
                     padding: [3, 0, 0, 0]
                 },
                 bule: {
                     fontSize: 6 * fontNum,
-                    color: '#fff',
+                    color: '#10fba6',
                 },
                 total: {
                     fontSize: 4 * fontNum,
@@ -77,48 +77,10 @@ export default {
                         formatter: "{a} <br/>{b} : {c}%"
                 },
                 series: [
-                    // { //内圆
-                    //     type: 'pie',
-                    //     radius: '100%',
-                    //     center: ['50%', '50%'],
-                    //     z: 0,
-                    //     itemStyle: {
-                    //         normal: {
-                    //             color: new echarts.graphic.RadialGradient(.5, .5, 1, [{
-                    //                     offset: 0,
-                    //                     color: 'rgba(17,24,43,0)'
-                    //                 },
-                    //                 {
-                    //                     offset: .5,
-                    //                     // color: '#1E2B57'
-                    //                     color: 'rgba(28,42,91,.6)'
-                    //                 },
-                    //                 {
-                    //                     offset: 1,
-                    //                     color: '#141C33',
-                    //                     // color:'rgba(17,24,43,0)'
-                    //                 }
-                    //             ], false),
-                    //             label: {
-                    //                 show: false
-                    //             },
-                    //             labelLine: {
-                    //                 show: false
-                    //             }
-                    //         },
-                    //     },
-                    //     hoverAnimation: false,
-                    //     label: {
-                    //         show: false,
-                    //     },
-                    //     tooltip: {
-                    //         show: false
-                    //     }
-                    // },
                     {
                         type: 'gauge',
                         name: '外层辅助',
-                        radius: '78%',
+                        radius: '85%',
                         startAngle: '225',
                         endAngle: '-45',
                         min: 0,
@@ -130,8 +92,8 @@ export default {
                         title: {
                             show: true,
                             color: '#fff',
-                            fontSize: 2 * fontNum,
-                            "offsetCenter": ['0%', "65%"],
+                            fontSize: 2.5 * fontNum,
+                            "offsetCenter": ['0%', "88%"],
                         },
                         detail: {
                             formatter: function(value) {
@@ -139,7 +101,7 @@ export default {
                                 return '{total|' + num + '}';
                             },
                             rich: rich,
-                            "offsetCenter": ['0%', "85%"],
+                            "offsetCenter": ['0%', "108%"],
                         },
                         data: [ this.chartData.list[1] ],
                         axisLine: {
@@ -174,7 +136,7 @@ export default {
                     },
                     {
                         type: 'gauge',
-                        radius: '76%',
+                        radius: '83%',
                         startAngle: '225',
                         endAngle: '-45',
                         pointer: {
@@ -192,14 +154,14 @@ export default {
                         title: {
                             show: true,
                             color: '#fff',
-                            fontSize: 2 * fontNum,
+                            fontSize: 2.5 * fontNum,
                             "offsetCenter": ['0%', "25%"],
                         },
                         axisLine: {
                             show: true,
                             lineStyle: {
                                 color: colorSet,
-                                width: 20,
+                                width: 22,
                                 // shadowBlur: 15,
                                 // shadowColor: '#B0C4DE',
                                 shadowOffsetX: 0,
@@ -227,14 +189,14 @@ export default {
                         name: '灰色内圈', //刻度背景
                         type: 'gauge',
                         z: 2,
-                        radius: '64%',
+                        radius: '68%',
                         startAngle: '225',
                         endAngle: '-45',
                         //center: ["50%", "75%"], //整体的位置设置
                         axisLine: { // 坐标轴线
                             lineStyle: { // 属性lineStyle控制线条样式
                                 color: [
-                                    [1, '#018DFF']
+                                    [1, '#00FFFF']
                                 ],
                                 width: 2,
                                 opacity: 1, //刻度背景宽度
@@ -259,7 +221,7 @@ export default {
                     {
                         name: "白色圈刻度",
                         type: "gauge",
-                        radius: "72%",
+                        radius: "77%",
                         startAngle: 225, //刻度起始
                         endAngle: -45, //刻度结束
                         z: 4,
@@ -295,7 +257,7 @@ export default {
                     },
                     { //内圆
                         type: 'pie',
-                        radius: '63%',
+                        radius: '66%',
                         center: ['50%', '50%'],
                         z: 1,
                         itemStyle: {

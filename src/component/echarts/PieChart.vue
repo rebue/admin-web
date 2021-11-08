@@ -50,7 +50,7 @@ export default {
                 // },
                 series: [
                     {
-                        name: 'Access From',
+                        name: '',
                         type: 'pie',
                         radius: ['0%', '80%'],
                         // roseType: 'radius',
