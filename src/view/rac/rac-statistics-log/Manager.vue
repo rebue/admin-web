@@ -13,37 +13,15 @@
             @change="onChange"
         /> -->
         <a-row :gutter="[20, 20]">
-            <a-col :span="12">
+            <a-col :span="12" v-for="(item, index) in chartData" :key="index">
                 <div class="chart-panel">
                     <div class="chart-ti">
-                        <h3 class="chart-title">今日访问情况</h3>
+                        <h3 class="chart-title">{{ item.title }}</h3>
                         <div class="chart-right">
                             <a-icon type="calendar" />
                         </div>
                     </div>
-                    <echart :chartData="lineChartData"></echart>
-                </div>
-            </a-col>
-            <a-col :span="12">
-                <div class="chart-panel">
-                    <div class="chart-ti">
-                        <h3 class="chart-title">今日认证情况</h3>
-                        <div class="chart-right">
-                            <a-icon type="calendar" />
-                        </div>
-                    </div>
-                    <echart :chartData="barChartData"></echart>
-                </div>
-            </a-col>
-            <a-col :span="12">
-                <div class="chart-panel">
-                    <div class="chart-ti">
-                        <h3 class="chart-title">今日登录情况</h3>
-                        <div class="chart-right">
-                            <a-icon type="calendar" />
-                        </div>
-                    </div>
-                    <echart :chartData="pieChartData"></echart>
+                    <echart ref="chart" :chartData="item.data"></echart>
                 </div>
             </a-col>
         </a-row>
@@ -71,37 +49,54 @@ export default {
             moment,
             dateFormat: 'YYYY/MM/DD',
             monthFormat: 'YYYY/MM',
-            lineChartData: {
-                chartId: 'LineChart1',
-                chartType: 'LineChart',
-                legendData: ['访问量'],
-                listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
-                list: [[509, 917, 2455, 2610, 2719, 3033, 3044, 3185, 2708, 2809, 2117]],
-            },
-            barChartData: {
-                chartId: 'BarChart1',
-                chartType: 'BarChart',
-                legendData: ['认证成功', '认证失败'],
-                listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
-                list: [
-                    [509, 917, 455, 610, 719, 333, 344, 385, 208, 209, 217],
-                    [0, 1, 0, 2, 0, 0, 3, 0, 3, 0, 4],
-                ],
-            },
-            pieChartData: {
-                chartId: 'PieChart1',
-                chartType: 'PieChart',
-                list: [
-                    { value: 1048, name: '登录成功' },
-                    { value: 5, name: '登陆失败' },
-                    { value: 3, name: '登录异常' },
-                ],
-            },
+            chartData: [
+                {
+                    title: '今日访问情况',
+                    data: {
+                        chartId: 'LineChart1',
+                        chartType: 'LineChart',
+                        legendData: ['访问量'],
+                        listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
+                        list: [[509, 917, 2455, 2610, 2719, 3033, 3044, 3185, 2708, 2809, 2117]],
+                    },
+                },
+                {
+                    title: '今日认证情况',
+                    data: {
+                        chartId: 'BarChart1',
+                        chartType: 'BarChart',
+                        legendData: ['认证成功', '认证失败'],
+                        listName: ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日'],
+                        list: [
+                            [509, 917, 455, 610, 719, 333, 344, 385, 208, 209, 217],
+                            [0, 1, 0, 2, 0, 0, 3, 0, 3, 0, 4],
+                        ],
+                    },
+                },
+                {
+                    title: '今日登录情况',
+                    data: {
+                        chartId: 'PieChart1',
+                        chartType: 'PieChart',
+                        list: [
+                            { value: 1048, name: '登录成功' },
+                            { value: 5, name: '登陆失败' },
+                            { value: 3, name: '登录异常' },
+                        ],
+                    },
+                },
+            ],
         };
     },
     computed: {},
     mounted() {
         this.refreshData();
+        window.onresize = () => {
+            // this.$refs.chart.reDrawChart();
+            for (const i in this.chartData) {
+                this.$refs.chart[i].reDrawChart();
+            }
+        };
     },
     methods: {
         /**

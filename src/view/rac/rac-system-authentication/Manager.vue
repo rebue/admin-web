@@ -16,10 +16,10 @@
                 </div> -->
                 <a-row :gutter="20">
                     <a-col class="gutter-row" :span="12">
-                        <echart style="width: 300px; height: 300px;" :chartData="cockpitChartData"></echart>
+                        <echart ref="chart" style="width: 300px; height: 300px;" :chartData="cockpitChartData"></echart>
                     </a-col>
                     <a-col class="gutter-row" :span="12">
-                        <echart style="width: 300px; height: 300px;" :chartData="approveChartData"></echart>
+                        <echart ref="chart" style="width: 300px; height: 300px;" :chartData="approveChartData"></echart>
                     </a-col>
                 </a-row>
             </div>
@@ -79,14 +79,14 @@
         <a-row :gutter="20">
             <a-col :span="12">
                 <div class="chart-panel">
-                    <h3 class="chart-title">今日访问情况</h3>
-                    <echart :chartData="lineChartData"></echart>
+                    <h3 class="chart-title">今日认证情况</h3>
+                    <echart ref="chart1" :chartData="barChartData"></echart>
                 </div>
             </a-col>
             <a-col :span="12">
                 <div class="chart-panel">
-                    <h3 class="chart-title">今日认证情况</h3>
-                    <echart :chartData="barChartData"></echart>
+                    <h3 class="chart-title">今日访问情况</h3>
+                    <echart ref="chart2" :chartData="lineChartData"></echart>
                 </div>
             </a-col>
         </a-row>
@@ -149,7 +149,12 @@ export default {
     },
     computed: {},
     // created() {},
-    // mounted() {},
+    mounted() {
+        window.onresize = () => {
+            this.$refs.chart1.reDrawChart();
+            this.$refs.chart2.reDrawChart();
+        };
+    },
     // destroyed() {},
     methods: {},
     watch: {},

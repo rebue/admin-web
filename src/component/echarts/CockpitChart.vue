@@ -27,6 +27,11 @@ export default {
     },
     // destroyed() {},
     methods: {
+        reDrawChart() {
+            if(this.myChart) {
+                this.myChart.resize();
+            }
+        },
         createChart() {
             // 基于准备好的dom，初始化echarts实例
             this.myChart = echarts.init(document.getElementById(this.chartData.chartId));

@@ -25,12 +25,17 @@ export default {
     // created() {},
     mounted() {
         setTimeout(() => {
-            this.chartWidth = (this.$refs.chartPanel.$parent.$el.scrollWidth) + 'px'
-            this.$refs.chartPanel.createChart()
+            this.chartWidth = (this.$refs.chartPanel.$parent.$parent.$el.clientWidth) + 'px'
+            this.$refs.chartPanel.createChart();
         }, 100)
     },
     // destroyed() {},
-    methods: {},
+    methods: {
+        reDrawChart() {
+            this.chartWidth = (this.$refs.chartPanel.$parent.$parent.$el.clientWidth - 20) + 'px'
+            this.$refs.chartPanel.reDrawChart();
+        }
+    },
     watch: {},
     filters: {}
 };
