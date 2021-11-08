@@ -5,6 +5,7 @@ import { hasJwtToken, hasAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 import { oapOidcApi } from '@/api/Api';
 import { getAppIdByUrl } from '@/util/common';
+import { AppIdDic } from '@/dic/AppIdDic';
 import { AppDic } from '@/dic/AppDic';
 
 Vue.use(VueRouter);
@@ -113,7 +114,18 @@ router.beforeEach(async (to, from, next) => {
         //需登录
         //如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
         if (!hasJwtToken()) {
-            return oidc(next);
+            const appId = getAppIdByUrl();
+            if (process.env.VUE_APP_LOGIN_BY_OIDC === 'true') {
+                return oidc(next);
+            } else {
+                if (appId === AppIdDic.PlatformAdminWeb) {
+                    next(`/${appId}/sign-in/platform`);
+                    return;
+                } else if (appId === AppIdDic.OpsAdminWeb) {
+                    next(`/${appId}/sign-in/ops`);
+                    return;
+                }
+            }
         } else {
             //已登录
             next();
