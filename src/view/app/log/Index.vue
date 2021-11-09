@@ -1,5 +1,5 @@
 <template>
-    <base-manager ref="baseManager">
+    <base-manager ref="baseManager" class="page">
         <template #managerCard>
             <crud-table
                 :showKeywords="true"
@@ -231,9 +231,13 @@ export default observer({
     },
 });
 </script>
-<style lang="less" scoped>
+<style scoped>
 .realm-tabs {
-    overflow: visible; // 否则表格的分页选择框展开时会被遮挡
+    overflow: visible;
+}
+
+.page >>> .manager-card {
+    width: 100%;
 }
 </style>
 <style type="text/css">

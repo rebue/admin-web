@@ -1,7 +1,7 @@
 <template>
     <div class="flex-box page index-wrap">
         <Aside />
-        <div class="ml20 mc w140">
+        <div class="ml20 mc flex-1">
             <change-pswd-form
                 :record="changePswdId"
                 :passworDoverdue="passworDoverdue"

@@ -39,9 +39,10 @@ export default {
     width: 80%;
     margin: 0 auto;
     padding: 18px 0;
+    display: flex;
     .page {
         display: flex;
-        height: 100%;
+        width: 100%;
     }
 }
 .header + .main {

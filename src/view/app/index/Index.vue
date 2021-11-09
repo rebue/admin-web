@@ -1,7 +1,7 @@
 <template>
     <div class="flex-box page index-wrap">
         <Aside />
-        <div class="ml20 mc w140 backgWhite scrollBar" v-if="!loading">
+        <div class="ml20 mc backgWhite scrollBar flex-1" v-if="!loading">
             <div class="tableList" v-for="(item, index) in labelSelect" :key="index" v-show="item.childList">
                 <div class="title" @click="clickShow(index)">
                     <span class="name">
@@ -230,7 +230,7 @@ export default {
     box-shadow: 0px 8px 10px 0px #a3bce2;
     border-radius: 0px 0px 10px 10px;
     border-top: 4px solid rgba(58, 105, 201, 1);
-    height: 791px;
+    // height: 791px;
     overflow: auto;
 }
 .scrollBar::-webkit-scrollbar {
