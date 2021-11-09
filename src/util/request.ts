@@ -89,8 +89,8 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
             const ro = resp.data as Ro;
             if (ro.result > 0) {
                 if (ro.msg) {
-                    // post put delete 默认提示，GET默认不提示
-                    if (config.method != 'GET') {
+                    // post put delete 默认提示，GET默认不提示。Disable-Info控制某些post请求(如验证码)不提示
+                    if (config.method != 'GET' && (!config.headers || !config.headers['Disable-Info'])) {
                         message.info(ro.msg);
                     }
                 }
