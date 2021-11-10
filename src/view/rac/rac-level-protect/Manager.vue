@@ -2,16 +2,24 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600"> </crud-table>
+                <crud-table
+                    ref="crudTable"
+                    :columns="columns"
+                    :api="api"
+                    :scrollX="600"
+                    :setLevelProtect="{ setLevelProtect: setLevelProtect, racDicItemApi: racDicItemApi }"
+                    isNewApiFun="levelProtect"
+                ></crud-table>
             </template>
         </base-manager>
     </fragment>
 </template>
 
 <script>
-import CrudTable from './levelCrudTable.vue';
+import CrudTable from '@/component/rebue/CrudTable.vue';
 import BaseManager from '@/component/rebue/BaseManager';
-import { racDicApi } from '@/api/Api';
+import { accountStore } from '@/store/Store';
+import { racDicApi, raclevelProtectApi, racDicItemApi } from '@/api/Api';
 
 // passwordErrors     输入密码错误次数/次
 // lockDuration       账号锁定时长/分钟
@@ -27,6 +35,7 @@ export default {
     },
     data() {
         this.api = racDicApi;
+        this.racDicItemApi = racDicItemApi;
         const columns = [
             {
                 title: '配置内容',
@@ -44,6 +53,7 @@ export default {
         ];
         return {
             columns,
+            accountStore,
         };
     },
     mounted() {
@@ -51,17 +61,16 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
-        onCellChange(key, dataIndex, value) {
-            const dataSource = [...this.dataSource];
-            const target = dataSource.find(item => item.key === key);
-            if (target) {
-                target[dataIndex] = value;
-                this.dataSource = dataSource;
-            }
-        },
-        onDelete(key) {
-            const dataSource = [...this.dataSource];
-            this.dataSource = dataSource.filter(item => item.key !== key);
+        setLevelProtect() {
+            const data = {
+                id: this.accountStore.id,
+            };
+            raclevelProtectApi
+                .setLevelProtect(data)
+                .then(() => {
+                    //
+                })
+                .finally(() => (this.loading = false));
         },
         /**
          * 刷新表格数据

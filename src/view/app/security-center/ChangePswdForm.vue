@@ -18,7 +18,7 @@
                     autocomplete="new-password"
                 />
             </a-form-model-item>
-            <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd">
+            <a-form-model-item key="newSignInPswd" label="新密码" prop="newSignInPswd" :help="help">
                 <a-input-password
                     v-model.trim="model.newSignInPswd"
                     placeholder="请输入新密码"
@@ -100,16 +100,6 @@ export default {
                             callback(new Error('新密码不能和旧密码相同'));
                             return;
                         }
-                        if (value === this.model.newSignInPswdAgain) {
-                            this.$refs.form.validateField('newSignInPswdAgain');
-                            callback();
-                            return;
-                        }
-                        if (value !== this.model.newSignInPswdAgain && this.model.newSignInPswdAgain.length != 0) {
-                            this.$refs.form.validateField('newSignInPswdAgain');
-                            callback();
-                            return;
-                        }
                         callback();
                     },
                 },
@@ -148,14 +138,15 @@ export default {
             },
         };
         return {
+            help: '',
             loading: false,
             model: {
                 signInPswd: '',
                 newSignInPswd: '',
                 newSignInPswdAgain: '',
             },
-            wordMinLength: 6,
-            passwordCharacter: 2,
+            passwordMinLength: 6,
+            passwordCharacter: 1,
             isCancelClick: true,
         };
     },
@@ -173,6 +164,7 @@ export default {
                     } else if (item.dicItemKey == 'passwordCharacter') {
                         this.passwordCharacter = item.dicItemValue;
                     }
+                    this.help = `登录密码由${this.passwordMinLength}~20位字符组成，包含至少${this.passwordCharacter}种以上字母、数组、符号以上组合，区分大小写`;
                 });
             });
         },

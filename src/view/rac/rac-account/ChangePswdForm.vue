@@ -9,7 +9,7 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="signInPswd" label="登录密码" prop="signInPswd">
+            <a-form-model-item key="signInPswd" label="登录密码" prop="signInPswd" :help="help">
                 <a-input-password
                     v-autofocus
                     v-model.trim="model.signInPswd"
@@ -78,16 +78,6 @@ export default {
                                 return;
                             }
                         }
-                        if (value === this.model.signInPswdAgain) {
-                            this.$refs.form.validateField('signInPswdAgain');
-                            callback();
-                            return;
-                        }
-                        if (value !== this.model.signInPswdAgain && this.model.signInPswdAgain.length != 0) {
-                            this.$refs.form.validateField('signInPswdAgain');
-                            callback();
-                            return;
-                        }
                         callback();
                     },
                 },
@@ -131,7 +121,7 @@ export default {
                 signInPswd: '',
                 signInPswdAgain: '',
             },
-            wordMinLength: 6,
+            passwordMinLength: 6,
             passwordCharacter: 2,
         };
     },
@@ -148,6 +138,7 @@ export default {
                     } else if (item.dicItemKey == 'passwordCharacter') {
                         this.passwordCharacter = item.dicItemValue;
                     }
+                    this.help = `登录密码由${this.passwordMinLength}~20位字符组成，包含至少${this.passwordCharacter}种以上字母、数组、符号以上组合，区分大小写`;
                 });
             });
         },

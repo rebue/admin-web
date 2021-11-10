@@ -26,7 +26,10 @@ const list = [
             '/platform-admin-web/log/lock-log',
             '/platform-admin-web/log/disable-log',
             '/platform-admin-web/log/op-log',
-            '/platform-admin-web/user-synchro/account-sy'
+            '/platform-admin-web/user-synchro/account-sy',
+            '/platform-admin-web/user-system-manage/weChat-config',
+            '/platform-admin-web/user-system-manage/dingTalk-config',
+            '/platform-admin-web/user-system-manage/level-protect',
         ],
         unionId:'1'
     },
