@@ -175,24 +175,6 @@
                             </span>
                         </template>
                     </span>
-                    <span slot="dicItemValue" slot-scope="text, record">
-                        <template >
-                            <editable-cell
-                                v-if="record.dicItemKey != 'passwordTips'"
-                                :text="text"
-                                :record="record"
-                                @change="onCellChange(record, $event)"
-                            />
-                            <div v-else>
-                                <a-switch
-                                    checked-children="是"
-                                    un-checked-children="否"
-                                    :checked="record.dicItemValue == 'true' || record.dicItemValue == true ? true : false"
-                                    @change="onCellChange(record, $event)"
-                                />
-                            </div>
-                        </template>
-                    </span>
                     <span slot="sort" slot-scope="text, record">
                         <span>
                             <a-tooltip title="上移">
@@ -231,10 +213,9 @@ import { settingStore } from '@/store/Store';
 import { settingAction } from '@/action/Action';
 import { forEachTree } from '@/util/tree';
 import SvgIcon from './SvgIcon.vue';
-import EditableCell from './EditableCell.vue';
 
 export default observer({
-    components: { SvgIcon, EditableCell },
+    components: { SvgIcon },
     name: 'CrudTable',
     props: {
         sortedInfo: {
@@ -301,11 +282,6 @@ export default observer({
             type:[Boolean,String],
             default:false,
         },
-        //更新等保的接口函数
-        setLevelProtect:{
-            type: Object,
-            default: function () {},
-        }
     },
     data() {
         /** 实现拖曳调整列宽度 */
@@ -622,25 +598,6 @@ export default observer({
             this.api.delById(record.id).finally(() => {
                 this.refreshData();
             });
-        },
-        onCellChange(record, value) {
-            if (record.dicItemValue == value) {
-                return;
-            }
-            const data = record;
-            data.dicItemValue = value;
-            this.setLevelProtect.racDicItemApi
-                .modify(data)
-                .then(ro => {
-                    this.dataSource.map(item => {
-                        if (item.dicItemValue == record.dicItemValue) {
-                            item.dicItemValue == value;
-                        }
-                    });
-                    this.setLevelProtect.setLevelProtect()
-                    this.visible = false;
-                })
-                .finally(() => (this.loading = false));
         },
     },
 });

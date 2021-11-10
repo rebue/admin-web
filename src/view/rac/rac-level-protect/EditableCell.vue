@@ -22,6 +22,7 @@ export default {
     name: 'EditableCell',
     props: {
         text: String,
+        cellClick: Function,
         record: Object,
     },
     data() {
@@ -36,7 +37,7 @@ export default {
     methods: {
         handleChange(e) {
             if (this.record.dicItemKey == 'passwordTips') {
-                e.target.value = e.target.value != '是' ? '否' : e.target.value;
+                //
             } else {
                 e.target.value = e.target.value.replace(/[^\d]/g, '');
                 if (this.record.dicItemKey == 'passwordCharacter') {
@@ -48,7 +49,7 @@ export default {
         },
         check() {
             this.editable = false;
-            this.$emit('change', this.value);
+            this.cellClick(this.record, this.value);
         },
         edit() {
             this.editable = true;

@@ -7,7 +7,6 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :setLevelProtect="{ setLevelProtect: setLevelProtect, racDicItemApi: racDicItemApi }"
                     isNewApiFun="levelProtect"
                 ></crud-table>
             </template>
@@ -18,6 +17,7 @@
 <script>
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import BaseManager from '@/component/rebue/BaseManager';
+import editableCell from './EditableCell.vue';
 import { accountStore } from '@/store/Store';
 import { racDicApi, raclevelProtectApi, racDicItemApi } from '@/api/Api';
 
@@ -31,6 +31,7 @@ export default {
     name: 'Manager',
     components: {
         CrudTable,
+        // EditableCell,
         BaseManager,
     },
     data() {
@@ -44,7 +45,18 @@ export default {
             {
                 title: '配置项',
                 dataIndex: 'dicItemValue',
-                scopedSlots: { customRender: 'dicItemValue' },
+                customRender: (text, record) =>
+                    record.dicItemKey != 'passwordTips' ? (
+                        <editableCell text={text} record={record} cellClick={this.onCellChange}></editableCell>
+                    ) : (
+                        <a-switch
+                            checked={record.dicItemValue == 'true' || record.dicItemValue == true ? true : false}
+                            checkedChildren="启"
+                            unCheckedChildren="禁"
+                            onClick={() => this.wsitchChange(record)}
+                        />
+                    ),
+                // scopedSlots: { customRender: 'dicItemValue' },
             },
             {
                 title: '备注',
@@ -69,6 +81,36 @@ export default {
                 .setLevelProtect(data)
                 .then(() => {
                     //
+                })
+                .finally(() => (this.loading = false));
+        },
+        onCellChange(record, value) {
+            if (record.dicItemValue == value) {
+                return;
+            }
+            const data = record;
+            data.dicItemValue = value;
+            racDicItemApi
+                .modify(data)
+                .then(() => {
+                    this.setLevelProtect();
+                    this.visible = false;
+                })
+                .finally(() => (this.loading = false));
+        },
+        wsitchChange(record) {
+            const data = record;
+            console.log(data.dicItemValue);
+            if (data.dicItemValue == 'false' || data.dicItemValue == false) {
+                data.dicItemValue = true;
+            } else {
+                data.dicItemValue = false;
+            }
+            racDicItemApi
+                .modify(data)
+                .then(() => {
+                    this.setLevelProtect();
+                    this.visible = false;
                 })
                 .finally(() => (this.loading = false));
         },
