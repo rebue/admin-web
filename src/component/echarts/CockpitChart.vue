@@ -1,5 +1,5 @@
 <template>
-    <div :id="chartData.chartId" :style="chartSize"></div>
+    <div ref="echart" :style="chartSize"></div>
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
         },
         createChart() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
+            this.myChart = echarts.init(this.$refs.echart);
 
             // 绘制图表
             const fontNum = this.chartData.fontNum;

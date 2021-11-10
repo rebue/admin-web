@@ -1,5 +1,10 @@
 <template>
-    <components v-bind:style="{ width: chartWidth, height: '300px' }" :is="chartData.chartType" :chartData="chartData" ref="chartPanel"></components>
+    <components
+        ref="chartPanel"
+        v-bind:style="{ width: chartWidth, height: '300px' }"
+        :is="chartData.chartType"
+        :chartData="chartData">
+    </components>
 </template>
 
 <script>
@@ -16,29 +21,26 @@ export default {
     props: {
         chartData: Object
     },
-    components: { 
-        BarChart, 
-        ClockChart, 
-        LineChart, 
-        PieChart, 
-        PoloChart, 
-        CockpitChart, 
-        AccountChart 
+    components: {
+        BarChart,
+        ClockChart,
+        LineChart,
+        PieChart,
+        PoloChart,
+        CockpitChart,
+        AccountChart
     },
     data() {
         return {
-            chartWidth: ''
+            chartWidth: '',
+            chartHeight: ''
         };
     },
     computed: {},
-    // created() {},
     mounted() {
-        setTimeout(() => {
-            this.chartWidth = (this.$refs.chartPanel.$parent.$parent.$el.clientWidth) + 'px'
-            this.$refs.chartPanel.createChart();
-        }, 100)
+        this.chartWidth = (this.$refs.chartPanel.$parent.$parent.$el.clientWidth) + 'px'
+        this.$refs.chartPanel.createChart();
     },
-    // destroyed() {},
     methods: {
         reDrawChart() {
             this.chartWidth = (this.$refs.chartPanel.$parent.$parent.$el.clientWidth - 20) + 'px'

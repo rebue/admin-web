@@ -97,7 +97,6 @@ export default {
             infoIndex: 4,
             totalData: {},
             accChartData: {
-                chartId: 'AccountChart1',
                 chartType: 'AccountChart',
                 fontNum: 6,
                 list: [
@@ -107,7 +106,6 @@ export default {
                 ],
             },
             cockpitChartData: {
-                chartId: 'Cockpit1',
                 chartType: 'CockpitChart',
                 fontNum: 6,
                 list: [
@@ -116,7 +114,6 @@ export default {
                 ],
             },
             approveChartData: {
-                chartId: 'Cockpit2',
                 chartType: 'CockpitChart',
                 fontNum: 6,
                 list: [
@@ -125,7 +122,6 @@ export default {
                 ],
             },
             barChartData: {
-                chartId: 'BarChart1',
                 chartType: 'BarChart',
                 legendData: ['待认证数', '认证数'],
                 listName: ['8点', '9点', '10点', '11点', '12点', '13点', '14点'],
@@ -135,7 +131,6 @@ export default {
                 ],
             },
             lineChartData: {
-                chartId: 'LineChart1',
                 chartType: 'LineChart',
                 legendData: ['登录量', '访问量'],
                 listName: ['8点', '9点', '10点', '11点', '12点', '13点', '14点'],

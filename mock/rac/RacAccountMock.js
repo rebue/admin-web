@@ -10,7 +10,7 @@ const list = [
         signInName: 'super',
         signInPswd: '43b90920409618f188bfc6923f16b9fa',
         signInNickname: '平台管理员',
-        "signInMobile": "13265019973",
+        signInMobile: '13265019973',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIxIiwibmJmIjoxNjE1MjU4NDY2LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MDI2NiwiaWF0IjoxNjE1MjU4NDY2fQ.qK-A2UjqwDoI6nt49z1O2iyTwno0qrU_VzeTNkbXFDjBGfhx2wBldO1BMUQv0EaHPInytBKWw7vn1zP4HIwaUg',
         menus: [
@@ -26,9 +26,11 @@ const list = [
             '/platform-admin-web/log/lock-log',
             '/platform-admin-web/log/disable-log',
             '/platform-admin-web/log/op-log',
-            '/platform-admin-web/user-synchro/account-sy'
+            '/platform-admin-web/user-synchro/account-sy',
+            '/platform-admin-web/log/lock-statistics',
+            '/platform-admin-web/user-system-survey/authentication',
         ],
-        unionId:'1'
+        unionId: '1',
     },
     {
         id: '2',
@@ -36,7 +38,7 @@ const list = [
         signInName: 'admin',
         signInPswd: '52569c045dc348f12dfc4c85000ad832',
         signInNickname: '运营管理员',
-        "signInMobile": "18503096697",
+        signInMobile: '18503096697',
         sign:
             'eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50SWQiOiIyIiwibmJmIjoxNjE1MjU5MjI3LCJpc3MiOiJ6Ym9zcyIsImV4cCI6MTYxNTI2MTAyNywiaWF0IjoxNjE1MjU5MjI3fQ.9e-k4k-TBCAUhoYO6-UKSJXgHIhdRwmlBDVnAWN99LwPWX3w1FhZoaJboz4nuFyi0pEqJUybYXn5WP2h0P71eQ',
         menus: [
@@ -47,83 +49,83 @@ const list = [
             '/ops-admin-web/log/lock-log',
             '/ops-admin-web/log/disable-log',
             '/ops-admin-web/log/op-log',
-        ]
+        ],
     },
     {
-        "id": 803,
-        "idType": "2y5qeu",
-        "isEnabled": true,
-        "signInName": "adminer",
-        "signInMobile": "13713883144",
-        "signInEmail": "adminer@gmail.com",
-        "signInPswd": "7ri9c7",
-        "signInPswdSalt": "fyc22w",
-        "signInNickname": "jc.stark",
-        "signInAvatar": "x3yixa",
-        "wxOpenId": "117",
-        "wxUnionId": "117",
-        "wxNickname": "jc.stark",
-        "wxAvatar": "wnp3ny",
-        "qqOpenId": "117",
-        "qqUnionId": "117",
-        "qqNickname": "jc.stark",
-        "qqAvatar": "e6uff2",
-        "isTester": true,
-        "createTimestamp": 1631003031598,
-        "updateTimestamp": 1631003031598,
-        "orgId": 325,
-        "org": {
-            "id": 508,
-            "idType": "cx1tu5",
-            "keywords": "e0g1by",
-            "name": "子骞.黎",
-            "parentId": 200,
-            "orgType": 79,
-            "fullName": "子骞.黎",
-            "introduction": "eftavl",
-            "remark": "pybpb3",
-            "treeCode": "64605",
-            "attrType": "56hgqp",
-            "addr": "cw9c8y",
-            "contactPerson": "oh4i68",
-            "contactWay": "68apmy",
-            "email": "明.汪@gmail.com",
-            "realmId": "117",
-            "realm": {
-                "id": "117",
-                "idType": "o7neve",
-                "name": "子骞.黎",
-                "remark": "yq4ss3"
-            }
+        id: 803,
+        idType: '2y5qeu',
+        isEnabled: true,
+        signInName: 'adminer',
+        signInMobile: '13713883144',
+        signInEmail: 'adminer@gmail.com',
+        signInPswd: '7ri9c7',
+        signInPswdSalt: 'fyc22w',
+        signInNickname: 'jc.stark',
+        signInAvatar: 'x3yixa',
+        wxOpenId: '117',
+        wxUnionId: '117',
+        wxNickname: 'jc.stark',
+        wxAvatar: 'wnp3ny',
+        qqOpenId: '117',
+        qqUnionId: '117',
+        qqNickname: 'jc.stark',
+        qqAvatar: 'e6uff2',
+        isTester: true,
+        createTimestamp: 1631003031598,
+        updateTimestamp: 1631003031598,
+        orgId: 325,
+        org: {
+            id: 508,
+            idType: 'cx1tu5',
+            keywords: 'e0g1by',
+            name: '子骞.黎',
+            parentId: 200,
+            orgType: 79,
+            fullName: '子骞.黎',
+            introduction: 'eftavl',
+            remark: 'pybpb3',
+            treeCode: '64605',
+            attrType: '56hgqp',
+            addr: 'cw9c8y',
+            contactPerson: 'oh4i68',
+            contactWay: '68apmy',
+            email: '明.汪@gmail.com',
+            realmId: '117',
+            realm: {
+                id: '117',
+                idType: 'o7neve',
+                name: '子骞.黎',
+                remark: 'yq4ss3',
+            },
         },
-        "payPswd": "fo2uxj",
-        "payPswdSalt": "ct57vj",
-        "userId": 505,
-        "user": {
-            "id": 368,
-            "idType": "or58n3",
-            "mobile": "13713883144",
-            "isVerifiedMobile": true,
-            "email": "明.汪@gmail.com",
-            "isVerifiedEmail": true,
-            "realName": "子骞.黎",
-            "isVerifiedRealname": true,
-            "idCard": "210216197304273039",
-            "isVerifiedIdcard": true,
-            "sex": 90,
-            "updateTimestamp": 1631003031598,
-            "createTimestamp": 1631003031598
+        payPswd: 'fo2uxj',
+        payPswdSalt: 'ct57vj',
+        userId: 505,
+        user: {
+            id: 368,
+            idType: 'or58n3',
+            mobile: '13713883144',
+            isVerifiedMobile: true,
+            email: '明.汪@gmail.com',
+            isVerifiedEmail: true,
+            realName: '子骞.黎',
+            isVerifiedRealname: true,
+            idCard: '210216197304273039',
+            isVerifiedIdcard: true,
+            sex: 90,
+            updateTimestamp: 1631003031598,
+            createTimestamp: 1631003031598,
         },
-        "remark": "c0ypd2",
-        realmId: "117",
-        "realm": {
-            "id": "117",
-            "idType": "af028j",
-            "name": "子骞.黎",
-            "remark": "hjee2k"
+        remark: 'c0ypd2',
+        realmId: '117',
+        realm: {
+            id: '117',
+            idType: 'af028j',
+            name: '子骞.黎',
+            remark: 'hjee2k',
         },
-        unionId:'1'
-    }
+        unionId: '1',
+    },
 ];
 
 const listRacAccount = () => list;
@@ -136,7 +138,7 @@ module.exports = {
     routes: {
         'GET /rac-svr/rac/account/list': listRacAccount,
         'GET /rac-svr/rac/account/get-cur-account-info': (req, res, u) => {
-            console.log('--req.headers',req.headers)
+            console.log('--req.headers', req.headers);
             let accountId;
             switch (req.headers['app-id']) {
                 case 'platform-admin-web':
@@ -267,7 +269,7 @@ module.exports = {
             const { pageNum, pageSize } = params;
 
             let l = list.filter(item => item.realmId === params.realmId);
-            let total = l.length;
+            const total = l.length;
 
             const begin = (pageNum - 1) * pageSize;
             const end = begin + (pageSize - 0);
@@ -286,20 +288,28 @@ module.exports = {
         },
         'POST /rac-svr/rac/account/upload-avatar': (req, res, u, b) => {
             return res.json({
-                result:1,
-                msg:'上传头像成功',
-                success:true
+                result: 1,
+                msg: '上传头像成功',
+                success: true,
             });
         },
         //通用上传接口
         'POST /oss-svr/oss/obj/upload': (req, res, u, b) => {
             return res.json({
-                    "result":1,
-                    "msg":"上传对象成功",
-                    "extra":{"id":"906445814724034561","objType":"png","objSize":"0","url":"http://172.20.10.154:9000/oss-obj/906445814724034561.png?a=1630055651049","creatorId":"10","createDatetime":"2021-08-27 17:14:11","objName":"avatar.png","objGroup":"1"},
-                    "success":true
-                }
-            );
+                result: 1,
+                msg: '上传对象成功',
+                extra: {
+                    id: '906445814724034561',
+                    objType: 'png',
+                    objSize: '0',
+                    url: 'http://172.20.10.154:9000/oss-obj/906445814724034561.png?a=1630055651049',
+                    creatorId: '10',
+                    createDatetime: '2021-08-27 17:14:11',
+                    objName: 'avatar.png',
+                    objGroup: '1',
+                },
+                success: true,
+            });
         },
         'GET /rac-svr/rac/account/get-account-by-union-id': (req, res, u) => {
             let url = u;
@@ -314,7 +324,7 @@ module.exports = {
                     result: 1,
                     msg: '获取映射账户信息成功',
                     extra: {
-                        list: result
+                        list: result,
                     },
                 });
             } else {
@@ -334,7 +344,7 @@ module.exports = {
             const { pageNum, pageSize } = params;
 
             let l = list.filter(item => item.realmId === params.realmId);
-            let total = l.length;
+            const total = l.length;
 
             const begin = (pageNum - 1) * pageSize;
             const end = begin + (pageSize - 0);
@@ -365,16 +375,14 @@ module.exports = {
                 extra: '',
             });
         },
-         /**
+        /**
          * 获取用户下的账号列表
          */
-        'GET /rac-svr/rac/account/get-by-user-id': (req, res, u) => {
-            
-        },
+        'GET /rac-svr/rac/account/get-by-user-id': (req, res, u) => {},
         /**
          * 移除账号下的用户
          */
-        'POST /rac-svr/rac/account/disassociate-user': (req, res, u)=>{
+        'POST /rac-svr/rac/account/disassociate-user': (req, res, u) => {
             console.log('---req', req);
             // let url = u;
             // if (!url || Object.prototype.toString.call(url) !== '[object String]') {
@@ -391,50 +399,49 @@ module.exports = {
             // const end = begin + (pageSize - 0);
             // l = l.slice(begin, end);
         },
-        'POST /rac-svr/rac/account/bind-mobile': (req, res, u, b)=>{
+        'POST /rac-svr/rac/account/bind-mobile': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
             //短信验证码 code:'11111'
-            const account = list.find((v)=>{
-                return v.id == body.id
-            })
-            if(body.bindType == 0) {
-                account.signInMobile = body.mobile
+            const account = list.find(v => {
+                return v.id == body.id;
+            });
+            if (body.bindType == 0) {
+                account.signInMobile = body.mobile;
                 return res.json({
                     result: 1,
-                    msg: '绑定成功'
+                    msg: '绑定成功',
                 });
-            } else if(body.bindType == 1){
-                account.signInMobile = undefined
+            } else if (body.bindType == 1) {
+                account.signInMobile = undefined;
                 return res.json({
                     result: 1,
-                    msg: '解绑成功'
+                    msg: '解绑成功',
                 });
             }
         },
-        'POST /rac-svr/rac/account/unbind-mobile': (req, res, u, b)=>{
+        'POST /rac-svr/rac/account/unbind-mobile': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
-            const account = list.find((v)=>{
-                return v.id == body.id
-            })
-            account.signInMobile = undefined
+            const account = list.find(v => {
+                return v.id == body.id;
+            });
+            account.signInMobile = undefined;
             return res.json({
                 result: 1,
-                msg: '解绑成功'
+                msg: '解绑成功',
             });
         },
-        'POST /rac-svr/forget/check-account-number': (req, res, u, b)=>{
+        'POST /rac-svr/forget/check-account-number': (req, res, u, b) => {
             const body = (b && b.body) || req.body;
-            const account = list.find((v)=>{
-                return v.signInName == (body.signInName || body.signInMobile || body.signInEmail)
-            })
+            const account = list.find(v => {
+                return v.signInName == (body.signInName || body.signInMobile || body.signInEmail);
+            });
             return res.json({
                 result: 1,
                 msg: '账号存在',
-                extra: account
+                extra: account,
             });
-
         },
-        'GET /rac-svr/rac/account/is-phone-exist': (req, res, u)=>{
+        'GET /rac-svr/rac/account/is-phone-exist': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;
@@ -446,13 +453,13 @@ module.exports = {
                 msg: '身份认证，手机号存在',
             });
         },
-        'POST /rac-svr/forget/sign-in-pswd-to-set': (req, res, u)=>{
+        'POST /rac-svr/forget/sign-in-pswd-to-set': (req, res, u) => {
             return res.json({
                 result: 1,
                 msg: '修改密码成功',
             });
         },
-        'GET /rac-svr/rac/account/is-email-exist': (req, res, u)=>{
+        'GET /rac-svr/rac/account/is-email-exist': (req, res, u) => {
             let url = u;
             if (!url || Object.prototype.toString.call(url) !== '[object String]') {
                 url = req.url;

@@ -1,5 +1,5 @@
 <template>
-    <div :id="chartName" :style="chartSize"></div>
+    <div ref="echart" :style="chartSize"></div>
 </template>
 
 <script>
@@ -9,8 +9,7 @@ import 'echarts-liquidfill';
 export default {
     name: 'PoloChart',
     props: {
-        chartName: String,
-        chartData: Number,
+        chartData: Object,
     },
     components: {},
     data() {
@@ -36,7 +35,7 @@ export default {
         },
         createChart() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartName));
+            this.myChart = echarts.init(this.$refs.echart);
             // 绘制图表
             const num = this.chartData / 100;
 

@@ -1,10 +1,9 @@
 <template>
-    <div :id="chartData.chartId" :style="chartSize"></div>
+    <div ref="echart" :style="chartSize"></div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-
 export default {
     name: 'LineChart',
     props: {
@@ -17,13 +16,10 @@ export default {
                 width: '100%',
                 height: '100%',
             },
-            myChart: null,
+            myChart: null
         };
     },
     computed: {},
-    // created() {},
-    // mounted() {},
-    // destroyed() {},
     methods: {
         reDrawChart() {
             if(this.myChart) {
@@ -32,7 +28,7 @@ export default {
         },
         createChart() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart = echarts.init(document.getElementById(this.chartData.chartId));
+            this.myChart = echarts.init(this.$refs.echart);
 
             // 绘制图表
             let arr = [];
