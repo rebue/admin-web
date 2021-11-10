@@ -20,7 +20,6 @@ export default class EtlStrategyApi extends BaseCrudApi {
         return request.get({ url: this.baseUrn + '/get-by-id?id=' + id }).then(ro => {
             const data: any = ro.extra;
             const clidData = data.one;
-            console.log(clidData);
             let tableName: any = [],
                 tableEndName: any = [];
             const tableSelect: any = [],
@@ -95,7 +94,6 @@ export default class EtlStrategyApi extends BaseCrudApi {
                     }
                 });
             });
-            console.log(tableEndArray);
             // 删除转换前的属性
             delete clidData.strategyDetailList;
             clidData.srcTableArray = tableArray;

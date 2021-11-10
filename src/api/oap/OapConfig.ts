@@ -1,5 +1,5 @@
 /**
- * 应用信息相关请求
+ * 钉钉、微信公众号相关请求
  */
 import BaseCrudApi from '../comm/BaseCrudApi';
 import { Ro } from '@/ro/Ro';
