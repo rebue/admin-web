@@ -126,7 +126,7 @@ export default {
         };
     },
     mounted() {
-        this.getbyIdFun();
+        //
     },
     methods: {
         getbyIdFun() {
@@ -144,6 +144,7 @@ export default {
         },
         handleShow() {
             this.$nextTick(() => {
+                this.getbyIdFun();
                 this.model = {};
                 this.$refs.form.resetFields();
             });
