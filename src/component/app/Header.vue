@@ -66,8 +66,9 @@ export default {
             }
             window.location.reload()
         },
-          /**获取密码过期时长接口和是否是第一次登录接口 */
+        /**获取密码过期时长接口和是否是第一次登录接口 */
         getPasswordApiFun() {
+            console.log('获取密码过期时长接口和是否是第一次登录接口')
             racAccountApi.getCurAccountInfo().then(res => {
                 const params = 'levelProtect';
                 racDicApi.getByDicKey(params).then(ro => {

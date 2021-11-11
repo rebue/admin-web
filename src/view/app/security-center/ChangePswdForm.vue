@@ -52,7 +52,7 @@ export default {
             required: true,
         },
         passworDoverdue: {
-            type: String,
+            type: Boolean,
             required: true,
         },
     },
@@ -152,7 +152,7 @@ export default {
     },
     mounted() {
         this.getbyIdFun();
-        this.isCancelClick = this.passworDoverdue == 'isShow' ? false : true;
+        this.isCancelClick = this.passworDoverdue;
     },
     methods: {
         getbyIdFun() {

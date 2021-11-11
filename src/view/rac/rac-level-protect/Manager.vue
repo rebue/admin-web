@@ -75,7 +75,7 @@ export default {
     methods: {
         setLevelProtect() {
             const data = {
-                id: this.accountStore.id,
+                id: this.accountStore.accountId,
             };
             raclevelProtectApi
                 .setLevelProtect(data)

@@ -5,6 +5,7 @@
             <change-pswd-form
                 :record="changePswdId"
                 :passworDoverdue="passworDoverdue"
+                :key="passworDoverdue"
                 :visible.sync="changePswdFormVisible"
                 @close="handleEditFormClose"
             />
@@ -42,13 +43,12 @@ export default observer({
             isVerifiedEmail: false,
             changePswdFormVisible: false,
             changePswdId: '',
-            passworDoverdue: '',
+            passworDoverdue: false,
         };
     },
     mounted() {
         if (this.$route.query?.passworDoverdue == 'isShow') {
-            this.passworDoverdue = 'isShow';
-            this.changePswd();
+            this.changePswd(false);
         }
     },
     methods: {
@@ -203,31 +203,14 @@ export default observer({
         },
 
         //修改密码
-        changePswd() {
-            // const that = this;
+        changePswd(type) {
+            if (type == false) {
+                this.passworDoverdue = false;
+            } else {
+                this.passworDoverdue = true;
+            }
             this.changePswdFormVisible = true;
             this.changePswdId = this.accountStore.accountId;
-            // this.$showDialog(
-            //     require('./ChangePswdForm.vue').default,
-            //     {
-            //         data() {
-            //             return {
-            //                 record: {
-            //                     id: that.accountStore.accountId,
-            //                 },
-            //                 maskClosable: false,
-            //                 closable: false,
-            //             };
-            //         },
-            //         methods: {
-            //             callback() {
-            //                 // that.refreshAccountInfo();
-            //                 console.log(1);
-            //             },
-            //         },
-            //     },
-            //     { title: '修改密码' }
-            // );
         },
 
         //修改邮箱
