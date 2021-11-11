@@ -60,21 +60,21 @@ export default {
                         if (this.passwordCharacter == 2) {
                             const pattern = /((?=.*[a-z])(?=.*\d)|(?=[a-z])(?=.*[#@!~%^&*])|(?=.*\d)(?=.*[#@!~%^&*]))[a-z\d#@!~%^&*]/i;
                             if (!pattern.test(value)) {
-                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                callback(new Error(`请最少输入2种字符密码格式`));
                                 return;
                             }
                         }
                         if (this.passwordCharacter == 3) {
                             const pattern = /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]/;
                             if (!pattern.test(value)) {
-                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                callback(new Error(`请最少输入3种字符密码格式`));
                                 return;
                             }
                         }
                         if (this.passwordCharacter == 4) {
                             const pattern = /(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*])[a-z\d#@!~%^&*]/i;
                             if (!pattern.test(value)) {
-                                callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
+                                callback(new Error(`请最少输入4种字符密码格式`));
                                 return;
                             }
                         }
@@ -126,7 +126,7 @@ export default {
         };
     },
     mounted() {
-        //
+        this.getbyIdFun();
     },
     methods: {
         getbyIdFun() {
@@ -144,7 +144,6 @@ export default {
         },
         handleShow() {
             this.$nextTick(() => {
-                this.getbyIdFun();
                 this.model = {};
                 this.$refs.form.resetFields();
             });
