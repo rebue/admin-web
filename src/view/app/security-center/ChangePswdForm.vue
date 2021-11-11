@@ -10,7 +10,7 @@
         @ok="handleOk"
     >
         <a-form-model ref="form" :model="model" :rules="rules" v-bind="formLayout">
-            <a-form-model-item key="signInPswd" label="旧密码11" prop="signInPswd">
+            <a-form-model-item key="signInPswd" label="旧密码" prop="signInPswd">
                 <a-input-password
                     v-autofocus
                     v-model.trim="model.signInPswd"
@@ -75,7 +75,7 @@ export default {
                         }
                         //字典项里设置的包括多少种字符
                         if (this.passwordCharacter == 2) {
-                            const pattern = /((?=.*[a-z])(?=.*\d)|(?=[a-z])(?=.*[#@!~%^&*.<>/';])|(?=.*\d)(?=.*[#@!~%^&*]))[a-z\d#@!~%^&*]/i;
+                            const pattern = /((?=.*[a-z])(?=.*\d)|(?=[a-z])(?=.*[#@!~%^&*])|(?=.*\d)(?=.*[#@!~%^&*]))[a-z\d#@!~%^&*]/i;
                             if (!pattern.test(value)) {
                                 callback(new Error(`请最少输入${this.passwordCharacter}种字符密码格式`));
                                 return;
