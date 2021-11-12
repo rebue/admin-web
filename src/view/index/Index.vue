@@ -100,10 +100,9 @@
         <change-pswd-form
             :record="accountStore.accountId"
             :visible.sync="changePswdFormVisible"
-            :passworDoverdue="passworDoverdue"
-            :key="passworDoverdue"
             @close="refreshAccountInfo"
         />
+        <ifLoginPass />
     </fragment>
 </template>
 
@@ -117,9 +116,10 @@ import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 import { AppIdDic } from '@/dic/AppIdDic';
 import { removeJwtToken } from '@/util/cookie';
-import { racAgentSignOutApi, racAccountApi, racDicApi } from '@/api/Api';
+import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/app/security-center/ChangePswdForm.vue';
+import ifLoginPass from '@/component/app/ifLoginPass.vue';
 import { getAppIdByUrl } from '@/util/common';
 
 export default observer({
@@ -130,6 +130,7 @@ export default observer({
         SettingDrawer,
         ImageUploader,
         ChangePswdForm,
+        ifLoginPass,
     },
     data() {
         const appId = getAppIdByUrl();
@@ -159,7 +160,6 @@ export default observer({
             },
             showImageUploader: false,
             changePswdFormVisible: false,
-            passworDoverdue: true,
         };
     },
     computed: {
@@ -168,47 +168,9 @@ export default observer({
         },
     },
     mounted() {
-        this.getPasswordApiFun();
         this.refreshAccountInfo();
     },
     methods: {
-        /**获取密码过期时长接口和是否是第一次登录接口 */
-        getPasswordApiFun() {
-            console.log('获取密码过期时长接口和是否是第一次登录接口');
-            racAccountApi.getCurAccountInfo().then(res => {
-                const params = 'levelProtect';
-                racDicApi.getByDicKey(params).then(ro => {
-                    const passworDoverdue = ro.extra.dicItems.find(item => item.dicItemKey === 'passworDoverdue');
-                    const dateEnd = new Date(); //获取当前时间
-                    const dateDiff = dateEnd.getTime() - Number(res.extra.updateTimestamp); //时间差的毫秒数
-                    const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
-                    console.log(dayDiff);
-                    if (dayDiff > Number(passworDoverdue.dicItemValue)) {
-                        this.$warning({
-                            title: '提示',
-                            content: `该账号的密码已经使用超过了${passworDoverdue.dicItemValue}天，根据等保配置，需要强制修改密码。`,
-                            onOk: () => {
-                                this.passworDoverdue = false;
-                                this.changePswdFormVisible = true;
-                            },
-                        });
-                    }
-                    const passwordTips = ro.extra.dicItems.find(item => item.dicItemKey === 'passwordTips');
-                    if (passwordTips.dicItemValue == 'true' || passwordTips.dicItemValue == true) {
-                        if (!res.extra.expirationDatetime) {
-                            this.$warning({
-                                title: '提示',
-                                content: `您是第一次登录，根据等保配置，需要强制修改密码。`,
-                                onOk: () => {
-                                    this.passworDoverdue = false;
-                                    this.changePswdFormVisible = true;
-                                },
-                            });
-                        }
-                    }
-                });
-            });
-        },
         getAppIdByUrl() {
             return getAppIdByUrl();
         },
@@ -233,7 +195,6 @@ export default observer({
                     break;
                 /** 修改密码 */
                 case 'ChangePswd':
-                    this.passworDoverdue = true;
                     this.changePswdFormVisible = true;
                     break;
                 /**退出应用 */

@@ -4,8 +4,6 @@
         <div class="ml20 mc flex-1">
             <change-pswd-form
                 :record="changePswdId"
-                :passworDoverdue="passworDoverdue"
-                :key="passworDoverdue"
                 :visible.sync="changePswdFormVisible"
                 @close="handleEditFormClose"
             />
@@ -43,13 +41,10 @@ export default observer({
             isVerifiedEmail: false,
             changePswdFormVisible: false,
             changePswdId: '',
-            passworDoverdue: false,
         };
     },
     mounted() {
-        if (this.$route.query?.passworDoverdue == 'isShow') {
-            this.changePswd(false);
-        }
+        //
     },
     methods: {
         refreshAccountInfo() {
@@ -203,12 +198,7 @@ export default observer({
         },
 
         //修改密码
-        changePswd(type) {
-            if (type == false) {
-                this.passworDoverdue = false;
-            } else {
-                this.passworDoverdue = true;
-            }
+        changePswd() {
             this.changePswdFormVisible = true;
             this.changePswdId = this.accountStore.accountId;
         },

@@ -51,9 +51,9 @@ export default {
             type: String,
             required: true,
         },
-        passworDoverdue: {
+        isCancelClick: {
             type: Boolean,
-            required: true,
+            default: true,
         },
     },
     data() {
@@ -147,11 +147,10 @@ export default {
             },
             passwordMinLength: 6,
             passwordCharacter: 1,
-            isCancelClick: true,
         };
     },
     mounted() {
-        this.isCancelClick = this.passworDoverdue;
+        //
     },
     methods: {
         getbyIdFun() {

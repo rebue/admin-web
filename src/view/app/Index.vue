@@ -1,5 +1,6 @@
 <template>
     <div class="layout">
+        <ifLoginPass />
         <Header />
         <div class="mt20 main">
             <router-view />
@@ -10,10 +11,11 @@
 
 <script>
 import Header from '@/component/app/Header.vue';
+import ifLoginPass from '@/component/app/ifLoginPass.vue';
 import { racMenuAction } from '@/action/Action';
 export default {
     name: 'app',
-    components: { Header },
+    components: { Header, ifLoginPass },
     props: {},
     data() {
         return {};
