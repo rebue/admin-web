@@ -34,9 +34,7 @@ export default {
     data() {
         this.api = racPermUrnApi;
         this.rules = {
-            permLink: [
-                { required: true, message: '请输入输入链接', trigger: 'blur', transform: val => val && val.trim() },
-            ],
+            permLink: [{ required: true, message: '请输入链接', trigger: 'blur', transform: val => val && val.trim() }],
         };
         this.formLayout = {
             labelCol: {
