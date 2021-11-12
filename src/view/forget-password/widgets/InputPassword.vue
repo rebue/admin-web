@@ -102,7 +102,7 @@ export default {
                     } else if (item.dicItemKey == 'passwordCharacter') {
                         this.passwordCharacter = item.dicItemValue;
                     }
-                    this.help = `登录密码由${this.passwordMinLength}~20位字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;
+                    this.help = `登录密码由${this.passwordMinLength}位以上字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;
                 });
             });
         },
