@@ -9,7 +9,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    isNewApiFun="wechatOpenMapList"
+                    :defaultPagination="false"
                 >
                 </crud-table>
             </template>
@@ -33,7 +33,15 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = oapConfig;
+        this.api = {
+            listAll() {
+                return oapConfig.getNacosConfig().then(ro => {
+                    const data = ro.extra.wechatOpenMapList;
+                    ro.extra.list = data;
+                    return ro;
+                });
+            },
+        };
         const columns = [
             {
                 dataIndex: 'no',

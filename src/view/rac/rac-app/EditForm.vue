@@ -234,14 +234,16 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     //处理重定向URL，IP白名单
-                    const authnType = 0;
-                    const data = { ...this.model, authnType };
+
                     if (this.editFormType === EditFormTypeDic.Add) {
+                        const authnType = 0;
+                        const data = { ...this.model, authnType };
                         this.api
                             .add(data)
                             .then(() => (this.visible = false))
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
+                        const data = { ...this.model };
                         this.api
                             .modify(data)
                             .then(() => (this.visible = false))

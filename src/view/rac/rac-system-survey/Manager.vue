@@ -8,7 +8,7 @@
                 :api="api"
                 :query="query"
                 :scrollX="600"
-                isNewApiFun="today"
+                :defaultPagination="false"
             >
                 <template #keywordsLeft>
                     <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
@@ -43,7 +43,15 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racOpLogApi;
+        this.api = {
+            list(data) {
+                return racOpLogApi.getCountSurvey(data).then(ro => {
+                    const data = ro.extra.id;
+                    ro.extra.list = [data];
+                    return ro;
+                });
+            },
+        };
         this.columns = [
             {
                 dataIndex: '账户添加',

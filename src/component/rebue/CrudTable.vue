@@ -277,11 +277,6 @@ export default observer({
                 };
             },
         },
-        //请求接口的时候是否请求特殊自定义接口方法
-        isNewApiFun:{
-            type:[Boolean,String],
-            default:false,
-        },
     },
     data() {
         /** 实现拖曳调整列宽度 */
@@ -422,30 +417,6 @@ export default observer({
                     ? undefined
                     : { orderBy: this.sorter.field + (this.sorter.order === 'descend' ? ' DESC' : '') };
             // 分页查询
-            if(this.isNewApiFun){
-                if(this.isNewApiFun == 'today'){
-                    const data = { ...query};
-                    promise = this.api.getCountSurvey(data).then(ro => {
-                        //根据属性取属性对应的值
-                        let newData = [
-                            ro.extra.id
-                        ];
-                        this.dataSource = newData;
-                    });
-                }else if(this.isNewApiFun == 'levelProtect'){
-                    const params = 'levelProtect';
-                    promise = this.api.getByDicKey(params).then(ro => {
-                        const data = ro.extra.dicItems;
-                        this.dataSource = data;
-                    });
-                }
-                else{
-                    promise = this.api.getNacosConfig().then(ro => {
-                        this.dataSource = ro.extra[this.isNewApiFun]
-                    });
-                }
-                return promise.finally(() => (this.loading = false));
-            }
             if (this.pagination) {
                 const { current, pageSize } = this.pagination;
                 const data = { ...query, pageNum: current ?? 1, pageSize, ...filters, ...sorter };
@@ -463,7 +434,7 @@ export default observer({
                 const data = { ...query, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
-                    (ro) => (this.dataSource = ro.extra.list)
+                    (ro) => ( this.dataSource = ro.extra.list)
                 );
             }
             return promise.finally(() => (this.loading = false));

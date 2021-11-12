@@ -7,7 +7,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    isNewApiFun="levelProtect"
+                    :defaultPagination="false"
                 ></crud-table>
             </template>
         </base-manager>
@@ -35,7 +35,16 @@ export default {
         BaseManager,
     },
     data() {
-        this.api = racDicApi;
+        this.api = {
+            listAll() {
+                const params = 'levelProtect';
+                return racDicApi.getByDicKey(params).then(ro => {
+                    const data = ro.extra.dicItems;
+                    ro.extra.list = data;
+                    return ro;
+                });
+            },
+        };
         this.racDicItemApi = racDicItemApi;
         const columns = [
             {

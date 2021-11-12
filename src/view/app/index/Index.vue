@@ -37,7 +37,12 @@
                                         <img :src="autoImg" alt="" />
                                     </div>
                                     <div class="appName">
-                                        {{ childItem.name }}
+                                        <a-tooltip>
+                                            <template slot="title">
+                                                {{ childItem.name }}
+                                            </template>
+                                            {{ childItem.name }}
+                                        </a-tooltip>
                                     </div>
                                 </div>
                                 <div
@@ -291,7 +296,7 @@ export default {
     }
 }
 .card_box {
-    width: 70%;
+    width: 74%;
     height: 180px;
     background: #f6f6f6;
     border-radius: 6px;
@@ -315,8 +320,8 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
-        font-weight: 400;
+        font-size: 14px;
+        font-weight: 500;
         color: #333333;
         text-align: center;
         padding: 10px 0;
@@ -331,7 +336,7 @@ export default {
             width: 18px;
             height: 18px;
             display: flex;
-            margin-right: 10px;
+            margin-right: 2px;
             img {
                 width: 100%;
                 height: 100%;
@@ -369,7 +374,7 @@ export default {
         align-items: center;
         justify-content: center;
         margin: auto;
-        width: 95px;
+        width: 60%;
         height: 24px;
         background: #e7ecf7;
         font-size: 14px;
