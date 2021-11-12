@@ -15,11 +15,21 @@ const mockList = Mock.mock({
         'opDatetime': '@datetime("yyyy-MM-dd HH:mm:ss")',
     }]
 })
+const toDayList = {
+    "账户添加": "1",
+    "账户修改": "1",
+    "账户删除": "1",
+    "密码修改": "1",
+    "启用账户": "1",
+    "禁用账户":"1",
+};
 
 const opLoglist = () => mockList.list;
+const listCountSurvey = () => toDayList;
 
 module.exports = {
     opLoglist,
+    listCountSurvey,
     routes: {
         /** 查询记录 */
         'GET /rac-svr/rac/op-log/page': (req, res, u, b) => {
@@ -45,6 +55,14 @@ module.exports = {
                     },
                 },
             });
+        },
+        /** 查询记录 */
+        'GET /rac-svr/rac/op-log/count-survey': {
+            result: 1,
+            msg: '查询列表成功',
+            extra: {
+                id: listCountSurvey(),
+            },
         },
     },
 
