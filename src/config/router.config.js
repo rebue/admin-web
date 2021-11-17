@@ -1,9 +1,6 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import { getAppIdByUrl } from '@/util/common';
 
-import UnifiedLogin from '@/view/unified/UnifiedLogin';
-import Demo from '@/view/demo/Demo';
-
 const RouteView = {
     name: 'RouteView',
     render: h => h('router-view'),
@@ -17,12 +14,12 @@ export const constantRouters = [
     {
         path: '/demo',
         name: 'demo',
-        component: Demo,
+        component: () => import('@/view/demo/Demo'),
     },
     {
         path: '/unifiedLogin',
         name: 'unifiedLogin',
-        component: UnifiedLogin,
+        component: () => import('@/view/unified/UnifiedLogin'),
     },
 
     /**扫码中转中间页*/
