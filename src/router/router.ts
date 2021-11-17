@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
 import { hasJwtToken, hasAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
-import { oapOidcApi } from '@/api/Api';
+import { oapOidcApi } from '@/api/oap/OapOidcApi';
 import { getAppIdByUrl } from '@/util/common';
 import { AppIdDic } from '@/dic/AppIdDic';
 import { AppDic } from '@/dic/AppDic';

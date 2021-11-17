@@ -3,7 +3,6 @@
  */
 import { Ro } from '@/ro/Ro';
 import request from '@/util/request';
-
 export default class OapOidcApi {
     /**
      * 获取认证全路径
@@ -15,3 +14,5 @@ export default class OapOidcApi {
         return request.get({ url: `/orp-svr/orp/get-auth-url/oidc/${clientId}`, params: qo });
     }
 }
+
+export const oapOidcApi = new OapOidcApi();
