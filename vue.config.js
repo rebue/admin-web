@@ -41,6 +41,9 @@ module.exports = {
             .options({
                 symbolId: 'icon-[name]',
             });
+        
+        //页面加载优化------“vue页面运行时，把所有的js文件全部加载了”的解决方案
+        config.plugins.delete("prefetch") //只加载当前页面需要的js
     },
     configureWebpack(config){
         config.plugins.push(new CopyPlugin(
