@@ -8,6 +8,7 @@ const path = require('path');
 const apiMocker = require('mocker-api');
 const CopyPlugin = require("copy-webpack-plugin");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // 设置请求的基础URL
 process.env.VUE_APP_REQUEST_BASE_URL =
     process.env.VUE_APP_REQUEST_BASE_SCHEME +
@@ -48,6 +49,11 @@ module.exports = {
                 { from: path.resolve(__dirname,'./src/view/sign-in/unified/wechat-login.css'), to: 'css' }
             ]
         ))
+        if(process.env.npm_config_report) {
+            // npm run dev --report 访问http://127.0.0.1:8888/ 查看打包分析
+            config.plugins.push(new BundleAnalyzerPlugin())
+        }
+        
     },
     devServer: {
         // 调试时自动打开浏览器
