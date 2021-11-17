@@ -55,30 +55,27 @@
                             <a @click="handleAgentSignOut"> <a-icon type="logout" /> 退出代理 </a>
                         </template>
                     </a-popover>
-                    <el-dropdown @command="handleAccountCommand">
-                        <a>
+                    <a-dropdown>
+                        <div>
                             <a-avatar
                                 size="large"
                                 :icon="accountStore.avatar ? accountStore.avatar : 'user'"
                                 :src="accountStore.avatar ? accountStore.avatar : undefined"
                             />
-                            <ellipsis :length="50" tooltip>
-                                {{ accountStore.nickname }}
-                            </ellipsis>
-                        </a>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="PersonCenter">
-                                <a-icon type="user" /> 个人中心
-                            </el-dropdown-item>
-                            <el-dropdown-item command="UploadAvatar">
-                                <a-icon type="smile" /> 上传头像
-                            </el-dropdown-item>
-                            <el-dropdown-item command="ChangePswd"> <a-icon type="key" /> 修改密码 </el-dropdown-item>
-                            <el-dropdown-item command="SignOut" divided>
-                                <a-icon type="logout" /> 退出应用
-                            </el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                            <a>
+                                <ellipsis :length="50" tooltip>
+                                    {{ accountStore.nickname }}
+                                </ellipsis>
+                            </a>
+                        </div>
+                        <a-menu slot="overlay" @click="handleAccountCommand">
+                            <a-menu-item key="PersonCenter"> <a-icon type="user" /> 个人中心 </a-menu-item>
+                            <a-menu-item key="UploadAvatar"> <a-icon type="smile" /> 上传头像 </a-menu-item>
+                            <a-menu-item key="ChangePswd"> <a-icon type="key" /> 修改密码 </a-menu-item>
+                            <a-menu-divider />
+                            <a-menu-item key="SignOut"> <a-icon type="logout" /> 退出应用 </a-menu-item>
+                        </a-menu>
+                    </a-dropdown>
                 </a-space>
             </template>
             <template #footerRender>
@@ -183,8 +180,8 @@ export default observer({
                 .finally(() => (this.loading = false));
         },
         /** 处理账户的几个命令 */
-        handleAccountCommand(command) {
-            switch (command) {
+        handleAccountCommand({ key }) {
+            switch (key) {
                 /** 个人中心 */
                 case 'PersonCenter':
                     this.$router.push({ path: `/${getAppIdByUrl()}/person-center` });

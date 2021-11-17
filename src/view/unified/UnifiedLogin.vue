@@ -27,7 +27,7 @@
                         <!-- 输入框 -->
                         <div class="pl30 pr30 pt10 pb10 bg-w radius-4">
                             <div class="pl10 pr10 flex-box al-c btn-box">
-                                <i class="el-icon-user font-24 grey"></i>
+                                <a-icon type="user" class="font-24 grey" />
                                 <input
                                     name="loginName"
                                     v-model="name"
@@ -38,7 +38,7 @@
                             </div>
                             <div class="horizontal-line"></div>
                             <div class="pl10 pr10 flex-box al-c btn-box">
-                                <i class="el-icon-lock font-24 grey"></i>
+                                <a-icon type="lock" class="font-24 grey" />
                                 <input
                                     name="password"
                                     v-model="password"
@@ -140,4 +140,3 @@ export default {
 
 <style scoped src="./UnifiedLogin.css"></style>
 <style scoped src="./base.css"></style>
-<style scoped src="./element.css"></style>
