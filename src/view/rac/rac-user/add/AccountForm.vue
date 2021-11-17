@@ -17,16 +17,21 @@
             <a-form-model-item label="登录账号" prop="signInName">
                 <a-input v-model.trim="model.signInName" placeholder="" key="signInName" />
             </a-form-model-item>
-            <a-form-model-item label="登录密码" prop="signInPswd" v-show="editFormType === EditFormTypeDic.Add">
-                <a-input-password v-model.trim="model.signInPswd" placeholder="" key="signInPswd" />
-            </a-form-model-item>
-            <a-form-model-item
+            <input-password
+                key="signInPswd"
+                :value.sync="model.signInPswd"
+                label="登录密码"
+                prop="signInPswd"
+                v-if="editFormType === EditFormTypeDic.Add"
+            />
+            <input-password-again
+                key="signInPswdAgain"
+                :value.sync="model.signInPswdAgain"
+                :target="model.signInPswd"
                 label="登录密码(再次确认)"
                 prop="signInPswdAgain"
-                v-show="editFormType === EditFormTypeDic.Add"
-            >
-                <a-input-password v-model.trim="model.signInPswdAgain" placeholder="" />
-            </a-form-model-item>
+                v-if="editFormType === EditFormTypeDic.Add"
+            />
             <a-form-model-item label="测试者" prop="isTester">
                 <a-switch v-model.trim="model.isTester" checked-children="是" un-checked-children="否" />
             </a-form-model-item>
@@ -51,7 +56,13 @@
 <script>
 import { racAccountApi, racRealmApi } from '@/api/Api';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import InputPassword from '@/view/forget-password/widgets/InputPassword.vue';
+import InputPasswordAgain from '@/view/forget-password/widgets/InputPasswordAgain.vue';
 export default {
+    components: {
+        InputPassword,
+        InputPasswordAgain,
+    },
     props: {
         editFormType: {
             type: String,
