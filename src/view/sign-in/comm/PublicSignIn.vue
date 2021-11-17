@@ -78,51 +78,9 @@ export default {
             }
         },
     },
-    mounted() {
-        //FIXME 引入js慢一步，第一次切换微信选项时报错，待解决
-        const s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = '//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
-        document.body.appendChild(s);
-        this.$nextTick(() => {
-            setTimeout(() => {
-                this.get_wx_qrcode();
-            }, 100);
-        });
-    },
     methods: {
-        changeShow() {
-            this.show = !this.show;
-            this.switchLogin();
-        },
         callback(key) {
             this.show = !this.show;
-            console.log(key);
-            if (key == 2) {
-                this.switchLogin();
-            }
-        },
-        get_wx_qrcode() {
-            // let call_back_realm_name = window.location.href,
-            //     realm_name_length = call_back_realm_name.indexOf('#') - 1,
-            //     DDNS = call_back_realm_name.substring(0, realm_name_length),
-            //     DDNS_resolution = encodeURIComponent(DDNS);
-            /* const obj = new WxLogin({
-                self_redirect: false,
-                id: 'wx-login-box',
-                appid: 'wx25d6c6c863c8629a',
-                scope: 'snsapi_login',
-                redirect_uri: encodeURIComponent(
-                    'https://khadmin.cocmis.cn/host/pcLogin?type=wxredirect&host_url=' + window.BASE_URL
-                ),
-                state: Math.ceil(Math.random() * 1000),
-                style: 'black',
-                href:
-                    'data:text/css;base64,LmltcG93ZXJCb3ggLnFyY29kZXsNCgl3aWR0aDogMTAwJTsNCgltYXJnaW46IDA7DQoJYm9yZGVyOiBub25lOw0KfQ0KLmltcG93ZXJCb3ggLnRpdGxlew0KCWRpc3BsYXk6IG5vbmU7DQp9DQouaW1wb3dlckJveCAuaW5mb3sNCgl3aWR0aDogMTAwJTsNCn0=',
-            }); */
-        },
-        switchLogin() {
-            this.get_wx_qrcode();
         },
         doSubmit() {
             this.loading = true;
