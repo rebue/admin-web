@@ -45,6 +45,7 @@ export default {
                 mobile: '',
                 email: '',
             },
+            source: {},
             rules: {
                 realName: [
                     { required: true, message: '请输入姓名', trigger: 'blur', transform: val => val && val.trim() },
@@ -58,6 +59,11 @@ export default {
                     },
                     {
                         validator: (rule, value, callback) => {
+                            if (value === this.source.idCard) {
+                                // 没有改动
+                                callback();
+                                return;
+                            }
                             if (!isIdCard(value)) {
                                 callback(new Error('身份证号不合法'));
                                 return false;
@@ -70,6 +76,11 @@ export default {
                     {
                         validator: (rule, value, callback) => {
                             if (value) {
+                                if (value === this.source.mobile) {
+                                    // 没有改动
+                                    callback();
+                                    return;
+                                }
                                 if (!isPhone(value)) {
                                     callback(new Error('手机号不合法'));
                                     return false;
@@ -83,6 +94,11 @@ export default {
                     {
                         validator: (rule, value, callback) => {
                             if (value) {
+                                if (value === this.source.email) {
+                                    // 没有改动
+                                    callback();
+                                    return;
+                                }
                                 if (!isEmail(value)) {
                                     callback(new Error('电子邮箱不合法'));
                                     return false;
@@ -107,6 +123,7 @@ export default {
                     .getById(this.model.id)
                     .then(ro => {
                         this.model = ro.extra.one;
+                        this.source = { ...ro.extra.one };
                         this.$emit('update:model', ro.extra.one);
                     })
                     .finally(() => {
@@ -115,10 +132,10 @@ export default {
             }
         },
         ok(e, successFn) {
-            this.loading = true;
-            this.$refs.userForm.validate(valid => {
-                if (valid) {
-                    if (this.editFormType === EditFormTypeDic.Add) {
+            if (this.editFormType === EditFormTypeDic.Add) {
+                this.loading = true;
+                this.$refs.userForm.validate(valid => {
+                    if (valid) {
                         return this.api
                             .add({ ...this.model })
                             .then(ro => {
@@ -127,9 +144,42 @@ export default {
                                 this.closeDialog && this.closeDialog(); //针对弹窗
                             })
                             .finally(() => (this.loading = false));
-                    } else if (this.editFormType === EditFormTypeDic.Modify) {
+                    } else {
+                        this.$nextTick(() => {
+                            this.$focusError(); // 设置焦点到第一个提示错误的输入框
+                            this.loading = false;
+                        });
+                    }
+                });
+            } else if (this.editFormType === EditFormTypeDic.Modify) {
+                this.update(e, successFn);
+            }
+        },
+        update(e, successFn) {
+            //检查哪几个字段更改了
+            const myset = new Set();
+            for (const key in this.model) {
+                if (this.model[key] !== this.source[key]) {
+                    myset.add(key);
+                }
+            }
+            if (myset.size) {
+                const myarr = Array.from(myset);
+                //只校验改变的字段
+                this.$refs.userForm.validateField(myarr, errorMessage => {
+                    console.log('--errorMessage', errorMessage);
+                    if (!errorMessage) {
+                        // 必传字段
+                        const data = {
+                            id: this.model.id,
+                        };
+                        // 只提交改变的的字段
+                        myarr.forEach(key => {
+                            data[key] = this.model[key];
+                        });
+                        this.loading = true;
                         return this.api
-                            .modify({ ...this.model })
+                            .modify(data)
                             .then(ro => {
                                 this.callback && this.callback(ro);
                                 successFn && successFn(ro);
@@ -137,13 +187,10 @@ export default {
                             })
                             .finally(() => (this.loading = false));
                     }
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
-                }
-            });
+                });
+            } else {
+                this.closeDialog && this.closeDialog(); //针对弹窗
+            }
         },
     },
 };

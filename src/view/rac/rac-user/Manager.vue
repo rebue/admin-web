@@ -15,7 +15,6 @@
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-account-form
             ref="manageOrgForm"
             :user="curRecord"
@@ -31,7 +30,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import EditForm from './EditForm.vue';
 import DisabledForm from './DisabledForm.vue';
 import EnabledForm from './EnabledForm.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
@@ -42,7 +40,6 @@ export default {
     components: {
         CrudTable,
         BaseManager,
-        EditForm,
         DisabledForm,
         EnabledForm,
         ManageAccountForm,
@@ -153,7 +150,6 @@ export default {
         },
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
         this.manageOrgForm = this.$refs.manageOrgForm;
     },
     methods: {
@@ -181,7 +177,6 @@ export default {
          */
         handleAdd(record) {
             this.crudTable.expand(record.id);
-            // this.editForm.show(EditFormTypeDic.Add, {});
             const that = this;
             this.$showDialog(
                 require('@/view/rac/rac-account/add/UserForm.vue').default,
@@ -209,7 +204,6 @@ export default {
          */
         handleEdit(record) {
             this.curRecord = record;
-            // this.editForm.show(EditFormTypeDic.Modify, { ...record });
             const that = this;
             this.$showDialog(
                 require('@/view/rac/rac-account/add/UserForm.vue').default,
