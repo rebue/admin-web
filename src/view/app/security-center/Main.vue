@@ -140,7 +140,7 @@ export default observer({
         unbindPhone() {
             const that = this;
             this.$showDialog(
-                require('./Phone.vue').default,
+                require('./unPhone.vue').default,
                 {
                     data() {
                         return {

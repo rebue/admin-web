@@ -17,9 +17,11 @@ const SECOND = 60;
 export default {
     components: {},
     props: {
+        action: {
+            type: Function,
+        },
         phoneNumber: {
             type: String,
-            required: true,
         },
         captchaVerification: {
             type: String,
@@ -103,10 +105,19 @@ export default {
             //发送短信验证码 请求
             try {
                 this.isCodeLoading = true;
-                await racVerifitionApi.sendSMSCode({
-                    phoneNumber: this.phoneNumber,
-                    captchaVerification: this.captchaVerification,
-                });
+
+                if (this.action) {
+                    await this.action();
+                    // racVerifitionApi.sendSMSCodeByAccountId({
+                    //     accountId: this.phoneNumber,
+                    //     captchaVerification: this.captchaVerification,
+                    // });
+                } else {
+                    await racVerifitionApi.sendSMSCode({
+                        phoneNumber: this.phoneNumber,
+                        captchaVerification: this.captchaVerification,
+                    });
+                }
                 this.isCodeLoading = false;
                 this.isCounting = true;
                 // then 验证码倒计时
