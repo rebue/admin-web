@@ -34,7 +34,7 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-org-form
+        <manage-org
             ref="manageOrgForm"
             :account="curRecord"
             :visible.sync="manageOrgFormVisible"
@@ -69,7 +69,7 @@ import AgentSignInForm from './AgentSignInForm.vue';
 import OrgTree from '../rac-org/Tree';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racRealmApi, racAccountApi } from '@/api/Api';
-import ManageOrgForm from './ManageOrgForm.vue';
+import ManageOrg from './ManageOrg.vue';
 import ManageRoleForm from './ManageRoleForm.vue';
 
 export default {
@@ -83,7 +83,7 @@ export default {
         OrgTree,
         DisabledForm,
         EnabledForm,
-        ManageOrgForm,
+        ManageOrg,
         ManageRoleForm,
     },
     data() {
@@ -230,7 +230,7 @@ export default {
                     {
                         type: 'a',
                         title: '映射账号',
-                        onClick: record => this.handleManageAccount(record),
+                        onClick: record => this.handleUnionAccount(record),
                     },
                     // 先注释代理登录，后期再实现
                     // {
@@ -495,10 +495,10 @@ export default {
         /**
          * 处理映射账号事件
          */
-        handleManageAccount(record) {
+        handleUnionAccount(record) {
             this.curRecord = record;
             this.$showDrawer(
-                require('./ManageAccountForm.vue').default,
+                require('./ManageUnionAccount.vue').default,
                 {
                     data() {
                         return {

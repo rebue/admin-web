@@ -133,7 +133,7 @@ export default {
         handleAdd(record) {
             const that = this;
             this.$showDialog(
-                require('./ManageAddAccountForm.vue').default,
+                require('./ChooseUnionAccount.vue').default,
                 {
                     data() {
                         return {
@@ -157,7 +157,7 @@ export default {
         handleModify(record) {
             const that = this;
             this.$showDialog(
-                require('./ManageAddAccountForm.vue').default,
+                require('./ChooseUnionAccount.vue').default,
                 {
                     data() {
                         return {

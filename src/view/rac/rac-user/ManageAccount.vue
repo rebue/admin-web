@@ -63,12 +63,7 @@
         <!-- 修改密码 -->
         <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="refreshData" />
         <!-- 组织 -->
-        <manage-org-form
-            ref="manageOrgForm"
-            :account="curRecord"
-            :visible.sync="manageOrgFormVisible"
-            @close="refreshData"
-        />
+        <manage-org ref="manageOrgForm" :account="curRecord" :visible.sync="manageOrgVisible" @close="refreshData" />
     </a-drawer>
 </template>
 
@@ -76,14 +71,14 @@
 import { racAccountApi, racRealmApi } from '@/api/Api';
 import ChangePswdForm from '../rac-account/ChangePswdForm.vue';
 import EditForm from '../rac-account/EditForm.vue';
-import ManageOrgForm from '../rac-account/ManageOrgForm.vue';
+import ManageOrg from '../rac-account/ManageOrg.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
     components: {
         EditForm,
         ChangePswdForm,
-        ManageOrgForm,
+        ManageOrg,
     },
     props: {
         user: {
@@ -163,7 +158,7 @@ export default {
             realmList: [],
             existAccountIds: [],
             columns,
-            manageOrgFormVisible: false,
+            manageOrgVisible: false,
             changePswdFormVisible: false,
             curRecord: {},
         };
@@ -224,7 +219,7 @@ export default {
          */
         handleManageOrg(record) {
             this.curRecord = record;
-            this.manageOrgFormVisible = true;
+            this.manageOrgVisible = true;
         },
         /**切换抽屉时动画结束后的回调 */
         afterVisibleChange(val) {

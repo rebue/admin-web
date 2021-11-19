@@ -39,7 +39,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import OrgTree from '../rac-org/Tree';
-import { racRealmApi, racAccountApi, racSignInUnlockApi } from '@/api/Api';
+import { racRealmApi, racSignInUnlockApi } from '@/api/Api';
 import UnlockForm from './UnlockForm.vue';
 
 export default {
@@ -158,9 +158,6 @@ export default {
         },
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.manageOrgForm = this.$refs.manageOrgForm;
-        this.manageRoleForm = this.$refs.manageRoleForm;
         this.refreshData();
     },
     methods: {
