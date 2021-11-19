@@ -15,7 +15,7 @@
                 </crud-table>
             </template>
         </base-manager>
-        <manage-account-form
+        <manage-account
             ref="manageOrgForm"
             :user="curRecord"
             :visible.sync="manageOrgFormVisible"
@@ -34,7 +34,7 @@ import DisabledForm from './DisabledForm.vue';
 import EnabledForm from './EnabledForm.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racUserApi } from '@/api/Api';
-import ManageAccountForm from './ManageAccountForm.vue';
+import ManageAccount from './ManageAccount.vue';
 export default {
     name: 'Manager',
     components: {
@@ -42,7 +42,7 @@ export default {
         BaseManager,
         DisabledForm,
         EnabledForm,
-        ManageAccountForm,
+        ManageAccount,
     },
     data() {
         this.api = racUserApi;

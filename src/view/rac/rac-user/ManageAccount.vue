@@ -59,18 +59,13 @@
                 </template>
             </span>
         </a-table>
-        <editUser-form
-            v-if="managerModifyOrgFormVisible"
-            :modifyOrgId="modifyOrgId"
-            :hideHandleModify="hideHandleModify"
-            @close="refreshData"
-        ></editUser-form>
+        <edit-form ref="editForm" @close="refreshData" />
         <!-- 修改密码 -->
-        <change-pswd-form :record="modifyOrgId" :visible.sync="changePswdFormVisible" @close="refreshData" />
+        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="refreshData" />
         <!-- 组织 -->
         <manage-org-form
             ref="manageOrgForm"
-            :account="modifyOrgId"
+            :account="curRecord"
             :visible.sync="manageOrgFormVisible"
             @close="refreshData"
         />
@@ -79,14 +74,14 @@
 
 <script>
 import { racAccountApi, racRealmApi } from '@/api/Api';
-// import ManageAddUserForm from './ManageAddUserForm.vue';
 import ChangePswdForm from '../rac-account/ChangePswdForm.vue';
-import EditUserForm from './EditUserForm.vue';
+import EditForm from '../rac-account/EditForm.vue';
 import ManageOrgForm from '../rac-account/ManageOrgForm.vue';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+
 export default {
     components: {
-        // ManageAddUserForm,
-        EditUserForm,
+        EditForm,
         ChangePswdForm,
         ManageOrgForm,
     },
@@ -152,12 +147,12 @@ export default {
                     {
                         type: 'a',
                         title: '修改账号',
-                        onClick: record => this.handleModify(record),
+                        onClick: record => this.handleModifyAccount(record),
                     },
                     {
                         type: 'a',
                         title: '管理组织',
-                        onClick: record => this.handleManageAccount(record),
+                        onClick: record => this.handleManageOrg(record),
                     },
                 ],
             },
@@ -168,12 +163,9 @@ export default {
             realmList: [],
             existAccountIds: [],
             columns,
-            showAccount: false,
-            manageAddAccountFormVisible: false,
-            managerModifyOrgFormVisible: false,
             manageOrgFormVisible: false,
             changePswdFormVisible: false,
-            modifyOrgId: {},
+            curRecord: {},
         };
     },
     computed: {},
@@ -189,10 +181,6 @@ export default {
     },
     created() {
         this.getRealmList();
-    },
-    mounted() {
-        // this.manageAddAccountForm = this.$refs.manageAddAccountForm;
-        // this.managerModifyAccountForm = this.$refs.managerModifyAccountForm;
     },
     methods: {
         getRealmList() {
@@ -222,26 +210,21 @@ export default {
             });
         },
         /** 修改账号信息 */
-        handleModify(orgMo) {
-            this.modifyOrgId = orgMo;
-            this.managerModifyOrgFormVisible = true;
+        handleModifyAccount(record) {
+            this.curRecord = record;
+            this.$refs.editForm.show(EditFormTypeDic.Modify, { ...record });
         },
         /** 处理修改密码 */
         handleChangePswd(record) {
-            this.modifyOrgId = record;
+            this.curRecord = record;
             this.changePswdFormVisible = true;
         },
         /**
          * 处理管理组织事件
          */
-        handleManageAccount(record) {
-            this.modifyOrgId = record;
+        handleManageOrg(record) {
+            this.curRecord = record;
             this.manageOrgFormVisible = true;
-        },
-        //关闭修改账号信息
-        hideHandleModify() {
-            this.managerModifyOrgFormVisible = false;
-            this.refreshData();
         },
         /**切换抽屉时动画结束后的回调 */
         afterVisibleChange(val) {
@@ -249,16 +232,8 @@ export default {
         },
         //关闭抽屉
         onClose() {
-            this.hideHandleModify();
             this.$emit('update:visible', false);
         },
-        /**
-         * 处理添加账号关系的事件
-         */
-        handleAdd() {
-            this.manageAddAccountFormVisible = true;
-        },
-
         //**点击返回 */
         handleCancel() {
             this.$emit('update:visible', false);
