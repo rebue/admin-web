@@ -38,4 +38,8 @@ export default class RacVerifitionApi extends BaseCrudApi {
     validSMSCode(data) {
         return request.post({ url: this.baseUrn + '/sms/verification', data, headers });
     }
+    /** 通过账号ID验证短信验证码 */
+    validSMSCodeByAccountId(data) {
+        return request.post({ url: '/rac-svr/rac/sms/verification', data, headers });
+    }
 }

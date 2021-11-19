@@ -12,7 +12,8 @@
             <div class="code code-large">
                 <a-input size="large" class="code-input" v-model.trim="model.code" placeholder="短信验证码" />
                 <SendSMSCode
-                    :phoneNumber="model.phoneNumber"
+                    :action="action"
+                    :phoneNumber="model.id"
                     :captchaVerification.sync="model.captchaVerification"
                     buttonSize="large"
                 />
@@ -67,9 +68,8 @@ export default {
                 if (valid) {
                     // 简单验证手机和校验码
                     racVerifitionApi
-                        .validSMSCode({
-                            // id: this.model.id,
-                            phoneNumber: this.model.phoneNumber,
+                        .validSMSCodeByAccountId({
+                            accountId: this.model.id,
                             code: this.model.code,
                         })
                         .then(ro => {
@@ -82,6 +82,12 @@ export default {
                         this.loading = false;
                     });
                 }
+            });
+        },
+        action() {
+            return racVerifitionApi.sendSMSCodeByAccountId({
+                accountId: this.model.id,
+                captchaVerification: this.model.captchaVerification,
             });
         },
     },
