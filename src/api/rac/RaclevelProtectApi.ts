@@ -1,14 +1,22 @@
 /**
- * 登录相关请求
+ * 等保配置信息
  */
 import { Ro } from '@/ro/Ro';
 import request from '@/util/request';
 
 export default class RacSignInApi {
+    /** 请求的基础链接 */
+    baseUrn = '/rac-svr/rac/nacos/level-protect';
     /**
-     * 刷新等堡配置
+     * 获取配置信息
      */
-    setLevelProtect(data): Promise<Ro> {
-        return request.post({ url: '/rac-svr/rac/sign-in/refresh-update-level-protect', data });
+    getConfig(): Promise<Ro> {
+        return request.get({ url: this.baseUrn + '/get/config' });
+    }
+    /**
+     * 获取配置信息
+     */
+    publishConfig(data): Promise<Ro> {
+        return request.post({ url: this.baseUrn + '/publish/config', data });
     }
 }

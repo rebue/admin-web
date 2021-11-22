@@ -19,14 +19,46 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import BaseManager from '@/component/rebue/BaseManager';
 import editableCell from './EditableCell.vue';
 import { accountStore } from '@/store/Store';
-import { racDicApi, raclevelProtectApi, racDicItemApi } from '@/api/Api';
+import { raclevelProtectApi, racDicItemApi } from '@/api/Api';
 
 // passwordErrors     输入密码错误次数/次
 // lockDuration       账号锁定时长/分钟
 // passwordMinLength  密码最小长度/位数
 // passwordCharacter  密码最少包含字符/种
 // passwordTips       输强制修改密码
-// passworDoverdue    密码过期时长/天
+// passwordDoverdue    密码过期时长/天
+const configData = [
+    {
+        name: '输入密码错误次数/次',
+        key: 'passwordErrors',
+        remark: '输入指定次数错误密码将锁定账号',
+    },
+    {
+        name: '账号锁定时长/分钟',
+        key: 'lockDuration',
+        remark: '当密码输入次数超过指定次数，则锁定账号无法登录',
+    },
+    {
+        name: '密码最小长度/位数',
+        key: 'passwordMinLength',
+        remark: '用户的密码最小长度',
+    },
+    {
+        name: '密码最少包含字符/种',
+        key: 'passwordCharacter',
+        remark: '字符包括大写字母、小写字母、数字和特殊符号',
+    },
+    {
+        name: '输强制修改密码',
+        key: 'passwordTips',
+        remark: '第一次登录是否强制修改密码',
+    },
+    {
+        name: '密码过期时长/天',
+        key: 'passwordDoverdue',
+        remark: '超过指定天数，需要用户强制修改新密码',
+    },
+];
 export default {
     name: 'Manager',
     components: {
@@ -37,9 +69,20 @@ export default {
     data() {
         this.api = {
             listAll() {
-                const params = 'levelProtect';
-                return racDicApi.getByDicKey(params).then(ro => {
-                    const data = ro.extra.dicItems;
+                return raclevelProtectApi.getConfig().then(ro => {
+                    const data = [];
+                    for (const i in configData) {
+                        for (const j in ro.extra) {
+                            if (configData[i].key == j) {
+                                data.push({
+                                    name: configData[i].name,
+                                    dicItemKey: configData[i].key,
+                                    dicItemValue: ro.extra[j],
+                                    remark: configData[i].remark,
+                                });
+                            }
+                        }
+                    }
                     ro.extra.list = data;
                     return ro;
                 });
@@ -82,43 +125,36 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
-        setLevelProtect() {
-            const data = {
-                id: this.accountStore.accountId,
-            };
-            raclevelProtectApi
-                .setLevelProtect(data)
-                .then(() => {
-                    //
-                })
-                .finally(() => (this.loading = false));
-        },
         onCellChange(record, value) {
             if (record.dicItemValue == value) {
                 return;
             }
-            const data = record;
-            data.dicItemValue = value;
-            racDicItemApi
-                .modify(data)
+            console.log(record);
+            const data = {
+                name: record.dicItemKey,
+                value: value,
+            };
+            raclevelProtectApi
+                .publishConfig(data)
                 .then(() => {
-                    this.setLevelProtect();
                     this.visible = false;
                 })
                 .finally(() => (this.loading = false));
         },
         wsitchChange(record) {
-            const data = record;
-            console.log(data.dicItemValue);
-            if (data.dicItemValue == 'false' || data.dicItemValue == false) {
-                data.dicItemValue = true;
+            const oldData = record;
+            if (oldData.dicItemValue == 'false' || oldData.dicItemValue == false) {
+                oldData.dicItemValue = true;
             } else {
-                data.dicItemValue = false;
+                oldData.dicItemValue = false;
             }
-            racDicItemApi
-                .modify(data)
+            const data = {
+                name: oldData.dicItemKey,
+                value: oldData.dicItemValue,
+            };
+            raclevelProtectApi
+                .publishConfig(data)
                 .then(() => {
-                    this.setLevelProtect();
                     this.visible = false;
                 })
                 .finally(() => (this.loading = false));
