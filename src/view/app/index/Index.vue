@@ -75,9 +75,7 @@ export default {
             loading: false,
             authedList: [],
             unauthList: [],
-            labelList: [],
             labelSelect: [],
-            activeKey: [],
             autoImg: require(`../assets/img/autoImage.png`),
         };
     },
@@ -97,16 +95,13 @@ export default {
             const params = 'ApplyLabel';
             racDicApi.getByDicKey(params).then(ro => {
                 let data = ro.extra.dicItems;
-                const labelList = [];
-                data.map((item, index) => {
-                    labelList.push(index++ + '');
+                data.map(item => {
                     item.show = true;
                     item.treeCode = Number(item.treeCode);
                 });
                 data = data.sort((a, b) => {
                     return a.treeCode - b.treeCode;
                 });
-                labelList.push(labelList.length + '');
                 data.push({
                     name: '其他',
                     show: true,
@@ -114,8 +109,6 @@ export default {
                     childList: [],
                     treeCode: data.length,
                 });
-                this.labelList = labelList;
-                this.activeKey = labelList;
                 this.labelSelect = data;
                 this.fetchAuthList();
             });
@@ -160,6 +153,7 @@ export default {
                             }
                         }
                     });
+                    //PUSH回相应的标签
                     this.labelSelect.map(item => {
                         if (item.children) {
                             item.children.map(childItem => {
@@ -189,12 +183,14 @@ export default {
                             });
                         }
                     });
+                    //给没有标签的应用push剩下的应用
                     unauthList.map(lastItem => {
                         if (!lastItem.isauthName) {
                             lastItem.isauthName = '未认证';
                             this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
+                    //给没有标签的应用push剩下的应用
                     authedList.map(lastItem => {
                         if (!lastItem.isauthName) {
                             lastItem.isauthName = '已认证';
@@ -206,6 +202,16 @@ export default {
                             this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
                         }
                     });
+                    //排序一下应用
+                    this.labelSelect.map(item => {
+                        if (item.childList) {
+                            console.log(item);
+                            item.childList = item.childList.sort((a, b) => {
+                                return a.seqNo - b.seqNo;
+                            });
+                        }
+                    });
+                    console.log(this.labelSelect);
                     this.loading = false;
                 })
                 .finally(() => {
