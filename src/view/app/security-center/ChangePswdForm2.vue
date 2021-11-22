@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { racAccountApi, racDicApi } from '@/api/Api';
+import { racAccountApi, raclevelProtectApi } from '@/api/Api';
 import md5 from 'crypto-js/md5';
 
 export default {
@@ -122,15 +122,17 @@ export default {
     },
     methods: {
         getbyIdFun() {
-            const params = 'levelProtect';
-            racDicApi.getByDicKey(params).then(ro => {
-                ro.extra.dicItems?.map(item => {
-                    if (item.dicItemKey == 'passwordMinLength') {
-                        this.passwordMinLength = item.dicItemValue;
-                    } else if (item.dicItemKey == 'passwordCharacter') {
-                        this.passwordCharacter = item.dicItemValue;
-                    }
-                });
+            raclevelProtectApi.getConfig().then(ro => {
+                this.passwordMinLength = ro.extra?.passwordMinLength;
+                this.passwordCharacter = ro.extra?.passwordCharacter;
+                this.help = `登录密码由${this.passwordMinLength}位以上字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;
+                // ro.extra.dicItems?.map(item => {
+                //     if (item.dicItemKey == 'passwordMinLength') {
+                //         this.passwordMinLength = item.dicItemValue;
+                //     } else if (item.dicItemKey == 'passwordCharacter') {
+                //         this.passwordCharacter = item.dicItemValue;
+                //     }
+                // });
             });
         },
         ok() {

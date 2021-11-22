@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { racDicApi } from '@/api/Api';
+import { raclevelProtectApi } from '@/api/Api';
 export default {
     props: {
         label: {
@@ -94,16 +94,18 @@ export default {
             this.$emit('update:value', e.target.value);
         },
         getbyIdFun() {
-            const params = 'levelProtect';
-            racDicApi.getByDicKey(params).then(ro => {
-                ro.extra.dicItems?.map(item => {
-                    if (item.dicItemKey == 'passwordMinLength') {
-                        this.passwordMinLength = item.dicItemValue;
-                    } else if (item.dicItemKey == 'passwordCharacter') {
-                        this.passwordCharacter = item.dicItemValue;
-                    }
-                    this.help = `登录密码由${this.passwordMinLength}位以上字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;
-                });
+            raclevelProtectApi.getConfig().then(ro => {
+                this.showHelp = true;
+                this.passwordMinLength = ro.extra?.passwordMinLength;
+                this.passwordCharacter = ro.extra?.passwordCharacter;
+                this.help = `登录密码由${this.passwordMinLength}位以上字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;
+                // ro.extra.dicItems?.map(item => {
+                //     if (item.dicItemKey == 'passwordMinLength') {
+                //         this.passwordMinLength = item.dicItemValue;
+                //     } else if (item.dicItemKey == 'passwordCharacter') {
+                //         this.passwordCharacter = item.dicItemValue;
+                //     }
+                // });
             });
         },
     },

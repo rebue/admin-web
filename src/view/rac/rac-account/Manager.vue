@@ -15,6 +15,7 @@
                             :scrollX="600"
                             :showHierarchical="showOrg"
                         >
+                            <!-- :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
                             <template #left>
                                 <div v-show="showOrg" class="table-left">
                                     <org-tree
@@ -177,6 +178,12 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
+            // {
+            //     buttonType: 'primary',
+            //     icon: 'align-center',
+            //     title: '批量操作',
+            //     onClick: this.batchOperation,
+            // },
         ];
 
         this.tableActions = [
@@ -269,6 +276,7 @@ export default {
             realms: [],
             columns,
             curRecord: {},
+            selectedRowKeys: [],
         };
     },
     computed: {
@@ -286,6 +294,10 @@ export default {
         this.refreshData();
     },
     methods: {
+        //批量启用/禁用的checkbox
+        onSelectChange(selectedRowKeys) {
+            this.selectedRowKeys = selectedRowKeys;
+        },
         /**
          * 刷新数据
          */
@@ -338,6 +350,60 @@ export default {
                 this.curRecord.isEnabled = !record.isEnabled;
                 this.enabledFormVisible = true;
             }
+            // this.loading = true;
+            // this.curRecord = record;
+            // if (this.selectedRowKeys.length == 0) {
+            //     if (record.isEnabled === true) {
+            //         this.curRecord.isEnabled = !record.isEnabled;
+            //         this.disabledFormVisible = true;
+            //     } else {
+            //         this.curRecord.isEnabled = !record.isEnabled;
+            //         this.enabledFormVisible = true;
+            //     }
+            // } else {
+            //     this.$confirm({
+            //         title: '批量操作',
+            //         content: '你确定要批量启用/禁用已选中账号？',
+            //         onOk: () => {
+            //             if (record.isEnabled === true) {
+            //                 this.curRecord.isEnabled = !record.isEnabled;
+            //                 this.disabledFormVisible = true;
+            //             } else {
+            //                 this.curRecord.isEnabled = !record.isEnabled;
+            //                 this.enabledFormVisible = true;
+            //             }
+            //         },
+            //     });
+            // }
+        },
+        /**
+         * 处理批量操作账户的事件
+         */
+        batchOperation(record) {
+            const that = this;
+            this.$showDialog(
+                require('./batchOperation.vue').default,
+                {
+                    data() {
+                        return {
+                            // realmId: that.curRealmId,
+                            // orgId: that.curOrgId,
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '批量操作',
+                    width: '50%',
+                    // footer: null,
+                    destroyOnClose: true,
+                    wrapClassName: 'account-batch-dialog-wrap',
+                }
+            );
         },
         /** 处理重置密码 */
         handleResetPswd(record) {

@@ -132,6 +132,7 @@
                     :rowClassName="
                         (record, index) => (settingStore.tableStrip ? (index % 2 === 0 ? 'row-odd' : 'row-even') : '')
                     "
+                    :row-selection="rowSelection"
                     :pagination="pagination"
                     :components="components"
                     v-bind="$attrs"
@@ -277,17 +278,31 @@ export default observer({
                 };
             },
         },
+         /** 是否显示checkbox */
+        rowSelection:{
+            type: Object,
+            default: null
+        },
     },
     data() {
         /** 实现拖曳调整列宽度 */
         const resizeableTitle = (h, props, children) => {
             let thDom = null;
             const { key, ...restProps } = props;
-            const col = this.displayColumns.find((col) => {
-                const k = col.key || col.dataIndex;
-                return k === key;
-            });
-
+             //当表格不需要checkbox的时候进的判断
+            if(this.rowSelection == null){
+                var col = this.displayColumns.find((col) => {
+                    const k = col.key || col.dataIndex;
+                    return k === key;
+                });
+            }else{
+                //暂时解决 但是有checkbox的表格还不能实现托拉拽
+                if( this.displayColumns.length != 0){
+                    var col = this.displayColumns[0].dataIndex
+                }else{
+                    var col = 'no'
+                }
+            }
             if (!col.width) {
                 return <th {...restProps}>{children}</th>;
             }
