@@ -18,6 +18,7 @@ export default observer({
     components: {
         WxLoginCode,
     },
+    props: ['account'],
     data() {
         return {
             state: '',
@@ -29,8 +30,7 @@ export default observer({
     computed: {
         redirectUri() {
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
-            // 后端api?callbackUrl=
-            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
+            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/forget/verifiy-account/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
         },
         option() {
             return {
@@ -62,18 +62,20 @@ export default observer({
             console.log('---------origin', event.origin);
             if (origin == location.origin) {
                 console.log('---------接收到子窗口的新消息了', event.data);
-                if (event.data.event === 'wechat-open-bind' || event.data.event === 'wechat-open-unbind') {
+                if (event.data.event === 'wechat-open-verifiy') {
                     const { result, msg } = event.data;
                     if (result === 'success') {
                         this.status = result;
+                        this.statusMsg = '身份认证成功';
                         setTimeout(() => {
+                            this.$emit('callback', { id: this.account.id, verifiy: msg });
                             this.callback && this.callback();
                             this.closeDialog && this.closeDialog();
                         }, 1000);
                     } else if (result === 'error') {
                         this.status = result;
+                        this.statusMsg = '身份认证失败';
                     }
-                    this.statusMsg = msg;
                 }
                 this.loading = false;
             }

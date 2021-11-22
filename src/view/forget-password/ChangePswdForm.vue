@@ -41,11 +41,17 @@ export default {
             this.loading = true;
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    racAccountApi
-                        .modifySignInPswdByForget({
-                            signInPswd: md5(this.model.signInPswd).toString(),
-                            ...this.params.model,
-                        })
+                    let api = racAccountApi.modifySignInPswdByForget;
+                    if (this.params.type === 'byWechat') {
+                        api = racAccountApi.modifySignInPswdByWeChat;
+                    }
+                    if (this.params.type === 'byDingding') {
+                        api = racAccountApi.modifySignInPswdByDingding;
+                    }
+                    api({
+                        signInPswd: md5(this.model.signInPswd).toString(),
+                        ...this.params.model,
+                    })
                         .then(() => {
                             this.$emit('success');
                         })

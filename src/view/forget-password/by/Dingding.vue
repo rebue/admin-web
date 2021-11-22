@@ -17,6 +17,7 @@ export default observer({
     components: {
         DdLoginCode,
     },
+    props: ['account'],
     data() {
         return {
             goto: '',
@@ -61,18 +62,21 @@ export default observer({
                 console.log('---------loginTmpCode', loginTmpCode, this.loginTmpCodeUrl);
             } else if (origin == location.origin) {
                 console.log('---------接收到子窗口的新消息了', event.data);
-                if (event.data.event === 'ding-talk-bind' || event.data.event === 'ding-talk-unbind') {
+                if (event.data.event === 'ding-talk-verifiy') {
                     const { result, msg } = event.data;
                     if (result === 'success') {
                         this.status = result;
+                        this.statusMsg = '身份认证成功';
                         setTimeout(() => {
+                            this.$emit('callback', { id: this.account.id, verifiy: msg });
+
                             this.callback && this.callback();
                             this.closeDialog && this.closeDialog();
                         }, 1000);
                     } else if (result === 'error') {
                         this.status = result;
+                        this.statusMsg = '身份认证失败';
                     }
-                    this.statusMsg = msg;
                 }
                 this.loading = false;
             }
@@ -81,7 +85,7 @@ export default observer({
             this.loading = true;
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
             // 后端api?callbackUrl=
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
+            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/forget/verifiy-account/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
             request
                 .get({
                     url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,

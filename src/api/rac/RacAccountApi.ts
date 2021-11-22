@@ -180,10 +180,28 @@ export default class RacAccountApi extends BaseCrudApi {
         return request.get({ url: '/rac-svr/forget/check-sign-in-mobile', params });
     }
     /**
-     *忘记密码，修改登录密码
+     *忘记密码，手机号修改登录密码
      */
     modifySignInPswdByForget(data): Promise<Ro> {
         return request.post({ url: '/rac-svr/forget/sign-in-pswd-to-set', data });
+    }
+    /**
+     *忘记密码，微信修改登录密码
+     */
+    modifySignInPswdByWeChat(data): Promise<Ro> {
+        return request.post({
+            url: `/orp-svr/forget/sign-in-pswd/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
+            data,
+        });
+    }
+    /**
+     *忘记密码，钉钉修改登录密码
+     */
+    modifySignInPswdByDingding(data): Promise<Ro> {
+        return request.post({
+            url: `/orp-svr/forget/sign-in-pswd/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
+            data,
+        });
     }
     /**
      *忘记密码，身份认证，邮箱
