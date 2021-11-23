@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('@/view/sign-in/unified/logo.png')" alt="" class="logo" />
+            <img :src="require('@client/images/logo.png')" alt="" class="logo" :class="`${clientConfig.id}-logo`" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -15,12 +15,21 @@
             <!-- 身份认证，设置操作，完成 -->
             <Wrap :account="account" v-if="step == 1" />
         </div>
-        <div class="footer">桂ICP备08001078号-2</div>
+        <div class="footer">
+            <template v-if="clientConfig.id === 'default'">
+                桂ICP备08001078号-2
+            </template>
+            <template v-else>
+                <p>{{ clientConfig.name }}版权所有</p>
+                <p>由南宁迈越提供技术支持</p>
+            </template>
+        </div>
     </div>
 </template>
 <script>
 import Account from './Account.vue';
 import Wrap from './Wrap.vue';
+import clientConfig from '@client/config';
 
 export default {
     components: {
@@ -29,6 +38,7 @@ export default {
     },
     data() {
         return {
+            clientConfig,
             step: 0,
             account: {},
         };
@@ -60,9 +70,12 @@ export default {
         align-items: flex-end;
         color: #000;
         .logo {
-            width: 207px;
+            // max-width: 207px;
             height: 78px;
             margin-left: 55px;
+        }
+        .nnxy-logo {
+            height: 60px;
         }
         .divider {
             width: 2px;
@@ -94,12 +107,15 @@ export default {
         display: flex;
     }
     .footer {
-        height: 50px;
-        line-height: 50px;
+        padding: 15px 0;
         text-align: center;
         vertical-align: middle;
         color: #a2a1a1;
         font-size: 14px;
+        p {
+            margin: 0;
+            padding: 0;
+        }
     }
 }
 </style>

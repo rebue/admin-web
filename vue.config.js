@@ -6,6 +6,7 @@
  */
 const path = require('path');
 const apiMocker = require('mocker-api');
+
 const CopyPlugin = require("copy-webpack-plugin");
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -44,6 +45,30 @@ module.exports = {
         
         //页面加载优化------“vue页面运行时，把所有的js文件全部加载了”的解决方案
         config.plugins.delete("prefetch") //只加载当前页面需要的js
+
+        // 客户主题start
+        let CLIENT = 'default';
+        // 命令 npm run  dev --client=anan
+        // 接收参数 console.log('--Theme',process.env.npm_config_client);
+        // 命令 yarn dev --client=anan
+        // 接收参数 console.log('---Theme', process.argv.find((v)=>{return v.includes('--client=')}).replace('--client=',''))
+        const yarn_config_client = process.argv.find((v)=>{return v.includes('--client=')})
+        if(process.env.VUE_APP_CLIENT){
+            CLIENT = process.env.VUE_APP_CLIENT
+        }else if(yarn_config_client) {
+            CLIENT = yarn_config_client.replace('--client=','')
+        }else if(process.env.npm_config_client){
+            CLIENT = process.env.npm_config_client
+        }
+        //设置对接的客户，如南宁学院
+        config.plugin('define').tap(args => {
+            args[0]['process.env'].VUE_APP_CLIENT = JSON.stringify(CLIENT)
+            return args
+        })
+        // 映射对接的客户目录
+        config.resolve.alias
+            .set("@client", path.resolve(__dirname,`./src/client/${CLIENT}`))
+        // 客户主题end
     },
     configureWebpack(config){
         config.plugins.push(new CopyPlugin(
