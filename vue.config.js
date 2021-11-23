@@ -48,10 +48,10 @@ module.exports = {
 
         // 客户主题start
         let CLIENT = 'default';
-        // 命令 npm run  dev --client=anan
-        // 接收参数 console.log('--Theme',process.env.npm_config_client);
-        // 命令 yarn dev --client=anan
-        // 接收参数 console.log('---Theme', process.argv.find((v)=>{return v.includes('--client=')}).replace('--client=',''))
+        // 命令 npm run  dev --client=nnxy
+        // 接收参数 console.log('--client',process.env.npm_config_client);
+        // 命令 yarn dev --client=nnxy
+        // 接收参数 console.log('--client', process.argv.find((v)=>{return v.includes('--client=')}).replace('--client=',''))
         const yarn_config_client = process.argv.find((v)=>{return v.includes('--client=')})
         if(process.env.VUE_APP_CLIENT){
             CLIENT = process.env.VUE_APP_CLIENT
