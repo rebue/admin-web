@@ -18,13 +18,37 @@
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racAccountApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm.vue';
+import _ from 'lodash';
 
 export default {
     components: {
         BaseEditForm,
     },
     data() {
-        this.api = racAccountApi;
+        this.api = {
+            add(mo) {
+                return racAccountApi.add(mo);
+            },
+            modify(mo) {
+                return racAccountApi.modify(mo);
+            },
+            getById(id) {
+                return racAccountApi.getById(id).then(ro => {
+                    ro.extra.one = _.pick(ro.extra.one, [
+                        'code',
+                        'signInNickname',
+                        'signInName',
+                        'isTester',
+                        'remark',
+                        'id',
+                        'realmId',
+                        'orgId',
+                    ]);
+                    return ro;
+                });
+            },
+        };
+
         this.addRules = {
             signInName: [
                 { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val && val.trim() },
