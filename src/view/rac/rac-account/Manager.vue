@@ -37,7 +37,7 @@
         <manage-org
             ref="manageOrgForm"
             :account="curRecord"
-            :visible.sync="manageOrgFormVisible"
+            :visible.sync="manageOrgVisible"
             @close="handleEditFormClose"
         />
         <manage-role-form
@@ -265,7 +265,7 @@ export default {
         return {
             loading: false,
             changePswdFormVisible: false,
-            manageOrgFormVisible: false,
+            manageOrgVisible: false,
             manageRoleFormVisible: false,
             enabledFormVisible: false,
             disabledFormVisible: false,
@@ -483,7 +483,7 @@ export default {
          */
         handleManageOrg(record) {
             this.curRecord = record;
-            this.manageOrgFormVisible = true;
+            this.manageOrgVisible = true;
         },
         /**
          * 处理管理角色事件
