@@ -6,6 +6,8 @@ import { Ro } from '@/ro/Ro';
 import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
 import { RacAccountEnableMo } from '@/mo/rac/RacAccountEnableMo';
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 
 export default class RacAccountApi extends BaseCrudApi {
     /** 请求的基础链接 */
@@ -190,7 +192,7 @@ export default class RacAccountApi extends BaseCrudApi {
      */
     modifySignInPswdByWeChat(data): Promise<Ro> {
         return request.post({
-            url: `/orp-svr/forget/sign-in-pswd/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
+            url: `/orp-svr/forget/sign-in-pswd/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}`,
             data,
         });
     }
@@ -199,7 +201,7 @@ export default class RacAccountApi extends BaseCrudApi {
      */
     modifySignInPswdByDingding(data): Promise<Ro> {
         return request.post({
-            url: `/orp-svr/forget/sign-in-pswd/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
+            url: `/orp-svr/forget/sign-in-pswd/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}`,
             data,
         });
     }

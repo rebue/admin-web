@@ -12,7 +12,8 @@ import WxLoginCode from '@/component/app/WXLoginCode.vue';
 import request from '@/util/request';
 import { observer } from 'mobx-vue';
 import { getQueryVariable } from '@/util/common';
-
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'forget-password-by-wechat',
     components: {
@@ -30,12 +31,12 @@ export default observer({
     computed: {
         redirectUri() {
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
-            return `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/forget/verifiy-account/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
+            return `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/forget/verifiy-account/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
         },
         option() {
             return {
                 self_redirect: true,
-                appid: process.env.VUE_APP_WX_CODE_APPID,
+                appid: clientConfigEnv.VUE_APP_WX_CODE_APPID,
                 scope: 'snsapi_login',
                 redirect_uri: encodeURIComponent(this.redirectUri),
                 state: this.state,
@@ -84,7 +85,7 @@ export default observer({
             this.loading = true;
             request
                 .get({
-                    url: `/orp-svr/orp/get-auth-url/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
+                    url: `/orp-svr/orp/get-auth-url/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}`,
                     params: {
                         redirectUri: this.redirectUri,
                     },

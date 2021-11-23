@@ -12,6 +12,8 @@
 import DdLoginCode from '@/component/app/DDLoginCode.vue';
 import request from '@/util/request';
 import { observer } from 'mobx-vue';
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'forget-password-by-dingding',
     components: {
@@ -85,10 +87,10 @@ export default observer({
             this.loading = true;
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
             // 后端api?callbackUrl=
-            const redirectUri = `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/forget/verifiy-account/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
+            const redirectUri = `${clientConfigEnv.VUE_APP_DD_REDIRECT_URL}/orp-svr/forget/verifiy-account/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}/${this.account.id}?callbackUrl=${callbackUrl}`;
             request
                 .get({
-                    url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
+                    url: `/orp-svr/orp/get-auth-url/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}`,
                     params: {
                         redirectUri: redirectUri,
                     },
