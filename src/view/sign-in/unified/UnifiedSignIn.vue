@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('./logo.png')" alt="" class="logo" />
+            <img :src="require('@client/images/logo.png')" alt="" class="logo" :class="`${clientConfig.id}-logo`" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -32,13 +32,22 @@
                 </div>
             </div>
         </div>
-        <div class="footer">桂ICP备08001078号-2</div>
+        <div class="footer">
+            <template v-if="clientConfig.id === 'default'">
+                桂ICP备08001078号-2
+            </template>
+            <template v-else>
+                <p>{{ clientConfig.name }}版权所有</p>
+                <p>由南宁迈越提供技术支持</p>
+            </template>
+        </div>
     </div>
 </template>
 <script>
 import PublicSignIn from './PublicSignIn.vue';
 import scanCode from './scanCode.vue';
 import { getAppIdByUrl } from '@/util/common';
+import clientConfig from '@client/config';
 export default {
     components: {
         PublicSignIn,
@@ -46,6 +55,7 @@ export default {
     },
     data() {
         return {
+            clientConfig,
             phoneShow: true,
             codeType: '微信',
             forgetPswdPath: `/${getAppIdByUrl()}/forget-password`,
@@ -81,9 +91,12 @@ export default {
         align-items: flex-end;
         color: #000;
         .logo {
-            width: 207px;
+            // max-width: 207px;
             height: 78px;
             margin-left: 55px;
+        }
+        .nnxy-logo {
+            height: 60px;
         }
         .divider {
             width: 2px;
@@ -184,12 +197,15 @@ export default {
         }
     }
     .footer {
-        height: 50px;
-        line-height: 50px;
+        padding: 15px 0;
         text-align: center;
         vertical-align: middle;
         color: #a2a1a1;
         font-size: 14px;
+        p {
+            margin: 0;
+            padding: 0;
+        }
     }
 }
 </style>
