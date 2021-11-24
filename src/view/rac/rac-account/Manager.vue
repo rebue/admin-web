@@ -14,8 +14,8 @@
                             :query="{ realmId: curRealmId, orgId: curOrgId }"
                             :scrollX="600"
                             :showHierarchical="showOrg"
+                            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                         >
-                            <!-- :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
                             <template #left>
                                 <div v-show="showOrg" class="table-left">
                                     <org-tree
@@ -178,12 +178,12 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
-            // {
-            //     buttonType: 'primary',
-            //     icon: 'align-center',
-            //     title: '批量操作',
-            //     onClick: this.batchOperation,
-            // },
+            {
+                buttonType: 'primary',
+                icon: 'align-center',
+                title: '批量操作',
+                onClick: this.batchOperation,
+            },
         ];
 
         this.tableActions = [
@@ -379,7 +379,7 @@ export default {
         /**
          * 处理批量操作账户的事件
          */
-        batchOperation(record) {
+        batchOperation() {
             const that = this;
             this.$showDialog(
                 require('./batchOperation.vue').default,
@@ -425,7 +425,7 @@ export default {
         /**
          * 处理添加账户的事件
          */
-        handleAdd(record) {
+        handleAdd() {
             const that = this;
             this.$showDialog(
                 require('./add/Index.vue').default,
@@ -468,7 +468,7 @@ export default {
                         };
                     },
                     methods: {
-                        callback(ro) {
+                        callback() {
                             that.refreshTableData();
                         },
                     },

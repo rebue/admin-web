@@ -31,6 +31,7 @@ import EtlStrategyApi from './etl/EtlStrategyApi';
 import EtlConnApi from './etl/EtlConnApi';
 import RacStatusApi from './rac/RacStatusApi';
 import RaclevelProtectApi from './rac/RaclevelProtectApi';
+import RacExcelApi from './rac/RacExcelApi';
 
 export const racRealmApi = new RacRealmApi();
 export const racAppApi = new RacAppApi();
@@ -59,3 +60,4 @@ export const etlStrategyApi = new EtlStrategyApi();
 export const etlConnApi = new EtlConnApi();
 export const racStatusApi = new RacStatusApi();
 export const raclevelProtectApi = new RaclevelProtectApi();
+export const racExcelApi = new RacExcelApi();
