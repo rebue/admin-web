@@ -5,7 +5,7 @@
         <div class="mt20 main">
             <router-view />
         </div>
-        <div class="footer">技术支持 迈越公司版权所有 @ 2021</div>
+        <div class="footer">{{ clientConfig.name }}版权所有 由南宁迈越提供技术支持</div>
     </div>
 </template>
 
@@ -13,12 +13,16 @@
 import Header from '@/component/app/Header.vue';
 import ifLoginPass from '@/component/app/ifLoginPass.vue';
 import { racMenuAction } from '@/action/Action';
+import clientConfig from '@client/config';
+
 export default {
     name: 'app',
     components: { Header, ifLoginPass },
     props: {},
     data() {
-        return {};
+        return {
+            clientConfig,
+        };
     },
     watch: {},
     methods: {},
