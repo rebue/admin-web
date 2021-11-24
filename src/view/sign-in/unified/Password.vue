@@ -28,7 +28,11 @@ import md5 from 'crypto-js/md5';
 
 export default {
     components: {},
-    props: {},
+    props: {
+        action: {
+            type: Function,
+        },
+    },
     data() {
         return {
             loading: false,
@@ -87,19 +91,30 @@ export default {
                         this.loading = false;
                         return;
                     }
-                    const data = {
-                        loginType: 0,
-                        loginName: this.pswForm.accountName,
-                        password: md5(this.pswForm.signInPswd).toString(),
-                    };
-                    if (this.pswForm.captchaVerification) {
-                        data.captchaVerification = this.pswForm.captchaVerification;
-                    }
-                    request
-                        .post({
+                    let action = () => {
+                        const data = {
+                            loginType: 0,
+                            loginName: this.pswForm.accountName,
+                            password: md5(this.pswForm.signInPswd).toString(),
+                        };
+                        if (this.pswForm.captchaVerification) {
+                            data.captchaVerification = this.pswForm.captchaVerification;
+                        }
+                        return request.post({
                             url: '/oap-svr/oap/login',
                             data: data,
-                        })
+                        });
+                    };
+                    if (this.action) {
+                        action = () => {
+                            return this.action({
+                                ...this.pswForm,
+                                signInPswd: md5(this.pswForm.signInPswd).toString(),
+                            });
+                        };
+                    }
+
+                    action()
                         .then(r => {
                             if (r.result === 1) {
                                 sessionStorage.removeItem('isNeedVerifyCode');

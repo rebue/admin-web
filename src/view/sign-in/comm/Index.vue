@@ -7,7 +7,12 @@
             <a-tab-pane :key="4" tab="钉钉扫码登录"></a-tab-pane>
         </a-tabs>
         <div class="sign">
-            <Password :action="onPswdSubmit" :captchaSessionName="captchaSessionName" v-if="activeKey == 1" />
+            <Password
+                :action="onPswdSubmit"
+                :captchaSessionName="captchaSessionName"
+                v-if="activeKey == 1"
+                class="pswd-form"
+            />
             <Phone :action="onPhoneSubmit" v-if="activeKey == 2" />
             <Wechat v-if="activeKey == 3" />
             <Dingding v-if="activeKey == 4" />
@@ -23,6 +28,7 @@ import Password from '@/view/sign-in/unified/Password.vue';
 import Phone from '@/view/sign-in/unified/Phone.vue';
 import Wechat from '@/view/sign-in/unified/ScanWechat.vue';
 import Dingding from '@/view/sign-in/unified/ScanDingding.vue';
+import { AppDic } from '@/dic/AppDic';
 
 export default {
     components: {
@@ -59,7 +65,9 @@ export default {
         },
     },
     mounted() {
-        //
+        // auth_info_clientId 用于标记扫码登录的是哪个系统
+        const clientId = AppDic.getClientId(getAppIdByUrl());
+        sessionStorage.setItem('auth_info_clientId', clientId);
     },
     methods: {
         //帐密登录
@@ -119,5 +127,8 @@ export default {
     padding: 10px;
     color: white;
     text-align: center;
+}
+.pswd-form {
+    width: 400px;
 }
 </style>
