@@ -48,6 +48,7 @@ import PublicSignIn from './PublicSignIn.vue';
 import scanCode from './scanCode.vue';
 import { getAppIdByUrl } from '@/util/common';
 import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default {
     components: {
         PublicSignIn,
@@ -64,11 +65,19 @@ export default {
     methods: {
         //微信扫码点击事件
         vxScanCodeClick() {
+            if (!clientConfigEnv.VUE_APP_WX_CODE_APPID) {
+                this.$message.warning('暂不支持微信扫码登录');
+                return;
+            }
             this.phoneShow = false;
             this.codeType = '微信';
         },
         //钉钉扫码点击事件
         ddScanCodeClick() {
+            if (!clientConfigEnv.VUE_APP_DD_CODE_APPID) {
+                this.$message.warning('暂不支持钉钉扫码登录');
+                return;
+            }
             this.phoneShow = false;
             this.codeType = '钉钉';
         },
