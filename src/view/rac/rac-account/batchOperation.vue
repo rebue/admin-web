@@ -38,7 +38,7 @@
 <script>
 import { racExcelApi } from '@/api/Api';
 import { getAppIdByUrl } from '@/util/common';
-import XLSX from 'xlsx';
+// import XLSX from 'xlsx';
 // import Excel from '../../../util/excel.js';
 
 export default {
@@ -150,6 +150,8 @@ export default {
             }
             const fileList = [...info.fileList];
             this.fileList = fileList.slice(-1);
+            console.log(fileList);
+            console.log(this.fileList);
             if (info.file.status === 'done') {
                 if (info.file.response.success) {
                     // this.$message.success(`${info.file.name} 文件上传成功`);
