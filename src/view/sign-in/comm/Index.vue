@@ -83,6 +83,7 @@ export default {
             return racSignInApi.signInByAccountName(data).then(r => {
                 if (r.result === 1) {
                     sessionStorage.removeItem(this.captchaSessionName);
+                    // window.location.replace(r.extra.redirectUrl);
                     this.$router.push(`/${getAppIdByUrl()}`);
                 }
             });

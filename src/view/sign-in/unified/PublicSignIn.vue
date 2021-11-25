@@ -2,7 +2,7 @@
     <a-tabs default-active-key="1" @change="callback" class="tabs">
         <a-tab-pane key="1" tab="账号密码登录">
             <div v-if="show" class="sign psw-sign">
-                <psw-form />
+                <psw-form :action="onPswdSubmit" :captchaSessionName="captchaSessionName" />
             </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="手机短信登录">
@@ -13,8 +13,10 @@
     </a-tabs>
 </template>
 <script>
+import request from '@/util/request';
 import PswForm from './Password.vue';
 import PhoneForm from './Phone.vue';
+import { AppIdDic } from '@/dic/AppIdDic';
 export default {
     components: {
         PswForm,
@@ -25,6 +27,7 @@ export default {
         return {
             show: true,
             tabKey: 1,
+            captchaSessionName: `is-${AppIdDic.UnifiedAuth}-need-captcha`,
         };
     },
     methods: {
@@ -32,6 +35,30 @@ export default {
         callback(key) {
             this.show = !this.show;
             this.tabKey = key; //key值
+        },
+        //帐密登录
+        onPswdSubmit(formData) {
+            const data = {
+                loginType: 0,
+                loginName: formData.accountName,
+                password: formData.signInPswd,
+            };
+            if (formData.captchaVerification) {
+                data.captchaVerification = formData.captchaVerification;
+            }
+            return request
+                .post({
+                    url: '/oap-svr/oap/login',
+                    data: data,
+                })
+                .then(r => {
+                    if (r.result === 1) {
+                        sessionStorage.removeItem(this.captchaSessionName);
+                        // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
+                        console.log('----登录成功 repalce', r);
+                        window.location.replace(r.extra);
+                    }
+                });
         },
     },
 };

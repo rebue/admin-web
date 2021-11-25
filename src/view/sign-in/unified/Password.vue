@@ -23,7 +23,6 @@
     </a-form-model>
 </template>
 <script>
-import request from '@/util/request';
 import md5 from 'crypto-js/md5';
 
 export default {
@@ -31,6 +30,11 @@ export default {
     props: {
         action: {
             type: Function,
+            required: true,
+        },
+        captchaSessionName: {
+            type: String,
+            default: 'isNeedVerifyCode',
         },
     },
     data() {
@@ -69,7 +73,7 @@ export default {
                 if (valid) {
                     //第一次密码输入错误后需要进行验证码校验
                     //表单校验成功后，验证码逻辑
-                    if (sessionStorage.getItem('isNeedVerifyCode') && !this.pswForm.captchaVerification) {
+                    if (sessionStorage.getItem(this.captchaSessionName) && !this.pswForm.captchaVerification) {
                         const that = this;
                         const { handleVerifySuccess, handleVerifyError } = this;
                         this.$showDialog(
@@ -91,42 +95,15 @@ export default {
                         this.loading = false;
                         return;
                     }
-                    let action = () => {
-                        const data = {
-                            loginType: 0,
-                            loginName: this.pswForm.accountName,
-                            password: md5(this.pswForm.signInPswd).toString(),
-                        };
-                        if (this.pswForm.captchaVerification) {
-                            data.captchaVerification = this.pswForm.captchaVerification;
-                        }
-                        return request.post({
-                            url: '/oap-svr/oap/login',
-                            data: data,
-                        });
-                    };
-                    if (this.action) {
-                        action = () => {
-                            return this.action({
-                                ...this.pswForm,
-                                signInPswd: md5(this.pswForm.signInPswd).toString(),
-                            });
-                        };
-                    }
 
-                    action()
-                        .then(r => {
-                            if (r.result === 1) {
-                                sessionStorage.removeItem('isNeedVerifyCode');
-                                // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
-                                console.log('----登录成功 repalce', r);
-                                window.location.replace(r.extra);
-                            }
-                        })
+                    this.action({
+                        ...this.pswForm,
+                        signInPswd: md5(this.pswForm.signInPswd).toString(),
+                    })
                         .catch(() => {
                             //登录失败，清除验证码
                             this.pswForm.captchaVerification = '';
-                            sessionStorage.setItem('isNeedVerifyCode', true);
+                            sessionStorage.setItem(this.captchaSessionName, true);
                         })
                         .finally(() => {
                             this.loading = false;
