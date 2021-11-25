@@ -26,6 +26,7 @@
 import Authentication from './Authentication.vue';
 import ChangePswdForm from './ChangePswdForm.vue';
 import { getAppIdByUrl } from '@/util/common';
+import { AppIdDic } from '@/dic/AppIdDic';
 
 export default {
     components: {
@@ -55,7 +56,13 @@ export default {
         },
         goLogin() {
             const appId = getAppIdByUrl();
-            this.$router.replace(`/${appId}/sign-in/unified`);
+            if (appId === AppIdDic.UnifiedAuth) {
+                this.$router.replace(`/${appId}/sign-in/unified`);
+            } else if (appId === AppIdDic.PlatformAdminWeb) {
+                this.$router.replace(`/${appId}/sign-in/platform`);
+            } else if (appId === AppIdDic.OpsAdminWeb) {
+                this.$router.replace(`/${appId}/sign-in/ops`);
+            }
         },
     },
 };
