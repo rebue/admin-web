@@ -45,6 +45,8 @@ const oidc = async function(next) {
     // unified-auth, platform-admin-web, ops-admin-web
     try {
         const clientId = AppDic.getClientId(getAppIdByUrl());
+        // auth_info_clientId 用于标记扫码登录的是哪个系统
+        sessionStorage.setItem('auth_info_clientId', clientId);
         const { result, detail } = await oapOidcApi.getOidcOauthUri(clientId, {
             // redirectUri: encodeURIComponent(`http://172.20.11.244:13080/orp-svr/orp/callback`),
             redirectUri: encodeURIComponent(`${location.origin}/orp-svr/orp/auth-code/oidc/${clientId}`),
@@ -128,6 +130,7 @@ router.beforeEach(async (to, from, next) => {
             }
         } else {
             //已登录
+            sessionStorage.removeItem('auth_info_clientId');
             next();
             return;
         }

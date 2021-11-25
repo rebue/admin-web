@@ -8,10 +8,10 @@ export default class RacExcelApi extends BaseCrudApi {
     baseUrn = '/rac-svr/rac/excel/';
     //导出模板
     getDownload(data) {
-        return request.get({ url: this.baseUrn + data + '/template-download' });
+        return this.baseUrn + 'template-download/' + data;
     }
     //导入模板
     getUpload(data) {
-        return request.get({ url: this.baseUrn + data + '/template-upload' });
+        return request.post({ url: this.baseUrn + '/template-upload' + data });
     }
 }

@@ -15,6 +15,7 @@
                     上传文件
                 </a-button> -->
             </a-upload>
+            <!-- <a :href="api.getDownload('account')"></a> -->
             <a-button class="export" style="width:125px;height:32px;font-size: 12px" @click="exportData()">
                 <i class="iconfont icon-printdaoru"></i>
                 点击下载模板文件
@@ -41,6 +42,7 @@ export default {
                 sm: { span: 13 },
             },
         };
+        this.api = racExcelApi;
         return {
             loading: false,
             checkedData: ['启用', '禁用'],
@@ -63,9 +65,20 @@ export default {
         },
         /** 下载excel样例 */
         exportData() {
-            racExcelApi.getDownload('account').then(ro => {
-                console.log(ro);
-            });
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            link.href = racExcelApi.getDownload('account');
+            // link.href = ‘;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); //下载完成移除元素
+            // racExcelApi.getDownload('account').then(data => {
+            //     console.log(data);
+            //     const url = window.URL.createObjectURL(new Blob([data]));
+            //     const link = document.createElement('a');
+            //     link.style.display = 'none';
+            //     console.log(url);
+            // });
             // this.getDownload()
             // const data = [
             //     {

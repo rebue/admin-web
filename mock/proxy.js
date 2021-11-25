@@ -4,6 +4,7 @@ const config = {
     luqing: 'http://172.20.11.113:10085',
     yuanman: 'http://172.20.11.244:10085',
     release: 'https://auth.maiyuesoft.com',
+    nnxy: 'https://auth.nnxy.edu.cn'
 };
 const target = config.yuanman;
 

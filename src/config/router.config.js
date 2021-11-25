@@ -49,6 +49,11 @@ export const constantRouters = [
         component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
     },
     {
+        path: '/platform-admin-web/sign-in/index',
+        name: 'platform-sign-in-index',
+        component: () => import('@/view/sign-in/platform/Index.vue'),
+    },
+    {
         path: '/platform-admin-web/forget-password',
         name: 'platform-forget-password',
         component: () => import('@/view/forget-password/Index.vue'),
@@ -269,6 +274,11 @@ export const constantRouters = [
         path: '/ops-admin-web/sign-in/ops',
         name: 'ops-sign-in',
         component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
+    },
+    {
+        path: '/ops-admin-web/sign-in/index',
+        name: 'ops-sign-in-index',
+        component: () => import('@/view/sign-in/ops/Index.vue'),
     },
     {
         path: '/ops-admin-web/forget-password',

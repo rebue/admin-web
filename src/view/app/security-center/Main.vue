@@ -94,6 +94,8 @@ import { accountStore } from '@/store/Store';
 import { racMenuAction } from '@/action/Action';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import ChangePswdForm from './ChangePswdForm.vue';
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 
 export default observer({
     name: 'app-security-center-main',
@@ -162,6 +164,10 @@ export default observer({
         },
         //微信
         bindWechat() {
+            if (!clientConfigEnv.VUE_APP_WX_CODE_APPID) {
+                this.$message.warning('暂不支持微信绑定');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Wechat.vue').default,
@@ -212,6 +218,10 @@ export default observer({
 
         //钉钉绑定
         bindDing() {
+            if (!clientConfigEnv.VUE_APP_DD_CODE_APPID) {
+                this.$message.warning('暂不支持钉钉绑定');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Dingding.vue').default,

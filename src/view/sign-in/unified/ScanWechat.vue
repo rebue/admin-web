@@ -31,7 +31,9 @@ export default observer({
     computed: {
         redirectUri() {
             const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
-            return `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/unified-auth?callbackUrl=${callbackUrl}`;
+            return `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${
+                clientConfigEnv.VUE_APP_WX_CODE_APPID
+            }/${sessionStorage.getItem('auth_info_clientId')}?callbackUrl=${callbackUrl}`;
         },
         option() {
             return {
@@ -97,6 +99,7 @@ export default observer({
         },
     },
     beforeDestroy() {
+        console.log('---sss');
         if (typeof window.addEventListener != 'undefined') {
             window.removeEventListener('message', this.handleMessage, false);
         } else if (typeof window.attachEvent != 'undefined') {
