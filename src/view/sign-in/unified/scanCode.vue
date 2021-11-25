@@ -13,7 +13,7 @@
             </div>
             <div class="loginBox">
                 <!-- <div id="login_container"></div> -->
-                <scan-wechat v-if="codeType == '微信'" />
+                <scan-wechat :clientId="clientId" v-if="codeType == '微信'" />
                 <scan-dingding v-else />
             </div>
             <!-- <div class="vxTips" v-if="codeType == '微信'">
@@ -39,6 +39,7 @@ export default {
     data() {
         return {
             modelVlaue: '手机微信扫码登录',
+            clientId: sessionStorage.getItem('auth_info_clientId'),
         };
     },
     mounted() {

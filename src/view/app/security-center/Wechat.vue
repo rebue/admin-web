@@ -1,131 +1,43 @@
 <template>
-    <div class="wechat-body">
-        <a-spin :spinning="loading">
-            <wx-login-code :option="option" v-if="option.state && !status"></wx-login-code>
-            <a-result status="success" :title="statusMsg" v-if="status == 'success'">
-                <template #extra>
-                    <a-button key="success-cancel" type="primary" @click="ok">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
-            <a-result status="error" :title="statusMsg" v-if="status == 'error'">
-                <template #extra>
-                    <a-button key="error-cancel" type="primary" @click="closeDialog">
-                        关闭
-                    </a-button>
-                </template>
-            </a-result>
-        </a-spin>
-    </div>
+    <wx-code
+        :redirect_uri="redirectUri"
+        :scanTransferEvent="eventTypeTransfer[eventType]"
+        :successFn="handleSuccess"
+    ></wx-code>
 </template>
 <script>
-import WxLoginCode from '@/component/app/WXLoginCode.vue';
-import request from '@/util/request';
+import WxCode from '@/view/sign-in/unified/Wechat.vue';
 import { observer } from 'mobx-vue';
-import { getQueryVariable } from '@/util/common';
 import clientConfig from '@client/config';
 const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'app-security-center-wechat',
     components: {
-        WxLoginCode,
+        WxCode,
     },
     data() {
         return {
-            state: '',
-            loading: false,
-            status: '',
-            statusMsg: '',
+            eventTypeTransfer: {
+                'account-bind': 'wechat-open-bind',
+                'account-unbind': 'wechat-open-unbind',
+            },
         };
     },
     computed: {
         redirectUri() {
-            const callbackUrl = encodeURIComponent(`${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/scanTransfer`);
-            return `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/${this.accountId}?callbackUrl=${callbackUrl}`;
+            return `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/${this.eventType}/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/${this.accountId}`;
         },
-        option() {
-            return {
-                self_redirect: true,
-                appid: clientConfigEnv.VUE_APP_WX_CODE_APPID,
-                scope: 'snsapi_login',
-                redirect_uri: encodeURIComponent(this.redirectUri),
-                state: this.state,
-                style: 'black',
-                href: `${location.origin}${process.env.VUE_APP_PUBLIC_PATH}/css/wechat.css`,
-            };
-        },
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.getQrcode();
-        });
-
-        if (typeof window.addEventListener != 'undefined') {
-            window.addEventListener('message', this.handleMessage, false);
-        } else if (typeof window.attachEvent != 'undefined') {
-            window.attachEvent('onmessage', this.handleMessage);
-        }
     },
     methods: {
-        ok() {
-            console.log('--submit');
-            //发请求
-            //then
-            this.callback && this.callback();
-            this.closeDialog();
-        },
-        handleMessage(event) {
-            this.loading = true;
-            const origin = event.origin;
-            console.log('---------origin', event.origin);
-            if (origin == location.origin) {
-                console.log('---------接收到子窗口的新消息了', event.data);
-                if (event.data.event === 'wechat-open-bind' || event.data.event === 'wechat-open-unbind') {
-                    const { result, msg } = event.data;
-                    if (result === 'success') {
-                        this.callback && this.callback();
-                        this.status = result;
-                    } else if (result === 'error') {
-                        this.status = result;
-                    }
-                    this.statusMsg = msg;
-                }
-                this.loading = false;
+        handleSuccess(data) {
+            const { result, msg } = data;
+            if (result === 'success') {
+                setTimeout(() => {
+                    this.callback && this.callback();
+                    this.closeDialog && this.closeDialog();
+                }, 500);
             }
         },
-        getQrcode() {
-            this.loading = true;
-            request
-                .get({
-                    url: `/orp-svr/orp/get-auth-url/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}`,
-                    params: {
-                        redirectUri: this.redirectUri,
-                    },
-                })
-                .then(ro => {
-                    console.log('---------res', ro.detail);
-                    this.state = getQueryVariable(ro.detail, 'state').replace('#wechat_redirect', '');
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
-    },
-    beforeDestroy() {
-        if (typeof window.addEventListener != 'undefined') {
-            window.removeEventListener('message', this.handleMessage, false);
-        } else if (typeof window.attachEvent != 'undefined') {
-            window.detachEvent('onmessage', this.handleMessage);
-        }
     },
 });
 </script>
-<style scoped>
-.wechat-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
-}
-</style>
