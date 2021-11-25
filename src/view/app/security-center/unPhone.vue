@@ -18,7 +18,7 @@
 </template>
 <script>
 import { racAccountApi, racVerifitionApi } from '@/api/Api';
-import SendSMSCode from '@/view/sign-in/unified/SendSMSCode.vue';
+import SendSMSCode from '@/component/app/SendSMSCode.vue';
 
 export default {
     name: 'app-security-center-mobile',

@@ -40,7 +40,7 @@
 <script>
 import request from '@/util/request';
 import { isPhone } from '@/util/validator';
-import SendSMSCode from './SendSMSCode.vue';
+import SendSMSCode from '@/component/app/SendSMSCode.vue';
 
 export default {
     components: {

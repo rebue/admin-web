@@ -19,7 +19,7 @@
 <script>
 import { racAccountApi } from '@/api/Api';
 import { isPhone } from '@/util/validator';
-import SendSMSCode from '@/view/sign-in/unified/SendSMSCode.vue';
+import SendSMSCode from '@/component/app/SendSMSCode.vue';
 
 export default {
     name: 'app-security-center-mobile',

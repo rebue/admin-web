@@ -36,7 +36,7 @@
 </template>
 <script>
 import { racVerifitionApi } from '@/api/Api';
-import SendSMSCode from '@/view/sign-in/unified/SendSMSCode.vue';
+import SendSMSCode from '@/component/app/SendSMSCode.vue';
 
 export default {
     name: 'forget-password-by-phone',
