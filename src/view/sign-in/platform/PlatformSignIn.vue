@@ -26,23 +26,9 @@ export default {
     },
     data() {
         return {
-            /** 登录后要中转的地址 */
-            redirect: undefined,
             /** 定义当前登录页面所对应的应用 */
             appId: AppIdDic.PlatformAdminWeb,
-            loading: false,
         };
-    },
-    watch: {
-        $route: {
-            handler: function(route) {
-                this.redirect = route.query && route.query.redirect;
-            },
-            immediate: true,
-        },
-    },
-    methods: {
-        //
     },
 };
 </script>
@@ -77,7 +63,7 @@ export default {
 
         .login-card {
             // margin-top: 150px;
-            width: 450px;
+            width: 800px;
             // height: 300px;
             background-color: aliceblue;
             display: flex;
@@ -86,7 +72,7 @@ export default {
             align-items: center; /* 垂直居中 */
 
             .form {
-                width: 280px;
+                width: auto;
             }
         }
     }

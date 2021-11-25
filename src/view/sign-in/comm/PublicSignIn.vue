@@ -1,38 +1,41 @@
 <template>
-    <!-- 只需要通过 rules 属性传入约定的验证规则，
-                并将 FormItem 的 prop 属性设置为需校验的字段名即可。
-                校验规则参见 https://github.com/yiminghe/async-validator -->
-    <a-tabs default-active-key="1" @change="callback">
-        <a-tab-pane key="1" tab="账号密码登录">
-            <div v-if="show" class="sign">
-                <a-form-model ref="form" class="form" :model="form" :rules="rules">
-                    <a-form-model-item prop="accountName" class="sign">
-                        <a-input v-autofocus v-model.trim="form.accountName" placeholder="请输入登录账号">
-                            <template #prefix><a-icon type="user"/></template>
-                        </a-input>
-                    </a-form-model-item>
-                    <a-form-model-item prop="signInPswd">
-                        <a-input-password v-model="form.signInPswd" placeholder="请输入登录密码">
-                            <template #prefix><a-icon type="key"/></template>
-                        </a-input-password>
-                    </a-form-model-item>
-                    <a-button :loading="loading" type="primary" block @click="doSubmit" class="sign">登录</a-button>
-                </a-form-model>
-            </div>
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="微信扫码登录">
-            <div id="wx-login-box" style="width: 350px"></div>
-        </a-tab-pane>
-    </a-tabs>
+    <fragment>
+        <a-tabs v-model="activeKey" @change="onActiveKeyChange">
+            <a-tab-pane :key="1" tab="账号密码登录"></a-tab-pane>
+            <a-tab-pane :key="2" tab="手机登录"></a-tab-pane>
+            <a-tab-pane :key="3" tab="微信扫码登录"></a-tab-pane>
+            <a-tab-pane :key="4" tab="钉钉扫码登录"></a-tab-pane>
+        </a-tabs>
+        <div class="sign">
+            <Password
+                :action="onPswdSubmit"
+                :captchaSessionName="captchaSessionName"
+                v-if="activeKey == 1"
+                class="pswd-form"
+            />
+            <Phone :action="onPhoneSubmit" v-if="activeKey == 2" />
+            <Wechat :clientId="clientId" v-if="activeKey == 3" />
+            <Dingding v-if="activeKey == 4" />
+        </div>
+    </fragment>
 </template>
 
 <script>
-import md5 from 'crypto-js/md5';
-import { racSignInApi, racVerifitionApi } from '@/api/Api';
-import { getAppIdByUrl } from '@/util/common';
+import request from '@/util/request';
+import { racSignInApi } from '@/api/Api';
+import Password from '@/view/sign-in/unified/Password.vue';
+import Phone from '@/view/sign-in/unified/Phone.vue';
+import Wechat from '@/view/sign-in/unified/ScanWechat.vue';
+import Dingding from '@/view/sign-in/unified/ScanDingding.vue';
+import { AppDic } from '@/dic/AppDic';
 
 export default {
-    components: {},
+    components: {
+        Password,
+        Phone,
+        Wechat,
+        Dingding,
+    },
     props: {
         appId: {
             type: String,
@@ -40,27 +43,10 @@ export default {
         },
     },
     data() {
-        this.api = racSignInApi;
         return {
-            /** 登录后要中转的地址 */
-            redirect: undefined,
-            /** 定义当前登录页面所对应的应用 */
-            //appId: AppIdDic.OpsAdminWeb,
-            loading: false,
-            show: true,
-            form: {
-                accountName: '',
-                signInPswd: '',
-            },
-            rules: {
-                accountName: [
-                    { required: true, message: '请输入登录账号', trigger: 'blur', transform: val => val.trim() },
-                ],
-                signInPswd: [
-                    { required: true, message: '请输入登录密码', trigger: 'blur', transform: val => val.trim() },
-                ],
-            },
-            captcha: '', //验证码
+            activeKey: 1,
+            captchaSessionName: `is-${this.appId}-need-captcha`,
+            clientId: AppDic.getClientId(this.appId),
         };
     },
     watch: {
@@ -79,93 +65,56 @@ export default {
         },
     },
     methods: {
-        callback(key) {
-            this.show = !this.show;
-        },
-        doSubmit() {
-            this.loading = true;
-
-            this.$refs.form.validate(valid => {
-                if (valid) {
-                    //第一次密码输入错误后需要进行验证码校验
-                    //表单校验成功后，验证码逻辑
-                    if (sessionStorage.getItem('isNeedCaptcha') && !this.captcha) {
-                        const that = this;
-                        const { handleVerifySuccess, handleVerifyError } = this;
-                        this.$showDialog(
-                            require('./Verify.vue').default,
-                            {
-                                methods: {
-                                    handleVerifySuccess: handleVerifySuccess.bind(that),
-                                    handleVerifyError: handleVerifyError.bind(that),
-                                },
-                            },
-                            {
-                                title: '请完成安全验证',
-                                footer: null,
-                                // closable: false,
-                                width: 450,
-                                wrapClassName: 'verify-modal-wrap',
-                            }
-                        );
-                        this.loading = false;
-                        return;
-                    }
-                    this.api
-                        .signInByAccountName({
-                            appId: this.appId,
-                            accountName: this.form.accountName,
-                            signInPswd: md5(this.form.signInPswd).toString(),
-                            verification: this.captcha,
-                        })
-                        .then(ro => {
-                            console.log('kkkkkk', ro);
-                            sessionStorage.removeItem('isNeedCaptcha');
-                            this.detail = ro.detail ? ro.detail : false;
-                            if (this.redirect) {
-                                window.location.href = this.redirect;
-                            } else {
-                                this.$router.push(`/${getAppIdByUrl()}`);
-                            }
-                        })
-                        .catch(() => {
-                            //登录失败，清除验证码
-                            this.captcha = null;
-                            sessionStorage.setItem('isNeedCaptcha', true);
-                        })
-                        .finally(() => {
-                            this.loading = false;
-                        });
-                } else {
-                    this.$nextTick(() => {
-                        this.$focusError(); // 设置焦点到第一个提示错误的输入框
-                        this.loading = false;
-                    });
+        //帐密登录
+        onPswdSubmit(formData) {
+            const data = {
+                appId: this.appId,
+                accountName: formData.accountName,
+                signInPswd: formData.signInPswd,
+            };
+            if (formData.captchaVerification) {
+                data.verification = formData.captchaVerification;
+            }
+            return racSignInApi.signInByAccountName(data).then(r => {
+                if (r.result === 1) {
+                    sessionStorage.removeItem(this.captchaSessionName);
+                    // window.location.replace(r.extra.redirectUrl);
+                    this.$router.push(`/${this.appId}`);
                 }
             });
         },
-        handleVerifySuccess(res) {
-            this.captcha = res.captchaVerification;
-            this.doSubmit();
-            // const verif = {
-            //     captchaVerification: res.captchaVerification,
-            // };
-            // racVerifitionApi.reqVerify(verif).then((ro) => {
-
-            // });
+        // 手机号登录
+        //手机号登录
+        onPhoneSubmit(formData) {
+            const data = {
+                loginType: 1,
+                phoneNumber: formData.phoneNumber,
+                code: formData.code,
+            };
+            if (formData.captchaVerification) {
+                data.captchaVerification = formData.captchaVerification;
+            }
+            return request
+                .post({
+                    url: '/oap-svr/oap/login',
+                    data: data,
+                })
+                .then(r => {
+                    if (r.result === 1) {
+                        this.$router.push(`/${this.appId}`);
+                    }
+                });
         },
-        handleVerifyError() {
-            this.captcha = '';
+        onActiveKeyChange(key) {
+            //
         },
     },
 };
 </script>
 <style scoped>
-.form {
-    width: 280px;
-    height: 450px;
-}
 .sign {
+    /* width: 280px; */
+    height: 450px;
     margin-top: 40px;
     margin-bottom: 20px;
 }
@@ -175,8 +124,7 @@ export default {
     color: white;
     text-align: center;
 }
-</style>
-<style>
-.verify-modal-wrap .ant-modal-body {
+.pswd-form {
+    width: 400px;
 }
 </style>
