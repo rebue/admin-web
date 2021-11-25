@@ -8,7 +8,7 @@
     ></wx-code>
 </template>
 <script>
-import WxCode from '@/view/sign-in/unified/Wechat.vue';
+import WxCode from '@/component/app/Wechat.vue';
 import { observer } from 'mobx-vue';
 import clientConfig from '@client/config';
 const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];

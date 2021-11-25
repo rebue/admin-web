@@ -2,11 +2,11 @@
     <wx-code :redirect_uri="redirectUri" scanTransferEvent="wechat-open-sign-in" :successFn="handleSuccess"></wx-code>
 </template>
 <script>
-import WxCode from './Wechat.vue';
+import WxCode from '@/component/app/Wechat.vue';
 import { observer } from 'mobx-vue';
-import clientConfig from '@client/config';
 import { AppDic } from '@/dic/AppDic';
 import { AppIdDic } from '@/dic/AppIdDic';
+import clientConfig from '@client/config';
 const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'sign-in-unified-wechat',
