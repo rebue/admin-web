@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="main">
-            <img :src="require('./makeup.png')" alt="" class="makeup" />
+            <img :src="require('./images/makeup.png')" alt="" class="makeup" />
             <div class="login-card">
                 <public-sign-in v-if="phoneShow" class="form"></public-sign-in>
                 <template v-else>
@@ -127,7 +127,7 @@ export default {
     }
     .main {
         flex-grow: 1;
-        background: url(./bg.png) no-repeat;
+        background: url(./images/bg.png) no-repeat;
         background-size: cover;
         background-color: #3e78ed;
         position: relative;

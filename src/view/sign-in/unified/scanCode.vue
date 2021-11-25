@@ -3,8 +3,8 @@
         <div class="codeBox">
             <div class="topLogo">
                 <div class="imgStyle">
-                    <img v-if="codeType == '微信'" src="./weixin.png" alt="" />
-                    <img v-else src="./dingd.png" alt="" />
+                    <img v-if="codeType == '微信'" src="./images/weixin.png" alt="" />
+                    <img v-else src="./images/dingd.png" alt="" />
                 </div>
                 <div class="textStyle">
                     <div>{{ modelVlaue }}</div>
