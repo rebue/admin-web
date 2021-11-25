@@ -22,7 +22,7 @@
                 <div v-else>暂不支持微信扫码登录</div>
             </template>
             <template v-if="activeKey == 4">
-                <Dingding v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID" />
+                <Dingding :clientId="clientId" v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID" />
                 <div v-else>暂不支持钉钉扫码登录</div>
             </template>
         </div>

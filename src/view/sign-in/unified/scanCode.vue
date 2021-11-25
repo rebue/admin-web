@@ -14,7 +14,7 @@
             <div class="loginBox">
                 <!-- <div id="login_container"></div> -->
                 <scan-wechat :clientId="clientId" v-if="codeType == '微信'" />
-                <scan-dingding v-else />
+                <scan-dingding :clientId="clientId" v-else />
             </div>
             <!-- <div class="vxTips" v-if="codeType == '微信'">
                 请使用微信扫描二维码登录
