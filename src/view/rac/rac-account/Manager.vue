@@ -181,9 +181,15 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'align-center',
-                title: '批量操作',
+                title: '批量导入',
                 onClick: this.batchOperation,
             },
+            // {
+            //     buttonType: 'primary',
+            //     icon: 'align-center',
+            //     title: '导出',
+            //     onClick: this.batchOperation,
+            // },
         ];
 
         this.tableActions = [
