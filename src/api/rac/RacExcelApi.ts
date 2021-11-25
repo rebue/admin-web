@@ -12,6 +12,6 @@ export default class RacExcelApi extends BaseCrudApi {
     }
     //导入模板
     getUpload(data) {
-        return request.post({ url: this.baseUrn + '/template-upload' + data });
+        return request.post({ url: this.baseUrn + data + '/template-upload' });
     }
 }

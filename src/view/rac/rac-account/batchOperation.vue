@@ -8,7 +8,14 @@
             </a-select>
         </a-form-model-item>
         <a-form-model-item key="uploadExcel" label="选择上传的Excel文件">
-            <a-upload name="file" :multiple="true" :action="uploadUrl" @change="handleImportExcel" accept=".xls,.xlsx">
+            <a-upload
+                name="file"
+                :multiple="true"
+                :action="uploadUrl"
+                @change="handleImportExcel"
+                :headers="headers"
+                accept=".xls,.xlsx"
+            >
                 <a-button type="primary"> <a-icon type="upload" /> 上传文件 </a-button>
                 <!-- <a-button style="width:100px;height:30px;font-size: 12px">
                     <i class="iconfont icon-printdaoru"></i>
@@ -26,6 +33,7 @@
 
 <script>
 import { racExcelApi } from '@/api/Api';
+import { getAppIdByUrl } from '@/util/common';
 // import XLSX from 'xlsx';
 // import Excel from '../../../util/excel.js';
 
@@ -51,13 +59,17 @@ export default {
             },
             //文件数据
             fileList: [],
+            headers: {},
             //上传文件地址
-            // uploadUrl: `/oss-svr/oss/obj/upload`,
             uploadUrl: `/rac-svr/rac/excel/account/template-upload`,
         };
     },
     created() {
-        this.rewriteFRread();
+        const appId = getAppIdByUrl();
+        if (appId) {
+            this.headers['App-Id'] = appId;
+            console.log(appId);
+        }
     },
     methods: {
         handleChange(e) {
@@ -68,60 +80,9 @@ export default {
             const link = document.createElement('a');
             link.style.display = 'none';
             link.href = racExcelApi.getDownload('account');
-            // link.href = ‘;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link); //下载完成移除元素
-            // racExcelApi.getDownload('account').then(data => {
-            //     console.log(data);
-            //     const url = window.URL.createObjectURL(new Blob([data]));
-            //     const link = document.createElement('a');
-            //     link.style.display = 'none';
-            //     console.log(url);
-            // });
-            // this.getDownload()
-            // const data = [
-            //     {
-            //         code: '20211104',
-            //         signInNickname: '张三',
-            //         signInName: 'zhangsan',
-            //         signInPswd: 'a1234567',
-            //         isTester: '否',
-            //         remark: '备注',
-            //         realName: '李四',
-            //         idCard: '452501200000000000',
-            //         mobile: '18200001234',
-            //         email: '9999999@qq.com',
-            //     },
-            // ];
-            // const date = new Date();
-            // const year = date.getFullYear();
-            // let month = date.getMonth() + 1;
-            // let day = date.getDate();
-            // month = month < 10 ? '0' + month : month;
-            // day = day < 10 ? '0' + day : day;
-            // const currentDate = year + '' + month + '' + day;
-            // Excel.exportExcel(data, '上传文件模板' + currentDate);
-        },
-        //导入功能不兼容IE方法
-        rewriteFRread() {
-            FileReader.prototype.readAsBinaryString = function(fileData) {
-                let binary = '';
-                // eslint-disable-next-line consistent-this
-                const pt = this;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const bytes = new Uint8Array(reader.result);
-                    const length = bytes.byteLength;
-                    for (let i = 0; i < length; i++) {
-                        binary += String.fromCharCode(bytes[i]);
-                    }
-                    pt.content = binary;
-                    pt.onload(pt);
-                };
-                reader.readAsArrayBuffer(fileData);
-            };
-            console.log('rewrite success');
         },
         //上传文件
         uploadFile(info) {
