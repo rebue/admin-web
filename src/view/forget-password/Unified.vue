@@ -8,13 +8,7 @@
                 <div class="sub-title">UNIFIED AUTHENTICATION PLATFORM</div>
             </div>
         </div>
-        <div class="main">
-            <!-- 忘记密码流程 -->
-            <!-- 验证账号 -->
-            <Account @success="next" v-if="step == 0" />
-            <!-- 身份认证，设置操作，完成 -->
-            <Wrap :account="account" v-if="step == 1" />
-        </div>
+        <Main class="main" />
         <div class="footer">
             <template v-if="clientConfig.id === 'default'">
                 桂ICP备08001078号-2
@@ -27,30 +21,17 @@
     </div>
 </template>
 <script>
-import Account from './Account.vue';
-import Wrap from './Wrap.vue';
+import Main from './Main.vue';
 import clientConfig from '@client/config';
 
 export default {
     components: {
-        Account,
-        Wrap,
+        Main,
     },
     data() {
         return {
             clientConfig,
-            step: 0,
-            account: {},
         };
-    },
-    mounted() {
-        //
-    },
-    methods: {
-        next(account) {
-            this.step = 1;
-            this.account = account;
-        },
     },
 };
 </script>

@@ -51,7 +51,7 @@ export const constantRouters = [
     {
         path: '/platform-admin-web/forget-password',
         name: 'platform-forget-password',
-        component: () => import('@/view/forget-password/Index.vue'),
+        component: () => import('@/view/forget-password/Platform.vue'),
     },
     /** 页面 */
     {
@@ -273,7 +273,7 @@ export const constantRouters = [
     {
         path: '/ops-admin-web/forget-password',
         name: 'ops-forget-password',
-        component: () => import('@/view/forget-password/Index.vue'),
+        component: () => import('@/view/forget-password/Ops.vue'),
     },
     /** 页面 */
     {
@@ -420,7 +420,7 @@ export const constantRouters = [
     {
         path: '/unified-auth/forget-password',
         name: 'unified-forget-password',
-        component: () => import('@/view/forget-password/Index.vue'),
+        component: () => import('@/view/forget-password/Unified.vue'),
     },
     {
         path: '/unified-auth',

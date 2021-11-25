@@ -63,9 +63,11 @@ export default {
 
         .login-card {
             // margin-top: 150px;
-            width: 800px;
+            // width: 800px;
             // height: 300px;
-            background-color: aliceblue;
+            padding: 0 50px;
+            // background-color: aliceblue;
+            background-color: #fff;
             display: flex;
             flex-direction: column;
             justify-content: center; /* 水平居中 */

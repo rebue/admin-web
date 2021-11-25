@@ -13,6 +13,9 @@
                 v-if="activeKey == 1"
                 class="pswd-form"
             />
+            <router-link :to="`/${appId}/forget-password`" class="forget-password" v-if="activeKey == 1"
+                >忘记密码</router-link
+            >
             <Phone :action="onPhoneSubmit" v-if="activeKey == 2" />
             <Wechat :clientId="clientId" v-if="activeKey == 3" />
             <Dingding v-if="activeKey == 4" />
@@ -111,7 +114,7 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 .sign {
     /* width: 280px; */
     height: 450px;
@@ -126,5 +129,14 @@ export default {
 }
 .pswd-form {
     width: 400px;
+}
+.forget-password {
+    display: inline-block;
+    margin: 20px 0;
+    color: rgba(0, 0, 0, 0.65);
+    &:hover {
+        color: #3e78ed;
+        text-decoration: underline;
+    }
 }
 </style>
