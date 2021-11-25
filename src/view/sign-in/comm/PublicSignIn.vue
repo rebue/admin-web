@@ -17,8 +17,14 @@
                 >忘记密码</router-link
             >
             <Phone :action="onPhoneSubmit" v-if="activeKey == 2" />
-            <Wechat :clientId="clientId" v-if="activeKey == 3" />
-            <Dingding v-if="activeKey == 4" />
+            <template v-if="activeKey == 3">
+                <Wechat :clientId="clientId" v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID" />
+                <div v-else>暂不支持微信扫码登录</div>
+            </template>
+            <template v-if="activeKey == 4">
+                <Dingding v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID" />
+                <div v-else>暂不支持钉钉扫码登录</div>
+            </template>
         </div>
     </fragment>
 </template>
@@ -31,7 +37,8 @@ import Phone from '@/view/sign-in/unified/Phone.vue';
 import Wechat from '@/view/sign-in/unified/ScanWechat.vue';
 import Dingding from '@/view/sign-in/unified/ScanDingding.vue';
 import { AppDic } from '@/dic/AppDic';
-
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default {
     components: {
         Password,
@@ -50,6 +57,7 @@ export default {
             activeKey: 1,
             captchaSessionName: `is-${this.appId}-need-captcha`,
             clientId: AppDic.getClientId(this.appId),
+            clientConfigEnv,
         };
     },
     watch: {
