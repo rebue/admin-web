@@ -16,7 +16,7 @@
                 accept=".xls,.xlsx"
             > -->
             <a-upload
-                name="avatar"
+                name="excel"
                 :multiple="true"
                 :action="uploadUrl"
                 @change="handleImportExcel"
