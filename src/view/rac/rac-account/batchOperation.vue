@@ -38,8 +38,6 @@
 <script>
 import { racExcelApi } from '@/api/Api';
 import { getAppIdByUrl } from '@/util/common';
-// import XLSX from 'xlsx';
-// import Excel from '../../../util/excel.js';
 
 export default {
     name: 'account-batch-operation',
@@ -69,7 +67,6 @@ export default {
         };
     },
     created() {
-        // this.rewriteFRread();
         const appId = getAppIdByUrl();
         if (appId) {
             this.headers['App-Id'] = appId;
@@ -89,60 +86,7 @@ export default {
             link.click();
             document.body.removeChild(link); //下载完成移除元素
         },
-        //导入功能不兼容IE方法
-        rewriteFRread() {
-            FileReader.prototype.readAsBinaryString = function(fileData) {
-                let binary = '';
-                // eslint-disable-next-line consistent-this
-                const pt = this;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const bytes = new Uint8Array(reader.result);
-                    const length = bytes.byteLength;
-                    for (let i = 0; i < length; i++) {
-                        binary += String.fromCharCode(bytes[i]);
-                    }
-                    pt.content = binary;
-                    pt.onload(pt);
-                };
-                reader.readAsArrayBuffer(fileData);
-            };
-            console.log('rewrite success');
-        },
         //上传文件
-        // uploadFile(info) {
-        //     const files = [...info.fileList];
-        //     if (files.length <= 0) {
-        //         //如果没有文件名
-        //         return false;
-        //     } else if (files[0].name.includes('xls') == false && files[0].name.includes('xlsx') == false) {
-        //         this.$message.error('上传格式不正确，请上传xls或者xlsx格式');
-        //         return false;
-        //     }
-        //     const fileReader = new FileReader();
-        //     if (info.file.status !== 'uploading') {
-        //         fileReader.onload = ev => {
-        //             try {
-        //                 const data = ev.content;
-        //                 const workbook = XLSX.read(data, {
-        //                     type: 'binary',
-        //                 });
-
-        //                 const wsname = workbook.SheetNames[0]; //取第一张表
-        //                 const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]); //生成json表格内容
-        //                 console.log(ws);
-        //             } catch (e) {
-        //                 return false;
-        //             }
-        //         };
-        //         fileReader.readAsBinaryString(files[0].originFileObj);
-        //     }
-        //     if (info.file.status === 'done') {
-        //         this.$message.success(`${info.file.name} file uploaded successfully`);
-        //     } else if (info.file.status === 'error') {
-        //         // this.$message.success(`${info.file.name} file uploaded successfully`);
-        //     }
-        // },
         handleImportExcel(info) {
             console.log(info);
             if (info.file.status !== 'uploading') {
