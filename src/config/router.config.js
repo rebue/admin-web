@@ -457,6 +457,24 @@ export const constantRouters = [
             },
         ],
     },
+    /** launch-demo1*/
+
+    {
+        path: '/launch-demo1',
+        name: 'launch-demo1',
+        component: RouteView,
+        redirect: '/launch-demo1/framework/department',
+        children: [
+            {
+                path: '/launch-demo1/framework/department',
+                name: 'launch-demo1-framework-department',
+                component: () => import('@/view/launch-demo1/framework/department/Index.vue'),
+                hidden: true,
+                meta: { title: '工作量管理部门', keepAlive: true, icon: 'global' },
+            },
+        ],
+    },
+
     /** 404 */
     {
         path: '/404',

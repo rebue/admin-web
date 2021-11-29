@@ -133,6 +133,9 @@ export default observer({
         const appId = getAppIdByUrl();
         if (appId === AppIdDic.PlatformAdminWeb) this.logoTitle = '平台管理';
         else if (appId === AppIdDic.OpsAdminWeb) this.logoTitle = '运营管理';
+        else {
+            this.logoTitle = '';
+        }
         return {
             accountStore,
             settingStore,
