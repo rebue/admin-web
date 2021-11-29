@@ -52,11 +52,14 @@ export default {
                         }
                         return;
                     }
+                    if(res.extra?.expirationDatetime == undefined){
+                        return;
+                    }
                     let passworDoverdue = ro.extra?.passwordDoverdue;
-                    let updateTimestamp = res.extra.updateTimestamp == '' ? null : res.extra.updateTimestamp
-                    console.log(updateTimestamp);
+                    let expirationDatetime = res.extra?.expirationDatetime.slice(0,10);
+                    var startDateM = (new Date(expirationDatetime)).getTime(); //得到毫秒数
                     const dateEnd = new Date(); //获取当前时间
-                    const dateDiff = dateEnd.getTime() - Number(updateTimestamp); //时间差的毫秒数
+                    const dateDiff = dateEnd.getTime() - startDateM; //时间差的毫秒数
                     const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
                     if(passworDoverdue == undefined){
                         passworDoverdue = 100
