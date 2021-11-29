@@ -36,23 +36,6 @@ export default {
         getPasswordApiFun() {
             racAccountApi.getCurAccountInfo().then(res => {
                 raclevelProtectApi.getConfig().then(ro => {
-                    let passworDoverdue = ro.extra?.passwordDoverdue;
-                    const dateEnd = new Date(); //获取当前时间
-                    const dateDiff = dateEnd.getTime() - Number(res.extra.updateTimestamp); //时间差的毫秒数
-                    const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
-                    if(passworDoverdue == undefined){
-                        passworDoverdue = 100
-                    }
-                    if (dayDiff > Number(passworDoverdue)) {
-                    // if (1 > 0) {
-                        this.$warning({
-                            title: '提示',
-                            content: `该账号的密码已经使用超过了${passworDoverdue}天，根据等保配置，需要强制修改密码。`,
-                            onOk: () => {
-                                this.changePswdFormVisible = true;
-                            },
-                        });
-                    }
                     let passwordTips = ro.extra?.passwordTips;
                      if(passwordTips == undefined){
                         passwordTips = false;
@@ -67,7 +50,29 @@ export default {
                                 },
                             });
                         }
+                        return;
                     }
+                    let passworDoverdue = ro.extra?.passwordDoverdue;
+                    let updateTimestamp = res.extra.updateTimestamp == '' ? null : res.extra.updateTimestamp
+                    console.log(updateTimestamp);
+                    const dateEnd = new Date(); //获取当前时间
+                    const dateDiff = dateEnd.getTime() - Number(updateTimestamp); //时间差的毫秒数
+                    const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
+                    if(passworDoverdue == undefined){
+                        passworDoverdue = 100
+                    }
+                    if (dayDiff > Number(passworDoverdue)) {
+                    // if (1 > 0) {
+                        this.$warning({
+                            title: '提示',
+                            content: `该账号的密码已经使用超过了${passworDoverdue}天，根据等保配置，需要强制修改密码。`,
+                            onOk: () => {
+                                this.changePswdFormVisible = true;
+                            },
+                        });
+                        return;
+                    }
+                  
                 });
             });
         },
