@@ -38,7 +38,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-y: hidden;
+    overflow-y: auto;
     background: url(./bg.jpg) no-repeat center center fixed;
     background-size: cover;
     .header {
