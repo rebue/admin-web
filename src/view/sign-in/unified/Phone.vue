@@ -46,7 +46,12 @@ export default {
     components: {
         SendSMSCode,
     },
-    props: {},
+    props: {
+        action: {
+            type: Function,
+            required: true,
+        },
+    },
     data() {
         return {
             loading: false,
@@ -99,29 +104,11 @@ export default {
             this.loading = true;
             this.$refs.phoneForm.validate(valid => {
                 if (valid) {
-                    const data = {
-                        loginType: 1,
-                        phoneNumber: this.phoneForm.phoneNumber,
-                        code: this.phoneForm.code,
-                    };
-                    if (this.phoneForm.captchaVerification) {
-                        data.captchaVerification = this.phoneForm.captchaVerification;
-                    }
-                    request
-                        .post({
-                            url: '/oap-svr/oap/login',
-                            data: data,
-                        })
-                        .then(r => {
-                            if (r.result === 1) {
-                                // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
-                                console.log('----登录成功 repalce', r);
-                                window.location.replace(r.extra);
-                            }
-                        })
-                        .finally(() => {
-                            this.loading = false;
-                        });
+                    this.action({
+                        ...this.phoneForm,
+                    }).finally(() => {
+                        this.loading = false;
+                    });
                 } else {
                     this.$nextTick(() => {
                         this.$focusError(); // 设置焦点到第一个提示错误的输入框

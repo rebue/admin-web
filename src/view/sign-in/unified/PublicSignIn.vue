@@ -7,7 +7,7 @@
         </a-tab-pane>
         <a-tab-pane key="2" tab="手机短信登录">
             <div v-if="!show" class="sign phone-sign">
-                <phone-form />
+                <phone-form :action="onPhoneSubmit" />
             </div>
         </a-tab-pane>
     </a-tabs>
@@ -54,6 +54,28 @@ export default {
                 .then(r => {
                     if (r.result === 1) {
                         sessionStorage.removeItem(this.captchaSessionName);
+                        // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
+                        console.log('----登录成功 repalce', r);
+                        window.location.replace(r.extra);
+                    }
+                });
+        },
+        onPhoneSubmit(formData) {
+            const data = {
+                loginType: 1,
+                phoneNumber: formData.phoneNumber,
+                code: formData.code,
+            };
+            if (formData.captchaVerification) {
+                data.captchaVerification = formData.captchaVerification;
+            }
+            return request
+                .post({
+                    url: '/oap-svr/oap/login',
+                    data: data,
+                })
+                .then(r => {
+                    if (r.result === 1) {
                         // 登录成功 重定向去后端接口redireact_uri?code&state&callbackUri
                         console.log('----登录成功 repalce', r);
                         window.location.replace(r.extra);
