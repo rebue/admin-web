@@ -55,6 +55,11 @@ export const constantRouters = [
     },
     /** 页面 */
     {
+        path: '/research-workload',
+        name: 'research-workload',
+        component: () => import('@/view/research-workload/rew-index.vue'),
+    },
+    {
         path: '/platform-admin-web',
         name: 'platform-admin-web',
         component: () => import('@/view/index/Index.vue'),
@@ -471,6 +476,21 @@ export const constantRouters = [
                 component: () => import('@/view/launch-demo1/framework/department/Index.vue'),
                 hidden: true,
                 meta: { title: '工作量管理部门', keepAlive: true, icon: 'global' },
+            },
+        ],
+    },
+    {
+        path: '/launch-demo3',
+        name: 'launch-demo3',
+        component: RouteView,
+        redirect: '/launch-demo3/framework/department',
+        children: [
+            {
+                path: '/launch-demo3/framework/department',
+                name: 'launch-demo3-framework-department',
+                component: () => import('@/view/launch-demo3/personal-profile-table.vue'),
+                hidden: true,
+                meta: { title: '测试表格', keepAlive: true, icon: 'global' },
             },
         ],
     },
