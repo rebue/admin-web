@@ -32,7 +32,8 @@ const list = [
             '/platform-admin-web/user-system-manage/weChat-config',
             '/platform-admin-web/user-system-manage/dingTalk-config',
             '/platform-admin-web/user-system-manage/level-protect',
-            '/platform-admin-web/user-system-survey/today-survey'
+            '/platform-admin-web/user-system-survey/today-survey',
+            '/launch-demo1/framework/department'
         ],
         unionId: '1',
     },
@@ -155,6 +156,7 @@ module.exports = {
                     accountId = '1';
                     break;
                 default:
+                    accountId = '1';
                     break;
             }
 
