@@ -69,7 +69,19 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '新建',
+                title: '修改',
+                onClick: this.handleEdit,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '删除',
+                onClick: this.handleDel,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '新增',
                 onClick: this.handleAdd,
             },
         ];

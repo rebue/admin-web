@@ -11,55 +11,62 @@
             >
                 <template #commands>
                     <a-row type="flex">
-                        <a-col :span="20">
+                        <a-col>
                             <a-form-model layout="inline" :model="formInline">
-                                <a-form-model-item label="作者姓名">
+                                <a-form-model-item label="成果名称:">
                                     <a-input style="width: 195px" v-model="formInline.name"> </a-input>
                                 </a-form-model-item>
-                                <a-form-model-item label="部门名称">
-                                    <a-select style="width: 195px" v-model="formInline.user" placeholder="请选择部门">
-                                        <a-select-option value="全部">
-                                            全部
+                                <a-form-model-item label="发布情况:">
+                                    <a-input style="width: 195px" v-model="formInline.name"></a-input>
+                                </a-form-model-item>
+                                <a-form-model-item label="开始年份:">
+                                    <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
+                                        <a-select-option value="2020">
+                                            2020
                                         </a-select-option>
-                                        <a-select-option value="学校">
-                                            学校
+                                        <a-select-option value="2019">
+                                            2019
                                         </a-select-option>
-                                        <a-select-option value="个人">
-                                            个人
+                                        <a-select-option value="2018">
+                                            2018
                                         </a-select-option>
                                     </a-select>
                                 </a-form-model-item>
-                                <a-form-model-item label="成果名称">
-                                    <a-input v-model="formInline.achievementName"> </a-input>
+                                <a-form-model-item label="结束年份:">
+                                    <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
+                                        <a-select-option value="">
+                                            --请选择--
+                                        </a-select-option>
+                                        <a-select-option value="2020">
+                                            2020
+                                        </a-select-option>
+                                        <a-select-option value="2019">
+                                            2019
+                                        </a-select-option>
+                                        <a-select-option value="2018">
+                                            2018
+                                        </a-select-option>
+                                    </a-select>
                                 </a-form-model-item>
-                                <a-form-model-item label="起始时间">
-                                    <a-date-picker
-                                        style="min-width: 195px;"
-                                        placeholder="开始时间"
-                                        v-model="formInline.startTime"
-                                        show-time
-                                        type="date"
-                                        class="dateType"
-                                    />
-                                </a-form-model-item>
-                                <a-form-model-item label="结束时间">
-                                    <a-date-picker
-                                        style="min-width: 195px;"
-                                        placeholder="结束时间"
-                                        v-model="formInline.endTime"
-                                        show-time
-                                        type="date"
-                                        class="dateType"
-                                    />
-                                </a-form-model-item>
-                                <a-form-model-item label="审核状态">
-                                    <a-input v-model="formInline.status" type="text" placeholder=""> </a-input>
+                                <a-form-model-item label="发布项目:">
+                                    <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
+                                        <a-select-option value="2020">
+                                            2020
+                                        </a-select-option>
+                                        <a-select-option value="2019">
+                                            2019
+                                        </a-select-option>
+                                        <a-select-option value="2018">
+                                            2018
+                                        </a-select-option>
+                                    </a-select>
                                 </a-form-model-item>
                             </a-form-model>
                         </a-col>
-                        <a-col :span="4">
+                        <a-col style="margin-top: 10px">
                             <a-button>查找</a-button>
                             <a-button style="margin-left: 10px">导出</a-button>
+                            <a-button style="margin-left: 10px">条件清除</a-button>
                         </a-col>
                     </a-row>
                 </template>
@@ -75,7 +82,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
 
 export default {
-    name: 'annual-overview-table',
+    name: 'annual-profile-table',
     components: {
         // eslint-disable-next-line vue/no-unused-components
         CrudTable,
@@ -126,11 +133,7 @@ export default {
                 title: '申请日期',
                 ellipsis: true,
             },
-            {
-                dataIndex: 'state',
-                title: '状态',
-                ellipsis: true,
-            },
+
             {
                 dataIndex: 'action',
                 title: '操作',

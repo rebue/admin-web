@@ -29,9 +29,6 @@
                                         </a-select-option>
                                     </a-select>
                                 </a-form-model-item>
-                                <a-form-model-item label="成果名称">
-                                    <a-input v-model="formInline.achievementName"> </a-input>
-                                </a-form-model-item>
                                 <a-form-model-item label="起始时间">
                                     <a-date-picker
                                         style="min-width: 195px;"
@@ -42,24 +39,26 @@
                                         class="dateType"
                                     />
                                 </a-form-model-item>
-                                <a-form-model-item label="结束时间">
-                                    <a-date-picker
-                                        style="min-width: 195px;"
-                                        placeholder="结束时间"
-                                        v-model="formInline.endTime"
-                                        show-time
-                                        type="date"
-                                        class="dateType"
-                                    />
-                                </a-form-model-item>
-                                <a-form-model-item label="审核状态">
-                                    <a-input v-model="formInline.status" type="text" placeholder=""> </a-input>
+                                <a-form-model-item label="部门名称">
+                                    <a-select style="width: 195px" v-model="formInline.user" placeholder="请选择部门">
+                                        <a-select-option value="全部">
+                                            全部
+                                        </a-select-option>
+                                        <a-select-option value="学校">
+                                            学校
+                                        </a-select-option>
+                                        <a-select-option value="个人">
+                                            个人
+                                        </a-select-option>
+                                    </a-select>
                                 </a-form-model-item>
                             </a-form-model>
                         </a-col>
-                        <a-col :span="4">
-                            <a-button>查找</a-button>
-                            <a-button style="margin-left: 10px">导出</a-button>
+                        <a-col :span="3">
+                            <center>
+                                <a-button style="line-height: 10px">查找</a-button>
+                                <a-button style="margin-top: 10px">导出</a-button>
+                            </center>
                         </a-col>
                     </a-row>
                 </template>
@@ -75,7 +74,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
 
 export default {
-    name: 'annual-overview-table',
+    name: 'personal-statistics-table',
     components: {
         // eslint-disable-next-line vue/no-unused-components
         CrudTable,

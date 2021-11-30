@@ -33,22 +33,18 @@ export default {
         const columns = [
             {
                 dataIndex: 'no',
-                title: '序号',
-                width: 80,
+                title: '自动序号',
+                width: 100,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'achievementNo',
-                title: '成果编号',
+                title: '填报人',
                 width: 150,
                 fixed: 'left',
             },
-            {
-                dataIndex: 'memberName',
-                title: '填报人',
-                width: 140,
-            },
+
             {
                 dataIndex: 'author',
                 title: '作者',
@@ -56,38 +52,50 @@ export default {
             },
             {
                 dataIndex: 'department',
-                title: '部门',
+                title: '奖励类型',
                 ellipsis: true,
             },
             {
                 dataIndex: 'achievementName',
-                title: '成果名称',
+                title: '科研奖励名单',
                 ellipsis: true,
             },
             {
                 dataIndex: 'applyTime',
-                title: '申请日期',
+                title: '科研奖励工作量',
                 ellipsis: true,
             },
             {
                 dataIndex: 'state',
-                title: '状态',
+                title: '系统时间',
                 ellipsis: true,
             },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 150,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
-            },
+            // {
+            //     dataIndex: 'action',
+            //     title: '操作',
+            //     width: 150,
+            //     fixed: 'right',
+            //     scopedSlots: { customRender: 'action' },
+            // },
         ];
 
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '新建',
+                title: '编辑',
+                onClick: this.handleEdit,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '删除',
+                onClick: this.handleDel,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '新增',
                 onClick: this.handleAdd,
             },
         ];

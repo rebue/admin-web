@@ -6,12 +6,12 @@
                 :actions="tableActions"
                 :columns="columns"
                 :api="api"
-                :scrollX="300"
+                :scrollX="600"
                 :defaultPagination="false"
             >
                 <template #commands>
                     <a-row type="flex">
-                        <a-col :span="20">
+                        <a-col>
                             <a-form-model layout="inline" :model="formInline">
                                 <a-form-model-item label="作者姓名">
                                     <a-input style="width: 195px" v-model="formInline.name"> </a-input>
@@ -57,9 +57,10 @@
                                 </a-form-model-item>
                             </a-form-model>
                         </a-col>
-                        <a-col :span="4">
+                        <a-col>
                             <a-button>查找</a-button>
                             <a-button style="margin-left: 10px">导出</a-button>
+                            <a-button style="margin-left: 10px">条件清除</a-button>
                         </a-col>
                     </a-row>
                 </template>
@@ -75,7 +76,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
 
 export default {
-    name: 'annual-overview-table',
+    name: 'annual-profile-table',
     components: {
         // eslint-disable-next-line vue/no-unused-components
         CrudTable,
