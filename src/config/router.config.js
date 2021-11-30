@@ -1,5 +1,13 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import { getAppIdByUrl } from '@/util/common';
+import LaunchDemo1 from './launch-demo1-router.config.js';
+import LaunchDemo2 from './launch-demo2-router.config.js';
+import LaunchDemo3 from './launch-demo3-router.config.js';
+import LaunchDemo4 from './launch-demo4-router.config.js';
+import LaunchDemo5 from './launch-demo5-router.config.js';
+import LaunchDemo6 from './launch-demo6-router.config.js';
+import LaunchDemo7 from './launch-demo7-router.config.js';
+import LaunchDemo8 from './launch-demo8-router.config.js';
 
 const RouteView = {
     name: 'RouteView',
@@ -462,6 +470,14 @@ export const constantRouters = [
             },
         ],
     },
+    { ...LaunchDemo1 },
+    { ...LaunchDemo2 },
+    { ...LaunchDemo3 },
+    { ...LaunchDemo4 },
+    { ...LaunchDemo5 },
+    { ...LaunchDemo6 },
+    { ...LaunchDemo7 },
+    { ...LaunchDemo8 },
     /** launch-demo1*/
 
     {
