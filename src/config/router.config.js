@@ -1,5 +1,13 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import { getAppIdByUrl } from '@/util/common';
+import LaunchDemo1 from './launch-demo1-router.config.js';
+import LaunchDemo2 from './launch-demo2-router.config.js';
+import LaunchDemo3 from './launch-demo3-router.config.js';
+import LaunchDemo4 from './launch-demo4-router.config.js';
+import LaunchDemo5 from './launch-demo5-router.config.js';
+import LaunchDemo6 from './launch-demo6-router.config.js';
+import LaunchDemo7 from './launch-demo7-router.config.js';
+import LaunchDemo8 from './launch-demo8-router.config.js';
 
 const RouteView = {
     name: 'RouteView',
@@ -462,49 +470,14 @@ export const constantRouters = [
             },
         ],
     },
-    /** launch-demo1*/
-
-    {
-        path: '/launch-demo1',
-        name: 'launch-demo1',
-        meta: { title: '系统1', keepAlive: true, icon: 'setting' },
-        component: () => import('@/view/launch-demo1/index/Index.vue'),
-        redirect: '/launch-demo1/framework/department',
-        children: [
-            {
-                path: '/launch-demo1/framework',
-                name: 'launch-demo1-framework',
-                component: RouteView,
-                hidden: true,
-                meta: { title: '系统框架', keepAlive: true, icon: 'global' },
-                children: [
-                    {
-                        path: '/launch-demo1/framework/department',
-                        name: 'launch-demo1-framework-department',
-                        component: () => import('@/view/launch-demo1/framework/department/Index.vue'),
-                        hidden: true,
-                        meta: { title: '工作量管理部门', keepAlive: true, icon: 'global' },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        path: '/launch-demo3',
-        name: 'launch-demo3',
-        component: RouteView,
-        redirect: '/launch-demo3/framework/department',
-        children: [
-            {
-                path: '/launch-demo3/framework/department',
-                name: 'launch-demo3-framework-department',
-                component: () => import('@/view/launch-demo3/personal-profile-table.vue'),
-                hidden: true,
-                meta: { title: '测试表格', keepAlive: true, icon: 'global' },
-            },
-        ],
-    },
-
+    { ...LaunchDemo1 },
+    { ...LaunchDemo2 },
+    { ...LaunchDemo3 },
+    { ...LaunchDemo4 },
+    { ...LaunchDemo5 },
+    { ...LaunchDemo6 },
+    { ...LaunchDemo7 },
+    { ...LaunchDemo8 },
     /** 404 */
     {
         path: '/404',
