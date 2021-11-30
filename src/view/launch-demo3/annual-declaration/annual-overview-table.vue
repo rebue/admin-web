@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CrudTable from '../../component/rebue/CrudTable';
+import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
 export default {
@@ -34,7 +34,7 @@ export default {
             {
                 dataIndex: 'no',
                 title: '序号',
-                width: 50,
+                width: 80,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
