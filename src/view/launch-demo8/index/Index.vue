@@ -124,10 +124,10 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统4';
+        this.logoTitle = '系统8';
 
         // 设置菜单
-        const sys = '/launch-demo4';
+        const sys = '/launch-demo8';
         let menus = constantRouters.find(item => item.path === sys).children;
         menus = JSON.parse(JSON.stringify(menus));
         matchRouteHidden(sys, menus);
@@ -168,7 +168,7 @@ export default observer({
         },
     },
     mounted() {
-        // this.refreshAccountInfo();
+        this.refreshAccountInfo();
     },
     methods: {
         getAppIdByUrl() {

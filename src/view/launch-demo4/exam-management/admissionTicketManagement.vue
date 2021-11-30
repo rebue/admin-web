@@ -1,0 +1,235 @@
+// 准考证管理
+<template>
+    <fragment>
+        <base-manager ref="baseManager">
+            <template #managerCard>
+                <crud-table
+                    ref="crudTable"
+                    :showKeywords="true"
+                    :commands="tableCommands"
+                    :actions="tableActions"
+                    :columns="columns"
+                    :api="api"
+                    :scrollX="600"
+                    :defaultPagination="false"
+                >
+                </crud-table>
+            </template>
+        </base-manager>
+    </fragment>
+</template>
+
+<script>
+import BaseManager from '@/component/rebue/BaseManager';
+import CrudTable from '@/component/rebue/CrudTable.vue';
+import { racRealmApi } from '@/api/Api';
+
+export default {
+    name: 'signupConf',
+    components: {
+        BaseManager,
+        CrudTable,
+    },
+    data() {
+        this.api = racRealmApi;
+        const columns = [
+            {
+                dataIndex: 'grade',
+                title: '年级',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'teachPoint',
+                title: '教学点',
+                width: 140,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'major',
+                title: '专业',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'number',
+                title: '序号',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'name',
+                title: '姓名',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'examQualifications',
+                title: '报考资格',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'ExemptExamQualifications',
+                title: '免试资格',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'registrationReviewState',
+                title: '报名审核状态',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'paymentState',
+                title: '缴费情况',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'sex',
+                title: '性别',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'workCity',
+                title: '工作所在城市',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'admissionTicketNum',
+                title: '准考证号',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'examinationRoomSite',
+                title: '考场地址',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'seatNum',
+                title: '座位号',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'nation',
+                title: '民族',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'id',
+                title: '身份证号',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'birthData',
+                title: '出生时间',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'nativePlace',
+                title: '籍贯',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'culture',
+                title: '文化程度',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'majorStudied',
+                title: '所学专业',
+                width: 150,
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'operation',
+                title: '操作',
+                width: 150,
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' },
+            },
+        ];
+
+        this.tableCommands = [
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '生成准考证号',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '清除准考证号',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '预览准考证',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '同步到报名系统',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '导出',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '打印准考证',
+                onClick: this.handleAdd,
+            },
+        ];
+
+        this.tableActions = [
+            {
+                type: 'a',
+                title: '编辑',
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'a',
+                title: '查看',
+                onClick: record => this.handleEdit(record),
+            },
+        ];
+
+        return {
+            columns,
+        };
+    },
+    mounted() {
+        this.crudTable = this.$refs.crudTable;
+    },
+    methods: {
+        handleAdd() {
+            //
+        },
+        handleEdit() {
+            //
+        },
+        handleDel() {
+            //
+        },
+    },
+};
+</script>

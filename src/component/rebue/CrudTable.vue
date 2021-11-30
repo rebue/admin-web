@@ -10,7 +10,7 @@
                         <slot name="commands">
                             <template v-for="(item, index) in commands">
                                 <a-button
-                                    style="margin-right: 50px"
+                                    style="margin-right: 15px"
                                     :type="item.buttonType"
                                     :icon="item.icon"
                                     @click="item.onClick"
