@@ -2,28 +2,28 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-tabs>
-                    <a-tab-pane :key="1" tab="允许学员修改档案信息配置"></a-tab-pane>
-                    <a-tab-pane :key="2" tab="学员超级登录密码"></a-tab-pane>
-                    <a-tab-pane :key="3" tab="学员手册"></a-tab-pane>
-                    <a-tab-pane :key="4" tab="其他"></a-tab-pane>
-                </a-tabs>
                 <crud-table
                     ref="crudTable"
+                    :showKeywords="true"
                     :commands="tableCommands"
                     :actions="tableActions"
                     :columns="columns"
                     :api="api"
+                    :query="{ orgId: curOrgId }"
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #commands>
-                        <div>开学后允许学员自主修改个人资料</div>
-                        <a-form-model layout="inline" :model="formInline">
-                            <a-form-model-item label="开班后多少天内允许修改">
-                                <a-input :style="{ width: '250px' }" v-model.trim="formInline.day" />
-                            </a-form-model-item>
-                        </a-form-model>
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
                     </template>
                 </crud-table>
             </template>
@@ -38,6 +38,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
+import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'Manager',
@@ -45,51 +46,45 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
+        OrgTree,
     },
     data() {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'term',
-                title: '学期',
+                dataIndex: 'no',
+                title: '序号',
                 width: 150,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
-                title: '班级名称',
-                width: 150,
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'startTime',
-                title: '开始时间',
+                dataIndex: 'term',
+                title: '学期',
                 width: 150,
             },
             {
-                dataIndex: 'endTime',
-                title: '结束时间',
+                dataIndex: 'class',
+                title: '班级',
+                width: 150,
+            },
+            {
+                dataIndex: 'activate',
+                title: '课程或活动',
+                width: 150,
+            },
+            {
+                dataIndex: 'date',
+                title: '日期',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupStartTime',
-                title: '网上报名开通时间',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'signupEndTime',
-                title: '网上报名关闭时间',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'creator',
-                title: '组织员',
-                width: 150,
-                ellipsis: true,
+                dataIndex: 'action',
+                title: '操作',
+                width: 250,
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' },
             },
         ];
 
@@ -97,23 +92,7 @@ export default {
             {
                 buttonType: 'primary',
                 // icon: 'plus',
-                title: '批量设置组号',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '生成excel报表',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '手动打印报表',
+                title: '新建',
                 onClick: () => {
                     /**/
                 },
@@ -123,7 +102,7 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '小组信息',
+                title: '查看考勤',
                 onClick: () => {
                     /**/
                 },
@@ -131,6 +110,12 @@ export default {
             {
                 type: 'a',
                 title: '编辑',
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
                 onClick: () => {
                     /**/
                 },
@@ -139,9 +124,8 @@ export default {
 
         return {
             columns,
-            formInline: {
-                day: '',
-            },
+            showOrg: false,
+            curOrgId: undefined,
         };
     },
     mounted() {
@@ -179,22 +163,30 @@ export default {
         handleEditFormClose() {
             this.refreshTableData();
         },
-        // 学期下拉菜单
-        handleTermChange() {
-            //
+        /** 处理组织菜单点击节点的事件 */
+        handleOrgMenuClick(item) {
+            this.curOrgId = item.id;
+            this.$nextTick(() => {
+                this.refreshTableData();
+            });
         },
-        // 班级下拉菜单
-        handleClassChange() {
-            //
+        /** 处理组织树选择节点的事件 */
+        handleOrgTreeSelect({ isSelected, item }) {
+            this.curOrgId = isSelected ? item.id : undefined;
+            this.$nextTick(this.refreshTableData);
         },
     },
 };
 </script>
-<style scoped>
-.btn-group {
-    margin: 10px 0;
-}
-.btn {
-    margin-right: 10px;
+<style lang="less" scoped>
+.table-left {
+    display: flex;
+    height: 100%;
+    margin: 4px 0;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
 }
 </style>

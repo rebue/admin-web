@@ -52,17 +52,11 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'source',
-                title: '数据来源',
+                dataIndex: 'no',
+                title: 'ID编号',
                 width: 150,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
-            },
-            {
-                dataIndex: 'orgId',
-                title: '小组号',
-                width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
@@ -70,10 +64,24 @@ export default {
                 width: 150,
             },
             {
+                dataIndex: 'ICID',
+                title: 'IC卡号',
+                width: 150,
+            },
+            {
+                dataIndex: 'ICID2',
+                title: 'IC卡号2',
+                width: 150,
+            },
+            {
+                dataIndex: 'carId',
+                title: '车牌号',
+                width: 150,
+            },
+            {
                 dataIndex: 'sex',
                 title: '性别',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'birth',
@@ -88,26 +96,14 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'ICCard',
-                title: 'IC卡号',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'carId',
-                title: '车牌号',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'IdCard',
-                title: '证件号',
-                width: 150,
-                ellipsis: true,
-            },
-            {
                 dataIndex: 'level',
                 title: '班级职务',
+                width: 150,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'idCard',
+                title: '证件号',
                 width: 150,
                 ellipsis: true,
             },
@@ -124,7 +120,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'classbname',
                 title: '班级',
                 width: 150,
                 ellipsis: true,
@@ -132,97 +128,44 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 250,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
 
-        this.tableCommands = [
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '视图',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '新建',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '同步',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '导出',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '导入',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '列出本期同名',
-                onClick: () => {
-                    /**/
-                },
-            },
-        ];
+        this.tableCommands = [];
 
         this.tableActions = [
             {
                 type: 'a',
-                title: '查看',
-                onClick: () => {
-                    /**/
-                },
+                title: '编辑',
+                onClick: record => this.handleEdit(record),
             },
             {
                 type: 'more',
+                title: '更多',
                 items: [
                     {
                         type: 'a',
-                        title: '编辑',
-                        onClick: record => this.handleEdit(record),
-                    },
-                    {
-                        type: 'confirm',
-                        title: '删除',
-                        confirmTitle: '你确定要删除本条记录吗?',
+                        // icon: 'plus',
+                        title: '上传学员到所有考勤机上',
                         onClick: () => {
                             /**/
                         },
                     },
                     {
                         type: 'a',
-                        title: '审核',
+                        // icon: 'plus',
+                        title: '从所有考勤机上清空学员',
                         onClick: () => {
                             /**/
                         },
                     },
                     {
                         type: 'a',
-                        title: '离校',
+                        // icon: 'plus',
+                        title: '清空并上传一学期所有学员到所有考勤机',
                         onClick: () => {
                             /**/
                         },
