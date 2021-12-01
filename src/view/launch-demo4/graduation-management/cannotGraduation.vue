@@ -1,17 +1,28 @@
-// 学籍变动
+// 不可毕业管理
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
                 <crud-table
                     ref="crudTable"
-                    :commands="tableCommands"
                     :actions="tableActions"
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                ref="orgTree.platform"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -22,12 +33,13 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
-
+import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         this.api = racRealmApi;
@@ -40,50 +52,26 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'stuOriginalNum',
-                title: '学员原编号',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeType',
-                title: '变动类型',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeDate',
-                title: '变动时间',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'stuNum',
+                dataIndex: 'grade',
                 title: '学号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'teachPoint',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'shift',
-                title: '班次',
+                dataIndex: 'major',
+                title: '毕业证号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'grade',
-                title: '年级',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeSemester',
-                title: '变动学期',
+                dataIndex: 'name',
+                title: '允许毕业',
                 ellipsis: true,
                 width: 150,
             },
@@ -94,68 +82,98 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'birthDate',
+                dataIndex: 'nation',
                 title: '出生年月',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'group',
+                dataIndex: 'id',
                 title: '小组',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'classDuties',
+                dataIndex: 'birthData',
                 title: '班级职务',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'company',
+                dataIndex: 'nativePlace',
                 title: '工作单位',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'duties',
+                dataIndex: 'Culture',
                 title: '职务',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'postLevel',
+                dataIndex: 'majorStudied',
                 title: '职级',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'title',
+                dataIndex: 'gradSchool',
                 title: '职称',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'phone',
+                dataIndex: 'gradTime',
                 title: '手机',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'telephone',
+                dataIndex: 'workTime',
                 title: '电话',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'zipCode',
+                dataIndex: 'diplomaNum',
                 title: '邮编',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'workDate',
+                dataIndex: 'Political',
                 title: '工作时间',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'partyData',
+                title: '入党时间',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'workPlace',
+                title: '文化程度',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'workPlace',
+                title: '身份证号',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'nation',
+                title: '民族',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'nativePlace',
+                title: '籍贯',
                 ellipsis: true,
                 width: 150,
             },
@@ -168,33 +186,6 @@ export default {
             },
         ];
 
-        this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '学员减少',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '学员增加',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '学员新增',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '转学学员以前成绩',
-                onClick: this.handleAdd,
-            },
-        ];
-
         this.tableActions = [
             {
                 type: 'a',
@@ -202,30 +193,55 @@ export default {
                 onClick: record => this.handleEdit(record),
             },
             {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
+                type: 'a',
+                title: '查看',
+                onClick: record => this.handleEdit(record),
             },
         ];
 
         return {
             columns,
+            showOrg: true,
+            realm: {
+                id: '1',
+            },
         };
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        /** 处理组织菜单点击节点的事件 */
+        handleOrgMenuClick(item) {
+            this.curOrgId = item.id;
+            this.$nextTick(() => {
+                // this.refreshTableData();
+            });
+        },
+        /** 处理组织树选择节点的事件 */
+        handleOrgTreeSelect({ isSelected, item }) {
+            this.curOrgId = isSelected ? item.id : undefined;
+            // this.$nextTick(this.refreshTableData);
+        },
         handleAdd() {
-            //
-        },
-        handleEdit() {
-            //
-        },
-        handleDel() {
             //
         },
     },
 };
 </script>
+<style lang="less" scoped>
+.realm-tabs {
+    overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
+}
+
+.table-left {
+    display: flex;
+    height: 100%;
+    margin: 4px 0;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
+}
+</style>

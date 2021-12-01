@@ -56,31 +56,37 @@ export default {
                 dataIndex: 'grade',
                 title: '年级',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'className',
                 title: '班级名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'classPeNum',
                 title: '班级人数',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

@@ -1,11 +1,10 @@
-// 网上报名配置
+// 成绩归档
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
                 <crud-table
                     ref="crudTable"
-                    :commands="tableCommands"
                     :actions="tableActions"
                     :columns="columns"
                     :api="api"
@@ -55,13 +54,18 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'startTime',
-                title: '入学报名开始时间',
+                dataIndex: 'entranceData',
+                title: '入学时间',
                 ellipsis: true,
             },
             {
-                dataIndex: 'endTime',
-                title: '入学报名结束时间',
+                dataIndex: 'graduationData',
+                title: '毕业时间',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'gradeFile',
+                title: '入学成绩归档',
                 ellipsis: true,
             },
             {
@@ -72,32 +76,16 @@ export default {
             {
                 dataIndex: 'operation',
                 title: '操作',
-                width: 110,
+                width: 60,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
-        this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '同步配置到报名库',
-                onClick: this.handleAdd,
-            },
-        ];
-
         this.tableActions = [
             {
                 type: 'a',
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
-            },
-            {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
             },
         ];
 

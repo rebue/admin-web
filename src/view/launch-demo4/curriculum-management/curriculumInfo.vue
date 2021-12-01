@@ -56,31 +56,37 @@ export default {
                 dataIndex: 'major',
                 title: '专业',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'semester',
                 title: '学期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'curriculumName',
                 title: '课程名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'examForm',
                 title: '考核形式',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'remarks',
                 title: '备注',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'printLabel',
                 title: '打印座位标签',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

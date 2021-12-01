@@ -1,4 +1,4 @@
-// 成绩归档
+// 成绩查询
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -6,7 +6,6 @@
                 <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
-                    :actions="tableActions"
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
@@ -40,51 +39,49 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'name',
-                title: '研究生类型',
-                width: 150,
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'gradeName',
-                title: '年级名称',
-                width: 140,
-            },
-            {
-                dataIndex: 'remark',
-                title: '允许报名',
+                dataIndex: 'admissionTicketNum',
+                title: '准考证号',
                 ellipsis: true,
             },
             {
-                dataIndex: 'entranceData',
-                title: '入学时间',
-                width: 150,
-                fixed: 'right',
+                dataIndex: 'name',
+                title: '姓名',
+                ellipsis: true,
             },
             {
-                dataIndex: 'graduationData',
-                title: '毕业时间',
-                width: 150,
-                fixed: 'right',
+                dataIndex: 'major',
+                title: '专业',
+                ellipsis: true,
             },
             {
-                dataIndex: 'gradeFile',
-                title: '入学成绩归档',
-                width: 150,
-                fixed: 'right',
+                dataIndex: 'subject01',
+                title: '科目一',
+                ellipsis: true,
             },
             {
-                dataIndex: 'desc',
-                title: '说明',
-                width: 150,
-                fixed: 'right',
+                dataIndex: 'achievement01',
+                title: '成绩',
+                ellipsis: true,
             },
             {
-                dataIndex: 'operation',
-                title: '操作',
-                width: 150,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
+                dataIndex: 'subject02',
+                title: '科目二',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'achievement02',
+                title: '成绩',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'subject03',
+                title: '科目三',
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'achievement03',
+                title: '成绩',
+                ellipsis: true,
             },
         ];
 
@@ -92,25 +89,10 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '同步配置到报名库',
+                title: '查询',
                 onClick: this.handleAdd,
             },
         ];
-
-        this.tableActions = [
-            {
-                type: 'a',
-                title: '编辑',
-                onClick: record => this.handleEdit(record),
-            },
-            {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
-            },
-        ];
-
         return {
             columns,
         };

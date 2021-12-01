@@ -1,17 +1,9 @@
-// 平时成绩
+// 课程成绩
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
+                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="false">
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
@@ -53,7 +45,7 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'naem',
+                dataIndex: 'name',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
@@ -65,14 +57,14 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'Homework score',
-                title: '作业分数',
+                dataIndex: 'homeworkAchievement',
+                title: '作业成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'attendanceScore',
-                title: '考勤分数',
+                dataIndex: 'attendanceAchievement',
+                title: '考勤成绩',
                 ellipsis: true,
                 width: 150,
             },
@@ -83,67 +75,24 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'courseAchievement',
-                title: '课程成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
                 dataIndex: 'makeUpExamAchievement',
                 title: '补考成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'allMakeUpExamAchievement',
+                dataIndex: 'allMakeUpExamAchievement1',
                 title: '总补考成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'operation',
-                title: '操作',
-                width: 60,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
+                dataIndex: 'courseAchievement',
+                title: '课程成绩',
+                ellipsis: true,
+                width: 150,
             },
         ];
-
-        this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '编辑全部',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '编辑未录入',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '清空成绩',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '上报成绩',
-                onClick: this.handleAdd,
-            },
-        ];
-
-        this.tableActions = [
-            {
-                type: 'a',
-                title: '编辑',
-                onClick: record => this.handleEdit(record),
-            },
-        ];
-
         return {
             columns,
             showOrg: true,

@@ -1,4 +1,4 @@
-// 学籍变动
+// 各科成绩
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -12,6 +12,18 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                ref="orgTree.platform"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -22,12 +34,13 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
-
+import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         this.api = racRealmApi;
@@ -40,20 +53,8 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'stuOriginalNum',
-                title: '学员原编号',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeType',
-                title: '变动类型',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeDate',
-                title: '变动时间',
+                dataIndex: 'name',
+                title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
@@ -64,105 +65,51 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'name',
-                title: '姓名',
+                dataIndex: 'makeUpExamAchievement1',
+                title: '补考成绩1',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'shift',
-                title: '班次',
+                dataIndex: 'makeUpExamAchievement2',
+                title: '补考成绩2',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'grade',
-                title: '年级',
+                dataIndex: 'usualAchievement',
+                title: '平时成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'changeSemester',
-                title: '变动学期',
+                dataIndex: 'attendanceAchievement',
+                title: '考勤成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'sex',
-                title: '性别',
+                dataIndex: 'achievement',
+                title: '卷面成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'birthDate',
-                title: '出生年月',
+                dataIndex: 'allMakeUpExamAchievement',
+                title: '总补考成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'group',
-                title: '小组',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'classDuties',
-                title: '班级职务',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'company',
-                title: '工作单位',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'duties',
-                title: '职务',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'postLevel',
-                title: '职级',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'title',
-                title: '职称',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'phone',
-                title: '手机',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'telephone',
-                title: '电话',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'zipCode',
-                title: '邮编',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'workDate',
-                title: '工作时间',
+                dataIndex: 'subjectAchievement',
+                title: '科目成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
-                width: 110,
+                width: 60,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -172,25 +119,25 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '学员减少',
+                title: '编辑未录入',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '学员增加',
+                title: '编辑全部',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '学员新增',
+                title: '清空成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '转学学员以前成绩',
+                title: '发布成绩',
                 onClick: this.handleAdd,
             },
         ];
@@ -201,31 +148,51 @@ export default {
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
             },
-            {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
-            },
         ];
 
         return {
             columns,
+            showOrg: true,
+            realm: {
+                id: '1',
+            },
         };
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        /** 处理组织菜单点击节点的事件 */
+        handleOrgMenuClick(item) {
+            this.curOrgId = item.id;
+            this.$nextTick(() => {
+                // this.refreshTableData();
+            });
+        },
+        /** 处理组织树选择节点的事件 */
+        handleOrgTreeSelect({ isSelected, item }) {
+            this.curOrgId = isSelected ? item.id : undefined;
+            // this.$nextTick(this.refreshTableData);
+        },
         handleAdd() {
-            //
-        },
-        handleEdit() {
-            //
-        },
-        handleDel() {
             //
         },
     },
 };
 </script>
+<style lang="less" scoped>
+.realm-tabs {
+    overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
+}
+
+.table-left {
+    display: flex;
+    height: 100%;
+    margin: 4px 0;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
+}
+</style>

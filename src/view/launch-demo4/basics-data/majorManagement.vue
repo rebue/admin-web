@@ -56,31 +56,37 @@ export default {
                 dataIndex: 'orderNum',
                 title: '顺序号',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'majorCode',
                 title: '专业代码',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'majorName',
                 title: '专业名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'researchDirection',
                 title: '研究方向',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'diplomaNumfront',
                 title: '毕业证号前缀',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

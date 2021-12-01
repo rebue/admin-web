@@ -1,10 +1,11 @@
-// 平时成绩
+// 成绩录入
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
                 <crud-table
                     ref="crudTable"
+                    :query="{ orgId: curOrg.id }"
                     :commands="tableCommands"
                     :actions="tableActions"
                     :columns="columns"
@@ -35,6 +36,8 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
+import request from '@/util/request';
+
 export default {
     name: 'signupConf',
     components: {
@@ -53,50 +56,32 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'naem',
+                dataIndex: 'name',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'stuNum',
-                title: '学号',
+                dataIndex: 'admissionTicketNum',
+                title: '准考证号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'Homework score',
-                title: '作业分数',
+                dataIndex: 'firstFraction',
+                title: '一次录入分数',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'attendanceScore',
-                title: '考勤分数',
+                dataIndex: 'secondFraction',
+                title: '二次录入分数',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'achievement',
-                title: '卷面成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'courseAchievement',
-                title: '课程成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'makeUpExamAchievement',
-                title: '补考成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'allMakeUpExamAchievement',
-                title: '总补考成绩',
+                dataIndex: 'totalScore',
+                title: '总分',
                 ellipsis: true,
                 width: 150,
             },
@@ -113,13 +98,13 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '编辑全部',
+                title: '编辑未录入',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '编辑未录入',
+                title: '编辑全部',
                 onClick: this.handleAdd,
             },
             {
@@ -131,7 +116,13 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '上报成绩',
+                title: '提交成绩',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '清除0分',
                 onClick: this.handleAdd,
             },
         ];
@@ -146,27 +137,28 @@ export default {
 
         return {
             columns,
-            showOrg: true,
-            realm: {
-                id: '1',
-            },
+            showOrg: false,
+            curOrg: '',
         };
     },
     mounted() {
-        this.crudTable = this.$refs.crudTable;
+        this.crudTable = this.$refs['orgTree.platform'];
     },
     methods: {
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                // this.refreshTableData();
-            });
+        /**
+         * 刷新表格数据
+         */
+        refreshTableData() {
+            this.crudTable.refreshData();
         },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            // this.$nextTick(this.refreshTableData);
+        handleOrgMenuClick(item) {
+            this.curOrg = item;
+            this.refreshTableData();
+            //
+        },
+        handleOrgTreeSelect(item) {
+            this.curOrg = item;
+            //
         },
         handleAdd() {
             //

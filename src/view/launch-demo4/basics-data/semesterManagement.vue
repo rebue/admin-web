@@ -56,36 +56,43 @@ export default {
                 dataIndex: 'semesterName',
                 title: '学期名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'semesterAlias',
                 title: '学期别名',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'semesterNum',
                 title: '学期编号',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'startDate',
                 title: '开始日期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'endDate',
                 title: '结束日期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'remarks',
                 title: '备注',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

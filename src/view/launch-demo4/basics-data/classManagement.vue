@@ -56,31 +56,37 @@ export default {
                 dataIndex: 'semesterName',
                 title: '年级',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'semesterAlias',
                 title: '教学点',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'semesterNum',
                 title: '专业',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'startDate',
                 title: '班级名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'endDate',
                 title: '班级人数',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

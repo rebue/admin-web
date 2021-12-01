@@ -48,62 +48,71 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
+                dataIndex: 'no',
+                title: '#',
+                width: 50,
+                fixed: 'left',
+                scopedSlots: { customRender: 'serial' },
+            },
+            {
                 dataIndex: 'grade',
                 title: '年级',
+                ellipsis: true,
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'teathPoint',
                 title: '教学点',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'majer',
                 title: '专业',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'number',
                 title: '序号',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'examQualification',
                 title: '报考资格',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'admissionTicketNum',
                 title: '准考证号',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'examinationRoomSite',
                 title: '考场地址',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'seatNum',
                 title: '座位号',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
             {
                 dataIndex: 'shift',
                 title: '班次',
+                ellipsis: true,
                 width: 150,
-                fixed: 'right',
             },
         ];
 

@@ -56,26 +56,31 @@ export default {
                 dataIndex: 'teachPointCode',
                 title: '教学点代码',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'teachPointName',
                 title: '教学点名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'examPlace',
                 title: '招生考试地点',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',

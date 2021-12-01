@@ -1,4 +1,4 @@
-// 平时成绩
+// 综合成绩
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -53,7 +53,7 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'naem',
+                dataIndex: 'name',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
@@ -65,38 +65,8 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'Homework score',
-                title: '作业分数',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'attendanceScore',
-                title: '考勤分数',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'achievement',
-                title: '卷面成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'courseAchievement',
-                title: '课程成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'makeUpExamAchievement',
-                title: '补考成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'allMakeUpExamAchievement',
-                title: '总补考成绩',
+                dataIndex: 'comprehensiveScore',
+                title: '综合分数',
                 ellipsis: true,
                 width: 150,
             },
@@ -113,13 +83,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '编辑全部',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '编辑未录入',
+                title: '计算综合成绩',
                 onClick: this.handleAdd,
             },
             {
@@ -131,7 +95,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '上报成绩',
+                title: '发布成绩',
                 onClick: this.handleAdd,
             },
         ];
@@ -139,7 +103,7 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '编辑',
+                title: '查看',
                 onClick: record => this.handleEdit(record),
             },
         ];

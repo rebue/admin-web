@@ -1,4 +1,4 @@
-// 平时成绩
+// 编码管理
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -46,64 +46,27 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'no',
-                title: '#',
-                width: 50,
-                fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
-            },
-            {
-                dataIndex: 'naem',
-                title: '姓名',
+                dataIndex: 'enumValue',
+                title: '枚举数值',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'stuNum',
-                title: '学号',
+                dataIndex: 'valueContent',
+                title: '数值内容',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'Homework score',
-                title: '作业分数',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'attendanceScore',
-                title: '考勤分数',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'achievement',
-                title: '卷面成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'courseAchievement',
-                title: '课程成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'makeUpExamAchievement',
-                title: '补考成绩',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'allMakeUpExamAchievement',
-                title: '总补考成绩',
+                dataIndex: 'detailedDesc',
+                title: '详细说明',
                 ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
-                width: 60,
+                width: 110,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -113,25 +76,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '编辑全部',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '编辑未录入',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '清空成绩',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '上报成绩',
+                title: '新增',
                 onClick: this.handleAdd,
             },
         ];
@@ -141,6 +86,12 @@ export default {
                 type: 'a',
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: record => this.handleDel(record),
             },
         ];
 

@@ -1,4 +1,4 @@
-// 学籍变动
+// 分数小于五分
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -40,20 +40,8 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'stuOriginalNum',
-                title: '学员原编号',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeType',
-                title: '变动类型',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'changeDate',
-                title: '变动时间',
+                dataIndex: 'name',
+                title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
@@ -64,8 +52,50 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'name',
-                title: '姓名',
+                dataIndex: 'semester',
+                title: '学期',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'curriculum',
+                title: '课程',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'homeworkAchievement',
+                title: '作业成绩',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'attendanceScore',
+                title: '考勤成绩',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'achievement',
+                title: '卷面成绩',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'makeUpExamAchievement',
+                title: '补考成绩',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'allMakeUpExamAchievement',
+                title: '总补考成绩',
+                ellipsis: true,
+                width: 150,
+            },
+            {
+                dataIndex: 'courseAchievement',
+                title: '课程成绩',
                 ellipsis: true,
                 width: 150,
             },
@@ -82,80 +112,14 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'changeSemester',
-                title: '变动学期',
+                dataIndex: 'teachPoint',
+                title: '教学点',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'sex',
-                title: '性别',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'birthDate',
-                title: '出生年月',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'group',
-                title: '小组',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'classDuties',
-                title: '班级职务',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'company',
-                title: '工作单位',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'duties',
-                title: '职务',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'postLevel',
-                title: '职级',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'title',
-                title: '职称',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'phone',
-                title: '手机',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'telephone',
-                title: '电话',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'zipCode',
-                title: '邮编',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'workDate',
-                title: '工作时间',
+                dataIndex: 'major',
+                title: '专业',
                 ellipsis: true,
                 width: 150,
             },
@@ -172,25 +136,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '学员减少',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '学员增加',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '学员新增',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '转学学员以前成绩',
+                title: '期考和补考成绩清零',
                 onClick: this.handleAdd,
             },
         ];
