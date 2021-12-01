@@ -209,6 +209,56 @@ const constantRouters = {
                 },
             ],
         },
+        {
+            path: '/launch-demo1/student-system',
+            name: 'launch-demo1-student-system',
+            component: RouteView,
+            hidden: true,
+            meta: { title: '基本功能', keepAlive: true, icon: 'global' },
+            children: [
+                {
+                    path: '/launch-demo1/student-system/basic-function/course',
+                    name: 'launch-demo1-student-system-course',
+                    component: () => import('@/view/launch-demo1/student-system/basic-function/course.vue'),
+                    hidden: true,
+                    meta: { title: '课程表', keepAlive: true, icon: 'global' },
+                },
+
+                //
+            ],
+        },
+        {
+            path: '/launch-demo1/student-system/attendance',
+            name: 'launch-demo1-student-system-attendance',
+            component: () => import('@/view/launch-demo1/student-system/attendance/attendance.vue'),
+            hidden: true,
+            meta: { title: '考勤记录', keepAlive: true, icon: 'global' },
+        },
+        {
+            path: '/launch-demo1/judges-entrance',
+            name: 'launch-demo1-judges-entrance',
+            component: RouteView,
+            //
+            hidden: true,
+            meta: { title: '评委入口', keepAlive: true, icon: 'global' },
+            children: [
+                {
+                    path: '/launch-demo1/judges-entrance/competition-schedule',
+                    name: 'launch-demo1-judges-entrance-competition-schedule',
+                    component: () =>
+                        import('@/view/launch-demo1/student-system/judges-entrance/CompetitionSchedule.vue'),
+                    hidden: true,
+                    meta: { title: '评比日程', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo1/judges-entrance/recommend-judges',
+                    name: 'launch-demo1-judges-entrance-recommend-judges',
+                    component: () => import('@/view/launch-demo1/student-system/judges-entrance/RecommendJudges.vue'),
+                    hidden: true,
+                    meta: { title: '推荐评委', keepAlive: true, icon: 'global' },
+                },
+            ],
+        },
     ],
 };
 

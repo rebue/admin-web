@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'achievement-declaration',
+    name: 'AchievementDeclaration',
 };
 </script>
 

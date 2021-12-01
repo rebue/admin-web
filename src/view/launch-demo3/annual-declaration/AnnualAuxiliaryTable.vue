@@ -20,7 +20,7 @@ import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
 export default {
-    name: 'annual-auxiliary-table',
+    name: 'AnnualAuxiliaryTable',
     components: {
         // eslint-disable-next-line vue/no-unused-components
         CrudTable,

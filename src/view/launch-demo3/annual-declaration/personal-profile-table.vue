@@ -18,7 +18,7 @@
                                 </a-form-model-item>
                                 <a-form-model-item label="部门名称">
                                     <a-select style="width: 195px" v-model="formInline.user" placeholder="请选择部门">
-                                        <a-select-option value="全部">
+                                        <a-select-option value="">
                                             全部
                                         </a-select-option>
                                         <a-select-option value="学校">
