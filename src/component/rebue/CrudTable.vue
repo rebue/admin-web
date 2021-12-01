@@ -615,6 +615,9 @@ export default observer({
     align-items: stretch;
     .client {
         flex-grow: 1;
+        min-width: calc(100% - 230px);
+        max-width: calc(100% - 0px);
+        width: calc(100% - 0px)
     }
 }
 .col-config-checkbox-group {
