@@ -100,7 +100,6 @@ export default {
                 dataIndex: 'achievementNo',
                 title: '成果编号',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'memberName',

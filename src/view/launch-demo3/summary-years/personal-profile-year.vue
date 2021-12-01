@@ -21,6 +21,9 @@
                                 </a-form-model-item>
                                 <a-form-model-item label="开始年份:">
                                     <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
+                                        <a-select-option value="">
+                                            全部
+                                        </a-select-option>
                                         <a-select-option value="2020">
                                             2020
                                         </a-select-option>
@@ -35,7 +38,7 @@
                                 <a-form-model-item label="结束年份:">
                                     <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
                                         <a-select-option value="">
-                                            --请选择--
+                                            全部
                                         </a-select-option>
                                         <a-select-option value="2020">
                                             2020
@@ -50,6 +53,9 @@
                                 </a-form-model-item>
                                 <a-form-model-item label="发布项目:">
                                     <a-select style="width: 195px" v-model="formInline.user" placeholder="全部">
+                                        <a-select-option value="">
+                                            --请选择--
+                                        </a-select-option>
                                         <a-select-option value="2020">
                                             2020
                                         </a-select-option>
@@ -106,7 +112,6 @@ export default {
                 dataIndex: 'achievementNo',
                 title: '成果编号',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'memberName',

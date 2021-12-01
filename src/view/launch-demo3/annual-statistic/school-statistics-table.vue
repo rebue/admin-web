@@ -22,6 +22,8 @@
                                 >
                             </a-form-model>
                         </a-col>
+
+                        <a-col :span="14"> </a-col>
                     </a-row>
                 </template>
             </crud-table>
@@ -58,13 +60,11 @@ export default {
             },
             {
                 dataIndex: 'achievementNo',
-                title: '年份',
-
-                fixed: 'left',
+                title: '总费用名称',
             },
             {
                 dataIndex: 'memberName',
-                title: '专职非专职',
+                title: '年份',
             },
             {
                 dataIndex: 'author',

@@ -61,8 +61,6 @@ export default {
             {
                 dataIndex: 'achievementNo',
                 title: '年份',
-
-                fixed: 'left',
             },
             {
                 dataIndex: 'memberName',
