@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "vue-cli-service serve",
         "build": "vue-cli-service build --mode production",
-        "lint": "vue-cli-service lint",
+        "lint": "vue-cli-service lint --fix",
+        "lint:fix": "eslint --fix --ext .js,.vue src",
         "report": "vue-cli-service build --report"
     },
     "dependencies": {
