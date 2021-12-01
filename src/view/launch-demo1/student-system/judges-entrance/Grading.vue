@@ -12,26 +12,6 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #left>
-                        <div
-                            style="height: 100%;width: 200px;margin-top: 50px;border: 1px solid #000;margin-right: 10px; border-bottom:none; "
-                        >
-                            <div style="height: 20px;background-color: #e8e8e8">
-                                <center>
-                                    <div style="margin: 0 auto;">
-                                        系统帮助
-                                    </div>
-                                </center>
-                                <span>
-                                    请点击评分要素列中的单元格，设置评委的评分要素
-                                    <br />
-                                    本次评比请推荐5个评委
-                                    <br />
-                                    推荐在“观点新颖、有独特的的见解’ 此项安排俩名评委
-                                </span>
-                            </div>
-                        </div>
-                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -47,7 +27,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
 export default {
-    name: 'RecommendJudges',
+    name: 'ChooseArticle',
     components: {
         BaseManager,
         // EditForm,
@@ -58,40 +38,13 @@ export default {
         const columns = [
             {
                 dataIndex: 'term',
-                title: '学员',
-                width: 100,
-                fixed: 'left',
+                title: '评比文章',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'className',
-                title: '评分要素',
-                width: 150,
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'startTime',
-                title: '电话号码',
-                width: 150,
-            },
-            {
-                dataIndex: 'endTime',
-                title: '评比期',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'signupCode',
-                title: '审核',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 240,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
+                title: '分数',
+                width: '100',
             },
         ];
 
@@ -99,7 +52,7 @@ export default {
             {
                 buttonType: 'primary',
                 // icon: 'plus',
-                title: '添加',
+                title: '查看',
                 onClick: () => {
                     /**/
                 },

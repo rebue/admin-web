@@ -13,23 +13,17 @@
                     :defaultPagination="false"
                 >
                     <template #left>
-                        <div
-                            style="height: 100%;width: 200px;margin-top: 50px;border: 1px solid #000;margin-right: 10px; border-bottom:none; "
-                        >
-                            <div style="height: 20px;background-color: #e8e8e8">
-                                <center>
-                                    <div style="margin: 0 auto;">
-                                        系统帮助
-                                    </div>
-                                </center>
-                                <span>
-                                    请点击评分要素列中的单元格，设置评委的评分要素
-                                    <br />
-                                    本次评比请推荐5个评委
-                                    <br />
-                                    推荐在“观点新颖、有独特的的见解’ 此项安排俩名评委
-                                </span>
-                            </div>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            >
+                            </org-tree>
+
+                            <div class="table-divider"></div>
                         </div>
                     </template>
                 </crud-table>
@@ -42,16 +36,20 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
+
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
+import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
-    name: 'RecommendJudges',
+    name: 'team',
     components: {
         BaseManager,
         // EditForm,
         CrudTable,
+        // eslint-disable-next-line vue/no-unused-components
+        OrgTree,
     },
     data() {
         this.api = racRealmApi;
@@ -99,7 +97,7 @@ export default {
             {
                 buttonType: 'primary',
                 // icon: 'plus',
-                title: '添加',
+                title: '试图',
                 onClick: () => {
                     /**/
                 },
@@ -122,9 +120,8 @@ export default {
                 name: '',
                 user: '',
             },
+            showOrg: false,
             moth: 37,
-            startTime: '2021-12-8',
-            endTime: '2021-12-15',
         };
     },
     mounted() {
@@ -134,6 +131,12 @@ export default {
     methods: {
         onPanelChange(value, mode) {
             console.log(value, mode);
+        },
+        handleOrgMenuClick() {
+            //
+        },
+        handleOrgTreeSelect() {
+            //
         },
         /**
          * 刷新表格数据

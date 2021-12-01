@@ -23,11 +23,7 @@
                                     </div>
                                 </center>
                                 <span>
-                                    请点击评分要素列中的单元格，设置评委的评分要素
-                                    <br />
-                                    本次评比请推荐5个评委
-                                    <br />
-                                    推荐在“观点新颖、有独特的的见解’ 此项安排俩名评委
+                                    本次评比请推荐5篇文章
                                 </span>
                             </div>
                         </div>
@@ -47,7 +43,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
 export default {
-    name: 'RecommendJudges',
+    name: 'ChooseArticle',
     components: {
         BaseManager,
         // EditForm,
@@ -58,31 +54,31 @@ export default {
         const columns = [
             {
                 dataIndex: 'term',
-                title: '学员',
+                title: '文章标题',
                 width: 100,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'className',
-                title: '评分要素',
+                title: '文章提交时间',
                 width: 150,
                 fixed: 'left',
             },
             {
                 dataIndex: 'startTime',
-                title: '电话号码',
+                title: '作者',
                 width: 150,
             },
             {
                 dataIndex: 'endTime',
-                title: '评比期',
+                title: '班级',
                 width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'signupCode',
-                title: '审核',
+                title: '评比期',
                 width: 150,
                 ellipsis: true,
             },
@@ -100,6 +96,14 @@ export default {
                 buttonType: 'primary',
                 // icon: 'plus',
                 title: '添加',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '查看',
                 onClick: () => {
                     /**/
                 },
