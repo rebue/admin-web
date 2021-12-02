@@ -10,8 +10,8 @@
                     :columns="columns"
                     :api="api"
                     :query="{ orgId: curOrgId }"
-                    :scrollX="600"
-                    :defaultPagination="false"
+                    :scrollX="800"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -34,40 +34,84 @@ export default {
         // OrgTree,
     },
     data() {
-        this.api = racRealmApi;
-        console.log(this.api);
+        this.api = {};
+        const page = function() {
+            const p = new Promise((resolve, reject) => {
+                // 数据列表在这里设置
+                const dataSource = [
+                    {
+                        id: 1,
+                        no: 1,
+                        name: '聚餐、游戏',
+                        name1: '张三',
+                        phone: '13512345678',
+                        nub1: '80',
+                        nub2: '12',
+                        add: '足球场',
+                        time: '2021-12-04 16:39:00 - 2021-12-04 18:39:00',
+                    },
+                    {
+                        id: 2,
+                        no: 2,
+                        name: '户外拓展活动',
+                        name1: '李四',
+                        phone: '13512345678',
+                        nub1: '20',
+                        nub2: '7',
+                        add: '美丽南方',
+                        time: '2021-12-04 09:30:00 - 2021-12-05 17:00:00',
+                    },
+                ];
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: dataSource.length,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
                 fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'name',
                 title: '专题名称',
                 width: 150,
                 fixed: 'left',
             },
             {
-                dataIndex: 'name1',
+                dataIndex: 'xy',
                 title: '负责人/联系方式',
-                width: 150,
+                width: 110,
+                customRender: (text, record) => {
+                    return record.name1 + '/' + record.phone;
+                },
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'nub',
                 title: '报名组数(总/当前)',
-                width: 150,
+                width: 90,
+                customRender: (text, record) => {
+                    return record.nub1 + '/' + record.nub2;
+                },
             },
             {
-                dataIndex: 'birth',
+                dataIndex: 'time',
                 title: '开放时间段',
-                width: 150,
+                width: 220,
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'add',
                 title: '活动地址',
                 width: 150,
                 ellipsis: true,
@@ -123,7 +167,11 @@ export default {
                 },
             },
         ];
-
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         return {
             columns,
             showOrg: false,
