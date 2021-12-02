@@ -49,6 +49,7 @@ export const constantRouters = [
             }
         },
     },
+
     /** 平台管理 */
     /** 登录 */
     {
@@ -651,14 +652,30 @@ export const constantRouters = [
             },
         ],
     },
-    { ...LaunchDemo1 },
-    { ...LaunchDemo2 },
-    { ...LaunchDemo3 },
-    { ...LaunchDemo4 },
-    { ...LaunchDemo5 },
-    { ...LaunchDemo6 },
-    { ...LaunchDemo7 },
-    { ...LaunchDemo8 },
+    {
+        ...LaunchDemo1,
+    },
+    {
+        ...LaunchDemo2,
+    },
+    {
+        ...LaunchDemo3,
+    },
+    {
+        ...LaunchDemo4,
+    },
+    {
+        ...LaunchDemo5,
+    },
+    {
+        ...LaunchDemo6,
+    },
+    {
+        ...LaunchDemo7,
+    },
+    {
+        ...LaunchDemo8,
+    },
 
     /** 404 */
     {

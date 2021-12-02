@@ -1,210 +1,162 @@
 <template>
-    <fragment>
-        <div class="main" :class="{'multiple-col-wrap': $slots.left}">
-            <div class="left" v-if="$slots.left">
-                <slot name="left" />
-            </div>
-            <div class="client">
-                <div class="table-operator">
-                    <div class="table-commands">
-                        <slot name="commands">
-                            <template v-for="(item, index) in commands">
-                                <a-button
-                                    style="margin-right: 15px"
-                                    :type="item.buttonType"
-                                    :icon="item.icon"
-                                    @click="item.onClick"
-                                    :key="index"
-                                >
-                                    {{ item.title }}
-                                </a-button>
-                            </template>
-                        </slot>
-                    </div>
-                    <div class="table-keywords">
-                        <slot name="keywordsLeft"> </slot>
-                        <slot name="keywords">
-                            <a-input-search
-                                :style="{ width: searchWidth + 'px' }"
-                                v-if="showKeywords"
-                                v-model.trim="keywords"
-                                :loading="loading"
-                                placeholder="关键字"
-                                @search="refreshData"
-                            />
-                        </slot>
-                    </div>
-                    <div class="table-tools">
-                        <a-tooltip title="刷新">
-                            <a-button type="link" icon="reload" @click="refreshData" />
-                        </a-tooltip>
-                        <a-divider type="vertical" />
-                        <a-tooltip :title="this.iconTips" v-show="showHierarchical">
-                            <a-button type="link" size="large" @click="toggleAccountDisplay">
-                                <a-icon
-                                    :type="this.changeIcon ? 'unordered-list' : 'apartment'"
-                                    :style="{ color: '#1890ff' }"
-                                />
-                            </a-button>
-                            <a-divider type="vertical" />
-                        </a-tooltip>
-                        <a-tooltip title="表格边框" :autoAdjustOverflow="false">
-                            <a-button type="link" size="large" @click="toggleTableBorder">
-                                <a-icon
-                                    type="table"
-                                    :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }"
-                                />
-                            </a-button>
-                        </a-tooltip>
-                        <a-tooltip title="表格斑马条纹" :autoAdjustOverflow="false">
-                            <a-button type="link" size="large" @click="toggleTableStrip">
-                                <svg-icon
-                                    icon="table-strip"
-                                    :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }"
-                                />
-                            </a-button>
-                        </a-tooltip>
-                        <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
-                            <a-dropdown>
-                                <a-button type="link" icon="column-height" />
-                                <a-menu slot="overlay">
-                                    <a-menu-item>
-                                        <a @click="setTableSize('default')">大</a>
-                                    </a-menu-item>
-                                    <a-menu-item>
-                                        <a @click="setTableSize('middle')">中</a>
-                                    </a-menu-item>
-                                    <a-menu-item>
-                                        <a @click="setTableSize('small')">小</a>
-                                    </a-menu-item>
-                                </a-menu>
-                            </a-dropdown>
-                        </a-tooltip>
-                        <a-tooltip title="列显示配置">
-                            <a-popover placement="bottom">
-                                <template slot="title">
-                                    <a-checkbox
-                                        :indeterminate="indeterminate"
-                                        :defaultChecked="isCheckColsAll"
-                                        :checked="isCheckColsAll"
-                                        @change="changeColsCheckAll"
-                                    >
-                                        全选
-                                    </a-checkbox>
-                                </template>
-                                <template slot="content">
-                                    <a-checkbox-group
-                                        class="col-config-checkbox-group"
-                                        v-model="checkedCols"
-                                        :options="defaultOptionCols"
-                                        @change="changeColCheck"
-                                    />
-                                </template>
-                                <a-button type="link" icon="project" />
-                            </a-popover>
-                        </a-tooltip>
-                        <a-divider type="vertical" />
-                        <a-tooltip v-if="expandable" title="全部展开">
-                            <a-button type="link" size="large" @click="expandAll">
-                                <icon-font type="rebue-expand-all" />
-                            </a-button>
-                        </a-tooltip>
-                        <a-tooltip v-if="expandable" title="全部收缩">
-                            <a-button type="link" size="large" @click="collapseAll">
-                                <icon-font type="rebue-collapse-all" />
-                            </a-button>
-                        </a-tooltip>
-                        <a-divider v-if="expandable" type="vertical" />
-                        <a-tooltip :title="fullScreenTitle">
-                            <a-button type="link" :icon="fullScreenIcon" @click="handleToggleFullScreen" />
-                        </a-tooltip>
-                    </div>
-                </div>
-                <a-table
-                    :bordered="settingStore.tableBorder"
-                    :size="settingStore.tableSize"
-                    :rowKey="(record, index) => (record.id ? record.id : index)"
-                    :columns="displayColumns"
-                    :expandedRowKeys="expandedRowKeys"
-                    :dataSource="dataSource"
-                    :loading="loading"
-                    :scroll="{ x: this.scrollX, y: this.scrollY }"
-                    :rowClassName="
+  <fragment>
+    <div class="main" :class="{'multiple-col-wrap': $slots.left}">
+      <div class="left" v-if="$slots.left">
+        <slot name="left" />
+      </div>
+      <div class="client">
+        <div class="table-operator">
+          <div class="table-commands">
+            <slot name="commands">
+              <template v-for="(item, index) in commands">
+                <a-button style="margin-right: 15px" :type="item.buttonType" :icon="item.icon"
+                  @click="item.onClick" :key="index">
+                  {{ item.title }}
+                </a-button>
+              </template>
+            </slot>
+          </div>
+          <div class="table-keywords">
+            <slot name="keywordsLeft"> </slot>
+            <slot name="keywords">
+              <a-input-search :style="{ width: searchWidth + 'px' }" v-if="showKeywords"
+                v-model.trim="keywords" :loading="loading" placeholder="关键字"
+                @search="refreshData" />
+            </slot>
+          </div>
+          <div class="table-tools">
+            <a-tooltip title="刷新">
+              <a-button type="link" icon="reload" @click="refreshData" />
+            </a-tooltip>
+            <a-divider type="vertical" />
+            <a-tooltip :title="this.iconTips" v-show="showHierarchical">
+              <a-button type="link" size="large" @click="toggleAccountDisplay">
+                <a-icon :type="this.changeIcon ? 'unordered-list' : 'apartment'"
+                  :style="{ color: '#1890ff' }" />
+              </a-button>
+              <a-divider type="vertical" />
+            </a-tooltip>
+            <a-tooltip title="表格边框" :autoAdjustOverflow="false">
+              <a-button type="link" size="large" @click="toggleTableBorder">
+                <a-icon type="table"
+                  :style="{ color: settingStore.tableBorder ? '#1890ff' : '#ddd' }" />
+              </a-button>
+            </a-tooltip>
+            <a-tooltip title="表格斑马条纹" :autoAdjustOverflow="false">
+              <a-button type="link" size="large" @click="toggleTableStrip">
+                <svg-icon icon="table-strip"
+                  :style="{ color: settingStore.tableStrip ? '#1890ff' : '#ddd' }" />
+              </a-button>
+            </a-tooltip>
+            <a-tooltip title="竖向间隔" :autoAdjustOverflow="false">
+              <a-dropdown>
+                <a-button type="link" icon="column-height" />
+                <a-menu slot="overlay">
+                  <a-menu-item>
+                    <a @click="setTableSize('default')">大</a>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <a @click="setTableSize('middle')">中</a>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <a @click="setTableSize('small')">小</a>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
+            </a-tooltip>
+            <a-tooltip title="列显示配置">
+              <a-popover placement="bottom">
+                <template slot="title">
+                  <a-checkbox :indeterminate="indeterminate" :defaultChecked="isCheckColsAll"
+                    :checked="isCheckColsAll" @change="changeColsCheckAll">
+                    全选
+                  </a-checkbox>
+                </template>
+                <template slot="content">
+                  <a-checkbox-group class="col-config-checkbox-group" v-model="checkedCols"
+                    :options="defaultOptionCols" @change="changeColCheck" />
+                </template>
+                <a-button type="link" icon="project" />
+              </a-popover>
+            </a-tooltip>
+            <a-divider type="vertical" />
+            <a-tooltip v-if="expandable" title="全部展开">
+              <a-button type="link" size="large" @click="expandAll">
+                <icon-font type="rebue-expand-all" />
+              </a-button>
+            </a-tooltip>
+            <a-tooltip v-if="expandable" title="全部收缩">
+              <a-button type="link" size="large" @click="collapseAll">
+                <icon-font type="rebue-collapse-all" />
+              </a-button>
+            </a-tooltip>
+            <a-divider v-if="expandable" type="vertical" />
+            <a-tooltip :title="fullScreenTitle">
+              <a-button type="link" :icon="fullScreenIcon" @click="handleToggleFullScreen" />
+            </a-tooltip>
+          </div>
+        </div>
+        <a-table :bordered="settingStore.tableBorder" :size="settingStore.tableSize"
+          :rowKey="(record, index) => (record.id ? record.id : index)" :columns="displayColumns"
+          :expandedRowKeys="expandedRowKeys" :dataSource="dataSource" :loading="loading"
+          :scroll="{ x: this.scrollX, y: this.scrollY }" :rowClassName="
                         (record, index) => (settingStore.tableStrip ? (index % 2 === 0 ? 'row-odd' : 'row-even') : '')
-                    "
-                    :row-selection="rowSelection"
-                    :pagination="pagination"
-                    :components="components"
-                    v-bind="$attrs"
-                    v-on="$listeners"
-                    @expand="handleTableExpand"
-                    @change="handleTableChange"
-                >
-                    <span slot="serial" slot-scope="text, record, index">
-                        {{
+                    " :row-selection="rowSelection" :pagination="pagination"
+          :components="components" v-bind="$attrs" v-on="$listeners" @expand="handleTableExpand"
+          @change="handleTableChange">
+          <span slot="serial" slot-scope="text, record, index">
+            {{
                             pagination === false
                                 ? index + 1
                                 : (pagination.current ? (pagination.current - 1) * pagination.pageSize : 0) + index + 1
                         }}
-                    </span>
-                    <span slot="action" slot-scope="text, record">
-                        <template v-for="(item, index) in actions">
-                            <span :key="index">
-                                <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
-                                <a-popconfirm
-                                    v-if="item.type === 'confirm'"
-                                    :title="item.confirmTitle"
-                                    @confirm="item.onClick(record)"
-                                    okText="确定"
-                                    cancelText="取消"
-                                >
-                                    <a>{{ item.title }}</a>
-                                </a-popconfirm>
-                                <a-dropdown v-if="item.type === 'more'">
-                                    <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
-                                        更多 <a-icon type="down" />
-                                    </a>
-                                    <a-menu slot="overlay">
-                                        <template v-for="(moreItem, moreIndex) in item.items">
-                                            <a-menu-item :key="moreIndex">
-                                                <a @click="moreItem.onClick(record)">{{ moreItem.title }}</a>
-                                            </a-menu-item>
-                                        </template>
-                                    </a-menu>
-                                </a-dropdown>
-                                <a-divider v-if="index < actions.length - 1" type="vertical" />
-                            </span>
-                        </template>
-                    </span>
-                    <span slot="sort" slot-scope="text, record">
-                        <span>
-                            <a-tooltip title="上移">
-                                <a-button
-                                    :disabled="record.seqNo === 0"
-                                    shape="circle"
-                                    size="small"
-                                    @click="$emit('moveUp', record)"
-                                >
-                                    <icon-font type="rebue-up" />
-                                </a-button>
-                            </a-tooltip>
-                            <a-divider type="vertical" />
-                            <a-tooltip title="下移">
-                                <a-button
-                                    :disabled="record.seqNo === record.maxSeqNo"
-                                    shape="circle"
-                                    size="small"
-                                    @click="$emit('moveDown', record)"
-                                >
-                                    <icon-font type="rebue-down" />
-                                </a-button>
-                            </a-tooltip>
-                        </span>
-                    </span>
-                </a-table>
-            </div>
-        </div>
-    </fragment>
+          </span>
+          <span slot="action" slot-scope="text, record">
+            <template v-for="(item, index) in actions">
+              <span :key="index">
+                <a v-if="item.type === 'a'" @click="item.onClick(record)">{{ item.title }}</a>
+                <a-popconfirm v-if="item.type === 'confirm'" :title="item.confirmTitle"
+                  @confirm="item.onClick(record)" okText="确定" cancelText="取消">
+                  <a>{{ item.title }}</a>
+                </a-popconfirm>
+                <a-dropdown v-if="item.type === 'more'">
+                  <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                    更多
+                    <a-icon type="down" />
+                  </a>
+                  <a-menu slot="overlay">
+                    <template v-for="(moreItem, moreIndex) in item.items">
+                      <a-menu-item :key="moreIndex">
+                        <a @click="moreItem.onClick(record)">{{ moreItem.title }}</a>
+                      </a-menu-item>
+                    </template>
+                  </a-menu>
+                </a-dropdown>
+                <a-divider v-if="index < actions.length - 1" type="vertical" />
+              </span>
+            </template>
+          </span>
+          <span slot="sort" slot-scope="text, record">
+            <span>
+              <a-tooltip title="上移">
+                <a-button :disabled="record.seqNo === 0" shape="circle" size="small"
+                  @click="$emit('moveUp', record)">
+                  <icon-font type="rebue-up" />
+                </a-button>
+              </a-tooltip>
+              <a-divider type="vertical" />
+              <a-tooltip title="下移">
+                <a-button :disabled="record.seqNo === record.maxSeqNo" shape="circle" size="small"
+                  @click="$emit('moveDown', record)">
+                  <icon-font type="rebue-down" />
+                </a-button>
+              </a-tooltip>
+            </span>
+          </span>
+        </a-table>
+      </div>
+    </div>
+  </fragment>
 </template>
 
 <script>
@@ -278,10 +230,10 @@ export default observer({
                 };
             },
         },
-         /** 是否显示checkbox */
-        rowSelection:{
+        /** 是否显示checkbox */
+        rowSelection: {
             type: Object,
-            default: null
+            default: null,
         },
     },
     data() {
@@ -289,18 +241,18 @@ export default observer({
         const resizeableTitle = (h, props, children) => {
             let thDom = null;
             const { key, ...restProps } = props;
-             //当表格不需要checkbox的时候进的判断
-            if(this.rowSelection == null){
+            //当表格不需要checkbox的时候进的判断
+            if (this.rowSelection == null) {
                 var col = this.displayColumns.find((col) => {
                     const k = col.key || col.dataIndex;
                     return k === key;
                 });
-            }else{
+            } else {
                 //暂时解决 但是有checkbox的表格还不能实现托拉拽
-                if( this.displayColumns.length != 0){
-                    var col = this.displayColumns[0].dataIndex
-                }else{
-                    var col = 'no'
+                if (this.displayColumns.length != 0) {
+                    var col = this.displayColumns[0].dataIndex;
+                } else {
+                    var col = 'no';
                 }
             }
             if (!col.width) {
@@ -449,7 +401,7 @@ export default observer({
                 const data = { ...query, ...filters, ...sorter };
                 if (keywords && keywords.trim() !== '') data.keywords = keywords.trim();
                 promise = (JSON.stringify(data) === '{}' ? this.api.listAll() : this.api.list(data)).then(
-                    (ro) => ( this.dataSource = ro.extra.list)
+                    (ro) => (this.dataSource = ro.extra.list)
                 );
             }
             return promise.finally(() => (this.loading = false));
