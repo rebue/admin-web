@@ -10,6 +10,8 @@
                         :api="api"
                         :scrollX="600"
                         :defaultPagination="false"
+                        :commands="tableCommands"
+                        :query="{ orgId: curOrgId }"
                     >
                     </crud-table>
                 </template>
@@ -37,13 +39,25 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'number',
-                title: '自动编号',
+                dataIndex: 'choose',
+                title: '选择',
                 width: 150,
             },
             {
-                dataIndex: 'user',
-                title: '用户',
+                dataIndex: 'homework',
+                title: '作业批次',
+                width: 150,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'homeworkName',
+                title: '作业名称',
+                width: 150,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'describe',
+                title: '作业描述',
                 width: 150,
                 ellipsis: true,
             },
@@ -54,21 +68,43 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'type',
-                title: '类型',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'describe',
-                title: '描述',
+                dataIndex: 'score',
+                title: '成绩',
                 width: 150,
                 ellipsis: true,
             },
         ];
 
+        this.tableCommands = [
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '新增',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '编辑',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '删除',
+                onClick: () => {
+                    /**/
+                },
+            },
+        ];
+
         return {
             columns,
+            curOrgId: undefined,
         };
     },
     mounted() {
@@ -109,3 +145,4 @@ export default {
     },
 };
 </script>
+<style lang="less" scoped></style>

@@ -1,34 +1,36 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :columns="columns"
-                    :api="api"
-                    :query="{ orgId: curOrgId }"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                    :commands="tableCommands"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :showKeywords="false"
+                        :columns="columns"
+                        :api="api"
+                        :query="{ orgId: curOrgId }"
+                        :scrollX="600"
+                        :defaultPagination="false"
+                        :commands="tableCommands"
+                    >
+                        <template #left>
+                            <div v-show="showOrg" class="table-left">
+                                <org-tree
+                                    :ref="`orgTree.platform`"
+                                    :show.sync="showOrg"
+                                    realmId="platform"
+                                    @click="handleOrgMenuClick"
+                                    @select="handleOrgTreeSelect"
+                                />
+                                <div class="table-divider"></div>
+                            </div>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+            <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        </fragment>
+    </div>
 </template>
 
 <script>

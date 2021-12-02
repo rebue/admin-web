@@ -10,6 +10,8 @@
                         :api="api"
                         :scrollX="600"
                         :defaultPagination="false"
+                        :commands="tableCommands"
+                        :query="{ orgId: curOrgId }"
                     >
                     </crud-table>
                 </template>
@@ -37,13 +39,13 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'number',
-                title: '自动编号',
+                dataIndex: 'collegeName',
+                title: '学院名称',
                 width: 150,
             },
             {
-                dataIndex: 'user',
-                title: '用户',
+                dataIndex: 'homework-paper',
+                title: '作业/论文名称',
                 width: 150,
                 ellipsis: true,
             },
@@ -54,21 +56,35 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'type',
-                title: '类型',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'describe',
-                title: '描述',
+                dataIndex: 'score',
+                title: '成绩',
                 width: 150,
                 ellipsis: true,
             },
         ];
 
+        this.tableCommands = [
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '导出数据',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '打印',
+                onClick: () => {
+                    /**/
+                },
+            },
+        ];
+
         return {
             columns,
+            curOrgId: undefined,
         };
     },
     mounted() {

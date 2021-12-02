@@ -1,43 +1,45 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="true"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                    <template #commands>
-                        <a-form-model layout="inline" :model="formInline">
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
-                                    <a-select-option value="lucy">
-                                        2021年秋季学期
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
-                                    <a-select-option value="lucy">
-                                        全区党校（行政院长）系统咨询
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <div class="btn-group">
-                                <a-button type="primary" class="btn">编辑</a-button>
-                                <a-button type="primary" class="btn">查看</a-button>
-                                <a-button type="primary" class="btn">批量录入分数</a-button>
-                            </div>
-                        </a-form-model>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :showKeywords="true"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="false"
+                    >
+                        <template #commands>
+                            <a-form-model layout="inline">
+                                <a-form-model-item>
+                                    <a-select default-value="lucy" style="width: 120px">
+                                        <a-select-option value="lucy">
+                                            2021年秋季学期
+                                        </a-select-option>
+                                    </a-select>
+                                </a-form-model-item>
+                                <a-form-model-item>
+                                    <a-select default-value="lucy" style="width: 120px">
+                                        <a-select-option value="lucy">
+                                            全区党校（行政院长）系统咨询
+                                        </a-select-option>
+                                    </a-select>
+                                </a-form-model-item>
+                                <div class="btn-group">
+                                    <a-button type="primary" class="btn">编辑</a-button>
+                                    <a-button type="primary" class="btn">查看</a-button>
+                                    <a-button type="primary" class="btn">批量录入分数</a-button>
+                                </div>
+                            </a-form-model>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+            <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        </fragment>
+    </div>
 </template>
 
 <script>

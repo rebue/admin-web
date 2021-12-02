@@ -1,56 +1,58 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :columns="columns"
-                    :api="api"
-                    :query="{ orgId: curOrgId }"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                    :row-selection="rowSelection"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                    <template #commands>
-                        <a-form-model layout="inline" :model="formInline">
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
-                                    <a-select-option value="lucy">
-                                        毕业鉴定
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
-                                    <a-select-option value="lucy">
-                                        批量打印
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <div class="btn-group">
-                                <a-button type="primary" class="btn">设置鉴定模块</a-button>
-                                <a-button type="primary" class="btn">填写班级学习内容</a-button>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :showKeywords="false"
+                        :columns="columns"
+                        :api="api"
+                        :query="{ orgId: curOrgId }"
+                        :scrollX="600"
+                        :defaultPagination="false"
+                        :row-selection="rowSelection"
+                    >
+                        <template #left>
+                            <div v-show="showOrg" class="table-left">
+                                <org-tree
+                                    :ref="`orgTree.platform`"
+                                    :show.sync="showOrg"
+                                    realmId="platform"
+                                    @click="handleOrgMenuClick"
+                                    @select="handleOrgTreeSelect"
+                                />
+                                <div class="table-divider"></div>
                             </div>
-                        </a-form-model>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
-    </fragment>
+                        </template>
+                        <template #commands>
+                            <a-form-model layout="inline">
+                                <a-form-model-item>
+                                    <a-select default-value="lucy" style="width: 120px">
+                                        <a-select-option value="lucy">
+                                            毕业鉴定
+                                        </a-select-option>
+                                    </a-select>
+                                </a-form-model-item>
+                                <a-form-model-item>
+                                    <a-select default-value="lucy" style="width: 120px">
+                                        <a-select-option value="lucy">
+                                            批量打印
+                                        </a-select-option>
+                                    </a-select>
+                                </a-form-model-item>
+                                <div class="btn-group">
+                                    <a-button type="primary" class="btn">设置鉴定模块</a-button>
+                                    <a-button type="primary" class="btn">填写班级学习内容</a-button>
+                                </div>
+                            </a-form-model>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+            <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        </fragment>
+    </div>
 </template>
 
 <script>

@@ -207,6 +207,28 @@ const constantRouters = {
                         icon: 'global',
                     },
                 },
+                {
+                    path: '/launch-demo1/student-status/log',
+                    name: 'launch-demo1-student-status-log',
+                    component: () => import('@/view/launch-demo1/student-status/log/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '版本记录',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/student-status/identity',
+                    name: 'launch-demo1-student-status-identity',
+                    component: () => import('@/view/launch-demo1/student-status/identity/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '学员身份',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
             ],
         },
         {
@@ -275,30 +297,92 @@ const constantRouters = {
                         icon: 'global',
                     },
                 },
+            ],
+        },
+        {
+            path: '/launch-demo1/homework',
+            name: 'launch-demo1-homework',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '作业管理',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
                 {
-                    path: '/launch-demo1/student-status/log',
-                    name: 'launch-demo1-student-status-log',
-                    component: () => import('@/view/launch-demo1/student-status/log/Index.vue'),
+                    path: '/launch-demo1/homework/decorate',
+                    name: 'launch-demo1-homework-decorate',
+                    component: () => import('@/view/launch-demo1/homework/decorate/Index.vue'),
                     hidden: true,
                     meta: {
-                        title: '版本记录',
+                        title: '布置批次',
                         keepAlive: true,
                         icon: 'global',
                     },
                 },
                 {
-                    path: '/launch-demo1/student-status/identity',
-                    name: 'launch-demo1-student-status-identity',
-                    component: () => import('@/view/launch-demo1/student-status/identity/Index.vue'),
+                    path: '/launch-demo1/homework/article',
+                    name: 'launch-demo1-homework-article',
+                    component: () => import('@/view/launch-demo1/homework/article/Index.vue'),
                     hidden: true,
                     meta: {
-                        title: '学员身份',
+                        title: '文章查询',
                         keepAlive: true,
                         icon: 'global',
                     },
                 },
             ],
         },
+        {
+            path: '/launch-demo1/score',
+            name: 'launch-demo1-score',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '成绩管理',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
+                {
+                    path: '/launch-demo1/score/manage',
+                    name: 'launch-demo1-score-manage',
+                    component: () => import('@/view/launch-demo1/score/manage/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '作业/论文成绩',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+            ],
+        },
+        {
+            path: '/launch-demo1/one-card',
+            name: 'launch-demo1-one-card',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '一卡通管理',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
+                {
+                    path: '/launch-demo1/one-card/manage',
+                    name: 'launch-demo1-one-card-manage',
+                    component: () => import('@/view/launch-demo1/one-card/manage/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '学员一卡通',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+            ],
+        },
+
         {
             path: '/launch-demo1/attendance',
             name: 'launch-demo1-attendance',
@@ -587,7 +671,11 @@ const constantRouters = {
                     name: 'launch-demo1-student-system-students-file',
                     component: () => import('@/view/launch-demo1/student-system/basic-function/Student.vue'),
                     hidden: true,
-                    meta: { title: '学籍信息', keepAlive: true, icon: 'global' },
+                    meta: {
+                        title: '学籍信息',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
                 },
                 {
                     path: '/launch-demo1/student-system/basic-function/course',

@@ -10,6 +10,8 @@
                         :api="api"
                         :scrollX="600"
                         :defaultPagination="false"
+                        :actions="tableActions"
+                        :query="{ orgId: curOrgId }"
                     >
                     </crud-table>
                 </template>
@@ -37,13 +39,14 @@ export default {
         this.api = racRealmApi;
         const columns = [
             {
-                dataIndex: 'number',
-                title: '自动编号',
+                dataIndex: 'articleTitle',
+                title: '文章标题',
                 width: 150,
+                ellipsis: true,
             },
             {
-                dataIndex: 'user',
-                title: '用户',
+                dataIndex: 'describe',
+                title: '文章内容',
                 width: 150,
                 ellipsis: true,
             },
@@ -54,21 +57,49 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'type',
-                title: '类型',
+                dataIndex: 'name',
+                title: '作者',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'describe',
-                title: '描述',
+                dataIndex: 'action',
+                title: '操作',
                 width: 150,
-                ellipsis: true,
+                fixed: 'right',
+                scopedSlots: { customRender: 'action' },
+            },
+        ];
+        this.tableActions = [
+            {
+                type: 'a',
+                title: '查看',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '编辑',
+                    },
+                    {
+                        type: 'confirm',
+                        title: '删除',
+                        confirmTitle: '你确定要删除本条记录吗?',
+                        onClick: () => {
+                            /**/
+                        },
+                    },
+                ],
             },
         ];
 
         return {
             columns,
+            curOrgId: undefined,
         };
     },
     mounted() {
