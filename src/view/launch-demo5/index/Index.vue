@@ -24,11 +24,11 @@
                         <h1>
                             {{ title }}
                         </h1>
-                        <a-tooltip placement="bottom" title="打开新页面">
+                        <!-- <a-tooltip placement="bottom" title="打开新页面">
                             <router-link tag="a" target="_blank" :to="$route.path">
                                 <a-icon type="plus-circle" :style="{ fontSize: '24px' }" />
                             </router-link>
-                        </a-tooltip>
+                        </a-tooltip> -->
                     </a-space>
                 </div>
             </template>
