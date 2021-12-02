@@ -70,6 +70,7 @@ import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
 export default {
+    name: 'course',
     components: {
         BaseManager,
         // EditForm,

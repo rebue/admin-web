@@ -656,6 +656,63 @@ const constantRouters = {
             ],
         },
         {
+            path: '/launch-demo1/top-ten-articles',
+            name: 'launch-demo1-top-ten-articles',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '十佳文章管理入口',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
+                {
+                    path: '/launch-demo1/manage',
+                    name: 'launch-demo1-data-manage',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/Manage.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '管理文章',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/management-judges',
+                    name: 'launch-demo1-management-judges',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/ManagementJudges.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '管理评委',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/manage-score',
+                    name: 'launch-demo1-manage-score',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/ManageScore.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '管理评分',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/class-manage',
+                    name: 'launch-demo1-class-manage',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/ClassManage.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '评比班级管理',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+            ],
+        },
+        {
             path: '/launch-demo1/student-system',
             name: 'launch-demo1-student-system',
             component: RouteView,
@@ -699,6 +756,17 @@ const constantRouters = {
             hidden: true,
             meta: {
                 title: '考勤记录',
+                keepAlive: true,
+                icon: 'global',
+            },
+        },
+        {
+            path: '/launch-demo1/student-system/course-selection',
+            name: 'launch-demo1-student-system-course-selection',
+            component: () => import('@/view/launch-demo1/student-system/course-selection/curriculum.vue'),
+            hidden: true,
+            meta: {
+                title: '网上选课',
                 keepAlive: true,
                 icon: 'global',
             },
@@ -783,6 +851,17 @@ const constantRouters = {
                     },
                 },
             ],
+        },
+        {
+            path: '/launch-demo1/student-system/summary',
+            name: 'launch-demo1-student-system-summary',
+            component: () => import('@/view/launch-demo1/student-system/personal-summary/summary.vue'),
+            hidden: true,
+            meta: {
+                title: '个人总结',
+                keepAlive: true,
+                icon: 'global',
+            },
         },
         {
             path: '/launch-demo1/judges-entrance/team',
