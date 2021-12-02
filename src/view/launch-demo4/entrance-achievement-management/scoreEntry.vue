@@ -3,6 +3,11 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
+                <a-tabs>
+                    <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
+                    <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
+                    <a-tab-pane :key="3" tab="目录3"></a-tab-pane>
+                </a-tabs>
                 <crud-table
                     ref="crudTable"
                     :query="{ orgId: curOrg.id }"
@@ -97,31 +102,26 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '编辑未录入',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '编辑全部',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '清空成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '提交成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '清除0分',
                 onClick: this.handleAdd,
             },

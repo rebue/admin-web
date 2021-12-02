@@ -12,6 +12,19 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #keywordsLeft>
+                        <div style="margin-right: 10px">
+                            <a-select
+                                :default-value="provinceData[0]"
+                                style="width: 100px"
+                                @change="handleProvinceChange"
+                            >
+                                <a-select-option v-for="province in provinceData" :key="province">
+                                    {{ province }}
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -23,6 +36,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
+const provinceData = ['2021年', '2020年', '2019年'];
 export default {
     name: 'signupConf',
     components: {
@@ -135,7 +149,6 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '期考和补考成绩清零',
                 onClick: this.handleAdd,
             },
@@ -157,6 +170,7 @@ export default {
 
         return {
             columns,
+            provinceData,
         };
     },
     mounted() {
@@ -170,6 +184,9 @@ export default {
             //
         },
         handleDel() {
+            //
+        },
+        handleProvinceChange(value) {
             //
         },
     },

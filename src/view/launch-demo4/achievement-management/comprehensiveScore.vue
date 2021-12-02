@@ -82,19 +82,16 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '计算综合成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '清空成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '发布成绩',
                 onClick: this.handleAdd,
             },

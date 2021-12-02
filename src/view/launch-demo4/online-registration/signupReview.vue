@@ -13,7 +13,21 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
+                    <template #keywordsLeft>
+                        <div style="margin-right: 10px">
+                            <a-select
+                                :default-value="provinceData[0]"
+                                style="width: 80px"
+                                @change="handleProvinceChange"
+                            >
+                                <a-select-option v-for="province in provinceData" :key="province">
+                                    {{ province }}
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                    </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
@@ -39,6 +53,7 @@ import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 import request from '@/util/request';
 
+const provinceData = ['全部', '已缴费', '未缴费'];
 export default {
     name: 'signupConf',
     components: {
@@ -116,32 +131,17 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '审核',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
-                title: '导出',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '已缴费',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '未缴费',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
                 title: '同步报名库',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                title: '导出',
                 onClick: this.handleAdd,
             },
         ];
@@ -164,6 +164,7 @@ export default {
             columns,
             showOrg: false,
             curOrg: '',
+            provinceData,
         };
     },
     mounted() {
@@ -186,6 +187,9 @@ export default {
             //
         },
         handleAdd() {
+            //
+        },
+        handleProvinceChange(value) {
             //
         },
     },

@@ -12,6 +12,19 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #keywordsLeft>
+                        <div style="margin-right: 10px">
+                            <a-select
+                                :default-value="provinceData[0]"
+                                style="width: 140px"
+                                @change="handleProvinceChange"
+                            >
+                                <a-select-option v-for="province in provinceData" :key="province">
+                                    {{ province }}
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                    </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
@@ -35,6 +48,8 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
+
+const provinceData = ['全部', '录取', '未录取'];
 export default {
     name: 'signupConf',
     components: {
@@ -173,31 +188,11 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '保存',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
-                title: '全部',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '录取',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '未录取',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
                 title: '转专业',
                 onClick: this.handleAdd,
             },
@@ -222,6 +217,7 @@ export default {
             realm: {
                 id: '1',
             },
+            provinceData,
         };
     },
     mounted() {
@@ -241,6 +237,9 @@ export default {
             // this.$nextTick(this.refreshTableData);
         },
         handleAdd() {
+            //
+        },
+        handleProvinceChange(value) {
             //
         },
     },

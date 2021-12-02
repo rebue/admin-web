@@ -11,6 +11,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -100,13 +101,16 @@ export default {
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
+                title: '删除',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
                 title: '复制',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '粘贴',
                 onClick: this.handleAdd,
             },

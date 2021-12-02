@@ -13,7 +13,7 @@
                     :defaultPagination="false"
                 >
                     <template #commands>
-                        <a-form-model layout="inline" :model="formInline">
+                        <a-form-model>
                             <a-form-model-item>
                                 <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
                                     <a-select-option value="lucy">

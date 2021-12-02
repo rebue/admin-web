@@ -1,8 +1,12 @@
-// 各科成绩
+// 补考成绩
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
+                <a-tabs>
+                    <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
+                    <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
+                </a-tabs>
                 <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
@@ -118,25 +122,21 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '编辑未录入',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '编辑全部',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '清空成绩',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '发布成绩',
                 onClick: this.handleAdd,
             },

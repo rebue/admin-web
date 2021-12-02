@@ -11,6 +11,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -106,13 +107,16 @@ export default {
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
+                title: '删除',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
                 title: '生成新班级',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '更新人数',
                 onClick: this.handleAdd,
             },

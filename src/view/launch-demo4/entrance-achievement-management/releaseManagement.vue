@@ -12,6 +12,19 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #keywordsLeft>
+                        <div style="margin-right: 10px">
+                            <a-select
+                                :default-value="provinceData[0]"
+                                style="width: 200px"
+                                @change="handleProvinceChange"
+                            >
+                                <a-select-option v-for="province in provinceData" :key="province">
+                                    {{ province }}
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -23,6 +36,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
+const provinceData = ['显示2021年成绩发布情况', '显示2020年成绩发布情况', '显示2019年成绩发布情况'];
 export default {
     name: 'signupConf',
     components: {
@@ -96,7 +110,6 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '同步成绩到报名系统',
                 onClick: this.handleAdd,
             },
@@ -118,6 +131,7 @@ export default {
 
         return {
             columns,
+            provinceData,
         };
     },
     mounted() {
@@ -131,6 +145,9 @@ export default {
             //
         },
         handleDel() {
+            //
+        },
+        handleProvinceChange(value) {
             //
         },
     },

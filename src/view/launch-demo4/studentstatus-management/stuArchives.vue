@@ -12,6 +12,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -179,14 +180,12 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
-                title: '新增',
+                title: '保存',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
-                title: '导入系统用户',
+                title: '删除',
                 onClick: this.handleAdd,
             },
         ];

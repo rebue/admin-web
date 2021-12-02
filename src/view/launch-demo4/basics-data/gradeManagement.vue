@@ -11,6 +11,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                 </crud-table>
             </template>
@@ -83,6 +84,11 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新增',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                title: '删除',
                 onClick: this.handleAdd,
             },
         ];

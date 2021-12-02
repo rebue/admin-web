@@ -11,6 +11,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -170,7 +171,7 @@ export default {
             {
                 dataIndex: 'operation',
                 title: '操作',
-                width: 130,
+                width: 110,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -179,14 +180,17 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '按年级生成证号',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '按年级清空证号',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                title: '生成毕业证',
                 onClick: this.handleAdd,
             },
         ];
@@ -200,11 +204,6 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-                onClick: record => this.handleEdit(record),
-            },
-            {
-                type: 'a',
-                title: '生成毕业证',
                 onClick: record => this.handleEdit(record),
             },
         ];

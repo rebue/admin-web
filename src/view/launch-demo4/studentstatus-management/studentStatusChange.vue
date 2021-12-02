@@ -11,6 +11,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                 </crud-table>
             </template>
@@ -172,24 +173,26 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '学员减少',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
                 title: '学员增加',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
+                title: '学员减少',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                title: '删除',
+                onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
                 title: '学员新增',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '转学学员以前成绩',
                 onClick: this.handleAdd,
             },

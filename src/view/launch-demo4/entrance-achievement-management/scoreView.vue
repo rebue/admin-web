@@ -1,8 +1,14 @@
-// 报名录入
+// 成绩查看
 <template>
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
+                <a-tabs>
+                    <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
+                    <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
+                    <a-tab-pane :key="3" tab="目录3"></a-tab-pane>
+                    <a-tab-pane :key="4" tab="目录4"></a-tab-pane>
+                </a-tabs>
                 <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="false">
                     <template #left>
                         <div v-show="showOrg" class="table-left">

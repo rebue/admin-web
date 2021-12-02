@@ -13,7 +13,7 @@
         "@ant-design-vue/pro-layout": "^1.0.8",
         "@antv/data-set": "^0.11.8",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
-        "ant-design-vue": "^1.7.3",
+        "ant-design-vue": "^1.7.8",
         "async-validator": "^4.0.7",
         "axios": "^0.21.1",
         "core-js": "^3.9.0",

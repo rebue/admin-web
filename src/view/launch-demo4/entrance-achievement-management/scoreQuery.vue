@@ -3,6 +3,10 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
+                <div style="float:left;margin-top:4px">
+                    <a-input placeholder="姓名" style="width:200px;margin-right:20px" />
+                    <a-input placeholder="准考证号" style="width:200px;margin-right:20px" />
+                </div>
                 <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
@@ -88,7 +92,6 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '查询',
                 onClick: this.handleAdd,
             },

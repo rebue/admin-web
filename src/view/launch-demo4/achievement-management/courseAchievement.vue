@@ -5,6 +5,10 @@
             <template #managerCard>
                 <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="false">
                     <template #left>
+                        <a-tabs>
+                            <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
+                            <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
+                        </a-tabs>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
                                 ref="orgTree.platform"

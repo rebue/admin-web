@@ -12,7 +12,21 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
+                    <template #keywordsLeft>
+                        <div style="margin-right: 10px">
+                            <a-select
+                                :default-value="provinceData[0]"
+                                style="width: 140px"
+                                @change="handleProvinceChange"
+                            >
+                                <a-select-option v-for="province in provinceData" :key="province">
+                                    {{ province }}
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -24,6 +38,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
 
+const provinceData = ['显示2021年考生', '显示2020年考生', '显示2019年考生'];
 export default {
     name: 'signupConf',
     components: {
@@ -172,37 +187,31 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '生成准考证号',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '清除准考证号',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '预览准考证',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '同步到报名系统',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '导出',
                 onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '打印准考证',
                 onClick: this.handleAdd,
             },
@@ -223,6 +232,7 @@ export default {
 
         return {
             columns,
+            provinceData,
         };
     },
     mounted() {
@@ -236,6 +246,9 @@ export default {
             //
         },
         handleDel() {
+            //
+        },
+        handleProvinceChange(value) {
             //
         },
     },

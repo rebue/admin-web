@@ -81,7 +81,6 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '同步配置到报名库',
                 onClick: this.handleAdd,
             },
