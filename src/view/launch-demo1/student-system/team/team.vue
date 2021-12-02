@@ -56,32 +56,38 @@ export default {
         const columns = [
             {
                 dataIndex: 'term',
-                title: '学员',
+                title: '状态',
                 width: 100,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'className',
-                title: '评分要素',
+                title: '组号',
                 width: 150,
                 fixed: 'left',
             },
             {
                 dataIndex: 'startTime',
-                title: '电话号码',
+                title: '姓名',
                 width: 150,
             },
             {
                 dataIndex: 'endTime',
-                title: '评比期',
+                title: '性别',
                 width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'signupCode',
-                title: '审核',
+                title: '班级职务',
                 width: 150,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'signupCode',
+                title: '班级',
+                width: 300,
                 ellipsis: true,
             },
             {
@@ -98,6 +104,14 @@ export default {
                 buttonType: 'primary',
                 // icon: 'plus',
                 title: '试图',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '班级毕业鉴定',
                 onClick: () => {
                     /**/
                 },

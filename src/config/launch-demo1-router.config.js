@@ -410,7 +410,7 @@ const constantRouters = {
             name: 'launch-demo1-judges-entrance-team',
             component: () => import('@/view/launch-demo1/student-system/team/team.vue'),
             hidden: true,
-            meta: { title: '评比结果', keepAlive: true, icon: 'global' },
+            meta: { title: '小组鉴定', keepAlive: true, icon: 'global' },
         },
     ],
 };
