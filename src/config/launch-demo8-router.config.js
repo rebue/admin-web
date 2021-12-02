@@ -11,7 +11,7 @@ const constantRouters = {
     path: '/launch-demo8',
     name: 'launch-demo8',
     meta: { title: '系统8', keepAlive: true, icon: 'setting' },
-    component: () => import('@/view/launch-demo8/index/Index.vue'),
+    // component: () => import('@/view/launch-demo8/index/Index.vue'),
     redirect: '/launch-demo8/framework/department',
     children: [
         // {

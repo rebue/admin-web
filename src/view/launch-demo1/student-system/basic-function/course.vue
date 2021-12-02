@@ -10,6 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
                     <template #commands>
                         <div style="width: 100%;overflow: hidden">

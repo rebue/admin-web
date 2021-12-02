@@ -583,6 +583,13 @@ const constantRouters = {
             },
             children: [
                 {
+                    path: '/launch-demo1/student-system/basic-function/students',
+                    name: 'launch-demo1-student-system-students-file',
+                    component: () => import('@/view/launch-demo1/student-system/basic-function/Student.vue'),
+                    hidden: true,
+                    meta: { title: '学籍信息', keepAlive: true, icon: 'global' },
+                },
+                {
                     path: '/launch-demo1/student-system/basic-function/course',
                     name: 'launch-demo1-student-system-course',
                     component: () => import('@/view/launch-demo1/student-system/basic-function/course.vue'),

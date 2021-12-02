@@ -682,6 +682,12 @@ export const constantRouters = [
         path: '/404',
         component: () => import('@/view/404/404.vue'),
     },
+    {
+        path: '/research-workload2',
+        name: 'ceshi',
+        hidden: true,
+        component: () => import('@/view/launch-demo3/search/baseSearch.vue'),
+    },
     // 404 page must be placed at the end !!!
     {
         path: '*',
