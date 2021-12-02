@@ -20,7 +20,7 @@
                 :multiple="true"
                 :action="uploadUrl"
                 @change="handleImportExcel"
-                :headers="headers"
+                :headers="{ 'App-Id': getAppIdByUrl() }"
                 :fileList="fileList"
                 accept=".xls,.xlsx"
             >
@@ -61,17 +61,9 @@ export default {
             },
             //文件数据
             fileList: [],
-            headers: {},
             //上传文件地址
             uploadUrl: `/rac-svr/rac/excel/account/template-upload`,
         };
-    },
-    created() {
-        const appId = getAppIdByUrl();
-        if (appId) {
-            this.headers['App-Id'] = appId;
-            console.log(appId);
-        }
     },
     methods: {
         handleChange(e) {

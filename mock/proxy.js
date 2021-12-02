@@ -6,10 +6,10 @@ const config = {
     release: 'https://auth.maiyuesoft.com',
     nnxy: 'https://auth.nnxy.edu.cn'
 };
-const target = config.yuanman;
+const target = config.release;
 
 module.exports = {
-    proxy: {} || {
+    proxy: {
         //'/rac-svt/(.*)': target,
         // '/oidc/authorize/(.*)': target
         '/rac-svr/(.*)': target,
