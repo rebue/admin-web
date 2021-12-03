@@ -11,18 +11,6 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <!-- <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree"
-                                :show.sync="showOrg"
-                                realmId="1"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template> -->
                 </crud-table>
             </template>
         </base-manager>
@@ -32,7 +20,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-// import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,7 +27,6 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        // OrgTree,
     },
     data() {
         // 初始化数据start
@@ -49,16 +35,19 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: 515,
-                        value2: '2021年秋季学期',
-                        value3: '开班临时测试',
-                        value4: '张三',
-                        value5: '2021-12-04',
-                        value6: '2021-12-04',
-                        value7: '105教室',
-                        value8: '使用专题库',
-                        value9: '区管班',
-                        value10: '50',
+                        value1: 'ABCD',
+                        value2: '1',
+                        value3: '永久',
+                        value4: '公开',
+                        value5: '人力资源部',
+                        value6: '1-2020-00001',
+                        value7: '0002',
+                        value8: '档案',
+                        value9: '档案',
+                        value10: '2021-12-04',
+                        value11: '档案',
+                        value12: '2021-12-05',
+                        value13: '2021-12-05',
                     },
                 ];
                 const ro = {
@@ -80,53 +69,67 @@ export default {
             list: page,
         };
         const columns = [
+            // {
+            //     dataIndex: 'no',
+            //     title: '序号',
+            //     width: 70,
+            //     fixed: 'left',
+            //     scopedSlots: { customRender: 'serial' },
+            // },
             {
                 dataIndex: 'value1',
-                title: '班级编号',
-                fixed: 'left',
+                title: '查看题名',
             },
             {
                 dataIndex: 'value2',
-                title: '学期',
-                fixed: 'left',
+                title: '分类号',
             },
             {
                 dataIndex: 'value3',
-                title: '班级名称',
+                title: '保管期限',
             },
             {
                 dataIndex: 'value4',
-                title: '组织员/班主任',
-                ellipsis: true,
+                title: '密级',
             },
             {
                 dataIndex: 'value5',
-                title: '开始时间',
-                ellipsis: true,
+                align: 'center',
+                title: '归档部门',
             },
             {
                 dataIndex: 'value6',
-                title: '结束时间',
-                ellipsis: true,
+                title: '档号',
             },
             {
                 dataIndex: 'value7',
-                title: '教室',
+                title: '查看号',
             },
             {
                 dataIndex: 'value8',
-                align: 'center',
-                title: '排课类型',
+                title: '查看人',
             },
             {
                 dataIndex: 'value9',
-                align: 'center',
-                title: '班次属性',
+                title: '查看单位',
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
-                title: '班级人数',
+                title: '查看时间',
+            },
+            {
+                dataIndex: 'value11',
+                title: '检查人',
+            },
+            {
+                dataIndex: 'value12',
+                title: '检查时间',
+            },
+            {
+                dataIndex: 'value13',
+                align: 'center',
+                title: '检查盒日期',
             },
             {
                 dataIndex: 'action',
@@ -174,12 +177,6 @@ export default {
         this.refreshData();
     },
     methods: {
-        handleOrgMenuClick() {
-            //
-        },
-        handleOrgTreeSelect() {
-            //
-        },
         refreshData() {
             this.loading = true;
             // racRealmApi

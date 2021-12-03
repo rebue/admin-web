@@ -42,6 +42,7 @@ import { getAppIdByUrl } from '@/util/common';
 export default {
     name: 'account-batch-operation',
     data() {
+        this.getAppIdByUrl = getAppIdByUrl;
         this.formLayout = {
             labelCol: {
                 xs: { span: 20 },

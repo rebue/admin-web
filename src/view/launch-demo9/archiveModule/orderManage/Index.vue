@@ -11,18 +11,17 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <!-- <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree"
-                                :show.sync="showOrg"
-                                realmId="1"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template> -->
+                    <template #keywordsLeft>
+                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
+                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
+                            <a-select-option value="2021">
+                                2021
+                            </a-select-option>
+                            <a-select-option value="2020">
+                                2020
+                            </a-select-option>
+                        </a-select>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -32,7 +31,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-// import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,7 +38,6 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        // OrgTree,
     },
     data() {
         // 初始化数据start
@@ -49,16 +46,10 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: 515,
+                        value1: '1691',
                         value2: '2021年秋季学期',
-                        value3: '开班临时测试',
-                        value4: '张三',
-                        value5: '2021-12-04',
-                        value6: '2021-12-04',
-                        value7: '105教室',
-                        value8: '使用专题库',
-                        value9: '区管班',
-                        value10: '50',
+                        value3: '必修课',
+                        value4: '中青年干部培训一班',
                     },
                 ];
                 const ro = {
@@ -82,51 +73,22 @@ export default {
         const columns = [
             {
                 dataIndex: 'value1',
-                title: '班级编号',
+                title: '模块编号',
                 fixed: 'left',
             },
             {
                 dataIndex: 'value2',
                 title: '学期',
-                fixed: 'left',
+                ellipsis: true,
             },
             {
                 dataIndex: 'value3',
-                title: '班级名称',
+                title: '模块名称',
+                ellipsis: true,
             },
             {
                 dataIndex: 'value4',
-                title: '组织员/班主任',
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'value5',
-                title: '开始时间',
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'value6',
-                title: '结束时间',
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'value7',
-                title: '教室',
-            },
-            {
-                dataIndex: 'value8',
-                align: 'center',
-                title: '排课类型',
-            },
-            {
-                dataIndex: 'value9',
-                align: 'center',
-                title: '班次属性',
-            },
-            {
-                dataIndex: 'value10',
-                align: 'center',
-                title: '班级人数',
+                title: '班级名称',
             },
             {
                 dataIndex: 'action',
@@ -174,10 +136,7 @@ export default {
         this.refreshData();
     },
     methods: {
-        handleOrgMenuClick() {
-            //
-        },
-        handleOrgTreeSelect() {
+        handleChange() {
             //
         },
         refreshData() {
@@ -195,9 +154,6 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        handleRealmChanged(realmId) {
-            this.curRealmId = realmId;
         },
         /**
          * 处理添加应用的事件
@@ -233,9 +189,6 @@ export default {
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
-        },
-        handleEditFormClose() {
-            this.refreshTableData();
         },
     },
 };

@@ -3,7 +3,7 @@
         <Aside />
         <div class="ml20 mc backgWhite scrollBar flex-1 newStyle " v-if="!loading">
             <div class="listCard" v-for="(item, index) in newLabelSelect" :key="index">
-                <div class="cardBox">
+                <div class="cardBox" @click="openWindow(item)">
                     <div class="imageStyle">
                         <img
                             :src="'https://auth.maiyuesoft.com' + item.imgUrl || defaultImg()"

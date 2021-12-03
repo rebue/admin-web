@@ -8,6 +8,7 @@ import LaunchDemo5 from './launch-demo5-router.config.js';
 import LaunchDemo6 from './launch-demo6-router.config.js';
 import LaunchDemo7 from './launch-demo7-router.config.js';
 import LaunchDemo8 from './launch-demo8-router.config.js';
+import LaunchDemo9 from './launch-demo9-router.config.js';
 
 const RouteView = {
     name: 'RouteView',
@@ -675,6 +676,9 @@ export const constantRouters = [
     },
     {
         ...LaunchDemo8,
+    },
+    {
+        ...LaunchDemo9,
     },
 
     /** 404 */

@@ -49,16 +49,18 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: 515,
-                        value2: '2021年秋季学期',
-                        value3: '开班临时测试',
-                        value4: '张三',
-                        value5: '2021-12-04',
-                        value6: '2021-12-04',
-                        value7: '105教室',
-                        value8: '使用专题库',
-                        value9: '区管班',
-                        value10: '50',
+                        value1: '党务工作',
+                        value2: '永久',
+                        value3: '公开',
+                        value4: '06（党群工作部）',
+                        value5: '10',
+                        value6: '20',
+                        value7: '关于档案数字化建设项目须知',
+                        value8: '-',
+                        value9: '-',
+                        value10: '1',
+                        value11: '',
+                        value12: '',
                     },
                 ];
                 const ro = {
@@ -81,52 +83,69 @@ export default {
         };
         const columns = [
             {
+                dataIndex: 'no',
+                title: '序号',
+                width: 70,
+                fixed: 'left',
+                scopedSlots: { customRender: 'serial' },
+            },
+            {
                 dataIndex: 'value1',
-                title: '班级编号',
+                title: '分类号',
                 fixed: 'left',
             },
             {
                 dataIndex: 'value2',
-                title: '学期',
+                title: '保管期限',
                 fixed: 'left',
             },
             {
                 dataIndex: 'value3',
-                title: '班级名称',
+                title: '密级',
             },
             {
                 dataIndex: 'value4',
-                title: '组织员/班主任',
+                title: '归档部门',
                 ellipsis: true,
             },
             {
                 dataIndex: 'value5',
-                title: '开始时间',
+                title: '在库分数',
                 ellipsis: true,
             },
             {
                 dataIndex: 'value6',
-                title: '结束时间',
+                title: '报名',
                 ellipsis: true,
             },
             {
                 dataIndex: 'value7',
-                title: '教室',
+                title: '档号',
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
-                title: '排课类型',
+                title: '序号',
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
-                title: '班次属性',
+                title: '页数',
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
-                title: '班级人数',
+                title: '全宗号',
+            },
+            {
+                dataIndex: 'value11',
+                align: 'center',
+                title: '责任者',
+            },
+            {
+                dataIndex: 'value12',
+                align: 'center',
+                title: '年度',
             },
             {
                 dataIndex: 'action',
