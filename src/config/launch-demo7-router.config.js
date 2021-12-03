@@ -165,6 +165,52 @@ const constantRouters = {
                 },
             ],
         },
+        {
+            path: '/launch-demo7/system-config',
+            name: 'launch-demo7-system-config',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '系统配置',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
+                {
+                    path: '/launch-demo7/system-config/permission',
+                    name: 'launch-demo7-system-config-permission',
+                    component: () => import('@/view/launch-demo7/system-config/permission/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '权限管理',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo7/system-config/setting',
+                    name: 'launch-demo7-system-config-setting',
+                    component: () => import('@/view/launch-demo7/system-config/setting/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '系统设置',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo7/system-config/log',
+                    name: 'launch-demo7-system-config-log',
+                    component: () => import('@/view/launch-demo7/system-config/log/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '自动计算日志',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+            ],
+        },
     ],
 };
 
