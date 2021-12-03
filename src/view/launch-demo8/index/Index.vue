@@ -103,7 +103,7 @@ import { observable } from 'mobx';
 
 const matchRouteHidden = function(app, listTree) {
     for (const v of listTree) {
-        if (v.path.includes(app)) {
+        if (v.path.includes(app) && !v.meta.hideMenu) {
             v.hidden = false;
         }
         if (v.children && v.children.length) {
@@ -168,7 +168,7 @@ export default observer({
         },
     },
     mounted() {
-        this.refreshAccountInfo();
+        // this.refreshAccountInfo();
     },
     methods: {
         getAppIdByUrl() {
