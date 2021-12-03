@@ -1,21 +1,37 @@
 <template>
     <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="true"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :query="{ orgId: curOrgId }"
-                    :scrollX="800"
-                    :defaultPagination="true"
-                >
-                </crud-table>
-            </template>
-        </base-manager>
+        <a-row>
+            <a-col :span="6">
+                <a-tree
+                    class="ant-card-body"
+                    v-model="checkedKeys"
+                    :auto-expand-parent="autoExpandParent"
+                    :default-selected-keys="selectedKeys"
+                    :default-checked-keys="checkedKeys"
+                    :default-expanded-keys="expandedKeys"
+                    :tree-data="treeData"
+                    @check="onCheck"
+                />
+            </a-col>
+            <a-col :span="18">
+                <base-manager ref="baseManager">
+                    <template #managerCard>
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="true"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ orgId: curOrgId }"
+                            :scrollX="800"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </template>
+                </base-manager>
+            </a-col>
+        </a-row>
     </fragment>
 </template>
 
@@ -35,6 +51,69 @@ export default {
     },
     data() {
         this.api = {};
+        const treeData = [
+            {
+                title: '2018年',
+                key: '2018',
+                children: [
+                    {
+                        title: '主岗正高职称',
+                        key: '20181',
+                    },
+                    {
+                        title: '主岗副高职称',
+                        key: '20182',
+                    },
+                    {
+                        title: '主岗中级职称',
+                        key: '20183',
+                    },
+                    {
+                        title: '主岗初级职称',
+                        key: '20184',
+                    },
+                    {
+                        title: '博士初期',
+                        key: '20185',
+                    },
+                    {
+                        title: '辅岗专技人员',
+                        key: '20186',
+                    },
+                ],
+            },
+            {
+                title: '2017年',
+                key: '2017',
+                children: [
+                    {
+                        title: '主岗正高职称',
+                        key: '20181',
+                    },
+                    {
+                        title: '主岗副高职称',
+                        key: '20182',
+                    },
+                    {
+                        title: '主岗中级职称',
+                        key: '20183',
+                    },
+                    {
+                        title: '主岗初级职称',
+                        key: '20184',
+                    },
+                    {
+                        title: '博士初期',
+                        key: '20185',
+                    },
+                    {
+                        title: '辅岗专技人员',
+                        key: '20186',
+                    },
+                ],
+            },
+        ];
+
         const columns = [
             {
                 dataIndex: 'no',
@@ -44,28 +123,23 @@ export default {
             },
             {
                 dataIndex: 'name',
-                title: '教学管理部门',
+                title: '姓名',
                 fixed: 'left',
-            },
-            {
-                dataIndex: 'lx',
-                title: '工作量类型',
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'dm',
-                title: '类型代码',
-                fixed: 'left',
-            },
-            {
-                dataIndex: 'gzl',
-                title: '仅统计计酬工作量',
-                ellipsis: true,
             },
             {
                 dataIndex: 'bm',
-                title: '负责部门',
-                ellipsis: true,
+                title: '部门',
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'zc',
+                title: '职称',
+                fixed: 'left',
+            },
+            {
+                dataIndex: 'xb',
+                title: '性别',
+                fixed: 'left',
             },
             {
                 dataIndex: 'action',
@@ -83,20 +157,18 @@ export default {
                     {
                         id: 1,
                         no: 1,
-                        name: '教务处',
-                        lx: '部门工作量',
-                        dm: '13512345678',
-                        gzl: '是',
-                        bm: '教务处',
+                        name: '吴建国',
+                        bm: '法学教研部',
+                        zc: '教师',
+                        xb: '男',
                     },
                     {
                         id: 2,
                         no: 2,
-                        name: '公培处',
-                        lx: '部门工作量',
-                        dm: '13512345678',
-                        gzl: '是',
-                        bm: '公务员培训处',
+                        name: '黄建国',
+                        bm: '法学教研部',
+                        zc: '教授',
+                        xb: '男',
                     },
                 ];
                 const ro = {
@@ -117,6 +189,27 @@ export default {
             {
                 buttonType: 'primary',
                 title: '新增',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                title: '复制',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                title: '粘贴',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                title: '排序',
                 onClick: () => {
                     /**/
                 },
@@ -145,6 +238,11 @@ export default {
             list: page,
         };
         return {
+            expandedKeys: ['2018', '20181'],
+            autoExpandParent: true,
+            selectedKeys: [],
+            checkedKeys: [],
+            treeData,
             columns,
             showOrg: false,
             curOrgId: undefined,
@@ -155,6 +253,13 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        onCheck(checkedKeys, info) {
+            console.log('onCheck', checkedKeys, info);
+        },
+        onSelect(selectedKeys, info) {
+            console.log('onSelect', info);
+            this.selectedKeys = selectedKeys;
+        },
         /**
          * 刷新表格数据
          */
@@ -200,3 +305,8 @@ export default {
     },
 };
 </script>
+<style type="text/css">
+.ant-row {
+    background-color: #ffffff;
+}
+</style>
