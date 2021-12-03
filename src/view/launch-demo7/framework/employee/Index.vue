@@ -209,6 +209,20 @@ export default {
             },
             {
                 buttonType: 'primary',
+                title: '同步员工到类型',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                title: '统计人数',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
                 title: '排序',
                 onClick: () => {
                     /**/
