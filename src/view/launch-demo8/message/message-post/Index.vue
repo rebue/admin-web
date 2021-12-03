@@ -1,5 +1,5 @@
 <template>
-    <div class="title">
+    <div>
         11.1短信发送
     </div>
 </template>
