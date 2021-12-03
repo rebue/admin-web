@@ -166,7 +166,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo1/online-signup-set',
                     name: 'launch-demo1-online-signup-set',
-                    component: () => import('@/view/launch-demo1/online-signup/set/Tab2.vue'),
+                    component: () => import('@/view/launch-demo1/online-signup/set/Index.vue'),
                     hidden: true,
                     meta: {
                         title: '报名设置',
