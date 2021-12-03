@@ -592,6 +592,28 @@ const constantRouters = {
                         icon: 'global',
                     },
                 },
+                {
+                    path: '/launch-demo1/evaluation-manage',
+                    name: 'launch-demo1-evaluation-manage',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/EvaluationManage.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '评比期管理',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/evaluation-config',
+                    name: 'launch-demo1-evaluation-config',
+                    component: () => import('@/view/launch-demo1/top-ten-articles/EvaluationConfig.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '评比配置',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
             ],
         },
         {
