@@ -2,15 +2,47 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="true"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                >
-                </crud-table>
+                <a-row>
+                    <a-col :span="6">
+                        <a-radio-group :value="1">
+                            <a-radio :value="1">
+                                按时间
+                            </a-radio>
+                            <a-radio :value="2">
+                                按课程
+                            </a-radio>
+                        </a-radio-group>
+                        <a-calendar :fullscreen="false" style="width: 250px" />
+                        <a-select default-value="lucy">
+                            <a-select-option value="lucy">
+                                01中青年干部培训一班（第45期）
+                            </a-select-option>
+                        </a-select>
+                        <div>
+                            上午：
+                            <p style="background-color: #1890ff;color:#ff0">广西边海防形式发展</p>
+                            下午：
+                            <p>玉柴高质量发展思路</p>
+                        </div>
+                    </a-col>
+                    <a-col :span="18">
+                        <div>
+                            <p>2021年秋季下学期01中青年干部培训一班（第45期）</p>
+                            <h4><p>广西边海防形式发展</p></h4>
+                            <p>地点：会议中心多功能展厅, 教师：外请</p>
+                            <p>时间：2021-11-3 上午, 上课时间：8:30 下课时间：11:30</p>
+                        </div>
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -83,49 +115,43 @@ export default {
         };
         // 初始化数据end
         const columns = [
+            // {
+            //     dataIndex: 'no',
+            //     title: '序号',
+            //     width: 150,
+            //     // fixed: 'left',
+            //     scopedSlots: { customRender: 'serial' },
+            // },
             {
-                dataIndex: 'no',
-                title: '序号',
-                width: 150,
-                fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
-            },
-            {
-                dataIndex: 'updator',
-                title: '修改人',
-                width: 150,
-            },
-            {
-                dataIndex: 'updatedTime',
-                title: '修改时间',
+                dataIndex: 'name',
+                title: '姓名',
                 width: 150,
             },
             {
-                dataIndex: 'course',
-                title: '哪门课',
+                dataIndex: 'inTime',
+                title: '到的时间',
                 width: 150,
             },
             {
-                dataIndex: 'startTime',
-                title: ' 上课时间',
+                dataIndex: 'outTime',
+                title: '走的时间',
                 width: 150,
-                ellipsis: true,
             },
             {
-                dataIndex: 'student',
-                title: '哪位学员',
+                dataIndex: 'type',
+                title: '考勤方式',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'before',
-                title: '修改前',
+                dataIndex: 'status',
+                title: '状态',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'after',
-                title: '修改后',
+                dataIndex: 'desc',
+                title: '备注',
                 width: 150,
                 ellipsis: true,
             },

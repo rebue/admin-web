@@ -55,14 +55,14 @@ export default {
                 dataIndex: 'source',
                 title: '数据来源',
                 width: 150,
-                fixed: 'left',
+                // fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'orgId',
                 title: '小组号',
                 width: 150,
-                fixed: 'left',
+                // fixed: 'left',
             },
             {
                 dataIndex: 'name',
@@ -133,7 +133,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+                // fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -9,7 +9,7 @@ const config = {
 const target = config.release;
 
 module.exports = {
-    proxy: {
+    proxy: {} || {
         //'/rac-svt/(.*)': target,
         // '/oidc/authorize/(.*)': target
         '/rac-svr/(.*)': target,

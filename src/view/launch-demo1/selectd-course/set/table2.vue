@@ -1,41 +1,25 @@
 <template>
     <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                    <template #keywordsLeft>
-                        <a-form-model layout="inline">
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 220px">
-                                    <a-select-option value="lucy">
-                                        2021年秋季学期
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                        </a-form-model>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
+        <crud-table
+            ref="crudTable"
+            :showKeywords="true"
+            :commands="tableCommands"
+            :actions="tableActions"
+            :columns="columns"
+            :api="api"
+            :scrollX="600"
+            :defaultPagination="false"
+            :rowSelection="{}"
+        >
+        </crud-table>
     </fragment>
 </template>
 
 <script>
-import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-
 export default {
     name: 'Manager',
     components: {
-        BaseManager,
         CrudTable,
     },
     data() {
@@ -84,8 +68,13 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'orign',
-                title: '课程来源',
+                dataIndex: 'course',
+                title: '排课编号',
+                width: 150,
+            },
+            {
+                dataIndex: 'term',
+                title: '学期编号',
                 width: 150,
             },
             {
@@ -94,47 +83,53 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'wubie',
-                title: '午别',
+                dataIndex: 'time',
+                title: '时间',
                 width: 150,
             },
             {
-                dataIndex: 'course',
+                dataIndex: 'courseNo',
+                title: '课程编号',
+                width: 150,
+            },
+            {
+                dataIndex: 'courseName',
                 title: '课程名称',
                 width: 150,
-                ellipsis: true,
+            },
+            {
+                dataIndex: 'teacherNo',
+                title: '教师编号',
+                width: 150,
             },
             {
                 dataIndex: 'teacher',
-                title: '教师',
+                title: '教师姓名',
                 width: 150,
-                ellipsis: true,
+            },
+            {
+                dataIndex: 'classroomNo',
+                title: '教室编号',
+                width: 150,
             },
             {
                 dataIndex: 'classroom',
-                title: '教室',
+                title: '教室名称',
                 width: 150,
-                ellipsis: true,
             },
-            {
-                dataIndex: 'ssica',
-                title: '评估问卷',
-                width: 150,
-                ellipsis: true,
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 150,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
-            },
+            // {
+            //     dataIndex: 'action',
+            //     title: '操作',
+            //     width: 150,
+            //     fixed: 'right',
+            //     scopedSlots: { customRender: 'action' },
+            // },
         ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 // icon: 'plus',
-                title: '选择选修课',
+                title: '添加选修课',
                 onClick: () => {
                     /**/
                 },
@@ -142,13 +137,13 @@ export default {
         ];
 
         this.tableActions = [
-            {
-                type: 'a',
-                title: '取消选修课',
-                onClick: () => {
-                    /**/
-                },
-            },
+            // {
+            //     type: 'a',
+            //     title: '取消选修课',
+            //     onClick: () => {
+            //         /**/
+            //     },
+            // },
         ];
         return {
             columns,
@@ -167,15 +162,3 @@ export default {
     },
 };
 </script>
-<style lang="less" scoped>
-.table-left {
-    display: flex;
-    height: 100%;
-    margin: 4px 0;
-    .table-divider {
-        width: 20px;
-        border-left: 1px solid #eee;
-        margin-left: 10px;
-    }
-}
-</style>

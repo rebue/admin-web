@@ -2,6 +2,7 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
+                <h4>2021年秋季学期(2021-09-01 至 2021-12-31)学员网上选择选修课</h4>
                 <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
@@ -10,18 +11,8 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="false"
+                    :rowSelection="{}"
                 >
-                    <template #keywordsLeft>
-                        <a-form-model layout="inline">
-                            <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 220px">
-                                    <a-select-option value="lucy">
-                                        2021年秋季学期
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                        </a-form-model>
-                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -31,7 +22,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-
 export default {
     name: 'Manager',
     components: {
@@ -84,71 +74,57 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'orign',
-                title: '课程来源',
-                width: 150,
-            },
-            {
-                dataIndex: 'date',
-                title: '日期',
-                width: 150,
-            },
-            {
-                dataIndex: 'wubie',
-                title: '午别',
-                width: 150,
-            },
-            {
-                dataIndex: 'course',
+                dataIndex: 'courseName',
                 title: '课程名称',
                 width: 150,
-                ellipsis: true,
+            },
+            {
+                dataIndex: 'courseType',
+                title: '课程类型',
+                width: 150,
             },
             {
                 dataIndex: 'teacher',
-                title: '教师',
+                title: '授课老师',
                 width: 150,
-                ellipsis: true,
             },
             {
-                dataIndex: 'classroom',
-                title: '教室',
+                dataIndex: 'startTime',
+                title: '课程开始时间',
                 width: 150,
-                ellipsis: true,
             },
             {
-                dataIndex: 'ssica',
-                title: '评估问卷',
+                dataIndex: 'length',
+                title: '课时',
                 width: 150,
-                ellipsis: true,
             },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 150,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
-            },
+            // {
+            //     dataIndex: 'action',
+            //     title: '操作',
+            //     width: 150,
+            //     fixed: 'right',
+            //     scopedSlots: { customRender: 'action' },
+            // },
         ];
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '选择选修课',
-                onClick: () => {
-                    /**/
-                },
-            },
+            // {
+            //     buttonType: 'primary',
+            //     // icon: 'plus',
+            //     title: '添加选修课',
+            //     onClick: () => {
+            //         /**/
+            //     },
+            // },
         ];
 
         this.tableActions = [
-            {
-                type: 'a',
-                title: '取消选修课',
-                onClick: () => {
-                    /**/
-                },
-            },
+            // {
+            //     type: 'a',
+            //     title: '取消选修课',
+            //     onClick: () => {
+            //         /**/
+            //     },
+            // },
         ];
         return {
             columns,
@@ -167,15 +143,3 @@ export default {
     },
 };
 </script>
-<style lang="less" scoped>
-.table-left {
-    display: flex;
-    height: 100%;
-    margin: 4px 0;
-    .table-divider {
-        width: 20px;
-        border-left: 1px solid #eee;
-        margin-left: 10px;
-    }
-}
-</style>
