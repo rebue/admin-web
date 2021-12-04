@@ -153,6 +153,63 @@ const constantRouters = {
             ],
         },
         {
+            path: '/launch-demo1/online-signup',
+            name: 'launch-demo1-online-signup',
+            component: RouteView,
+            hidden: true,
+            meta: {
+                title: '网上报名',
+                keepAlive: true,
+                icon: 'global',
+            },
+            children: [
+                {
+                    path: '/launch-demo1/online-signup-set',
+                    name: 'launch-demo1-online-signup-set',
+                    component: () => import('@/view/launch-demo1/online-signup/set/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '报名设置',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/online-signup-register',
+                    name: 'launch-demo1-online-signup-register',
+                    component: () => import('@/view/launch-demo1/online-signup/register/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '新生登记',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/online-signup-checkin',
+                    name: 'launch-demo1-online-signup-checkin',
+                    component: () => import('@/view/launch-demo1/online-signup/checkin/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '新生报到',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+                {
+                    path: '/launch-demo1/online-signup-export',
+                    name: 'launch-demo1-online-signup-export',
+                    component: () => import('@/view/launch-demo1/online-signup/export/Index.vue'),
+                    hidden: true,
+                    meta: {
+                        title: '历史导出',
+                        keepAlive: true,
+                        icon: 'global',
+                    },
+                },
+            ],
+        },
+        {
             path: '/launch-demo1/student-status',
             name: 'launch-demo1-student-status',
             component: RouteView,
@@ -380,7 +437,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo1/selectd-course-change',
                     name: 'launch-demo1-selectd-course-change',
-                    component: RouteView,
+                    component: () => import('@/view/launch-demo1/selectd-course/change/Index.vue'),
                     hidden: true,
                     meta: {
                         title: '选修课改选管理',
@@ -391,7 +448,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo1/selectd-course-student',
                     name: 'launch-demo1-selectd-course-student',
-                    component: RouteView,
+                    component: () => import('@/view/launch-demo1/selectd-course/student/Index.vue'),
                     hidden: true,
                     meta: {
                         title: '学员选课情况',

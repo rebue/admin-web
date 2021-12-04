@@ -206,7 +206,7 @@ export default {
                         { id: '1', name: '评分统计', remark: '十佳文章统计' },
                         { id: '2', name: '评比结果', remark: '十佳文章统计' },
                     ];
-                    console.log('@' + JSON.stringify(this.realms));
+
                     this.curRealmId = this.realms[0].id;
                 })
                 .finally(() => (this.loading = false));
