@@ -16,7 +16,7 @@ const constantRouters = {
         icon: 'setting',
     },
     component: () => import('@/view/launch-demo1/index/Index.vue'),
-    redirect: '/launch-demo1/base/playground',
+    redirect: '/launch-demo1/online-signup-set',
     children: [
         {
             path: '/launch-demo1/desktop',

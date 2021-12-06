@@ -9,7 +9,7 @@
           <div class="table-commands">
             <slot name="commands">
               <template v-for="(item, index) in commands">
-                <a-button style="margin-right: 15px" :type="item.buttonType" :icon="item.icon"
+                <a-button style="margin-right: 15px;margin-bottom: 10px;" :type="item.buttonType" :icon="item.icon"
                   @click="item.onClick" :key="index">
                   {{ item.title }}
                 </a-button>

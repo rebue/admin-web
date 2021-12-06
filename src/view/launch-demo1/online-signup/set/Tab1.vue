@@ -36,16 +36,15 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-30': [
+                    'list|1-20': [
                         {
                             'id|+1': 10000000,
-                            // 'realmId|+1': ['default', 'platform', 'ops'],
-                            // "accountId|1-1000000": 193201,
-                            updator: '@cname()',
-                            updatedTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            student: '@cname()',
+                            'qrcode|1-1000000': 193201,
+                            class: '@pick(["计算机一班", "计算机二班"])',
                             startTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            course: '@pick(["锁定", "启用"])',
+                            endTime: '@now("yyyy-MM-dd HH:mm:ss")',
+                            'total|1-20': 20,
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
                             //'opType': '@pick(["锁定", "启用"])',
                             //'opTitle': '@title()',
                             //'opDetail': '@cparagraph',
@@ -53,19 +52,7 @@ export default {
                     ],
                 });
                 // 数据列表在这里设置
-                const dataSource = mockList.list || [
-                    {
-                        id: 1,
-                        // no: 1,
-                        updator: 'zzm',
-                        updatedTime: '2021-12-01 16:39:00',
-                        course: '计算机科学与技术',
-                        startTime: '2021-12-04 16:39:00',
-                        student: '章三',
-                        before: 'xx',
-                        after: 'xx',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -109,6 +96,11 @@ export default {
                         </div>
                     );
                 },
+            },
+            {
+                dataIndex: 'class',
+                title: '班级',
+                width: 200,
             },
             {
                 dataIndex: 'qrcode',
