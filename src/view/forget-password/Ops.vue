@@ -58,6 +58,9 @@ export default {
         .nnxy-logo {
             height: 60px;
         }
+        .fangchenggang-logo {
+            height: 66px;
+        }
         .divider {
             width: 2px;
             height: 42px;
