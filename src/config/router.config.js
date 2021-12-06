@@ -657,13 +657,46 @@ export const constantRouters = [
         ...LaunchDemo1,
     },
     {
+        path: '/launch-demo1/login',
+        name: 'launch-demo1-login',
+        component: () => import('@/view/launch-demo1/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
+    },
+    {
         ...LaunchDemo2,
+    },
+    {
+        path: '/launch-demo2/login',
+        name: 'launch-demo2-login',
+        component: () => import('@/view/launch-demo2/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
     },
     {
         ...LaunchDemo3,
     },
     {
         ...LaunchDemo4,
+    },
+    {
+        path: '/launch-demo4/login',
+        name: 'launch-demo4-login',
+        component: () => import('@/view/launch-demo4/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
     },
     {
         ...LaunchDemo5,
@@ -675,10 +708,43 @@ export const constantRouters = [
         ...LaunchDemo7,
     },
     {
+        path: '/launch-demo7/login',
+        name: 'launch-demo7-login',
+        component: () => import('@/view/launch-demo7/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
+    },
+    {
         ...LaunchDemo8,
     },
     {
+        path: '/launch-demo8/login',
+        name: 'launch-demo8-login',
+        component: () => import('@/view/launch-demo8/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
+    },
+    {
         ...LaunchDemo9,
+    },
+    {
+        path: '/launch-demo9/login',
+        name: 'launch-demo9-login',
+        component: () => import('@/view/launch-demo9/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
     },
 
     /** 404 */
