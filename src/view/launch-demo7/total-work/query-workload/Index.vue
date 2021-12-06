@@ -76,7 +76,7 @@
                     </a-form-model>
                     <crud-table
                         ref="crudTable"
-                        :showKeywords="falsse"
+                        :showKeywords="false"
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
