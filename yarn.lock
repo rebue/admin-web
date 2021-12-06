@@ -1110,7 +1110,7 @@
 
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
-  resolved "https://registry.npmmirror.com/@polka/url/download/@polka/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
+  resolved "https://registry.npmmirror.com/@polka/url/download/@polka/url-1.0.0-next.21.tgz?cache=0&sync_timestamp=1633093101880&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40polka%2Furl%2Fdownload%2F%40polka%2Furl-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha1-XeWiOFo1MJQn9gEZkrVEUU1VmqE=
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -1908,7 +1908,7 @@ acorn-walk@^7.1.1:
 
 acorn-walk@^8.0.0:
   version "8.2.0"
-  resolved "https://registry.nlark.com/acorn-walk/download/acorn-walk-8.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn-walk%2Fdownload%2Facorn-walk-8.2.0.tgz#741210f2e2426454508853a2f44d0ab83b7f69c1"
+  resolved "https://registry.nlark.com/acorn-walk/download/acorn-walk-8.2.0.tgz?cache=0&sync_timestamp=1630916608758&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn-walk%2Fdownload%2Facorn-walk-8.2.0.tgz#741210f2e2426454508853a2f44d0ab83b7f69c1"
   integrity sha1-dBIQ8uJCZFRQiFOi9E0KuDt/acE=
 
 acorn@^6.4.1:
@@ -2285,7 +2285,7 @@ async-validator@^3.0.3:
 
 async-validator@^4.0.7:
   version "4.0.7"
-  resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz?cache=0&sync_timestamp=1634529574100&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
+  resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
   integrity sha1-A0oP0hA6ay6/AQ2nUYO+wpkkev4=
 
 async-validator@~1.8.1:
@@ -2895,7 +2895,7 @@ center-align@^0.1.1:
 
 cfb@^1.1.4:
   version "1.2.1"
-  resolved "https://registry.nlark.com/cfb/download/cfb-1.2.1.tgz#209429e4c68efd30641f6fc74b2d6028bd202402"
+  resolved "https://registry.nlark.com/cfb/download/cfb-1.2.1.tgz?cache=0&sync_timestamp=1630959711444&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcfb%2Fdownload%2Fcfb-1.2.1.tgz#209429e4c68efd30641f6fc74b2d6028bd202402"
   integrity sha1-IJQp5MaO/TBkH2/HSy1gKL0gJAI=
   dependencies:
     adler-32 "~1.3.0"
@@ -3249,7 +3249,7 @@ commander@2.17.x:
 
 commander@^7.2.0:
   version "7.2.0"
-  resolved "https://registry.npmmirror.com/commander/download/commander-7.2.0.tgz?cache=0&sync_timestamp=1634886396986&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcommander%2Fdownload%2Fcommander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
+  resolved "https://registry.npmmirror.com/commander/download/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
   integrity sha1-o2y1fQtQHOEI5NIFWaFQo5HZerc=
 
 commander@~2.19.0:
@@ -3496,7 +3496,7 @@ cosmiconfig@^6.0.0:
 
 crc-32@~1.2.0:
   version "1.2.0"
-  resolved "https://registry.nlark.com/crc-32/download/crc-32-1.2.0.tgz#cb2db6e29b88508e32d9dd0ec1693e7b41a18208"
+  resolved "https://registry.npm.taobao.org/crc-32/download/crc-32-1.2.0.tgz#cb2db6e29b88508e32d9dd0ec1693e7b41a18208"
   integrity sha1-yy224puIUI4y2d0OwWk+e0Ghggg=
   dependencies:
     exit-on-epipe "~1.0.1"
@@ -5157,7 +5157,7 @@ forwarded@~0.1.2:
 
 frac@~1.1.2:
   version "1.1.2"
-  resolved "https://registry.nlark.com/frac/download/frac-1.1.2.tgz#3d74f7f6478c88a1b5020306d747dc6313c74d0b"
+  resolved "https://registry.npm.taobao.org/frac/download/frac-1.1.2.tgz#3d74f7f6478c88a1b5020306d747dc6313c74d0b"
   integrity sha1-PXT39keMiKG1AgMG10fcYxPHTQs=
 
 fragment-cache@^0.2.1:
@@ -6804,7 +6804,7 @@ lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17
 
 lodash@^4.17.21:
   version "4.17.21"
-  resolved "https://registry.nlark.com/lodash/download/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.21.tgz?cache=0&sync_timestamp=1613835838133&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=
 
 log-symbols@^1.0.2:
@@ -8458,17 +8458,17 @@ pretty-error@^2.0.2:
 
 printj@~1.1.0:
   version "1.1.2"
-  resolved "https://registry.nlark.com/printj/download/printj-1.1.2.tgz?cache=0&sync_timestamp=1630361456411&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fprintj%2Fdownload%2Fprintj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
+  resolved "https://registry.nlark.com/printj/download/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
   integrity sha1-2Q3rKXWoufYA+zoclOP0xTx4oiI=
 
 printj@~1.2.2:
   version "1.2.3"
-  resolved "https://registry.nlark.com/printj/download/printj-1.2.3.tgz?cache=0&sync_timestamp=1630361456411&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fprintj%2Fdownload%2Fprintj-1.2.3.tgz#2cfb2b192a1e5385dbbe5b46658ac34aa828508a"
+  resolved "https://registry.nlark.com/printj/download/printj-1.2.3.tgz#2cfb2b192a1e5385dbbe5b46658ac34aa828508a"
   integrity sha1-LPsrGSoeU4XbvltGZYrDSqgoUIo=
 
 printj@~1.3.0:
   version "1.3.0"
-  resolved "https://registry.nlark.com/printj/download/printj-1.3.0.tgz?cache=0&sync_timestamp=1630361456411&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fprintj%2Fdownload%2Fprintj-1.3.0.tgz#9018a918a790e43707f10625d6e10187a367cff6"
+  resolved "https://registry.nlark.com/printj/download/printj-1.3.0.tgz#9018a918a790e43707f10625d6e10187a367cff6"
   integrity sha1-kBipGKeQ5DcH8QYl1uEBh6Nnz/Y=
 
 process-nextick-args@~2.0.0:
@@ -8578,7 +8578,7 @@ qs@6.7.0:
 
 qs@^6.10.1:
   version "6.10.1"
-  resolved "https://registry.nlark.com/qs/download/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
+  resolved "https://registry.npm.taobao.org/qs/download/qs-6.10.1.tgz?cache=0&sync_timestamp=1616385315895&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqs%2Fdownload%2Fqs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
   integrity sha1-STFIL6jWR6Wqt5nFJx0hM7mB+2o=
   dependencies:
     side-channel "^1.0.4"
@@ -9296,7 +9296,7 @@ shell-quote@^1.6.1:
 
 side-channel@^1.0.4:
   version "1.0.4"
-  resolved "https://registry.nlark.com/side-channel/download/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
+  resolved "https://registry.npm.taobao.org/side-channel/download/side-channel-1.0.4.tgz?cache=0&sync_timestamp=1609270210432&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fside-channel%2Fdownload%2Fside-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
   integrity sha1-785cj9wQTudRslxY1CkAEfpeos8=
   dependencies:
     call-bind "^1.0.0"
@@ -9537,7 +9537,7 @@ sprintf-js@~1.0.2:
 
 ssf@~0.11.2:
   version "0.11.2"
-  resolved "https://registry.nlark.com/ssf/download/ssf-0.11.2.tgz#0b99698b237548d088fc43cdf2b70c1a7512c06c"
+  resolved "https://registry.npm.taobao.org/ssf/download/ssf-0.11.2.tgz#0b99698b237548d088fc43cdf2b70c1a7512c06c"
   integrity sha1-C5lpiyN1SNCI/EPN8rcMGnUSwGw=
   dependencies:
     frac "~1.1.2"
@@ -10169,7 +10169,7 @@ tslib@^2.0.3:
 
 tslib@^2.3.1:
   version "2.3.1"
-  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz?cache=0&sync_timestamp=1628722556410&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE=
 
 tslint@^5.20.1:
@@ -10756,7 +10756,7 @@ webpack-bundle-analyzer@^3.8.0:
 
 webpack-bundle-analyzer@^4.5.0:
   version "4.5.0"
-  resolved "https://registry.npmmirror.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-4.5.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fwebpack-bundle-analyzer%2Fdownload%2Fwebpack-bundle-analyzer-4.5.0.tgz#1b0eea2947e73528754a6f9af3e91b2b6e0f79d5"
+  resolved "https://registry.npmmirror.com/webpack-bundle-analyzer/download/webpack-bundle-analyzer-4.5.0.tgz?cache=0&sync_timestamp=1634019921368&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fwebpack-bundle-analyzer%2Fdownload%2Fwebpack-bundle-analyzer-4.5.0.tgz#1b0eea2947e73528754a6f9af3e91b2b6e0f79d5"
   integrity sha1-Gw7qKUfnNSh1Sm+a8+kbK24PedU=
   dependencies:
     acorn "^8.0.4"
@@ -10939,7 +10939,7 @@ window-size@0.1.0:
 
 wmf@~1.0.1:
   version "1.0.2"
-  resolved "https://registry.nlark.com/wmf/download/wmf-1.0.2.tgz#7d19d621071a08c2bdc6b7e688a9c435298cc2da"
+  resolved "https://registry.npm.taobao.org/wmf/download/wmf-1.0.2.tgz#7d19d621071a08c2bdc6b7e688a9c435298cc2da"
   integrity sha1-fRnWIQcaCMK9xrfmiKnENSmMwto=
 
 wolfy87-eventemitter@^5.1.0:
@@ -10959,7 +10959,7 @@ word-wrap@~1.2.3:
 
 word@~0.3.0:
   version "0.3.0"
-  resolved "https://registry.nlark.com/word/download/word-0.3.0.tgz#8542157e4f8e849f4a363a288992d47612db9961"
+  resolved "https://registry.npm.taobao.org/word/download/word-0.3.0.tgz#8542157e4f8e849f4a363a288992d47612db9961"
   integrity sha1-hUIVfk+OhJ9KNjooiZLUdhLbmWE=
 
 wordwrap@0.0.2:
