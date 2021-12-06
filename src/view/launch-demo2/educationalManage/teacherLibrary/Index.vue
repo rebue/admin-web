@@ -12,6 +12,18 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -21,6 +33,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -28,6 +41,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         // 初始化数据start

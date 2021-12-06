@@ -11,21 +11,10 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
-                    </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
-                                :ref="`orgTree.platform`"
+                                ref="orgTree"
                                 :show.sync="showOrg"
                                 realmId="platform"
                                 @click="handleOrgMenuClick"
@@ -60,40 +49,11 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
+                        value1: '企业通用分类',
+                        value2: 'BFL',
+                        value3: '永久',
+                        value4: '1',
+                        value5: '档案',
                     },
                 ];
                 const ro = {
@@ -117,43 +77,34 @@ export default {
         const columns = [
             {
                 dataIndex: 'value1',
-                title: '日期',
-                fixed: 'left',
+                title: '档案分类名称',
             },
             {
                 dataIndex: 'value2',
-                title: '星期',
-                ellipsis: true,
+                title: '档案分类编码',
             },
             {
                 dataIndex: 'value3',
-                title: '午别',
-                ellipsis: true,
+                title: '保管期限',
             },
             {
                 dataIndex: 'value4',
-                title: '教学内容',
+                title: '序号',
             },
             {
                 dataIndex: 'value5',
-                title: '授课人',
-            },
-            {
-                dataIndex: 'value6',
-                title: '地点',
-            },
-            {
-                dataIndex: 'value7',
-                title: '评估问卷',
+                align: 'center',
+                title: '备注',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 100,
+                width: 200,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -169,6 +120,12 @@ export default {
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
             },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: record => this.handleDel(record),
+            },
         ];
         return {
             loading: false,
@@ -181,22 +138,14 @@ export default {
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.refreshData();
+        //
     },
     methods: {
-        handleChange() {
+        handleOrgMenuClick() {
             //
         },
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
+        handleOrgTreeSelect() {
+            //
         },
         /**
          * 刷新表格数据
@@ -219,11 +168,28 @@ export default {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
+         * 处理删除应用的事件
+         */
+        handleDel(record) {
+            this.loading = true;
+            this.api
+                .delById(record.id)
+                .then(() => {
+                    this.refreshTableData();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        /**
          * 处理应用菜单的事件
          */
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

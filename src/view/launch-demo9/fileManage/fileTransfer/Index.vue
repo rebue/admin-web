@@ -11,18 +11,18 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <!-- <template #left>
+                    <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
                                 ref="orgTree"
                                 :show.sync="showOrg"
-                                realmId="1"
+                                realmId="platform"
                                 @click="handleOrgMenuClick"
                                 @select="handleOrgTreeSelect"
                             />
                             <div class="table-divider"></div>
                         </div>
-                    </template> -->
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -32,7 +32,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-// import OrgTree from '../../../rac/rac-org/Tree.vue';
+import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,7 +40,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        // OrgTree,
+        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -59,8 +59,7 @@ export default {
                         value8: '-',
                         value9: '-',
                         value10: '1',
-                        value11: '',
-                        value12: '',
+                        value11: '2020',
                     },
                 ];
                 const ro = {
@@ -83,21 +82,12 @@ export default {
         };
         const columns = [
             {
-                dataIndex: 'no',
-                title: '序号',
-                width: 70,
-                fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
-            },
-            {
                 dataIndex: 'value1',
                 title: '分类号',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
                 title: '保管期限',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value3',
@@ -106,17 +96,15 @@ export default {
             {
                 dataIndex: 'value4',
                 title: '归档部门',
-                ellipsis: true,
             },
             {
                 dataIndex: 'value5',
-                title: '在库分数',
-                ellipsis: true,
+                align: 'center',
+                title: '在库份数',
             },
             {
                 dataIndex: 'value6',
-                title: '报名',
-                ellipsis: true,
+                title: '提名',
             },
             {
                 dataIndex: 'value7',
@@ -124,27 +112,19 @@ export default {
             },
             {
                 dataIndex: 'value8',
-                align: 'center',
-                title: '序号',
+                title: '页数',
             },
             {
                 dataIndex: 'value9',
-                align: 'center',
-                title: '页数',
+                title: '全宗号',
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
-                title: '全宗号',
-            },
-            {
-                dataIndex: 'value11',
-                align: 'center',
                 title: '责任者',
             },
             {
-                dataIndex: 'value12',
-                align: 'center',
+                dataIndex: 'value11',
                 title: '年度',
             },
             {
@@ -189,8 +169,7 @@ export default {
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.refreshData();
+        //
     },
     methods: {
         handleOrgMenuClick() {
@@ -198,16 +177,6 @@ export default {
         },
         handleOrgTreeSelect() {
             //
-        },
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
         },
         /**
          * 刷新表格数据

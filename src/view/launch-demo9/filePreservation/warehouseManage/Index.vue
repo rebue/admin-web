@@ -11,17 +11,6 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
-                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -46,10 +35,13 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: '1691',
-                        value2: '2021年秋季学期',
-                        value3: '必修课',
-                        value4: '中青年干部培训一班',
+                        value1: '文本档案',
+                        value2: '文件',
+                        value3: '分类大于1或者保管期限大于3',
+                        value4: '档案库房管理期限永久盘点',
+                        value5: '0',
+                        value6: '10',
+                        value7: '',
                     },
                 ];
                 const ro = {
@@ -73,22 +65,32 @@ export default {
         const columns = [
             {
                 dataIndex: 'value1',
-                title: '模块编号',
-                fixed: 'left',
+                title: '档案库',
             },
             {
                 dataIndex: 'value2',
-                title: '学期',
-                ellipsis: true,
+                title: '级别',
             },
             {
                 dataIndex: 'value3',
-                title: '模块名称',
-                ellipsis: true,
+                title: '条件',
             },
             {
                 dataIndex: 'value4',
-                title: '班级名称',
+                title: '任务描述',
+            },
+            {
+                dataIndex: 'value5',
+                align: 'center',
+                title: '系统盘点数量',
+            },
+            {
+                dataIndex: 'value6',
+                title: '人工盘点梳理',
+            },
+            {
+                dataIndex: 'value7',
+                title: '差异描述',
             },
             {
                 dataIndex: 'action',
@@ -109,6 +111,11 @@ export default {
         ];
 
         this.tableActions = [
+            {
+                type: 'a',
+                title: '盘点',
+                onClick: record => this.handleEdit(record),
+            },
             {
                 type: 'a',
                 title: '编辑',
@@ -132,28 +139,23 @@ export default {
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.refreshData();
+        //
     },
     methods: {
-        handleChange() {
+        handleOrgMenuClick() {
             //
         },
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
+        handleOrgTreeSelect() {
+            //
         },
         /**
          * 刷新表格数据
          */
         refreshTableData() {
             this.crudTable.refreshData();
+        },
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /**
          * 处理添加应用的事件
@@ -189,6 +191,9 @@ export default {
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

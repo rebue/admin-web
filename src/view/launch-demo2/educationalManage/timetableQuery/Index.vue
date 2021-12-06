@@ -22,6 +22,18 @@
                             </a-select-option>
                         </a-select>
                     </template>
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -31,6 +43,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -38,6 +51,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -46,9 +60,18 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: '2921-10-12',
+                        value1: '2021-10-12',
                         value2: '一',
                         value3: '上午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-12',
+                        value2: '一',
+                        value3: '下午',
                         value4: '报到',
                         value5: '学员工作处',
                         value6: '至诚院服务台',

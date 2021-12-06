@@ -11,16 +11,17 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                ref="orgTree"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
                     </template>
                 </crud-table>
             </template>
@@ -31,6 +32,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -38,6 +40,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -46,17 +49,15 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: '1区',
-                        value2: '1',
-                        value3: '2',
-                        value4: '1',
-                        value5: 'No1',
-                        value6: '4',
-                        value7: '6',
-                        value8: '400',
-                        value9: '6',
-                        value10: '600',
-                        value11: '',
+                        value1: '档案类型',
+                        value2: 'DALX',
+                        value3: '2020',
+                        value4: '',
+                        value5: '',
+                        value6: '纪检档案',
+                        value7: '第一版',
+                        value8: '第一版',
+                        value9: '',
                     },
                 ];
                 const ro = {
@@ -80,52 +81,47 @@ export default {
         const columns = [
             {
                 dataIndex: 'value1',
-                title: '所属区域',
+                title: '年度项目编号',
             },
             {
                 dataIndex: 'value2',
-                title: '密集架类型',
+                title: '年度项目名称',
             },
             {
                 dataIndex: 'value3',
-                title: '单双面选择',
+                title: '年度',
             },
             {
                 dataIndex: 'value4',
-                title: '列编号',
+                title: '分类表',
             },
             {
                 dataIndex: 'value5',
-                title: '列名称',
+                align: 'center',
+                title: '保管期限',
             },
             {
                 dataIndex: 'value6',
-                title: '密集架类型',
+                title: '整改规划',
             },
             {
                 dataIndex: 'value7',
-                title: '节数',
+                title: '归档部门',
             },
             {
                 dataIndex: 'value8',
-                title: '节长度',
+                align: 'center',
+                title: '密级',
             },
             {
                 dataIndex: 'value9',
-                title: '层数',
-            },
-            {
-                dataIndex: 'value10',
-                title: '层高',
-            },
-            {
-                dataIndex: 'value11',
-                title: '备注',
+                align: 'center',
+                title: '项目类型',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 200,
+                width: 300,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -141,6 +137,16 @@ export default {
         ];
 
         this.tableActions = [
+            {
+                type: 'a',
+                title: '完善项目',
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'a',
+                title: '编辑表单',
+                onClick: record => this.handleEdit(record),
+            },
             {
                 type: 'a',
                 title: '编辑',
@@ -164,28 +170,23 @@ export default {
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.refreshData();
+        //
     },
     methods: {
-        handleChange() {
+        handleOrgMenuClick() {
             //
         },
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
+        handleOrgTreeSelect() {
+            //
         },
         /**
          * 刷新表格数据
          */
         refreshTableData() {
             this.crudTable.refreshData();
+        },
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
         },
         /**
          * 处理添加应用的事件
@@ -221,6 +222,9 @@ export default {
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };

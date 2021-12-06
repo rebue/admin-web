@@ -11,6 +11,18 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                ref="orgTree"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -20,6 +32,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -27,6 +40,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
+        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -40,14 +54,14 @@ export default {
                         value3: '永久',
                         value4: '公开',
                         value5: '人力资源部',
-                        value6: '1-2020-00001',
+                        value6: '1-2020-0001',
                         value7: '0002',
                         value8: '档案',
                         value9: '档案',
-                        value10: '2021-12-04',
+                        value10: '2020-06-24',
                         value11: '档案',
-                        value12: '2021-12-05',
-                        value13: '2021-12-05',
+                        value12: '2020-06-24',
+                        value13: '2020-06-24',
                     },
                 ];
                 const ro = {
@@ -69,13 +83,6 @@ export default {
             list: page,
         };
         const columns = [
-            // {
-            //     dataIndex: 'no',
-            //     title: '序号',
-            //     width: 70,
-            //     fixed: 'left',
-            //     scopedSlots: { customRender: 'serial' },
-            // },
             {
                 dataIndex: 'value1',
                 title: '查看题名',
@@ -173,28 +180,20 @@ export default {
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
-        this.refreshData();
+        //
     },
     methods: {
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
+        handleOrgMenuClick() {
+            //
+        },
+        handleOrgTreeSelect() {
+            //
         },
         /**
          * 刷新表格数据
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        handleRealmChanged(realmId) {
-            this.curRealmId = realmId;
         },
         /**
          * 处理添加应用的事件

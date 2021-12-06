@@ -11,17 +11,6 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
-                    </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
@@ -60,40 +49,18 @@ export default {
                 // 数据列表在这里设置
                 const dataSource = [
                     {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
+                        value1: '党务工作',
+                        value2: '永久',
+                        value3: '公开',
+                        value4: '06（党群工作部）',
+                        value5: '10',
+                        value6: '20',
+                        value7: '关于档案数字化建设项目须知',
+                        value8: '-',
+                        value9: '-',
+                        value10: '1',
+                        value11: '',
+                        value12: '',
                     },
                 ];
                 const ro = {
@@ -116,44 +83,73 @@ export default {
         };
         const columns = [
             {
+                dataIndex: 'no',
+                title: '序号',
+                width: 70,
+                scopedSlots: { customRender: 'serial' },
+            },
+            {
                 dataIndex: 'value1',
-                title: '日期',
-                fixed: 'left',
+                title: '分类号',
             },
             {
                 dataIndex: 'value2',
-                title: '星期',
-                ellipsis: true,
+                title: '保管期限',
             },
             {
                 dataIndex: 'value3',
-                title: '午别',
-                ellipsis: true,
+                title: '密级',
             },
             {
                 dataIndex: 'value4',
-                title: '教学内容',
+                title: '归档部门',
             },
             {
                 dataIndex: 'value5',
-                title: '授课人',
+                title: '在库分数',
             },
             {
                 dataIndex: 'value6',
-                title: '地点',
+                title: '报名',
             },
             {
                 dataIndex: 'value7',
-                title: '评估问卷',
+                title: '档号',
+            },
+            {
+                dataIndex: 'value8',
+                align: 'center',
+                title: '序号',
+            },
+            {
+                dataIndex: 'value9',
+                align: 'center',
+                title: '页数',
+            },
+            {
+                dataIndex: 'value10',
+                align: 'center',
+                title: '全宗号',
+            },
+            {
+                dataIndex: 'value11',
+                align: 'center',
+                title: '责任者',
+            },
+            {
+                dataIndex: 'value12',
+                align: 'center',
+                title: '年度',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 100,
+                width: 200,
                 fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
+
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -168,6 +164,12 @@ export default {
                 type: 'a',
                 title: '编辑',
                 onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: record => this.handleDel(record),
             },
         ];
         return {
@@ -185,9 +187,6 @@ export default {
         this.refreshData();
     },
     methods: {
-        handleChange() {
-            //
-        },
         refreshData() {
             this.loading = true;
             // racRealmApi
@@ -204,6 +203,9 @@ export default {
         refreshTableData() {
             this.crudTable.refreshData();
         },
+        handleRealmChanged(realmId) {
+            this.curRealmId = realmId;
+        },
         /**
          * 处理添加应用的事件
          */
@@ -219,11 +221,28 @@ export default {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
+         * 处理删除应用的事件
+         */
+        handleDel(record) {
+            this.loading = true;
+            this.api
+                .delById(record.id)
+                .then(() => {
+                    this.refreshTableData();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        /**
          * 处理应用菜单的事件
          */
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };
