@@ -101,6 +101,8 @@ import { getAppIdByUrl } from '@/util/common';
 import { constantRouters } from '@/config/router.config';
 import { observable } from 'mobx';
 
+import '@/asset/css/base.css';
+
 const matchRouteHidden = function(app, listTree) {
     for (const v of listTree) {
         if (v.path.includes(app) && !v.meta.hideMenu) {
@@ -277,6 +279,7 @@ export default observer({
     },
 });
 </script>
+
 <style lang="less">
 @import './Index.less';
 .title {
