@@ -99,28 +99,37 @@ export default {
         };
         // 初始化数据end
         const columns = [
-            // {
-            //     dataIndex: 'no',
-            //     title: '序号',
-            //     width: 150,
-            //     // fixed: 'left',
-            //     scopedSlots: { customRender: 'serial' },
-            // },
             {
-                dataIndex: 'name',
-                title: '姓名',
-                fixed: 'left',
-                width: 150,
-            },
-            {
-                title: '课程名称',
-                dataIndex: 'courseName',
-                width: 150,
-            },
-            {
-                title: '日期',
-                dataIndex: 'date',
-                width: 150,
+                dataIndex: 'test',
+                title: '开班临时测试(测试需要)',
+                width: 300,
+                ellipsis: true,
+                children: [
+                    {
+                        title: '姓名',
+                        width: 50,
+                        dataIndex: 'test',
+                        ellipsis: true,
+                    },
+                    {
+                        title: '所选课程',
+                        width: 150,
+                        dataIndex: 'test',
+                        ellipsis: true,
+                        children: [
+                            {
+                                title: '课程名称',
+                                dataIndex: 'test',
+                                width: 75,
+                            },
+                            {
+                                title: '日期',
+                                dataIndex: 'test',
+                                width: 75,
+                            },
+                        ],
+                    },
+                ],
             },
         ];
 
