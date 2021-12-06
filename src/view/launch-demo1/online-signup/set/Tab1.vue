@@ -82,7 +82,7 @@ export default {
             //     scopedSlots: { customRender: 'serial' },
             // },
             {
-                dataIndex: 'qrcode',
+                dataIndex: 'no',
                 title: '报名二维码',
                 width: 300,
                 customRender: () => {
