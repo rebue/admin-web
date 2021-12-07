@@ -10,7 +10,7 @@
                     :scrollX="600"
                     :rowSelection="{}"
                     :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #left>
                         <div v-show="showOrg" style="margin-right: 10px" class="table-left">
@@ -40,7 +40,60 @@ export default {
     },
     props: [],
     data() {
-        this.api = racAccountApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|21-25': [
+                        {
+                            'id|+1': 10000000,
+                            GdMobile: '',
+                            photo: '@image("200x100", "#894FC4", "#FFF", "png", "!")',
+                            sex: '@pick(["男", "女"])',
+                            name: '@cname',
+                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            startTime: '@now("yyyy-MM-dd")',
+                            endTime: '@now("yyyy-MM-dd")',
+                            mobile: '',
+                            // ["校(院)领导","行政部"]
+                            department: '@pick(["行政部", "校（院）领导"])',
+                            work: '@pick(["常务副校长，常务副院长", "副校长，副院长","普通教师"])',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
@@ -48,9 +101,12 @@ export default {
                 title: '头像',
                 fixed: 'left',
                 width: 100,
+                customRender: function(text, record) {
+                    return <span></span>;
+                },
             },
             {
-                dataIndex: 'name2',
+                dataIndex: 'name',
                 title: '姓名',
                 fixed: 'left',
                 width: 100,
@@ -64,19 +120,66 @@ export default {
                 dataIndex: 'mobile',
                 title: '移动电话',
                 ellipsis: true,
+                customRender: function() {
+                    const numArray = [
+                        '139',
+                        '138',
+                        '137',
+                        '136',
+                        '135',
+                        '134',
+                        '159',
+                        '158',
+                        '157',
+                        '150',
+                        '151',
+                        '152',
+                        '188',
+                        '187',
+                        '182',
+                        '183',
+                        '184',
+                        '178',
+                        '130',
+                        '131',
+                        '132',
+                        '156',
+                        '155',
+                        '186',
+                        '185',
+                        '176',
+                        '133',
+                        '153',
+                        '189',
+                        '180',
+                        '181',
+                        '177',
+                    ];
+                    let str = Math.random();
+                    str = Math.round(str * numArray.length);
+
+                    const strMobile = numArray[str] + '' + Math.round(Math.random() * 99999999) + '';
+                    return strMobile;
+                },
             },
             {
                 dataIndex: 'GdMobile',
                 title: '固定电话',
                 ellipsis: true,
+                customRender: function() {
+                    const strMobile = '0771' + '-' + Math.round(Math.random() * 99999999) + '';
+                    return strMobile;
+                },
             },
             {
                 dataIndex: 'department',
                 title: '部门',
+                width: 200,
                 ellipsis: true,
             },
             {
                 dataIndex: 'work',
+                width: 200,
                 title: '职务',
             },
             // {
