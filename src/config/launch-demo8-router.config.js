@@ -262,9 +262,46 @@ const constantRouters = {
         {
             path: '/launch-demo8/easy-zone',
             name: 'launch-demo8-easy-zone',
-            component: () => import('@/view/launch-demo8/easy-zone/Index.vue'),
+            component: RouteView,
             hidden: true,
             meta: { title: '易空间', keepAlive: true, icon: 'global' },
+            children: [
+                {
+                    path: '/launch-demo8/easy-zone/my-zone',
+                    name: 'launch-demo8-easy-zone-my-zone',
+                    component: () => import('@/view/launch-demo8/easy-zone/my-zone/Index.vue'),
+                    hidden: true,
+                    meta: { title: '个人空间', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo8/easy-zone/notepad',
+                    name: 'launch-demo8-easy-zone-notepad',
+                    component: () => import('@/view/launch-demo8/easy-zone/notepad/Index.vue'),
+                    hidden: true,
+                    meta: { title: '记事本', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo8/easy-zone/article',
+                    name: 'launch-demo8-easy-zone-article',
+                    component: () => import('@/view/launch-demo8/easy-zone/article/Index.vue'),
+                    hidden: true,
+                    meta: { title: '文章', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo8/easy-zone/album',
+                    name: 'launch-demo8-easy-zone-album',
+                    component: () => import('@/view/launch-demo8/easy-zone/album/Index.vue'),
+                    hidden: true,
+                    meta: { title: '相册', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo8/easy-zone/album-detail/:id',
+                    name: 'launch-demo8-easy-zone-album-detail',
+                    component: () => import('@/view/launch-demo8/easy-zone/album-detail/Index.vue'),
+                    hidden: true,
+                    meta: { title: '相册', keepAlive: true, icon: 'global', hideMenu: true },
+                },
+            ],
         },
         {
             path: '/launch-demo8/mail-list',
