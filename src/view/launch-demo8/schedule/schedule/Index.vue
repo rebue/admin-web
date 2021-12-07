@@ -1,55 +1,62 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row>
-                    <a-col :span="5">
-                        <p style="text-align: center;">计划总结列表</p>
-                        <a-calendar :fullscreen="false" style="width: 250px" />
-                        <a-collapse default-active-key="" :bordered="false">
-                            <a-collapse-panel key="1" header="我的日历" style="background: white;">
-                                <p>我的日历</p>
-                            </a-collapse-panel>
-                        </a-collapse>
-                        <div>
-                            <a-button type="link">我能看谁？</a-button>
-                            <a-button type="link">谁能看我？</a-button>
-                        </div>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </a-col>
-                    <a-col :span="19">
-                        <a-tabs style="left: 10px;" type="card" :activeKey="curRealmId" @change="handleRealmChanged">
-                            <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
-                                <crud-table
-                                    ref="crudTable"
-                                    :showKeywords="false"
-                                    :columns="columns"
-                                    :api="api"
-                                    :scrollX="600"
-                                    :defaultPagination="true"
-                                >
-                                    <template #commands>
-                                        <a-tag>今日</a-tag>
-                                        <span>{{ nowDate }}</span>
-                                        <span style=" margin-left: 30px;">【表格内双击快速添加】</span>
-                                    </template>
-                                </crud-table>
-                            </a-tab-pane>
-                        </a-tabs>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row>
+                        <a-col :span="5">
+                            <p style="text-align: center;">计划总结列表</p>
+                            <a-calendar :fullscreen="false" style="width: 250px" />
+                            <a-collapse default-active-key="" :bordered="false">
+                                <a-collapse-panel key="1" header="我的日历" style="background: white;">
+                                    <p>我的日历</p>
+                                </a-collapse-panel>
+                            </a-collapse>
+                            <div>
+                                <a-button type="link">我能看谁？</a-button>
+                                <a-button type="link">谁能看我？</a-button>
+                            </div>
+                            <div v-show="showOrg" class="table-left">
+                                <org-tree
+                                    :ref="`orgTree.platform`"
+                                    :show.sync="showOrg"
+                                    realmId="platform"
+                                    @click="handleOrgMenuClick"
+                                    @select="handleOrgTreeSelect"
+                                />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                        <a-col :span="19">
+                            <a-tabs
+                                style="left: 10px;"
+                                type="card"
+                                :activeKey="curRealmId"
+                                @change="handleRealmChanged"
+                            >
+                                <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
+                                    <crud-table
+                                        ref="crudTable"
+                                        :showKeywords="false"
+                                        :columns="columns"
+                                        :api="api"
+                                        :scrollX="600"
+                                        :defaultPagination="true"
+                                    >
+                                        <template #commands>
+                                            <a-tag>今日</a-tag>
+                                            <span>{{ nowDate }}</span>
+                                            <span style=" margin-left: 30px;">【表格内双击快速添加】</span>
+                                        </template>
+                                    </crud-table>
+                                </a-tab-pane>
+                            </a-tabs>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

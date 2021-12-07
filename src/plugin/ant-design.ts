@@ -42,6 +42,7 @@ import {
     Result,
     message,
     Collapse,
+    TimePicker,
 } from 'ant-design-vue';
 
 import IconFont from '@/component/rebue/IconFont';
@@ -119,6 +120,8 @@ Vue.use(Result);
 
 // 折叠面板
 Vue.use(Collapse);
+//时间选择框
+Vue.use(TimePicker);
 
 Vue.prototype.$confirm = Modal.confirm;
 Vue.prototype.$warning = Modal.warning;

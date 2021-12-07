@@ -48,7 +48,7 @@
                                 </a-form-model-item>
                             </a-col>
                         </a-row>
-                        <a-row>
+                        <a-row class="btnRow">
                             <a-button class="btn">提交</a-button>
                             <a-button class="btn">帮助</a-button>
                         </a-row>
@@ -178,10 +178,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.btn-group {
-    float: left;
-}
 .btn {
     margin: 0 10px 0 10px;
+}
+.btnRow {
+    text-align: center;
 }
 </style>
