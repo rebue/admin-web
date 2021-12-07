@@ -4,12 +4,12 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <a-tabs>
-                    <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
-                    <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
-                    <a-tab-pane :key="3" tab="目录3"></a-tab-pane>
-                    <a-tab-pane :key="4" tab="目录4"></a-tab-pane>
+                    <a-tab-pane :key="1" tab="马克思主义基础理论"></a-tab-pane>
+                    <a-tab-pane :key="2" tab="市场经济理论"></a-tab-pane>
+                    <a-tab-pane :key="3" tab="现代管理学"></a-tab-pane>
+                    <a-tab-pane :key="4" tab="录入不同"></a-tab-pane>
                 </a-tabs>
-                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="false">
+                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="true">
                     <template #left>
                         <div v-show="showOrg" class="table-left">
                             <org-tree
@@ -31,7 +31,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -41,7 +40,45 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            name: '@cname',
+                            'admissionTicketNum|1000000000-9999999999': 1111111111,
+                            'firstFraction|0-100': 1,
+                            'secondFraction|0-100': 1,
+                            totalScore: function() {
+                                return this.firstFraction + this.secondFraction;
+                            },
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',

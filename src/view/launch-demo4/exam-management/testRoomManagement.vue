@@ -11,7 +11,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -35,9 +35,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
-import request from '@/util/request';
 
 export default {
     name: 'signupConf',
@@ -47,7 +45,46 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            examRoomAddress:
+                                '@pick(["崇信园一楼研讨室", "教学中心201教室", "教学中心202教室", "教学中心203教室", "教学中心204教室", "教学中心205教室", "教学中心206教室"])',
+                            'examRoomNum|1-20': 1,
+                            'examRoomPeople|25-40': 25,
+                            'layoutPeople|25-40': 30,
+                            examPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -63,46 +100,40 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'majer',
+                dataIndex: 'teachPoint',
                 title: '教学点',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
-                dataIndex: 'courseName',
-                title: '课程名称',
-                ellipsis: true,
-                width: 150,
-            },
-            {
-                dataIndex: 'examStartData',
+                dataIndex: 'examRoomAddress',
                 title: '考场地址',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'examEndData',
+                dataIndex: 'examRoomNum',
                 title: '考场编号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'examRoomPeople',
                 title: '考场人数',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'layoutPeople',
                 title: '实际编排人数',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'examPoint',
                 title: '考点',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'operation',

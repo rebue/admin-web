@@ -66,10 +66,6 @@ export default {
                             by: '@pick(["自驾","公交","火车", "飞机"])',
                             arriveTime: '@now("yyyy-MM-dd")',
                             meet: '@pick(["是", "否"])',
-                            // 'realmId|+1': ['default', 'platform', 'ops'],
-                            //'opType': '@pick(["锁定", "启用"])',
-                            //'opTitle': '@title()',
-                            //'opDetail': '@cparagraph',
                         },
                     ],
                 });

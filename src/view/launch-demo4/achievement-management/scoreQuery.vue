@@ -112,7 +112,7 @@
                     :commands="tableCommands"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -123,7 +123,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const stuType = ['类型1', '类型2', '类型3'];
 const grade = ['年级1', '年级2', '年级3'];
@@ -141,7 +140,47 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            'stuNum|1000000000-9999999999': 1111111111,
+                            name: '@cname',
+                            classes: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'homeWork|10-20': 10,
+                            'check|7-10': 7,
+                            'surface|0-100': 1,
+                            'evaluate|0-100': 1,
+                            makeScore: '',
+                            allMakeScore: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -151,55 +190,55 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'stuNum',
                 title: '学号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'gradeName',
+                dataIndex: 'name',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'classes',
                 title: '班级',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'homeWork',
                 title: '作业',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'endTime',
+                dataIndex: 'check',
                 title: '考勤',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'surface',
                 title: '卷面',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'evaluate',
                 title: '期评',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'makeScore',
                 title: '补考分',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'desc',
+                dataIndex: 'allMakeScore',
                 title: '总补考分',
                 ellipsis: true,
                 width: 150,

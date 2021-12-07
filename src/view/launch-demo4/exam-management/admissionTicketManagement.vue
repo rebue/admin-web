@@ -11,7 +11,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #keywordsLeft>
@@ -36,7 +36,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const provinceData = ['显示2021年考生', '显示2020年考生', '显示2019年考生'];
 export default {
@@ -46,7 +45,61 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'number|1-1000': 1,
+                            name: '@cname',
+                            examQualifications: '@pick(["是","否"])',
+                            ExemptExamQualifications: '@pick(["已审核", "未审核"])',
+                            registrationReviewState: '@pick(["通过", "处理中"])',
+                            paymentState: '@pick(["已缴费", "未缴费"])',
+                            sex: '@pick(["男", "女"])',
+                            workCity: '@city',
+                            'admissionTicketNum|1000000000-9999999999': 1111111111,
+                            examinationRoomSite:
+                                '@pick(["中共广西区委党校会议中心报告厅(A区)", "中共广西区委党校会议中心报告厅(B区)"], "中共广西区委党校会议中心报告厅(C区)"], "中共广西区委党校会议中心报告厅(D区)"])',
+                            'seatNum|1-35': 30,
+                            nation:
+                                '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',
+                            'ID|100000000000000000-600000000000000000': 400000000000000000,
+                            birthData: '@date',
+                            nativePlace: '@province',
+                            culture: '@pick(["本科", "大专"])',
+                            majorStudied:
+                                '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -65,7 +118,7 @@ export default {
                 dataIndex: 'teachPoint',
                 title: '教学点',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'major',
@@ -131,7 +184,7 @@ export default {
                 dataIndex: 'examinationRoomSite',
                 title: '考场地址',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'seatNum',
@@ -146,10 +199,10 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'ID',
                 title: '身份证号',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'birthData',

@@ -11,7 +11,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #keywordsLeft>
                         <div style="margin-right: 10px">
@@ -47,7 +47,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 
 const provinceData = ['全部', '已注册', '未注册'];
@@ -59,7 +58,62 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'number|1-1000': 1,
+                            name: '@cname',
+                            admission: '@pick(["录取","未录取"])',
+                            turnMajor: '',
+                            studentStatus: '@pick("是")',
+                            'allAchievement|250-300': 250,
+                            stuRegister: '@pick(["是","否"])',
+                            nation:
+                                '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',
+                            shift: '@pick(["党校研究生","中科大研究生"])',
+                            'ID|100000000000000000-600000000000000000': 400000000000000000,
+                            sex: '@pick(["男","女"])',
+                            birthDate: '@date',
+                            nativePlace: '@province',
+                            culture: '@pick(["本科","专科"])',
+                            learnMajor:
+                                '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            graduationSchool:
+                                '@pick(["广西民族大学","河北师范大学","重庆大学","广西大学","中央党校函授学院","广西师范大学","广西民族大学","天津商业大学","山西财经大学"])',
+                            graduationDate: '@date',
+                            workDate: '@date',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -69,127 +123,127 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'teachPointNum',
+                dataIndex: 'grade',
                 title: '年级',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: '教学点',
+                dataIndex: 'teachPoint',
                 title: '教学点',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'major',
                 title: '专业',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'number',
                 title: '序号',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'name',
                 title: '姓名',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'admission',
                 title: '录取',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'turnMajor',
                 title: '转专业',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'studentStatus',
                 title: '生成学籍',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'allAchievement',
                 title: '总成绩',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'stuRegister',
                 title: '考生注册',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'nation',
                 title: '民族',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'shift',
                 title: '班次',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'ID',
                 title: '身份证号',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'sex',
                 title: '性别',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'birthDate',
                 title: '出生时间',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'nativePlace',
                 title: '籍贯',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'culture',
                 title: '文化程度',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'learnMajor',
                 title: '所学专业',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'graduationSchool',
                 title: '毕业院校',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'graduationDate',
                 title: '毕业时间',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'admissionIndex',
+                dataIndex: 'workDate',
                 title: '工作时间',
                 ellipsis: true,
                 width: 150,

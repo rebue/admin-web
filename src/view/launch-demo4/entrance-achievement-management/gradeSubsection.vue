@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                 </crud-table>
@@ -22,7 +22,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 export default {
     name: 'signupConf',
@@ -31,7 +30,42 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            'subName|0-100': 1,
+                            'lowerLimit|0-250': 1,
+                            'upperLimit|150-400': 150,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -41,22 +75,22 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'grade',
                 title: '年级',
                 ellipsis: true,
             },
             {
-                dataIndex: 'gradeName',
+                dataIndex: 'subName',
                 title: '分段名称',
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'lowerLimit',
                 title: '下限',
                 ellipsis: true,
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'upperLimit',
                 title: '上限',
                 ellipsis: true,
             },

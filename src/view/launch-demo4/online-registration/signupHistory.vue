@@ -11,7 +11,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -34,9 +34,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
-import request from '@/util/request';
 
 export default {
     name: 'signupConf',
@@ -46,7 +44,58 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["党校研究生","中政大研究生"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
+                            name: '@cname',
+                            sex: '@pick(["男", "女"])',
+                            nation:
+                                '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',
+                            'ID|100000000000000000-600000000000000000': 400000000000000000,
+                            birthData: '@date',
+                            nativePlace: '@province',
+                            culture: '@pick(["本科","大专"])',
+                            teachMajor:
+                                '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","物流管理","体育教育","物理学","日语"])',
+                            gradSchool:
+                                '@pick(["钦州学院","玉林师范学院","广西师范大学","广西民族大学","钦州学院","广西大学","中南民族大学","北京邮电大学","广西农业职业技术大学"])',
+                            gradData: '@date',
+                            workData: '@date',
+                            'diplomaNum|0000000000000001-90000000000000000': 111111111111111,
+                            partyData: '@date',
+                            workPlace: '@city',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -68,7 +117,7 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'majer',
+                dataIndex: 'major',
                 title: '专业',
                 ellipsis: true,
                 width: 150,
@@ -92,10 +141,10 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'ID',
                 title: '身份证号',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'birthData',
@@ -116,7 +165,7 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'major',
+                dataIndex: 'teachMajor',
                 title: '所学专业',
                 ellipsis: true,
                 width: 150,
@@ -143,7 +192,7 @@ export default {
                 dataIndex: 'diplomaNum',
                 title: '毕业证号',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'partyData',

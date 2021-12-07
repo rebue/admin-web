@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #keywordsLeft>
                         <div style="margin-right: 10px">
@@ -46,7 +46,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 
 const provinceData = ['全部', '录取', '未录取'];
@@ -58,7 +57,59 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPointNum: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'number|1-500': 1,
+                            name: '@cname',
+                            'totalScore|250-300': 1,
+                            admission: '@pick(["录取","未录取"])',
+                            shift: '@pick(["党校研究生","中科大研究生"])',
+                            sex: '@pick(["男","女"])',
+                            nation:
+                                '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',
+                            'ID|100000000000000000-600000000000000000': 400000000000000000,
+                            birthDate: '@date',
+                            nativePlace: '@province',
+                            culture: '@pick(["本科","专科"])',
+                            majorStudied:
+                                '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            graduationSchool:
+                                '@pick(["广西民族大学","河北师范大学","重庆大学","广西大学","中央党校函授学院","广西师范大学","广西民族大学","天津商业大学","山西财经大学"])',
+                            graduationDate: '@date',
+                            workDate: '@date',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -78,7 +129,7 @@ export default {
                 dataIndex: 'teachPointNum',
                 title: '教学点',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'major',
@@ -129,10 +180,10 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'ID',
                 title: '身份证号',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'birthDate',

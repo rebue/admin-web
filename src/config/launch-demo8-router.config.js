@@ -232,9 +232,26 @@ const constantRouters = {
         {
             path: '/launch-demo8/email',
             name: 'launch-demo8-email',
-            component: () => import('@/view/launch-demo8/email/Index.vue'),
+            // component: () => import('@/view/launch-demo8/email/Index.vue'),
+            component: RouteView,
             hidden: true,
             meta: { title: '电子邮件', keepAlive: true, icon: 'global' },
+            children: [
+                {
+                    path: '/launch-demo8/email/write',
+                    name: 'launch-demo8-email-write',
+                    component: () => import('@/view/launch-demo8/email/write.vue'),
+                    hidden: true,
+                    meta: { title: '写信', keepAlive: true, icon: 'global' },
+                },
+                {
+                    path: '/launch-demo8/email/Inbox',
+                    name: 'launch-demo8-email-Inbox',
+                    component: () => import('@/view/launch-demo8/email/Inbox.vue'),
+                    hidden: true,
+                    meta: { title: '收件箱', keepAlive: true, icon: 'global' },
+                },
+            ],
         },
         {
             path: '/launch-demo8/file',
@@ -315,7 +332,7 @@ const constantRouters = {
             name: 'launch-demo8-website',
             component: RouteView,
             hidden: true,
-            meta: { title: '文档管理', keepAlive: true, icon: 'global' },
+            meta: { title: '网站收藏', keepAlive: true, icon: 'global' },
             children: [
                 {
                     path: '/launch-demo8/website/website-public',
