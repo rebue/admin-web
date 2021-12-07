@@ -2,7 +2,54 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
+                <div class="stepsCss">
+                    <a-steps :current="1">
+                        <a-step>
+                            <template slot="title">
+                                Finished
+                            </template>
+                            <span slot="description">This is a description.</span>
+                        </a-step>
+                        <a-step title="In Progress" sub-title="Left 00:00:08" description="This is a description." />
+                        <a-step title="Waiting" description="This is a description." />
+                        <a-step title="Waiting" description="This is a description." />
+                        <a-step title="Waiting" description="This is a description." />
+                    </a-steps>
+                </div>
+                <template>
+                    <div v-show="showOrg" class="table-left">
+                        <org-tree
+                            ref="orgTree"
+                            :show.sync="showOrg"
+                            realmId="platform"
+                            @click="handleOrgMenuClick"
+                            @select="handleOrgTreeSelect"
+                        />
+                        <div class="table-divider"></div>
+                    </div>
+                </template>
+                <div class="fromCss">
+                    <a-form-model
+                        layout="inline"
+                        :model="formInline"
+                        @submit="handleSubmit"
+                        :label-col="labelCol"
+                        :wrapper-col="wrapperCol"
+                    >
+                        <a-row>
+                            <a-col :span="12" v-for="(item, index) in fromList" :key="index">
+                                <a-form-model-item :label="item.name">
+                                    <a-input
+                                        v-model="formInline.user"
+                                        disabled
+                                        :placeholder="item.placeholder"
+                                    ></a-input>
+                                </a-form-model-item>
+                            </a-col>
+                        </a-row>
+                    </a-form-model>
+                </div>
+                <!-- <crud-table
                     ref="crudTable"
                     :commands="tableCommands"
                     :actions="tableActions"
@@ -11,19 +58,7 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                </crud-table>  -->
             </template>
         </base-manager>
     </fragment>
@@ -31,7 +66,7 @@
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-import CrudTable from '@/component/rebue/CrudTable.vue';
+// import CrudTable from '@/component/rebue/CrudTable.vue';
 import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
@@ -39,7 +74,7 @@ export default {
     name: 'Manager',
     components: {
         BaseManager,
-        CrudTable,
+        // CrudTable,
         OrgTree,
     },
     data() {
@@ -164,6 +199,42 @@ export default {
             },
         ];
         return {
+            fromList: [
+                {
+                    name: '主键ID',
+                    placeholder: '沒有值',
+                },
+                {
+                    name: '名称',
+                    placeholder: '沒有值',
+                },
+                {
+                    name: '描述信息',
+                    placeholder: '沒有值',
+                },
+                {
+                    name: '执行监听器',
+                    placeholder: '未配置执行监听器',
+                },
+                {
+                    name: '启动器',
+                    placeholder: '沒有值',
+                },
+                {
+                    name: '表单编号',
+                    placeholder: '沒有值',
+                },
+                {
+                    name: '表单属性',
+                    placeholder: '未选择表单属性',
+                },
+            ],
+            labelCol: { span: 4 },
+            wrapperCol: { span: 14 },
+            formInline: {
+                user: '',
+                password: '',
+            },
             loading: false,
             curRealmId: '',
             manageMenusFormVisible: false,
@@ -177,6 +248,9 @@ export default {
         //
     },
     methods: {
+        handleSubmit(e) {
+            console.log(this.formInline);
+        },
         handleOrgMenuClick() {
             //
         },
@@ -235,7 +309,19 @@ export default {
 .realm-tabs {
     overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
 }
-
+.stepsCss {
+    width: calc(100% - 200px);
+    margin-top: 20px;
+    float: right;
+}
+.fromCss {
+    width: calc(100% - 200px);
+    margin-top: 50px;
+    float: right;
+    /deep/ .ant-form-item {
+        width: 100%;
+    }
+}
 .table-left {
     display: flex;
     height: 100%;

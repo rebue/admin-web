@@ -59,7 +59,7 @@ export default {
             height: 60px;
         }
         .fangchenggang-logo {
-            height: 66px;
+            height: 80px;
         }
         .divider {
             width: 2px;

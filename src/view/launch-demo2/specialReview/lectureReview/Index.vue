@@ -11,17 +11,6 @@
                     :scrollX="600"
                     :defaultPagination="false"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
-                    </template>
                 </crud-table>
             </template>
         </base-manager>
@@ -41,41 +30,72 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racAccountApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // 数据列表在这里设置
+                const dataSource = [
+                    {
+                        value1: '习近平新时代中国特色社会主义思想学习',
+                        value2: '1',
+                        value3: '',
+                        value4: '',
+                        value5: '',
+                        value6: '',
+                        value7: '',
+                        value8: '',
+                    },
+                ];
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 50,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'name',
-                title: '活动名称',
-                fixed: 'left',
+                dataIndex: 'value1',
+                title: '专题名称',
             },
             {
-                dataIndex: 'remark',
-                title: '负责部门',
-                ellipsis: true,
+                dataIndex: 'value2',
+                title: '试讲人工号',
             },
             {
-                dataIndex: 'isEnabled',
-                title: '活动时长',
-                ellipsis: true,
+                dataIndex: 'value3',
+                title: '试讲人名称',
             },
             {
-                dataIndex: 'action2',
+                dataIndex: 'value4',
                 title: '学期',
             },
             {
-                dataIndex: 'sort',
-                align: 'center',
-                title: '单位工作量',
+                dataIndex: 'value5',
+                title: '分组',
             },
             {
-                dataIndex: 'fenzu',
-                align: 'center',
-                title: '状态',
+                dataIndex: 'value6',
+                title: '评委组',
             },
             {
-                dataIndex: 'fenzu',
-                align: 'center',
-                title: '属性',
+                dataIndex: 'value7',
+                title: '试讲分数',
+            },
+            {
+                dataIndex: 'value8',
+                title: '试讲时间',
             },
             {
                 dataIndex: 'action',
