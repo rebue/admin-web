@@ -59,7 +59,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                     >
                         <template #commands>
                             <p>计划总量统计结果：</p>
@@ -88,13 +88,48 @@ export default {
     },
 
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            name: '@cname',
+                            department: '@pick(["办公室（业务指导工作处）", "信息技术处"])',
+                            type: '@pick(["日计划", "周计划", "月计划", "年计划"])',
+                            'count|1-1000': 123,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 50,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
+
         const columns = [
             {
                 dataIndex: 'number',
                 title: '序号',
-                width: 120,
+                width: 50,
                 ellipsis: true,
+                scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
@@ -105,7 +140,7 @@ export default {
             {
                 dataIndex: 'department',
                 title: '部门',
-                width: 120,
+                width: 150,
                 ellipsis: true,
             },
             {
