@@ -9,7 +9,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #commands>
@@ -77,52 +77,117 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const arr = ['上午', '下午', '晚上'];
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3': [
+                        {
+                            'id|+1': 1,
+                            date: '["上午", "下午","晚上"]',
+                            Monday:
+                                '@pick(["c语言程序与设计,数据结构", "大学物理，操作系统","高等数学，java程序与设计"])',
+                            dataIndex:
+                                '@pick(["c语言程序与设计,数据结构", "毛泽东思想概论，马克思理论与哲学","高等数学，数据结构"])',
+                            Tuesday:
+                                '@pick(["数据集原理,jsp程序设计", "设计模式，马克思理论与哲学","高等数学，数据结构"])',
+                            Wednesday:
+                                '@pick(["数据集原理,jsp程序设计", "设计模式，马克思理论与哲学","高等数学，数据结构"])',
+                            Thursday:
+                                '@pick(["数据集原理,jsp程序设计", "设计模式，马克思理论与哲学","高等数学，数据结构"])',
+                            Friday:
+                                '@pick(["数据集原理,jsp程序设计", "设计模式，马克思理论与哲学","高等数学，数据结构"])',
+
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            status: '@pick(["正在进行", "未开始","已结束"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                for (let i = 0; i < mockList.list.length; i++) {
+                    mockList.list[i].date = arr[i];
+                }
+                const dataSource = mockList.list;
+
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'term',
+                dataIndex: 'date',
                 title: '时间',
                 width: 150,
                 fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'Monday',
                 title: '周一',
-                width: 150,
+                width: 250,
                 fixed: 'left',
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'Tuesday',
                 title: '周二',
-                width: 150,
+                width: 250,
             },
             {
-                dataIndex: 'endTime',
+                dataIndex: 'Wednesday',
                 title: '周三',
-                width: 150,
+                width: 250,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'Thursday',
                 title: '周四',
-                width: 150,
+                width: 250,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupStartTime',
+                dataIndex: 'Friday',
                 title: '周五',
-                width: 150,
+                width: 250,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupEndTime',
+                dataIndex: 'Saturday',
                 title: '周六',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'creator',
+                dataIndex: 'Sunday',
                 title: '周日',
                 width: 150,
                 ellipsis: true,
@@ -182,6 +247,7 @@ export default {
                 name: '',
                 user: '',
             },
+            i: 0,
             moth: 37,
             startTime: '2021-12-8',
             endTime: '2021-12-15',

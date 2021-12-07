@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -34,26 +34,81 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|10-20': [
+                        {
+                            'id|+1': 10000000,
+                            title: '@ctitle',
+                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+
+                            'grade|50-99': 100,
+                            author: '@cname',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            evaluationPeriod: '@pick(["评比初期", "评比中期","评比后期"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+
+                // 数据列表在这里设置
+                const dataSource = mockList.list.sort(function(a, b) {
+                    return parseInt(b.grade) - parseInt(a.grade); //相当于sort()中的a-b
+                });
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'term',
+                dataIndex: 'no',
                 title: '排名',
                 width: '100',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'title',
                 title: '文章标题',
                 width: '200',
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'grade',
                 title: '分数',
                 width: '100',
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'author',
                 title: '作者',
                 width: '200',
             },
@@ -63,7 +118,7 @@ export default {
                 width: '200',
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'evaluationPeriod',
                 title: '评比期',
                 width: '200',
             },

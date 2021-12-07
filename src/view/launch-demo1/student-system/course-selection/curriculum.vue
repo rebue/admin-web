@@ -9,7 +9,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #commands>
@@ -39,40 +39,94 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|10-20': [
+                        {
+                            'id|+1': 10000000,
+                            className:
+                                '@pick(["马克思列宁思想与哲学", "大学物理","高等数学","数据结构","c语言程序设计","java程序设计",' +
+                                '"数据库原理","设计模式","毛泽东思想概论","html程序设计","操作系统"])',
+                            classType: '@pick(["必修","选修"])',
+                            classTeacher: '@cname',
+                            startTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            classHour: '@pick(["64", "24","46"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'term',
+                dataIndex: 'className',
                 title: '课程名称',
                 width: 150,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'classType',
                 title: '课程类型',
                 width: 150,
                 fixed: 'left',
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'classTeacher',
                 title: '周授课老师',
                 width: 150,
             },
             {
-                dataIndex: 'endTime',
+                dataIndex: 'startTime',
                 title: '课程开始时间',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'endTime',
                 title: '课程结束时间',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupStartTime',
+                dataIndex: 'classHour',
                 title: '课时',
                 width: 150,
                 ellipsis: true,

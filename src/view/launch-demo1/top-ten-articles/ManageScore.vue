@@ -73,7 +73,51 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racAppApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const arr = ['计算机一班', '计算机二班', 'GC班'];
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            judges: '@cname',
+                            scoringElements: '@pick(["观点新颖，有独特的见解"])',
+                            'grade|50-100': 100,
+
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             // {
             //     dataIndex: 'no',
@@ -83,25 +127,24 @@ export default {
             //     fixed: 'left',
             // },
             {
-                dataIndex: 'name',
+                dataIndex: 'className',
                 title: '班级',
                 width: 200,
                 fixed: 'left',
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'judges',
                 title: '评委',
                 width: 180,
             },
             {
-                dataIndex: 'isCertified',
+                dataIndex: 'scoringElements',
                 title: '评分要素',
-                width: 120,
+                width: 180,
                 ellipsis: true,
-                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'grade',
                 title: '分数',
                 width: 120,
                 ellipsis: true,

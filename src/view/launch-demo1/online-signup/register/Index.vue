@@ -86,8 +86,10 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
+
         this.api = {
             page,
             listAll: page,

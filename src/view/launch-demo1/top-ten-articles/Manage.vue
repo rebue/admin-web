@@ -23,7 +23,7 @@
                                 :api="api"
                                 :query="{ realmId: curRealmId }"
                                 :scrollX="600"
-                                :defaultPagination="false"
+                                :defaultPagination="true"
                                 @moveUp="handleMoveUp"
                                 @moveDown="handleMoveDown"
                             >
@@ -62,7 +62,58 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racAppApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|21-25': [
+                        {
+                            'id|+1': 10000000,
+
+                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            examine: '@pick(["审核通过", "审核未通过","审核通过"])',
+                            name: '@cname',
+                            title: '@ctitle',
+                            author: '@cname',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            createTime: '@now("yyyy-MM-dd HH:mm:ss")',
+                            updateTime: '@now("yyyy-MM-dd HH:mm:ss")',
+                            evaluationPeriod: '2015年十佳文章评比',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -72,45 +123,44 @@ export default {
                 fixed: 'left',
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'title',
                 title: '文章标题',
                 width: 200,
                 fixed: 'left',
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'examine',
                 title: '审核',
                 width: 180,
             },
             {
-                dataIndex: 'isCertified',
+                dataIndex: 'createTime',
                 title: '文章提交时间',
-                width: 120,
+                width: 180,
                 ellipsis: true,
-                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'author',
                 title: '文章作者',
                 width: 120,
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'className',
                 title: '班级',
                 width: 120,
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'evaluationPeriod',
                 title: '评比期',
                 width: 120,
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'updateTime',
                 title: '修改时间',
-                width: 120,
+                width: 180,
                 ellipsis: true,
             },
 

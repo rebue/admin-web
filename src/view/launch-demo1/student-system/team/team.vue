@@ -10,7 +10,8 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :rowSelection="{}"
+                    :defaultPagination="true"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -52,40 +53,93 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            'groupNo|10001-99999': 99999,
+                            name: '@cname',
+                            sex: '@pick(["男", "女"])',
+                            classJob:
+                                '@pick(["学习委员", "班长", "副班长", "体育委员", "劳动委员", "团支书", "组织委员", "无职务"])',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            status: '@pick(["已填", "未填"])',
+                            class: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'term',
+                dataIndex: 'status',
                 title: '状态',
                 width: 100,
                 fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'groupNo',
                 title: '组号',
                 width: 150,
                 fixed: 'left',
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'name',
                 title: '姓名',
                 width: 150,
             },
             {
-                dataIndex: 'endTime',
+                dataIndex: 'sex',
                 title: '性别',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'classJob',
                 title: '班级职务',
                 width: 150,
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'class',
                 title: '班级',
                 width: 300,
                 ellipsis: true,

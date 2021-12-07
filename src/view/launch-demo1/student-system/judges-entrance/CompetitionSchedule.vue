@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #commands>
                         <div style="float:right;margin-top: 20px">
@@ -38,20 +38,80 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|15-20': [
+                        {
+                            'id|+1': 10000000,
+                            phaseName: '@pick(["评比初期", "评比中期","评比后期"])',
+                            classDate: '@date("yyyy-MM-dd")',
+                            startTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            explain: '@pick(["正在进行", "未开始","已结束"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                for (let i = 0; i < mockList.list.length; i++) {
+                    if (mockList.list[i].phaseName == '评比初期') {
+                        mockList.list[i].explain = '评比初期我们对文章进行了第一步筛选';
+                    } else if (mockList.list[i].phaseName == '评比中期') {
+                        mockList.list[i].explain = '评比中期我们淘汰了一些文章';
+                    } else {
+                        mockList.list[i].explain = '评比后期，这是最后的决定阶段';
+                    }
+                }
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
+
         const columns = [
             {
-                dataIndex: 'term',
+                dataIndex: 'no',
                 title: '序号',
                 width: 100,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'className',
+                dataIndex: 'phaseName',
                 title: '阶段名称',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'startTime',
@@ -65,9 +125,9 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'explain',
                 title: '阶段说明',
-                width: 150,
+                width: 350,
                 ellipsis: true,
             },
         ];

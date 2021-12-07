@@ -10,7 +10,7 @@
                     :rowSelection="{}"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     @moveUp="handleMoveUp"
                     @moveDown="handleMoveDown"
                 >
@@ -58,41 +58,91 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racAppApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|21-25': [
+                        {
+                            'id|+1': 10000000,
+
+                            sex: '@pick(["男", "女"])',
+                            phaseName:
+                                '@pick(["学员论坛时间范围", "班级推荐文章和评委","学习部确认文章","评委评分","汇总评比结果"])',
+                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            status: '@pick(["未开始", "已开始"])',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastModifiedTime: '@date("yyyy-MM-dd")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            startTime: '@now("yyyy-MM-dd")',
+                            endTime: '@now("yyyy-MM-dd")',
+                            'semesterNo|100000-55555555555': 444444444444,
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                            explain: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '序号',
                 scopedSlots: { customRender: 'serial' },
                 width: 80,
-                fixed: 'left',
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'phaseName',
                 title: '阶段名称',
                 width: 200,
-                fixed: 'left',
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'startTime',
                 title: '起始时间',
                 width: 180,
             },
             {
-                dataIndex: 'isCertified',
+                dataIndex: 'endTime',
                 title: '截止时间',
-                width: 120,
+                width: 180,
                 ellipsis: true,
-                customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
+                // customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'explain',
                 title: '阶段说明',
-                width: 120,
+                width: 200,
                 ellipsis: true,
             },
             {
-                dataIndex: 'remark',
+                dataIndex: 'status',
                 title: '阶段状态',
                 width: 120,
                 ellipsis: true,
