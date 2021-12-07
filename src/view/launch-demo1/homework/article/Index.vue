@@ -9,8 +9,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
-                        :actions="tableActions"
+                        :defaultPagination="true"
                         :query="{ orgId: curOrgId }"
                     >
                     </crud-table>
@@ -36,64 +35,71 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            'number|+1': 10000,
+                            articleTitle: '@csentence(5,10)',
+                            describe: '@cparagraph(2)',
+                            time: '@date(yyyy-mm-dd hh:mm:ss)',
+                            name: '@cname()',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
+            {
+                dataIndex: 'number',
+                title: '文章编号',
+                width: 70,
+                ellipsis: true,
+            },
             {
                 dataIndex: 'articleTitle',
                 title: '文章标题',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
             {
                 dataIndex: 'describe',
                 title: '文章内容',
-                width: 150,
+                width: 260,
                 ellipsis: true,
             },
             {
                 dataIndex: 'time',
                 title: '时间',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
             {
                 dataIndex: 'name',
                 title: '作者',
-                width: 150,
+                width: 60,
                 ellipsis: true,
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 150,
-                fixed: 'right',
-                scopedSlots: { customRender: 'action' },
-            },
-        ];
-        this.tableActions = [
-            {
-                type: 'a',
-                title: '查看',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                type: 'more',
-                items: [
-                    {
-                        type: 'a',
-                        title: '编辑',
-                    },
-                    {
-                        type: 'confirm',
-                        title: '删除',
-                        confirmTitle: '你确定要删除本条记录吗?',
-                        onClick: () => {
-                            /**/
-                        },
-                    },
-                ],
             },
         ];
 

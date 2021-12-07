@@ -9,7 +9,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                         :commands="tableCommands"
                         :query="{ orgId: curOrgId }"
                     >
@@ -36,41 +36,75 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            'homework|+1': 10000,
+                            homeworkName: '@csentence(4,9)',
+                            describe: '@cparagraph(1)',
+                            time: '@date(yyyy-MM-dd hh:mm:ss)',
+                            score: '@integer(0,100)',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'choose',
                 title: '选择',
-                width: 150,
+                width: 50,
             },
             {
                 dataIndex: 'homework',
-                title: '作业批次',
-                width: 150,
+                title: '作业批次号',
+                width: 60,
                 ellipsis: true,
             },
             {
                 dataIndex: 'homeworkName',
                 title: '作业名称',
-                width: 150,
+                width: 100,
                 ellipsis: true,
             },
             {
                 dataIndex: 'describe',
                 title: '作业描述',
-                width: 150,
+                width: 210,
                 ellipsis: true,
             },
             {
                 dataIndex: 'time',
                 title: '时间',
-                width: 150,
+                width: 90,
                 ellipsis: true,
             },
             {
                 dataIndex: 'score',
                 title: '成绩',
-                width: 150,
+                width: 60,
                 ellipsis: true,
             },
         ];

@@ -16,14 +16,8 @@
                                 <a-button type="link">我能看谁？</a-button>
                                 <a-button type="link">谁能看我？</a-button>
                             </div>
-                            <div v-show="showOrg" class="table-left">
-                                <org-tree
-                                    :ref="`orgTree.platform`"
-                                    :show.sync="showOrg"
-                                    realmId="platform"
-                                    @click="handleOrgMenuClick"
-                                    @select="handleOrgTreeSelect"
-                                />
+                            <div class="table-left">
+                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                                 <div class="table-divider"></div>
                             </div>
                         </a-col>
@@ -62,14 +56,12 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 import { racRealmApi } from '@/api/Api';
 export default {
     name: 'schedule',
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -94,7 +86,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },
@@ -138,9 +130,51 @@ export default {
                 ellipsis: true,
             },
         ];
+        const treeData = [
+            {
+                title: '教工部',
+                key: '101',
+                children: [
+                    {
+                        title: '校(院)领导',
+                        key: '101-1',
+                    },
+                    {
+                        title: '办公室(业务指导工作处)',
+                        key: '101-2',
+                        children: [
+                            {
+                                title: '监控员',
+                                key: '101-2-1',
+                            },
+                        ],
+                    },
+                    {
+                        title: '组织人事',
+                        key: '101-3',
+                    },
+                    {
+                        title: '机关党委',
+                        key: '101-4',
+                    },
+                    {
+                        title: '财务处',
+                        key: '101-5',
+                    },
+                    {
+                        title: '资产管理处',
+                        key: '101-6',
+                    },
+                    {
+                        title: '学院工作处',
+                        key: '101-7',
+                    },
+                ],
+            },
+        ];
         return {
             columns,
-            showOrg: false,
+            treeData,
             nowDate: '',
             curRealmId: '',
             realms: [],
@@ -193,5 +227,12 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
 }
 </style>

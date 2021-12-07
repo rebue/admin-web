@@ -3,51 +3,51 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <crud-table
-                        ref="crudTable"
-                        :showKeywords="false"
-                        :columns="columns"
-                        :api="api"
-                        :query="{ orgId: curOrgId }"
-                        :scrollX="600"
-                        :defaultPagination="false"
-                        :row-selection="rowSelection"
-                    >
-                        <template #left>
-                            <div v-show="showOrg" class="table-left">
-                                <org-tree
-                                    :ref="`orgTree.platform`"
-                                    :show.sync="showOrg"
-                                    realmId="platform"
-                                    @click="handleOrgMenuClick"
-                                    @select="handleOrgTreeSelect"
-                                />
+                    <a-row>
+                        <a-col :span="5">
+                            <div class="table-left">
+                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                                 <div class="table-divider"></div>
                             </div>
-                        </template>
-                        <template #commands>
-                            <a-form-model layout="inline">
-                                <a-form-model-item>
-                                    <a-select default-value="lucy" style="width: 120px">
-                                        <a-select-option value="lucy">
-                                            毕业鉴定
-                                        </a-select-option>
-                                    </a-select>
-                                </a-form-model-item>
-                                <a-form-model-item>
-                                    <a-select default-value="lucy" style="width: 120px">
-                                        <a-select-option value="lucy">
-                                            批量打印
-                                        </a-select-option>
-                                    </a-select>
-                                </a-form-model-item>
-                                <div class="btn-group">
-                                    <a-button type="primary" class="btn">设置鉴定模块</a-button>
-                                    <a-button type="primary" class="btn">填写班级学习内容</a-button>
-                                </div>
-                            </a-form-model>
-                        </template>
-                    </crud-table>
+                        </a-col>
+                        <a-col :span="19">
+                            <crud-table
+                                ref="crudTable"
+                                :showKeywords="false"
+                                :columns="columns"
+                                :api="api"
+                                :query="{ orgId: curOrgId }"
+                                :scrollX="600"
+                                :defaultPagination="true"
+                                :row-selection="rowSelection"
+                            >
+                                <template #commands>
+                                    <a-form-model layout="inline">
+                                        <a-form-model-item>
+                                            <a-button>设置鉴定模块</a-button>
+                                        </a-form-model-item>
+                                        <a-form-model-item>
+                                            <a-select default-value="lucy" style="width: 120px">
+                                                <a-select-option value="lucy">
+                                                    毕业鉴定
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item>
+                                            <a-select default-value="lucy" style="width: 120px">
+                                                <a-select-option value="lucy">
+                                                    批量打印
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item>
+                                            <a-button>填写班级学习内容</a-button>
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </template>
+                            </crud-table>
+                        </a-col>
+                    </a-row>
                 </template>
             </base-manager>
             <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -61,7 +61,6 @@ import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'Manager',
@@ -69,7 +68,6 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
-        OrgTree,
     },
     props: {
         /** 是否显示checkbox */
@@ -79,29 +77,65 @@ export default {
         },
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            status: '未填',
+                            'group|+1': 100,
+                            name: '@cname()',
+                            sex: '@pick(["男","女"])',
+                            post: '@pick(["班长","副班长","学习委员"])',
+                            grade: '@pick(["1班","2班","3班"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'status',
                 title: '状态',
-                width: 150,
-                fixed: 'left',
+                width: 80,
+                ellipsis: true,
             },
             {
                 dataIndex: 'group',
                 title: '组号',
                 width: 150,
-                fixed: 'left',
+                ellipsis: true,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
             {
@@ -118,9 +152,42 @@ export default {
             },
         ];
 
+        const treeData = [
+            {
+                title: '所有学期',
+                key: '100',
+            },
+            {
+                title: '2021年秋季学期',
+                key: '101',
+                children: [
+                    {
+                        title: '防范化解重大风险能力和突发公共事件应急能力提升专题研讨班',
+                        key: '101-1',
+                    },
+                    {
+                        title: '开班临时测试(测试需要)',
+                        key: '101-2',
+                    },
+                    {
+                        title: '全区党校(行政院校)系统师资培训班(第21期)',
+                        key: '101-3',
+                    },
+                    {
+                        title: '全区党校(行政院校)系统师资培训班（第22期)',
+                        key: '101-4',
+                    },
+                    {
+                        title: '全区非公企业党组织书记专题研讨班',
+                        key: '101-5',
+                    },
+                ],
+            },
+        ];
+
         return {
             columns,
-            showOrg: false,
+            treeData,
             curOrgId: undefined,
         };
     },
@@ -175,10 +242,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.btn-group {
-    float: left;
-}
-.btn {
-    margin: 0 10px 0 10px;
+.table-left {
+    display: flex;
+    height: 100%;
+    margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
 }
 </style>

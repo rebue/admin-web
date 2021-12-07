@@ -16,18 +16,19 @@
                         :auto-expand-parent="autoExpandParent"
                         :default-selected-keys="selectedKeys"
                         :default-checked-keys="checkedKeys"
+                        :defaultExpandAll="true"
                         :default-expanded-keys="expandedKeys"
                         :tree-data="treeData"
                         @check="onCheck"
                     />
                 </a-col>
                 <a-col :span="18">
-                    <a-tabs default-active-key="1" @change="callback">
+                    <a-tabs default-active-key="1">
                         <a-tab-pane key="1" tab="组权限">
                             <div>
                                 <a-table
                                     :columns="columns"
-                                    :data-source="data"
+                                    :data-source="tableData"
                                     :row-selection="rowSelection"
                                     :expanded-row-keys.sync="expandedRowKeys"
                                 />
@@ -37,7 +38,7 @@
                             <div>
                                 <a-table
                                     :columns="columns"
-                                    :data-source="data"
+                                    :data-source="tableData"
                                     :row-selection="rowSelection"
                                     :expanded-row-keys.sync="expandedRowKeys"
                                 />
@@ -59,22 +60,36 @@ const columns = [
     },
 ];
 
-const data = [
+const tableData = [
     {
         key: 1,
         name: '绩效工作量',
         children: [
             {
-                key: 12,
+                key: 11,
                 name: '系统框架',
                 children: [
                     {
-                        key: 121,
+                        key: 111,
                         name: '工作量管理部门',
                     },
                     {
-                        key: 122,
+                        key: 112,
                         name: '工作量年份',
+                    },
+                ],
+            },
+            {
+                key: 12,
+                name: '工作量设置',
+                children: [
+                    {
+                        key: 121,
+                        name: '教务处设置',
+                    },
+                    {
+                        key: 122,
+                        name: '项目管理',
                     },
                 ],
             },
@@ -113,6 +128,16 @@ export default {
                     {
                         title: '研究生班工作量角色',
                         key: '1-2',
+                        children: [
+                            {
+                                title: '教师',
+                                key: '1-2-1',
+                            },
+                            {
+                                title: '研究生管理员',
+                                key: '1-2-2',
+                            },
+                        ],
                     },
                     {
                         title: '其他工作量角色',
@@ -128,7 +153,7 @@ export default {
             selectedKeys: [],
             checkedKeys: [],
             treeData,
-            data,
+            tableData,
             columns,
             rowSelection,
             expandedRowKeys: [],

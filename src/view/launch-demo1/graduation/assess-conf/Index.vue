@@ -3,29 +3,27 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <crud-table
-                        ref="crudTable"
-                        :showKeywords="false"
-                        :columns="columns"
-                        :api="api"
-                        :query="{ orgId: curOrgId }"
-                        :scrollX="600"
-                        :defaultPagination="false"
-                        :commands="tableCommands"
-                    >
-                        <template #left>
-                            <div v-show="showOrg" class="table-left">
-                                <org-tree
-                                    :ref="`orgTree.platform`"
-                                    :show.sync="showOrg"
-                                    realmId="platform"
-                                    @click="handleOrgMenuClick"
-                                    @select="handleOrgTreeSelect"
-                                />
+                    <a-row>
+                        <a-col :span="5">
+                            <div class="table-left">
+                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                                 <div class="table-divider"></div>
                             </div>
-                        </template>
-                    </crud-table>
+                        </a-col>
+                        <a-col :span="19">
+                            <crud-table
+                                ref="crudTable"
+                                :showKeywords="false"
+                                :columns="columns"
+                                :api="api"
+                                :query="{ orgId: curOrgId }"
+                                :scrollX="600"
+                                :defaultPagination="true"
+                                :commands="tableCommands"
+                            >
+                            </crud-table>
+                        </a-col>
+                    </a-row>
                 </template>
             </base-manager>
             <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -38,8 +36,6 @@ import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'Manager',
@@ -47,23 +43,53 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
-        OrgTree,
     },
 
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            content: '@csentence(10,20)',
+                            score: '+@integer(1,5)',
+                            demo: '党性教育“制高点”',
+                            use: '@pick(["是","否"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'content',
                 title: '分项及内容',
-                width: 150,
-                fixed: 'left',
+                width: 200,
             },
             {
                 dataIndex: 'score',
                 title: '加分加值',
-                width: 150,
-                fixed: 'left',
+                width: 100,
             },
             {
                 dataIndex: 'demo',
@@ -73,8 +99,7 @@ export default {
             {
                 dataIndex: 'use',
                 title: '是否使用',
-                width: 150,
-                ellipsis: true,
+                width: 60,
             },
         ];
 
@@ -120,9 +145,27 @@ export default {
                 },
             },
         ];
+        const treeData = [
+            {
+                title: '主体班学员“两点—线”量化考核表(90分)',
+                key: '101',
+            },
+            {
+                title: '党性教育“制高点”(30分)',
+                key: '102',
+            },
+            {
+                title: '纪律“底线”(30分)学习成果“亮点”(30分)',
+                key: '103',
+            },
+            {
+                title: '学习成果“亮点”(30分)',
+                key: '104',
+            },
+        ];
         return {
             columns,
-            showOrg: false,
+            treeData,
             curOrgId: undefined,
         };
     },
@@ -177,10 +220,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.btn-group {
-    float: left;
-}
-.btn {
-    margin: 0 10px 0 10px;
+.table-left {
+    display: flex;
+    height: 100%;
+    margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
+    .table-divider {
+        width: 20px;
+        border-left: 1px solid #eee;
+        margin-left: 10px;
+    }
 }
 </style>

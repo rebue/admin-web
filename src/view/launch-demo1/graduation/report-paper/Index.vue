@@ -5,11 +5,11 @@
                 <template #managerCard>
                     <crud-table
                         ref="crudTable"
-                        :showKeywords="true"
+                        :showKeywords="false"
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                     >
                         <template #commands>
                             <a-form-model layout="inline">
@@ -57,17 +57,53 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            status: '未填',
+                            'report|0-100': 0,
+                            name: '@cname()',
+                            semester: '2021年秋季学期',
+                            post: '@pick(["班长","副班长","学习委员"])',
+                            grade: '全区党校（行政院校）系统师咨培训班（第22期）',
+                            'graduation|0-100': 0,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'name',
                 title: '姓名',
-                width: 150,
+                width: 80,
             },
             {
                 dataIndex: 'grade',
                 title: '班级',
-                width: 150,
+                width: 200,
                 ellipsis: true,
             },
             {
@@ -79,13 +115,13 @@ export default {
             {
                 dataIndex: 'report',
                 title: '咨政报告评分',
-                width: 150,
+                width: 60,
                 ellipsis: true,
             },
             {
                 dataIndex: 'graduation',
                 title: '毕业论文评分',
-                width: 150,
+                width: 60,
                 ellipsis: true,
             },
         ];

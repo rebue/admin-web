@@ -108,7 +108,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

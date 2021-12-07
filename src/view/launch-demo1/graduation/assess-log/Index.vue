@@ -9,7 +9,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                     >
                     </crud-table>
                 </template>
@@ -34,17 +34,52 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            'number|+1': 10000,
+                            user: '@cname()',
+                            time: '@date(yyyy-mm-dd hh:mm:ss)',
+                            type: '修改',
+                            describe:
+                                '@cname()修改学员【@cname()】,咨政报告评分:0 修改成：@integer(60,100),毕业论文评分：null 修改成：',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'number',
                 title: '自动编号',
-                width: 150,
+                width: 70,
             },
             {
                 dataIndex: 'user',
                 title: '用户',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
             {
@@ -56,13 +91,13 @@ export default {
             {
                 dataIndex: 'type',
                 title: '类型',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
             {
                 dataIndex: 'describe',
                 title: '描述',
-                width: 150,
+                width: 400,
                 ellipsis: true,
             },
         ];
