@@ -10,7 +10,7 @@ const RouteView = {
 const constantRouters = {
     path: '/launch-demo9',
     name: 'launch-demo9',
-    meta: { title: '系统9', keepAlive: true, icon: 'setting' },
+    meta: { title: '档案管理系统', keepAlive: true, icon: 'setting' },
     component: () => import('@/view/launch-demo9/index/Index.vue'),
     redirect: '/launch-demo9/fileCollection/fileArrangement',
     children: [

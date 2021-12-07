@@ -11,7 +11,7 @@ const constantRouters = {
     path: '/launch-demo7',
     name: 'launch-demo7',
     meta: {
-        title: '系统4',
+        title: '研究生应用系统',
         keepAlive: true,
         icon: 'setting',
     },

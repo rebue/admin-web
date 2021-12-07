@@ -124,7 +124,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统4';
+        this.logoTitle = '研究生应用系统';
 
         // 设置菜单
         const sys = '/launch-demo4';

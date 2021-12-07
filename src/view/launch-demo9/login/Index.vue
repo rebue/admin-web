@@ -6,7 +6,7 @@
         <div class="main">
             <div class="login-card">
                 <div class="sign">
-                    <h2 class="title">系统9</h2>
+                    <h2 class="title">档案管理系统</h2>
                     <Password :action="onPswdSubmit" class="pswd-form" />
                 </div>
             </div>

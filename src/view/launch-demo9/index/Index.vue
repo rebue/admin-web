@@ -124,7 +124,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统9';
+        this.logoTitle = '档案管理系统';
 
         // 设置菜单
         const sys = '/launch-demo9';
@@ -168,7 +168,7 @@ export default observer({
         },
     },
     mounted() {
-        this.refreshAccountInfo();
+        // this.refreshAccountInfo();
     },
     methods: {
         getAppIdByUrl() {

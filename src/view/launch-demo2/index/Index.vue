@@ -124,7 +124,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统2';
+        this.logoTitle = '教学管理系统';
 
         // 设置菜单
         const sys = '/launch-demo2';
@@ -168,7 +168,7 @@ export default observer({
         },
     },
     mounted() {
-        this.refreshAccountInfo();
+        // this.refreshAccountInfo();
     },
     methods: {
         getAppIdByUrl() {

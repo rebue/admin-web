@@ -6,7 +6,7 @@
         <div class="main">
             <div class="login-card">
                 <div class="sign">
-                    <h2 class="title">研究生应用系统</h2>
+                    <h2 class="title">科研工作量系统</h2>
                     <Password :action="onPswdSubmit" class="pswd-form" />
                 </div>
             </div>
@@ -36,7 +36,7 @@ export default {
     methods: {
         //帐密登录
         onPswdSubmit(formData) {
-            this.$router.push(`/launch-demo4`);
+            this.$router.push(`/launch-demo3`);
         },
     },
 };

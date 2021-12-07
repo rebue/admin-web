@@ -126,7 +126,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统8';
+        this.logoTitle = '综合信息系统';
 
         // 设置菜单
         const sys = '/launch-demo8';

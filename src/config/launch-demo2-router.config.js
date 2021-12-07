@@ -10,7 +10,7 @@ const RouteView = {
 const constantRouters = {
     path: '/launch-demo2',
     name: 'launch-demo2',
-    meta: { title: '系统2', keepAlive: true, icon: 'setting' },
+    meta: { title: '教学管理系统', keepAlive: true, icon: 'setting' },
     component: () => import('@/view/launch-demo2/index/Index.vue'),
     redirect: '/launch-demo2/basic/shift',
     children: [

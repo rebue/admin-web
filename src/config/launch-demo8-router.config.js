@@ -10,7 +10,7 @@ const RouteView = {
 const constantRouters = {
     path: '/launch-demo8',
     name: 'launch-demo8',
-    meta: { title: '系统8', keepAlive: true, icon: 'setting' },
+    meta: { title: '综合信息系统', keepAlive: true, icon: 'setting' },
     component: () => import('@/view/launch-demo8/index/Index.vue'),
     redirect: '/launch-demo8/process/my-process/new-process',
     children: [

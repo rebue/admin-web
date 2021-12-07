@@ -685,6 +685,17 @@ export const constantRouters = [
         ...LaunchDemo3,
     },
     {
+        path: '/launch-demo3/login',
+        name: 'launch-demo3-login',
+        component: () => import('@/view/launch-demo3/login/Index.vue'),
+        hidden: true,
+        meta: {
+            title: '登录页',
+            keepAlive: true,
+            icon: 'global',
+        },
+    },
+    {
         ...LaunchDemo4,
     },
     {

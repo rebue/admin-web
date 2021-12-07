@@ -168,7 +168,7 @@ export default observer({
         },
     },
     mounted() {
-        this.refreshAccountInfo();
+        // this.refreshAccountInfo();
     },
     methods: {
         getAppIdByUrl() {
