@@ -122,7 +122,6 @@ export default {
             {
                 dataIndex: 'date',
                 title: '日期',
-                fixed: 'left',
                 width: 100,
             },
             {

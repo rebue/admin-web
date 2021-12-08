@@ -98,7 +98,6 @@ export default {
                 dataIndex: 'no',
                 title: '序号',
                 width: 80,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
@@ -137,8 +136,7 @@ export default {
             {
                 dataIndex: 'company',
                 title: '工作单位',
-                width: 150,
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'flag',
@@ -192,7 +190,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                // fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

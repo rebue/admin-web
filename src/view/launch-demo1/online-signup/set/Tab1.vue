@@ -120,7 +120,7 @@ export default {
             {
                 dataIndex: 'total',
                 title: '报名人数',
-                width: 200,
+                width: 100,
             },
         ];
 

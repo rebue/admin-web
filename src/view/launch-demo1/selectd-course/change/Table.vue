@@ -80,13 +80,11 @@ export default {
             //     dataIndex: 'no',
             //     title: '序号',
             //     width: 150,
-            //     // fixed: 'left',
             //     scopedSlots: { customRender: 'serial' },
             // },
             {
                 dataIndex: 'date',
                 title: '上课日期',
-                fixed: 'left',
                 width: 100,
             },
             {

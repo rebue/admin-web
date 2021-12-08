@@ -55,7 +55,6 @@ export default {
                 dataIndex: 'no',
                 title: 'ID编号',
                 width: 150,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
@@ -129,7 +128,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 250,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -85,14 +85,12 @@ export default {
                 dataIndex: 'orgId',
                 title: '所属组号',
                 width: 150,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'level',
                 title: '班级职务',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
@@ -156,8 +154,7 @@ export default {
             {
                 dataIndex: 'company',
                 title: '工作单位',
-                width: 150,
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'worklevel',
@@ -193,7 +190,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 240,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

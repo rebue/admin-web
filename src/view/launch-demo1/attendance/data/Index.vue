@@ -181,7 +181,6 @@ export default {
             {
                 dataIndex: 'name',
                 title: '姓名',
-                fixed: 'left',
                 width: 100,
             },
             ...map,

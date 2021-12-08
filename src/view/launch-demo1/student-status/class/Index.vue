@@ -40,14 +40,12 @@ export default {
                 dataIndex: 'term',
                 title: '学期',
                 width: 150,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'className',
                 title: '班级名称',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'startTime',
@@ -93,8 +91,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 240,
-                fixed: 'right',
+                width: 140,
                 scopedSlots: { customRender: 'action' },
             },
         ];

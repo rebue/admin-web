@@ -80,7 +80,6 @@ export default {
                 dataIndex: 'no',
                 title: '序号',
                 width: 80,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
@@ -126,7 +125,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
