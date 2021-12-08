@@ -3,16 +3,24 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <a-row>
-                        <a-col :span="5">
+                    <a-row type="flex">
+                        <a-col :span="4">
                             <div class="table-left">
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData1" />
-                                <div class="table-divider"></div>
-                                <a-divider type="vertical" />
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData2" />
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData1" />
                             </div>
                         </a-col>
-                        <a-col :span="19">
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%" />
+                        </a-col>
+                        <a-col :span="4">
+                            <div class="table-left">
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData2" />
+                            </div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%" />
+                        </a-col>
+                        <a-col :span="14">
                             <crud-table
                                 ref="crudTable"
                                 :showKeywords="false"
@@ -297,7 +305,6 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
-    width: 200px;
     overflow: scroll;
     .table-divider {
         width: 20px;

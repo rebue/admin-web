@@ -6,18 +6,16 @@
                     <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="部门初审表">
                             <div>
-                                <a-row>
+                                <a-row type="flex">
                                     <a-col :span="5">
                                         <div class="table-left">
-                                            <a-tree
-                                                class="ant-card-body"
-                                                :defaultExpandAll="true"
-                                                :tree-data="treeData"
-                                            />
-                                            <div class="table-divider"></div>
+                                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                                         </div>
                                     </a-col>
-                                    <a-col :span="19">
+                                    <a-col :span="1">
+                                        <a-divider type="vertical" style="height:100%"></a-divider>
+                                    </a-col>
+                                    <a-col :span="18">
                                         <crud-table
                                             ref="crudTable"
                                             :showKeywords="false"
