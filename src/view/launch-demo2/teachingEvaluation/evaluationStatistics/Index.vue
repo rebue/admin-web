@@ -65,32 +65,36 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '教师名称',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '总平均分',
-                fixed: 'left',
+                width: 100,
             },
             {
                 dataIndex: 'value3',
                 title: '课程名称',
+                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'value4',
                 title: '班级',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '意见',
                 ellipsis: true,
+                width: 150,
             },
             // {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

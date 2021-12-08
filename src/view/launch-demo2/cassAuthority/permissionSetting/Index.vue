@@ -64,12 +64,10 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '学期',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
                 title: '班级名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value3',
@@ -79,7 +77,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

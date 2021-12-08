@@ -95,55 +95,65 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '场地名称',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '场地类型',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '楼号',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '房号',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '电话',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '设备',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '位置',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 title: '面积',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 title: '管理员',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 title: '座位',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 title: '顺序',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

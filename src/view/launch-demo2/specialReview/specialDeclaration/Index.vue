@@ -64,32 +64,36 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '学期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '专题名称',
                 ellipsis: true,
+                width: 250,
             },
             {
                 dataIndex: 'value3',
                 title: '分组',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 align: 'center',
                 title: '排序',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '申报人',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

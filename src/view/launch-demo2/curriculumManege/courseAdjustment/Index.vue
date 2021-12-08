@@ -72,7 +72,6 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '课程类型',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
@@ -122,7 +121,6 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

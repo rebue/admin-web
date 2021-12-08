@@ -68,40 +68,48 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '专题名称',
+                width: 250,
             },
             {
                 dataIndex: 'value2',
                 title: '试讲人工号',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '试讲人名称',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '学期',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '分组',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '评委组',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '试讲分数',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 title: '试讲时间',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

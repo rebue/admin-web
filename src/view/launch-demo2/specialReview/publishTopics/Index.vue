@@ -66,41 +66,46 @@ export default {
             {
                 dataIndex: 'value1',
                 title: 'ID',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '学期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '专题名称',
+                width: 250,
             },
             {
                 dataIndex: 'value4',
                 title: '模板',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '招标要求',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '分组',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '排序',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

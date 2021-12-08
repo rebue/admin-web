@@ -64,7 +64,6 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '学期名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
@@ -79,17 +78,17 @@ export default {
             {
                 dataIndex: 'value4',
                 title: '专题开始时间',
+                width: 200,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '专题结束时间',
+                width: 200,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 200,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

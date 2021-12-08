@@ -83,57 +83,66 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '专题编号',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '专题类别',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '专题名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '申报时间',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '教学方式',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 align: 'center',
                 title: '任课教师',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 align: 'center',
                 title: '是否外请专题',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
                 title: '上课时长(分钟)',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '课件URL',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '试讲通过标志',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 120,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

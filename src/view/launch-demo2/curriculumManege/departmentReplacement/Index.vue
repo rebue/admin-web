@@ -72,13 +72,11 @@ export default {
             {
                 dataIndex: 'name',
                 title: '名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 300,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

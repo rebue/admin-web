@@ -72,66 +72,75 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '类型',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '姓名',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '身份证',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '性别',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '职称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '单位职务',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '联系电话',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
                 title: '所属区域',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '开户行',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '银行账号',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 align: 'center',
                 title: '课薪标准(元)',
+                width: 150,
             },
             {
                 dataIndex: 'value12',
                 align: 'center',
                 title: '个人简介',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

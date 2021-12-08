@@ -80,55 +80,64 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '日期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '上课时间',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '下课时间',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '教学内容',
+                width: 250,
             },
             {
                 dataIndex: 'value6',
                 title: '授课人',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '地点',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 title: '主持人',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 title: '辅教人',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 title: '备注',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 title: '评估问卷',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 100,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

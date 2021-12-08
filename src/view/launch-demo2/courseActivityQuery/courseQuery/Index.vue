@@ -67,31 +67,36 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '学期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '班级',
-                fixed: 'left',
+                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '课程名称',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '日期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '时间',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '教室名称',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value7',

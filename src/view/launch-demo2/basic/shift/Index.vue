@@ -83,56 +83,63 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '班级编号',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '学期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '班级名称',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '组织员/班主任',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '开始时间',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '结束时间',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '教室',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
                 title: '排课类型',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '班次属性',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '班级人数',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 200,
-                fixed: 'right',
+                width: 150,
                 scopedSlots: { customRender: 'action' },
             },
         ];

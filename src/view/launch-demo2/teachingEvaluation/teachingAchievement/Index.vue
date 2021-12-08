@@ -64,26 +64,28 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '教师姓名',
-                fixed: 'left',
+                width: 100,
             },
             {
                 dataIndex: 'value2',
                 title: '课程名称',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '评课成绩',
+                width: 100,
             },
             {
                 dataIndex: 'value4',
                 title: '授课班级',
+                width: 250,
             },
             // {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

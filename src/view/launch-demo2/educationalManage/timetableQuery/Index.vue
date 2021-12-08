@@ -100,39 +100,45 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '日期',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '午别',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '教学内容',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '授课人',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '地点',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '主持人',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 100,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

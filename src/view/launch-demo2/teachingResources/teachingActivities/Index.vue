@@ -77,7 +77,6 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '活动名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
@@ -92,6 +91,7 @@ export default {
             {
                 dataIndex: 'value4',
                 title: '学期',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
@@ -112,7 +112,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

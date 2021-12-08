@@ -72,7 +72,7 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '课程类型',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
@@ -83,46 +83,54 @@ export default {
             {
                 dataIndex: 'value3',
                 title: '教师部门',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '教师姓名',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '教师电话',
+                width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'value6',
                 title: '发送电话',
+                width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'value7',
                 title: '发送时间',
+                width: 200,
             },
             {
                 dataIndex: 'value8',
                 title: '结果时间',
+                width: 200,
             },
             {
                 dataIndex: 'value9',
                 title: '发送结果',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 title: '发送类型',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 title: '重复次数',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

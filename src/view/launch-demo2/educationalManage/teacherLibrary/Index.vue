@@ -78,13 +78,12 @@ export default {
                 dataIndex: 'no',
                 title: '序号',
                 width: 70,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'value1',
                 title: '标题',
-                fixed: 'left',
             },
             {
                 dataIndex: 'value2',
@@ -99,7 +98,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];
