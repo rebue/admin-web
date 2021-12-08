@@ -55,7 +55,7 @@
                             </a-form-model>
                         </a-col>
 
-                        <a-col style="margin-top: 5px;margin-left: 30px">
+                        <a-col style="margin-top: 10px;">
                             <a-button>查找</a-button>
                         </a-col>
                     </a-row>

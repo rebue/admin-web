@@ -57,7 +57,7 @@
                                 </a-form-item>
                             </a-form-model>
                         </a-col>
-                        <a-col style="margin-left: 20px">
+                        <a-col style="margin-top: 10px">
                             <a-button>查询</a-button>
                         </a-col>
                     </a-row>

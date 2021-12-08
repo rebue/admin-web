@@ -1,31 +1,34 @@
 <template>
     <base-manager>
         <template #managerCard>
-            <crud-table
-                ref="crudTable"
-                :actions="tableActions"
-                :columns="columns"
-                :api="api"
-                :scrollX="300"
-                :defaultPagination="false"
-            >
-                <template #commands>
-                    <a-row type="flex" style="margin-left: 20px">
-                        <a-col style="margin-left: 20px">
-                            <a-button>新增</a-button>
-                            <a-button>删除</a-button>
-                            <a-button>修改</a-button>
-                            <a-button>课题默认所属时间</a-button>
-                        </a-col>
-                    </a-row>
-                </template>
-                <template #left>
+            <a-row type="flex">
+                <a-col :span="5">
                     <div v-show="showOrg" class="table-left">
                         <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
                         <div class="table-divider"></div>
                     </div>
-                </template>
-            </crud-table>
+                </a-col>
+                <a-col :span="1">
+                    <a-divider type="vertical" style="height:100%"></a-divider>
+                </a-col>
+                <a-col :span="18">
+                    <crud-table
+                        ref="crudTable"
+                        :actions="tableActions"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="300"
+                        :defaultPagination="false"
+                    >
+                        <template #commands>
+                            <a-button class="btn">新增</a-button>
+                            <a-button class="btn">删除</a-button>
+                            <a-button class="btn">修改</a-button>
+                            <a-button class="btn">课题默认所属时间</a-button>
+                        </template>
+                    </crud-table>
+                </a-col>
+            </a-row>
         </template>
     </base-manager>
 </template>
@@ -104,4 +107,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+    margin-right: 10px;
+}
+</style>

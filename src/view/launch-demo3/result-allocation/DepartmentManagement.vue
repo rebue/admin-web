@@ -21,7 +21,7 @@
                                 </a-form-item>
                             </a-form-model>
                         </a-col>
-                        <a-col style="margin-left: 20px">
+                        <a-col style="margin-top: 10px">
                             <a-button>查询</a-button>
                             <a-button style="margin-left: 10px">条件清空</a-button>
                             <a-button style="margin-left: 10px">同步数据</a-button>
