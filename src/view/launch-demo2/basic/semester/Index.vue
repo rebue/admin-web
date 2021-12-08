@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -32,16 +34,21 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["2021年秋季学期", "2020年秋季学期","2019    年秋季学期"])',
+                            value2: '@date("yyyy-MM-dd")',
+                            value3: '@date("yyyy-MM-dd")',
+                            value4: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value5: '@date("yyyy-MM-dd hh:mm:ss")',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2021年秋季学期',
-                        value2: '2021-12-04',
-                        value3: '2021-12-04',
-                        value4: '2021-12-04 00:00:00',
-                        value5: '2021-12-04 00:00:00',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -123,6 +130,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

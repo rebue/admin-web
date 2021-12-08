@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -43,14 +45,27 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["教学效果", "专业背景","教学形式"])',
+                            'value2|1-10': 10,
+                            value3: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
+                            // value3: '',
+                            // value4: '@cname()',
+                            // value5: '@date("yyyy-MM")',
+                            // value6: '@date("yyyy-MM")',
+                            // value7: '@pick(["105教室", "302教室","202教室"])',
+                            // value8: '@pick(["使用专题库、教学计划排课"])',
+                            // value9: '@pick(["区管班"])',
+                            // 'value10|1-100': 100,
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '教学效果',
-                        value2: '20',
-                        value3: '2021年秋季学期',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -128,6 +143,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

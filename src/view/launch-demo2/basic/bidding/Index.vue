@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -43,15 +45,22 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            'value1|1-10000': 1234,
+                            value2: '@pick(["2021年秋季学期", "2020年秋季学期","2019    年秋季学期"])',
+                            value3: '@pick(["必修课", "导学"])',
+                            value4: '',
+                            'value5|1-10': 1,
+                            'value6|0': 0,
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '1691',
-                        value2: '2021年秋季学期',
-                        value3: '必修课',
-                        value4: '中青年干部培训一班',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -88,6 +97,14 @@ export default {
             {
                 dataIndex: 'value4',
                 title: '班级名称',
+            },
+            {
+                dataIndex: 'value5',
+                title: '顺序',
+            },
+            {
+                dataIndex: 'value6',
+                title: '公共属性',
             },
             {
                 dataIndex: 'action',
@@ -127,6 +144,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {
