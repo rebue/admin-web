@@ -115,13 +115,13 @@ export default {
             {
                 dataIndex: 'startTime',
                 title: '课程开始时间',
-                width: 150,
+                width: 180,
                 ellipsis: true,
             },
             {
                 dataIndex: 'endTime',
                 title: '课程结束时间',
-                width: 150,
+                width: 180,
                 ellipsis: true,
             },
             {

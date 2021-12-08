@@ -187,13 +187,13 @@ const constantRouters = {
                     meta: { title: '全校统计查看', keepAlive: true, icon: 'global' },
                     hidden: true,
                 },
-                {
-                    path: '/launch-demo3/summary-years/labor1-cost',
-                    name: 'launch-demo3-summary-years-labor1-cost',
-                    component: () => import('@/view/launch-demo3/summary-years/WorkloadYears.vue'),
-                    meta: { title: '历年工作量报表', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
+                // {
+                //     path: '/launch-demo3/summary-years/labor1-cost',
+                //     name: 'launch-demo3-summary-years-labor1-cost',
+                //     component: () => import('@/view/launch-demo3/summary-years/WorkloadYears.vue'),
+                //     meta: { title: '历年工作量报表', keepAlive: true, icon: 'global' },
+                //     hidden: true,
+                // },
             ],
         },
         {

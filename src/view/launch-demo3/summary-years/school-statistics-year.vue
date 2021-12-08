@@ -76,28 +76,95 @@ export default {
         baseSearch,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-7': [
+                        {
+                            'id|+1': 10000000,
+
+                            'totalWorkload|3002-55555': 55555,
+                            totalCostName: '@pick(["2021年费用汇总"])',
+                            year: '@now("yyyy")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
                 dataIndex: 'no',
                 title: '序号',
                 width: 80,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
+
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'totalCostName',
                 title: '总费用名称',
+                width: 150,
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'year',
                 title: '年份',
+                width: 150,
             },
             {
-                dataIndex: 'author',
-                title: '工作量',
-                ellipsis: true,
+                dataIndex: 'totalWorkload',
+                title: '总工作量',
+                width: 140,
+            },
+        ];
+
+        this.tableActions = [
+            {
+                type: 'a',
+                title: '修改',
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: record => this.handleDel(record),
+            },
+            {
+                type: 'a',
+                title: '查看',
+
+                onClick: record => this.handleEdit(record),
             },
         ];
 

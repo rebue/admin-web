@@ -7,7 +7,7 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="300"
-                :defaultPagination="false"
+                :defaultPagination="true"
             >
                 <template #commands>
                     <a-row type="flex">
@@ -98,7 +98,62 @@ export default {
         baseSearch,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            'achievementNo|10001-99999': 99999,
+                            memberName: '@cname',
+                            sex: '@pick(["男", "女"])',
+                            author: '@cname',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            // 'qrcode|1-1000000': 193201,
+                            status: '@pick(["审核通过","审核中","未审核","审核未通过"])',
+                            department: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            achievementName: '@ctitle',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            applyTime: '@now("yyyy-MM-dd")',
+                            year: '@now("yyyy")',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
@@ -107,6 +162,11 @@ export default {
                 width: 80,
                 fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
+            },
+            {
+                dataIndex: 'year',
+                title: '年份',
+                width: 150,
             },
             {
                 dataIndex: 'achievementNo',
@@ -121,21 +181,25 @@ export default {
             {
                 dataIndex: 'author',
                 title: '作者',
+                width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'department',
                 title: '部门',
+                width: 200,
                 ellipsis: true,
             },
             {
                 dataIndex: 'achievementName',
                 title: '成果名称',
+                width: 250,
                 ellipsis: true,
             },
             {
                 dataIndex: 'applyTime',
                 title: '申请日期',
+                width: 150,
                 ellipsis: true,
             },
 
@@ -143,7 +207,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];
