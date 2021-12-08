@@ -119,32 +119,31 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
                 title: '节点名称',
-                fixed: 'left',
+                width: 200,
             },
             {
                 dataIndex: 'kssj',
                 title: '开始时间',
-                fixed: 'left',
+                width: 200,
             },
             {
                 dataIndex: 'jssj',
                 title: '结束时间',
-                fixed: 'left',
+                width: 200,
             },
             {
                 dataIndex: 'sm',
                 title: '说明',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 120,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -40,22 +40,18 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
                 title: '教学管理部门',
-                fixed: 'left',
             },
             {
                 dataIndex: 'lx',
                 title: '工作量类型',
-                fixed: 'left',
             },
             {
                 dataIndex: 'dm',
                 title: '类型代码',
-                fixed: 'left',
             },
             {
                 dataIndex: 'gzl',
@@ -71,7 +67,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 120,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

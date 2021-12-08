@@ -40,22 +40,19 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'nfmc',
                 title: '年份名称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'nf',
                 title: '年份',
-                fixed: 'left',
             },
             {
                 dataIndex: 'gzsj',
                 title: '全年工作时间（天）',
-                fixed: 'left',
+                width: 230,
             },
             {
                 dataIndex: 'gzl',
@@ -71,7 +68,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 120,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

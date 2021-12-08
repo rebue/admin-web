@@ -119,18 +119,16 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
                 title: '项目名称',
-                fixed: 'left',
+                width: 200,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 120,
-                fixed: 'right',
+                width: 100,
                 scopedSlots: { customRender: 'action' },
             },
         ];

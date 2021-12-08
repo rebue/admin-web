@@ -116,7 +116,6 @@ export default {
             //     dataIndex: 'no',
             //     title: '序号',
             //     width: 150,
-            //     // fixed: 'left',
             //     scopedSlots: { customRender: 'serial' },
             // },
             {

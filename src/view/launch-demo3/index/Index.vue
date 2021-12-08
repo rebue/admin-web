@@ -124,7 +124,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '系统5';
+        this.logoTitle = '科研工作量系统';
 
         // 设置菜单
         const sys = '/launch-demo3';

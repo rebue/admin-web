@@ -119,33 +119,28 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                fixed: 'left',
             },
             {
                 dataIndex: 'bm',
                 title: '部门',
-                fixed: 'left',
             },
             {
                 dataIndex: 'zc',
                 title: '职称',
-                fixed: 'left',
             },
             {
                 dataIndex: 'xb',
                 title: '性别',
-                fixed: 'left',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 120,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

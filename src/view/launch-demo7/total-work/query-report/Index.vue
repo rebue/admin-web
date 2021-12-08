@@ -97,13 +97,13 @@ export default {
             {
                 dataIndex: 'teaching',
                 title: '2019年教学工作量',
-                width: 150,
+                width: 250,
                 ellipsis: true,
             },
             {
                 dataIndex: 'research',
                 title: '2019年科研工作量',
-                width: 150,
+                width: 250,
                 ellipsis: true,
             },
             {
