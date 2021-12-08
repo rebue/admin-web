@@ -78,29 +78,33 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '模型标识',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '模型名称',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '模型版本',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '创建时间',
+                width: 200,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '最后更新时间',
+                width: 200,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 300,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

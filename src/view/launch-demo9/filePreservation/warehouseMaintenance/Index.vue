@@ -84,54 +84,64 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '所属区域',
+                width: 100,
             },
             {
                 dataIndex: 'value2',
                 title: '密集架类型',
+                width: 120,
             },
             {
                 dataIndex: 'value3',
                 title: '单双面选择',
+                width: 120,
             },
             {
                 dataIndex: 'value4',
                 title: '列编号',
+                width: 100,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '列名称',
+                width: 100,
             },
             {
                 dataIndex: 'value6',
                 title: '密集架类型',
+                width: 120,
             },
             {
                 dataIndex: 'value7',
                 title: '节数',
+                width: 100,
             },
             {
                 dataIndex: 'value8',
                 title: '节长度',
+                width: 100,
             },
             {
                 dataIndex: 'value9',
                 title: '层数',
+                width: 100,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '层高',
+                width: 100,
             },
             {
                 dataIndex: 'value11',
                 title: '备注',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

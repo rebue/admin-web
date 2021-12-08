@@ -82,47 +82,55 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '年度项目编号',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '年度项目名称',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '年度',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '分类表',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '保管期限',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '整改规划',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '归档部门',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
                 title: '密级',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '项目类型',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 300,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

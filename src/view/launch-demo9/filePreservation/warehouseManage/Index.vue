@@ -66,37 +66,44 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '档案库',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '级别',
+                width: 100,
             },
             {
                 dataIndex: 'value3',
                 title: '条件',
+                width: 250,
             },
             {
                 dataIndex: 'value4',
                 title: '任务描述',
+                width: 200,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '系统盘点数量',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '人工盘点梳理',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '差异描述',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

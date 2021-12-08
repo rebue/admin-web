@@ -86,72 +86,82 @@ export default {
                 dataIndex: 'no',
                 title: '序号',
                 width: 70,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'value1',
                 title: '分类号',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '保管期限',
-                fixed: 'left',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '密级',
+                width: 100,
             },
             {
                 dataIndex: 'value4',
                 title: '归档部门',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 title: '在库分数',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '报名',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '档号',
+                width: 250,
             },
             {
                 dataIndex: 'value8',
                 align: 'center',
                 title: '序号',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '页数',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '全宗号',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 align: 'center',
                 title: '责任者',
+                width: 150,
             },
             {
                 dataIndex: 'value12',
                 align: 'center',
                 title: '年度',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

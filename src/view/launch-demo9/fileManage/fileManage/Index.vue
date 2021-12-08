@@ -86,63 +86,75 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '查看题名',
+                width: 150,
             },
             {
                 dataIndex: 'value2',
                 title: '分类号',
+                width: 150,
             },
             {
                 dataIndex: 'value3',
                 title: '保管期限',
+                width: 150,
             },
             {
                 dataIndex: 'value4',
                 title: '密级',
+                width: 150,
             },
             {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '归档部门',
+                width: 150,
             },
             {
                 dataIndex: 'value6',
                 title: '档号',
+                width: 150,
             },
             {
                 dataIndex: 'value7',
                 title: '查看号',
+                width: 150,
             },
             {
                 dataIndex: 'value8',
                 title: '查看人',
+                width: 150,
             },
             {
                 dataIndex: 'value9',
                 title: '查看单位',
+                width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '查看时间',
+                width: 150,
             },
             {
                 dataIndex: 'value11',
                 title: '检查人',
+                width: 150,
             },
             {
                 dataIndex: 'value12',
                 title: '检查时间',
+                width: 150,
             },
             {
                 dataIndex: 'value13',
                 align: 'center',
                 title: '检查盒日期',
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
