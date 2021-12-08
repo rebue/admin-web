@@ -92,46 +92,55 @@ export default {
                 dataIndex: 'teacher',
                 title: '教师',
                 width: 100,
+                ellipsis: true,
             },
             {
                 dataIndex: 'teaching',
                 title: '2019年教学工作量',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: 'research',
                 title: '2019年科研工作量',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: 'one',
                 title: '',
                 width: 50,
+                ellipsis: true,
             },
             {
                 dataIndex: 'tow',
                 title: '',
                 width: 50,
+                ellipsis: true,
             },
             {
                 dataIndex: 'three',
                 title: '',
                 width: 50,
+                ellipsis: true,
             },
             {
                 dataIndex: 'four',
                 title: '',
                 width: 50,
+                ellipsis: true,
             },
             {
                 dataIndex: 'teaching-total',
                 title: '2019年-2019年教学工作量合计',
-                width: 150,
+                width: 250,
+                ellipsis: true,
             },
             {
                 dataIndex: 'research-total',
                 title: '2019年-2019年科研工作量合计',
-                width: 150,
+                width: 250,
+                ellipsis: true,
             },
         ];
 

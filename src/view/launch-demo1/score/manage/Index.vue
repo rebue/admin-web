@@ -43,7 +43,7 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
                     'list|1-20': [
                         {
-                            collegeName: 'xxx学院',
+                            collegeName: '@cword(4,5)学院',
                             'homework-paper': '@csentence(4,9)',
                             time: '@date(yyyy-MM-dd hh:mm:ss)',
                             score: '@integer(0,100)',
@@ -75,6 +75,7 @@ export default {
                 dataIndex: 'collegeName',
                 title: '学院名称',
                 width: 90,
+                ellipsis: true,
             },
             {
                 dataIndex: 'homework-paper',

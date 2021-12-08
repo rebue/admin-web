@@ -92,8 +92,8 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
-                fixed: 'right',
+                width: 80,
+                ellipsis: true,
                 scopedSlots: { customRender: 'action' },
             },
         ];

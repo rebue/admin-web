@@ -85,21 +85,25 @@ export default {
                 dataIndex: 'content',
                 title: '分项及内容',
                 width: 200,
+                ellipsis: true,
             },
             {
                 dataIndex: 'score',
                 title: '加分加值',
                 width: 100,
+                ellipsis: true,
             },
             {
                 dataIndex: 'demo',
                 title: '评分项目',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: 'use',
                 title: '是否使用',
                 width: 60,
+                ellipsis: true,
             },
         ];
 

@@ -75,6 +75,7 @@ export default {
                 dataIndex: 'number',
                 title: '自动编号',
                 width: 70,
+                ellipsis: true,
             },
             {
                 dataIndex: 'user',

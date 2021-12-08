@@ -99,6 +99,7 @@ export default {
                 dataIndex: 'name',
                 title: '姓名',
                 width: 80,
+                ellipsis: true,
             },
             {
                 dataIndex: 'grade',

@@ -76,6 +76,7 @@ export default {
                 dataIndex: 'choose',
                 title: '选择',
                 width: 50,
+                ellipsis: true,
             },
             {
                 dataIndex: 'homework',

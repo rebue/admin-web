@@ -99,6 +99,7 @@ export default {
                 title: '模板名称',
                 dataIndex: 'name',
                 key: 'name',
+                ellipsis: true,
             },
         ];
         const tableData = [

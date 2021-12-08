@@ -75,6 +75,7 @@ export default {
                 dataIndex: 'people',
                 title: '人员',
                 width: 80,
+                ellipsis: true,
             },
             {
                 dataIndex: 'time',

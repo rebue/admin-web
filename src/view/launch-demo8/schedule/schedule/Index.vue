@@ -106,16 +106,19 @@ export default {
                 dataIndex: 'week',
                 title: '星期',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: 'plan',
                 title: '工作计划',
-                width: 150,
+                width: 210,
+                ellipsis: true,
             },
             {
                 dataIndex: 'conclusion',
                 title: '工作总结',
-                width: 150,
+                width: 250,
+                ellipsis: true,
             },
             {
                 dataIndex: 'evaluation',
@@ -126,7 +129,7 @@ export default {
             {
                 dataIndex: 'leader',
                 title: '领导',
-                width: 150,
+                width: 80,
                 ellipsis: true,
             },
         ];

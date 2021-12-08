@@ -109,35 +109,42 @@ export default {
             {
                 dataIndex: 'time',
                 width: 150,
-                fixed: 'left',
+                ellipsis: true,
             },
             {
                 dataIndex: '2',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '3',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '4',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '5',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '6',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '7',
                 width: 150,
+                ellipsis: true,
             },
             {
                 dataIndex: '8',
                 width: 150,
+                ellipsis: true,
             },
         ];
         const treeData = [

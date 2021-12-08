@@ -57,6 +57,7 @@ const columns = [
         title: '权限名称',
         dataIndex: 'name',
         key: 'name',
+        ellipsis: true,
     },
 ];
 
