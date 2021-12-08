@@ -71,34 +71,32 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'subName',
                 title: '分段名称',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'lowerLimit',
                 title: '下限',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'upperLimit',
                 title: '上限',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -44,56 +43,85 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            'orderNum|0-10': 1,
+                            majorCode: '@pick(["M", "D", "F", "X", "J"])',
+                            majorName: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            researchDirection: '',
+                            'diplomaNumfront|10000-90000': 11111,
+                            desc: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'orderNum',
                 title: '顺序号',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'majorCode',
                 title: '专业代码',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'majorName',
                 title: '专业名称',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'researchDirection',
                 title: '研究方向',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'diplomaNumfront',
                 title: '毕业证号前缀',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

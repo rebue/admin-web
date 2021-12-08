@@ -59,68 +59,66 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'stuNum',
                 title: '学号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'achievement1',
                 title: '卷面成绩1',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'achievement2',
                 title: '卷面成绩2',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'homeworkScore',
                 title: '作业分数',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'attendanceScore',
                 title: '考勤分数',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'subjectAchievement',
                 title: '科目成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'makeUpExamAchievement',
                 title: '补考成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'allMakeUpExamAchievement',
                 title: '总补考成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 60,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -79,7 +79,7 @@ export default {
                             stuRegister: '@pick(["是","否"])',
                             nation:
                                 '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',
-                            shift: '@pick(["党校研究生","中科大研究生"])',
+                            shift: '@pick(["党校研究生","中政大研究生"])',
                             'ID|100000000000000000-600000000000000000': 400000000000000000,
                             sex: '@pick(["男","女"])',
                             birthDate: '@date',
@@ -119,140 +119,138 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'number',
                 title: '序号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'admission',
                 title: '录取',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'turnMajor',
                 title: '转专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'studentStatus',
                 title: '生成学籍',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'allAchievement',
                 title: '总成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'stuRegister',
                 title: '考生注册',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'nation',
                 title: '民族',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'shift',
                 title: '班次',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'ID',
                 title: '身份证号',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'birthDate',
                 title: '出生时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'nativePlace',
                 title: '籍贯',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'culture',
                 title: '文化程度',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'learnMajor',
                 title: '所学专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'graduationSchool',
                 title: '毕业院校',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'graduationDate',
                 title: '毕业时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'workDate',
                 title: '工作时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

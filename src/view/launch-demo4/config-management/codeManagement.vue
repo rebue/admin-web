@@ -48,26 +48,22 @@ export default {
             {
                 dataIndex: 'enumValue',
                 title: '枚举数值',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'valueContent',
                 title: '数值内容',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'detailedDesc',
                 title: '详细说明',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -82,29 +82,24 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'teachPointNum',
                 title: '教学点编号',
-                ellipsis: true,
             },
             {
                 dataIndex: 'majorNum',
                 title: '专业编号',
-                ellipsis: true,
             },
             {
                 dataIndex: 'admissionIndex',
                 title: '录取指标',
-                ellipsis: true,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

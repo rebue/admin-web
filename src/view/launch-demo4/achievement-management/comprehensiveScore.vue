@@ -49,32 +49,27 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'stuNum',
                 title: '学号',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'comprehensiveScore',
                 title: '综合分数',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 60,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

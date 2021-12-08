@@ -105,62 +105,60 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 100,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'ID',
                 title: '身份证号',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'diplomaNum',
                 title: '毕业证号',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'signUpData',
                 title: '报名时间',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'paymentStatus',
                 title: '缴费状态',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'examineStatus',
                 title: '审核状态',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

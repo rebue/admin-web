@@ -90,56 +90,52 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
                 width: 250,
             },
             {
                 dataIndex: 'examRoomAddress',
                 title: '考场地址',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'examRoomNum',
                 title: '考场编号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'examRoomPeople',
                 title: '考场人数',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'layoutPeople',
                 title: '实际编排人数',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'examPoint',
                 title: '考点',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

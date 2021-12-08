@@ -105,13 +105,12 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
+
                 width: 250,
             },
             {
@@ -152,13 +151,13 @@ export default {
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'birthData',
                 title: '出生时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
@@ -199,7 +198,7 @@ export default {
             {
                 dataIndex: 'partyData',
                 title: '入党时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
@@ -210,14 +209,13 @@ export default {
             {
                 dataIndex: 'workCompany',
                 title: '工作单位',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

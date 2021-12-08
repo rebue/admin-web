@@ -50,80 +50,78 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'stuNum',
                 title: '学号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'birthDate',
                 title: '生日',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'shift',
                 title: '班次',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'diplomaNum',
                 title: '毕业证号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'graduationYear',
                 title: '毕业年份',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'fileRoute',
                 title: '文件路径',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'isGraduation',
                 title: '毕业否',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

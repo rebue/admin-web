@@ -50,98 +50,96 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'stuNum',
                 title: '学号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'semester',
                 title: '学期',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'curriculum',
                 title: '课程',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'homeworkAchievement',
                 title: '作业成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'attendanceScore',
                 title: '考勤成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'achievement',
                 title: '卷面成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'makeUpExamAchievement',
                 title: '补考成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'allMakeUpExamAchievement',
                 title: '总补考成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'courseAchievement',
                 title: '课程成绩',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'shift',
                 title: '班次',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

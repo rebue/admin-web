@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -44,56 +43,91 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            className: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'classPeNum|35-40': 1,
+                            desc: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
-                width: 150,
+
+                width: 250,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'className',
                 title: '班级名称',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'classPeNum',
                 title: '班级人数',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'desc',
                 title: '说明',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

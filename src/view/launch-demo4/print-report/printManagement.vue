@@ -309,7 +309,7 @@ export default {
 .btn {
     margin-right: 10px;
 }
->>> .table-tools {
+.table-tools {
     display: none;
 }
 </style>

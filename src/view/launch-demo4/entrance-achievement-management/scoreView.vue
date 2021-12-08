@@ -84,33 +84,32 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'admissionTicketNum',
                 title: '准考证号',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'firstFraction',
                 title: '一次录入分数',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'secondFraction',
                 title: '二次录入分数',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'totalScore',
                 title: '总分',
-                ellipsis: true,
+                width: 150,
             },
         ];
         return {

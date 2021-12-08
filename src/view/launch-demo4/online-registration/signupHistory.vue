@@ -101,116 +101,114 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'grade',
                 title: '年级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'teachPoint',
                 title: '教学点',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'major',
                 title: '专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'nation',
                 title: '民族',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'ID',
                 title: '身份证号',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'birthData',
                 title: '出生时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'nativePlace',
                 title: '籍贯',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'culture',
                 title: '文化程度',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'teachMajor',
                 title: '所学专业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'gradSchool',
                 title: '毕业院校',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'gradData',
                 title: '毕业时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'workData',
                 title: '工作时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'diplomaNum',
                 title: '毕业证号',
-                ellipsis: true,
+
                 width: 250,
             },
             {
                 dataIndex: 'partyData',
                 title: '入党时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'workPlace',
                 title: '工作地点',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 60,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

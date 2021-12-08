@@ -50,128 +50,126 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'stuNum',
                 title: '学号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'allowGraduation',
                 title: '允许毕业',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'birthDate',
                 title: '出生年月',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'group',
                 title: '小组',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'classDuties',
                 title: '班级职务',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'company',
                 title: '工作单位',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'position',
                 title: '职位',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'rank',
                 title: '职级',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'title',
                 title: '职称',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'phone',
                 title: '手机',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'telephone',
                 title: '电话',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'zipCode',
                 title: '邮编',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'workDate',
                 title: '工作时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'partyData',
                 title: '入党时间',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'culture',
                 title: '文化程度',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'id',
                 title: '身份证号',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'nation',
                 title: '民族',
-                ellipsis: true,
+
                 width: 150,
             },
             {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
