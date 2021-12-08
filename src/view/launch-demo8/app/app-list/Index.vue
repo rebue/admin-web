@@ -7,8 +7,8 @@
             管理我的模板
         </a-button>
         <div class="w100" v-for="(item, index) in appList" :key="index">
-            <a-collapse>
-                <a-collapse-panel :key="index" :header="item.title">
+            <a-collapse :activeKey="['0', '1']">
+                <a-collapse-panel :ky="index" :header="item.title">
                     <a-row class="mt20 pl20 pr20" :gutter="20">
                         <a-col class="mt10 mb10" :span="4" v-for="(val, key) in item.list" :key="key">
                             <router-link class="w100 in-block tx-c" :to="val.to">

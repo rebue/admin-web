@@ -77,7 +77,7 @@ const constantRouters = {
                             name: 'launch-demo8-proces-my-processs-history-process',
                             component: () => import('@/view/launch-demo8/process/my-process/history-process/Index.vue'),
                             hidden: true,
-                            meta: { title: '流程历史与流程图', keepAlive: true, icon: 'global' },
+                            meta: { title: '流程历史与流程图', keepAlive: true, icon: 'global', hideMenu: true },
                         },
                     ],
                 },

@@ -218,5 +218,6 @@ export default {
 }
 .btnRow {
     text-align: center;
+    margin: 10px 0;
 }
 </style>

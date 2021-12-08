@@ -36,34 +36,7 @@
                                     天之内依然可以填写或修改（0表示本月内必须写好工作总结)
                                 </a-form-model-item>
                             </a-tab-pane>
-                            <a-tab-pane key="2" tab="共享管理" force-render>
-                                <a-divider orientation="left">共享管理</a-divider>
-                                <p>
-                                    【功能说明】
-                                </p>
-                                <a-divider />
-                                <a-form-model-item label="是否启用">
-                                    <a-radio-group :value="1">
-                                        <a-radio :value="1">是</a-radio>
-                                        <a-radio :value="2">否</a-radio>
-                                    </a-radio-group>
-                                </a-form-model-item>
-                                <a-divider />
-                                <P>一、</P>
-                                <a-form-model-item label="1、">
-                                    <a-input class="inp"></a-input>
-                                </a-form-model-item>
-                                <a-divider />
-                                <P>一、</P>
-                                <a-form-model-item label="1、">
-                                    <a-input class="inp"></a-input>
-                                </a-form-model-item>
-                                <a-divider />
-                                <P>一、</P>
-                                <a-form-model-item label="1、">
-                                    <a-input class="inp"></a-input>
-                                </a-form-model-item>
-                            </a-tab-pane>
+                            <a-tab-pane key="2" tab="共享管理" force-render> </a-tab-pane>
                         </a-tabs>
                     </a-form-model>
                 </template>

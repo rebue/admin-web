@@ -1,23 +1,26 @@
 //数据查询
 <template>
     <fragment>
-        <a-row>
-            <a-col :span="4">
-                <a-tree
-                    class="ant-card-body"
-                    v-model="checkedKeys"
-                    :auto-expand-parent="autoExpandParent"
-                    :default-selected-keys="selectedKeys"
-                    :default-checked-keys="checkedKeys"
-                    :default-expanded-keys="expandedKeys"
-                    :tree-data="treeData"
-                    @check="onCheck"
-                    :defaultExpandAll="true"
-                />
-            </a-col>
-            <a-col :span="20">
-                <base-manager ref="baseManager">
-                    <template #managerCard>
+        <base-manager ref="baseManager">
+            <template #managerCard>
+                <a-row type="flex">
+                    <a-col :span="5">
+                        <a-tree
+                            class="ant-card-body"
+                            v-model="checkedKeys"
+                            :auto-expand-parent="autoExpandParent"
+                            :default-selected-keys="selectedKeys"
+                            :default-checked-keys="checkedKeys"
+                            :default-expanded-keys="expandedKeys"
+                            :tree-data="treeData"
+                            @check="onCheck"
+                            :defaultExpandAll="true"
+                        />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
                         <crud-table
                             ref="crudTable"
                             :commands="tableCommands"
@@ -29,11 +32,10 @@
                             :showKeywords="true"
                         >
                         </crud-table>
-                    </template>
-                </base-manager>
-            </a-col>
-            <div></div>
-        </a-row>
+                    </a-col>
+                </a-row>
+            </template>
+        </base-manager>
     </fragment>
 </template>
 
@@ -138,6 +140,7 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
+                scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'num',

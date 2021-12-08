@@ -2,10 +2,9 @@
     <div>
         <fragment>
             <a-card>
-                <a-row>
+                <a-row type="flex">
                     <a-col :span="4">
                         <a-tree
-                            class="ant-card-body"
                             v-model="checkedKeys"
                             show-icon
                             :auto-expand-parent="autoExpandParent"
@@ -20,7 +19,10 @@
                             <a-icon slot="cloud-sync" type="cloud-sync-o" />
                         </a-tree>
                     </a-col>
-                    <a-col :span="20">
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="19">
                         <div class="btn-group">
                             <a-button-group>
                                 <a-button icon="search"></a-button>

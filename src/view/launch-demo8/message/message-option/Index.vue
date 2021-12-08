@@ -107,13 +107,13 @@ export default {
             {
                 dataIndex: 'photo',
                 title: '头像',
-                fixed: 'left',
+
                 width: 100,
             },
             {
                 dataIndex: 'name2',
                 title: '姓名',
-                fixed: 'left',
+
                 width: 100,
             },
             {
@@ -144,7 +144,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

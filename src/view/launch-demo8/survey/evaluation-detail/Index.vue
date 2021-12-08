@@ -2,106 +2,115 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <div>
-                    <a-button>新增</a-button>
-                    <a-button>编辑</a-button>
-                    <a-button>删除</a-button>
+                <div style="margin-bottom:10px">
+                    <a-button class="btn">新增</a-button>
+                    <a-button class="btn">编辑</a-button>
+                    <a-button class="btn">删除</a-button>
                 </div>
-                <div style="float: left;" v-show="showOrg" class="table-left">
-                    <org-tree
-                        :ref="`orgTree.platform`"
-                        :show.sync="showOrg"
-                        realmId="platform"
-                        @click="handleOrgMenuClick"
-                        @select="handleOrgTreeSelect"
-                    />
-                    <div class="table-divider"></div>
-                </div>
-                <div style="margin: 0 auto">
-                    <p style="text-align: center">广西党校职业工作者”职业幸福感“调查问卷内容</p>
-                    <table class="table1">
-                        <tr>
-                            <td class="td1">项目</td>
-                            <td class="td2">要素</td>
-                            <td class="td3">主要内容</td>
-                            <td class="td4"></td>
-                        </tr>
-                        <tr>
-                            <td class="td1" rowspan="4">项目</td>
-                            <td class="td2">A.三十岁以下</td>
-                            <td class="td3"></td>
-                            <td class="td4">1</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">B.31-40岁</td>
-                            <td class="td3"></td>
-                            <td class="td4">2</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">C.41-50岁</td>
-                            <td class="td3"></td>
-                            <td class="td4">3</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">D.50岁以上</td>
-                            <td class="td3"></td>
-                            <td class="td4">4</td>
-                        </tr>
-                        <tr>
-                            <td class="td1" rowspan="2">您的性别</td>
-                            <td class="td2">A.男</td>
-                            <td class="td3"></td>
-                            <td class="td4">5</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">B.女</td>
-                            <td class="td3"></td>
-                            <td class="td4">6</td>
-                        </tr>
-                        <tr>
-                            <td class="td1" rowspan="4">您的工作效率</td>
-                            <td class="td2">A.行政</td>
-                            <td class="td3">使用[请导入部门]语法导入</td>
-                            <td class="td4">7</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">B.教辅</td>
-                            <td class="td3">使用[请导入部门]语法导入</td>
-                            <td class="td4">8</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">C.教研部</td>
-                            <td class="td3">使用[请导入部门]语法导入</td>
-                            <td class="td4">9</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">D.后勤服务</td>
-                            <td class="td3"></td>
-                            <td class="td4">10</td>
-                        </tr>
-                        <tr>
-                            <td class="td1" rowspan="4">您的专业技术职务</td>
-                            <td class="td2">A.教授</td>
-                            <td class="td3"></td>
-                            <td class="td4">11</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">B.副教授</td>
-                            <td class="td3"></td>
-                            <td class="td4">12</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">C.中职技术职务以下</td>
-                            <td class="td3"></td>
-                            <td class="td4">13</td>
-                        </tr>
-                        <tr>
-                            <td class="td2">D.初级技术职务以下</td>
-                            <td class="td3"></td>
-                            <td class="td4">14</td>
-                        </tr>
-                    </table>
-                </div>
+                <a-divider />
+                <a-row type="flex">
+                    <a-col :span="6">
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                        </div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="17">
+                        <div style="margin: 0 auto">
+                            <p style="text-align: center">广西党校职业工作者”职业幸福感“调查问卷内容</p>
+                            <table class="table1">
+                                <tr>
+                                    <td class="td1">项目</td>
+                                    <td class="td2">要素</td>
+                                    <td class="td3">主要内容</td>
+                                    <td class="td4"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" rowspan="4">项目</td>
+                                    <td class="td2">A.三十岁以下</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">B.31-40岁</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">2</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">C.41-50岁</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">3</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">D.50岁以上</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">4</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" rowspan="2">您的性别</td>
+                                    <td class="td2">A.男</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">5</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">B.女</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">6</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" rowspan="4">您的工作效率</td>
+                                    <td class="td2">A.行政</td>
+                                    <td class="td3">使用[请导入部门]语法导入</td>
+                                    <td class="td4">7</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">B.教辅</td>
+                                    <td class="td3">使用[请导入部门]语法导入</td>
+                                    <td class="td4">8</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">C.教研部</td>
+                                    <td class="td3">使用[请导入部门]语法导入</td>
+                                    <td class="td4">9</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">D.后勤服务</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">10</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" rowspan="4">您的专业技术职务</td>
+                                    <td class="td2">A.教授</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">11</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">B.副教授</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">12</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">C.中职技术职务以下</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">13</td>
+                                </tr>
+                                <tr>
+                                    <td class="td2">D.初级技术职务以下</td>
+                                    <td class="td3"></td>
+                                    <td class="td4">14</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
 
@@ -294,6 +303,9 @@ export default {
 };
 </script>
 <style scoped>
+.btn {
+    margin-right: 10px;
+}
 .table1 {
     width: 750px;
     margin: 0 auto;

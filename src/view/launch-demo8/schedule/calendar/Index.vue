@@ -3,8 +3,8 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <a-row>
-                        <a-col :span="5">
+                    <a-row type="flex">
+                        <a-col :span="6">
                             <p style="text-align: center;">活动安排</p>
                             <a-calendar :fullscreen="false" style="width: 250px" />
                             <a-collapse default-active-key="" :bordered="false">
@@ -21,7 +21,10 @@
                                 <div class="table-divider"></div>
                             </div>
                         </a-col>
-                        <a-col :span="19">
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                        <a-col :span="17">
                             <a-tabs
                                 style="left: 10px;"
                                 type="card"

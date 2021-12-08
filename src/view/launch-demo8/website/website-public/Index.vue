@@ -2,23 +2,30 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    :api="api"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :scrollX="600"
-                    :rowSelection="{}"
-                    :showKeywords="false"
-                    :defaultPagination="true"
-                >
-                    <template #left>
+                <a-row type="flex">
+                    <a-col :span="5">
                         <div v-show="showOrg" style="margin-right: 10px" class="table-left">
                             <org-tree ref="form.platform" :show.sync="showOrg" realmId="platform" />
                             <div class="table-divider"></div>
                         </div>
-                    </template>
-                </crud-table>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            :api="api"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :scrollX="600"
+                            :rowSelection="{}"
+                            :showKeywords="false"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -116,7 +123,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

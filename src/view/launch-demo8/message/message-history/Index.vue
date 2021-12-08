@@ -110,13 +110,13 @@ export default {
             {
                 dataIndex: 'batchName',
                 title: '批次名称',
-                fixed: 'left',
+
                 width: 200,
             },
             {
                 dataIndex: 'sendTime',
                 title: '发送时间',
-                fixed: 'left',
+
                 width: 180,
             },
             {
@@ -161,7 +161,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];
@@ -169,13 +169,13 @@ export default {
             {
                 dataIndex: 'photo',
                 title: '自动编号',
-                fixed: 'left',
+
                 width: 200,
             },
             {
                 dataIndex: 'name2',
                 title: '姓名',
-                fixed: 'left',
+
                 width: 150,
             },
             {
@@ -200,7 +200,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

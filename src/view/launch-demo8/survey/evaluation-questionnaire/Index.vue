@@ -2,106 +2,117 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-button>新增</a-button>
-                <a-button>编辑</a-button>
-                <a-button>删除</a-button>
-                <div style="float: left;" v-show="showOrg" class="table-left">
-                    <org-tree
-                        :ref="`orgTree.platform`"
-                        :show.sync="showOrg"
-                        realmId="platform"
-                        @click="handleOrgMenuClick"
-                        @select="handleOrgTreeSelect"
-                    />
-                    <div class="table-divider"></div>
+                <div style="margin-bottom:10px">
+                    <a-button class="btn">新增</a-button>
+                    <a-button class="btn">编辑</a-button>
+                    <a-button class="btn">删除</a-button>
                 </div>
-
-                <a-tabs style="left: 10px" :activeKey="curRealmId" @change="handleRealmChanged">
-                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
-                        <p>问卷设计</p>
-                        <a-form-model
-                            style="margin-left: -150px"
-                            :model="form"
-                            :label-col="{ span: 8 }"
-                            :wrapper-col="{ span: 14 }"
-                        >
-                            <a-form-model-item label="标题">
-                                <a-input v-model="form.name" />
-                            </a-form-model-item>
-                            <a-form-model-item label="测评人身份">
-                                <a-select
-                                    placeholder="
-                                院领导，机关部门领导，系部领导，单位职工"
+                <a-divider />
+                <a-row type="flex">
+                    <a-col :span="6">
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.platform`"
+                                :show.sync="showOrg"
+                                realmId="platform"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="17">
+                        <a-tabs :activeKey="curRealmId" @change="handleRealmChanged">
+                            <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
+                                <p>问卷设计</p>
+                                <a-form-model
+                                    style="margin-left: -150px"
+                                    :model="form"
+                                    :label-col="{ span: 8 }"
+                                    :wrapper-col="{ span: 14 }"
                                 >
-                                    <a-select-option value="广西党委">
-                                        广西党委
-                                    </a-select-option>
-                                    <a-select-option value="广西政委">
-                                        广西政委
-                                    </a-select-option>
-                                    <a-select-option value="广西团委">
-                                        广西团委
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <a-form-model-item label="选择测评内容">
-                                <a-select
-                                    placeholder="
-                                      广西区党校工作者”职业幸福感“调查问卷"
-                                >
-                                    <a-select-option value="广西党委">
-                                        广西党委
-                                    </a-select-option>
-                                    <a-select-option value="广西政委">
-                                        广西政委
-                                    </a-select-option>
-                                    <a-select-option value="广西团委">
-                                        广西团委
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <a-form-model-item label="测评对象">
-                                <a-select placeholder="">
-                                    <a-select-option value="广西党委">
-                                        广西党委
-                                    </a-select-option>
-                                    <a-select-option value="广西政委">
-                                        广西政委
-                                    </a-select-option>
-                                    <a-select-option value="广西团委">
-                                        广西团委
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
-                            <a-form-model-item label="测评人范围">
-                                <a-select placeholder="">
-                                    <a-select-option value="广西党委">
-                                        广西党委
-                                    </a-select-option>
-                                    <a-select-option value="广西政委">
-                                        广西政委
-                                    </a-select-option>
-                                    <a-select-option value="广西团委">
-                                        广西团委
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-model-item>
+                                    <a-form-model-item label="标题">
+                                        <a-input v-model="form.name" />
+                                    </a-form-model-item>
+                                    <a-form-model-item label="测评人身份">
+                                        <a-select
+                                            placeholder="
+                                        院领导，机关部门领导，系部领导，单位职工"
+                                        >
+                                            <a-select-option value="广西党委">
+                                                广西党委
+                                            </a-select-option>
+                                            <a-select-option value="广西政委">
+                                                广西政委
+                                            </a-select-option>
+                                            <a-select-option value="广西团委">
+                                                广西团委
+                                            </a-select-option>
+                                        </a-select>
+                                    </a-form-model-item>
+                                    <a-form-model-item label="选择测评内容">
+                                        <a-select
+                                            placeholder="
+                                            广西区党校工作者”职业幸福感“调查问卷"
+                                        >
+                                            <a-select-option value="广西党委">
+                                                广西党委
+                                            </a-select-option>
+                                            <a-select-option value="广西政委">
+                                                广西政委
+                                            </a-select-option>
+                                            <a-select-option value="广西团委">
+                                                广西团委
+                                            </a-select-option>
+                                        </a-select>
+                                    </a-form-model-item>
+                                    <a-form-model-item label="测评对象">
+                                        <a-select placeholder="">
+                                            <a-select-option value="广西党委">
+                                                广西党委
+                                            </a-select-option>
+                                            <a-select-option value="广西政委">
+                                                广西政委
+                                            </a-select-option>
+                                            <a-select-option value="广西团委">
+                                                广西团委
+                                            </a-select-option>
+                                        </a-select>
+                                    </a-form-model-item>
+                                    <a-form-model-item label="测评人范围">
+                                        <a-select placeholder="">
+                                            <a-select-option value="广西党委">
+                                                广西党委
+                                            </a-select-option>
+                                            <a-select-option value="广西政委">
+                                                广西政委
+                                            </a-select-option>
+                                            <a-select-option value="广西团委">
+                                                广西团委
+                                            </a-select-option>
+                                        </a-select>
+                                    </a-form-model-item>
 
-                            <a-form-model-item label="开始测评时间">
-                                <a-date-picker type="date" placeholder="Pick a date" style="width: 100%;" />
-                            </a-form-model-item>
-                            <a-form-model-item label="结束测评时间">
-                                <a-date-picker type="date" placeholder="Pick a date" style="width: 100%;" />
-                            </a-form-model-item>
-                            <a-form-model-item label="显示合计">
-                                <a-switch />
-                            </a-form-model-item>
-                            <a-form-model-item label="问卷注释">
-                                <a-textarea></a-textarea>
-                            </a-form-model-item>
-                        </a-form-model>
-                    </a-tab-pane>
-                </a-tabs>
+                                    <a-form-model-item label="开始测评时间">
+                                        <a-date-picker type="date" placeholder="Pick a date" style="width: 100%;" />
+                                    </a-form-model-item>
+                                    <a-form-model-item label="结束测评时间">
+                                        <a-date-picker type="date" placeholder="Pick a date" style="width: 100%;" />
+                                    </a-form-model-item>
+                                    <a-form-model-item label="显示合计">
+                                        <a-switch />
+                                    </a-form-model-item>
+                                    <a-form-model-item label="问卷注释">
+                                        <a-textarea></a-textarea>
+                                    </a-form-model-item>
+                                </a-form-model>
+                            </a-tab-pane>
+                        </a-tabs>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
 
@@ -141,13 +152,12 @@ export default {
             //     title: '#',
             //     scopedSlots: { customRender: 'serial' },
             //     width: 50,
-            //     fixed: 'left',
+            //
             // },
             {
                 dataIndex: 'name',
                 title: '班级',
                 width: 200,
-                fixed: 'left',
             },
             {
                 dataIndex: 'id',
@@ -172,7 +182,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 200,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];
@@ -265,7 +275,7 @@ export default {
                     this.realms = [
                         { id: 'manage', name: '预览', remark: '' },
                         { id: 'count', name: '设置', remark: '' },
-                        { id: '1', name: '评分组', remark: '' },
+                        { id: '1', name: '测评组', remark: '' },
                     ];
                     console.log('@' + JSON.stringify(this.realms));
                     this.curRealmId = this.realms[0].id;
@@ -368,3 +378,8 @@ export default {
     },
 };
 </script>
+<style scoped>
+.btn {
+    margin-right: 10px;
+}
+</style>

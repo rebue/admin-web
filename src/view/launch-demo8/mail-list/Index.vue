@@ -2,23 +2,30 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    :api="api"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :scrollX="600"
-                    :rowSelection="{}"
-                    :showKeywords="true"
-                    :defaultPagination="true"
-                >
-                    <template #left>
+                <a-row type="flex">
+                    <a-col :span="5">
                         <div v-show="showOrg" style="margin-right: 10px" class="table-left">
                             <org-tree ref="form.platform" :show.sync="showOrg" realmId="platform" />
                             <div class="table-divider"></div>
                         </div>
-                    </template>
-                </crud-table>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            :api="api"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :scrollX="600"
+                            :rowSelection="{}"
+                            :showKeywords="true"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -99,7 +106,6 @@ export default {
             {
                 dataIndex: 'photo',
                 title: '头像',
-                fixed: 'left',
                 width: 100,
                 customRender: () => {
                     return (
@@ -112,7 +118,6 @@ export default {
             {
                 dataIndex: 'name',
                 title: '姓名',
-                fixed: 'left',
                 width: 100,
             },
             {
@@ -123,6 +128,7 @@ export default {
             {
                 dataIndex: 'mobile',
                 title: '移动电话',
+                width: 150,
                 ellipsis: true,
                 customRender: function() {
                     const numArray = [
@@ -169,6 +175,7 @@ export default {
             {
                 dataIndex: 'GdMobile',
                 title: '固定电话',
+                width: 150,
                 ellipsis: true,
                 customRender: function() {
                     const strMobile = '0771' + '-' + Math.round(Math.random() * 99999999) + '';
@@ -190,7 +197,7 @@ export default {
             //     dataIndex: 'action',
             //     title: '操作',
             //     width: 150,
-            //     fixed: 'right',
+            //
             //     scopedSlots: { customRender: 'action' },
             // },
         ];

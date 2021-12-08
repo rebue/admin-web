@@ -15,7 +15,7 @@
                             <br />
                             <ol>
                                 <li>
-                                    您的职业<br />
+                                    <h4>您的职业</h4>
                                     <a-checkbox>
                                         公务员
                                     </a-checkbox>
@@ -40,7 +40,7 @@
                                     </a-checkbox>
                                 </li>
                                 <li>
-                                    您的年龄<br />
+                                    <h4>您的年龄</h4>
                                     <a-checkbox>
                                         15-25
                                     </a-checkbox>
@@ -56,7 +56,7 @@
                                 </li>
 
                                 <li>
-                                    您的月收入<br />
+                                    <h4>您的月收入</h4>
                                     <a-checkbox>
                                         5000以上
                                     </a-checkbox>
@@ -73,7 +73,7 @@
                                     </a-checkbox>
                                 </li>
                                 <li>
-                                    您是第几次到本餐厅用餐<br />
+                                    <h4>您是第几次到本餐厅用餐</h4>
                                     <a-checkbox>
                                         第一次
                                     </a-checkbox>
@@ -85,7 +85,7 @@
                                     </a-checkbox>
                                 </li>
                                 <li>
-                                    您今天到本餐厅用餐的主要讯息来源是<br />
+                                    <h4>您今天到本餐厅用餐的主要讯息来源是</h4>
                                     <a-checkbox>
                                         朋友介绍
                                     </a-checkbox>
@@ -107,7 +107,7 @@
                                     </a-checkbox>
                                 </li>
                                 <li>
-                                    您对我们餐厅对服务<br />
+                                    <h4>您对我们餐厅对服务</h4>
                                     <a-checkbox>
                                         非常满意
                                     </a-checkbox>
@@ -155,4 +155,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+ol {
+    margin: 10px 0;
+}
+ol > li {
+    margin-bottom: 20px;
+}
+</style>
