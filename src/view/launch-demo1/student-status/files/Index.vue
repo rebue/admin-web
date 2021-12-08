@@ -2,30 +2,30 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="true"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :query="{ orgId: curOrgId }"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                <a-row>
+                    <a-col :span="5">
+                        <div class="table-left">
+                            <a-tree class="ant-card-body" show-icon :defaultExpandAll="true" :tree-data="treeData">
+                                <a-icon slot="clock-circle" type="clock-circle-o" />
+                            </a-tree>
                             <div class="table-divider"></div>
                         </div>
-                    </template>
-                </crud-table>
+                    </a-col>
+                    <a-col :span="19">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="true"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ orgId: curOrgId }"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -37,8 +37,6 @@ import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'Manager',
@@ -46,17 +44,58 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
-        OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            source: '网上报名',
+                            'orgId|+1': 1,
+                            name: '@cname()',
+                            sex: '@pick(["男","女"])',
+                            birth: '@date(yyyy-MM)',
+                            'stunum|+1': 20210000,
+                            'ICCard|+1': 3000,
+                            'carId|+1': 400000,
+                            IdCard: '@id()',
+                            level: '@pick(["班长","学习委员","副班长",])',
+                            phone: '138@integer(10000000,99999999)',
+                            'dormitoryId|+1': 500,
+                            className: '县处级领导干部理论研修班(第@integer(1,10)期)',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'source',
                 title: '数据来源',
                 width: 150,
                 // fixed: 'left',
-                scopedSlots: { customRender: 'serial' },
+                // scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'orgId',
@@ -231,9 +270,40 @@ export default {
             },
         ];
 
+        const treeData = [
+            {
+                title: '所有学期',
+                key: '100',
+            },
+            {
+                title: '2021年秋季学期',
+                key: '101',
+                children: [
+                    {
+                        title: '中青年干部培训—班(第45期)',
+                        key: '101-1',
+                        slots: {
+                            icon: 'clock-circle',
+                        },
+                    },
+                    {
+                        title: '中青年干部培训二班(第8期)',
+                        key: '101-2',
+                        slots: {
+                            icon: 'clock-circle',
+                        },
+                    },
+                    {
+                        title: '自治区党委管理干部进修班(第28期)“学习贯彻落实习近平总书记对广',
+                        key: '101-3',
+                    },
+                ],
+            },
+        ];
+
         return {
             columns,
-            showOrg: false,
+            treeData,
             curOrgId: undefined,
         };
     },
@@ -292,6 +362,8 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;

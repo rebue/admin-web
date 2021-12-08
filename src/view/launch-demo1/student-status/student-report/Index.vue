@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #commands>
                         <a-form-model layout="inline">
@@ -79,13 +79,61 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            'orgId|+1': 100,
+                            level: '@pick(["班长","副班长"])',
+                            name: '@cname()',
+                            sex: '@pick(["男","女"])',
+                            'stunum|+1': 2021100,
+                            nation: '@pick(["汉族","壮族","苗族"])',
+                            birth: '@date(yyyy-MM)',
+                            graduated: '@pick(["大学本科","硕士研究生"])',
+                            place: '@city(true)',
+                            workTime: '@date(yyyy-MM)',
+                            partyTime: '@date(yyyy-MM)',
+                            joinTime: '@date(yyyy-MM)',
+                            company:
+                                '@pick(["中共博白县委员会党校（博白县行政学校）","中共广西柳州钢铁集团有限公司委员会党校"])',
+                            worklevel: '@pick(["副校长","培训管理","总务处主任"])',
+                            tel: '0779-@integer(10000,99999)',
+                            phone: '137@integer(10000000,99999999)',
+                            'dormitoryId|+1': 200,
+                            'postal-code': '@zip()',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'orgId',
                 title: '所属组号',
                 width: 150,
-                scopedSlots: { customRender: 'serial' },
+                // scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'level',

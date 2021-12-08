@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                 </crud-table>
@@ -31,26 +31,26 @@ export default {
     data() {
         // 初始化数据start
         const page = function() {
-            const p = new Promise((resolve, reject) => {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            courseName: '测试课程',
+                            courseType: '@pick(["学科程程","综合课程"])',
+                            teacher: '@cname()',
+                            startTime: '@date(yyyy-MM-dd)',
+                            length: '@integer(10,60)',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        updator: 'zzm',
-                        updatedTime: '2021-12-01 16:39:00',
-                        course: '计算机科学与技术',
-                        startTime: '2021-12-04 16:39:00',
-                        student: '章三',
-                        before: 'xx',
-                        after: 'xx',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

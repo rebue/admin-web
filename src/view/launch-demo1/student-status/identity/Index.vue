@@ -43,7 +43,7 @@
                     </a-form-model-item>
                 </a-form-model>
 
-                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="false">
+                <crud-table ref="crudTable" :columns="columns" :api="api" :scrollX="600" :defaultPagination="true">
                 </crud-table>
             </template>
         </base-manager>
@@ -66,7 +66,41 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            teacher: '@cname',
+                            student: '@cname',
+                            creator: '@cname',
+                            createdTime: '@date(yyyy-MM-dd)',
+                            lastSigninTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'teacher',

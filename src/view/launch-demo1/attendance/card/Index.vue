@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -30,13 +30,49 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            no: '@integer(3000000,3999999)',
+                            createdTime: '@date(yyyy-MM-dd hh:mm)',
+                            device: '多功能厅西门 @ip()',
+                            name: '@cname()',
+                            className: '校委中心组成员(扩大)',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
-                title: '序号',
+                title: '卡序列号',
                 width: 150,
-                scopedSlots: { customRender: 'serial' },
+                ellipsis: true,
+                // scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'createdTime',

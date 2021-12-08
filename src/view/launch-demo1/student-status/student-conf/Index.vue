@@ -15,7 +15,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #commands>
                         <div>开学后允许学员自主修改个人资料</div>
@@ -47,13 +47,49 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                    'list|1-20': [
+                        {
+                            term: '@date(yyyy年)@cword("春秋")季学期',
+                            className: '@pick(["区直单位中心组成员","中心组学习室联络班","区直机关处级学习班"])',
+                            startTime: '@date(yyyy-MM-dd)',
+                            endTime: '@date(yyyy-MM-dd)',
+                            signupStartTime: '@date(yyyy-MM-dd)',
+                            signupEndTime: '@date(yyyy-MM-dd)',
+                            creator: '@cname(),@cname()',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'term',
                 title: '学期',
                 width: 150,
-                scopedSlots: { customRender: 'serial' },
+                // scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'className',
