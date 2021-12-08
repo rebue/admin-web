@@ -10,7 +10,7 @@
                     :scrollX="600"
                     :rowSelection="{}"
                     :showKeywords="false"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #left>
                         <div v-show="showOrg" style="margin-right: 10px" class="table-left">
@@ -40,15 +40,76 @@ export default {
     },
     props: [],
     data() {
-        this.api = racAccountApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|21-25': [
+                        {
+                            'id|+1': 10000000,
+
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+
+                            urlName: '@pick(["青少年预防犯罪","自我保护的方法","如何高效学习","创业就业","新发展观"])',
+                            url: '',
+
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                for (let i = 0; i < mockList.list.length; i++) {
+                    const name = mockList.list[i].urlName;
+                    if (name === '青少年预防犯罪') {
+                        mockList.list[i].url = 'http://www.kids21.cn/jzxt/zx/jjyf/201109/t20110927_706167.htm';
+                    } else if (name === '自我保护的方法') {
+                        mockList.list[i].url = 'https://www.xuexila.com/baikezhishi/1267051.html';
+                    } else if (name === '自我保护的方法') {
+                        mockList.list[i].url =
+                            'https://baike.baidu.com/item/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%AD%A6%E4%B9%A0/12978814?fr=aladdin';
+                    } else if (name === '创业就业') {
+                        mockList.list[i].url = 'http://www.csee-china.com/';
+                    } else if (name === '新发展观') {
+                        mockList.list[i].url =
+                            'https://baike.baidu.com/item/%E7%A7%91%E5%AD%A6%E5%8F%91%E5%B1%95%E8%A7%82/317422?fr=aladdin';
+                    } else {
+                        mockList.list[i].url = 'https://baike.baidu.com';
+                    }
+                }
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
-                dataIndex: 'department',
+                dataIndex: 'urlName',
                 title: '网站名称',
                 ellipsis: true,
             },
             {
-                dataIndex: 'work',
+                dataIndex: 'url',
                 title: '网址',
             },
             // {

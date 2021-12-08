@@ -107,14 +107,13 @@ export default {
                 dataIndex: 'title',
                 title: '文章标题',
                 width: 100,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'createTime',
                 title: '文章提交时间',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'author',
@@ -137,7 +136,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 240,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

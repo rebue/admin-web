@@ -119,14 +119,12 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 scopedSlots: { customRender: 'serial' },
-                width: 50,
-                fixed: 'left',
+                width: 100,
             },
             {
                 dataIndex: 'title',
                 title: '文章标题',
                 width: 200,
-                fixed: 'left',
             },
             {
                 dataIndex: 'examine',

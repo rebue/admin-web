@@ -11,31 +11,31 @@ const constantRouters = {
     path: '/launch-demo3',
     name: 'launch-demo3',
     component: () => import('@/view/launch-demo3/index/Index.vue'),
-    redirect: '/launch-demo3/annual-declaration/personal-profile-table',
+    redirect: '/launch-demo3/annual-declaration',
     children: [
-        {
-            path: '/launch-demo3/research-workload',
-            name: 'launch-demo3-research-workload',
-            component: RouteView,
-            hidden: true,
-            meta: { title: '科研工作量', keepAlive: true, icon: 'global' },
-            children: [
-                {
-                    path: '/launch-demo3/research-workload/personal-profile-table',
-                    name: 'launch-demo3-research-workload-personal-profile-table',
-                    component: () => import('@/view/launch-demo3/annual-declaration/personal-profile-table.vue'),
-                    meta: { title: '成功工作量申报', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
-                {
-                    path: '/launch-demo3/research-workload/annual-overview-table',
-                    name: 'launch-demo3-research-workload-annual-overview-table',
-                    component: () => import('@/view/launch-demo3/annual-declaration/annual-overview-table.vue'),
-                    meta: { title: '其他工作量申报', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
-            ],
-        },
+        // {
+        //     path: '/launch-demo3/research-workload',
+        //     name: 'launch-demo3-research-workload',
+        //     component: RouteView,
+        //     hidden: true,
+        //     meta: { title: '科研工作量', keepAlive: true, icon: 'global' },
+        //     children: [
+        //         {
+        //             path: '/launch-demo3/research-workload/personal-profile-table',
+        //             name: 'launch-demo3-research-workload-personal-profile-table',
+        //             component: () => import('@/view/launch-demo3/annual-declaration/personal-profile-table.vue'),
+        //             meta: { title: '成功工作量申报', keepAlive: true, icon: 'global' },
+        //             hidden: true,
+        //         },
+        //         {
+        //             path: '/launch-demo3/research-workload/annual-overview-table',
+        //             name: 'launch-demo3-research-workload-annual-overview-table',
+        //             component: () => import('@/view/launch-demo3/annual-declaration/annual-overview-table.vue'),
+        //             meta: { title: '其他工作量申报', keepAlive: true, icon: 'global' },
+        //             hidden: true,
+        //         },
+        //     ],
+        // },
         {
             path: '/launch-demo3/annual-declaration',
             name: 'launch-demo3-annual-declaration',
@@ -80,13 +80,13 @@ const constantRouters = {
             hidden: true,
             meta: { title: '本年度统计', keepAlive: true, icon: 'global' },
             children: [
-                {
-                    path: '/launch-demo3/annual-statistic/statistical-encapsulation',
-                    name: 'launch-demo3-annual-statistic-statistical-encapsulation',
-                    component: () => import('@/view/launch-demo3/annual-declaration/personal-profile-table.vue'),
-                    meta: { title: '统计/封装', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
+                // {
+                //     path: '/launch-demo3/annual-statistic/statistical-encapsulation',
+                //     name: 'launch-demo3-annual-statistic-statistical-encapsulation',
+                //     component: () => import('@/view/launch-demo3/annual-declaration/personal-profile-table.vue'),
+                //     meta: { title: '统计/封装', keepAlive: true, icon: 'global' },
+                //     hidden: true,
+                // },
                 {
                     path: '/launch-demo3/annual-statistic/personal-statistics-table',
                     name: 'launch-demo3-annual-statistic-personal-statistics-table',
@@ -115,20 +115,20 @@ const constantRouters = {
                     meta: { title: '全校统计查看', keepAlive: true, icon: 'global' },
                     hidden: true,
                 },
-                {
-                    path: '/launch-demo3/annual-statistic/workload',
-                    name: 'launch-demo3-annual-statistic-workload',
-                    component: () => import('@/view/launch-demo3/annual-declaration/AnnualAuxiliaryTable.vue'),
-                    meta: { title: '本年度工作量报表', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
-                {
-                    path: '/launch-demo3/annual-statistic/labor-cost',
-                    name: 'launch-demo3-annual-statistic-labor-cost',
-                    component: () => import('@/view/launch-demo3/annual-declaration/AnnualAuxiliaryTable.vue'),
-                    meta: { title: '劳务费发放报表', keepAlive: true, icon: 'global' },
-                    hidden: true,
-                },
+                // {
+                //     path: '/launch-demo3/annual-statistic/workload',
+                //     name: 'launch-demo3-annual-statistic-workload',
+                //     component: () => import('@/view/launch-demo3/annual-declaration/AnnualAuxiliaryTable.vue'),
+                //     meta: { title: '本年度工作量报表', keepAlive: true, icon: 'global' },
+                //     hidden: true,
+                // },
+                // {
+                //     path: '/launch-demo3/annual-statistic/labor-cost',
+                //     name: 'launch-demo3-annual-statistic-labor-cost',
+                //     component: () => import('@/view/launch-demo3/annual-declaration/AnnualAuxiliaryTable.vue'),
+                //     meta: { title: '劳务费发放报表', keepAlive: true, icon: 'global' },
+                //     hidden: true,
+                // },
             ],
         },
         {

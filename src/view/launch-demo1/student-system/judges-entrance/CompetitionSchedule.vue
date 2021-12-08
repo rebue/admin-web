@@ -105,7 +105,7 @@ export default {
                 dataIndex: 'no',
                 title: '序号',
                 width: 100,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {

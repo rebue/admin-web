@@ -130,7 +130,6 @@ export default {
                 dataIndex: 'className',
                 title: '班级',
                 width: 200,
-                fixed: 'left',
             },
             {
                 dataIndex: 'judges',

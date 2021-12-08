@@ -149,13 +149,11 @@ export default {
                 dataIndex: 'date',
                 title: '时间',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'Monday',
                 title: '周一',
                 width: 250,
-                fixed: 'left',
             },
             {
                 dataIndex: 'Tuesday',

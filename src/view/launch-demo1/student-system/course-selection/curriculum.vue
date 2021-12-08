@@ -99,14 +99,13 @@ export default {
                 dataIndex: 'className',
                 title: '课程名称',
                 width: 150,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'classType',
                 title: '课程类型',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'classTeacher',
@@ -135,7 +134,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 240,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

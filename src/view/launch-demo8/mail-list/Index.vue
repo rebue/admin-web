@@ -88,7 +88,7 @@ export default {
 
             return p;
         };
-
+        this.photo1 = require('./image/1.jpeg');
         this.api = {
             page,
             listAll: page,
@@ -101,8 +101,12 @@ export default {
                 title: '头像',
                 fixed: 'left',
                 width: 100,
-                customRender: function(text, record) {
-                    return <span></span>;
+                customRender: () => {
+                    return (
+                        <div>
+                            <img width="50" src={this.photo1}></img>
+                        </div>
+                    );
                 },
             },
             {

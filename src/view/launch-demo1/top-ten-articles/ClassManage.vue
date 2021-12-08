@@ -120,7 +120,6 @@ export default {
                 dataIndex: 'className',
                 title: '班级名称',
                 width: 200,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',

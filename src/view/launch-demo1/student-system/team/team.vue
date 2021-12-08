@@ -113,13 +113,11 @@ export default {
                 dataIndex: 'status',
                 title: '状态',
                 width: 100,
-                fixed: 'left',
             },
             {
                 dataIndex: 'groupNo',
                 title: '组号',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'name',
@@ -148,7 +146,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 240,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

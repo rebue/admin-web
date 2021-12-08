@@ -112,13 +112,11 @@ export default {
                 dataIndex: 'name',
                 title: '学员',
                 width: 100,
-                fixed: 'left',
             },
             {
                 dataIndex: 'scoringElements',
                 title: '评分要素',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'startTime',
