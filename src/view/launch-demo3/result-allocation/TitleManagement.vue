@@ -63,28 +63,61 @@ export default {
         baseSearch,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|5-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            post: '@pick(["教师","教师","教师","教师","行政主任","行政副主任",])',
+                            level: '@pick(["一级","二级","三级"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
                 dataIndex: 'no',
                 title: '编号',
                 width: 80,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'post',
                 title: '职务',
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'level',
                 title: '级别',
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                filed: 'right',
                 width: '150',
                 scopedSlots: { customRender: 'action' },
             },

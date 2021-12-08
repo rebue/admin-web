@@ -11,7 +11,7 @@ const constantRouters = {
     path: '/launch-demo3',
     name: 'launch-demo3',
     component: () => import('@/view/launch-demo3/index/Index.vue'),
-    redirect: '/launch-demo3/annual-declaration',
+    redirect: '/launch-demo3/annual-declaration/personal-profile-table',
     children: [
         // {
         //     path: '/launch-demo3/research-workload',
@@ -204,8 +204,8 @@ const constantRouters = {
             meta: { title: '成果配置', keepAlive: true, icon: 'global' },
             children: [
                 {
-                    path: '/launch-demo3/result-allocation/vue',
-                    name: 'launch-demo3-result-allocation-vue',
+                    path: '/launch-demo3/result-allocation/user',
+                    name: 'launch-demo3-result-allocation-user',
                     component: () => import('@/view/launch-demo3/result-allocation/user.vue'),
                     meta: { title: '用户管理', keepAlive: true, icon: 'global' },
                     hidden: true,

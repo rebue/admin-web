@@ -7,7 +7,7 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="300"
-                :defaultPagination="false"
+                :defaultPagination="true"
             >
                 <template #commands>
                     <a-row type="flex" style="margin-left: 20px">
@@ -93,53 +93,108 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|5-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            'achievementNo|10001-99999': 99999,
+                            year: '@now(yyyy)',
+                            name: '@cname',
+                            DepartmentLeader: '@cname',
+                            ExclusiveTeacher: '@cname',
+                            subject: '@pick(["计算机应用基础","操作系统","高等数学","大学英语","计算机网络"])',
+                            technicalTitle: '@pick(["初级教师","中级教师","高级教师","学校主任"])',
+                            // 'idCard|1-100000000000000000': 12345679012345678,
+                            // 'cardId|1-1000000': 193201,
+                            orderly: '@pick(["公务员","参公人员"])',
+                            department: '@pick(["行政部", "教研部"])',
+                            'workloadTask|200-500': 500,
+                            //workloadTask: '@ctitle',
+                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            // flag: '@pick(["是", "否"])',
+                            // lastChecker: '@cname()',
+                            // by: '@pick(["自驾","公交","火车", "飞机"])',
+                            // arriveTime: '@now("yyyy-MM-dd")',
+                            // meet: '@pick(["是", "否"])',
+                            // 'realmId|+1': ['default', 'platform', 'ops'],
+                            //'opType': '@pick(["锁定", "启用"])',
+                            //'opTitle': '@title()',
+                            //'opDetail': '@cparagraph',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'department',
                 title: '部门',
-
-                fixed: 'left',
+                width: 200,
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'name',
                 title: '姓名',
+                width: 150,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'technicalTitle',
                 title: '职称',
-                ellipsis: true,
+                width: 150,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'subject',
                 title: '学科',
-                ellipsis: true,
+                width: 200,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'ExclusiveTeacher',
                 title: '专属教师',
-                ellipsis: true,
+                width: 150,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'DepartmentLeader',
                 title: '处室领导',
-                ellipsis: true,
+                width: 150,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'orderly',
                 title: '公务员/参公人员',
-                ellipsis: true,
+                width: 200,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'workloadTask',
                 title: '工作任务量',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
-                fixed: 'right',
                 width: '150',
                 scopedSlots: { customRender: 'action' },
             },

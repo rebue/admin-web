@@ -6,8 +6,8 @@
                 :actions="tableActions"
                 :columns="columns"
                 :api="api"
-                :scrollX="300"
-                :defaultPagination="false"
+                :scrollX="600"
+                :defaultPagination="true"
             >
                 <template #commands>
                     <a-row type="flex">
@@ -82,23 +82,67 @@ export default {
         baseSearch,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|5-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            userName: '@pick(["系统管理员","钟琪","魏无羡","蓝湛","管理员","唐三","萧炎"])',
+                            // level: '@pick(["一级","二级","三级"])',
+                            operation:
+                                '@pick(["按指定每小时劳务费方式统计2019年度劳务费,每小时劳务费:1,任务内劳务费系数:0.7"' +
+                                ',"清除2018年度汇总记录","按分值方式统计2017年度工作量"])',
+                            createTime: '@dateTime',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
                 dataIndex: 'no',
                 title: '序号',
                 width: 80,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'userName',
                 title: '用户名称',
+                width: 150,
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'operation',
                 title: '操作',
+            },
+            {
+                dataIndex: 'createTime',
+                title: '时间',
+                width: 180,
             },
         ];
 

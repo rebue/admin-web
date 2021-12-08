@@ -50,22 +50,62 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3': [
+                        {
+                            'parameterNo|+1': 45456,
+
+                            'parameterName|+1': [
+                                '被其他杂志转载',
+                                '被《新华月报》，《新华文摘》转载',
+                                '被《人大报刊复印资料》转载',
+                            ],
+                            // level: '@pick(["一级","二级","三级"])',
+                            'parameterNumber|1-10': 10,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'parameterNo',
                 title: '参数编号',
                 width: '100',
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'parameterName',
                 title: '参数名称',
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'parameterNumber',
                 title: '参数量词',
-                ellipsis: true,
+                width: 100,
             },
         ];
 

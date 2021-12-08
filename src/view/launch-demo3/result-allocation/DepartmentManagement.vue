@@ -7,7 +7,7 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="300"
-                :defaultPagination="false"
+                :defaultPagination="true"
             >
                 <template #commands>
                     <a-row type="flex" style="margin-left: 20px">
@@ -51,26 +51,60 @@ export default {
         // eslint-disable-next-line no-undef
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|5-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            level: '@pick(["一级","二级","三级"])',
+                            department:
+                                '@pick(["校（院）领导","办公室（业务指导工作处）","第十二期自治区管理干部培训班","机关党委"])',
+                            createTime: '@dateTime',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
                 dataIndex: 'no',
                 title: '序号',
                 width: 80,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'memberName',
+                dataIndex: 'department',
                 title: '部门名称',
-                ellipsis: true,
             },
             {
-                dataIndex: 'author',
+                dataIndex: 'level',
                 title: '部门排序级别',
-
-                ellipsis: true,
             },
         ];
 

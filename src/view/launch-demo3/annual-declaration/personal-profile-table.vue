@@ -157,32 +157,32 @@ export default {
             {
                 dataIndex: 'memberName',
                 title: '填报人',
-                width: 140,
+                width: 150,
             },
             {
                 dataIndex: 'author',
                 title: '作者',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'department',
                 title: '部门',
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'achievementName',
                 title: '成果名称',
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'applyTime',
                 title: '申请日期',
-                ellipsis: true,
+                width: 180,
             },
             {
                 dataIndex: 'status',
                 title: '状态',
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'action',
