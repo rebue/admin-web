@@ -103,7 +103,7 @@ export default {
             {
                 dataIndex: 'curriculumName',
                 title: '课程名称',
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'examForm',

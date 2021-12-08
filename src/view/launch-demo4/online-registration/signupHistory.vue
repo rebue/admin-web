@@ -173,7 +173,7 @@ export default {
                 dataIndex: 'gradSchool',
                 title: '毕业院校',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'gradData',
@@ -203,7 +203,7 @@ export default {
                 dataIndex: 'workPlace',
                 title: '工作地点',
 
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'operation',

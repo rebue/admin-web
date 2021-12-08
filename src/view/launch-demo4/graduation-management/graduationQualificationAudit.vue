@@ -151,7 +151,7 @@ export default {
                 dataIndex: 'company',
                 title: '工作单位',
 
-                width: 250,
+                width: 300,
             },
             {
                 dataIndex: 'position',
