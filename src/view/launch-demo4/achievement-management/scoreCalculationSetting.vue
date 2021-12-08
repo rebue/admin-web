@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -44,7 +43,46 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
+                            semester: '@pick(["第一学期","第二学期","第三学期","第四学期"])',
+                            curriculumName:
+                                '@pick(["政治理论", "中国化马克思主义理论", "公共管理学", "新时代党的建设理论", "应用数学", "中国共产党历史"])',
+                            examForm: '@pick(["闭卷","开卷","论文"])',
+                            checkProportion: '',
+                            taskProportion: '',
+                            surfaceProportion: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -53,37 +91,37 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'grade',
+                dataIndex: 'major',
                 title: '专业',
                 width: 150,
             },
             {
-                dataIndex: 'teachPoint',
+                dataIndex: 'semester',
                 title: '学期',
                 width: 150,
             },
             {
-                dataIndex: 'major',
+                dataIndex: 'curriculumName',
                 title: '课程名称',
                 width: 150,
             },
             {
-                dataIndex: 'name',
+                dataIndex: 'examForm',
                 title: '考核形式',
                 width: 150,
             },
             {
-                dataIndex: 'sex',
+                dataIndex: 'checkProportion',
                 title: '考勤比例',
                 width: 150,
             },
             {
-                dataIndex: 'nation',
+                dataIndex: 'taskProportion',
                 title: '作业比例',
                 width: 150,
             },
             {
-                dataIndex: 'id',
+                dataIndex: 'surfaceProportion',
                 title: '卷面比例',
                 width: 150,
             },

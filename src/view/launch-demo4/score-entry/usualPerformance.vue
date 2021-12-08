@@ -14,7 +14,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
@@ -37,7 +37,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -47,7 +46,46 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            name: '@cname',
+                            'stuNum|100000000-200000000': 111111111,
+                            'homeworkScore|10-20': 10,
+                            'attendanceScore|1-10': 1,
+                            'achievement|30-60': 30,
+                            'courseAchievement|70-100': 70,
+                            'makeUpExamAchievement|75-100': 75,
+                            'allMakeUpExamAchievement|100-150': 100,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -56,7 +94,7 @@ export default {
                 scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'naem',
+                dataIndex: 'name',
                 title: '姓名',
 
                 width: 150,
@@ -68,7 +106,7 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'Homework score',
+                dataIndex: 'homeworkScore',
                 title: '作业分数',
 
                 width: 150,

@@ -42,7 +42,7 @@
                         <a-col>
                             <base-manager ref="baseManager">
                                 <template #managerCard>
-                                    <div style="float:left">
+                                    <div style="float: left">
                                         <a-select
                                             :default-value="process[0]"
                                             style="width: 100px; margin-right: 15px"
@@ -87,7 +87,6 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const process = ['流程环节', '流程环节2', '流程环节3'];
 const approver = ['审批人', '审批人2', '审批人3'];
@@ -100,7 +99,50 @@ export default {
         // OrgTree,
     },
     data() {
-        this.api = {};
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            process: '网上发布(部门新闻)',
+                            title:
+                                '@pick(["后勤服务中心举办消防知识宣传讲座","2020级中共党史党建专业在职研究生班举行党史学习交流研讨会","院举办全区退役军人工作专题研修班","财务处组织开展我为教职工办实事解难题联合主题党日活动","固定资产卡片信息变更申请表","促党建提业务强队伍----网络培训部党支部开展党建理论和业务工作学习","注重学习教育宣传，营造干事创业氛围","业务指导工作处党支部开展“缅怀革命先烈、追寻英雄精神”主题党日活动"])',
+                            state: '@pick(["运行","完成"])',
+                            initiator: '@cname',
+                            startDate: '@datetime',
+                            endDate: '@datetime',
+                            'num|1+': 1,
+                            approver: '@cname',
+                            process03: '@pick(["拟稿","送办","校办领导批示","处室审阅","处室会签"])',
+                            'handleNum|0-300': 1,
+                            'handleTime|1-5.1-9': 1.1,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const treeData = [
             {
                 title: '办公管理',
@@ -149,7 +191,6 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'process',
@@ -174,12 +215,12 @@ export default {
             {
                 dataIndex: 'startDate',
                 title: '启动时间',
-                width: 200,
+                width: 250,
             },
             {
                 dataIndex: 'endDate',
                 title: '结束时间',
-                width: 200,
+                width: 250,
             },
         ];
         const columns03 = [
@@ -187,7 +228,6 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'num',
@@ -197,10 +237,10 @@ export default {
             {
                 dataIndex: 'approver',
                 title: '审批人',
-                width: 800,
+                width: 150,
             },
             {
-                dataIndex: 'process',
+                dataIndex: 'process03',
                 title: '流程环节',
                 width: 200,
             },
@@ -215,40 +255,6 @@ export default {
                 width: 200,
             },
         ];
-        const page = function() {
-            const p = new Promise((resolve, reject) => {
-                // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        fileNum: '20210908',
-                        title:
-                            '关于商请减免区机关事务管理局十九届五中全会精神暨习近平总书记视察广西时的重要讲话精神培训费的函',
-                        autoNum: '125646456',
-                    },
-                    {
-                        id: 2,
-                        no: 2,
-                        fileNum: '20210909',
-                        title:
-                            '关于商请减免区机关事务管理局十九届五中全会精神暨习近平总书记视察广西时的重要讲话精神培训费的函',
-                        autoNum: '984894645',
-                    },
-                ];
-                const ro = {
-                    extra: {
-                        page: {
-                            list: dataSource,
-                            total: dataSource.length,
-                        },
-                        list: dataSource,
-                    },
-                };
-                resolve(ro);
-            });
-            return p;
-        };
 
         this.tableCommands = [
             {

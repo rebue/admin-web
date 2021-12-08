@@ -104,7 +104,7 @@ export default {
             {
                 dataIndex: 'courseName',
                 title: '课程名称',
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'examStartData',

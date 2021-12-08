@@ -11,7 +11,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -86,7 +86,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const depLevel = ['低一级', '低二级', '低三级', '中一级', '中二级', '中三级', '高一级', '高二级', '高三级'];
 const superiorDep = ['办公室', '绩效办', '组织部', '研发部'];
@@ -99,13 +98,56 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            'number|100000-900000': 111111,
+                            loginName: '@cname',
+                            name: function() {
+                                return this.loginName;
+                            },
+                            superior: '',
+                            dep:
+                                '@pick(["教工部", "回收站", "市县党校", "区纪检组", "跟班学习离职", "校-院领导", "办公室", "监控室"])',
+                            post:
+                                '@pick(["第一书记","干部","科员","教师","人事科科员","党委组织委员","副书记","科长","民政办负责人","副组长"])',
+                            level: '@pick(["初级","中级","高级","其他"])',
+                            IPAddress: '',
+                            'phone|13000000000-19000000000': 11111111111,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
@@ -157,7 +199,6 @@ export default {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 110,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -56,7 +56,6 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const year = ['2021', '2020', '2019', '2018', '2017', '2016'];
 const date = ['全部', '待议', '已议'];
@@ -69,7 +68,41 @@ export default {
         // OrgTree,
     },
     data() {
-        this.api = {};
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            'fileNum|100000-900000': 111111,
+                            title:
+                                '关于商请减免区机关事务管理局十九届五中全会精神暨习近平总书记视察广西时的重要讲话精神培训费的函',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const treeData = [
             {
                 title: '待议',
@@ -118,7 +151,6 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
             },
             {
                 dataIndex: 'fileNum',
@@ -134,43 +166,9 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
-        const page = function() {
-            const p = new Promise((resolve, reject) => {
-                // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        fileNum: '20210908',
-                        title:
-                            '关于商请减免区机关事务管理局十九届五中全会精神暨习近平总书记视察广西时的重要讲话精神培训费的函',
-                    },
-                    {
-                        id: 2,
-                        no: 2,
-                        fileNum: '20210909',
-                        title:
-                            '关于商请减免区机关事务管理局十九届五中全会精神暨习近平总书记视察广西时的重要讲话精神培训费的函',
-                    },
-                ];
-                const ro = {
-                    extra: {
-                        page: {
-                            list: dataSource,
-                            total: dataSource.length,
-                        },
-                        list: dataSource,
-                    },
-                };
-                resolve(ro);
-            });
-            return p;
-        };
 
         this.tableCommands = [
             {

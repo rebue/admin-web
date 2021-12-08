@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
@@ -45,13 +44,58 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            title: '新文档.doc',
+                            useState: '@pick(["使用中","未使用"])',
+                            degree: '@pick(["一般","中等","重要"])',
+                            date: '@date',
+                            dep:
+                                '@pick(["教工部", "回收站", "市县党校", "区纪检组", "跟班学习离职", "校-院领导", "办公室", "监控室"])',
+                            administrator: '@cname',
+                            sourceType: '',
+                            businessType: '',
+                            submitDate: '@datetime',
+                            submitter: '@cname',
+                            'visitsNum|10-50': 10,
+                            'enclosureLength|100000-500000': 111111,
+                            custom: '',
+                            keyword: '',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
                 scopedSlots: { customRender: 'serial' },
             },
             {
@@ -97,7 +141,7 @@ export default {
             {
                 dataIndex: 'submitDate',
                 title: '提交时间',
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'submitter',
@@ -128,7 +172,6 @@ export default {
                 dataIndex: 'operation',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
         ];

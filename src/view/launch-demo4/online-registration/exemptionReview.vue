@@ -76,7 +76,8 @@ export default {
                             political: '@pick(["中共党员","共青团员","群众"])',
                             partyData: '@date',
                             workCity: '@city',
-                            workCompany: '@csentence(7, 16)',
+                            workCompany:
+                                '@pick(["那坡县平孟镇人民政府","广西揽胜企业管理服务集团有限公司","横线横州镇人民政府","河池市人民政府办公室","广西来本银海铝业有限责任公司","融安县农业技术推广中心","南宁轨道交通集团有限责任公司","广西大新县就业社保服务中心","崇左市人民政府办公室","柳州东城置地有限公司"])',
                         },
                     ],
                 });
@@ -210,7 +211,7 @@ export default {
                 dataIndex: 'workCompany',
                 title: '工作单位',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'operation',

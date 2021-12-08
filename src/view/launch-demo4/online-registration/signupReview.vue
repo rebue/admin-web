@@ -29,14 +29,8 @@
                         </div>
                     </template>
                     <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree.platform"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                        <div class="table-left" style="width: 250px; overflow-x: scroll">
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -49,7 +43,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 const provinceData = ['全部', '已缴费', '未缴费'];
 export default {
@@ -57,7 +50,6 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -197,7 +189,6 @@ export default {
 
         return {
             columns,
-            showOrg: false,
             curOrg: '',
             provinceData,
         };
@@ -211,15 +202,6 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        handleOrgMenuClick(item) {
-            this.curOrg = item;
-            this.refreshTableData();
-            //
-        },
-        handleOrgTreeSelect(item) {
-            this.curOrg = item;
-            //
         },
         handleAdd() {
             //

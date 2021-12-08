@@ -1,4 +1,4 @@
-// 分数小于五分
+// 考勤低于五分
 <template>
     <fragment>
         <base-manager ref="baseManager">
@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                     <template #keywordsLeft>
                         <div style="margin-right: 10px">
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 
 const provinceData = ['2021年', '2020年', '2019年'];
 export default {
@@ -44,7 +43,53 @@ export default {
         CrudTable,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            name: '@cname',
+                            'stuNum|100000000-200000000': 111111111,
+                            semester: '@pick(["第一学期","第二学期","第三学期","第四学期"])',
+                            curriculum:
+                                '@pick(["政治理论", "中国化马克思主义理论", "公共管理学", "新时代党的建设理论", "应用数学", "中国共产党历史"])',
+                            'homeworkAchievement|0-20': 1,
+                            'attendanceScore|0-10': 1,
+                            'achievement|60-100': 1,
+                            'makeUpExamAchievement|70-100': 70,
+                            'allMakeUpExamAchievement|100-150': 100,
+                            'courseAchievement|70-100': 70,
+                            shift: '@pick(["中政大研究生","党校研究生"])',
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -74,7 +119,7 @@ export default {
                 dataIndex: 'curriculum',
                 title: '课程',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'homeworkAchievement',
@@ -128,7 +173,7 @@ export default {
                 dataIndex: 'teachPoint',
                 title: '教学点',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'major',

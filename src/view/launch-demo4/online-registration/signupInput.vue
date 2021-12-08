@@ -13,14 +13,8 @@
                     :defaultPagination="true"
                 >
                     <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree.platform"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                        <div class="table-left" style="width: 250px;overflow-x:scroll">
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -33,15 +27,75 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '2021',
+                key: '20211',
+                children: [
+                    {
+                        title: '中共广西区委党校',
+                        key: '20211-1',
+                    },
+                    {
+                        title: '中共党史与党的建设',
+                        key: '20211-2',
+                    },
+                    {
+                        title: '经济管理',
+                        key: '20211-3',
+                    },
+                    {
+                        title: '马克思主义中国化研究',
+                        key: '20211-4',
+                    },
+                    {
+                        title: '宪法与行政法',
+                        key: '20211-5',
+                    },
+                    {
+                        title: '公共管理',
+                        key: '20211-6',
+                    },
+                ],
+            },
+            {
+                title: '2020',
+                key: '20201',
+                children: [
+                    {
+                        title: '中共广西区委党校',
+                        key: '20201-1',
+                    },
+                    {
+                        title: '中共党史与党的建设',
+                        key: '20201-2',
+                    },
+                    {
+                        title: '经济管理',
+                        key: '20201-3',
+                    },
+                    {
+                        title: '马克思主义中国化研究',
+                        key: '20201-4',
+                    },
+                    {
+                        title: '宪法与行政法',
+                        key: '20201-5',
+                    },
+                    {
+                        title: '公共管理',
+                        key: '20201-6',
+                    },
+                ],
+            },
+        ];
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
@@ -112,7 +166,7 @@ export default {
                 dataIndex: 'teachPoint',
                 title: '教学点',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'major',
@@ -148,7 +202,7 @@ export default {
                 dataIndex: 'ID',
                 title: '身份证号',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'birthData',
@@ -178,7 +232,7 @@ export default {
                 dataIndex: 'gradSchool',
                 title: '毕业院校',
 
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'gradTime',
@@ -260,31 +314,17 @@ export default {
 
         return {
             columns,
-            showOrg: true,
             realm: {
                 id: '1',
             },
+            treeData,
         };
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                // this.refreshTableData();
-            });
-        },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            // this.$nextTick(this.refreshTableData);
-        },
-        handleAdd() {
-            //
-        },
+        //
     },
 };
 </script>

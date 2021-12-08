@@ -10,7 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                     :rowSelection="{}"
                 >
                     <template #left>
@@ -34,7 +34,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
 import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
@@ -44,7 +43,49 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            'stuNum|100000000-200000000': 111111111,
+                            name: '@cname',
+                            major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            sex: '@pick(["男","女"])',
+                            birthDate: '@date',
+                            shift: '@pick(["中政大研究生","党校研究生"])',
+                            'diplomaNum|1000000000-9999999999': 1111111111,
+                            graduationYear: '@date',
+                            fileRoute: '/data/nfs/student/images2021/1112352.jpg',
+                            isGraduation: '@pick(["是","否"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -110,7 +151,7 @@ export default {
                 dataIndex: 'fileRoute',
                 title: '文件路径',
 
-                width: 150,
+                width: 350,
             },
             {
                 dataIndex: 'isGraduation',
