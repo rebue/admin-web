@@ -14,7 +14,6 @@
                             :query="{ realmId: curRealmId, orgId: curOrgId }"
                             :scrollX="600"
                             :showHierarchical="showOrg"
-                            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                         >
                             <template #left>
                                 <div v-show="showOrg" class="table-left">
@@ -178,12 +177,12 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
-            {
-                buttonType: 'primary',
-                icon: 'align-center',
-                title: '批量导入',
-                onClick: this.batchOperation,
-            },
+            // {
+            //     buttonType: 'primary',
+            //     icon: 'align-center',
+            //     title: '批量导入',
+            //     onClick: this.batchOperation,
+            // },
             // {
             //     buttonType: 'primary',
             //     icon: 'align-center',
