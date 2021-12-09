@@ -4,8 +4,18 @@
             <template #managerCard>
                 <a-row type="flex">
                     <a-col :span="5">
-                        <div v-show="showOrg" style="margin-right: 10px" class="table-left">
-                            <org-tree ref="form.platform" :show.sync="showOrg" realmId="platform" />
+                        <div style="margin-right: 10px;overflow: auto" class="table-left">
+                            <a-tree
+                                style="margin-left: -30px;margin-top: -20px"
+                                class="ant-card-body"
+                                v-model="checkedKeys"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                @Click="onCheck"
+                                :tree-data="treeData"
+                                :defaultExpandAll="true"
+                            >
+                            </a-tree>
                             <div class="table-divider"></div>
                         </div>
                     </a-col>
@@ -43,10 +53,113 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     props: [],
     data() {
+        const treeData = [
+            {
+                title: '教工部',
+                key: '1',
+                children: [
+                    {
+                        title: '校（院）领导',
+                        key: '101',
+                    },
+                    {
+                        title: '办公室（业务指导工作处）',
+                        key: '102',
+                        children: [
+                            {
+                                title: '监察员',
+                                key: '1021',
+                            },
+                        ],
+                    },
+                    {
+                        title: '组织人事处',
+                        key: '103',
+                    },
+                    {
+                        title: '机关党委',
+                        key: '104',
+                    },
+                    {
+                        title: '财务处',
+                        key: '105',
+                    },
+                    {
+                        title: '资产管理处',
+                        key: '106',
+                    },
+                    {
+                        title: '学员工作处',
+                        key: '107',
+                    },
+                    {
+                        title: '公务员培训处/研究生工作处/干部继续教育学院',
+                        key: '108',
+                    },
+                    {
+                        title: '离退休人员工作处',
+                        key: '109',
+                    },
+                    {
+                        title: '教务处',
+                        key: '1010',
+                    },
+                    {
+                        title: '科研处',
+                        key: '1011',
+                    },
+                    {
+                        title: '研究室/宣传处',
+                        key: '1012',
+                    },
+                    {
+                        title: '应急管理培训部',
+                        key: '1013',
+                    },
+                    {
+                        title: '信息技术处',
+                        key: '1014',
+                    },
+                    {
+                        title: '图书馆',
+                        key: '1015',
+                    },
+                    {
+                        title: '网络培训部',
+                        key: '1016',
+                    },
+                    {
+                        title: '后勤服务中心',
+                        key: '1017',
+                        children: [
+                            {
+                                title: '监管服务科',
+                                key: '10171',
+                            },
+                            {
+                                title: '行政事务科',
+                                key: '10172',
+                            },
+                            {
+                                title: '车队',
+                                key: '10173',
+                            },
+                            {
+                                title: '动力课',
+                                key: '10174',
+                            },
+                            {
+                                title: '联络科',
+                                key: '10175',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -232,6 +345,7 @@ export default {
             curApp: {},
             realms: [],
             columns,
+            treeData,
             showOrg: false,
         };
     },

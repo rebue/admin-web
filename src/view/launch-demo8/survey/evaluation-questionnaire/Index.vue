@@ -9,22 +9,26 @@
                 </div>
                 <a-divider />
                 <a-row type="flex">
-                    <a-col :span="6">
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                    <a-col :span="5">
+                        <div class="table-left" style="overflow: auto">
+                            <a-tree
+                                style="margin-left: -30px;margin-top: -20px"
+                                class="ant-card-body"
+                                v-model="checkedKeys"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                @Click="onCheck"
+                                :tree-data="treeData"
+                                :defaultExpandAll="true"
+                            >
+                            </a-tree>
                             <div class="table-divider"></div>
                         </div>
                     </a-col>
                     <a-col :span="1">
                         <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
-                    <a-col :span="17">
+                    <a-col :span="18">
                         <a-tabs :activeKey="curRealmId" @change="handleRealmChanged">
                             <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                                 <p>问卷设计</p>
@@ -141,10 +145,42 @@ export default {
         EditAuthForm,
         // CrudTable,
         ManageMenusForm,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '中层领导',
+                key: '1',
+                children: [
+                    {
+                        title: '广西区党校工作者“职业幸福感”调查问卷',
+                        key: '101',
+                    },
+                    {
+                        title: '险地求生',
+                        key: '102',
+                    },
+                    {
+                        title: '事业单位党建工作调查问卷',
+                        key: '103',
+                    },
+                ],
+            },
+            {
+                title: '一般教职工',
+                key: '106',
+                children: [
+                    {
+                        title: '新学员调查问卷',
+                        key: '1061',
+                    },
+                    {
+                        title: '后勤服务中心意见征询表',
+                        key: '1062',
+                    },
+                ],
+            },
+        ];
         this.api = racAppApi;
         const columns = [
             // {
@@ -229,6 +265,7 @@ export default {
             columns,
             showOrg: false,
             form: '',
+            treeData,
         };
     },
     computed: {

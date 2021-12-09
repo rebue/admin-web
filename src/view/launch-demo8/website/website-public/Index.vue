@@ -3,16 +3,16 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <a-row type="flex">
-                    <a-col :span="5">
-                        <div v-show="showOrg" style="margin-right: 10px" class="table-left">
-                            <org-tree ref="form.platform" :show.sync="showOrg" realmId="platform" />
+                    <a-col :span="4">
+                        <div style="margin-right: 10px" class="table-left">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </a-col>
                     <a-col :span="1">
                         <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
-                    <a-col :span="18">
+                    <a-col :span="19">
                         <crud-table
                             :api="api"
                             :commands="tableCommands"
@@ -47,6 +47,18 @@ export default {
     },
     props: [],
     data() {
+        const treeData = [
+            {
+                title: '新闻',
+                key: '1',
+                children: [
+                    {
+                        title: '实事新闻',
+                        key: '101',
+                    },
+                ],
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -182,6 +194,7 @@ export default {
             curApp: {},
             realms: [],
             columns,
+            treeData,
             showOrg: false,
         };
     },

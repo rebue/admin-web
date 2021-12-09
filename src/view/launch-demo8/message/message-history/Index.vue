@@ -19,10 +19,10 @@
                 </crud-table>
                 <hr />
                 <crud-table
-                    :api="api"
+                    :api="ap"
                     :commands="tableCommands"
                     :actions="tableActions"
-                    :columns="columns"
+                    :columns="columns2"
                     :scrollX="600"
                     :rowSelection="{}"
                     :showKeywords="false"
@@ -41,8 +41,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
-import { racAccountApi } from '@/api/Api';
 
 export default {
     name: 'message-history',
@@ -71,6 +69,9 @@ export default {
                             sendTime: '@now("yyyy-MM-dd HH:mm:ss")',
                             TimingTime: '@now("yyyy-MM-dd HH:mm:ss")',
                             mobile: '',
+                            name: '@cname',
+                            msg: '@pick(["200","400","500"])',
+                            createTime: '@now(yyyy-MM-dd HH:mm:ss)',
                             // ["校(院)领导","行政部"]
                             department: '@pick(["行政部", "校（院）领导"])',
                             work: '@pick(["常务副校长，常务副院长", "副校长，副院长","普通教师"])',
@@ -101,6 +102,12 @@ export default {
             return p;
         };
         this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
+        //批量发送
+        this.ap = {
             page,
             listAll: page,
             list: page,
@@ -167,30 +174,71 @@ export default {
         ];
         const columns2 = [
             {
-                dataIndex: 'photo',
+                dataIndex: 'no',
                 title: '自动编号',
-
-                width: 200,
+                width: 80,
+                scopedSlots: { customRender: 'serial' },
             },
             {
-                dataIndex: 'name2',
+                dataIndex: 'name',
                 title: '姓名',
 
                 width: 150,
             },
             {
-                dataIndex: 'sex',
+                dataIndex: 'mobile',
                 title: '手机号',
                 width: 150,
+                customRender: function() {
+                    const numArray = [
+                        '139',
+                        '138',
+                        '137',
+                        '136',
+                        '135',
+                        '134',
+                        '159',
+                        '158',
+                        '157',
+                        '150',
+                        '151',
+                        '152',
+                        '188',
+                        '187',
+                        '182',
+                        '183',
+                        '184',
+                        '178',
+                        '130',
+                        '131',
+                        '132',
+                        '156',
+                        '155',
+                        '186',
+                        '185',
+                        '176',
+                        '133',
+                        '153',
+                        '189',
+                        '180',
+                        '181',
+                        '177',
+                    ];
+                    let str = Math.random();
+                    str = Math.round(str * numArray.length);
+
+                    const strMobile = numArray[str] + '' + Math.round(Math.random() * 99999999) + '';
+                    return strMobile;
+                },
             },
             {
-                dataIndex: 'mobile',
+                dataIndex: 'msg',
                 title: '发送结果',
                 ellipsis: true,
                 width: 150,
             },
             {
-                dataIndex: 'GdMobile',
+                dataIndex: 'createTime',
                 title: '发送时间',
                 ellipsis: true,
                 width: 150,
