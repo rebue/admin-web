@@ -15,13 +15,14 @@
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
+                            <!-- <org-tree
                                 :ref="`orgTree.platform`"
                                 :show.sync="showOrg"
                                 realmId="platform"
                                 @click="handleOrgMenuClick"
                                 @select="handleOrgTreeSelect"
-                            />
+                            /> -->
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -34,7 +35,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
+// import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -42,7 +43,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
+        // OrgTree,
     },
     data() {
         // 初始化数据start
@@ -151,7 +152,32 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '2021年春季学期',
+                key: '20211',
+            },
+            {
+                title: '2021年秋季学期',
+                key: '20212',
+            },
+            {
+                title: '2020年春季学期',
+                key: '20201',
+            },
+            {
+                title: '2020年秋季学期',
+                key: '20212',
+            },
+            {
+                title: '2019年春季学期',
+                key: '20191',
+            },
+            {
+                title: '2019年秋季学期',
+                key: '20192',
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -183,6 +209,7 @@ export default {
             columns,
             showOrg: true,
             curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -270,6 +297,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>

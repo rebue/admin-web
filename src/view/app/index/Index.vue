@@ -291,8 +291,8 @@ export default {
     float: left;
     margin-bottom: 2%;
     .cardBox {
-        width: 174px;
-        // width: 75%;
+        // width: 174px;
+        width: 75%;
         height: 100%;
         margin: auto;
         background: #f4f4f4;

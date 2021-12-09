@@ -3,17 +3,31 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <div class="stepsCss">
-                    <a-steps :current="1">
+                    <a-steps :current="0">
                         <a-step>
                             <template slot="title">
-                                Finished
+                                开始事件
                             </template>
-                            <span slot="description">This is a description.</span>
+                            <a-icon slot="icon" type="clock-circle" />
                         </a-step>
-                        <a-step title="In Progress" sub-title="Left 00:00:08" description="This is a description." />
-                        <a-step title="Waiting" description="This is a description." />
-                        <a-step title="Waiting" description="This is a description." />
-                        <a-step title="Waiting" description="This is a description." />
+                        <a-step title="学生/教室申请">
+                            <a-icon slot="icon" type="user" />
+                        </a-step>
+                        <a-step title="主办方单位意见">
+                            <a-icon slot="icon" type="user" />
+                        </a-step>
+                        <a-step title="宣传部工作人员">
+                            <a-icon slot="icon" type="user" />
+                        </a-step>
+                        <a-step title="党委宣传部意见">
+                            <a-icon slot="icon" type="user" />
+                        </a-step>
+                        <a-step title="学院领导审批">
+                            <a-icon slot="icon" type="user" />
+                        </a-step>
+                        <a-step title="结束事件">
+                            <a-icon slot="icon" type="stop" />
+                        </a-step>
                     </a-steps>
                 </div>
                 <template>
