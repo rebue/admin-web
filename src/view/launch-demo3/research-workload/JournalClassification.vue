@@ -78,11 +78,24 @@ export default {
                         {
                             'id|+1': 10000000,
 
-                            userName: '@pick(["系统管理员","钟琪","魏无羡","蓝湛","管理员","唐三","萧炎"])',
+                            examine: '@pick(["审核通过","审核未通过"])',
                             // level: '@pick(["一级","二级","三级"])',
-                            operation:
-                                '@pick(["按指定每小时劳务费方式统计2019年度劳务费,每小时劳务费:1,任务内劳务费系数:0.7"' +
-                                ',"清除2018年度汇总记录","按分值方式统计2017年度工作量"])',
+                            'periodicalName|+1': [
+                                '对外贸易',
+                                '宏观经济管理',
+                                '企业改革与管理',
+                                '会计师',
+                                '教与学',
+                                '新课教育',
+                                '科学与财富',
+                                '数码设计',
+                                '广西青年干部学院学报',
+                                '好日子',
+                                '当代广西',
+                                '求是',
+                                '学报',
+                                '传承',
+                            ],
                             createTime: '@dateTime',
                         },
                     ],
@@ -112,9 +125,16 @@ export default {
 
         const columns = [
             {
-                dataIndex: 'achievementNo',
-                title: '参数值',
-                fixed: 'right',
+                dataIndex: 'periodicalName',
+                title: '期刊名称',
+            },
+            {
+                dataIndex: 'createTime',
+                title: '添加时间',
+            },
+            {
+                dataIndex: 'examine',
+                title: '审核',
             },
         ];
 

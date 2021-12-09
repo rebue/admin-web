@@ -4,7 +4,7 @@
             <base-manager ref="baseManager">
                 <template #managerCard>
                     <a-row type="flex">
-                        <a-col :span="6">
+                        <a-col :span="6" style="overflow: auto">
                             <p style="text-align: center;">计划总结列表</p>
                             <a-calendar :fullscreen="false" style="width: 250px" />
                             <a-collapse default-active-key="" :bordered="false">
@@ -16,9 +16,8 @@
                                 <a-button type="link">我能看谁？</a-button>
                                 <a-button type="link">谁能看我？</a-button>
                             </div>
-                            <div class="table-left">
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                                <div class="table-divider"></div>
+                            <div>
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                             </div>
                         </a-col>
                         <a-col :span="1">
