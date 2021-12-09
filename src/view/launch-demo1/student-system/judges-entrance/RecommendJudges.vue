@@ -72,7 +72,7 @@ export default {
                             // 'qrcode|1-1000000': 193201,
                             status: '@pick(["正在进行", "未开始","已结束"])',
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
-                            // flag: '@pick(["是", "否"])',
+                            examine: '@pick(["审核通过", "审核未通过"])',
                             // lastModifiedTime: '@date("yyyy-MM-dd")',
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
@@ -116,7 +116,7 @@ export default {
             {
                 dataIndex: 'scoringElements',
                 title: '评分要素',
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'startTime',
@@ -130,7 +130,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'signupCode',
+                dataIndex: 'examine',
                 title: '审核',
                 width: 150,
                 ellipsis: true,

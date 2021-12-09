@@ -147,6 +147,7 @@ export default {
                             // lastModifiedTime: '@date("yyyy-MM-dd")',
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
+
                             startTime: '@now("yyyy-MM-dd")',
                             endTime: '@now("yyyy-MM-dd")',
                             'semesterNo|100000-55555555555': 444444444444,
@@ -155,7 +156,13 @@ export default {
                             //'opType': '@pick(["锁定", "启用"])',
                             //'opTitle': '@title()',
                             //'opDetail': '@cparagraph',
-                            explain: '',
+                            'explain|+1': [
+                                '确定本次“月十佳文章”评比中选取学员论坛中提交文章的时间范围，也就是在这个时间段内发表在学员论坛的文章才会允许推选',
+                                '每班由学习委员推荐5篇文章，5个评委',
+                                '',
+                                '',
+                                '',
+                            ],
                         },
                     ],
                 });
@@ -202,13 +209,13 @@ export default {
                 dataIndex: 'endTime',
                 title: '截止时间',
                 width: 180,
-                ellipsis: true,
+
                 // customRender: (text, record) => <span>{record.isCertified === true ? '是' : '否'}</span>,
             },
             {
                 dataIndex: 'explain',
                 title: '阶段说明',
-                width: 200,
+                width: 400,
                 ellipsis: true,
             },
             {

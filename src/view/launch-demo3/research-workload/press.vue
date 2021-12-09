@@ -33,7 +33,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="300"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                     >
                         <template #commands>
                             <a-button class="btn">新增</a-button>
@@ -69,19 +69,56 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|5-20': [
+                        {
+                            'id|+1': 10000000,
+
+                            status: '@pick(["审核通过","审核未通过","未审核"])',
+                            // level: '@pick(["一级","二级","三级"])',
+                            'pressName|+1': ['新华月报', '新华文摘', '人大报刊复印资料'],
+                            createTime: '@dateTime',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'pressName',
                 title: '出版社名称',
             },
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'createTime',
                 title: '添加时间',
             },
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'status',
                 title: '审核状态',
             },
         ];

@@ -10,6 +10,7 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
+                    :rowSelection="{}"
                     :defaultPagination="true"
                 >
                     <template #left>
@@ -58,10 +59,24 @@ export default {
                     'list|10-20': [
                         {
                             'id|+1': 10000000,
-                            title: '@ctitle',
+                            'title|+1':
+                                '@pick(["拓展“出彩”平台注重人文关怀——关于完善干部激励机制的思考",' +
+                                '"关于加快推进广西“互联网”发展的初步思考","“—带一路”战略背景下广西新闻出版广播影视走出去的困境和路径探析","新常态下广西农业可持续发展思考","' +
+                                '提升广西智库对决策影响力的探讨","确立多民族文化发展观弘扬广西多民族文化精神","从哲学思维视角谈广西贯彻落实“四个全面”战略布局","经济新常态下广西扩大消费需求途径的对策思考"])',
                             createTime: '@date("yyyy-MM-dd")',
                             author: '@cname',
-                            class: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            'className|+1': [
+                                '第6期自治区管理干部研修班',
+                                '第33期中青年干部培训动',
+                                '第55期县处级领导干部进修—班',
+                                '第55期县处级领导干部进修二班',
+                                '第27期少数民族领导干部培训班',
+                                '第16期县处级女干部培训班',
+                                '第4期县处级公务员任职培训班',
+                                '第2期多（镇）长培训—班',
+                                '第2期多（镇）长培训二班',
+                                '第10期市、县（市、区）党校师资培训班',
+                            ],
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             // 'qrcode|1-1000000': 193201,
@@ -106,9 +121,7 @@ export default {
             {
                 dataIndex: 'title',
                 title: '文章标题',
-                width: 100,
-
-                scopedSlots: { customRender: 'serial' },
+                width: 300,
             },
             {
                 dataIndex: 'createTime',
@@ -121,16 +134,14 @@ export default {
                 width: 150,
             },
             {
-                dataIndex: 'class',
+                dataIndex: 'className',
                 title: '班级',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'evaluationPeriod',
                 title: '评比期',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'action',

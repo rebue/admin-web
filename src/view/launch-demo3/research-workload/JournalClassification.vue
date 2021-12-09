@@ -33,7 +33,7 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="300"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
                     >
                         <template #commands>
                             <a-button class="btn">新增</a-button>

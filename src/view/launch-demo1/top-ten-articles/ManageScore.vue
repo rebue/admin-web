@@ -20,7 +20,7 @@
                                     :api="api"
                                     :query="{ realmId: curRealmId }"
                                     :scrollX="600"
-                                    :defaultPagination="false"
+                                    :defaultPagination="true"
                                     @moveUp="handleMoveUp"
                                     @moveDown="handleMoveDown"
                                 >
@@ -154,7 +154,18 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            'className|+1': [
+                                '第6期自治区管理干部研修班',
+                                '第33期中青年干部培训动',
+                                '第55期县处级领导干部进修—班',
+                                '第55期县处级领导干部进修二班',
+                                '第27期少数民族领导干部培训班',
+                                '第16期县处级女干部培训班',
+                                '第4期县处级公务员任职培训班',
+                                '第2期多（镇）长培训—班',
+                                '第2期多（镇）长培训二班',
+                                '第10期市、县（市、区）党校师资培训班',
+                            ],
                             judges: '@cname',
                             scoringElements: '@pick(["观点新颖，有独特的见解"])',
                             'grade|50-100': 100,

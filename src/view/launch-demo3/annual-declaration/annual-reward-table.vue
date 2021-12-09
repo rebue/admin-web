@@ -51,7 +51,7 @@ export default {
                             // flag: '@pick(["是", "否"])',
                             date: '@now("yyyy-MM-dd")',
                             // lastChecker: '@cname()',
-                            rewardName: '@pick(["微分子研究","新教学方法","新科学发展观", "物理模型"])',
+                            rewardName: '@pick(["自然科学奖","科学进步奖","科学发明奖"])',
                             // arriveTime: '@now("yyyy-MM-dd")',
                             // meet: '@pick(["是", "否"])',
                             // 'realmId|+1': ['default', 'platform', 'ops'],

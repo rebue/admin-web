@@ -7,7 +7,7 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="300"
-                :defaultPagination="false"
+                :defaultPagination="true"
             >
                 <template #commands>
                     <a-row type="flex">

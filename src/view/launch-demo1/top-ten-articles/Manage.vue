@@ -144,10 +144,20 @@ export default {
                         {
                             'id|+1': 10000000,
 
-                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            className:
+                                '@pick(["第6期自治区管理干部研修班", "第33期中青年干部培训|班","第33期中青年干部培训班"])',
                             examine: '@pick(["审核通过", "审核未通过","审核通过"])',
                             name: '@cname',
-                            title: '@ctitle',
+                            'title|+1': [
+                                '广西实施精准扶贫存在的主要问题及对策',
+                                '对创新驱动发展的思考',
+                                '医改折射出的医疗卫生公共服务创新若力点',
+                                '关于广西精准扶贫资金筹措和监管问题的思考',
+                                '我区引进高层次人才的主要制约因素及其对策建议',
+                                '加快开发广西现有科技人才资源的思考',
+                                '经济新常态下广西扩大消费需求途径的对策思考',
+                                '关于加快推进广西“互联网“发展的初步思考',
+                            ],
                             author: '@cname',
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             // flag: '@pick(["是", "否"])',
@@ -197,7 +207,7 @@ export default {
             {
                 dataIndex: 'title',
                 title: '文章标题',
-                width: 200,
+                width: 300,
             },
             {
                 dataIndex: 'examine',
@@ -208,31 +218,26 @@ export default {
                 dataIndex: 'createTime',
                 title: '文章提交时间',
                 width: 180,
-                ellipsis: true,
             },
             {
                 dataIndex: 'author',
                 title: '文章作者',
-                width: 120,
-                ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'className',
                 title: '班级',
-                width: 120,
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'evaluationPeriod',
                 title: '评比期',
-                width: 120,
-                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'updateTime',
                 title: '修改时间',
                 width: 180,
-                ellipsis: true,
             },
 
             // {

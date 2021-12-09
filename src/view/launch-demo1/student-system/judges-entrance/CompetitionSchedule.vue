@@ -43,17 +43,29 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|15-20': [
+                    'list|5': [
                         {
                             'id|+1': 10000000,
-                            phaseName: '@pick(["评比初期", "评比中期","评比后期"])',
+                            'phaseName|+1': [
+                                '学员论坛文章时间范围',
+                                '班级推荐文章和评委',
+                                '学习部确认文章',
+                                '评委要素',
+                                '汇总评比结果',
+                            ],
                             classDate: '@date("yyyy-MM-dd")',
                             startTime: '@date("yyyy-MM-dd HH:mm:ss")',
                             endTime: '@date("yyyy-MM-dd HH:mm:ss")',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             // 'qrcode|1-1000000': 193201,
-                            explain: '@pick(["正在进行", "未开始","已结束"])',
+                            'explain|+1': [
+                                '确定本次“月十佳文章”评比中选取学员论坛中提交文章的时间范围，也就是在这个时间段内发表在学员论坛的文章才会允许推选',
+                                '每班由学习委员推荐5篇文章，5个评委',
+                                '',
+                                '',
+                                '',
+                            ],
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             // flag: '@pick(["是", "否"])',
                             // lastModifiedTime: '@date("yyyy-MM-dd")',
@@ -68,16 +80,6 @@ export default {
                         },
                     ],
                 });
-                // 数据列表在这里设置
-                for (let i = 0; i < mockList.list.length; i++) {
-                    if (mockList.list[i].phaseName == '评比初期') {
-                        mockList.list[i].explain = '评比初期我们对文章进行了第一步筛选';
-                    } else if (mockList.list[i].phaseName == '评比中期') {
-                        mockList.list[i].explain = '评比中期我们淘汰了一些文章';
-                    } else {
-                        mockList.list[i].explain = '评比后期，这是最后的决定阶段';
-                    }
-                }
                 const dataSource = mockList.list;
                 const ro = {
                     extra: {
@@ -127,8 +129,7 @@ export default {
             {
                 dataIndex: 'explain',
                 title: '阶段说明',
-                width: 350,
-                ellipsis: true,
+                width: 400,
             },
         ];
 

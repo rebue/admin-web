@@ -39,10 +39,19 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|1-8': [
                         {
                             'id|+1': 10000000,
-                            title: '@ctitle',
+                            'title|+1': [
+                                '广西实施精准扶贫存在的主要问题及对策',
+                                '对创新驱动发展的思考',
+                                '医改折射出的医疗卫生公共服务创新若力点',
+                                '关于广西精准扶贫资金筹措和监管问题的思考',
+                                '我区引进高层次人才的主要制约因素及其对策建议',
+                                '加快开发广西现有科技人才资源的思考',
+                                '经济新常态下广西扩大消费需求途径的对策思考',
+                                '关于加快推进广西“互联网“发展的初步思考',
+                            ],
                             'grade|50-100': 100,
                             // startTime: '@date("yyyy-MM-dd HH:mm:ss")',
                             // endTime: '@date("yyyy-MM-dd HH:mm:ss")',

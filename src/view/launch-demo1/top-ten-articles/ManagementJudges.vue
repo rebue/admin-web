@@ -21,7 +21,7 @@
                                         :api="api"
                                         :query="{ realmId: curRealmId }"
                                         :scrollX="600"
-                                        :defaultPagination="false"
+                                        :defaultPagination="true"
                                         @moveUp="handleMoveUp"
                                         @moveDown="handleMoveDown"
                                     >
@@ -142,10 +142,21 @@ export default {
                 const arr = ['计算机一班', '计算机二班', 'GC班'];
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3': [
+                    'list|10': [
                         {
                             'id|+1': 10000000,
-                            className: '@pick(["计算机一班", "计算机二班","GC班"])',
+                            'className|+1': [
+                                '第6期自治区管理干部研修班',
+                                '第33期中青年干部培训动',
+                                '第55期县处级领导干部进修—班',
+                                '第55期县处级领导干部进修二班',
+                                '第27期少数民族领导干部培训班',
+                                '第16期县处级女干部培训班',
+                                '第4期县处级公务员任职培训班',
+                                '第2期多（镇）长培训—班',
+                                '第2期多（镇）长培训二班',
+                                '第10期市、县（市、区）党校师资培训班',
+                            ],
                             'judgesNumber|10-20': 20,
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             // flag: '@pick(["是", "否"])',
@@ -162,9 +173,6 @@ export default {
                     ],
                 });
                 // 数据列表在这里设置
-                for (let i = 0; i < mockList.list.length; i++) {
-                    mockList.list[i].className = arr[i];
-                }
                 const dataSource = mockList.list;
                 const ro = {
                     extra: {
