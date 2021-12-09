@@ -3,11 +3,15 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <a-row type="flex">
-                    <a-col :span="5" style="overflow: auto">
-                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    <a-col :span="5">
+                        <div class="table-left">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData">
+                                <a-icon slot="area-chart" type="area-chart-o" />
+                            </a-tree>
+                        </div>
                     </a-col>
                     <a-col :span="1">
-                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                        <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
                     <a-col :span="18">
                         <crud-table
@@ -19,7 +23,7 @@
                             :api="api"
                             :query="{ orgId: curOrgId }"
                             :scrollX="600"
-                            :defaultPagination="false"
+                            :defaultPagination="true"
                         >
                             <template #commands>
                                 <a-form-model layout="inline">
@@ -123,26 +127,27 @@ export default {
         ];
         // 初始化数据start
         const page = function() {
-            const p = new Promise((resolve, reject) => {
+            const p = new Promise(resolve => {
+                // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            name: '@cname()',
+                            sex: '@pick(["男","女"])',
+                            birth: '@date(yyyy-MM-dd)',
+                            nation: '@pick(["汉族","壮族"])',
+                            total: '@integer(1,9)',
+                        },
+                    ],
+                });
+
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        updator: 'zzm',
-                        updatedTime: '2021-12-01 16:39:00',
-                        course: '计算机科学与技术',
-                        startTime: '2021-12-04 16:39:00',
-                        student: '章三',
-                        before: 'xx',
-                        after: 'xx',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },
@@ -222,11 +227,10 @@ export default {
 
         return {
             columns,
-            showOrg: false,
+            treeData,
             curOrgId: undefined,
             moment,
             dateFormat: 'YYYY/MM/DD',
-            treeData,
         };
     },
     mounted() {
@@ -272,6 +276,8 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;

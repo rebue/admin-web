@@ -4,17 +4,18 @@
             <base-manager ref="baseManager">
                 <template #managerCard>
                     <a-row type="flex">
-                        <a-col :span="5" style="overflow: auto">
-                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
+                        <a-col :span="5">
+                            <div class="table-left">
+                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
                         </a-col>
                         <a-col :span="1">
-                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                            <a-divider type="vertical" style="height:100%"></a-divider>
                         </a-col>
                         <a-col :span="18">
-                            <a-col :span="19">
-                                <P>主体班学员“两点一线"量化考核表</P>
-                            </a-col>
+                            <h3 class="tex">主体班学员“两点一线"量化考核表</h3>
+                            <Table />
                         </a-col>
                     </a-row>
                 </template>
@@ -27,6 +28,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import Table from './Table.vue';
 
 export default {
     name: 'Manager',
@@ -34,6 +36,7 @@ export default {
         BaseManager,
         // EditForm,
         // CrudTable,
+        Table,
     },
 
     data() {
@@ -122,5 +125,8 @@ export default {
         border-left: 1px solid #eee;
         margin-left: 10px;
     }
+}
+.tex {
+    text-align: center;
 }
 </style>

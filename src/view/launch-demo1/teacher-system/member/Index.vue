@@ -19,8 +19,12 @@
                     </a-form-model-item>
                 </a-form-model>
                 <a-row type="flex">
-                    <a-col :span="5" style="overflow:auto">
-                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    <a-col :span="5">
+                        <div class="table-left">
+                            <a-tree :defaultExpandAll="true" show-icon :tree-data="treeData">
+                                <a-icon slot="team" type="team" />
+                            </a-tree>
+                        </div>
                     </a-col>
                     <a-col :span="1">
                         <a-divider type="vertical" style="height:100%"></a-divider>
@@ -49,7 +53,7 @@
                             :api="api"
                             :query="{ orgId: curOrgId }"
                             :scrollX="600"
-                            :defaultPagination="false"
+                            :defaultPagination="true"
                             :rowSelection="{}"
                         >
                         </crud-table>
@@ -115,7 +119,45 @@ export default {
                 ],
             },
         ];
-        this.api = racRealmApi;
+
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            activate: '报到',
+                            student: '@cname()',
+                            inTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            outTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            way: '刷卡',
+                            status: '正常',
+                            desc: '',
+                        },
+                    ],
+                });
+
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const columns = [
             {
                 dataIndex: 'no',
@@ -146,7 +188,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'outTime',
+                dataIndex: 'way',
                 title: '考勤方式',
                 width: 150,
                 ellipsis: true,
@@ -194,9 +236,8 @@ export default {
 
         return {
             columns,
-            showOrg: false,
-            curOrgId: undefined,
             treeData,
+            curOrgId: undefined,
         };
     },
     mounted() {
@@ -242,6 +283,8 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;
