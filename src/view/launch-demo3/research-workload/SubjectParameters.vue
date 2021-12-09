@@ -53,11 +53,53 @@ export default {
         OrgTree,
     },
     data() {
-        this.api = racRealmApi;
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3': [
+                        {
+                            'id|+1': 122823,
+
+                            'parameter|+1': [
+                                '高等院校，其他学校',
+                                '中国社会科学院',
+                                '省、市社会科学院',
+                                '各级党校',
+                                '',
+                                '省、市社会科学院',
+                            ],
+                            // level: '@pick(["一级","二级","三级"])',
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+
+            return p;
+        };
+
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
 
         const columns = [
             {
-                dataIndex: 'achievementNo',
+                dataIndex: 'parameter',
                 title: '参数值',
             },
         ];
