@@ -6,7 +6,6 @@
                 <a-row type="flex">
                     <a-col :span="5">
                         <a-tree
-                            class="ant-card-body"
                             v-model="checkedKeys"
                             :auto-expand-parent="autoExpandParent"
                             :default-selected-keys="selectedKeys"
