@@ -97,7 +97,41 @@ export default {
         // OrgTree,
     },
     data() {
-        this.api = {};
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-10': [
+                        {
+                            'id|+1': 10000000,
+                            'stuId|100000000-200000000': 111111111,
+                            name: '@cname',
+                            'class|40-100': 40,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const treeData = [
             {
                 title: '主岗正高职称',
@@ -178,40 +212,40 @@ export default {
             // },
         ];
 
-        const page = function() {
-            const p = new Promise((resolve, reject) => {
-                // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        name: '吴建国',
-                        bm: '法学教研部',
-                        zc: '教师',
-                        xb: '男',
-                    },
-                    {
-                        id: 2,
-                        no: 2,
-                        name: '黄建国',
-                        bm: '法学教研部',
-                        zc: '教授',
-                        xb: '男',
-                    },
-                ];
-                const ro = {
-                    extra: {
-                        page: {
-                            list: dataSource,
-                            total: dataSource.length,
-                        },
-                        list: dataSource,
-                    },
-                };
-                resolve(ro);
-            });
-            return p;
-        };
+        // const page = function() {
+        //     const p = new Promise((resolve, reject) => {
+        //         // 数据列表在这里设置
+        //         const dataSource = [
+        //             {
+        //                 id: 1,
+        //                 no: 1,
+        //                 name: '吴建国',
+        //                 bm: '法学教研部',
+        //                 zc: '教师',
+        //                 xb: '男',
+        //             },
+        //             {
+        //                 id: 2,
+        //                 no: 2,
+        //                 name: '黄建国',
+        //                 bm: '法学教研部',
+        //                 zc: '教授',
+        //                 xb: '男',
+        //             },
+        //         ];
+        //         const ro = {
+        //             extra: {
+        //                 page: {
+        //                     list: dataSource,
+        //                     total: dataSource.length,
+        //                 },
+        //                 list: dataSource,
+        //             },
+        //         };
+        //         resolve(ro);
+        //     });
+        //     return p;
+        // };
 
         this.tableCommands = [
             // {

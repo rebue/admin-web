@@ -3,22 +3,26 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                >
-                    <template #left>
-                        <div class="table-left" style="width: 250px; overflow-x: scroll">
-                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow:auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                        ></crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>

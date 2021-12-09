@@ -3,30 +3,29 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :query="{ orgId: curOrg.id }"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree.platform"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :query="{ orgId: curOrg.id }"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            :rowSelection="{}"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -35,16 +34,89 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '党校研究生',
+                key: 'dxyjs',
+                children: [
+                    {
+                        title: '2021',
+                        key: '1',
+                        children: [
+                            {
+                                title: '中共广西区委党校',
+                                key: '101',
+                            },
+                        ],
+                    },
+                    {
+                        title: '2020',
+                        key: '2',
+                        children: [
+                            {
+                                title: '广西区委党校',
+                                key: '201',
+                            },
+                        ],
+                    },
+                    {
+                        title: '2019',
+                        key: '3',
+                        children: [
+                            {
+                                title: '百色市委党校',
+                                key: '301',
+                            },
+                            {
+                                title: '广西区委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '北海市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '桂林市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '河池市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '贺州市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '来宾市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '柳州市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '梧州市委党校',
+                                key: '302',
+                            },
+                            {
+                                title: '玉林市委党校',
+                                key: '302',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
@@ -171,6 +243,7 @@ export default {
             columns,
             showOrg: false,
             curOrg: '',
+            treeData,
         };
     },
     mounted() {
@@ -182,15 +255,6 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        handleOrgMenuClick(item) {
-            this.curOrg = item;
-            this.refreshTableData();
-            //
-        },
-        handleOrgTreeSelect(item) {
-            this.curOrg = item;
-            //
         },
         handleAdd() {
             //

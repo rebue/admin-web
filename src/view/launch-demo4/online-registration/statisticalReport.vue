@@ -77,7 +77,42 @@ export default {
         // OrgTree,
     },
     data() {
-        this.api = {};
+        // 初始化数据start
+        const page = function() {
+            const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|3-20': [
+                        {
+                            'id|+1': 10000000,
+                            code: '@pick(["4100","5100","5200"])',
+                            company: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
+                            class: '@pick(["党校研究生","中政大研究生"])',
+                            'total|3500-4000': 3500,
+                        },
+                    ],
+                });
+                // 数据列表在这里设置
+                const dataSource = mockList.list;
+                const ro = {
+                    extra: {
+                        page: {
+                            list: dataSource,
+                            total: 20,
+                        },
+                        list: dataSource,
+                    },
+                };
+                resolve(ro);
+            });
+            return p;
+        };
+        this.api = {
+            page,
+            listAll: page,
+            list: page,
+        };
         const treeData = [
             {
                 title: '主岗正高职称',
@@ -140,41 +175,6 @@ export default {
             //     scopedSlots: { customRender: 'action' },
             // },
         ];
-
-        const page = function() {
-            const p = new Promise((resolve, reject) => {
-                // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        name: '吴建国',
-                        bm: '法学教研部',
-                        zc: '教师',
-                        xb: '男',
-                    },
-                    {
-                        id: 2,
-                        no: 2,
-                        name: '黄建国',
-                        bm: '法学教研部',
-                        zc: '教授',
-                        xb: '男',
-                    },
-                ];
-                const ro = {
-                    extra: {
-                        page: {
-                            list: dataSource,
-                            total: dataSource.length,
-                        },
-                        list: dataSource,
-                    },
-                };
-                resolve(ro);
-            });
-            return p;
-        };
 
         this.tableCommands = [
             // {

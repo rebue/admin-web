@@ -3,38 +3,30 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    :showKeywords="true"
-                    ref="crudTable"
-                    :query="{ orgId: curOrg.id }"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #keywordsLeft>
-                        <div style="margin-right: 10px">
-                            <a-select
-                                :default-value="provinceData[0]"
-                                style="width: 80px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in provinceData" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </template>
-                    <template #left>
-                        <div class="table-left" style="width: 250px; overflow-x: scroll">
-                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow:auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            :showKeywords="true"
+                            ref="crudTable"
+                            :query="{ orgId: curOrg.id }"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            :rowSelection="{}"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>

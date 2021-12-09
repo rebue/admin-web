@@ -3,30 +3,29 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :query="{ orgId: curOrg.id }"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree.platform"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :query="{ orgId: curOrg.id }"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            :rowSelection="{}"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -35,16 +34,83 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '党校研究生',
+                key: 'dxyjs',
+                children: [
+                    {
+                        title: '2021',
+                        key: '20211',
+                        children: [
+                            {
+                                title: '中共广西区委党校',
+                                key: '20211-1',
+                            },
+                            {
+                                title: '中共党史与党的建设',
+                                key: '20211-2',
+                            },
+                            {
+                                title: '经济管理',
+                                key: '20211-3',
+                            },
+                            {
+                                title: '马克思主义中国化研究',
+                                key: '20211-4',
+                            },
+                            {
+                                title: '宪法与行政法',
+                                key: '20211-5',
+                            },
+                            {
+                                title: '公共管理',
+                                key: '20211-6',
+                            },
+                        ],
+                    },
+                    {
+                        title: '2020',
+                        key: '20201',
+                        children: [
+                            {
+                                title: '中共广西区委党校',
+                                key: '20201-1',
+                            },
+                            {
+                                title: '中共党史与党的建设',
+                                key: '20201-2',
+                            },
+                            {
+                                title: '经济管理',
+                                key: '20201-3',
+                            },
+                            {
+                                title: '马克思主义中国化研究',
+                                key: '20201-4',
+                            },
+                            {
+                                title: '宪法与行政法',
+                                key: '20201-5',
+                            },
+                            {
+                                title: '公共管理',
+                                key: '20201-6',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
@@ -171,6 +237,7 @@ export default {
             columns,
             showOrg: false,
             curOrg: '',
+            treeData,
         };
     },
     mounted() {
@@ -182,15 +249,6 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
-        },
-        handleOrgMenuClick(item) {
-            this.curOrg = item;
-            this.refreshTableData();
-            //
-        },
-        handleOrgTreeSelect(item) {
-            this.curOrg = item;
-            //
         },
         handleAdd() {
             //
