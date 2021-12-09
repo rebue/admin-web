@@ -73,11 +73,11 @@ export default {
         .login-card {
             width: 500px;
             height: 400px;
-            margin: 0 auto;
             margin-top: 100px;
             padding: 50px;
-            // background-color: aliceblue;
             background-color: #fff;
+            position: absolute;
+            right: 10%;
             .form {
                 width: auto;
             }
