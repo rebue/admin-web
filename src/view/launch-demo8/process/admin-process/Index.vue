@@ -2,14 +2,16 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-button>导入流程</a-button>
-                <a-button>删除</a-button>
-                <a-button>保存</a-button>
-                <a-button>排序</a-button>
-                <a-button>构建</a-button>
-                <a-button>复制权限</a-button>
-                <a-button>粘贴权限</a-button>
-                <a-row>
+                <div style="margin-bottom:10px">
+                    <a-button class="btn">导入流程</a-button>
+                    <a-button class="btn">删除</a-button>
+                    <a-button class="btn">保存</a-button>
+                    <a-button class="btn">排序</a-button>
+                    <a-button class="btn">构建</a-button>
+                    <a-button class="btn">复制权限</a-button>
+                    <a-button class="btn">粘贴权限</a-button>
+                </div>
+                <a-row type="flex">
                     <a-col span="5">
                         <div style="overflow: scroll;border-top: 1px solid #000;margin-top: 5px">
                             <a-tree
@@ -23,362 +25,339 @@
                             />
                         </div>
                     </a-col>
-                    <a-col span="19">
+                    <a-col span="1">
+                        <div>
+                            <a-divider type="vertical" style="height:700px"></a-divider>
+                        </div>
+                    </a-col>
+                    <a-col span="18">
                         <a-tabs default-active-key="1">
                             <a-tab-pane key="1" tab="流程图">
-                                <a-col span="15"> </a-col>
-                                <a-col span="9">
-                                    <div style="overflow: scroll;border: 1px solid #000;padding: 10px;height: 700px">
-                                        <a-form-model
-                                            :model="form"
-                                            :label-col="{ span: 8 }"
-                                            :wrapper-col="{ span: 16 }"
-                                        >
-                                            <a-form-model-item label="业务主题">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        办公管理
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        行政管理
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程编码">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程名称">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item label="流程图片">
-                                                <a-button style="height: 80px;width: 80px">图片</a-button>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a-button>选择</a-button>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程备注">
-                                                <a-textarea style="max-height: 50px;max-width: 200px"></a-textarea>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程属性">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        独立流程
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        模型
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程状态">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        使用
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        未使用
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="监控人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="启用时间">
-                                                <a-date-picker
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="停用时间">
-                                                <a-date-picker
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建时间">
-                                                <a-date-picker
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                        </a-form-model>
-                                    </div>
-                                </a-col>
+                                <div>
+                                    <a-form-model :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }">
+                                        <a-form-model-item label="业务主题">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    办公管理
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    行政管理
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程编码">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程名称">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="流程图片">
+                                            <a-button style="height: 80px;width: 80px">图片</a-button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a-button>选择</a-button>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程备注">
+                                            <a-textarea></a-textarea>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程属性">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    独立流程
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    模型
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程状态">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    使用
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    未使用
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="监控人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="启用时间">
+                                            <a-date-picker
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="停用时间">
+                                            <a-date-picker
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建时间">
+                                            <a-date-picker
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </div>
                             </a-tab-pane>
                             <a-tab-pane key="2" tab="流程属性">
-                                <a-col span="15"> </a-col>
-                                <a-col span="9">
-                                    <div style="overflow: scroll;border: 1px solid #000;padding: 10px">
-                                        <a-form-model
-                                            :model="form"
-                                            :label-col="{ span: 8 }"
-                                            :wrapper-col="{ span: 16 }"
-                                        >
-                                            <a-form-model-item label="业务主题">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        办公管理
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        行政管理
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程编码">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程名称">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item label="流程图片">
-                                                <a-button style="height: 80px;width: 80px">图片</a-button>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a-button>选择</a-button>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程备注">
-                                                <a-textarea style="max-height: 50px;max-width: 200px"></a-textarea>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程属性">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        独立流程
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        模型
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程状态">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        使用
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        未使用
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="监控人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="启用时间">
-                                                <a-date-picker
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="停用时间">
-                                                <a-date-picker
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                        </a-form-model>
-                                    </div>
-                                </a-col>
+                                <div style="overflow: scroll;padding: 10px">
+                                    <a-form-model :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }">
+                                        <a-form-model-item label="业务主题">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    办公管理
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    行政管理
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程编码">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程名称">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="流程图片">
+                                            <a-button style="height: 80px;width: 80px">图片</a-button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a-button>选择</a-button>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程备注">
+                                            <a-textarea></a-textarea>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程属性">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    独立流程
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    模型
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程状态">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    使用
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    未使用
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="监控人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="启用时间">
+                                            <a-date-picker
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="停用时间">
+                                            <a-date-picker
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </div>
                             </a-tab-pane>
                             <a-tab-pane key="3" tab="权限管理">
-                                <a-col span="15"> </a-col>
-                                <a-col span="9">
-                                    <div style="overflow: scroll;border: 1px solid #000;padding: 10px">
-                                        <a-form-model
-                                            :model="form"
-                                            :label-col="{ span: 8 }"
-                                            :wrapper-col="{ span: 16 }"
-                                        >
-                                            <a-form-model-item label="业务主题">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        办公管理
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        行政管理
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程编码">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程名称">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item label="流程图片">
-                                                <a-button style="height: 80px;width: 80px">图片</a-button>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a-button>选择</a-button>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程备注">
-                                                <a-textarea style="max-height: 50px;max-width: 200px"></a-textarea>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程属性">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        独立流程
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        模型
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程状态">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        使用
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        未使用
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="监控人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="启用时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="停用时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                        </a-form-model>
-                                    </div>
-                                </a-col>
+                                <div style="overflow: scroll;padding: 10px">
+                                    <a-form-model :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }">
+                                        <a-form-model-item label="业务主题">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    办公管理
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    行政管理
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程编码">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程名称">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="流程图片">
+                                            <a-button style="height: 80px;width: 80px">图片</a-button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a-button>选择</a-button>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程备注">
+                                            <a-textarea></a-textarea>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程属性">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    独立流程
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    模型
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程状态">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    使用
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    未使用
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="监控人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="启用时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="停用时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </div>
                             </a-tab-pane>
                             <a-tab-pane key="4" tab="流程说明">
-                                <a-col span="15"> </a-col>
-                                <a-col span="9">
-                                    <div style="overflow: scroll;border: 1px solid #000;padding: 10px">
-                                        <a-form-model
-                                            :model="form"
-                                            :label-col="{ span: 8 }"
-                                            :wrapper-col="{ span: 16 }"
-                                        >
-                                            <a-form-model-item label="业务主题">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        办公管理
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        行政管理
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程编码">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程名称">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item label="流程图片">
-                                                <a-button style="height: 80px;width: 80px">图片</a-button>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a-button>选择</a-button>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程备注">
-                                                <a-textarea style="max-height: 50px;max-width: 200px"></a-textarea>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程属性">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        独立流程
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        模型
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="流程状态">
-                                                <a-select v-model="form.region" placeholder="">
-                                                    <a-select-option value="bangong">
-                                                        使用
-                                                    </a-select-option>
-                                                    <a-select-option value="xingzheng">
-                                                        未使用
-                                                    </a-select-option>
-                                                </a-select>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="监控人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="启用时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="停用时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建时间">
-                                                <a-date-picker
-                                                    v-model="form.date1"
-                                                    show-time
-                                                    type="date"
-                                                    placeholder="Pick a date"
-                                                    style="width: 70%;"
-                                                />
-                                            </a-form-model-item>
-                                            <a-form-model-item style="margin-top: -15px" label="创建人">
-                                                <a-input></a-input>
-                                            </a-form-model-item>
-                                        </a-form-model>
-                                    </div>
-                                </a-col>
+                                <div style="overflow: scroll; padding: 10px">
+                                    <a-form-model :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }">
+                                        <a-form-model-item label="业务主题">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    办公管理
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    行政管理
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程编码">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程名称">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="流程图片">
+                                            <a-button style="height: 80px;width: 80px">图片</a-button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a-button>选择</a-button>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="流程说明">
+                                            <a-textarea></a-textarea>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程属性">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    独立流程
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    模型
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="流程状态">
+                                            <a-select v-model="form.region" placeholder="">
+                                                <a-select-option value="bangong">
+                                                    使用
+                                                </a-select-option>
+                                                <a-select-option value="xingzheng">
+                                                    未使用
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="监控人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="启用时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="停用时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建时间">
+                                            <a-date-picker
+                                                v-model="form.date1"
+                                                show-time
+                                                type="date"
+                                                placeholder="Pick a date"
+                                                style="width: 70%;"
+                                            />
+                                        </a-form-model-item>
+                                        <a-form-model-item style="margin-top: -15px" label="创建人">
+                                            <a-input></a-input>
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </div>
                             </a-tab-pane>
                         </a-tabs>
                     </a-col>
@@ -535,4 +514,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+    margin-right: 10px;
+}
+</style>
