@@ -2,12 +2,13 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-row>
-                    <a-col :span="6">
-                        <div class="table-left">
-                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
-                        </div>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
                     </a-col>
                     <a-col :span="18">
                         <a-tabs>
@@ -15,7 +16,7 @@
                             <a-tab-pane :key="2" tab="组成员"></a-tab-pane>
                         </a-tabs>
                         <a-row>
-                            <a-tree checkable class="ant-card-body" :defaultExpandAll="true" :tree-data="permData" />
+                            <a-tree checkable :defaultExpandAll="true" :tree-data="permData" />
                         </a-row>
                     </a-col>
                 </a-row>

@@ -3,29 +3,28 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree.platform"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                        <div class="table-divider"></div>
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            :rowSelection="{}"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
     </fragment>
@@ -34,15 +33,424 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '@/view/rac/rac-org/Tree';
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '2021',
+                key: '1',
+                children: [
+                    {
+                        title: '中共党史与党的建设',
+                        key: '101',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '101-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '101-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '101-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '101-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '101-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '经济管理',
+                        key: '102',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '102-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '102-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '102-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '102-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '102-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '马克思主义中国化研究',
+                        key: '103',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '103-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '103-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '103-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '103-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '103-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '宪法与行政法',
+                        key: '104',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '104-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '104-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '104-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '104-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '104-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '公共管理',
+                        key: '105',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '105-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '105-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '105-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '105-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '105-5',
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                title: '2020',
+                key: '2',
+                children: [
+                    {
+                        title: '中共党史与党的建设',
+                        key: '201',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '201-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '201-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '201-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '201-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '201-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '经济管理',
+                        key: '202',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '202-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '202-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '202-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '202-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '202-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '马克思主义中国化研究',
+                        key: '203',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '203-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '203-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '203-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '203-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '203-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '宪法与行政法',
+                        key: '204',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '204-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '204-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '204-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '204-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '204-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '公共管理',
+                        key: '205',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '205-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '205-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '205-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '205-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '205-5',
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                title: '2019',
+                key: '3',
+                children: [
+                    {
+                        title: '中共党史与党的建设',
+                        key: '301',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '301-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '301-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '301-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '301-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '301-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '经济管理',
+                        key: '302',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '302-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '302-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '302-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '302-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '302-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '马克思主义中国化研究',
+                        key: '303',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '303-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '303-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '303-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '303-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '303-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '宪法与行政法',
+                        key: '304',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '304-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '304-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '304-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '304-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '304-5',
+                            },
+                        ],
+                    },
+                    {
+                        title: '公共管理',
+                        key: '305',
+                        children: [
+                            {
+                                title: '第一学期',
+                                key: '305-1',
+                            },
+                            {
+                                title: '第二学期',
+                                key: '305-2',
+                            },
+                            {
+                                title: '第三学期',
+                                key: '305-3',
+                            },
+                            {
+                                title: '第四学期',
+                                key: '305-4',
+                            },
+                            {
+                                title: '第五学期',
+                                key: '305-5',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
@@ -171,24 +579,13 @@ export default {
             realm: {
                 id: '1',
             },
+            treeData,
         };
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                // this.refreshTableData();
-            });
-        },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            // this.$nextTick(this.refreshTableData);
-        },
         handleAdd() {
             //
         },
