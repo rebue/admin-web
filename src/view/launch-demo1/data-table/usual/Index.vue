@@ -2,49 +2,47 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :query="{ orgId: curOrgId }"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                    <template #commands>
-                        <a-form-model layout="inline">
-                            <a-form-model-item label="开始与结束时间">
-                                <a-range-picker
-                                    :default-value="[
-                                        moment('2021/08/31', dateFormat),
-                                        moment('2021/12/31', dateFormat),
-                                    ]"
-                                    :format="dateFormat"
-                                />
-                            </a-form-model-item>
-                            <a-form-model-item label="培训次数">
-                                <a-input></a-input>
-                            </a-form-model-item>
-                            <a-form-model-item label="显示前n条记录">
-                                <a-input></a-input>
-                            </a-form-model-item>
-                        </a-form-model>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ orgId: curOrgId }"
+                            :scrollX="600"
+                            :defaultPagination="false"
+                        >
+                            <template #commands>
+                                <a-form-model layout="inline">
+                                    <a-form-model-item label="开始与结束时间">
+                                        <a-range-picker
+                                            :default-value="[
+                                                moment('2021/08/31', dateFormat),
+                                                moment('2021/12/31', dateFormat),
+                                            ]"
+                                            :format="dateFormat"
+                                        />
+                                    </a-form-model-item>
+                                    <a-form-model-item label="培训次数">
+                                        <a-input></a-input>
+                                    </a-form-model-item>
+                                    <a-form-model-item label="显示前n条记录">
+                                        <a-input></a-input>
+                                    </a-form-model-item>
+                                </a-form-model>
+                            </template>
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -56,8 +54,6 @@ import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
 import moment from 'moment';
 
 export default {
@@ -66,9 +62,65 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '最常来的学员排名',
+                key: '1',
+                children: [
+                    {
+                        title: '学员1',
+                        key: '101',
+                    },
+                    {
+                        title: '学员2',
+                        key: '102',
+                    },
+                    {
+                        title: '学员3',
+                        key: '103',
+                    },
+                ],
+            },
+            {
+                title: '最常来的单位排名',
+                key: '2',
+                children: [
+                    {
+                        title: '单位1',
+                        key: '201',
+                    },
+                    {
+                        title: '单位2',
+                        key: '202',
+                    },
+                    {
+                        title: '单位3',
+                        key: '203',
+                    },
+                ],
+            },
+            {
+                title: '重点培养对象统计',
+                key: '3',
+                children: [
+                    {
+                        title: '对象1',
+                        key: '301',
+                    },
+                    {
+                        title: '对象2',
+                        key: '302',
+                    },
+                    {
+                        title: '对象3',
+                        key: '303',
+                    },
+                ],
+            },
+        ];
         // 初始化数据start
         const page = function() {
             const p = new Promise((resolve, reject) => {
@@ -174,6 +226,7 @@ export default {
             curOrgId: undefined,
             moment,
             dateFormat: 'YYYY/MM/DD',
+            treeData,
         };
     },
     mounted() {
@@ -210,18 +263,6 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
-        },
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                this.refreshTableData();
-            });
-        },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            this.$nextTick(this.refreshTableData);
         },
     },
 };

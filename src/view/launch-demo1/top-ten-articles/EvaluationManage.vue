@@ -2,34 +2,31 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crud"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :rowSelection="{}"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    @moveUp="handleMoveUp"
-                    @moveDown="handleMoveDown"
-                >
-                    <template #left>
-                        <div v-show="showOrg" style="margin-right: 10px" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crud"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :rowSelection="{}"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            @moveUp="handleMoveUp"
+                            @moveDown="handleMoveDown"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
-
         <edit-form ref="editForm" @close="handleEditFormClose" />
         <manage-menus-form :curApp.sync="curApp" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
         <edit-auth-form ref="editAuthForm" @close="handleEditFormClose" />
@@ -44,7 +41,6 @@ import BaseManager from '../../../component/rebue/BaseManager';
 import EditForm from '../../rac/rac-account/EditForm';
 import EditAuthForm from '../../rac/rac-app/EditAuthForm';
 import ManageMenusForm from '../../rac/rac-app/ManageMenusForm';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'ClassManage',
@@ -55,9 +51,83 @@ export default {
         CrudTable,
         ManageMenusForm,
         // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '2021年春季学期',
+                key: '1',
+                children: [
+                    {
+                        title: '2021年3月份十佳文章评比',
+                        key: '101',
+                    },
+                    {
+                        title: '班2021年4月份十佳文章评比级2',
+                        key: '102',
+                    },
+                    {
+                        title: '2021年5月份十佳文章评比',
+                        key: '103',
+                    },
+                ],
+            },
+            {
+                title: '2021年秋季学期',
+                key: '2',
+                children: [
+                    {
+                        title: '2021年11月份十佳文章评比',
+                        key: '201',
+                    },
+                    {
+                        title: '2021年10月份十佳文章评比',
+                        key: '202',
+                    },
+                    {
+                        title: '2021年9月份十佳文章评比',
+                        key: '203',
+                    },
+                ],
+            },
+            {
+                title: '2020年春季学期',
+                key: '3',
+                children: [
+                    {
+                        title: '2020年3月份十佳文章评比',
+                        key: '301',
+                    },
+                    {
+                        title: '班2020年4月份十佳文章评比级2',
+                        key: '302',
+                    },
+                    {
+                        title: '2020年5月份十佳文章评比',
+                        key: '303',
+                    },
+                ],
+            },
+            {
+                title: '2020年秋季学期',
+                key: '4',
+                children: [
+                    {
+                        title: '2020年11月份十佳文章评比',
+                        key: '401',
+                    },
+                    {
+                        title: '2020年10月份十佳文章评比',
+                        key: '402',
+                    },
+                    {
+                        title: '2020年9月份十佳文章评比',
+                        key: '403',
+                    },
+                ],
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -228,6 +298,7 @@ export default {
             realms: [],
             columns,
             showOrg: false,
+            treeData,
         };
     },
     computed: {

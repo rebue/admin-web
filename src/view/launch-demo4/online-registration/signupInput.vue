@@ -13,7 +13,7 @@
                     :defaultPagination="true"
                 >
                     <template #left>
-                        <div class="table-left" style="width: 250px;overflow-x:scroll">
+                        <div class="table-left" style="width: 250px; overflow-x: scroll">
                             <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
@@ -34,64 +34,71 @@ export default {
         CrudTable,
     },
     data() {
+        //侧边栏数据
         const treeData = [
             {
-                title: '2021',
-                key: '20211',
+                title: '党校研究生',
+                key: 'dxyjs',
                 children: [
                     {
-                        title: '中共广西区委党校',
-                        key: '20211-1',
+                        title: '2021',
+                        key: '20211',
+                        children: [
+                            {
+                                title: '中共广西区委党校',
+                                key: '20211-1',
+                            },
+                            {
+                                title: '中共党史与党的建设',
+                                key: '20211-2',
+                            },
+                            {
+                                title: '经济管理',
+                                key: '20211-3',
+                            },
+                            {
+                                title: '马克思主义中国化研究',
+                                key: '20211-4',
+                            },
+                            {
+                                title: '宪法与行政法',
+                                key: '20211-5',
+                            },
+                            {
+                                title: '公共管理',
+                                key: '20211-6',
+                            },
+                        ],
                     },
                     {
-                        title: '中共党史与党的建设',
-                        key: '20211-2',
-                    },
-                    {
-                        title: '经济管理',
-                        key: '20211-3',
-                    },
-                    {
-                        title: '马克思主义中国化研究',
-                        key: '20211-4',
-                    },
-                    {
-                        title: '宪法与行政法',
-                        key: '20211-5',
-                    },
-                    {
-                        title: '公共管理',
-                        key: '20211-6',
-                    },
-                ],
-            },
-            {
-                title: '2020',
-                key: '20201',
-                children: [
-                    {
-                        title: '中共广西区委党校',
-                        key: '20201-1',
-                    },
-                    {
-                        title: '中共党史与党的建设',
-                        key: '20201-2',
-                    },
-                    {
-                        title: '经济管理',
-                        key: '20201-3',
-                    },
-                    {
-                        title: '马克思主义中国化研究',
-                        key: '20201-4',
-                    },
-                    {
-                        title: '宪法与行政法',
-                        key: '20201-5',
-                    },
-                    {
-                        title: '公共管理',
-                        key: '20201-6',
+                        title: '2020',
+                        key: '20201',
+                        children: [
+                            {
+                                title: '中共广西区委党校',
+                                key: '20201-1',
+                            },
+                            {
+                                title: '中共党史与党的建设',
+                                key: '20201-2',
+                            },
+                            {
+                                title: '经济管理',
+                                key: '20201-3',
+                            },
+                            {
+                                title: '马克思主义中国化研究',
+                                key: '20201-4',
+                            },
+                            {
+                                title: '宪法与行政法',
+                                key: '20201-5',
+                            },
+                            {
+                                title: '公共管理',
+                                key: '20201-6',
+                            },
+                        ],
                     },
                 ],
             },

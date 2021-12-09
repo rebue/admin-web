@@ -2,25 +2,25 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-row>
-                    <a-col :span="6">
-                        <div class="table-left">
-                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
-                        </div>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow:auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
                     <a-col :span="18">
                         <crud-table
                             ref="crudTable"
-                            :showKeywords="false"
                             :commands="tableCommands"
-                            :actions="tableActions"
                             :columns="columns"
+                            :actions="tableActions"
                             :api="api"
-                            :query="{ orgId: curOrgId }"
-                            :scrollX="600"
+                            :scrollX="800"
                             :defaultPagination="true"
-                        ></crud-table>
+                            :showKeywords="false"
+                        >
+                        </crud-table>
                     </a-col>
                 </a-row>
             </template>
@@ -211,41 +211,42 @@ export default {
             // },
         ];
 
+        //侧边栏数据
         const treeData = [
             {
                 title: '2022年春季学期培训班次',
-                key: '20181',
+                key: '1',
                 children: [
                     {
                         title: '班级1',
-                        key: '20181-1',
+                        key: '101',
                     },
                     {
                         title: '班级2',
-                        key: '20181-2',
+                        key: '102',
                     },
                     {
                         title: '班级3',
-                        key: '20181-3',
+                        key: '103',
                     },
                 ],
             },
             {
                 title: '2021年秋季学期培训班次',
-                key: '20182',
+                key: '2',
                 children: [
                     {
                         title:
                             '自治区党委管理干部“学习贯彻习近平新时代中国特色社会主义思想，加强党性修养”专题培训班第13期',
-                        key: '20182-1',
+                        key: '201',
                     },
                     {
                         title: '县处级干部“学习贯彻习近平新时代中国特色社会主义思想，加强党性修养”专题培训班第15期',
-                        key: '20182-2',
+                        key: '202',
                     },
                     {
                         title: '班级3',
-                        key: '20182-3',
+                        key: '203',
                     },
                 ],
             },

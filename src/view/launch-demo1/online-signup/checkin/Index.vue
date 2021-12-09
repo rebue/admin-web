@@ -2,7 +2,28 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-row>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow:auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :query="{ orgId: curOrgId }"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                        ></crud-table>
+                    </a-col>
+                </a-row>
+                <!-- <a-row>
                     <a-col :span="6">
                         <div class="table-left">
                             <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
@@ -22,7 +43,7 @@
                             :defaultPagination="true"
                         ></crud-table>
                     </a-col>
-                </a-row>
+                </a-row> -->
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->

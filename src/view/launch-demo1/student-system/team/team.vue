@@ -2,32 +2,28 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :rowSelection="{}"
-                    :defaultPagination="true"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            >
-                            </org-tree>
-
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow: auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                    </a-col>
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height: 100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :rowSelection="{}"
+                            :defaultPagination="true"
+                        >
+                        </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -40,8 +36,6 @@ import BaseManager from '@/component/rebue/BaseManager';
 
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'team',
@@ -50,9 +44,39 @@ export default {
         // EditForm,
         CrudTable,
         // eslint-disable-next-line vue/no-unused-components
-        OrgTree,
     },
     data() {
+        //侧边栏数据
+        const treeData = [
+            {
+                title: '2021年秋季学期培训班次',
+                key: '1',
+                children: [
+                    {
+                        title: '自治区党委管理干部“学习”',
+                        key: '101',
+                    },
+                    {
+                        title: '贯彻习近平新时代中国特色社会主义思想',
+                        key: '102',
+                    },
+                ],
+            },
+            {
+                title: '2021年春季学期培训班次',
+                key: '2',
+                children: [
+                    {
+                        title: '自治区党委管理干部“学习”',
+                        key: '201',
+                    },
+                    {
+                        title: '贯彻习近平新时代中国特色社会主义思想',
+                        key: '202',
+                    },
+                ],
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -188,6 +212,7 @@ export default {
             },
             showOrg: false,
             moth: 37,
+            treeData,
         };
     },
     mounted() {

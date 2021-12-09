@@ -3,15 +3,18 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <a-row>
-                        <a-col :span="5">
-                            <div class="table-left">
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                                <div class="table-divider"></div>
-                            </div>
+                    <a-row type="flex">
+                        <a-col :span="5" style="overflow: auto">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                            <div class="table-divider"></div>
                         </a-col>
-                        <a-col :span="19">
-                            <P>主体班学员“两点一线"量化考核表</P>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <a-col :span="19">
+                                <P>主体班学员“两点一线"量化考核表</P>
+                            </a-col>
                         </a-col>
                     </a-row>
                 </template>

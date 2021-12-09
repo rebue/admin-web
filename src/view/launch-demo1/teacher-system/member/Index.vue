@@ -18,20 +18,14 @@
                         </a-select>
                     </a-form-model-item>
                 </a-form-model>
-                <a-row>
-                    <a-col :span="5">
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
-                            <div class="table-divider"></div>
-                        </div>
+                <a-row type="flex">
+                    <a-col :span="5" style="overflow:auto">
+                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                     </a-col>
-                    <a-col :span="19">
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="18">
                         <a-tabs>
                             <a-tab-pane :key="1" tab="考勤统计"></a-tab-pane>
                             <a-tab-pane :key="2" tab="评课统计"></a-tab-pane>
@@ -58,9 +52,6 @@
                             :defaultPagination="false"
                             :rowSelection="{}"
                         >
-                            <!-- <template #left>
-                                
-                            </template> -->
                         </crud-table>
                     </a-col>
                 </a-row>
@@ -76,7 +67,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
-import OrgTree from '@/view/rac/rac-org/Tree';
+// import OrgTree from '@/view/rac/rac-org/Tree';
 
 export default {
     name: 'Manager',
@@ -84,9 +75,46 @@ export default {
         BaseManager,
         // EditForm,
         CrudTable,
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '中青年干部培训班一班',
+                key: '1',
+                children: [
+                    {
+                        title: '班级1',
+                        key: '101',
+                    },
+                    {
+                        title: '班级2',
+                        key: '102',
+                    },
+                    {
+                        title: '班级3',
+                        key: '103',
+                    },
+                ],
+            },
+            {
+                title: '中青年干部培训班二班',
+                key: '2',
+                children: [
+                    {
+                        title: '班级1',
+                        key: '201',
+                    },
+                    {
+                        title: '班级2',
+                        key: '202',
+                    },
+                    {
+                        title: '班级3',
+                        key: '203',
+                    },
+                ],
+            },
+        ];
         this.api = racRealmApi;
         const columns = [
             {
@@ -168,6 +196,7 @@ export default {
             columns,
             showOrg: false,
             curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -204,18 +233,6 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
-        },
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                this.refreshTableData();
-            });
-        },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            this.$nextTick(this.refreshTableData);
         },
     },
 };

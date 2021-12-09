@@ -3,14 +3,14 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <a-row>
-                        <a-col :span="5">
-                            <div class="table-left">
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                                <div class="table-divider"></div>
-                            </div>
+                    <a-row type="flex">
+                        <a-col :span="5" style="overflow: auto">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                         </a-col>
-                        <a-col :span="19">
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
                             <crud-table
                                 ref="crudTable"
                                 :showKeywords="false"
@@ -28,16 +28,12 @@
                                         </a-form-model-item>
                                         <a-form-model-item>
                                             <a-select default-value="lucy" style="width: 120px">
-                                                <a-select-option value="lucy">
-                                                    毕业鉴定
-                                                </a-select-option>
+                                                <a-select-option value="lucy"> 毕业鉴定 </a-select-option>
                                             </a-select>
                                         </a-form-model-item>
                                         <a-form-model-item>
                                             <a-select default-value="lucy" style="width: 120px">
-                                                <a-select-option value="lucy">
-                                                    批量打印
-                                                </a-select-option>
+                                                <a-select-option value="lucy"> 批量打印 </a-select-option>
                                             </a-select>
                                         </a-form-model-item>
                                         <a-form-model-item>
