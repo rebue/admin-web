@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -43,13 +45,19 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1:
+                                '@pick(["习近平新时代中国特色社会主义思想学习问答", "深入学习领会习近平总书记在庆祝中国共产党成立100周年大会的讲话精神"])',
+                            'value2|+1': 1,
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '习近平新时代中国特色社会主义思想学习',
-                        value2: '1',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -61,6 +69,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -132,6 +141,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

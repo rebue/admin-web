@@ -9,8 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -33,23 +34,24 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-3': [
+                        {
+                            name: '@pick(["教务处", "领导力教研", "后勤服务中心"])',
+                            'id|+1': 1,
+                            children: [
+                                {
+                                    name: '@cname()',
+                                    'parentId|+100000': 10000,
+                                },
+                            ],
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        name: '教务处',
-                        id: '933898345598025730',
-                        children: [
-                            {
-                                name: '张三',
-                                parentId: '933898345598025730',
-                            },
-                            {
-                                name: '王五',
-                                parentId: '933898345598025731',
-                            },
-                        ],
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -116,6 +118,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

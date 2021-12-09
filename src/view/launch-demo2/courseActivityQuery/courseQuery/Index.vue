@@ -9,8 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -33,18 +34,24 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
+                            value2:
+                                '@pick(["第35期中青年干部培训一班", "中青年干部培训一班（第45期）","中青年干部培训二班（第8期）"])',
+                            value3: '@pick(["毕业典礼"])',
+                            value4: '@date("yyyy-MM-dd")',
+                            value5: '@pick(["上午","下午"])',
+                            value6: '@cname()',
+                            value7: '@pick(["305教室","地点待定","会议中心报告厅"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2016年秋季学期',
-                        value2: '第三十五期中青年干部培训一班',
-                        value3: '毕业典礼',
-                        value4: '2021-10-12',
-                        value5: '上午',
-                        value6: '办公室、学员工作处',
-                        value7: '305教室',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -56,6 +63,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -73,12 +81,12 @@ export default {
                 dataIndex: 'value2',
                 title: '班级',
                 ellipsis: true,
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'value3',
                 title: '课程名称',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'value4',
@@ -129,6 +137,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

@@ -9,8 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -33,23 +34,28 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["必修课", "选修课"])',
+                            value2:
+                                '@pick(["【温馨提示】主体班授课提醒：2017年11月23日上午是您（刘慧玲老师）主讲的“发展全域旅游，建设旅游强区”专题课", "【温馨提示】主体班授课提醒：2017年11月23日下午是您（罗文峰老师）主讲的“新时代法治政府建设”专题课"])',
+                            value3: '@pick(["经济学教研部", "法学教研部"])',
+                            value4: '@cname()',
+                            'value5|1-10000000000': 1932010000,
+                            'value6|1-10000000000': 1932010000,
+                            value7: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value8: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value9: '@pick(["发生成功", "发生失败"])',
+                            value10: '@pick(["自动发送"])',
+                            'value11|0-1': 1,
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '必修课',
-                        value2:
-                            '【温馨提示】主体班授课提醒：2017年11月23日上午是您（刘慧玲老师）主讲的“发展全域旅游，建设旅游强区”专题课',
-                        value3: '经济学教研部',
-                        value4: '刘慧玲',
-                        value5: '12345678',
-                        value6: '12345678',
-                        value7: '2021-10-12 08:30:00',
-                        value8: '2021-10-12 08:30:01',
-                        value9: '发生成功',
-                        value10: '自动发送',
-                        value11: '0',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -61,6 +67,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -164,6 +171,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

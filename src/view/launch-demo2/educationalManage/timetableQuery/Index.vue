@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -24,13 +26,7 @@
                     </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -43,7 +39,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -51,7 +46,6 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -71,6 +65,78 @@ export default {
                     {
                         value1: '2021-10-12',
                         value2: '一',
+                        value3: '下午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-13',
+                        value2: '二',
+                        value3: '上午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-13',
+                        value2: '二',
+                        value3: '下午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-14',
+                        value2: '三',
+                        value3: '上午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-14',
+                        value2: '三',
+                        value3: '下午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-15',
+                        value2: '四',
+                        value3: '上午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-15',
+                        value2: '四',
+                        value3: '下午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-16',
+                        value2: '五',
+                        value3: '上午',
+                        value4: '报到',
+                        value5: '学员工作处',
+                        value6: '至诚院服务台',
+                        value7: '',
+                    },
+                    {
+                        value1: '2021-10-16',
+                        value2: '五',
                         value3: '下午',
                         value4: '报到',
                         value5: '学员工作处',
@@ -142,6 +208,30 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
+        const treeData = [
+            {
+                title: '2021年秋季学期',
+                key: '20183',
+                children: [
+                    {
+                        title: '市领导授课专题',
+                        key: '20183-1',
+                    },
+                    {
+                        title: '外聘专家教授授课专题',
+                        key: '20183-2',
+                    },
+                    {
+                        title: '本校教师授课专题',
+                        key: '20183-3',
+                    },
+                ],
+            },
+            {
+                title: '2020年秋季学期',
+                key: '20184',
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -166,6 +256,8 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {

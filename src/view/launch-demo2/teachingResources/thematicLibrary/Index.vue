@@ -9,17 +9,20 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
+                            <!-- <org-tree
                                 :ref="`orgTree.platform`"
                                 :show.sync="showOrg"
                                 realmId="platform"
                                 @click="handleOrgMenuClick"
                                 @select="handleOrgTreeSelect"
-                            />
+                            /> -->
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -32,7 +35,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
+// import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,27 +43,33 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
+        // OrgTree,
     },
     data() {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            'value1|1-1000': 1234,
+                            value2: '@pick(["理论教育（基本理论）","广西区情与实践"])',
+                            value3:
+                                '@pick(["已模式创新推进园区开发建设","习近平视察广西现场教学：北海合浦县汉代文化博物馆、铁山港公用码头、金海湾红树林生态保护区"])',
+                            value4: '@date("yyyy-MM-dd")',
+                            value5: '@pick(["讲授式", "现场教学","研讨式"])',
+                            value6: '@cname()',
+                            value7: '@pick(["是","否"])',
+                            'value8|1-40': 40,
+                            value9: '',
+                            value10: '@pick(["内部试讲通过","内部试讲未通过"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '4117',
-                        value2: '理论教育（基本理论）',
-                        value3: '已模式创新推进园区开发建设',
-                        value4: '2018-07-18',
-                        value5: '现场教学',
-                        value6: '',
-                        value7: '是',
-                        value8: '0',
-                        value9: '',
-                        value10: '内部试讲通过',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -72,6 +81,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -146,7 +156,45 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '理论教育（基本理论）',
+                key: '20181',
+                children: [
+                    {
+                        title: '班级1',
+                        key: '20181-1',
+                    },
+                    {
+                        title: '班级2',
+                        key: '20181-2',
+                    },
+                    {
+                        title: '班级3',
+                        key: '20181-3',
+                    },
+                ],
+            },
+            {
+                title: '党性教育',
+                key: '20182',
+                children: [
+                    {
+                        title:
+                            '自治区党委管理干部“学习贯彻习近平新时代中国特色社会主义思想，加强党性修养”专题培训班第13期',
+                        key: '20182-1',
+                    },
+                    {
+                        title: '县处级干部“学习贯彻习近平新时代中国特色社会主义思想，加强党性修养”专题培训班第15期',
+                        key: '20182-2',
+                    },
+                    {
+                        title: '班级3',
+                        key: '20182-3',
+                    },
+                ],
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -177,6 +225,8 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -258,6 +308,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>

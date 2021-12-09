@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -43,18 +45,23 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["报到","开学典礼","学院讲堂","周五大讲坛"])',
+                            value2: '@pick(["学院工作处","组织员","办公司","班委"])',
+                            'value3|0-1': 1,
+                            value4: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
+                            'value5|0-1': 1,
+                            value6: '',
+                            value7: '',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '报到',
-                        value2: '学院工作处',
-                        value3: '0.5',
-                        value4: '2021年秋季学期',
-                        value5: '0',
-                        value6: '',
-                        value7: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -66,6 +73,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -147,6 +155,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

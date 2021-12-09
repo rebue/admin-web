@@ -41,7 +41,6 @@ export default {
                             'id|+1': 10000000,
 
                             className: '@pick(["计算机应用基础", "软件工程","java程序设计", "设计模式","高等数学"])',
-
                             'classFund|500-1000': 1000,
                             'officeCost|500-1000': 1000,
                             'dataFee|500-1000': 1000,

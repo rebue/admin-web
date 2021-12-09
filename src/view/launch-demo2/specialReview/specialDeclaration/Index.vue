@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -32,16 +34,21 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
+                            value2:
+                                '@pick(["习近平新时代中国特色社会主义思想学习问答", "深入学习领会习近平总书记在庆祝中国共产党成立100周年大会的讲话精神"])',
+                            'value3|+1': 1,
+                            'value4|1-100': 100,
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2021年秋季学期',
-                        value2: '习近平新时代中国特色社会主义思想学习',
-                        value3: '1',
-                        value4: '1',
-                        value5: '张三',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -53,6 +60,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -128,6 +136,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

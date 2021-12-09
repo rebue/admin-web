@@ -8,9 +8,10 @@
                     :actions="tableActions"
                     :columns="columns"
                     :api="api"
-                    :showKeywords="true"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -33,23 +34,28 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["院内教室（非编）"])',
+                            value2: '@cname()',
+                            'value3|1-100000000000000000': 12345679012345678,
+                            value4: '@pick(["男", "女"])',
+                            value5: '无',
+                            value6: '@pick(["百色干部学院教室"])',
+                            'value7|1-10000000000': 123456790,
+                            value8: '@pick(["区内","区外"])',
+                            value9: '@pick(["中国农业银行白色右江支行"])',
+                            'value10|1-100000000000000000': 12345679012345678,
+                            'value11|1-1000': 1234,
+                            value12: '',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '院内教室',
-                        value2: '朱健',
-                        value3: '123456789',
-                        value4: '女',
-                        value5: '无',
-                        value6: '白色干部学院教室',
-                        value7: '123456789',
-                        value8: '区内',
-                        value9: '中国农业银行白色右江支行',
-                        value10: '123456789',
-                        value11: '0',
-                        value12: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -82,13 +88,13 @@ export default {
             {
                 dataIndex: 'value3',
                 title: '身份证',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'value4',
                 title: '性别',
                 ellipsis: true,
-                width: 150,
+                width: 100,
             },
             {
                 dataIndex: 'value5',
@@ -117,12 +123,14 @@ export default {
                 dataIndex: 'value9',
                 align: 'center',
                 title: '开户行',
+                ellipsis: true,
                 width: 150,
             },
             {
                 dataIndex: 'value10',
                 align: 'center',
                 title: '银行账号',
+                ellipsis: true,
                 width: 150,
             },
             {
@@ -187,6 +195,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

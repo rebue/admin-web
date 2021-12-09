@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -32,16 +34,20 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["单份文档", "内置功能"])',
+                            value2: '@pick(["办班文件", "教学计划", "课程", "培训班管理人员名单"])',
+                            value3: '@pick(["调训通知、领导批示、协调函等", "教学计划", "课程", "学院手册的内容"])',
+                            value4: '@pick(["教学部", "教学项目负责人"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '内置功能',
-                        value2: '教学计划（方案）',
-                        value3: '教学计划（方案）',
-                        value4: '教务处',
-                        value5: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -53,6 +59,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -128,6 +135,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

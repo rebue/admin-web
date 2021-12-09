@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <a-select default-value="2021" style="width: 120px" @change="handleChange">
@@ -21,6 +23,12 @@
                             </a-select-option>
                         </a-select>
                     </template>
+                    <!-- <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template> -->
                 </crud-table>
             </template>
         </base-manager>
@@ -42,22 +50,27 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@date("yyyy-MM-dd")',
+                            value2: '@pick(["一", "二", "三", "四", "五"])',
+                            value3: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value4: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value5: '@pick(["专业技术人才成长", "决定中国革命命运的湘江战役"])',
+                            value6: '@cname()',
+                            value7: '',
+                            value8: '@cname()',
+                            value9: '@cname()',
+                            value10: '',
+                            value11: '@pick(["线上评估", "不评估"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '8:30',
-                        value4: '11:30',
-                        value5: '聚焦建工“两大主战场”',
-                        value6: '昌松',
-                        value7: '',
-                        value8: '',
-                        value9: '',
-                        value10: '',
-                        value11: '不评估',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -69,6 +82,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -86,18 +100,19 @@ export default {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
-                width: 150,
+                width: 50,
             },
             {
                 dataIndex: 'value3',
                 title: '上课时间',
                 ellipsis: true,
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'value4',
                 title: '下课时间',
-                width: 150,
+                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'value5',
@@ -141,7 +156,48 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '教学计划',
+                key: '20181',
+            },
+            {
+                title: '最新专题',
+                key: '20182',
+            },
+            {
+                title: '专题库',
+                key: '20183',
+                children: [
+                    {
+                        title: '市领导授课专题',
+                        key: '20183-1',
+                    },
+                    {
+                        title: '外聘专家教授授课专题',
+                        key: '20183-2',
+                        children: [
+                            {
+                                title: '专业技术人才成长',
+                                key: '201831-1',
+                            },
+                            {
+                                title: '决定中国革命命运的湘江战役',
+                                key: '201831-2',
+                            },
+                        ],
+                    },
+                    {
+                        title: '本校教师授课专题',
+                        key: '20183-3',
+                    },
+                ],
+            },
+            {
+                title: '剪贴簿',
+                key: '20184',
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -166,6 +222,8 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -244,6 +302,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>

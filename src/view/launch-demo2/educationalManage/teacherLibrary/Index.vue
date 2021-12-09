@@ -8,19 +8,14 @@
                     :actions="tableActions"
                     :columns="columns"
                     :api="api"
-                    :showKeywords="true"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -33,7 +28,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -41,20 +35,24 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["教学计划（方案）", "办班文件", "异地教学方案", "学院论坛方案"])',
+                            'value2|1-10': 10,
+                            value3: '@pick(["教务处", "教学处"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '教学计划（方案）',
-                        value2: '0',
-                        value3: '教务处',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -66,6 +64,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -102,7 +101,22 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '2021年秋季学期',
+                key: '20181',
+                children: [
+                    {
+                        title: '20214501-中青年干部培训一班（第45期）',
+                        key: '20181-1',
+                    },
+                    {
+                        title: '20210801-中青年干部培训二班（第8期）',
+                        key: '20181-2',
+                    },
+                ],
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -139,6 +153,8 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -220,6 +236,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>

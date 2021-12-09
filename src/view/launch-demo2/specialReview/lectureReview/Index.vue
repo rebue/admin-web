@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
             </template>
@@ -33,19 +35,24 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["理论教育（基本理论）","广西区情与实践"])',
+                            'value2|1-10000': 10000,
+                            value3: '@cname()',
+                            value4: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
+                            'value5|1-10': 10,
+                            value6: '',
+                            'value7|1-100': 100,
+                            value8: '@date("yyyy-MM-dd")',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '习近平新时代中国特色社会主义思想学习',
-                        value2: '1',
-                        value3: '',
-                        value4: '',
-                        value5: '',
-                        value6: '',
-                        value7: '',
-                        value8: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -57,6 +64,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -144,6 +152,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
         };
     },
     mounted() {

@@ -9,7 +9,9 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
+                    :query="{ orgId: curOrgId }"
                 >
                     <template #keywordsLeft>
                         <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
@@ -24,13 +26,7 @@
                     </template>
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -43,7 +39,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
+// import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -51,28 +47,33 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
+        // OrgTree,
     },
     data() {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["101教室","102教室","103教室","104教室"])',
+                            value2: '@pick(["建筑物"])',
+                            'value3|1-10': 10,
+                            'value4|1-1000': 1000,
+                            'value5|1-10000000000': 10000000000,
+                            value6: '10.141.163.220',
+                            value7: '',
+                            value8: '',
+                            value9: '',
+                            value10: '',
+                            value11: '',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '101教室',
-                        value2: '建筑物',
-                        value3: '1号楼',
-                        value4: '101',
-                        value5: '12345678',
-                        value6: '10.141.163.220',
-                        value7: '',
-                        value8: '',
-                        value9: '',
-                        value10: '',
-                        value11: '1',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -84,6 +85,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -157,7 +159,38 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '教室',
+                key: '20181',
+                children: [
+                    {
+                        title: '101教室',
+                        key: '20181-1',
+                    },
+                    {
+                        title: '102教室',
+                        key: '20181-2',
+                    },
+                    {
+                        title: '103教室',
+                        key: '20181-3',
+                    },
+                    {
+                        title: '104教室',
+                        key: '20181-4',
+                    },
+                    {
+                        title: '105教室',
+                        key: '20181-5',
+                    },
+                    {
+                        title: '106教室',
+                        key: '20181-6',
+                    },
+                ],
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -188,6 +221,8 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            curOrgId: undefined,
+            treeData,
         };
     },
     mounted() {
@@ -266,6 +301,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>
