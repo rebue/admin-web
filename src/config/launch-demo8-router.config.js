@@ -12,8 +12,15 @@ const constantRouters = {
     name: 'launch-demo8',
     meta: { title: '综合信息系统', keepAlive: true, icon: 'setting' },
     component: () => import('@/view/launch-demo8/index/Index.vue'),
-    redirect: '/launch-demo8/process/my-process/new-process',
+    redirect: '/launch-demo8/desktop',
     children: [
+        {
+            path: '/launch-demo8/desktop',
+            name: 'launch-demo8-desktop',
+            component: () => import('@/view/launch-demo8/desktop/Index.vue'),
+            hidden: true,
+            meta: { title: '智能桌面', keepAlive: true, icon: 'global' },
+        },
         {
             path: '/launch-demo8/process',
             name: 'launch-demo8-process',

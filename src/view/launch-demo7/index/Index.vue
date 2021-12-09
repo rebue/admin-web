@@ -124,7 +124,7 @@ export default observer({
         SettingDrawer,
     },
     data() {
-        this.logoTitle = '绩效工作量应用系统';
+        this.logoTitle = '绩效工作量系统';
 
         // 设置菜单
         const sys = '/launch-demo7';

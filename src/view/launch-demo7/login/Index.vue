@@ -6,7 +6,7 @@
         <div class="main">
             <div class="login-card">
                 <div class="sign">
-                    <h2 class="title">绩效工作量应用系统</h2>
+                    <h2 class="title">绩效工作量系统</h2>
                     <Password :action="onPswdSubmit" class="pswd-form" />
                 </div>
             </div>
@@ -73,11 +73,11 @@ export default {
         .login-card {
             width: 500px;
             height: 400px;
-            margin: 0 auto;
             margin-top: 100px;
             padding: 50px;
-            // background-color: aliceblue;
             background-color: #fff;
+            position: absolute;
+            right: 10%;
             .form {
                 width: auto;
             }

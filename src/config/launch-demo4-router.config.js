@@ -11,7 +11,7 @@ const constantRouters = {
     path: '/launch-demo4',
     name: 'launch-demo4',
     component: () => import('@/view/launch-demo4/index/Index.vue'),
-    redirect: '/launch-demo4/online-registration',
+    redirect: '/launch-demo4/online-registration-config',
     children: [
         {
             path: '/launch-demo4/online-registration',
