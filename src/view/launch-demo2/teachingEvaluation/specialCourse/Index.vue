@@ -10,7 +10,7 @@
                     :api="api"
                     :showKeywords="true"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -36,10 +36,11 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             'specialName|+1': ['大学生创业就业', '摄影技术与技巧', '考研讲座'],
+                            department: '部门@integer(1,9)',
                             createTime: '@now(yyyy-MM-dd)',
                             'explain|+1': ['为大学生就业提前做准备工作', '拓展学生知识', '升学讲座'],
                         },

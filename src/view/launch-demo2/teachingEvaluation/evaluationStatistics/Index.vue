@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -33,21 +33,26 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            value1: '@cname()',
+                            value2: '@float(60,100,2,2)',
+                            value3:
+                                '@pick(["专题教学:习近平总书记视察广西重要讲话精神解读","专题教学:习近平关于民族工作重要思想"])',
+                            value4: '测试班级',
+                            value5: '@cparagraph(1)',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '黄健',
-                        value2: '0',
-                        value3: '专题教学：习近平关于民族工作重要思想',
-                        value4: '测试班级',
-                        value5: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

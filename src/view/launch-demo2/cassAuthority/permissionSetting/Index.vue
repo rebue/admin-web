@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -34,19 +34,24 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            value1: '2021年秋季学期',
+                            value2:
+                                '@pick(["自治区党委管理干部进修班（第29期）“推进改革开放构建发展新格局”研究专题","县处级女干部进修班（第25期）"])',
+                            value3: '@cname()，@cname()',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2016年秋季学期',
-                        value2: '自治区党委管理干部进修班',
-                        value3: '张三，李四',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

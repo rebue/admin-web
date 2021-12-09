@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -33,20 +33,24 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            value1: '@cname()',
+                            value2:
+                                '@pick(["高效班级学习团队建设","《忠诚》——党性教育情景课（录像教学）","行动学习理论与方法"])',
+                            value3: '@float(60,100,2,2)',
+                            value4: '县处级领导干部进修班（第77期）“学习贯彻落实习近平书记对广西工作的重要指示”',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '组织员',
-                        value2: '高效班级学习团队建设',
-                        value3: '',
-                        value4: '县处级领导干部进修班（第77期）“学习贯彻落实习近平书记对广西工作的重要指示”',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

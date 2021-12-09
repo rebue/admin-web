@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :showKeywords="true"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
                 >
                 </crud-table>
             </template>
@@ -34,23 +34,28 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
+                const mockList = require('mockjs').mock({
+                    'list|20': [
+                        {
+                            value1: '@cword(3,6)',
+                            value2: '高效班级学习团队建设',
+                            value3: '2020年秋季学期',
+                            value4: '高数@integer(1,9)班',
+                            value5: '@now(yyyy-MM-dd)',
+                            value6: '@pick(["上午","下午"])',
+                            value7: '@time(HH:mm)',
+                            value8: '@time(HH:mm)',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '组织员',
-                        value2: '高效班级学习团队建设',
-                        value3: '2020年秋季学期',
-                        value4: '高数1班',
-                        value5: '2021-10-10',
-                        value6: '上午',
-                        value7: '2021-10-10 08:30:00',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },
@@ -101,7 +106,12 @@ export default {
             {
                 dataIndex: 'value7',
                 title: '上课时间',
-                width: 250,
+                width: 100,
+            },
+            {
+                dataIndex: 'value8',
+                title: '下课时间',
+                width: 100,
             },
             // {
             //     dataIndex: 'action',
