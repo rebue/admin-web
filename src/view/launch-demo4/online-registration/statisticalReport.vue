@@ -1,65 +1,67 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <div style="margin-bottom: 20px;">
-                    <a-button class="btn">新增</a-button>
-                    <a-button class="btn">编辑</a-button>
-                    <a-button class="btn">删除</a-button>
-                    <a-button class="btn">生成报表</a-button>
-                    <a-button class="btn">清空报表</a-button>
-                    <a-button class="btn">数据归档</a-button>
-                    <a-checkbox>操作全部报表</a-checkbox>
-                </div>
-                <a-divider />
-                <a-row type="flex">
-                    <a-col :span="3">
-                        <a-tree
-                            class="ant-card-body"
-                            v-model="checkedKeys"
-                            :auto-expand-parent="autoExpandParent"
-                            :default-selected-keys="selectedKeys"
-                            :default-checked-keys="checkedKeys"
-                            :default-expanded-keys="expandedKeys"
-                            :tree-data="treeData"
-                            @check="onCheck"
-                        />
-                    </a-col>
-                    <a-col :span="1" style="margin-right:10px;border-right:1px solid #ededed"></a-col>
-                    <a-col :span="18">
-                        <p>
-                            <a-checkbox>批量模式：</a-checkbox>每个弹出的网页一次可以打印纸张<a-input
-                                value="101"
-                                style="width:60px;"
-                            />页, <a-button type="link">第一批</a-button>
-                        </p>
-                        <p>
-                            <a-checkbox default-checked>连续打印</a-checkbox> 等待打印完成时间：<a-input
-                                value="2"
-                                style="width:60px;"
-                            />秒, <a-button class="btn">打印</a-button><a-button class="btn">暂停</a-button
-                            ><a-button class="btn">打印预览</a-button>
-                        </p>
-                        <div style="padding: 20px 0;border: 1px solid #ededed">
-                            <h2 style="text-align:center">2021区党校在职研究生报考人数一览表</h2>
-                            <crud-table
-                                ref="crudTable"
-                                :showKeywords="false"
-                                :commands="tableCommands"
-                                :actions="tableActions"
-                                :columns="columns"
-                                :api="api"
-                                :query="{ orgId: curOrgId }"
-                                :scrollX="800"
-                                :defaultPagination="false"
-                            >
-                            </crud-table>
-                        </div>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <div style="margin-bottom: 20px;">
+                        <a-button class="btn">新增</a-button>
+                        <a-button class="btn">编辑</a-button>
+                        <a-button class="btn">删除</a-button>
+                        <a-button class="btn">生成报表</a-button>
+                        <a-button class="btn">清空报表</a-button>
+                        <a-button class="btn">数据归档</a-button>
+                        <a-checkbox>操作全部报表</a-checkbox>
+                    </div>
+                    <a-divider />
+                    <a-row type="flex">
+                        <a-col :span="3">
+                            <a-tree
+                                class="ant-card-body"
+                                v-model="checkedKeys"
+                                :auto-expand-parent="autoExpandParent"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                :default-expanded-keys="expandedKeys"
+                                :tree-data="treeData"
+                                @check="onCheck"
+                            />
+                        </a-col>
+                        <a-col :span="1" style="margin-right:10px;border-right:1px solid #ededed"></a-col>
+                        <a-col :span="18">
+                            <p>
+                                <a-checkbox>批量模式：</a-checkbox>每个弹出的网页一次可以打印纸张<a-input
+                                    value="101"
+                                    style="width:60px;"
+                                />页, <a-button type="link">第一批</a-button>
+                            </p>
+                            <p>
+                                <a-checkbox default-checked>连续打印</a-checkbox> 等待打印完成时间：<a-input
+                                    value="2"
+                                    style="width:60px;"
+                                />秒, <a-button class="btn">打印</a-button><a-button class="btn">暂停</a-button
+                                ><a-button class="btn">打印预览</a-button>
+                            </p>
+                            <div style="padding: 20px 0;border: 1px solid #ededed">
+                                <h2 style="text-align:center">2021区党校在职研究生报考人数一览表</h2>
+                                <crud-table
+                                    ref="crudTable"
+                                    :showKeywords="false"
+                                    :commands="tableCommands"
+                                    :actions="tableActions"
+                                    :columns="columns"
+                                    :api="api"
+                                    :query="{ orgId: curOrgId }"
+                                    :scrollX="800"
+                                    :defaultPagination="false"
+                                >
+                                </crud-table>
+                            </div>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

@@ -1,24 +1,26 @@
 // 成绩查询
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <div style="float:left;margin-top:4px">
-                    <a-input placeholder="姓名" style="width:200px;margin-right:20px" />
-                    <a-input placeholder="准考证号" style="width:200px;margin-right:20px" />
-                </div>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                >
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <div style="float:left;margin-top:4px">
+                        <a-input placeholder="姓名" style="width:200px;margin-right:20px" />
+                        <a-input placeholder="准考证号" style="width:200px;margin-right:20px" />
+                    </div>
+                    <crud-table
+                        ref="crudTable"
+                        :commands="tableCommands"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="true"
+                    >
+                    </crud-table>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

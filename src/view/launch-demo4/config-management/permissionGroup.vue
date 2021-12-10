@@ -1,28 +1,30 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row type="flex">
-                    <a-col :span="5" style="overflow: auto">
-                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
-                        <div class="table-divider"></div>
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height: 100%"></a-divider>
-                    </a-col>
-                    <a-col :span="18">
-                        <a-tabs>
-                            <a-tab-pane :key="1" tab="组权限"></a-tab-pane>
-                            <a-tab-pane :key="2" tab="组成员"></a-tab-pane>
-                        </a-tabs>
-                        <a-row>
-                            <a-tree checkable :defaultExpandAll="true" :tree-data="permData" />
-                        </a-row>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row type="flex">
+                        <a-col :span="5" style="overflow: auto">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                            <div class="table-divider"></div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <a-tabs>
+                                <a-tab-pane :key="1" tab="组权限"></a-tab-pane>
+                                <a-tab-pane :key="2" tab="组成员"></a-tab-pane>
+                            </a-tabs>
+                            <a-row>
+                                <a-tree checkable :defaultExpandAll="true" :tree-data="permData" />
+                            </a-row>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

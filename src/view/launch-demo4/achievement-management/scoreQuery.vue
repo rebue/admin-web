@@ -1,123 +1,137 @@
 //成绩查询
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-form-model layout="inline">
-                    <a-form-model-item label="研究生类型:">
-                        <div>
-                            <a-select :default-value="stuType[0]" style="width: 230px" @change="handleProvinceChange">
-                                <a-select-option v-for="province in stuType" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="年级:" style="margin-left:50px">
-                        <div>
-                            <a-select :default-value="grade[0]" style="width: 230px" @change="handleProvinceChange">
-                                <a-select-option v-for="province in grade" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="学期:" style="margin-left:50px">
-                        <div>
-                            <a-select :default-value="semester[0]" style="width: 230px" @change="handleProvinceChange">
-                                <a-select-option v-for="province in semester" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                </a-form-model>
-                <a-form-model layout="inline">
-                    <a-form-model-item label="专业:" style="margin-left:40px">
-                        <div>
-                            <a-select :default-value="major[0]" style="width: 230px" @change="handleProvinceChange">
-                                <a-select-option v-for="province in major" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="班级:" style="margin-left:50px">
-                        <div>
-                            <a-select :default-value="classes[0]" style="width: 230px" @change="handleProvinceChange">
-                                <a-select-option v-for="province in classes" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="课程:" style="margin-left:50px">
-                        <div>
-                            <a-select
-                                :default-value="curriculum[0]"
-                                style="width: 230px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in curriculum" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                </a-form-model>
-                <a-form-model layout="inline">
-                    <a-form-model-item label="学号或姓名:">
-                        <div>
-                            <a-select
-                                :default-value="studentName[0]"
-                                style="width: 230px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in studentName" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="学员类型:" style="margin-left:20px">
-                        <div>
-                            <a-select
-                                :default-value="studentType[0]"
-                                style="width: 230px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in studentType" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                    <a-form-model-item label="成绩类型:" style="margin-left:20px">
-                        <div>
-                            <a-select
-                                :default-value="achievementType[0]"
-                                style="width: 230px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in achievementType" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </a-form-model-item>
-                </a-form-model>
-                <crud-table
-                    ref="crudTable"
-                    :columns="columns"
-                    :commands="tableCommands"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                >
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-form-model layout="inline">
+                        <a-form-model-item label="研究生类型:">
+                            <div>
+                                <a-select
+                                    :default-value="stuType[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in stuType" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="年级:" style="margin-left:50px">
+                            <div>
+                                <a-select :default-value="grade[0]" style="width: 230px" @change="handleProvinceChange">
+                                    <a-select-option v-for="province in grade" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="学期:" style="margin-left:50px">
+                            <div>
+                                <a-select
+                                    :default-value="semester[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in semester" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                    </a-form-model>
+                    <a-form-model layout="inline">
+                        <a-form-model-item label="专业:" style="margin-left:40px">
+                            <div>
+                                <a-select :default-value="major[0]" style="width: 230px" @change="handleProvinceChange">
+                                    <a-select-option v-for="province in major" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="班级:" style="margin-left:50px">
+                            <div>
+                                <a-select
+                                    :default-value="classes[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in classes" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="课程:" style="margin-left:50px">
+                            <div>
+                                <a-select
+                                    :default-value="curriculum[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in curriculum" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                    </a-form-model>
+                    <a-form-model layout="inline">
+                        <a-form-model-item label="学号或姓名:">
+                            <div>
+                                <a-select
+                                    :default-value="studentName[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in studentName" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="学员类型:" style="margin-left:20px">
+                            <div>
+                                <a-select
+                                    :default-value="studentType[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in studentType" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                        <a-form-model-item label="成绩类型:" style="margin-left:20px">
+                            <div>
+                                <a-select
+                                    :default-value="achievementType[0]"
+                                    style="width: 230px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in achievementType" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </a-form-model-item>
+                    </a-form-model>
+                    <crud-table
+                        ref="crudTable"
+                        :columns="columns"
+                        :commands="tableCommands"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="true"
+                    >
+                    </crud-table>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

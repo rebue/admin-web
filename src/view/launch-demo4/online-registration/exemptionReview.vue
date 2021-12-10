@@ -1,34 +1,36 @@
 // 免试资格审核
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row type="flex">
-                    <a-col :span="5" style="overflow: auto">
-                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
-                        <div class="table-divider"></div>
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height: 100%"></a-divider>
-                    </a-col>
-                    <a-col :span="18">
-                        <crud-table
-                            :showKeywords="true"
-                            ref="crudTable"
-                            :query="{ orgId: curOrg.id }"
-                            :commands="tableCommands"
-                            :actions="tableActions"
-                            :columns="columns"
-                            :api="api"
-                            :scrollX="600"
-                            :defaultPagination="true"
-                        >
-                        </crud-table>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row type="flex">
+                        <a-col :span="5" style="overflow: auto">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                            <div class="table-divider"></div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <crud-table
+                                :showKeywords="true"
+                                ref="crudTable"
+                                :query="{ orgId: curOrg.id }"
+                                :commands="tableCommands"
+                                :actions="tableActions"
+                                :columns="columns"
+                                :api="api"
+                                :scrollX="600"
+                                :defaultPagination="true"
+                            >
+                            </crud-table>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

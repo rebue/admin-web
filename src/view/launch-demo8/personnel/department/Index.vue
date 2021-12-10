@@ -1,85 +1,91 @@
 //部门管理
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #left>
-                        <div>
-                            <a-modal
-                                width="600px"
-                                title="新增部门"
-                                :visible="visible"
-                                :confirm-loading="confirmLoading"
-                                @ok="handleOk"
-                                @cancel="handleCancel"
-                            >
-                                <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
-                                    <a-form-model-item label="部门编号:">
-                                        <a-input placeholder="20314523" disabled="true" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门编码:">
-                                        <a-input placeholder="请输入部门编码" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门级别:">
-                                        <a-select :default-value="depLevel[3]" @change="handleProvinceChange">
-                                            <a-select-option v-for="depLevel in depLevel" :key="depLevel">
-                                                {{ depLevel }}
-                                            </a-select-option>
-                                        </a-select>
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门领导:">
-                                        <a-input-search placeholder="请输入部门领导名称" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门邮箱:">
-                                        <a-input placeholder="请输入部门邮箱" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门名称:">
-                                        <a-input placeholder="请输入部门名称" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="顺序号:">
-                                        <a-input placeholder="请输入顺序号" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="上级部门:">
-                                        <a-select :default-value="superiorDep[0]" @change="handleProvinceChange">
-                                            <a-select-option v-for="superiorDep in superiorDep" :key="superiorDep">
-                                                {{ superiorDep }}
-                                            </a-select-option>
-                                        </a-select>
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门电话:">
-                                        <a-input placeholder="请输入部门电话" />
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门状态:">
-                                        <a-select :default-value="depState[0]" @change="handleProvinceChange">
-                                            <a-select-option v-for="depState in depState" :key="depState">
-                                                {{ depState }}
-                                            </a-select-option>
-                                        </a-select>
-                                    </a-form-model-item>
-                                    <a-form-model-item label="部门职责:">
-                                        <a-textarea
-                                            placeholder="请输入部门职责"
-                                            :auto-size="{ minRows: 2, maxRows: 6 }"
-                                        />
-                                    </a-form-model-item>
-                                </a-form-model>
-                            </a-modal>
-                        </div>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :commands="tableCommands"
+                        :actions="tableActions"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="true"
+                        :rowSelection="{}"
+                    >
+                        <template #left>
+                            <div>
+                                <a-modal
+                                    width="600px"
+                                    title="新增部门"
+                                    :visible="visible"
+                                    :confirm-loading="confirmLoading"
+                                    @ok="handleOk"
+                                    @cancel="handleCancel"
+                                >
+                                    <a-form-model
+                                        :label-col="{ span: 3 }"
+                                        :wrapper-col="{ span: 20 }"
+                                        layout="horizontal"
+                                    >
+                                        <a-form-model-item label="部门编号:">
+                                            <a-input placeholder="20314523" disabled="true" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门编码:">
+                                            <a-input placeholder="请输入部门编码" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门级别:">
+                                            <a-select :default-value="depLevel[3]" @change="handleProvinceChange">
+                                                <a-select-option v-for="depLevel in depLevel" :key="depLevel">
+                                                    {{ depLevel }}
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门领导:">
+                                            <a-input-search placeholder="请输入部门领导名称" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门邮箱:">
+                                            <a-input placeholder="请输入部门邮箱" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门名称:">
+                                            <a-input placeholder="请输入部门名称" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="顺序号:">
+                                            <a-input placeholder="请输入顺序号" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="上级部门:">
+                                            <a-select :default-value="superiorDep[0]" @change="handleProvinceChange">
+                                                <a-select-option v-for="superiorDep in superiorDep" :key="superiorDep">
+                                                    {{ superiorDep }}
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门电话:">
+                                            <a-input placeholder="请输入部门电话" />
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门状态:">
+                                            <a-select :default-value="depState[0]" @change="handleProvinceChange">
+                                                <a-select-option v-for="depState in depState" :key="depState">
+                                                    {{ depState }}
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-model-item>
+                                        <a-form-model-item label="部门职责:">
+                                            <a-textarea
+                                                placeholder="请输入部门职责"
+                                                :auto-size="{ minRows: 2, maxRows: 6 }"
+                                            />
+                                        </a-form-model-item>
+                                    </a-form-model>
+                                </a-modal>
+                            </div>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>
