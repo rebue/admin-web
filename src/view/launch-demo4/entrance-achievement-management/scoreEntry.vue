@@ -1,38 +1,40 @@
 // 成绩录入
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-tabs>
-                    <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
-                    <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
-                    <a-tab-pane :key="3" tab="目录3"></a-tab-pane>
-                </a-tabs>
-                <a-row type="flex">
-                    <a-col :span="5" style="overflow: auto">
-                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
-                        <div class="table-divider"></div>
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height: 100%"></a-divider>
-                    </a-col>
-                    <a-col :span="18">
-                        <crud-table
-                            ref="crudTable"
-                            :query="{ orgId: curOrg.id }"
-                            :commands="tableCommands"
-                            :actions="tableActions"
-                            :columns="columns"
-                            :api="api"
-                            :scrollX="600"
-                            :defaultPagination="true"
-                        >
-                        </crud-table>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-tabs>
+                        <a-tab-pane :key="1" tab="目录1"></a-tab-pane>
+                        <a-tab-pane :key="2" tab="目录2"></a-tab-pane>
+                        <a-tab-pane :key="3" tab="目录3"></a-tab-pane>
+                    </a-tabs>
+                    <a-row type="flex">
+                        <a-col :span="5" style="overflow: auto">
+                            <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                            <div class="table-divider"></div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height: 100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <crud-table
+                                ref="crudTable"
+                                :query="{ orgId: curOrg.id }"
+                                :commands="tableCommands"
+                                :actions="tableActions"
+                                :columns="columns"
+                                :api="api"
+                                :scrollX="600"
+                                :defaultPagination="true"
+                            >
+                            </crud-table>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

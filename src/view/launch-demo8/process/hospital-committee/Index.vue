@@ -1,62 +1,64 @@
 //院委会研究
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row type="flex">
-                    <a-col :span="4">
-                        <a-tree
-                            v-model="checkedKeys"
-                            :auto-expand-parent="autoExpandParent"
-                            :default-selected-keys="selectedKeys"
-                            :default-checked-keys="checkedKeys"
-                            :default-expanded-keys="expandedKeys"
-                            :tree-data="treeData"
-                            @check="onCheck"
-                        />
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height:100%"></a-divider>
-                    </a-col>
-                    <a-col :span="19">
-                        <crud-table
-                            ref="crudTable"
-                            :actions="tableActions"
-                            :columns="columns"
-                            :api="api"
-                            :query="{ orgId: curOrgId }"
-                            :scrollX="800"
-                            :defaultPagination="true"
-                            :rowSelection="{}"
-                        >
-                            <template #commands>
-                                <a-select
-                                    :default-value="year[0]"
-                                    style="width: 80px; margin-right: 10px"
-                                    @change="handleProvinceChange"
-                                >
-                                    <a-select-option v-for="year in year" :key="year">
-                                        {{ year }}
-                                    </a-select-option>
-                                </a-select>
-                                <a-select
-                                    :default-value="date[0]"
-                                    style="width: 80px;margin-right:10px"
-                                    @change="handleProvinceChange"
-                                >
-                                    <a-select-option v-for="date in date" :key="date">
-                                        {{ date }}
-                                    </a-select-option>
-                                </a-select>
-                                <a-button class="btn">配置管理员</a-button>
-                                <a-button class="btn">删除</a-button>
-                            </template>
-                        </crud-table>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row type="flex">
+                        <a-col :span="4">
+                            <a-tree
+                                v-model="checkedKeys"
+                                :auto-expand-parent="autoExpandParent"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                :default-expanded-keys="expandedKeys"
+                                :tree-data="treeData"
+                                @check="onCheck"
+                            />
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                        <a-col :span="19">
+                            <crud-table
+                                ref="crudTable"
+                                :actions="tableActions"
+                                :columns="columns"
+                                :api="api"
+                                :query="{ orgId: curOrgId }"
+                                :scrollX="800"
+                                :defaultPagination="true"
+                                :rowSelection="{}"
+                            >
+                                <template #commands>
+                                    <a-select
+                                        :default-value="year[0]"
+                                        style="width: 80px; margin-right: 10px"
+                                        @change="handleProvinceChange"
+                                    >
+                                        <a-select-option v-for="year in year" :key="year">
+                                            {{ year }}
+                                        </a-select-option>
+                                    </a-select>
+                                    <a-select
+                                        :default-value="date[0]"
+                                        style="width: 80px;margin-right:10px"
+                                        @change="handleProvinceChange"
+                                    >
+                                        <a-select-option v-for="date in date" :key="date">
+                                            {{ date }}
+                                        </a-select-option>
+                                    </a-select>
+                                    <a-button class="btn">配置管理员</a-button>
+                                    <a-button class="btn">删除</a-button>
+                                </template>
+                            </crud-table>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

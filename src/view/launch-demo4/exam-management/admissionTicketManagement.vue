@@ -1,36 +1,38 @@
 // 准考证管理
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="true"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #keywordsLeft>
-                        <div style="margin-right: 10px">
-                            <a-select
-                                :default-value="provinceData[0]"
-                                style="width: 140px"
-                                @change="handleProvinceChange"
-                            >
-                                <a-select-option v-for="province in provinceData" :key="province">
-                                    {{ province }}
-                                </a-select-option>
-                            </a-select>
-                        </div>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :showKeywords="true"
+                        :commands="tableCommands"
+                        :actions="tableActions"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="true"
+                        :rowSelection="{}"
+                    >
+                        <template #keywordsLeft>
+                            <div style="margin-right: 10px">
+                                <a-select
+                                    :default-value="provinceData[0]"
+                                    style="width: 140px"
+                                    @change="handleProvinceChange"
+                                >
+                                    <a-select-option v-for="province in provinceData" :key="province">
+                                        {{ province }}
+                                    </a-select-option>
+                                </a-select>
+                            </div>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

@@ -1,88 +1,90 @@
 //流程查询
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row type="flex">
-                    <a-col :span="5">
-                        <a-tree
-                            v-model="checkedKeys"
-                            :auto-expand-parent="autoExpandParent"
-                            :default-selected-keys="selectedKeys"
-                            :default-checked-keys="checkedKeys"
-                            :default-expanded-keys="expandedKeys"
-                            :tree-data="treeData"
-                            @check="onCheck"
-                            :defaultExpandAll="true"
-                        />
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height:100%"></a-divider>
-                    </a-col>
-                    <a-col :span="18">
-                        <a-tabs default-active-key="1" @change="callback">
-                            <a-tab-pane key="1" tab="流程列表">
-                                <a-col>
-                                    <crud-table
-                                        ref="crudTable"
-                                        :commands="tableCommands"
-                                        :columns="columns"
-                                        :api="api"
-                                        :query="{ orgId: curOrgId }"
-                                        :scrollX="800"
-                                        :defaultPagination="true"
-                                        :rowSelection="{}"
-                                        :showKeywords="true"
-                                    >
-                                    </crud-table>
-                                </a-col>
-                            </a-tab-pane>
-                            <a-tab-pane key="2" tab="流程统计" force-render> 流程统计 </a-tab-pane>
-                            <a-tab-pane key="3" tab="审批统计">
-                                <a-col>
-                                    <base-manager ref="baseManager">
-                                        <template #managerCard>
-                                            <div style="float: left">
-                                                <a-select
-                                                    :default-value="process[0]"
-                                                    style="width: 100px; margin-right: 15px"
-                                                    @change="handleProvinceChange"
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row type="flex">
+                        <a-col :span="5">
+                            <a-tree
+                                v-model="checkedKeys"
+                                :auto-expand-parent="autoExpandParent"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                :default-expanded-keys="expandedKeys"
+                                :tree-data="treeData"
+                                @check="onCheck"
+                                :defaultExpandAll="true"
+                            />
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <a-tabs default-active-key="1" @change="callback">
+                                <a-tab-pane key="1" tab="流程列表">
+                                    <a-col>
+                                        <crud-table
+                                            ref="crudTable"
+                                            :commands="tableCommands"
+                                            :columns="columns"
+                                            :api="api"
+                                            :query="{ orgId: curOrgId }"
+                                            :scrollX="800"
+                                            :defaultPagination="true"
+                                            :rowSelection="{}"
+                                            :showKeywords="true"
+                                        >
+                                        </crud-table>
+                                    </a-col>
+                                </a-tab-pane>
+                                <a-tab-pane key="2" tab="流程统计" force-render> 流程统计 </a-tab-pane>
+                                <a-tab-pane key="3" tab="审批统计">
+                                    <a-col>
+                                        <base-manager ref="baseManager">
+                                            <template #managerCard>
+                                                <div style="float: left">
+                                                    <a-select
+                                                        :default-value="process[0]"
+                                                        style="width: 100px; margin-right: 15px"
+                                                        @change="handleProvinceChange"
+                                                    >
+                                                        <a-select-option v-for="process in process" :key="process">
+                                                            {{ process }}
+                                                        </a-select-option>
+                                                    </a-select>
+                                                    <a-select
+                                                        :default-value="approver[0]"
+                                                        style="width: 80px"
+                                                        @change="handleProvinceChange"
+                                                    >
+                                                        <a-select-option v-for="approver in approver" :key="approver">
+                                                            {{ approver }}
+                                                        </a-select-option>
+                                                    </a-select>
+                                                </div>
+                                                <crud-table
+                                                    ref="crudTable"
+                                                    :columns="columns03"
+                                                    :api="api"
+                                                    :query="{ orgId: curOrgId }"
+                                                    :scrollX="800"
+                                                    :defaultPagination="true"
+                                                    :rowSelection="{}"
+                                                    :showKeywords="true"
                                                 >
-                                                    <a-select-option v-for="process in process" :key="process">
-                                                        {{ process }}
-                                                    </a-select-option>
-                                                </a-select>
-                                                <a-select
-                                                    :default-value="approver[0]"
-                                                    style="width: 80px"
-                                                    @change="handleProvinceChange"
-                                                >
-                                                    <a-select-option v-for="approver in approver" :key="approver">
-                                                        {{ approver }}
-                                                    </a-select-option>
-                                                </a-select>
-                                            </div>
-                                            <crud-table
-                                                ref="crudTable"
-                                                :columns="columns03"
-                                                :api="api"
-                                                :query="{ orgId: curOrgId }"
-                                                :scrollX="800"
-                                                :defaultPagination="true"
-                                                :rowSelection="{}"
-                                                :showKeywords="true"
-                                            >
-                                            </crud-table>
-                                        </template>
-                                    </base-manager>
-                                </a-col>
-                            </a-tab-pane>
-                        </a-tabs>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+                                                </crud-table>
+                                            </template>
+                                        </base-manager>
+                                    </a-col>
+                                </a-tab-pane>
+                            </a-tabs>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

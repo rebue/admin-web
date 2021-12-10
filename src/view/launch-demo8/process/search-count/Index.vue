@@ -1,41 +1,43 @@
 //数据查询
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <a-row type="flex">
-                    <a-col :span="5">
-                        <a-tree
-                            v-model="checkedKeys"
-                            :auto-expand-parent="autoExpandParent"
-                            :default-selected-keys="selectedKeys"
-                            :default-checked-keys="checkedKeys"
-                            :default-expanded-keys="expandedKeys"
-                            :tree-data="treeData"
-                            @check="onCheck"
-                            :defaultExpandAll="true"
-                        />
-                    </a-col>
-                    <a-col :span="1">
-                        <a-divider type="vertical" style="height:100%"></a-divider>
-                    </a-col>
-                    <a-col :span="18">
-                        <crud-table
-                            ref="crudTable"
-                            :commands="tableCommands"
-                            :columns="columns"
-                            :api="api"
-                            :query="{ orgId: curOrgId }"
-                            :scrollX="800"
-                            :defaultPagination="true"
-                            :showKeywords="true"
-                        >
-                        </crud-table>
-                    </a-col>
-                </a-row>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <a-row type="flex">
+                        <a-col :span="5">
+                            <a-tree
+                                v-model="checkedKeys"
+                                :auto-expand-parent="autoExpandParent"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                :default-expanded-keys="expandedKeys"
+                                :tree-data="treeData"
+                                @check="onCheck"
+                                :defaultExpandAll="true"
+                            />
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                        <a-col :span="18">
+                            <crud-table
+                                ref="crudTable"
+                                :commands="tableCommands"
+                                :columns="columns"
+                                :api="api"
+                                :query="{ orgId: curOrgId }"
+                                :scrollX="800"
+                                :defaultPagination="true"
+                                :showKeywords="true"
+                            >
+                            </crud-table>
+                        </a-col>
+                    </a-row>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>

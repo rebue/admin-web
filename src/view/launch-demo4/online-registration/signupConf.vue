@@ -1,21 +1,23 @@
 // 网上报名配置
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                >
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :commands="tableCommands"
+                        :actions="tableActions"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="true"
+                    >
+                    </crud-table>
+                </template>
+            </base-manager>
+        </fragment>
+    </div>
 </template>
 
 <script>
