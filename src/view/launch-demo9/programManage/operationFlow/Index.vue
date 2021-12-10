@@ -13,13 +13,7 @@
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -32,7 +26,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,22 +33,26 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["pckp","weod"])',
+                            value2: '@pick(["回档流程","文书档案和业务流程"])',
+                            'value3|1-10': 1,
+                            value4: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value5: '@date("yyyy-MM-dd hh:mm:ss")',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: 'pckp',
-                        value2: '归档流程',
-                        value3: '2',
-                        value4: '2020-10-10 00:00:00',
-                        value5: '2020-10-10 10:00:00',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -67,6 +64,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -108,7 +106,30 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '乐山市委',
+                key: '1',
+            },
+            {
+                title: '某某某全宗',
+                key: '2',
+                children: [
+                    {
+                        title: '文书档案',
+                        key: '2-1',
+                    },
+                    {
+                        title: '基建档案',
+                        key: '2-2',
+                    },
+                    {
+                        title: '永中',
+                        key: '2-3',
+                    },
+                ],
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -149,6 +170,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            treeData,
         };
     },
     mounted() {
@@ -225,6 +247,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>
