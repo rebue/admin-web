@@ -40,6 +40,7 @@
                     </a-row>
                 </template>
             </base-manager>
+            <edit-form ref="editForm" @close="handleEditFormClose" />
         </fragment>
     </div>
 </template>
@@ -47,6 +48,8 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import EditForm from './EditForm';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 const provinceData = ['全部', '录取', '未录取'];
 export default {
@@ -54,6 +57,7 @@ export default {
     components: {
         BaseManager,
         CrudTable,
+        EditForm,
     },
     data() {
         //侧边栏数据
@@ -340,13 +344,26 @@ export default {
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
+        this.editForm = this.$refs.editForm;
     },
     methods: {
-        handleAdd() {
-            //
-        },
         handleProvinceChange(value) {
             //
+        },
+        /**
+         * 处理添加领域的事件
+         */
+        handleAdd() {
+            //this.editForm.show(EditFormTypeDic.Add, {});
+        },
+        /**
+         * 处理编辑领域的事件
+         */
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        handleEditFormClose() {
+            // this.refreshTableData();
         },
     },
 };

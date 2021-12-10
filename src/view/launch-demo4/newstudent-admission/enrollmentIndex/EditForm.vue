@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="领域"
+        title="指标"
         :editFormType.sync="editFormType"
         :model.sync="model"
         :formItems="formItems"
@@ -10,6 +10,25 @@
         v-bind="$attrs"
         v-on="$listeners"
     >
+        <template #formItems>
+            <a-form-model-item label="教学点编号">
+                <a-select v-model="model.teachPointNum" style="width: 320px">
+                    <a-select-option v-for="teachPointNum in teachPointNum" :key="teachPointNum">
+                        {{ teachPointNum }}
+                    </a-select-option>
+                </a-select>
+            </a-form-model-item>
+            <a-form-model-item label="专业编号">
+                <a-select v-model="model.majorNum" style="width: 320px">
+                    <a-select-option v-for="majorNum in majorNum" :key="majorNum">
+                        {{ majorNum }}
+                    </a-select-option>
+                </a-select>
+            </a-form-model-item>
+            <a-form-model-item label="录取指标">
+                <a-input v-model="model.admissionIndex" placeholder="请输入录取指标" />
+            </a-form-model-item>
+        </template>
     </base-edit-form>
 </template>
 
@@ -18,6 +37,8 @@ import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racRealmApi } from '@/api/Api';
 import BaseEditForm from '@/component/rebue/BaseEditForm';
 
+const teachPointNum = ['中共广西区委党校', '中共广西政法大学'];
+const majorNum = ['电子商务', '公共管理', '计算机应用', '政治与法律', '软件技术', '中共党史'];
 export default {
     components: {
         BaseEditForm,
@@ -44,6 +65,8 @@ export default {
                     { required: true, message: '请输入录取指标', trigger: 'blur', transform: val => val && val.trim() },
                 ],
             },
+            majorNum,
+            teachPointNum,
         };
     },
     computed: {
