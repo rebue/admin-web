@@ -27,6 +27,7 @@
                     </a-row>
                 </template>
             </base-manager>
+            <edit-form ref="editForm" @close="handleEditFormClose" />
         </fragment>
     </div>
 </template>
@@ -34,11 +35,14 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import EditForm from './EditForm';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 export default {
     name: 'signupConf',
     components: {
         BaseManager,
         CrudTable,
+        EditForm,
     },
     data() {
         //侧边栏数据
@@ -211,11 +215,24 @@ export default {
         };
     },
     mounted() {
+        this.editForm = this.$refs.editForm;
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        /**
+         * 处理添加领域的事件
+         */
         handleAdd() {
-            //
+            this.editForm.show(EditFormTypeDic.Add, {});
+        },
+        /**
+         * 处理编辑领域的事件
+         */
+        handleEdit(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        handleEditFormClose() {
+            // this.refreshTableData();
         },
     },
 };

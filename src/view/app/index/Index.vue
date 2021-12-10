@@ -6,7 +6,7 @@
                 <div class="cardBox" @click="openWindow(item)">
                     <div class="imageStyle">
                         <img
-                            :src="'https://auth.maiyuesoft.com' + item.imgUrl || defaultImg()"
+                            :src="item.imgUrl || defaultImg()"
                             @error="
                                 () => {
                                     item.imgUrl || defaultImg();
@@ -24,16 +24,16 @@
                     </div>
                     <div class="appTitle">
                         <div class="autoImg">
-                            <img :src="item.tagName == '已认证' ? autoImg : noautoImg" alt="" />
+                            <img :src="item.isCertified == true ? autoImg : noautoImg" alt="" />
                         </div>
-                        <div class="appName" :class="item.tagName != '已认证' ? 'greyColor' : ''">
-                            {{ item.name }}
-                            <!-- <a-tooltip>
+                        <div class="appName" :class="item.isCertified == false ? 'greyColor' : ''">
+                            <!-- {{ item.name }} -->
+                            <a-tooltip>
                                 <template slot="title">
                                     {{ item.name }}
                                 </template>
                                 {{ item.name }}
-                            </a-tooltip> -->
+                            </a-tooltip>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         defaultImg() {
-            return require(`../assets/img/app1.png`);
+            return require(`../assets/img/default.png`);
         },
         /**点击展开 */
         clickShow(index) {
@@ -92,7 +92,6 @@ export default {
             racDicApi.getByDicKey(params).then(ro => {
                 let data = ro.extra.dicItems;
                 data.map(item => {
-                    item.show = true;
                     item.treeCode = Number(item.treeCode);
                 });
                 data = data.sort((a, b) => {
@@ -100,9 +99,7 @@ export default {
                 });
                 data.push({
                     name: '其他',
-                    show: true,
                     children: [],
-                    childList: [],
                     treeCode: data.length,
                 });
                 this.labelSelect = data;
@@ -115,103 +112,39 @@ export default {
             oapAppApi
                 .listAndTripartite()
                 .then(ro => {
-                    const { oapAppList, racAppLabelList, racAppList } = ro.extra;
+                    const { racAppLabelList, racAppList } = ro.extra;
                     racAppLabelList.map(item => {
                         this.labelSelect.map(childItem => {
                             if (childItem.id == item.dicItemId) {
                                 if (!childItem.children) {
                                     childItem.children = [];
                                 }
+                                item.labelName = childItem.name;
                                 childItem.children.push(item);
                             }
                         });
                     });
-                    // //已认证
-                    const authedList = [];
-                    // 未认证
-                    const unauthList = [];
-
-                    // 认证map
-                    const oapAppMap = {};
-                    oapAppList.forEach(v => {
-                        oapAppMap[v.appId] = v;
-                    });
-                    //过滤
-                    racAppList.forEach(v => {
-                        //启用
-                        if (v.isEnabled) {
-                            if (oapAppMap[v.id] && v.isCertified) {
-                                //已认证
-                                authedList.push(v);
-                            } else {
-                                //未认证
-                                unauthList.push(v);
-                            }
-                        }
-                    });
-                    //PUSH回相应的标签
                     this.labelSelect.map(item => {
-                        if (item.children) {
-                            item.children.map(childItem => {
-                                unauthList.map(lastItem => {
-                                    if (childItem.appId == lastItem.id) {
-                                        lastItem.isauthName = '未认证';
-                                        lastItem.labelName = item.name;
-                                        if (!item.childList) {
-                                            item.childList = [];
-                                        }
-                                        item.childList.push(lastItem);
-                                    }
-                                });
-                                authedList.map(lastItem => {
-                                    if (childItem.appId == lastItem.id) {
-                                        lastItem.isauthName = '已认证';
-                                        lastItem.labelName = item.name;
-                                        if (lastItem.authnType == 0) {
-                                            lastItem.tagName = '未认证';
-                                        } else {
-                                            lastItem.tagName = '已认证';
-                                        }
-                                        if (!item.childList) {
-                                            item.childList = [];
-                                        }
-                                        item.childList.push(lastItem);
+                        if (item.children && item.children.length != 0) {
+                            racAppList.map(childItem => {
+                                item.children.map((levenItem, levenIndex) => {
+                                    if (childItem.id == levenItem.appId) {
+                                        item.children[levenIndex] = { ...childItem, ...levenItem };
                                     }
                                 });
                             });
                         }
                     });
-                    //给没有标签的应用push剩下的应用
-                    unauthList.map(lastItem => {
-                        if (!lastItem.isauthName) {
-                            lastItem.isauthName = '未认证';
-                            lastItem.labelName = '其他';
-                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
-                        }
-                    });
-                    //给没有标签的应用push剩下的应用
-                    authedList.map(lastItem => {
-                        if (!lastItem.isauthName) {
-                            lastItem.isauthName = '已认证';
-                            lastItem.labelName = '其他';
-                            if (lastItem.authnType == 0) {
-                                lastItem.tagName = '未认证';
-                            } else {
-                                lastItem.tagName = '已认证';
-                            }
-                            this.labelSelect[this.labelSelect.length - 1].childList.push(lastItem);
-                        }
-                    });
-                    //排序一下应用 并装到一个新数组
+                    // //排序一下应用 并装到一个新数组
                     const newData = [],
                         newLabelSelect = [];
                     this.labelSelect.map(item => {
-                        if (item.childList) {
-                            item.childList = item.childList.sort((a, b) => {
+                        if (item.children && item.children.length != 0) {
+                            item.children = item.children.sort((a, b) => {
                                 return a.seqNo - b.seqNo;
                             });
+                            newData.push(item.children);
                         }
-                        newData.push(item.childList);
                     });
                     let labelIndex = -1;
                     newData.map(item => {
@@ -303,13 +236,13 @@ export default {
             width: 100%;
             height: 118px;
             // height: 65%;
-            background: #a3bce2;
+            background: #a1c7fa;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             img {
-                width: 100%;
+                width: 130%;
                 // height: 100%;
             }
             .labelStyle {

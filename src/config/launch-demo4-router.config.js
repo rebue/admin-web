@@ -254,7 +254,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo4/newstudent-admission-enrollmentIndex',
                     name: 'launch-demo4-newstudent-admission-enrollmentIndex',
-                    component: () => import('@/view/launch-demo4/newstudent-admission/enrollmentIndex.vue'),
+                    component: () => import('@/view/launch-demo4/newstudent-admission/enrollmentIndex'),
                     hidden: true,
                     meta: {
                         title: '招生指标',
@@ -265,7 +265,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo4/newstudent-admission-admissionManagement',
                     name: 'launch-demo4-newstudent-admission-admissionManagement',
-                    component: () => import('@/view/launch-demo4/newstudent-admission/admissionManagement.vue'),
+                    component: () => import('@/view/launch-demo4/newstudent-admission/admissionManagement'),
                     hidden: true,
                     meta: {
                         title: '录取管理',
@@ -276,7 +276,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo4/newstudent-admission-newStuRegister',
                     name: 'launch-demo4-newstudent-admission-newStuRegister',
-                    component: () => import('@/view/launch-demo4/newstudent-admission/newStuRegister.vue'),
+                    component: () => import('@/view/launch-demo4/newstudent-admission/newStuRegister'),
                     hidden: true,
                     meta: {
                         title: '新生注册',
