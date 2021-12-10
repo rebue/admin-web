@@ -14,10 +14,8 @@
                 <a-divider />
                 <a-row type="flex">
                     <a-col span="5">
-                        <div style="overflow: scroll;margin-top: 5px">
+                        <div style="overflow: auto;">
                             <a-tree
-                                style="margin-left: -30px;margin-top: -20px"
-                                class="ant-card-body"
                                 v-model="checkedKeys"
                                 :default-selected-keys="selectedKeys"
                                 :default-checked-keys="checkedKeys"
