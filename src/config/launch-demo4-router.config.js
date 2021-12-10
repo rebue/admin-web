@@ -254,7 +254,7 @@ const constantRouters = {
                 {
                     path: '/launch-demo4/newstudent-admission-enrollmentIndex',
                     name: 'launch-demo4-newstudent-admission-enrollmentIndex',
-                    component: () => import('@/view/launch-demo4/newstudent-admission/enrollmentIndex.vue'),
+                    component: () => import('@/view/launch-demo4/newstudent-admission/enrollmentIndex'),
                     hidden: true,
                     meta: {
                         title: '招生指标',
