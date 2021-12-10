@@ -63,6 +63,43 @@
                         </a-col>
                     </a-row>
                 </template>
+                <template #left>
+                    <div>
+                        <a-modal
+                            width="600px"
+                            title="新增部门"
+                            :visible="visible"
+                            :confirm-loading="confirmLoading"
+                            @ok="handleOk"
+                            @cancel="handleCancel"
+                        >
+                            <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                                <a-form-model-item label="成果编号:">
+                                    <a-input placeholder="20314523" disabled="true" />
+                                </a-form-model-item>
+                                <a-form-model-item label="部门编码:">
+                                    <a-input placeholder="请输入部门编码" />
+                                </a-form-model-item>
+                                <a-form-model-item label="部门领导:">
+                                    <a-input-search placeholder="请输入部门领导名称" />
+                                </a-form-model-item>
+                                <a-form-model-item label="部门邮箱:">
+                                    <a-input placeholder="请输入部门邮箱" />
+                                </a-form-model-item>
+                                <a-form-model-item label="部门名称:">
+                                    <a-input placeholder="请输入部门名称" />
+                                </a-form-model-item>
+                                <a-form-model-item label="顺序号:">
+                                    <a-input placeholder="请输入顺序号" />
+                                </a-form-model-item>
+
+                                <a-form-model-item label="部门电话:">
+                                    <a-input placeholder="请输入部门电话" />
+                                </a-form-model-item>
+                            </a-form-model>
+                        </a-modal>
+                    </div>
+                </template>
             </crud-table>
         </template>
     </base-manager>
@@ -268,7 +305,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 200,
                 scopedSlots: { customRender: 'action' },
             },
         ];
@@ -288,8 +325,7 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-
-                onClick: record => this.handleEdit(record),
+                onClick: record => this.handleShow(record),
             },
         ];
 
@@ -303,7 +339,9 @@ export default {
                 achievementName: '',
                 startTime: '',
                 endTime: '',
+                visible: false,
                 status: '',
+                tableObj: '',
             },
         };
     },
@@ -311,6 +349,11 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleShow(resolve) {
+            this.tableObj = resolve;
+            console.log(resolve);
+            //
+        },
         search() {
             console.log(this.api);
         },
