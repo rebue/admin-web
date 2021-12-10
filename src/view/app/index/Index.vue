@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         defaultImg() {
-            return require(`../assets/img/app1.png`);
+            return require(`../assets/img/default.png`);
         },
         /**点击展开 */
         clickShow(index) {
@@ -303,13 +303,13 @@ export default {
             width: 100%;
             height: 118px;
             // height: 65%;
-            background: #a3bce2;
+            background: #a1c7fa;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             img {
-                width: 100%;
+                width: 130%;
                 // height: 100%;
             }
             .labelStyle {
