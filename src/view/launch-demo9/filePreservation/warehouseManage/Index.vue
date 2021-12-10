@@ -9,7 +9,8 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
                 >
                 </crud-table>
             </template>
@@ -32,18 +33,23 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["文书档案"])',
+                            value2: '@pick(["文件"])',
+                            value3: '@pick(["分类号大于1或保管期大于3","分类号大于1或保管期等于永久"])',
+                            value4: '@pick(["档案库房管理期限永久盘点"])',
+                            'value5|1-100000': 1,
+                            'value6|1-1000': 1,
+                            value7: '-',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '文本档案',
-                        value2: '文件',
-                        value3: '分类大于1或者保管期限大于3',
-                        value4: '档案库房管理期限永久盘点',
-                        value5: '0',
-                        value6: '10',
-                        value7: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -55,6 +61,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {

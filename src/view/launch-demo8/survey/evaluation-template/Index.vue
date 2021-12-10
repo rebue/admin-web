@@ -3,16 +3,26 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <a-row type="flex">
-                    <a-col :span="6">
-                        <div v-show="showOrg" style="margin-right: 10px;margin-top: 20px" class="table-left">
-                            <org-tree ref="form.platform" :show.sync="showOrg" realmId="platform" />
+                    <a-col :span="5">
+                        <div style="margin-right: 10px;overflow: auto" class="table-left">
+                            <a-tree
+                                style="margin-left: -30px;margin-top: -20px"
+                                class="ant-card-body"
+                                v-model="checkedKeys"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                @Click="onCheck"
+                                :tree-data="treeData"
+                                :defaultExpandAll="true"
+                            >
+                            </a-tree>
                             <div class="table-divider"></div>
                         </div>
                     </a-col>
                     <a-col :span="1">
                         <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
-                    <a-col :span="17">
+                    <a-col :span="18">
                         <a-form-model
                             ref="ruleForm"
                             style="width: 500px"
@@ -74,12 +84,69 @@ export default {
     name: 'evaluation-template',
     components: {
         BaseManager,
-
-        OrgTree,
     },
     props: [],
     data() {
-        this.api = racAccountApi;
+        const treeData = [
+            {
+                title: '调查问卷模板',
+                key: '1',
+                children: [
+                    {
+                        title: '问卷',
+                        key: '11',
+                    },
+                    {
+                        title: '标题',
+                        key: '12',
+                    },
+                    {
+                        title: '角色',
+                        key: '13',
+                    },
+                    {
+                        title: '测评对象',
+                        key: '14',
+                    },
+                    {
+                        title: '合计',
+                        key: '15',
+                    },
+                    {
+                        title: '注释',
+                        key: '16',
+                    },
+                    {
+                        title: '其他',
+                        key: '17',
+                    },
+                    {
+                        title: '测评人范围',
+                        key: '18',
+                    },
+                    {
+                        title: '统计页面',
+                        key: '19',
+                    },
+                ],
+            },
+            {
+                title: '后勤服务中心意见征询表',
+                key: '2',
+            },
+            {
+                title: '年终总结工作测评模板',
+                key: '3',
+            },
+            {
+                title: '险地求生决策模板',
+                key: '4',
+            },
+            {
+                title: '新学员调查问卷模板',
+                key: '5',
+            },
+        ];
 
         const columns = [
             {
@@ -151,6 +218,7 @@ export default {
         ];
 
         return {
+            treeData,
             loading: false,
             curRealmId: '',
             manageMenusFormVisible: false,

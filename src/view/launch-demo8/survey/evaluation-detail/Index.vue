@@ -9,21 +9,26 @@
                 </div>
                 <a-divider />
                 <a-row type="flex">
-                    <a-col :span="6">
-                        <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                :ref="`orgTree.platform`"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                    <a-col :span="5">
+                        <div style="margin-right: 10px;overflow: auto" class="table-left">
+                            <a-tree
+                                style="margin-left: -30px;margin-top: -20px"
+                                class="ant-card-body"
+                                v-model="checkedKeys"
+                                :default-selected-keys="selectedKeys"
+                                :default-checked-keys="checkedKeys"
+                                @Click="onCheck"
+                                :tree-data="treeData"
+                                :defaultExpandAll="true"
+                            >
+                            </a-tree>
+                            <div class="table-divider"></div>
                         </div>
                     </a-col>
                     <a-col :span="1">
                         <a-divider type="vertical" style="height:100%"></a-divider>
                     </a-col>
-                    <a-col :span="17">
+                    <a-col :span="18">
                         <div style="margin: 0 auto">
                             <p style="text-align: center">广西党校职业工作者”职业幸福感“调查问卷内容</p>
                             <table class="table1">
@@ -139,13 +144,32 @@ export default {
         EditAuthForm,
         // CrudTable,
         ManageMenusForm,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
-        this.api = racAppApi;
-
+        const treeData = [
+            {
+                title: '广西党校工作者“职业幸福感”调查问卷内容',
+                key: '1',
+            },
+            {
+                title: '险地求生',
+                key: '2',
+            },
+            {
+                title: '事业单位党建调查问卷',
+                key: '3',
+            },
+            {
+                title: '新学员调查问卷',
+                key: '4',
+            },
+            {
+                title: '后勤服务中心意见征询表',
+                key: '5',
+            },
+        ];
         return {
+            treeData,
             loading: false,
             curRealmId: '',
             manageMenusFormVisible: false,
