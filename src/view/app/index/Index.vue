@@ -6,7 +6,7 @@
                 <div class="cardBox" @click="openWindow(item)">
                     <div class="imageStyle">
                         <img
-                            :src="'https://auth.maiyuesoft.com' + item.imgUrl || defaultImg()"
+                            :src="item.imgUrl || defaultImg()"
                             @error="
                                 () => {
                                     item.imgUrl || defaultImg();
