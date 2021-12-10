@@ -62,6 +62,52 @@
                             <a-button style="margin-left: 10px">导出</a-button>
                         </a-col>
                     </a-row>
+                    <div>
+                        <a-modal
+                            width="600px"
+                            title="查看"
+                            :visible="visible"
+                            :confirm-loading="confirmLoading"
+                            @cancel="handleCancel"
+                        >
+                            <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                                <a-form-model-item label="成果编号:">
+                                    <a-input
+                                        placeholder="20314523"
+                                        v-model="tableObj.achievementNo"
+                                        :disabled="idEdit"
+                                    />
+                                </a-form-model-item>
+                                <a-form-model-item label="填报人:">
+                                    <a-input :disabled="context" v-model="tableObj.author" />
+                                </a-form-model-item>
+                                <a-form-model-item label="部门:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.department"
+                                        placeholder="请输入部门领导名称"
+                                    />
+                                </a-form-model-item>
+                                <a-form-model-item label="成果名称:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.achievementName"
+                                        placeholder="请输入部门邮箱"
+                                    />
+                                </a-form-model-item>
+                                <a-form-model-item label="申请日期:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.applyTime"
+                                        placeholder="请输入部门名称"
+                                    />
+                                </a-form-model-item>
+                                <a-form-model-item label="状态:">
+                                    <a-input :disabled="context" v-model="tableObj.status" placeholder="请输入顺序号" />
+                                </a-form-model-item>
+                            </a-form-model>
+                        </a-modal>
+                    </div>
                 </template>
             </crud-table>
         </template>
@@ -268,7 +314,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 200,
 
                 scopedSlots: { customRender: 'action' },
             },
@@ -290,13 +336,25 @@ export default {
                 type: 'a',
                 title: '查看',
 
-                onClick: record => this.handleEdit(record),
+                onClick: record => this.handleShow(record),
             },
         ];
 
         return {
+            idEdit: true,
+            context: true,
+            confirmLoading: false,
+            tableObj: {
+                achievementNo: '',
+                memberName: '',
+                author: '',
+                department: '',
+                achievementName: '',
+                applyTime: '',
+                status: '',
+            },
             columns,
-
+            visible: false,
             formInline: {
                 user: '',
                 password: '',
@@ -312,6 +370,21 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleCancel() {
+            this.visible = false;
+        },
+        handleEdit(value) {
+            this.context = false;
+            this.idEdit = false;
+            this.tableObj = value;
+            this.visible = true;
+        },
+        handleShow(value) {
+            this.context = true;
+            this.idEdit = true;
+            this.tableObj = value;
+            this.visible = true;
+        },
         search() {
             console.log(this.api);
         },

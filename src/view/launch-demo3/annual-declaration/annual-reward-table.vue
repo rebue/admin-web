@@ -8,9 +8,40 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="600"
+                :rowSelection="{}"
                 :defaultPagination="true"
                 :showKeywords="showKeywords"
             ></crud-table>
+            <div>
+                <a-modal
+                    width="600px"
+                    title="查看"
+                    :visible="visible"
+                    :confirm-loading="confirmLoading"
+                    @cancel="handleCancel"
+                >
+                    <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                        <a-form-model-item label="填报人:">
+                            <a-input v-model="tableObj.memberName" :disabled="idEdit" />
+                        </a-form-model-item>
+                        <a-form-model-item label="作者:">
+                            <a-input :disabled="context" v-model="tableObj.author" />
+                        </a-form-model-item>
+                        <a-form-model-item label="奖励类型:">
+                            <a-input :disabled="context" v-model="tableObj.rewardType" />
+                        </a-form-model-item>
+                        <a-form-model-item label="奖励名称:">
+                            <a-input :disabled="context" v-model="tableObj.rewardName" />
+                        </a-form-model-item>
+                        <a-form-model-item label="奖励工作量:">
+                            <a-input :disabled="context" v-model="tableObj.rewardWorkload" />
+                        </a-form-model-item>
+                        <a-form-model-item label="系统时间:">
+                            <a-input :disabled="context" v-model="tableObj.date" />
+                        </a-form-model-item>
+                    </a-form-model>
+                </a-modal>
+            </div>
         </template>
     </base-manager>
 </template>
@@ -174,8 +205,25 @@ export default {
         ];
 
         return {
+            visible: false,
+            tableObj: {
+                rewardType: '',
+                memberName: '',
+                author: '',
+                rewardName: '',
+                date: '',
+                rewardWorkload: '',
+            },
             columns,
         };
+    },
+    methods: {
+        handleCancel() {
+            this.visible = false;
+        },
+        handleAdd() {
+            this.visible = true;
+        },
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;

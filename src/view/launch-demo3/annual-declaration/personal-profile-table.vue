@@ -67,34 +67,45 @@
                     <div>
                         <a-modal
                             width="600px"
-                            title="新增部门"
+                            title="查看"
                             :visible="visible"
                             :confirm-loading="confirmLoading"
-                            @ok="handleOk"
                             @cancel="handleCancel"
                         >
                             <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
                                 <a-form-model-item label="成果编号:">
-                                    <a-input placeholder="20314523" disabled="true" />
+                                    <a-input
+                                        placeholder="20314523"
+                                        v-model="tableObj.achievementNo"
+                                        :disabled="idEdit"
+                                    />
                                 </a-form-model-item>
-                                <a-form-model-item label="部门编码:">
-                                    <a-input placeholder="请输入部门编码" />
+                                <a-form-model-item label="填报人:">
+                                    <a-input :disabled="context" v-model="tableObj.author" />
                                 </a-form-model-item>
-                                <a-form-model-item label="部门领导:">
-                                    <a-input-search placeholder="请输入部门领导名称" />
+                                <a-form-model-item label="部门:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.department"
+                                        placeholder="请输入部门领导名称"
+                                    />
                                 </a-form-model-item>
-                                <a-form-model-item label="部门邮箱:">
-                                    <a-input placeholder="请输入部门邮箱" />
+                                <a-form-model-item label="成果名称:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.achievementName"
+                                        placeholder="请输入部门邮箱"
+                                    />
                                 </a-form-model-item>
-                                <a-form-model-item label="部门名称:">
-                                    <a-input placeholder="请输入部门名称" />
+                                <a-form-model-item label="申请日期:">
+                                    <a-input
+                                        :disabled="context"
+                                        v-model="tableObj.applyTime"
+                                        placeholder="请输入部门名称"
+                                    />
                                 </a-form-model-item>
-                                <a-form-model-item label="顺序号:">
-                                    <a-input placeholder="请输入顺序号" />
-                                </a-form-model-item>
-
-                                <a-form-model-item label="部门电话:">
-                                    <a-input placeholder="请输入部门电话" />
+                                <a-form-model-item label="状态:">
+                                    <a-input :disabled="context" v-model="tableObj.status" placeholder="请输入顺序号" />
                                 </a-form-model-item>
                             </a-form-model>
                         </a-modal>
@@ -330,8 +341,21 @@ export default {
         ];
 
         return {
+            page,
+            idEdit: true,
+            context: true,
+            confirmLoading: false,
+            visible: false,
             columns,
-
+            tableObj: {
+                achievementNo: '',
+                memberName: '',
+                author: '',
+                department: '',
+                achievementName: '',
+                applyTime: '',
+                status: '',
+            },
             formInline: {
                 user: '',
                 password: '',
@@ -339,9 +363,8 @@ export default {
                 achievementName: '',
                 startTime: '',
                 endTime: '',
-                visible: false,
+
                 status: '',
-                tableObj: '',
             },
         };
     },
@@ -349,9 +372,24 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleCancel(e) {
+            this.visible = false;
+        },
         handleShow(resolve) {
             this.tableObj = resolve;
-            console.log(resolve);
+            this.visible = true;
+            this.idEdit = true;
+            this.context = true;
+
+            //
+        },
+        handleEdit(e) {
+            this.tableObj = e;
+            this.visible = true;
+            this.idEdit = true;
+            this.context = false;
+        },
+        handleDel(e) {
             //
         },
         search() {
