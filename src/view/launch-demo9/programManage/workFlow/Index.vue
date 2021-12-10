@@ -32,13 +32,7 @@
                 </div>
                 <template>
                     <div v-show="showOrg" class="table-left">
-                        <org-tree
-                            ref="orgTree"
-                            :show.sync="showOrg"
-                            realmId="platform"
-                            @click="handleOrgMenuClick"
-                            @select="handleOrgTreeSelect"
-                        />
+                        <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                         <div class="table-divider"></div>
                     </div>
                 </template>
@@ -63,16 +57,6 @@
                         </a-row>
                     </a-form-model>
                 </div>
-                <!-- <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                </crud-table>  -->
             </template>
         </base-manager>
     </fragment>
@@ -80,16 +64,12 @@
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-// import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
-        // CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
@@ -129,62 +109,70 @@ export default {
             listAll: page,
             list: page,
         };
-        const columns = [
+        const treeData = [
             {
-                dataIndex: 'value1',
-                title: '所属区域',
+                title: '开始事件',
+                key: '1',
+                children: [
+                    {
+                        title: '定时开始事件',
+                        key: '1-1',
+                    },
+                    {
+                        title: '信号开始事件',
+                        key: '1-2',
+                    },
+                    {
+                        title: '消息开始事件',
+                        key: '1-3',
+                    },
+                    {
+                        title: '错误开始事件',
+                        key: '1-4',
+                    },
+                ],
             },
             {
-                dataIndex: 'value2',
-                title: '密集架类型',
+                title: '任务',
+                key: '2',
+                children: [],
             },
             {
-                dataIndex: 'value3',
-                title: '单双面选择',
+                title: '结构',
+                key: '3',
+                children: [],
             },
             {
-                dataIndex: 'value4',
-                title: '列编号',
+                title: '网关',
+                key: '4',
+                children: [],
             },
             {
-                dataIndex: 'value5',
-                align: 'center',
-                title: '列名称',
+                title: '边界事件',
+                key: '5',
+                children: [],
             },
             {
-                dataIndex: 'value6',
-                title: '密集架类型',
+                title: '中间捕捉事件',
+                key: '6',
+                children: [],
             },
             {
-                dataIndex: 'value7',
-                title: '节数',
+                title: '中间抛出事件',
+                key: '7',
+                children: [],
             },
             {
-                dataIndex: 'value8',
-                title: '节长度',
+                title: '结束事件',
+                key: '8',
+                children: [],
             },
             {
-                dataIndex: 'value9',
-                title: '层数',
-            },
-            {
-                dataIndex: 'value10',
-                align: 'center',
-                title: '层高',
-            },
-            {
-                dataIndex: 'value11',
-                title: '备注',
-            },
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 200,
-
-                scopedSlots: { customRender: 'action' },
+                title: '泳道',
+                key: '9',
+                children: [],
             },
         ];
-
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -254,7 +242,7 @@ export default {
             manageMenusFormVisible: false,
             curApp: {},
             realms: [],
-            columns,
+            treeData,
             showOrg: true,
         };
     },
@@ -324,12 +312,12 @@ export default {
     overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
 }
 .stepsCss {
-    width: calc(100% - 200px);
+    width: calc(100% - 230px);
     margin-top: 20px;
     float: right;
 }
 .fromCss {
-    width: calc(100% - 200px);
+    width: calc(100% - 230px);
     margin-top: 50px;
     float: right;
     /deep/ .ant-form-item {
@@ -340,10 +328,16 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    float: left;
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>

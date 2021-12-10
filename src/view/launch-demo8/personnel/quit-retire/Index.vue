@@ -108,10 +108,8 @@ export default {
                         {
                             'id|+1': 10000000,
                             'number|100000-900000': 111111,
-                            loginName: '@cname',
-                            name: function() {
-                                return this.loginName;
-                            },
+                            loginName: '@first',
+                            name: '@cname',
                             superior: '',
                             dep:
                                 '@pick(["教工部", "回收站", "市县党校", "区纪检组", "跟班学习离职", "校-院领导", "办公室", "监控室"])',

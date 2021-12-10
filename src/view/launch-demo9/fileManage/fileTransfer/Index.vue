@@ -9,17 +9,12 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
-                            <org-tree
-                                ref="orgTree"
-                                :show.sync="showOrg"
-                                realmId="platform"
-                                @click="handleOrgMenuClick"
-                                @select="handleOrgTreeSelect"
-                            />
+                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
                             <div class="table-divider"></div>
                         </div>
                     </template>
@@ -32,7 +27,6 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import OrgTree from '../../../rac/rac-org/Tree.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 
 export default {
@@ -40,28 +34,33 @@ export default {
     components: {
         BaseManager,
         CrudTable,
-        OrgTree,
     },
     data() {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '@pick(["ABCD","12138","基建01"])',
+                            'value2|1-10': 1,
+                            value3: '@pick(["永久（Y）"])',
+                            value4: '@pick(["公开（GK）"])',
+                            value5: '@pick(["人力资源部"])',
+                            'value6|1-100000': 1,
+                            value7: '@pick(["档案"])',
+                            value8: '@pick(["档案"])',
+                            value9: '@date("yyyy-MM-dd")',
+                            value10: '@pick(["档案"])',
+                            value11: '@date("yyyy-MM-dd")',
+                            value12: '@date("yyyy-MM-dd")',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '党务工作',
-                        value2: '永久',
-                        value3: '公开',
-                        value4: '06（党群工作部）',
-                        value5: '10',
-                        value6: '20',
-                        value7: '关于档案数字化建设项目须知',
-                        value8: '-',
-                        value9: '-',
-                        value10: '1',
-                        value11: '2020',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -73,6 +72,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -145,7 +145,44 @@ export default {
                 scopedSlots: { customRender: 'action' },
             },
         ];
-
+        const treeData = [
+            {
+                title: '某某某全宗',
+                key: '20211',
+                children: [
+                    {
+                        title: '文书档案（2020年）',
+                        key: '20211-1',
+                        children: [
+                            {
+                                title: '【2020】文书档案项目',
+                                key: '20211-1-1',
+                            },
+                        ],
+                    },
+                    {
+                        title: '基建档案（2020年）',
+                        key: '20211-2',
+                        children: [
+                            {
+                                title: '【2020】基建档案项目',
+                                key: '20211-2-1',
+                            },
+                        ],
+                    },
+                    {
+                        title: '文书档案',
+                        key: '20211-3',
+                        children: [
+                            {
+                                title: '【2020】2020年',
+                                key: '20211-3-1',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -176,6 +213,7 @@ export default {
             realms: [],
             columns,
             showOrg: true,
+            treeData,
         };
     },
     mounted() {
@@ -252,6 +290,11 @@ export default {
         width: 20px;
         border-left: 1px solid #eee;
         margin-left: 10px;
+    }
+    .ant-card-body {
+        width: 200px;
+        overflow: auto;
+        padding: 0;
     }
 }
 </style>
