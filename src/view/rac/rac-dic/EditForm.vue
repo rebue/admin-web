@@ -89,7 +89,6 @@ export default {
     watch: {
         model: {
             handler: function(newModel) {
-                console.log('--newModel', newModel);
                 if (newModel.realmId) {
                     if (newModel.realmId !== this.oldModel.realmId) {
                         this.changeModel(newModel.realmId);
