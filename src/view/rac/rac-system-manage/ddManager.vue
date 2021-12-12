@@ -133,7 +133,7 @@ export default {
                 oldAppKey: record.id,
                 configType,
             };
-            this.api.setNacosDelConfig(data).finally(() => {
+            oapConfig.setNacosDelConfig(data).finally(() => {
                 this.refreshTableData();
             });
         },
