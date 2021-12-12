@@ -12,8 +12,11 @@
 <script>
 import Header from '@/component/app/Header.vue';
 import ifLoginPass from '@/component/app/ifLoginPass.vue';
-import { racMenuAction } from '@/action/Action';
+import CookiePolling from '@/component/rebue/CookiePolling';
 export default {
+    extends: {
+        ...CookiePolling,
+    },
     name: 'app',
     components: { Header, ifLoginPass },
     props: {},
@@ -23,7 +26,7 @@ export default {
     watch: {},
     methods: {},
     mounted() {
-        racMenuAction.refreshAccountInfo();
+        //
     },
 };
 </script>

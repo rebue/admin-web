@@ -171,11 +171,6 @@ export default {
             // 记录打开的窗口，后续点击退出操作关闭已打开的窗口。
             setWin(win);
         },
-        // 轮询加载
-        // loopFetch() {
-        //     this.fetchAuthList();
-        //     setTimeout(this.loopFetch, process.env.VUE_APP_APP_OPS_LOOP * 60 * 1000);
-        // },
     },
 };
 </script>

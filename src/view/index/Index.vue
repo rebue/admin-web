@@ -118,8 +118,12 @@ import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/app/security-center/ChangePswdForm.vue';
 import ifLoginPass from '@/component/app/ifLoginPass.vue';
 import { getAppIdByUrl } from '@/util/common';
+import CookiePolling from '@/component/rebue/CookiePolling';
 
 export default observer({
+    extends: {
+        ...CookiePolling,
+    },
     name: 'Index',
     components: {
         ProLayout,
@@ -168,7 +172,7 @@ export default observer({
         },
     },
     mounted() {
-        this.refreshAccountInfo();
+        //
     },
     methods: {
         getAppIdByUrl() {
