@@ -31,24 +31,6 @@ import CrudTable from './dicCrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import { racDicApi, racDicItemApi, racAppApi, racRealmApi } from '@/api/Api';
 
-let realms = [];
-let apps = [];
-racAppApi.list().then(ro => {
-    apps = Object.values(ro.extra.list).map(item => {
-        return {
-            value: item.id,
-            text: item.name,
-        };
-    });
-});
-racRealmApi.listAll().then(ro => {
-    realms = Object.values(ro.extra.list).map(item => {
-        return {
-            value: item.id,
-            text: item.name,
-        };
-    });
-});
 export default {
     name: 'Manager',
     components: {
@@ -59,22 +41,120 @@ export default {
     },
     data() {
         this.api = racDicApi;
-        // racRealmApi.listAll().then(ro => {
-        //     this.realms = Object.values(ro.extra.list).map(item => {
-        //         return {
-        //             value: item.id,
-        //             text: item.name,
-        //         };
-        //     });
-        // });
-        // racAppApi.list().then(ro => {
-        //     this.apps = Object.values(ro.extra.list).map(item => {
-        //         return {
-        //             value: item.id,
-        //             text: item.name,
-        //         };
-        //     });
-        // });
+        this.columns = [
+            {
+                dataIndex: 'name',
+                title: '名称',
+                width: 300,
+
+                customRender: (text, record) => {
+                    if (!record.dicId) {
+                        return (
+                            <span>
+                                <a-tag color="blue">
+                                    字典
+                                    <a-icon type="tags" />
+                                </a-tag>
+                                {text}
+                            </span>
+                        );
+                    } else {
+                        return (
+                            <fragment>
+                                <a-tag color="blue">
+                                    字典项
+                                    <a-icon type="tag" />
+                                </a-tag>
+                                {text}
+                            </fragment>
+                        );
+                    }
+                },
+            },
+            {
+                dataIndex: 'realmId',
+                title: '领域',
+                width: 100,
+                ellipsis: true,
+                customRender: (text, record) => {
+                    const item = this.realms.find(v => {
+                        return v.value == record.appId;
+                    });
+
+                    return item && item.name;
+                },
+            },
+            {
+                dataIndex: 'appId',
+                title: '应用',
+                width: 120,
+                ellipsis: true,
+                customRender: (text, record) => {
+                    const item = this.apps.find(v => {
+                        return v.value == record.appId;
+                    });
+
+                    return item && item.name;
+                },
+            },
+            {
+                dataIndex: 'remark',
+                title: '备注',
+                width: 150,
+                ellipsis: true,
+            },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 200,
+
+                customRender: (text, record) => {
+                    if (!record.dicId) {
+                        return (
+                            <span>
+                                <a onClick={() => this.handleDicEdit(record)}>编辑</a>
+                                <a-divider type="vertical" />
+                                <a-popconfirm
+                                    title="你确定要删除本条记录吗?"
+                                    onConfirm={() => this.handleDicDel(record)}
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <a>删除</a>
+                                </a-popconfirm>
+                                <a-divider type="vertical" />
+                                <a onClick={() => this.handleAdd(record)}>添加字典项</a>
+                            </span>
+                        );
+                    } else {
+                        return (
+                            <span>
+                                <a onClick={() => this.handleEdit(record)}>编辑</a>
+                                <a-divider type="vertical" />
+                                <a-popconfirm
+                                    title="你确定要删除本条记录吗?"
+                                    onConfirm={() => this.handleDel(record)}
+                                    okText="确定"
+                                    cancelText="取消"
+                                >
+                                    <a>删除</a>
+                                </a-popconfirm>
+                                <a-divider type="vertical" />
+                                <a onClick={() => this.handleItemAdd(record)}>添加字典项</a>
+                            </span>
+                        );
+                    }
+                },
+            },
+            {
+                dataIndex: 'sort',
+                align: 'center',
+                title: '排序',
+                width: 100,
+
+                scopedSlots: { customRender: 'sort' },
+            },
+        ];
         this.tableCommands = [
             {
                 buttonType: 'primary',
@@ -85,141 +165,26 @@ export default {
         ];
         return {
             loading: false,
-            realms: realms,
             edintLinkFormVisible: false,
             manageMenuFormVisible: false,
             curRecord: {},
-            apps: apps,
+            realms: [],
+            apps: [],
         };
     },
-    computed: {
-        columns() {
-            return [
-                {
-                    dataIndex: 'name',
-                    title: '名称',
-                    width: 300,
-
-                    customRender: (text, record) => {
-                        if (!record.dicId) {
-                            return (
-                                <span>
-                                    <a-tag color="blue">
-                                        字典
-                                        <a-icon type="tags" />
-                                    </a-tag>
-                                    {{ text }}
-                                </span>
-                            );
-                        } else {
-                            return (
-                                <fragment>
-                                    <a-tag color="blue">
-                                        字典项
-                                        <a-icon type="tag" />
-                                    </a-tag>
-                                    {{ text }}
-                                </fragment>
-                            );
-                        }
-                    },
-                },
-                {
-                    dataIndex: 'realmId',
-                    key: 'realmIds',
-                    title: '领域',
-                    width: 100,
-                    ellipsis: true,
-                    filters: this.realms,
-                },
-                {
-                    dataIndex: 'appId',
-                    key: 'appIds',
-                    title: '应用',
-                    width: 120,
-                    ellipsis: true,
-                    filters: this.apps,
-                },
-                {
-                    dataIndex: 'remark',
-                    title: '备注',
-                    width: 150,
-                    ellipsis: true,
-                },
-                {
-                    dataIndex: 'action',
-                    title: '操作',
-                    width: 200,
-
-                    customRender: (text, record) => {
-                        if (!record.dicId) {
-                            return (
-                                <span>
-                                    <a onClick={() => this.handleDicEdit(record)}>编辑</a>
-                                    <a-divider type="vertical" />
-                                    <a-popconfirm
-                                        title="你确定要删除本条记录吗?"
-                                        onConfirm={() => this.handleDicDel(record)}
-                                        okText="确定"
-                                        cancelText="取消"
-                                    >
-                                        <a>删除</a>
-                                    </a-popconfirm>
-                                    <a-divider type="vertical" />
-                                    <a onClick={() => this.handleAdd(record)}>添加字典项</a>
-                                </span>
-                            );
-                        } else {
-                            return (
-                                <span>
-                                    <a onClick={() => this.handleEdit(record)}>编辑</a>
-                                    <a-divider type="vertical" />
-                                    <a-popconfirm
-                                        title="你确定要删除本条记录吗?"
-                                        onConfirm={() => this.handleDel(record)}
-                                        okText="确定"
-                                        cancelText="取消"
-                                    >
-                                        <a>删除</a>
-                                    </a-popconfirm>
-                                    <a-divider type="vertical" />
-                                    <a onClick={() => this.handleItemAdd(record)}>添加字典项</a>
-                                </span>
-                            );
-                        }
-                    },
-                },
-                {
-                    dataIndex: 'sort',
-                    align: 'center',
-                    title: '排序',
-                    width: 100,
-
-                    scopedSlots: { customRender: 'sort' },
-                },
-            ];
-        },
+    created() {
+        racAppApi.list().then(ro => {
+            this.apps = ro.extra.list;
+        });
+        racRealmApi.listAll().then(ro => {
+            this.realms = ro.extra.list;
+        });
     },
+    computed: {},
     mounted() {
         this.crudTable = this.$refs.crudTable;
         this.dicItemeditForm = this.$refs.dicItemeditForm;
         this.dicEditForm = this.$refs.dicEditForm;
-        // racRealmApi.listAll().then((ro) => {
-        //     this.realms = Object.values(ro.extra.list).map((item) => {
-        //         return {
-        //             value: item.id,
-        //             text: item.name,
-        //         };
-        //     });
-        // });
-        // racAppApi.list().then((ro) => {
-        //     this.apps = Object.values(ro.extra.list).map((item) => {
-        //         return {
-        //             value: item.id,
-        //             text: item.name,
-        //         };
-        //     });
-        // });
     },
     methods: {
         /**
