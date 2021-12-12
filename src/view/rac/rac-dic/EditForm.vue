@@ -50,18 +50,6 @@ export default {
             },
         };
     },
-    created() {
-        this.$nextTick(() => {
-            racRealmApi.listAll().then(ro => {
-                this.realms = Object.values(ro.extra.list).map(item => {
-                    return {
-                        value: item.id,
-                        title: item.name,
-                    };
-                });
-            });
-        });
-    },
     mounted() {
         //
     },
@@ -87,27 +75,34 @@ export default {
         },
     },
     watch: {
-        model: {
-            handler: function(newModel) {
-                if (newModel.realmId) {
-                    if (newModel.realmId !== this.oldModel.realmId) {
-                        this.changeModel(newModel.realmId);
-                    }
-                }
-                this.oldModel = { ...newModel };
+        'model.realmId': {
+            handler: function(val) {
+                this.changeModel(val);
             },
-            deep: true,
-            immediate: true,
         },
     },
     methods: {
         handleShow() {
-            //
+            this.$nextTick(() => {
+                racRealmApi.listAll().then(ro => {
+                    this.realms = Object.values(ro.extra.list).map(item => {
+                        return {
+                            value: item.id,
+                            title: item.name,
+                        };
+                    });
+                });
+                this.changeModel(this.model.realmId);
+            });
         },
         show: function(...params) {
             this.$refs.baseEditForm.show(...params);
         },
         changeModel(realmId) {
+            if (!realmId) {
+                this.apps = [];
+                return;
+            }
             racAppApi.list({ realmId: realmId }).then(ro => {
                 this.apps = Object.values(ro.extra.list).map(item => {
                     return {
@@ -116,9 +111,6 @@ export default {
                     };
                 });
             });
-            if (!realmId) {
-                this.apps = [];
-            }
         },
     },
 };
