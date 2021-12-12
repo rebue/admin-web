@@ -53,7 +53,7 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '账号名称',
-                fixed: 'left',
+
                 ellipsis: true,
                 width: 120,
                 customRender: (text, record) => (
@@ -132,6 +132,7 @@ export default {
             {
                 dataIndex: 'disableReason',
                 title: '禁用原因',
+                width: 220,
                 ellipsis: true,
             },
             {
@@ -199,6 +200,7 @@ export default {
             {
                 dataIndex: 'enableReason',
                 title: '启用原因',
+                width: 220,
                 ellipsis: true,
             },
         ];

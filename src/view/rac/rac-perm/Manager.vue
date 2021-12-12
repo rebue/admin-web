@@ -65,8 +65,8 @@ export default {
             {
                 dataIndex: 'name',
                 title: '名称',
-                width: 250,
-                fixed: 'left',
+                width: 300,
+
                 customRender: (text, record) => {
                     if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
@@ -94,6 +94,7 @@ export default {
             {
                 dataIndex: 'remark',
                 title: '备注',
+                width: 150,
                 ellipsis: true,
             },
             {
@@ -101,7 +102,7 @@ export default {
                 align: 'center',
                 title: '启用',
                 width: 70,
-                fixed: 'right',
+
                 customRender: (text, record) => (
                     <a-switch
                         checked={record.isEnabled}
@@ -115,7 +116,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 240,
-                fixed: 'right',
+
                 customRender: (text, record) => {
                     if (record.type === PermTreeNodeTypeDic.PermGroup) {
                         return (
@@ -163,7 +164,7 @@ export default {
                 align: 'center',
                 title: '排序',
                 width: 100,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'sort' },
             },
         ];

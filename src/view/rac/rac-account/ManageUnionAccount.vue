@@ -35,7 +35,7 @@ export default {
             {
                 dataIndex: 'realmName',
                 title: '领域名称',
-                fixed: 'left',
+
                 customRender: (text, record) => {
                     return record?.realm?.name;
                 },
@@ -51,7 +51,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 //width: 250,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

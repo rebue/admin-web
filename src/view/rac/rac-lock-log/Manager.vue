@@ -53,7 +53,7 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '账号名称',
-                fixed: 'left',
+
                 ellipsis: true,
                 width: 120,
                 customRender: (text, record) => (

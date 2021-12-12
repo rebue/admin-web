@@ -92,14 +92,14 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'signInName',
                 title: '登录账号',
-                width: 200,
-                fixed: 'left',
+                width: 120,
+
                 customRender: (text, record) => (
                     <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
                         {record.signInName || record.signInMobile || record.signInEmail}
@@ -118,7 +118,7 @@ export default {
             {
                 dataIndex: 'nickname',
                 title: '昵称',
-                // width: 120,
+                width: 120,
                 ellipsis: true,
                 customRender: (text, record) => {
                     //FIXME 在编辑的时候，昵称输入框删除完之后会报错，浏览窗口动不了
@@ -144,6 +144,7 @@ export default {
             {
                 dataIndex: 'realName',
                 title: '用户姓名',
+                width: 120,
                 align: 'center',
             },
             {
@@ -151,7 +152,7 @@ export default {
                 align: 'center',
                 title: '启用',
                 width: 100,
-                fixed: 'right',
+
                 customRender: (text, record) => (
                     <a-switch
                         checked={record.isEnabled}
@@ -165,7 +166,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 200,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

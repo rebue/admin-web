@@ -38,14 +38,13 @@ export default {
             //     dataIndex: 'no',
             //     title: '#',
             //     width: 50,
-            //     fixed: 'left',
+            //
             //     scopedSlots: { customRender: 'serial' },
             // },
             {
                 dataIndex: 'name',
                 title: '名称',
                 width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'srcName',
@@ -62,7 +61,7 @@ export default {
                 align: 'center',
                 title: '启用',
                 width: 70,
-                fixed: 'right',
+
                 customRender: (text, record) => (
                     <a-switch
                         checked={record.isEnabled}
@@ -76,7 +75,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

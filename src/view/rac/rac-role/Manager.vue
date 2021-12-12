@@ -52,11 +52,11 @@ export default {
                 dataIndex: 'name',
                 title: '名称',
                 width: 250,
-                fixed: 'left',
             },
             {
                 dataIndex: 'remark',
                 title: '备注',
+                width: 150,
                 ellipsis: true,
             },
             {
@@ -64,7 +64,7 @@ export default {
                 align: 'center',
                 title: '启用',
                 width: 150,
-                fixed: 'right',
+
                 customRender: (text, record) => (
                     <a-switch
                         checked={record.isEnabled}
@@ -78,7 +78,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 250,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
             {
@@ -86,7 +86,7 @@ export default {
                 align: 'center',
                 title: '排序',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'sort' },
             },
         ];

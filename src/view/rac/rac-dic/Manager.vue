@@ -99,7 +99,7 @@ export default {
                     dataIndex: 'name',
                     title: '名称',
                     width: 300,
-                    fixed: 'left',
+
                     customRender: (text, record) => {
                         if (!record.dicId) {
                             return (
@@ -128,7 +128,7 @@ export default {
                     dataIndex: 'realmId',
                     key: 'realmIds',
                     title: '领域',
-                    with: 100,
+                    width: 100,
                     ellipsis: true,
                     filters: this.realms,
                 },
@@ -136,20 +136,21 @@ export default {
                     dataIndex: 'appId',
                     key: 'appIds',
                     title: '应用',
-                    with: 120,
+                    width: 120,
                     ellipsis: true,
                     filters: this.apps,
                 },
                 {
                     dataIndex: 'remark',
                     title: '备注',
+                    width: 150,
                     ellipsis: true,
                 },
                 {
                     dataIndex: 'action',
                     title: '操作',
                     width: 200,
-                    fixed: 'right',
+
                     customRender: (text, record) => {
                         if (!record.dicId) {
                             return (
@@ -193,7 +194,7 @@ export default {
                     align: 'center',
                     title: '排序',
                     width: 100,
-                    fixed: 'right',
+
                     scopedSlots: { customRender: 'sort' },
                 },
             ];

@@ -97,7 +97,7 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '账号名称',
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'tagName' },
             },
             {
@@ -119,7 +119,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 //width: 250,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

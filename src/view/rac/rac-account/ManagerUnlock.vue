@@ -57,14 +57,14 @@ export default {
             //     dataIndex: 'no',
             //     title: '#',
             //     width: 50,
-            //     fixed: 'left',
+            //
             //     scopedSlots: { customRender: 'serial' },
             // },
             {
                 dataIndex: 'signInName',
                 title: '登录账号',
                 width: 120,
-                fixed: 'left',
+
                 customRender: (text, record) => (
                     <a-popover title={(record.signInName || record.signInMobile || record.signInEmail) + '详情'}>
                         {record.signInName || record.signInMobile || record.signInEmail}
@@ -125,7 +125,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 100,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

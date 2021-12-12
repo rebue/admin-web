@@ -60,7 +60,7 @@ export default {
                 dataIndex: 'signInName',
                 key: 'signInName',
                 title: '账号名称',
-                fixed: 'left',
+
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (
@@ -85,7 +85,7 @@ export default {
                 dataIndex: 'agentSignInName',
                 key: 'agentSignInName',
                 title: '代理账号名称',
-                fixed: 'left',
+
                 ellipsis: true,
                 width: 150,
                 customRender: (text, record) => (

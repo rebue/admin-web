@@ -55,7 +55,6 @@ export default {
                 dataIndex: 'name',
                 title: '名称',
                 width: 250,
-                fixed: 'left',
             },
             {
                 dataIndex: 'orgType',
@@ -77,7 +76,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 300,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

@@ -47,14 +47,13 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'name',
                 title: '名称',
                 // width: 150,
-                fixed: 'left',
             },
             {
                 dataIndex: 'id',
@@ -70,7 +69,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];

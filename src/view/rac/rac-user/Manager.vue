@@ -51,14 +51,13 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
-                fixed: 'left',
+
                 scopedSlots: { customRender: 'serial' },
             },
             {
                 dataIndex: 'realName',
                 title: '姓名',
                 width: 120,
-                fixed: 'left',
             },
             {
                 dataIndex: 'idCard',
@@ -89,7 +88,7 @@ export default {
             //     align: 'center',
             //     title: '启用',
             //     width: 70,
-            //     fixed: 'right',
+            //
             //     customRender: (text, record) => (
             //         <a-switch
             //             checked={record.isEnabled}
@@ -103,7 +102,7 @@ export default {
                 dataIndex: 'action',
                 title: '操作',
                 width: 180,
-                fixed: 'right',
+
                 scopedSlots: { customRender: 'action' },
             },
         ];
