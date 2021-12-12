@@ -78,7 +78,7 @@ export default {
                 ellipsis: true,
                 customRender: (text, record) => {
                     const item = this.realms.find(v => {
-                        return v.value == record.appId;
+                        return v.id == record.realmId;
                     });
 
                     return item && item.name;
@@ -91,7 +91,7 @@ export default {
                 ellipsis: true,
                 customRender: (text, record) => {
                     const item = this.apps.find(v => {
-                        return v.value == record.appId;
+                        return v.id == record.appId;
                     });
 
                     return item && item.name;
