@@ -25,7 +25,7 @@ import { raclevelProtectApi, racDicItemApi } from '@/api/Api';
 // lockDuration       账号锁定时长/分钟
 // passwordMinLength  密码最小长度/位数
 // passwordCharacter  密码最少包含字符/种
-// passwordTips       输强制修改密码
+// passwordTips       强制修改密码
 // passwordDoverdue    密码过期时长/天
 const configData = [
     {
@@ -49,7 +49,7 @@ const configData = [
         remark: '字符包括大写字母、小写字母、数字和特殊符号',
     },
     {
-        name: '输强制修改密码',
+        name: '强制修改密码',
         key: 'passwordTips',
         remark: '第一次登录是否强制修改密码',
     },
