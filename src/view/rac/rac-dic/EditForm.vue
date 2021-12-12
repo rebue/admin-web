@@ -50,6 +50,18 @@ export default {
             },
         };
     },
+    created() {
+        this.$nextTick(() => {
+            racRealmApi.listAll().then(ro => {
+                this.realms = Object.values(ro.extra.list).map(item => {
+                    return {
+                        value: item.id,
+                        title: item.name,
+                    };
+                });
+            });
+        });
+    },
     mounted() {
         //
     },
@@ -77,6 +89,7 @@ export default {
     watch: {
         model: {
             handler: function(newModel) {
+                console.log('--newModel', newModel);
                 if (newModel.realmId) {
                     if (newModel.realmId !== this.oldModel.realmId) {
                         this.changeModel(newModel.realmId);
@@ -90,18 +103,7 @@ export default {
     },
     methods: {
         handleShow() {
-            this.realms = [];
-            this.apps = [];
-            this.$nextTick(() => {
-                racRealmApi.listAll().then(ro => {
-                    this.realms = Object.values(ro.extra.list).map(item => {
-                        return {
-                            value: item.id,
-                            title: item.name,
-                        };
-                    });
-                });
-            });
+            //
         },
         show: function(...params) {
             this.$refs.baseEditForm.show(...params);
