@@ -35,7 +35,7 @@
                             </a-form-model>
                         </a-col>
 
-                        <a-col style="margin-top: 10px">
+                        <a-col style="margin-top: 5px">
                             <a-button>查找</a-button><a-button style="margin-left: 15px">添加</a-button>
                             <a-button style="margin-left: 15px">条件清空</a-button>
                         </a-col>

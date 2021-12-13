@@ -167,7 +167,7 @@ export default {
             {
                 dataIndex: 'rewardWorkload',
                 title: '科研奖励工作量',
-                width: 80,
+                width: 150,
             },
             {
                 dataIndex: 'date',

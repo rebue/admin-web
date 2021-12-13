@@ -47,7 +47,7 @@
                                 </a-form-item>
                             </a-form-model>
                         </a-col>
-                        <a-col style="margin-top: 10px">
+                        <a-col style="margin-top: 5px">
                             <a-button>查找</a-button>
                             <a-button style="margin-left: 10px">导出</a-button>
                             <a-button style="margin-left: 10px">条件清除</a-button>

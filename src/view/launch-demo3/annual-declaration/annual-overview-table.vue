@@ -97,6 +97,7 @@
                                 </a-form-model-item>
                                 <a-form-model-item label="申请日期:">
                                     <a-date-picker
+                                        :disabled="context"
                                         v-model="tableObj.applyTime"
                                         v-decorator="['申请日期', config]"
                                         show-time
@@ -378,7 +379,7 @@ export default {
         handleEdit(value) {
             this.title = '编辑';
             this.context = false;
-            this.idEdit = false;
+            this.idEdit = true;
             this.tableObj = value;
             this.visible = true;
         },

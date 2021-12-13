@@ -104,6 +104,7 @@
                                         placeholder="请输入部门名称"
                                     /> -->
                                     <a-date-picker
+                                        :disabled="context"
                                         v-model="tableObj.applyTime"
                                         v-decorator="['申请日期', config]"
                                         show-time
