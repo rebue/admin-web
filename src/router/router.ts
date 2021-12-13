@@ -46,7 +46,7 @@ const oidc = async function(next) {
     try {
         const clientId = sessionStorage.getItem('auth_info_clientId');
         // auth_info_clientId 用于标记扫码登录的是哪个系统
-        sessionStorage.setItem('auth_info_clientId', clientId);
+        sessionStorage.setItem('auth_info_clientId', clientId || '');
         const { result, detail } = await oapOidcApi.getOidcOauthUri(clientId, {
             // redirectUri: encodeURIComponent(`http://172.20.11.244:13080/orp-svr/orp/callback`),
             redirectUri: encodeURIComponent(`${location.origin}/orp-svr/orp/auth-code/oidc/${clientId}`),
