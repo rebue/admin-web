@@ -1,38 +1,43 @@
 <template>
-    <fragment>
-        <base-manager ref="baseManager">
-            <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="false"
-                >
-                    <template #left>
-                        <div v-show="showOrg" class="table-left">
-                            <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                            <div class="table-divider"></div>
-                        </div>
-                    </template>
-                </crud-table>
-            </template>
-        </base-manager>
-    </fragment>
+    <div>
+        <fragment>
+            <base-manager ref="baseManager">
+                <template #managerCard>
+                    <crud-table
+                        ref="crudTable"
+                        :commands="tableCommands"
+                        :actions="tableActions"
+                        :columns="columns"
+                        :api="api"
+                        :scrollX="600"
+                        :defaultPagination="false"
+                    >
+                        <template #left>
+                            <div v-show="showOrg" class="table-left">
+                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </template>
+                    </crud-table>
+                </template>
+            </base-manager>
+            <edit-form ref="editForm" @close="handleEditFormClose" />
+        </fragment>
+    </div>
 </template>
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import EditForm from './EditForm';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
         CrudTable,
+        EditForm,
     },
     data() {
         // 初始化数据start
@@ -169,12 +174,12 @@ export default {
             {
                 type: 'a',
                 title: '完善项目',
-                onClick: record => this.handleEdit(record),
+                //onClick: record => this.handleEdit(record),
             },
             {
                 type: 'a',
                 title: '编辑表单',
-                onClick: record => this.handleEdit(record),
+                //onClick: record => this.handleEdit(record),
             },
             {
                 type: 'a',
@@ -200,7 +205,7 @@ export default {
         };
     },
     mounted() {
-        //
+        this.editForm = this.$refs.editForm;
     },
     methods: {
         handleOrgMenuClick() {

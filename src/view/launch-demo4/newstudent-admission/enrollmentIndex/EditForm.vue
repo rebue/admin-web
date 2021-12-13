@@ -47,7 +47,7 @@ export default {
         // this.api=racRealmApi
         return {
             record: {},
-            editFormType: EditFormTypeDic.None,
+            editFormType: EditFormTypeDic.add,
             model: {},
             rules: {
                 teachPointNum: [

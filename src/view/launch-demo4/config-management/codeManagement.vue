@@ -45,55 +45,55 @@ export default {
         const treeData = [
             {
                 title: '研究生报名审核状态',
-                key: '1',
+                key: 'value1',
             },
             {
                 title: '干部属性',
-                key: '1',
+                key: 'value2',
             },
             {
                 title: '学籍变动类型',
-                key: '1',
+                key: 'value3',
             },
             {
                 title: '考核形式',
-                key: '1',
+                key: 'value4',
             },
             {
                 title: '研究生班级职务',
-                key: '1',
+                key: 'value5',
             },
             {
                 title: '研究生文化程度',
-                key: '1',
+                key: 'value6',
             },
             {
                 title: '免试条件',
-                key: '1',
+                key: 'value7',
             },
             {
                 title: '荣誉称号',
-                key: '1',
+                key: 'value8',
             },
             {
                 title: '研究生录取指标类型',
-                key: '1',
+                key: 'value9',
             },
             {
                 title: '研究生新生录取',
-                key: '1',
+                key: 'value10',
             },
             {
                 title: '是否允许毕业',
-                key: '1',
+                key: 'value11',
             },
             {
                 title: '研究生报名审核结果',
-                key: '1',
+                key: 'value12',
             },
             {
                 title: '职称',
-                key: '1',
+                key: 'value13',
             },
         ];
         // 初始化数据start

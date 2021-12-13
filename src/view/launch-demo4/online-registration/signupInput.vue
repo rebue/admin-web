@@ -296,13 +296,13 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '新增',
-                onClick: this.handleAdd,
+                //onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '导出',
-                onClick: this.handleAdd,
+                //onClick: this.handleAdd,
             },
         ];
 
@@ -310,18 +310,18 @@ export default {
             {
                 type: 'a',
                 title: '编辑',
-                onClick: record => this.handleEdit(record),
+                //onClick: record => this.handleEdit(record),
             },
             {
                 type: 'a',
                 title: '查看',
-                onClick: record => this.handleEdit(record),
+                //onClick: record => this.handleEdit(record),
             },
             {
                 type: 'confirm',
                 title: '删除',
                 confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
+                //onClick: record => this.handleDel(record),
             },
         ];
 
