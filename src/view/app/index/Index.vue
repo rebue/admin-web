@@ -137,7 +137,8 @@ export default {
                     });
                     // //排序一下应用 并装到一个新数组
                     const newData = [],
-                        newLabelSelect = [];
+                        newLabelSelect = [],
+                        completeLable = [];
                     this.labelSelect.map(item => {
                         if (item.children && item.children.length != 0) {
                             item.children = item.children.sort((a, b) => {
@@ -153,7 +154,16 @@ export default {
                             item.map(childItem => {
                                 childItem.labelIndex = labelIndex;
                                 newLabelSelect.push(childItem);
+                                completeLable.push(childItem.appId);
                             });
+                        }
+                    });
+                    labelIndex = labelIndex + 1;
+                    racAppList.map(item => {
+                        if (!completeLable.includes(item.id)) {
+                            item.labelName = '其他';
+                            item.labelIndex = labelIndex;
+                            newLabelSelect.push(item);
                         }
                     });
                     this.newLabelSelect = newLabelSelect;
