@@ -28,13 +28,13 @@
                 </a-row>
             </template>
         </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        <edit-form ref="editForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-// import EditForm from './EditForm';
+import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 
@@ -42,7 +42,7 @@ export default {
     name: 'Manager',
     components: {
         BaseManager,
-        // EditForm,
+        EditForm,
         CrudTable,
     },
     data() {
@@ -171,7 +171,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 200,
                 // fixed: 'right',
                 scopedSlots: { customRender: 'action' },
             },
@@ -190,9 +190,7 @@ export default {
                 buttonType: 'primary',
                 // icon: 'plus',
                 title: '新建',
-                onClick: () => {
-                    /**/
-                },
+                onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
@@ -232,9 +230,13 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-                onClick: () => {
-                    /**/
-                },
+                onClick: record => this.handleEdit(record),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: record => this.handleDel(record),
             },
             {
                 type: 'more',
@@ -244,14 +246,7 @@ export default {
                         title: '编辑',
                         onClick: record => this.handleEdit(record),
                     },
-                    {
-                        type: 'confirm',
-                        title: '删除',
-                        confirmTitle: '你确定要删除本条记录吗?',
-                        onClick: () => {
-                            /**/
-                        },
-                    },
+
                     {
                         type: 'a',
                         title: '审核',
@@ -328,36 +323,40 @@ export default {
          * 处理编辑场地的事件
          */
         handleEdit(record) {
-            // this.editForm.show(EditFormTypeDic.Modify, record);
+            this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
          * 处理删除场地的事件
          */
         handleDel(record) {
-            this.loading = true;
-            this.api.delById(record.id).finally(() => {
-                this.refreshTableData();
-            });
+            // this.loading = true;
+            // this.api.delById(record.id).finally(() => {
+            //     this.refreshTableData();
+            // });
         },
+
         handleEditFormClose() {
-            this.refreshTableData();
+            // this.refreshTableData();
         },
-        /** 处理组织菜单点击节点的事件 */
-        handleOrgMenuClick(item) {
-            this.curOrgId = item.id;
-            this.$nextTick(() => {
-                this.refreshTableData();
-            });
-        },
-        /** 处理组织树选择节点的事件 */
-        handleOrgTreeSelect({ isSelected, item }) {
-            this.curOrgId = isSelected ? item.id : undefined;
-            this.$nextTick(this.refreshTableData);
-        },
+        // /** 处理组织菜单点击节点的事件 */
+        // handleOrgMenuClick(item) {
+        //     this.curOrgId = item.id;
+        //     this.$nextTick(() => {
+        //         this.refreshTableData();
+        //     });
+        // },
+        // /** 处理组织树选择节点的事件 */
+        // handleOrgTreeSelect({ isSelected, item }) {
+        //     this.curOrgId = isSelected ? item.id : undefined;
+        //     this.$nextTick(this.refreshTableData);
+        // },
     },
 };
 </script>
 <style lang="less" scoped>
+.realm-tabs {
+    overflow: visible; /* 否则表格的分页选择框展开时会被遮挡 */
+}
 .table-left {
     display: flex;
     height: 100%;

@@ -15,23 +15,48 @@
                 </crud-table>
             </template>
         </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        <set-class ref="setClassForm" @close="handleEditFormClose" />
+        <set-code ref="setCodeForm" @close="handleEditFormClose" />
+        <!-- 查看班级课程 -->
+        <a-modal
+            title="查看班级课程"
+            :visible="classVisible"
+            :confirm-loading="confirmLoading"
+            @cancel="handleCancel"
+            @ok="handleCancel"
+        >
+            <p>班级名称：{{ checkForm.className }}</p>
+            <p>班级课程：课程1</p>
+        </a-modal>
+        <!-- 查看学员宿舍 -->
+        <a-modal
+            title="查看学员宿舍"
+            :visible="dormVisible"
+            :confirm-loading="confirmLoading"
+            @cancel="handleCancel"
+            @ok="handleCancel"
+        >
+            <p>学员名称：{{ checkForm.creator }}</p>
+            <p>学员宿舍：宿舍1</p>
+        </a-modal>
     </fragment>
 </template>
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-// import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import SetClass from './SetClass';
+import SetCode from './SetCode';
 import { racRealmApi } from '@/api/Api';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
-        // EditForm,
         CrudTable,
+        SetClass,
+        SetCode,
     },
     data() {
         // 初始化数据start
@@ -152,30 +177,22 @@ export default {
                     {
                         type: 'a',
                         title: '查看班级课程',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleCheckCourse(record),
                     },
                     {
                         type: 'a',
                         title: '查看学员宿舍',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleCheckDrom(record),
                     },
                     {
                         type: 'a',
                         title: '设置班级编码',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleSetClass(record),
                     },
                     {
                         type: 'a',
                         title: '设置网上报名注册码',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleSetCode(record),
                     },
                 ],
             },
@@ -183,10 +200,15 @@ export default {
 
         return {
             columns,
+            dormVisible: false,
+            classVisible: false,
+            confirmLoading: false,
+            checkForm: {},
         };
     },
     mounted() {
-        this.editForm = this.$refs.editForm;
+        this.setClassForm = this.$refs.setClassForm;
+        this.setCodeForm = this.$refs.setCodeForm;
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
@@ -209,16 +231,37 @@ export default {
             // this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
-         * 处理删除场地的事件
+         * 处理 查看班级课程事件
          */
-        handleDel(record) {
-            this.loading = true;
-            this.api.delById(record.id).finally(() => {
-                this.refreshTableData();
-            });
+        handleCheckCourse(record) {
+            this.checkForm = record;
+            this.classVisible = true;
+        },
+        /**
+         * 处理 查看学员宿舍事件
+         */
+        handleCheckDrom(record) {
+            this.checkForm = record;
+            this.dormVisible = true;
+        },
+        /**
+         * 处理 设置班级编号事件
+         */
+        handleSetClass(record) {
+            this.setClassForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理 设置网上报名注册码事件
+         */
+        handleSetCode(record) {
+            this.setCodeForm.show(EditFormTypeDic.Modify, record);
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        handleCancel() {
+            this.dormVisible = false;
+            this.classVisible = false;
         },
     },
 };

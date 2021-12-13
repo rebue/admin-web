@@ -60,13 +60,13 @@
                 </crud-table>
             </template>
         </base-manager>
-        <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
+        <edit-form ref="editForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
-// import EditForm from './EditForm';
+import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
@@ -75,7 +75,7 @@ export default {
     name: 'Manager',
     components: {
         BaseManager,
-        // EditForm,
+        EditForm,
         CrudTable,
     },
     data() {
@@ -104,7 +104,7 @@ export default {
                             tel: '0779-@integer(10000,99999)',
                             phone: '137@integer(10000000,99999999)',
                             'dormitoryId|+1': 200,
-                            'postal-code': '@zip()',
+                            postalCode: '@zip()',
                         },
                     ],
                 });
@@ -229,7 +229,7 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'postal-code',
+                dataIndex: 'postalCode',
                 title: '邮政编码',
                 width: 150,
                 ellipsis: true,
@@ -273,16 +273,12 @@ export default {
             {
                 type: 'a',
                 title: '小组信息',
-                onClick: () => {
-                    /**/
-                },
+                onClick: record => this.handleCheck(record),
             },
             {
                 type: 'a',
                 title: '编辑',
-                onClick: () => {
-                    /**/
-                },
+                onClick: record => this.handleEdit(record),
             },
         ];
 
@@ -314,7 +310,10 @@ export default {
          * 处理编辑场地的事件
          */
         handleEdit(record) {
-            // this.editForm.show(EditFormTypeDic.Modify, record);
+            this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        handleCheck(record) {
+            this.editForm.show(EditFormTypeDic.Modify, record);
         },
         /**
          * 处理删除场地的事件
