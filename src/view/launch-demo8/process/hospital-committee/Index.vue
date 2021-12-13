@@ -55,6 +55,29 @@
                             </crud-table>
                         </a-col>
                     </a-row>
+                    <div>
+                        <a-modal
+                            width="600px"
+                            :title="title"
+                            :visible="visible"
+                            :confirm-loading="confirmLoading"
+                            @cancel="handleCancel"
+                        >
+                            <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                                <a-form-model-item label="文件号:">
+                                    <a-input placeholder="" v-model="tableObj.fileNum" :disabled="context" />
+                                </a-form-model-item>
+                                <a-form-model-item label="标题:">
+                                    <a-input
+                                        type="textarea"
+                                        placeholder=""
+                                        v-model="tableObj.title"
+                                        :disabled="context"
+                                    />
+                                </a-form-model-item>
+                            </a-form-model>
+                        </a-modal>
+                    </div>
                 </template>
             </base-manager>
         </fragment>
@@ -175,7 +198,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 150,
+                width: 200,
                 scopedSlots: { customRender: 'action' },
             },
         ];
@@ -201,9 +224,8 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-                onClick: () => {
-                    /**/
-                },
+                onClick: res => this.handleShow(res),
+                /**/
             },
             {
                 type: 'a',
@@ -213,8 +235,9 @@ export default {
                 },
             },
             {
-                type: 'a',
+                type: 'confirm',
                 title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
                 onClick: () => {
                     /**/
                 },
@@ -226,6 +249,14 @@ export default {
             list: page,
         };
         return {
+            title: '',
+            context: false,
+            idEdit: false,
+            visible: false,
+            tableObj: {
+                fileNum: '',
+                title: '',
+            },
             expandedKeys: ['2021', '20211'],
             autoExpandParent: true,
             selectedKeys: [],
@@ -243,6 +274,15 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleCancel() {
+            this.visible = false;
+        },
+        handleShow(value) {
+            this.title = '查看详情';
+            this.tableObj = value;
+            this.context = true;
+            this.visible = true;
+        },
         onCheck(checkedKeys, info) {
             console.log('onCheck', checkedKeys, info);
         },

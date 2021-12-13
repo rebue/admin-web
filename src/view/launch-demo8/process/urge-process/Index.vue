@@ -33,6 +33,45 @@
                         </crud-table>
                     </a-col>
                 </a-row>
+                <div>
+                    <a-modal
+                        width="600px"
+                        :title="title"
+                        :visible="visible"
+                        :confirm-loading="confirmLoading"
+                        @cancel="handleCancel"
+                    >
+                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="提交人:">
+                                <a-input placeholder="" v-model="tableObj.apply" :disabled="context" />
+                            </a-form-model-item>
+                            <a-form-model-item label="文件名称:">
+                                <a-input :disabled="context" v-model="tableObj.filename" />
+                            </a-form-model-item>
+                            <a-form-model-item label="专题名称:">
+                                <a-input type="textarea" :disabled="context" v-model="tableObj.active" />
+                            </a-form-model-item>
+                            <a-form-model-item label="代办活动:">
+                                <a-input :disabled="context" v-model="tableObj.active" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="主办人:">
+                                <a-input :disabled="context" v-model="tableObj.handle" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="发送时间:">
+                                <a-date-picker
+                                    :disabled="context"
+                                    v-model="tableObj.sendTime"
+                                    v-decorator="['发送时间', config]"
+                                    show-time
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                />
+                            </a-form-model-item>
+                            <a-form-model-item label="发送人:">
+                                <a-input :disabled="context" v-model="tableObj.total" placeholder="" />
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -166,15 +205,15 @@ export default {
                 width: 200,
             },
             {
-                dataIndex: 'action',
-                title: '操作',
-                width: 100,
-                scopedSlots: { customRender: 'action' },
-            },
-            {
                 dataIndex: 'total',
                 title: '发送次数',
                 width: 200,
+            },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+                scopedSlots: { customRender: 'action' },
             },
         ];
 
@@ -195,9 +234,17 @@ export default {
                     /**/
                 },
             },
+            {
+                type: 'a',
+                title: '查看',
+                onClick: record => this.handleShow(record),
+            },
         ];
 
         return {
+            visible: false,
+            title: '',
+            context: false,
             expandedKeys: ['2021', '20211'],
             autoExpandParent: true,
             selectedKeys: [],
@@ -208,6 +255,14 @@ export default {
             curOrgId: undefined,
             process,
             approver,
+            tableObj: {
+                apply: '',
+                filename: '',
+                active: '',
+                handle: '',
+                sendTime: '',
+                total: '',
+            },
         };
     },
     mounted() {
@@ -215,6 +270,9 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleCancel() {
+            this.visible = false;
+        },
         onCheck(checkedKeys, info) {
             console.log('onCheck', checkedKeys, info);
         },
@@ -227,6 +285,13 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
+        },
+        //** 查看事件*/
+        handleShow(value) {
+            this.tableObj = value;
+            this.context = true;
+            this.title = '查看详情';
+            this.visible = true;
         },
         /**
          * 新增事件

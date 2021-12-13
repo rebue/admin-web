@@ -46,6 +46,27 @@
                             </crud-table>
                         </a-col>
                     </a-row>
+                    <div>
+                        <a-modal
+                            width="600px"
+                            :title="title"
+                            :visible="visible"
+                            :confirm-loading="confirmLoading"
+                            @cancel="handleCancel"
+                        >
+                            <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                                <a-form-model-item label="文件号:">
+                                    <a-input placeholder="" v-model="tableObj.fileNum" :disabled="context" />
+                                </a-form-model-item>
+                                <a-form-model-item label="标题:">
+                                    <a-input type="textarea" :disabled="context" v-model="tableObj.title" />
+                                </a-form-model-item>
+                                <a-form-model-item label="自动编号:">
+                                    <a-input :disabled="context" v-model="tableObj.autoNum" />
+                                </a-form-model-item>
+                            </a-form-model>
+                        </a-modal>
+                    </div>
                 </template>
             </base-manager>
         </fragment>
@@ -56,6 +77,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import { reverse } from 'lodash';
 
 const year = ['2021', '2020', '2019', '2018', '2017', '2016'];
 const date = ['全部', '已整理', '未整理'];
@@ -136,7 +158,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 60,
+                width: 150,
                 scopedSlots: { customRender: 'action' },
             },
         ];
@@ -160,11 +182,18 @@ export default {
 
         this.tableActions = [
             {
-                type: 'a',
+                type: 'confirm',
                 title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
                 onClick: () => {
                     /**/
                 },
+            },
+            {
+                type: 'a',
+                title: '查看',
+                onClick: resolve => this.handleShow(resolve),
+                /**/
             },
         ];
         this.api = {
@@ -173,6 +202,15 @@ export default {
             list: page,
         };
         return {
+            title: '',
+            context: false,
+            idEdit: false,
+            visible: false,
+            tableObj: {
+                fileNum: '',
+                title: '',
+                autoNum: '',
+            },
             expandedKeys: ['2021', '20211'],
             autoExpandParent: true,
             selectedKeys: [],
@@ -190,6 +228,16 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        handleShow(value) {
+            this.title = '查看详情';
+            this.tableObj = value;
+            this.context = true;
+            this.idEdit = true;
+            this.visible = true;
+        },
+        handleCancel() {
+            this.visible = false;
+        },
         onCheck(checkedKeys, info) {
             console.log('onCheck', checkedKeys, info);
         },
