@@ -14,6 +14,48 @@
                     :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
+                <div>
+                    <a-modal
+                        width="600px"
+                        :title="title"
+                        :visible="visible"
+                        :confirm-loading="confirmLoading"
+                        @cancel="handleCancel"
+                    >
+                        <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="学期:">
+                                <a-input :disabled="context" v-model="tableObj.value1" />
+                            </a-form-model-item>
+                            <a-form-model-item label="专题名称:">
+                                <a-input type="textarea" :disabled="context" v-model="tableObj.value2" />
+                            </a-form-model-item>
+                            <a-form-model-item label="分组:">
+                                <a-select
+                                    v-model="tableObj.value3"
+                                    v-decorator="['gender', { rules: [{ required: true, message: '请选择组别' }] }]"
+                                    placeholder=""
+                                    @change="handleSelectChange"
+                                >
+                                    <a-select-option value="1">
+                                        1
+                                    </a-select-option>
+                                    <a-select-option value="2">
+                                        2
+                                    </a-select-option>
+                                    <a-select-option value="3">
+                                        3
+                                    </a-select-option>
+                                </a-select>
+                            </a-form-model-item>
+                            <a-form-model-item label="排序:">
+                                <a-input :disabled="idEdit" v-model="tableObj.value4" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="申请人:">
+                                <a-input :disabled="idEdit" v-model="tableObj.value5" placeholder="" />
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -129,8 +171,17 @@ export default {
             },
         ];
         return {
+            title: '',
             loading: false,
             curRealmId: '',
+            visible: false,
+            tableObj: {
+                value1: '',
+                value2: '',
+                value3: '',
+                value4: '',
+                value5: '',
+            },
             manageMenusFormVisible: false,
             curApp: {},
             realms: [],
@@ -166,10 +217,15 @@ export default {
         /**
          * 处理添加应用的事件
          */
+        handleCancel() {
+            this.visible = false;
+        },
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            // this.editForm.show(EditFormTypeDic.Add, {
+            //     realmId: this.curRealmId,
+            // });
+            this.visible = true;
+            this.title = '新建';
         },
         /**
          * 处理编辑应用的事件

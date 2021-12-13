@@ -25,6 +25,54 @@
                         </a-select>
                     </template>
                 </crud-table>
+                <div>
+                    <a-modal
+                        width="600px"
+                        :title="title"
+                        :visible="visible"
+                        :confirm-loading="confirmLoading"
+                        @cancel="handleCancel"
+                    >
+                        <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="id:">
+                                <a-input placeholder="" v-model="tableObj.value1" :disabled="idEdit" />
+                            </a-form-model-item>
+                            <a-form-model-item label="学期:">
+                                <a-input :disabled="context" v-model="tableObj.value2" />
+                            </a-form-model-item>
+                            <a-form-model-item label="专题名称:">
+                                <a-input type="textarea" :disabled="context" v-model="tableObj.value3" />
+                            </a-form-model-item>
+                            <a-form-model-item label="模板:">
+                                <a-input :disabled="context" v-model="tableObj.value4" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="招标要求:">
+                                <a-input :disabled="context" v-model="tableObj.value5" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="分组:">
+                                <a-select
+                                    v-model="tableObj.value6"
+                                    v-decorator="['gender', { rules: [{ required: true, message: '请选择组别' }] }]"
+                                    placeholder=""
+                                    @change="handleSelectChange"
+                                >
+                                    <a-select-option value="1">
+                                        1
+                                    </a-select-option>
+                                    <a-select-option value="2">
+                                        2
+                                    </a-select-option>
+                                    <a-select-option value="3">
+                                        3
+                                    </a-select-option>
+                                </a-select>
+                            </a-form-model-item>
+                            <a-form-model-item label="排序:">
+                                <a-input :disabled="idEdit" v-model="tableObj.value7" placeholder="" />
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -161,6 +209,18 @@ export default {
             columns,
             showOrg: true,
             curOrgId: undefined,
+            visible: false,
+            idEdit: true,
+            context: true,
+            tableObj: {
+                value1: '',
+                value2: '',
+                value3: '',
+                value4: '',
+                value5: '',
+                value6: '',
+                value7: '',
+            },
         };
     },
     mounted() {
@@ -168,6 +228,9 @@ export default {
         this.refreshData();
     },
     methods: {
+        handleCancel() {
+            this.visible = false;
+        },
         refreshData() {
             this.loading = true;
             // racRealmApi
@@ -191,15 +254,25 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            (this.idEdit = false), (this.context = false), (this.visible = true);
+            this.tableObj = {
+                value1: '',
+                value2: '',
+                value3: '',
+                value4: '',
+                value5: '',
+                value6: '',
+                value7: '',
+            };
         },
         /**
          * 处理编辑应用的事件
          */
         handleEdit(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+            this.visible = true;
+            this.idEdit = true;
+            this.context = false;
+            this.tableObj = record;
         },
         /**
          * 处理删除应用的事件

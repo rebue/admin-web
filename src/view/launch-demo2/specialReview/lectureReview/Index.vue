@@ -14,6 +14,57 @@
                     :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
+                <div>
+                    <a-modal width="600px" :title="title" :visible="visible" @cancel="handleCancel">
+                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="专题名称:">
+                                <a-input :disabled="context" v-model="tableObj.value1" />
+                            </a-form-model-item>
+                            <a-form-model-item label="试讲人工号:">
+                                <a-input :disabled="context" v-model="tableObj.value2"> </a-input>
+                            </a-form-model-item>
+                            <a-form-model-item label="试讲人名称:">
+                                <a-input :disabled="context" v-model="tableObj.value3" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="学期:">
+                                <a-input :disabled="context" v-model="tableObj.value4" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="分组:">
+                                <a-select
+                                    v-model="tableObj.value5"
+                                    v-decorator="['gender', { rules: [{ required: true, message: '请选择组别' }] }]"
+                                    placeholder="请选择组别"
+                                    @change="handleSelectChange"
+                                >
+                                    <a-select-option value="1">
+                                        1
+                                    </a-select-option>
+                                    <a-select-option value="2">
+                                        2
+                                    </a-select-option>
+                                    <a-select-option value="3">
+                                        3
+                                    </a-select-option>
+                                </a-select>
+                            </a-form-model-item>
+                            <a-form-model-item label="评委组:">
+                                <a-input :disabled="context" v-model="tableObj.value6" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="试讲分数:">
+                                <a-input :disabled="context" v-model="tableObj.value7" placeholder="" />
+                            </a-form-model-item>
+                            <a-form-model-item label="试讲时间:">
+                                <!-- <a-input :disabled="context"  v-model="tableObj.value8" placeholder="" /> -->
+                                <a-date-picker
+                                    v-model="tableObj.value8"
+                                    v-decorator="['请选择试讲时间', config]"
+                                    show-time
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                />
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -145,7 +196,21 @@ export default {
             },
         ];
         return {
+            title: '',
+            tableObj: {
+                value1: '',
+                value2: '',
+                value3: '',
+                value4: '',
+                value5: '',
+                value6: '',
+                value7: '',
+                value8: '',
+            },
+            visible: false,
+            idEdit: false,
             loading: false,
+            context: false,
             curRealmId: '',
             manageMenusFormVisible: false,
             curApp: {},
@@ -163,6 +228,10 @@ export default {
         handleChange() {
             //
         },
+        handleCancel() {
+            this.visible = false;
+        },
+
         refreshData() {
             this.loading = true;
             // racRealmApi
@@ -183,15 +252,35 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            // this.editForm.show(EditFormTypeDic.Add, {
+            //     realmId: this.curRealmId,
+            // });
+            this.tableObj = {
+                value1: '',
+                value2: '',
+                value3: '',
+                value4: '',
+                value5: '',
+                value6: '',
+                value7: '',
+                value8: '',
+            };
+            this.title = '新建';
+            this.visible = true;
+            this.idEdit = false;
+            this.context = false;
         },
         /**
          * 处理编辑应用的事件
          */
         handleEdit(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+            // this.editForm.show(EditFormTypeDic.Modify, record);
+            this.title = '编辑';
+
+            this.idEdit = true;
+            this.context = false;
+            this.tableObj = record;
+            this.visible = true;
         },
         /**
          * 处理删除应用的事件

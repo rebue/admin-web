@@ -25,6 +25,34 @@
                         </a-select>
                     </template>
                 </crud-table>
+                <div>
+                    <a-modal width="600px" :title="title" :visible="visible" @cancel="handleCancel">
+                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="专题名称:">
+                                <a-input :disabled="context" v-model="tableObj.value1" placeholder="" />
+                            </a-form-model-item>
+
+                            <a-form-model-item label="分组:">
+                                <a-select
+                                    v-model="tableObj.value2"
+                                    v-decorator="['gender', { rules: [{ required: true, message: '请选择组别' }] }]"
+                                    placeholder="请选择组别"
+                                    @change="handleSelectChange"
+                                >
+                                    <a-select-option value="1">
+                                        1
+                                    </a-select-option>
+                                    <a-select-option value="2">
+                                        2
+                                    </a-select-option>
+                                    <a-select-option value="3">
+                                        3
+                                    </a-select-option>
+                                </a-select>
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -134,6 +162,13 @@ export default {
             },
         ];
         return {
+            idEdit: false,
+            context: false,
+            visible: false,
+            tableObj: {
+                value1: '',
+                value2: '',
+            },
             loading: false,
             curRealmId: '',
             manageMenusFormVisible: false,
@@ -149,6 +184,9 @@ export default {
         this.refreshData();
     },
     methods: {
+        handleCancel() {
+            this.visible = false;
+        },
         handleChange() {
             //
         },
@@ -172,9 +210,17 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            // this.editForm.show(EditFormTypeDic.Add, {
+            //     realmId: this.curRealmId,
+            // });
+            this.tableObj = {
+                value1: '',
+                value2: '',
+            };
+            this.visible = true;
+            this.context = false;
+            this.idEdit = false;
+            this.title = '新建';
         },
         /**
          * 处理编辑应用的事件
