@@ -1,6 +1,6 @@
 <template>
     <fragment>
-        <a-tabs v-model="activeKey" @change="onActiveKeyChange">
+        <a-tabs v-model="activeKey">
             <a-tab-pane :key="1" tab="账号密码登录"></a-tab-pane>
             <a-tab-pane :key="2" tab="手机登录"></a-tab-pane>
             <a-tab-pane :key="3" tab="微信扫码登录"></a-tab-pane>
@@ -16,7 +16,8 @@
             <router-link :to="`/${appId}/forget-password`" class="forget-password" v-if="activeKey == 1"
                 >忘记密码</router-link
             >
-            <Phone :action="onPhoneSubmit" v-if="activeKey == 2" />
+            <!-- <Phone :action="onPhoneSubmit" v-if="activeKey == 2" /> -->
+            <div v-if="activeKey == 2">功能开发中，敬请期待</div>
             <template v-if="activeKey == 3">
                 <Wechat :clientId="clientId" v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID" />
                 <div v-else>暂不支持微信扫码登录</div>
@@ -33,7 +34,7 @@
 import request from '@/util/request';
 import { racSignInApi } from '@/api/Api';
 import Password from '@/view/sign-in/unified/Password.vue';
-import Phone from '@/view/sign-in/unified/Phone.vue';
+// import Phone from '@/view/sign-in/unified/Phone.vue';
 import Wechat from '@/view/sign-in/unified/ScanWechat.vue';
 import Dingding from '@/view/sign-in/unified/ScanDingding.vue';
 import { AppDic } from '@/dic/AppDic';
@@ -42,7 +43,7 @@ const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default {
     components: {
         Password,
-        Phone,
+        // Phone,
         Wechat,
         Dingding,
     },
@@ -115,9 +116,6 @@ export default {
                         this.$router.push(`/${this.appId}`);
                     }
                 });
-        },
-        onActiveKeyChange(key) {
-            //
         },
     },
 };
