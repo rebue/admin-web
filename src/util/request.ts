@@ -109,7 +109,7 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                 (err.code && codeMessage[err.code]) ||
                 err.msg ||
                 '未知错误:' + err;
-            if (err.msg && !['未获取到session信息', '会话信息已失效,请刷新页面！'].includes(err.msg)) {
+            if (msg && !['未获取到session信息', '会话信息已失效,请刷新页面！'].includes(msg)) {
                 message.error(msg);
             } else {
                 Modal.confirm({
