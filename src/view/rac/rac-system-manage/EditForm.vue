@@ -134,6 +134,7 @@ export default {
                 ...JSON.parse(JSON.stringify(modelSource)),
                 ...JSON.parse(JSON.stringify(this.formatDetail(record))),
             };
+            this.secretShow = true;
             this.visible = true;
             this.enable = true;
         },

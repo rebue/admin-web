@@ -129,7 +129,6 @@ export default {
             if (record.dicItemValue == value) {
                 return;
             }
-            console.log(record);
             const data = {
                 name: record.dicItemKey,
                 value: value,

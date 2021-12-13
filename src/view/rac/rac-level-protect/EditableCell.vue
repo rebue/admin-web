@@ -48,6 +48,10 @@ export default {
             this.value = value;
         },
         check() {
+            if (this.value == 0) {
+                this.$message.warning('配置项值不能小于0');
+                return;
+            }
             this.editable = false;
             this.cellClick(this.record, this.value);
         },
