@@ -5,7 +5,7 @@
                 :size="75"
                 class="avatar"
                 :icon="accountStore.avatar ? accountStore.avatar : 'user'"
-                :src="accountStore.avatar ? accountStore.avatar : undefined"
+                :src="accountStore.avatar ? accountStore.avatar : defaultImg()"
             />
             <span class="font-18 user-name">{{ accountStore.nickname }}</span>
             <span class="font-14 org-name" v-if="accountStore.orgFullName">{{ accountStore.orgFullName }}</span>
@@ -13,7 +13,7 @@
         </div>
         <div class="time-wrap">
             <!-- <img :src="require('../assets/img/clock.png')" /> -->
-            <echart :chartData="clockChart" style="width: 170px; height: 170px;"></echart>
+            <echart :chartData="clockChart" style="width: 150px; height: 150px;"></echart>
             <div>
                 <div class="hour" v-text="hour"></div>
                 <span class="font-14" v-text="date"></span>
@@ -76,7 +76,11 @@ export default {
         }, 1000);
     },
 
-    methods: {},
+    methods: {
+        defaultImg() {
+            return require(`../assets/img/moren.png`);
+        },
+    },
     beforeDestroy() {
         if (this.interval) {
             clearInterval(this.interval);
