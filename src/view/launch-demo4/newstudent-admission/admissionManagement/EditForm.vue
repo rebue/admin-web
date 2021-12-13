@@ -13,7 +13,7 @@
     >
         <template #formItems>
             <a-row>
-                <a-col :span="12">
+                <a-col :span="11">
                     <a-form-model-item label="年级">
                         <a-select v-model="model.grade" style="width: 320px">
                             <a-select-option v-for="grade in grade" :key="grade">
@@ -66,7 +66,7 @@
                         </a-select>
                     </a-form-model-item>
                 </a-col>
-                <a-col :span="12">
+                <a-col :span="13">
                     <a-form-model-item label="民族">
                         <a-select v-model="model.nation" style="width: 320px">
                             <a-select-option v-for="nation in nation" :key="nation">
@@ -86,6 +86,33 @@
                                 {{ nativePlace }}
                             </a-select-option>
                         </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="文化程度">
+                        <a-select v-model="model.culture" style="width: 320px">
+                            <a-select-option v-for="culture in culture" :key="culture">
+                                {{ culture }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="所学专业">
+                        <a-select v-model="model.majorStudied" style="width: 320px">
+                            <a-select-option v-for="majorStudied in majorStudied" :key="majorStudied">
+                                {{ majorStudied }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="毕业院校">
+                        <a-select v-model="model.graduationSchool" style="width: 320px">
+                            <a-select-option v-for="graduationSchool in graduationSchool" :key="graduationSchool">
+                                {{ graduationSchool }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="毕业时间">
+                        <a-date-picker v-model="model.graduationDate" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="工作时间">
+                        <a-date-picker v-model="model.workDate" style="width: 320px" />
                     </a-form-model-item>
                 </a-col>
             </a-row>
@@ -117,6 +144,27 @@ const nativePlace = [
     '陕西省',
     '山西省',
     '吉林省',
+];
+const culture = ['本科', '专科'];
+const majorStudied = [
+    '电子商务',
+    '政治与法律',
+    '软件技术',
+    '计算机应用',
+    '中共党史',
+    '公共管理',
+    '马克思主义中国化研究',
+    '应用数学',
+];
+const graduationSchool = [
+    '重庆大学',
+    '广西民族大学',
+    '广西师范大学',
+    '河北师范大学',
+    '天津商业大学',
+    '中央党校函授学院',
+    '山西财经大学',
+    '广西农业职业技术大学',
 ];
 export default {
     components: {
@@ -152,6 +200,9 @@ export default {
             sex,
             nation,
             nativePlace,
+            culture,
+            majorStudied,
+            graduationSchool,
         };
     },
     computed: {

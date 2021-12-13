@@ -145,7 +145,7 @@ export default {
                             'number|1-1000': 1,
                             name: '@cname',
                             admission: '@pick(["录取","未录取"])',
-                            turnMajor: '',
+                            turnMajor: '@pick(["是","否"])',
                             studentStatus: '@pick("是")',
                             'allAchievement|250-300': 250,
                             stuRegister: '@pick(["是","否"])',
@@ -348,13 +348,13 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '查看',
-                onClick: record => this.handlePreview(record),
+                title: '编辑',
+                onClick: record => this.handleEdit(record),
             },
             {
                 type: 'a',
-                title: '编辑',
-                onClick: record => this.handleEdit(record),
+                title: '查看',
+                onClick: record => this.handlePreview(record),
             },
         ];
 
