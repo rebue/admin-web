@@ -20,6 +20,21 @@
                         </div>
                     </template>
                 </crud-table>
+                <div>
+                    <a-modal width="600px" :title="title" :visible="visible" @cancel="handleCancel">
+                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model-item label="标题名称:">
+                                <a-input :disabled="context" v-model="tableObj.value1" />
+                            </a-form-model-item>
+                            <a-form-model-item label="数量:">
+                                <a-input :disabled="context" v-model="tableObj.value2"> </a-input>
+                            </a-form-model-item>
+                            <a-form-model-item label="责任部门:">
+                                <a-input :disabled="context" v-model="tableObj.value3" placeholder="" />
+                            </a-form-model-item>
+                        </a-form-model>
+                    </a-modal>
+                </div>
             </template>
         </base-manager>
     </fragment>
@@ -128,13 +143,13 @@ export default {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '导入',
-                onClick: this.handleAdd,
+                // onClick: this.handleAdd,
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
                 title: '导出',
-                onClick: this.handleAdd,
+                // onClick: this.handleAdd,
             },
         ];
 
@@ -147,6 +162,13 @@ export default {
         ];
         return {
             loading: false,
+            visible: false,
+            title: '新建',
+            tableObj: {
+                value1: '',
+                value2: '',
+                value3: '',
+            },
             curRealmId: '',
             manageMenusFormVisible: false,
             curApp: {},
@@ -178,6 +200,9 @@ export default {
         refreshTableData() {
             this.crudTable.refreshData();
         },
+        handleCancel() {
+            this.visible = false;
+        },
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
         },
@@ -185,15 +210,22 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            this.tableObj = {
+                value1: '',
+                value2: '',
+                value3: '',
+            };
+            this.title = '新建';
+            this.visible = true;
         },
         /**
          * 处理编辑应用的事件
          */
         handleEdit(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+            console.log(record);
+            this.tableObj = record;
+            this.title = '编辑';
+            this.visible = true;
         },
         /**
          * 处理删除应用的事件
