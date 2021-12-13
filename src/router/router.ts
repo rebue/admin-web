@@ -44,7 +44,7 @@ const oidc = async function(next) {
     //应用认证里自动生成的clientId, 以下三个默认写库,前端配置在AppDic中
     // unified-auth, platform-admin-web, ops-admin-web
     try {
-        const clientId = AppDic.getClientId(getAppIdByUrl());
+        const clientId = sessionStorage.getItem('auth_info_clientId');
         // auth_info_clientId 用于标记扫码登录的是哪个系统
         sessionStorage.setItem('auth_info_clientId', clientId);
         const { result, detail } = await oapOidcApi.getOidcOauthUri(clientId, {
@@ -103,7 +103,14 @@ router.beforeEach(async (to, from, next) => {
             //通过认证，后端设置cookie clientId
             //第一步 获取认证
             // unified-auth, platform-admin-web, uiapcee071fc86a0003
-            return oidc(next);
+            if (sessionStorage.getItem('auth_info_clientId')) {
+                // cookie失效，重新生成cookie
+                return oidc(next);
+            } else {
+                // cookie未生成
+                sessionStorage.setItem('auth_info_clientId', AppDic.getClientId(AppIdDic.UnifiedAuth));
+                return oidc(next);
+            }
         } else {
             next();
             return;
@@ -122,6 +129,7 @@ router.beforeEach(async (to, from, next) => {
             const clientConfig = require(`@/client/${process.env.VUE_APP_CLIENT}/config`).default;
             const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
             if (clientConfigEnv.VUE_APP_LOGIN_BY_OIDC === true) {
+                sessionStorage.setItem('auth_info_clientId', AppDic.getClientId(appId));
                 return oidc(next);
             } else {
                 if (appId === AppIdDic.PlatformAdminWeb) {

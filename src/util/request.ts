@@ -5,6 +5,8 @@ import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
 import { getAppIdByUrl } from '@/util/common';
+import { hasAuthInfo, removeAuthInfo } from '@/util/cookie';
+import { Modal } from 'ant-design-vue';
 
 const codeMessage = {
     ETIMEDOUT: '请求超时，请稍后重试',
@@ -107,7 +109,21 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                 (err.code && codeMessage[err.code]) ||
                 err.msg ||
                 '未知错误:' + err;
-            message.error(msg);
+            if (err.msg && !['未获取到session信息', '会话信息已失效,请刷新页面！'].includes(err.msg)) {
+                message.error(msg);
+            } else {
+                Modal.confirm({
+                    title: '登录失效',
+                    content: '登录会话已失效，请刷新页面重新登录',
+                    okText: '刷新页面',
+                    onOk() {
+                        if (hasAuthInfo()) {
+                            removeAuthInfo();
+                        }
+                        window.location.reload();
+                    },
+                });
+            }
             if (err.response && err.response.status) {
                 // if (err.response.status === 401) {
                 //     router.push({ path: `/sign-in?redirect=${router.currentRoute.path}` });
