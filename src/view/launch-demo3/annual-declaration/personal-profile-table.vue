@@ -67,7 +67,7 @@
                     <div>
                         <a-modal
                             width="600px"
-                            title="查看"
+                            :title="title"
                             :visible="visible"
                             :confirm-loading="confirmLoading"
                             @cancel="handleCancel"
@@ -98,10 +98,16 @@
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="申请日期:">
-                                    <a-input
+                                    <!-- <a-input
                                         :disabled="context"
                                         v-model="tableObj.applyTime"
                                         placeholder="请输入部门名称"
+                                    /> -->
+                                    <a-date-picker
+                                        v-model="tableObj.applyTime"
+                                        v-decorator="['申请日期', config]"
+                                        show-time
+                                        format="YYYY-MM-DD HH:mm:ss"
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="状态:">
@@ -341,6 +347,7 @@ export default {
         ];
 
         return {
+            title: '',
             page,
             idEdit: true,
             context: true,
@@ -376,6 +383,7 @@ export default {
             this.visible = false;
         },
         handleShow(resolve) {
+            this.title = '查看';
             this.tableObj = resolve;
             this.visible = true;
             this.idEdit = true;
@@ -384,6 +392,7 @@ export default {
             //
         },
         handleEdit(e) {
+            this.title = '修改';
             this.tableObj = e;
             this.visible = true;
             this.idEdit = true;

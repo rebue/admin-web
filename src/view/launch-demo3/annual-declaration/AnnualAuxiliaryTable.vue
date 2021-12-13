@@ -11,6 +11,48 @@
                 :defaultPagination="true"
                 :showKeywords="showKeywords"
             ></crud-table>
+            <div>
+                <a-modal
+                    width="600px"
+                    :title="title"
+                    :visible="visible"
+                    :confirm-loading="confirmLoading"
+                    @cancel="handleCancel"
+                >
+                    <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                        <a-form-model-item label="填报人:">
+                            <a-input v-model="tableObj.memberName" :disabled="idEdit" />
+                        </a-form-model-item>
+                        <a-form-model-item label="作者:">
+                            <a-input :disabled="context" v-model="tableObj.author" />
+                        </a-form-model-item>
+                        <a-form-model-item label="辅助的工作:">
+                            <a-input :disabled="context" v-model="tableObj.auxiliaryWork" />
+                        </a-form-model-item>
+                        <a-form-model-item label="工作日期:">
+                            <!-- <a-input :disabled="context" v-model="tableObj.workTime" /> -->
+                            <a-date-picker
+                                v-model="tableObj.workTime"
+                                v-decorator="['工作日期', config]"
+                                show-time
+                                format="YYYY-MM-DD HH:mm:ss"
+                            />
+                        </a-form-model-item>
+                        <a-form-model-item label="辅助的工作量:">
+                            <a-input :disabled="context" v-model="tableObj.auxiliaryWorkload" />
+                        </a-form-model-item>
+                        <a-form-model-item label="添加时间:">
+                            <!-- <a-input :disabled="context" v-model="tableObj.createTime" /> -->
+                            <a-date-picker
+                                v-model="tableObj.createTime"
+                                v-decorator="['工作日期', config]"
+                                show-time
+                                format="YYYY-MM-DD HH:mm:ss"
+                            />
+                        </a-form-model-item>
+                    </a-form-model>
+                </a-modal>
+            </div>
         </template>
     </base-manager>
 </template>
@@ -145,12 +187,12 @@ export default {
             {
                 dataIndex: 'author',
                 title: '作者',
-                ellipsis: true,
+                with: 150,
             },
             {
                 dataIndex: 'auxiliaryWork',
                 title: '辅助的工作',
-                width: 300,
+                width: 350,
             },
             {
                 dataIndex: 'workTime',
@@ -160,28 +202,23 @@ export default {
             {
                 dataIndex: 'auxiliaryWorkload',
                 title: '辅助的工作量',
-                ellipsis: true,
+                with: 80,
             },
             {
                 dataIndex: 'createTime',
                 title: '添加时间',
-                ellipsis: true,
+                with: 180,
+            },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+
+                scopedSlots: { customRender: 'action' },
             },
         ];
 
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '修改',
-                onClick: this.handleEdit,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '删除',
-                onClick: this.handleDel,
-            },
             {
                 buttonType: 'primary',
                 icon: 'plus',
@@ -205,8 +242,40 @@ export default {
         ];
 
         return {
+            visible: false,
             columns,
+            tableObj: {
+                memberName: '',
+                author: '',
+                auxiliaryWork: '',
+                workTime: '',
+                auxiliaryWorkload: '',
+                createTime: '',
+            },
+            title: '',
         };
+    },
+    methods: {
+        handleCancel() {
+            this.visible = false;
+        },
+        handleAdd(value) {
+            this.title = '新增';
+            (this.tableObj = {
+                memberName: '',
+                author: '',
+                auxiliaryWork: '',
+                workTime: '',
+                auxiliaryWorkload: '',
+                createTime: '',
+            }),
+                (this.visible = true);
+        },
+        handleEdit(value) {
+            this.title = '编辑';
+            this.tableObj = value;
+            this.visible = true;
+        },
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;

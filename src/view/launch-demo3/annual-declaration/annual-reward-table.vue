@@ -8,14 +8,13 @@
                 :columns="columns"
                 :api="api"
                 :scrollX="600"
-                :rowSelection="{}"
                 :defaultPagination="true"
                 :showKeywords="showKeywords"
             ></crud-table>
             <div>
                 <a-modal
                     width="600px"
-                    title="查看"
+                    :title="title"
                     :visible="visible"
                     :confirm-loading="confirmLoading"
                     @cancel="handleCancel"
@@ -28,7 +27,20 @@
                             <a-input :disabled="context" v-model="tableObj.author" />
                         </a-form-model-item>
                         <a-form-model-item label="奖励类型:">
-                            <a-input :disabled="context" v-model="tableObj.rewardType" />
+                            <a-select
+                                v-model="tableObj.rewardType"
+                                v-decorator="['gender', { rules: [{ required: true, message: '请选择!' }] }]"
+                                placeholder="请选择奖励类型"
+                                @change="handleSelectChange"
+                            >
+                                <a-select-option value="个人">
+                                    个人
+                                </a-select-option>
+                                <a-select-option value="群体">
+                                    群体
+                                </a-select-option>
+                            </a-select>
+                            <!-- <a-input :disabled="context" v-model="tableObj.rewardType" /> -->
                         </a-form-model-item>
                         <a-form-model-item label="奖励名称:">
                             <a-input :disabled="context" v-model="tableObj.rewardName" />
@@ -37,7 +49,14 @@
                             <a-input :disabled="context" v-model="tableObj.rewardWorkload" />
                         </a-form-model-item>
                         <a-form-model-item label="系统时间:">
-                            <a-input :disabled="context" v-model="tableObj.date" />
+                            <!-- <a-input :disabled="context" v-model="tableObj.date" /> -->
+                            <a-date-picker
+                                :disabled="context"
+                                v-model="tableObj.date"
+                                v-decorator="['系统时间', config]"
+                                show-time
+                                format="YYYY-MM-DD HH:mm:ss"
+                            />
                         </a-form-model-item>
                     </a-form-model>
                 </a-modal>
@@ -134,54 +153,37 @@ export default {
                 dataIndex: 'author',
                 title: '作者',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'rewardType',
                 title: '奖励类型',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'rewardName',
                 title: '科研奖励名称',
                 width: 150,
-                ellipsis: true,
             },
             {
                 dataIndex: 'rewardWorkload',
                 title: '科研奖励工作量',
-                width: 150,
-                ellipsis: true,
+                width: 80,
             },
             {
                 dataIndex: 'date',
                 title: '系统时间',
-                width: 150,
-                ellipsis: true,
+                width: 180,
             },
-            // {
-            //     dataIndex: 'action',
-            //     title: '操作',
-            //     width: 150,
-            //     fixed: 'right',
-            //     scopedSlots: { customRender: 'action' },
-            // },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+
+                scopedSlots: { customRender: 'action' },
+            },
         ];
 
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '编辑',
-                onClick: this.handleEdit,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '删除',
-                onClick: this.handleDel,
-            },
             {
                 buttonType: 'primary',
                 icon: 'plus',
@@ -214,6 +216,7 @@ export default {
                 date: '',
                 rewardWorkload: '',
             },
+            title: '',
             columns,
         };
     },
@@ -221,8 +224,26 @@ export default {
         handleCancel() {
             this.visible = false;
         },
+
         handleAdd() {
+            this.title = '新增';
+            (this.tableObj = {
+                rewardType: '',
+                memberName: '',
+                author: '',
+                rewardName: '',
+                date: '',
+                rewardWorkload: '',
+            }),
+                (this.visible = true);
+        },
+        handleEdit(value) {
+            this.title = '编辑';
+            this.tableObj = value;
             this.visible = true;
+        },
+        handleDel() {
+            //
         },
     },
     mounted() {
