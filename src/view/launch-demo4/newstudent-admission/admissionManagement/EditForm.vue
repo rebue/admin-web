@@ -12,68 +12,83 @@
         width="1000px"
     >
         <template #formItems>
-            <a-from-model layout="inline">
-                <a-form-model-item label="年级">
-                    <a-select v-model="model.grade" style="width: 320px">
-                        <a-select-option v-for="grade in grade" :key="grade">
-                            {{ grade }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="教学点">
-                    <a-select v-model="model.teachPointNum" style="width: 320px">
-                        <a-select-option v-for="teachPointNum in teachPointNum" :key="teachPointNum">
-                            {{ teachPointNum }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="专业">
-                    <a-select v-model="model.major" style="width: 320px">
-                        <a-select-option v-for="major in major" :key="major">
-                            {{ major }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="序号">
-                    <a-input v-model="model.number" placeholder="请输入序号" style="width: 320px" />
-                </a-form-model-item>
-                <a-form-model-item label="姓名">
-                    <a-input v-model="model.name" placeholder="请输入姓名" style="width: 320px" />
-                </a-form-model-item>
-                <a-form-model-item label="总成绩">
-                    <a-input v-model="model.totalScore" placeholder="请输入总成绩" style="width: 320px" />
-                </a-form-model-item>
-                <a-form-model-item label="录取">
-                    <a-select v-model="model.admission" style="width: 320px">
-                        <a-select-option v-for="admission in admission" :key="admission">
-                            {{ admission }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="班次">
-                    <a-select v-model="model.shift" style="width: 320px">
-                        <a-select-option v-for="shift in shift" :key="shift">
-                            {{ shift }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="性别">
-                    <a-select v-model="model.sex" style="width: 320px">
-                        <a-select-option v-for="sex in sex" :key="sex">
-                            {{ sex }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-            </a-from-model>
-            <a-from-model layout="inline">
-                <a-form-model-item label="民族">
-                    <a-select v-model="model.nation" style="width: 320px">
-                        <a-select-option v-for="nation in nation" :key="nation">
-                            {{ nation }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-model-item>
-            </a-from-model>
+            <a-row>
+                <a-col :span="12">
+                    <a-form-model-item label="年级">
+                        <a-select v-model="model.grade" style="width: 320px">
+                            <a-select-option v-for="grade in grade" :key="grade">
+                                {{ grade }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="教学点">
+                        <a-select v-model="model.teachPointNum" style="width: 320px">
+                            <a-select-option v-for="teachPointNum in teachPointNum" :key="teachPointNum">
+                                {{ teachPointNum }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="专业">
+                        <a-select v-model="model.major" style="width: 320px">
+                            <a-select-option v-for="major in major" :key="major">
+                                {{ major }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="序号">
+                        <a-input v-model="model.number" placeholder="请输入序号" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="姓名">
+                        <a-input v-model="model.name" placeholder="请输入姓名" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="总成绩">
+                        <a-input v-model="model.totalScore" placeholder="请输入总成绩" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="录取">
+                        <a-select v-model="model.admission" style="width: 320px">
+                            <a-select-option v-for="admission in admission" :key="admission">
+                                {{ admission }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="班次">
+                        <a-select v-model="model.shift" style="width: 320px">
+                            <a-select-option v-for="shift in shift" :key="shift">
+                                {{ shift }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="性别">
+                        <a-select v-model="model.sex" style="width: 320px">
+                            <a-select-option v-for="sex in sex" :key="sex">
+                                {{ sex }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                </a-col>
+                <a-col :span="12">
+                    <a-form-model-item label="民族">
+                        <a-select v-model="model.nation" style="width: 320px">
+                            <a-select-option v-for="nation in nation" :key="nation">
+                                {{ nation }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                    <a-form-model-item label="身份证号">
+                        <a-input v-model="model.ID" placeholder="请输入身份证号" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="出生时间">
+                        <a-date-picker v-model="model.birthDate" style="width: 320px" />
+                    </a-form-model-item>
+                    <a-form-model-item label="籍贯">
+                        <a-select v-model="model.nativePlace" style="width: 320px">
+                            <a-select-option v-for="nativePlace in nativePlace" :key="nativePlace">
+                                {{ nativePlace }}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-model-item>
+                </a-col>
+            </a-row>
         </template>
     </base-edit-form>
 </template>
@@ -90,6 +105,19 @@ const admission = ['录取', '未录取'];
 const shift = ['中科大研究生', '党校研究生'];
 const sex = ['男', '女'];
 const nation = ['汉族', '蒙古族', '回族', '藏族', '维吾尔族', '苗族', '壮族', '布依族', '土家族', '白族', '瑶族'];
+const nativePlace = [
+    '广西壮族自治区',
+    '广东省',
+    '上海',
+    '湖北省',
+    '浙江省',
+    '湖南省',
+    '江苏省',
+    '黑龙江省',
+    '陕西省',
+    '山西省',
+    '吉林省',
+];
 export default {
     components: {
         BaseEditForm,
@@ -123,6 +151,7 @@ export default {
             shift,
             sex,
             nation,
+            nativePlace,
         };
     },
     computed: {
