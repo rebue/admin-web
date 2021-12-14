@@ -24,6 +24,7 @@
                             <crud-table
                                 ref="crudTable"
                                 :showKeywords="false"
+                                :actions="tableActions"
                                 :columns="columns"
                                 :api="api"
                                 :query="{ orgId: curOrgId }"
@@ -34,6 +35,33 @@
                             </crud-table>
                         </a-col>
                     </a-row>
+                    <div>
+                        <a-modal
+                            width="600px"
+                            :title="title"
+                            :visible="visible"
+                            :confirm-loading="confirmLoading"
+                            @cancel="handleCancel"
+                        >
+                            <a-form-model :label-col="{ span: 9 }" :wrapper-col="{ span: 14 }" layout="horizontal">
+                                <a-form-model-item label="教师:">
+                                    <a-input placeholder="" v-model="tableObj.teacher" :disabled="context" />
+                                </a-form-model-item>
+                                <a-form-model-item label="2019年教学工作量:">
+                                    <a-input :disabled="context" v-model="tableObj.teaching" />
+                                </a-form-model-item>
+                                <a-form-model-item label="2019年科研工作量:">
+                                    <a-input :disabled="context" v-model="tableObj.research" />
+                                </a-form-model-item>
+                                <a-form-model-item label="2019年-2019年教学工作量合计:">
+                                    <a-input :disabled="context" v-model="tableObj.teachingTotal" />
+                                </a-form-model-item>
+                                <a-form-model-item label="2019年-2019年科研工作量合计:">
+                                    <a-input :disabled="context" v-model="tableObj.researchTotal" />
+                                </a-form-model-item>
+                            </a-form-model>
+                        </a-modal>
+                    </div>
                 </template>
             </base-manager>
             <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -70,8 +98,8 @@ export default {
                             tow: 0,
                             three: 0,
                             four: 0,
-                            'teaching-total': '@integer(0,200)',
-                            'research-total': '@float(0,200,0,1)',
+                            teachingTotal: '@integer(0,200)',
+                            researchTotal: '@float(0,200,0,1)',
                         },
                     ],
                 });
@@ -139,41 +167,48 @@ export default {
                 ellipsis: true,
             },
             {
-                dataIndex: 'teaching-total',
+                dataIndex: 'teachingTotal',
                 title: '2019年-2019年教学工作量合计',
                 width: 250,
                 ellipsis: true,
             },
             {
-                dataIndex: 'research-total',
+                dataIndex: 'researchTotal',
                 title: '2019年-2019年科研工作量合计',
                 width: 250,
                 ellipsis: true,
             },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+                scopedSlots: { customRender: 'action' },
+            },
+        ];
+        this.tableActions = [
+            {
+                type: 'a',
+                title: '编辑',
+                onClick: resolve => this.handleEdit(resolve),
+            },
+            {
+                type: 'confirm',
+                title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
+                onClick: () => {
+                    /**/
+                },
+            },
+            /**/
         ];
 
         this.tableCommands = [
             {
                 buttonType: 'primary',
                 title: '新增',
-                onClick: () => {
-                    /**/
-                },
+                onClick: res => this.handleAdd(res),
             },
-            {
-                buttonType: 'primary',
-                title: '编辑',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                title: '删除',
-                onClick: () => {
-                    /**/
-                },
-            },
+
             {
                 buttonType: 'primary',
                 title: '重新生成报表',
@@ -244,6 +279,21 @@ export default {
         ];
 
         return {
+            visible: false,
+            idEdit: false,
+            title: '',
+            context: false,
+            tableObj: {
+                teacher: '',
+                teaching: '',
+                research: '',
+                one: '',
+                tow: '',
+                three: '',
+                four: '',
+                teachingTotal: '',
+                researchTotal: '',
+            },
             columns,
             treeData1,
             treeData2,
@@ -261,17 +311,41 @@ export default {
         refreshTableData() {
             this.crudTable.refreshData();
         },
+        handleCancel() {
+            this.visible = false;
+        },
         /**
          * 处理添加场地的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {});
+            /*  this.editForm.show(EditFormTypeDic.Add, {}); */
+            this.visible = true;
+            this.idEdit = false;
+            this.context = false;
+            this.title = '新增';
+            this.tableObj = {
+                teacher: '',
+                teaching: '',
+                research: '',
+                one: '',
+                tow: '',
+                three: '',
+                four: '',
+                'teaching-total': '',
+                'research-total': '',
+            };
         },
         /**
          * 处理编辑场地的事件
          */
         handleEdit(record) {
             // this.editForm.show(EditFormTypeDic.Modify, record);
+
+            this.title = '编辑';
+            this.idEdit = true;
+            this.context = false;
+            this.tableObj = record;
+            this.visible = true;
         },
         /**
          * 处理删除场地的事件

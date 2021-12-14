@@ -202,6 +202,7 @@ export default {
         ];
         return {
             loading: false,
+            title: '',
             curRealmId: '',
             manageMenusFormVisible: false,
             curApp: {},
@@ -264,6 +265,7 @@ export default {
                 value6: '',
                 value7: '',
             };
+            this.title = '新建';
         },
         /**
          * 处理编辑应用的事件
@@ -273,6 +275,7 @@ export default {
             this.idEdit = true;
             this.context = false;
             this.tableObj = record;
+            this.title = '编辑';
         },
         /**
          * 处理删除应用的事件
