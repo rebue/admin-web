@@ -144,7 +144,7 @@ export default {
             this.$nextTick(() => {
                 this.loading = true;
                 this.$refs.form.resetFields();
-                if (this.editFormType === EditFormTypeDic.Modify) {
+                if (this.editFormType === EditFormTypeDic.Modify || this.editFormType === EditFormTypeDic.View) {
                     this.api
                         .getById(this.model.id)
                         .then((ro) => {

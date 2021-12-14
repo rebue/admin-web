@@ -389,7 +389,7 @@ export default {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
         handlePreview(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+            this.editForm.show(EditFormTypeDic.View, record);
         },
         handleEditFormClose() {
             // this.refreshTableData();
