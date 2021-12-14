@@ -301,7 +301,7 @@ export default {
             {
                 dataIndex: 'achievementName',
                 title: '成果名称',
-                width: 300,
+                width: 450,
             },
             {
                 dataIndex: 'applyTime',

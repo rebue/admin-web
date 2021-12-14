@@ -141,7 +141,7 @@ export default {
             {
                 dataIndex: 'value3',
                 title: '专题名称',
-                width: 250,
+                width: 500,
             },
             {
                 dataIndex: 'value4',

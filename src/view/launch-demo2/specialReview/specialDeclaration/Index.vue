@@ -120,7 +120,7 @@ export default {
                 dataIndex: 'value2',
                 title: '专题名称',
                 ellipsis: true,
-                width: 250,
+                width: 600,
             },
             {
                 dataIndex: 'value3',
@@ -142,7 +142,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 200,
+                width: 150,
 
                 scopedSlots: { customRender: 'action' },
             },
