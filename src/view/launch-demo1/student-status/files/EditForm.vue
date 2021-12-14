@@ -7,7 +7,7 @@
         :formItems="formItems"
         :rules="rules"
         :api="api"
-        v-bind="$attrs"
+        v-bind="editFormType == EditFormTypeDic.View ? { footer: null } : {}"
         v-on="$listeners"
     >
         <template #formItems>
@@ -88,6 +88,7 @@ export default {
         return {
             record: {},
             editFormType: EditFormTypeDic.None,
+            EditFormTypeDic,
             model: {},
             rules: {
                 source: [
@@ -204,13 +205,23 @@ export default {
     computed: {
         formItems() {
             return [
-                // {
-                //     dataIndex: 'level',
-                //     title: '班级职务',
-                //     disabled: this.editFormType === EditFormTypeDic.Modify,
-                // },
-                // { dataIndex: 'majorNum', title: '专业编号' },
-                // { dataIndex: 'admissionIndex', title: '录取指标' },
+                {
+                    dataIndex: 'source',
+                    title: '数据来源',
+                    disabled: this.editFormType === EditFormTypeDic.Modify,
+                },
+                { dataIndex: 'orgId', title: '小组号' },
+                { dataIndex: 'name', title: '姓名' },
+                { dataIndex: 'sex', title: '性别' },
+                { dataIndex: 'birth', title: '出生年月' },
+                { dataIndex: 'stunum', title: '学号' },
+                { dataIndex: 'ICCard', title: 'IC卡号' },
+                { dataIndex: 'carId', title: '车牌号' },
+                { dataIndex: 'IdCard', title: '证件号' },
+                { dataIndex: 'level', title: '班级职务' },
+                { dataIndex: 'phone', title: '手机' },
+                { dataIndex: 'dormitoryId', title: '宿舍编号' },
+                { dataIndex: 'className', title: '班级' },
             ];
         },
     },

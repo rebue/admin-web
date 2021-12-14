@@ -230,7 +230,7 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-                onClick: record => this.handleEdit(record),
+                onClick: record => this.handleView(record),
             },
             {
                 type: 'confirm',
@@ -324,6 +324,12 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        /**
+         * 处理查看场地的事件
+         */
+        handleView(record) {
+            this.editForm.show(EditFormTypeDic.View, record);
         },
         /**
          * 处理删除场地的事件

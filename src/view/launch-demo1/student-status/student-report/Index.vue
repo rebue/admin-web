@@ -273,7 +273,7 @@ export default {
             {
                 type: 'a',
                 title: '小组信息',
-                onClick: record => this.handleCheck(record),
+                onClick: record => this.handleView(record),
             },
             {
                 type: 'a',
@@ -312,8 +312,11 @@ export default {
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
         },
-        handleCheck(record) {
-            this.editForm.show(EditFormTypeDic.Modify, record);
+        /**
+         * 处理查看场地的事件
+         */
+        handleView(record) {
+            this.editForm.show(EditFormTypeDic.View, record);
         },
         /**
          * 处理删除场地的事件

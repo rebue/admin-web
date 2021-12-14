@@ -7,7 +7,7 @@
         :formItems="formItems"
         :rules="rules"
         :api="api"
-        v-bind="$attrs"
+        v-bind="editFormType == EditFormTypeDic.View ? { footer: null } : {}"
         v-on="$listeners"
     >
         <template #formItems>
@@ -114,12 +114,141 @@ export default {
         return {
             record: {},
             editFormType: EditFormTypeDic.None,
+            EditFormTypeDic,
             model: {},
             rules: {
-                source: [
+                orgId: [
                     {
                         required: true,
-                        message: '请输入数据来源',
+                        message: '请输入所属组号',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                level: [
+                    {
+                        required: true,
+                        message: '请选择班级职务',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                name: [
+                    {
+                        required: true,
+                        message: '请输入姓名',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                sex: [
+                    {
+                        required: true,
+                        message: '请选择性别',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                stunum: [
+                    {
+                        required: true,
+                        message: '请输入学号',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                nation: [
+                    {
+                        required: true,
+                        message: '请输入民族',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                birth: [
+                    {
+                        required: true,
+                        message: '请选择出生年月',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                graduated: [
+                    {
+                        required: true,
+                        message: '请选择文化程度',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                place: [
+                    {
+                        required: true,
+                        message: '请输入籍贯',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                workTime: [
+                    {
+                        required: true,
+                        message: '请选择参加工作时间',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                partyTime: [
+                    {
+                        required: true,
+                        message: '请选择入党时间',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                joinTime: [
+                    {
+                        required: true,
+                        message: '请选择任现职时间',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                company: [
+                    {
+                        required: true,
+                        message: '请选择工作单位',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                worklevel: [
+                    {
+                        required: true,
+                        message: '请选择职务',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                tel: [
+                    {
+                        required: true,
+                        message: '请输入电话',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                phone: [
+                    {
+                        required: true,
+                        message: '请输入手机',
+                        trigger: 'blur',
+                        transform: val => val && val.trim(),
+                    },
+                ],
+                postalCode: [
+                    {
+                        required: true,
+                        message: '请输入宿舍编号',
                         trigger: 'blur',
                         transform: val => val && val.trim(),
                     },
@@ -136,13 +265,28 @@ export default {
     computed: {
         formItems() {
             return [
-                // {
-                //     dataIndex: 'level',
-                //     title: '班级职务',
-                //     disabled: this.editFormType === EditFormTypeDic.Modify,
-                // },
-                // { dataIndex: 'majorNum', title: '专业编号' },
-                // { dataIndex: 'admissionIndex', title: '录取指标' },
+                {
+                    dataIndex: 'orgId',
+                    title: '所属组号',
+                    disabled: this.editFormType === EditFormTypeDic.Modify,
+                },
+                { dataIndex: 'level', title: '班级职务' },
+                { dataIndex: 'name', title: '姓名' },
+                { dataIndex: 'sex', title: '性别' },
+                { dataIndex: 'stunum', title: '学号' },
+                { dataIndex: 'nation', title: '民族' },
+                { dataIndex: 'birth', title: '出生年月' },
+                { dataIndex: 'graduated', title: '文化程度' },
+                { dataIndex: 'place', title: '籍贯' },
+                { dataIndex: 'workTime', title: '参加工作时间' },
+                { dataIndex: 'partyTime', title: '入党时间' },
+                { dataIndex: 'joinTime', title: '任现职时间' },
+                { dataIndex: 'company', title: '工作单位' },
+                { dataIndex: 'worklevel', title: '职务' },
+                { dataIndex: 'tel', title: '电话' },
+                { dataIndex: 'phone', title: '手机' },
+                { dataIndex: 'dormitoryId', title: '宿舍编号' },
+                { dataIndex: 'postalCode', title: '邮政编码' },
             ];
         },
     },
