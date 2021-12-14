@@ -1,7 +1,7 @@
 <template>
     <base-edit-form
         ref="baseEditForm"
-        title="学员报表"
+        :title="editFormType == EditFormTypeDic.View ? '小组信息' : '学员报表'"
         :editFormType.sync="editFormType"
         :model.sync="model"
         :formItems="formItems"
