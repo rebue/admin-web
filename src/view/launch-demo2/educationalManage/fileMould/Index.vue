@@ -16,6 +16,7 @@
                 </crud-table>
             </template>
         </base-manager>
+        <edit-form ref="editForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -23,12 +24,14 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import EditForm from './EditForm';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
         CrudTable,
+        EditForm,
     },
     data() {
         // 初始化数据start
@@ -140,19 +143,9 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
+        this.crudTable = this.$refs.crudTable;
     },
     methods: {
-        refreshData() {
-            this.loading = true;
-            // racRealmApi
-            //     .listAll()
-            //     .then(ro => {
-            //         this.realms = ro.extra.list;
-            //         this.curRealmId = this.realms[0].id;
-            //     })
-            //     .finally(() => (this.loading = false));
-        },
         /**
          * 刷新表格数据
          */
@@ -166,9 +159,7 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
          * 处理编辑应用的事件

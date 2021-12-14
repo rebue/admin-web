@@ -33,6 +33,7 @@
                 </crud-table>
             </template>
         </base-manager>
+        <edit-form ref="editForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
@@ -40,12 +41,14 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
+import EditForm from './EditForm';
 
 export default {
     name: 'Manager',
     components: {
         BaseManager,
         CrudTable,
+        EditForm,
     },
     data() {
         // 初始化数据start
@@ -261,7 +264,7 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
+        this.crudTable = this.$refs.crudTable;
     },
     methods: {
         handleChange() {
@@ -287,9 +290,7 @@ export default {
          * 处理添加应用的事件
          */
         handleAdd() {
-            this.editForm.show(EditFormTypeDic.Add, {
-                realmId: this.curRealmId,
-            });
+            this.editForm.show(EditFormTypeDic.Add, {});
         },
         /**
          * 处理编辑应用的事件
@@ -303,6 +304,9 @@ export default {
         handleMenus(record) {
             this.curApp = record;
             this.manageMenusFormVisible = true;
+        },
+        handleEditFormClose() {
+            this.refreshTableData();
         },
     },
 };
