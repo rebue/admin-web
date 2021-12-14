@@ -14,6 +14,11 @@ export function removeJwtToken() {
 export function hasAuthInfo(): boolean {
     return Cookies.get(authInfoKey) ? true : false;
 }
+
+export function getAuthInfo(): string {
+    return Cookies.get(authInfoKey) || '';
+}
+
 export function removeAuthInfo() {
     return Cookies.remove(authInfoKey);
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { constantRouters } from '@/config/router.config';
-import { hasJwtToken, hasAuthInfo } from '@/util/cookie';
+import { hasJwtToken, hasAuthInfo, getAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 import { oapOidcApi } from '@/api/oap/OapOidcApi';
 import { getAppIdByUrl } from '@/util/common';
@@ -104,14 +104,16 @@ router.beforeEach(async (to, from, next) => {
             //第一步 获取认证
             // unified-auth, platform-admin-web, uiapcee071fc86a0003
             if (sessionStorage.getItem('auth_info_clientId')) {
-                // cookie失效，重新生成cookie
+                // 统一登录页cookie：auth_info失效，走oidc重新生成cookie：auth_info
                 return oidc(next);
             } else {
-                // cookie未生成
+                // 直接访问登录页，cookie：auth_info未生成
                 sessionStorage.setItem('auth_info_clientId', AppDic.getClientId(AppIdDic.UnifiedAuth));
                 return oidc(next);
             }
         } else {
+            // 跳转到登录页cookie：auth_info已生成，或者登录页刷新
+            sessionStorage.setItem('auth_info_clientId', JSON.parse(window.atob(getAuthInfo())).clientId);
             next();
             return;
         }
