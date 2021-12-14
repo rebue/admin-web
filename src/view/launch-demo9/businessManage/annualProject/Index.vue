@@ -133,7 +133,7 @@ export default {
             {
                 dataIndex: 'action',
                 title: '操作',
-                width: 300,
+                width: 110,
                 scopedSlots: { customRender: 'action' },
             },
         ];
@@ -171,16 +171,16 @@ export default {
         ];
 
         this.tableActions = [
-            {
-                type: 'a',
-                title: '完善项目',
-                //onClick: record => this.handleEdit(record),
-            },
-            {
-                type: 'a',
-                title: '编辑表单',
-                //onClick: record => this.handleEdit(record),
-            },
+            // {
+            //     type: 'a',
+            //     title: '完善项目',
+            //     //onClick: record => this.handleEdit(record),
+            // },
+            // {
+            //     type: 'a',
+            //     title: '编辑表单',
+            //     //onClick: record => this.handleEdit(record),
+            // },
             {
                 type: 'a',
                 title: '编辑',
