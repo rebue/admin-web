@@ -143,11 +143,10 @@ export default {
 
         this.tableActions = [
             {
-                type: 'a',
+                type: 'confirm',
                 title: '取消选修课',
-                onClick: () => {
-                    /**/
-                },
+                confirmTitle: '你确定要取消这个选修课吗?',
+                onClick: record => this.handleCancel(record),
             },
         ];
         return {
@@ -163,6 +162,12 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
+        },
+        /**
+         * 点击取消选修课事件
+         */
+        handleCancel(record) {
+            //
         },
     },
 };

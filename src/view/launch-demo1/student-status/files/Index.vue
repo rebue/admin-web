@@ -29,6 +29,40 @@
             </template>
         </base-manager>
         <edit-form ref="editForm" @close="handleEditFormClose" />
+        <a-modal v-model="checkVisible" title="审核" @ok="handleCheckOk">
+            <a-form-model :model="form" v-bind="layout">
+                <a-form-model-item label="学员姓名">
+                    {{ form.name }}
+                </a-form-model-item>
+                <a-form-model-item label="是否通过">
+                    <a-radio-group v-model="value">
+                        <a-radio :value="1">
+                            通过
+                        </a-radio>
+                        <a-radio :value="2">
+                            不通过
+                        </a-radio>
+                    </a-radio-group>
+                </a-form-model-item>
+            </a-form-model>
+        </a-modal>
+        <a-modal v-model="leaveVisible" title="离校" @ok="handleLeaveOk">
+            <a-form-model :model="form" v-bind="layout">
+                <a-form-model-item label="学员姓名">
+                    {{ form.name }}
+                </a-form-model-item>
+                <a-form-model-item label="是否离校">
+                    <a-radio-group v-model="value">
+                        <a-radio :value="1">
+                            是
+                        </a-radio>
+                        <a-radio :value="2">
+                            否
+                        </a-radio>
+                    </a-radio-group>
+                </a-form-model-item>
+            </a-form-model>
+        </a-modal>
     </fragment>
 </template>
 
@@ -250,16 +284,12 @@ export default {
                     {
                         type: 'a',
                         title: '审核',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleCheck(record),
                     },
                     {
                         type: 'a',
                         title: '离校',
-                        onClick: () => {
-                            /**/
-                        },
+                        onClick: record => this.handleLeave(record),
                     },
                 ],
             },
@@ -300,6 +330,14 @@ export default {
             columns,
             treeData,
             curOrgId: undefined,
+            checkVisible: false,
+            leaveVisible: false,
+            form: {},
+            value: '',
+            layout: {
+                labelCol: { span: 4 },
+                wrapperCol: { span: 14 },
+            },
         };
     },
     mounted() {
@@ -340,10 +378,33 @@ export default {
             //     this.refreshTableData();
             // });
         },
-
+        /**
+         * 处理点击审核事件
+         */
+        handleCheck(record) {
+            this.form = record;
+            this.checkVisible = true;
+        },
+        /**
+         * 确认
+         */
+        handleCheckOk() {
+            this.checkVisible = false;
+        },
+        /**
+         * 点击离校事件
+         */
+        handleLeave(record) {
+            this.form = record;
+            this.leaveVisible = true;
+        },
+        handleLeaveOk() {
+            this.leaveVisible = false;
+        },
         handleEditFormClose() {
             // this.refreshTableData();
         },
+
         // /** 处理组织菜单点击节点的事件 */
         // handleOrgMenuClick(item) {
         //     this.curOrgId = item.id;
