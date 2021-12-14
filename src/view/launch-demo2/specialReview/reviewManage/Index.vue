@@ -26,7 +26,16 @@
                     </template>
                 </crud-table>
                 <div>
-                    <a-modal width="600px" :title="title" :visible="visible" @cancel="handleCancel">
+                    <a-modal
+                        okText="提交"
+                        :ok-button-props="{ props: { icon: 'check' } }"
+                        cancelText="关闭"
+                        :cancel-button-props="{ props: { icon: 'rollback' } }"
+                        width="600px"
+                        :title="title"
+                        :visible="visible"
+                        @cancel="handleCancel"
+                    >
                         <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
                             <a-form-model-item label="专题名称:">
                                 <a-input :disabled="context" v-model="tableObj.value1" placeholder="" />

@@ -15,19 +15,48 @@
                 >
                 </crud-table>
                 <div>
-                    <a-modal width="600px" :title="title" :visible="visible" @cancel="handleCancel">
-                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                    <a-modal
+                        okText="提交"
+                        :ok-button-props="{ props: { icon: 'check' } }"
+                        cancelText="关闭"
+                        :cancel-button-props="{ props: { icon: 'rollback' } }"
+                        width="500px"
+                        :title="title"
+                        :visible="visible"
+                        @cancel="handleCancel"
+                    >
+                        <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }" layout="horizontal">
                             <a-form-model-item label="专题名称:">
-                                <a-input :disabled="context" v-model="tableObj.value1" />
+                                <a-input placeholder="请输入专题名称" :disabled="context" v-model="tableObj.value1" />
                             </a-form-model-item>
                             <a-form-model-item label="试讲人工号:">
-                                <a-input :disabled="context" v-model="tableObj.value2"> </a-input>
+                                <a-input placeholder="请输入试讲人工号" :disabled="context" v-model="tableObj.value2">
+                                </a-input>
                             </a-form-model-item>
                             <a-form-model-item label="试讲人名称:">
-                                <a-input :disabled="context" v-model="tableObj.value3" placeholder="" />
+                                <a-input placeholder="试讲人名称" :disabled="context" v-model="tableObj.value3" />
                             </a-form-model-item>
                             <a-form-model-item label="学期:">
-                                <a-input :disabled="context" v-model="tableObj.value4" placeholder="" />
+                                <a-select
+                                    v-model="tableObj.value4"
+                                    v-decorator="[
+                                        'gender',
+                                        { initialValue: '1' },
+                                        { rules: [{ required: true, message: '请选择学期' }] },
+                                    ]"
+                                    placeholder="请选择学期"
+                                    @change="handleSelectChange"
+                                >
+                                    <a-select-option value="2021年秋季学期">
+                                        2021年秋季学期
+                                    </a-select-option>
+                                    <a-select-option value="2020年秋季学期">
+                                        2020年秋季学期
+                                    </a-select-option>
+                                    <a-select-option value="2019年秋季学期">
+                                        2019年秋季学期
+                                    </a-select-option>
+                                </a-select>
                             </a-form-model-item>
                             <a-form-model-item label="分组:">
                                 <a-select
@@ -48,14 +77,15 @@
                                 </a-select>
                             </a-form-model-item>
                             <a-form-model-item label="评委组:">
-                                <a-input :disabled="context" v-model="tableObj.value6" placeholder="" />
+                                <a-input :disabled="context" v-model="tableObj.value6" placeholder="请输入评委组" />
                             </a-form-model-item>
                             <a-form-model-item label="试讲分数:">
-                                <a-input :disabled="context" v-model="tableObj.value7" placeholder="" />
+                                <a-input :disabled="context" v-model="tableObj.value7" placeholder="请输入试讲分数" />
                             </a-form-model-item>
                             <a-form-model-item label="试讲时间:">
                                 <!-- <a-input :disabled="context"  v-model="tableObj.value8" placeholder="" /> -->
                                 <a-date-picker
+                                    style="width: 340px"
                                     v-model="tableObj.value8"
                                     v-decorator="['请选择试讲时间', config]"
                                     show-time

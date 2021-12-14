@@ -111,6 +111,7 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|3-20': [
                         {
+                            yd: 0,
                             'id|+1': 10000000,
                             process: '网上发布(部门新闻)',
                             title:

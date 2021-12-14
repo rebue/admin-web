@@ -13,6 +13,10 @@
             ></crud-table>
             <div>
                 <a-modal
+                    okText="提交"
+                    :ok-button-props="{ props: { icon: 'check' } }"
+                    cancelText="关闭"
+                    :cancel-button-props="{ props: { icon: 'rollback' } }"
                     width="500px"
                     :title="title"
                     :visible="visible"

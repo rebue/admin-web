@@ -35,13 +35,17 @@
                 </a-row>
                 <div>
                     <a-modal
-                        width="600px"
+                        okText="提交"
+                        :ok-button-props="{ props: { icon: 'check' } }"
+                        cancelText="关闭"
+                        :cancel-button-props="{ props: { icon: 'rollback' } }"
+                        width="500px"
                         :title="title"
                         :visible="visible"
                         :confirm-loading="confirmLoading"
                         @cancel="handleCancel"
                     >
-                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                        <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 19 }" layout="horizontal">
                             <a-form-model-item label="提交人:">
                                 <a-input placeholder="" v-model="tableObj.apply" :disabled="context" />
                             </a-form-model-item>
@@ -59,6 +63,7 @@
                             </a-form-model-item>
                             <a-form-model-item label="发送时间:">
                                 <a-date-picker
+                                    style="width: 360px"
                                     :disabled="context"
                                     v-model="tableObj.sendTime"
                                     v-decorator="['发送时间', config]"

@@ -67,6 +67,10 @@
                     <div>
                         <a-modal
                             width="500px"
+                            okText="提交"
+                            :ok-button-props="{ props: { icon: 'check' } }"
+                            cancelText="关闭"
+                            :cancel-button-props="{ props: { icon: 'rollback' } }"
                             :title="title"
                             :visible="visible"
                             :confirm-loading="confirmLoading"
