@@ -34,9 +34,6 @@
                         @cancel="handleCancel"
                     >
                         <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
-                            <a-form-model-item label="id:">
-                                <a-input placeholder="" v-model="tableObj.value1" :disabled="idEdit" />
-                            </a-form-model-item>
                             <a-form-model-item label="学期:">
                                 <a-input :disabled="context" v-model="tableObj.value2" />
                             </a-form-model-item>
