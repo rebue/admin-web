@@ -66,7 +66,7 @@
                                     format="YYYY-MM-DD HH:mm:ss"
                                 />
                             </a-form-model-item>
-                            <a-form-model-item label="发送人:">
+                            <a-form-model-item label="发送次数:">
                                 <a-input :disabled="context" v-model="tableObj.total" placeholder="" />
                             </a-form-model-item>
                         </a-form-model>

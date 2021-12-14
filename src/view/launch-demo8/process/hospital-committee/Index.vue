@@ -50,7 +50,9 @@
                                         </a-select-option>
                                     </a-select>
                                     <a-button class="btn">配置管理员</a-button>
-                                    <a-button class="btn">删除</a-button>
+                                    <a-popconfirm title="确定删除？" ok-text="确定" cancel-text="取消">
+                                        <a-button class="btn">删除</a-button>
+                                    </a-popconfirm>
                                 </template>
                             </crud-table>
                         </a-col>
