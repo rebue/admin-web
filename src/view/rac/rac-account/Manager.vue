@@ -91,8 +91,7 @@ export default {
             {
                 dataIndex: 'no',
                 title: '#',
-                width: 50,
-
+                width: 100,
                 scopedSlots: { customRender: 'serial' },
             },
             {

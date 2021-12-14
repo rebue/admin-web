@@ -54,7 +54,7 @@ export default {
                 dataIndex: 'no',
                 title: '#',
                 scopedSlots: { customRender: 'serial' },
-                width: 50,
+                width: 100,
             },
             {
                 dataIndex: 'name',
