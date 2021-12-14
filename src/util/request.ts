@@ -5,7 +5,7 @@ import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
 import { getAppIdByUrl } from '@/util/common';
-import { hasAuthInfo, removeAuthInfo } from '@/util/cookie';
+import { hasAuthInfo, removeAuthInfo, getAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
 const codeMessage = {
@@ -118,9 +118,12 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                     okText: '刷新页面',
                     onOk() {
                         if (hasAuthInfo()) {
+                            const authInfo = JSON.parse(window.atob(getAuthInfo()));
                             removeAuthInfo();
+                            window.location.replace(authInfo.redirectUri);
+                        } else {
+                            window.location.reload();
                         }
-                        window.location.reload();
                     },
                 });
             }
