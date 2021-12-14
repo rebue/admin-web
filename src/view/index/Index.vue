@@ -56,7 +56,7 @@
                         </template>
                     </a-popover>
                     <a-dropdown>
-                        <div>
+                        <div style="min-width:10em">
                             <a-avatar
                                 size="large"
                                 :icon="accountStore.avatar ? accountStore.avatar : 'user'"
