@@ -13,8 +13,8 @@
             </div>
             <div class="loginBox">
                 <!-- <div id="login_container"></div> -->
-                <scan-wechat :clientId="clientId" v-if="codeType == '微信'" />
-                <scan-dingding :clientId="clientId" v-else />
+                <scan-wechat v-if="codeType == '微信'" />
+                <scan-dingding v-else />
             </div>
             <!-- <div class="vxTips" v-if="codeType == '微信'">
                 请使用微信扫描二维码登录
@@ -39,7 +39,6 @@ export default {
     data() {
         return {
             modelVlaue: '手机微信扫码登录',
-            clientId: sessionStorage.getItem('auth_info_clientId'),
         };
     },
     mounted() {
