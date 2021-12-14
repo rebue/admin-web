@@ -328,7 +328,7 @@ export default {
             {
                 type: 'a',
                 title: '查看',
-                onClick: record => this.handleEdit(record),
+                onClick: record => this.handleView(record),
             },
         ];
 
@@ -361,6 +361,9 @@ export default {
          */
         handleEdit(record) {
             this.editForm.show(EditFormTypeDic.Modify, record);
+        },
+        handleView(record) {
+            this.editForm.show(EditFormTypeDic.View, record);
         },
         handleEditFormClose() {
             // this.refreshTableData();

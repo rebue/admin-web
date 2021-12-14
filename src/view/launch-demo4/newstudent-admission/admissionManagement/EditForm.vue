@@ -7,9 +7,9 @@
         :formItems="formItems"
         :rules="rules"
         :api="api"
-        v-bind="$attrs"
         v-on="$listeners"
         width="1000px"
+        v-bind="editFormType == EditFormTypeDic.View ? { footer: null } : {}"
     >
         <template #formItems>
             <a-row>
@@ -175,6 +175,7 @@ export default {
         return {
             record: {},
             editFormType: EditFormTypeDic.None,
+            EditFormTypeDic,
             model: {},
             rules: {
                 teachPointNum: [
