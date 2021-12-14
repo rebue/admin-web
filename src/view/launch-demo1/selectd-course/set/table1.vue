@@ -11,15 +11,19 @@
             :rowSelection="{}"
         >
         </crud-table>
+        <edit-form ref="editForm" @close="handleEditFormClose" />
     </fragment>
 </template>
 
 <script>
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import EditForm from './EditForm';
+import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 export default {
     name: 'Manager',
     components: {
         CrudTable,
+        EditForm,
     },
     data() {
         // 初始化数据start
@@ -90,9 +94,7 @@ export default {
                 buttonType: 'primary',
                 // icon: 'plus',
                 title: '添加选修课',
-                onClick: () => {
-                    /**/
-                },
+                onClick: this.handleAdd,
             },
         ];
 
@@ -111,6 +113,7 @@ export default {
     },
     mounted() {
         this.crudTable = this.$refs.crudTable;
+        this.editForm = this.$refs.editForm;
     },
     methods: {
         /**
@@ -118,6 +121,15 @@ export default {
          */
         refreshTableData() {
             this.crudTable.refreshData();
+        },
+        /**
+         * 处理添加领域的事件
+         */
+        handleAdd() {
+            this.editForm.show(EditFormTypeDic.Add, {});
+        },
+        handleEditFormClose() {
+            // this.refreshTableData();
         },
     },
 };
