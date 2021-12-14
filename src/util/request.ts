@@ -5,7 +5,7 @@ import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
 import router from '@/router/router';
 import { getAppIdByUrl } from '@/util/common';
-import { hasAuthInfo, removeAuthInfo, getAuthInfo } from '@/util/cookie';
+import { hasJwtToken, removeJwtToken, hasAuthInfo, removeAuthInfo, getAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';
 
 const codeMessage = {
@@ -117,6 +117,9 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                     content: '登录会话已失效，请刷新页面重新登录',
                     okText: '刷新页面',
                     onOk() {
+                        if (hasJwtToken()) {
+                            removeJwtToken();
+                        }
                         if (hasAuthInfo()) {
                             const authInfo = JSON.parse(window.atob(getAuthInfo()));
                             removeAuthInfo();
