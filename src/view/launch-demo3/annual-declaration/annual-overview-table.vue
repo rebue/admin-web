@@ -64,13 +64,13 @@
                     </a-row>
                     <div>
                         <a-modal
-                            width="600px"
+                            width="500px"
                             :title="title"
                             :visible="visible"
                             :confirm-loading="confirmLoading"
                             @cancel="handleCancel"
                         >
-                            <a-form-model :label-col="{ span: 3 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                            <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 19 }" layout="horizontal">
                                 <a-form-model-item label="成果编号:">
                                     <a-input
                                         placeholder="20314523"
@@ -79,24 +79,25 @@
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="填报人:">
-                                    <a-input :disabled="context" v-model="tableObj.author" />
+                                    <a-input placeholder="请输入填报人" :disabled="context" v-model="tableObj.author" />
                                 </a-form-model-item>
                                 <a-form-model-item label="部门:">
                                     <a-input
                                         :disabled="context"
                                         v-model="tableObj.department"
-                                        placeholder="请输入部门领导名称"
+                                        placeholder="请输入部门名称"
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="成果名称:">
                                     <a-input
                                         :disabled="context"
                                         v-model="tableObj.achievementName"
-                                        placeholder="请输入部门邮箱"
+                                        placeholder="请输入成果名称"
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="申请日期:">
                                     <a-date-picker
+                                        style="width:360px"
                                         :disabled="context"
                                         v-model="tableObj.applyTime"
                                         v-decorator="['申请日期', config]"
@@ -105,7 +106,7 @@
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="状态:">
-                                    <a-input :disabled="context" v-model="tableObj.status" placeholder="请输入顺序号" />
+                                    <a-input :disabled="context" v-model="tableObj.status" placeholder="状态" />
                                 </a-form-model-item>
                             </a-form-model>
                         </a-modal>

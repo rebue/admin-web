@@ -94,6 +94,7 @@ export default {
     },
     data() {
         // 初始化数据start
+        const data = [];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -101,16 +102,19 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|3-20': [
                         {
+                            'id|+1': 5551215,
                             apply: '@cname',
                             filename:
                                 '@pick(["后勤服务中心举办消防知识宣传讲座","2020级中共党史党建专业在职研究生班举行党史学习交流研讨会","院举办全区退役军人工作专题研修班","财务处组织开展我为教职工办实事解难题联合主题党日活动","固定资产卡片信息变更申请表","促党建提业务强队伍----网络培训部党支部开展党建理论和业务工作学习","注重学习教育宣传，营造干事创业氛围","业务指导工作处党支部开展“缅怀革命先烈、追寻英雄精神”主题党日活动"])',
                             active: '@pick(["送办", "处室审阅"])',
                             handle: '@cname',
+                            total: 0,
                         },
                     ],
                 });
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
+                this.data = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -125,6 +129,7 @@ export default {
             return p;
         };
         this.api = {
+            obj: '',
             page,
             listAll: page,
             list: page,
@@ -174,6 +179,7 @@ export default {
 
         const columns = [
             {
+                page,
                 dataIndex: 'no',
                 title: '#',
                 width: 50,
@@ -230,9 +236,8 @@ export default {
             {
                 type: 'a',
                 title: '发送',
-                onClick: () => {
-                    /**/
-                },
+                onClick: record => this.send(record),
+                /**/
             },
             {
                 type: 'a',
@@ -242,6 +247,7 @@ export default {
         ];
 
         return {
+            count: 1,
             visible: false,
             title: '',
             context: false,
@@ -270,6 +276,23 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        send(record) {
+            //co
+            let b = false;
+
+            this.crudTable.dataSource.map(v => {
+                if (v.id == record.id) {
+                    v.total = v.total + 1;
+                    b = true;
+                }
+                return v;
+            });
+            if (b) {
+                this.$message.success('发送信息成功');
+            } else {
+                this.$message.error('发送信息失败');
+            }
+        },
         handleCancel() {
             this.visible = false;
         },

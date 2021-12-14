@@ -90,6 +90,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+import { forIn } from 'lodash';
 
 const year = ['2021', '2020', '2019', '2018', '2017', '2016'];
 const date = ['全部', '待议', '已议'];
@@ -110,6 +111,7 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|3-20': [
                         {
+                            yd: '',
                             'id|+1': 10000000,
                             'fileNum|100000-900000': 111111,
                             title:
@@ -230,11 +232,19 @@ export default {
                 /**/
             },
             {
-                type: 'a',
-                title: '移动',
-                onClick: () => {
-                    /**/
-                },
+                type: 'more',
+                items: [
+                    {
+                        type: 'a',
+                        title: '上移',
+                        onClick: record => this.handleYd(record, 1),
+                    },
+                    {
+                        type: 'a',
+                        title: '下移',
+                        onClick: record => this.handleYd(record, 2),
+                    },
+                ],
             },
             {
                 type: 'confirm',
@@ -276,6 +286,39 @@ export default {
         this.crudTable = this.$refs.crudTable;
     },
     methods: {
+        //移动数据
+        handleYd(value, type) {
+            let b = true;
+            const index = this.crudTable.dataSource.findIndex(v => {
+                return v.id == value.id;
+            });
+            if (type == 1) {
+                const preIndex = index - 1;
+                const preRecord = this.crudTable.dataSource[preIndex];
+                console.log('---index', index, preIndex, preRecord);
+                if (preIndex < 0) {
+                    b = false;
+                    this.$message.error('已经在最顶部');
+                    return;
+                }
+                this.$set(this.crudTable.dataSource, preIndex, value);
+                this.$set(this.crudTable.dataSource, index, preRecord);
+            } else {
+                const preIndex = index + 1;
+                const preRecord = this.crudTable.dataSource[preIndex];
+                console.log('---index', index, preIndex, preRecord);
+                if (preIndex > this.crudTable.dataSource.length - 1) {
+                    b = false;
+                    this.$message.error('已经在最底部');
+                    return;
+                }
+                this.$set(this.crudTable.dataSource, preIndex, value);
+                this.$set(this.crudTable.dataSource, index, preRecord);
+            }
+            if (b) {
+                this.$message.success('移动成功');
+            }
+        },
         handleCancel() {
             this.visible = false;
         },

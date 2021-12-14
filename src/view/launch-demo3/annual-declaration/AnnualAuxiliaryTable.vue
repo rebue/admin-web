@@ -13,25 +13,30 @@
             ></crud-table>
             <div>
                 <a-modal
-                    width="600px"
+                    width="500px"
                     :title="title"
                     :visible="visible"
                     :confirm-loading="confirmLoading"
                     @cancel="handleCancel"
                 >
-                    <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                    <a-form-model :label-col="{ span: 6 }" :wrapper-col="{ span: 17 }" layout="horizontal">
                         <a-form-model-item label="填报人:">
-                            <a-input v-model="tableObj.memberName" :disabled="idEdit" />
+                            <a-input placeholder="请输入填报人" v-model="tableObj.memberName" :disabled="idEdit" />
                         </a-form-model-item>
                         <a-form-model-item label="作者:">
-                            <a-input :disabled="context" v-model="tableObj.author" />
+                            <a-input placeholder="请输入作者" :disabled="context" v-model="tableObj.author" />
                         </a-form-model-item>
                         <a-form-model-item label="辅助的工作:">
-                            <a-input :disabled="context" v-model="tableObj.auxiliaryWork" />
+                            <a-input
+                                placeholder="请输入辅助的工作"
+                                :disabled="context"
+                                v-model="tableObj.auxiliaryWork"
+                            />
                         </a-form-model-item>
                         <a-form-model-item label="工作日期:">
                             <!-- <a-input :disabled="context" v-model="tableObj.workTime" /> -->
                             <a-date-picker
+                                style="width:320px"
                                 v-model="tableObj.workTime"
                                 v-decorator="['工作日期', config]"
                                 show-time
@@ -39,11 +44,16 @@
                             />
                         </a-form-model-item>
                         <a-form-model-item label="辅助的工作量:">
-                            <a-input :disabled="context" v-model="tableObj.auxiliaryWorkload" />
+                            <a-input
+                                placeholder="请输入辅助的工作量"
+                                :disabled="context"
+                                v-model="tableObj.auxiliaryWorkload"
+                            />
                         </a-form-model-item>
                         <a-form-model-item label="添加时间:">
                             <!-- <a-input :disabled="context" v-model="tableObj.createTime" /> -->
                             <a-date-picker
+                                style="width:320px"
                                 v-model="tableObj.createTime"
                                 v-decorator="['工作日期', config]"
                                 show-time
@@ -192,7 +202,7 @@ export default {
             {
                 dataIndex: 'auxiliaryWork',
                 title: '辅助的工作',
-                width: 350,
+                width: 450,
             },
             {
                 dataIndex: 'workTime',

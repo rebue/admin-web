@@ -13,18 +13,18 @@
             ></crud-table>
             <div>
                 <a-modal
-                    width="600px"
+                    width="450px"
                     :title="title"
                     :visible="visible"
                     :confirm-loading="confirmLoading"
                     @cancel="handleCancel"
                 >
-                    <a-form-model :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" layout="horizontal">
+                    <a-form-model :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }" layout="horizontal">
                         <a-form-model-item label="填报人:">
-                            <a-input v-model="tableObj.memberName" :disabled="idEdit" />
+                            <a-input placeholder="请输入填报人" v-model="tableObj.memberName" :disabled="idEdit" />
                         </a-form-model-item>
                         <a-form-model-item label="作者:">
-                            <a-input :disabled="context" v-model="tableObj.author" />
+                            <a-input placeholder="请输入作者" :disabled="context" v-model="tableObj.author" />
                         </a-form-model-item>
                         <a-form-model-item label="奖励类型:">
                             <a-select
@@ -43,10 +43,14 @@
                             <!-- <a-input :disabled="context" v-model="tableObj.rewardType" /> -->
                         </a-form-model-item>
                         <a-form-model-item label="奖励名称:">
-                            <a-input :disabled="context" v-model="tableObj.rewardName" />
+                            <a-input placeholder="请选择奖励名称" :disabled="context" v-model="tableObj.rewardName" />
                         </a-form-model-item>
                         <a-form-model-item label="奖励工作量:">
-                            <a-input :disabled="context" v-model="tableObj.rewardWorkload" />
+                            <a-input
+                                placeholder="请选择奖励工作量"
+                                :disabled="context"
+                                v-model="tableObj.rewardWorkload"
+                            />
                         </a-form-model-item>
                         <a-form-model-item label="系统时间:">
                             <!-- <a-input :disabled="context" v-model="tableObj.date" /> -->
