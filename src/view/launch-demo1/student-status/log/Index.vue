@@ -33,7 +33,7 @@ export default {
                     'list|1-20': [
                         {
                             updator: '@cname',
-                            updateTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            updateTime: '@integer(2018,2021)-@date(MM-dd hh:mm:ss)',
                             target: '@cname',
                         },
                     ],

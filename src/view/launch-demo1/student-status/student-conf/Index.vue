@@ -54,12 +54,18 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
                     'list|1-20': [
                         {
-                            term: '@date(yyyy年)@cword("春秋")季学期',
-                            className: '@pick(["区直单位中心组成员","中心组学习室联络班","区直机关处级学习班"])',
-                            startTime: '@date(yyyy-MM-dd)',
-                            endTime: '@date(yyyy-MM-dd)',
-                            signupStartTime: '@date(yyyy-MM-dd)',
-                            signupEndTime: '@date(yyyy-MM-dd)',
+                            term: '2021年春秋季学期',
+                            'className|+1': [
+                                '区直单位中心组成员',
+                                '中心组学习室联络班',
+                                '区直机关处级学习班',
+                                '校委中心组成员（扩大）',
+                                '中青年干部培训一班（第45期）',
+                            ],
+                            startTime: '2021-@integer(07,10)-@date(dd)',
+                            endTime: '2021-@integer(11,12)-@date(dd)',
+                            signupStartTime: '2021-@integer(04,06)-@date(dd)',
+                            signupEndTime: '2021-@integer(09,10)-@date(dd)',
                             creator: '@cname(),@cname()',
                         },
                     ],

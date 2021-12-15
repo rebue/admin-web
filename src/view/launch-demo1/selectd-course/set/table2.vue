@@ -35,15 +35,21 @@ export default {
                     'list|1-20': [
                         {
                             'course|+1': 100,
-                            'term|+1': 200,
-                            'date|': '@date(yyyy-MM-dd)',
+                            'term|+1': 202100,
+                            'date|': '2021-@date(MM-dd)',
                             time: '@time(hh:mm:ss)',
                             'courseNo|+1': 300,
-                            courseName: '课程@integer(1,9)',
+                            'courseName|+1': [
+                                '教学总体布局及其实施',
+                                '高效班级学习团队建设',
+                                '习近平总书记关于中国共产党历史的重要论述',
+                                '《忠诚》一党性救育情景课 （录像救学）',
+                                '深刻认识把握坚持以人民为中心的发展思想',
+                            ],
                             'teacherNo|+1': 400,
                             teacher: '@cname()',
                             'classroomNo|+1': 500,
-                            classroom: '第@integer(1,9)号教室',
+                            classroom: '',
                         },
                     ],
                 });

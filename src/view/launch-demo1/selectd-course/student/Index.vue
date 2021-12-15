@@ -12,7 +12,7 @@
                     </a-form-model-item>
                 </a-form-model>
                 <h2>中青年干部培训一班（第45期）</h2>
-                <crud-table
+                <!-- <crud-table
                     ref="crudTable"
                     :showKeywords="false"
                     :columns="columns"
@@ -20,7 +20,14 @@
                     :scrollX="600"
                     :defaultPagination="true"
                 >
-                </crud-table>
+                </crud-table> -->
+                <a-table
+                    :columns="columns"
+                    :data-source="data1"
+                    bordered
+                    size="middle"
+                    :scroll="{ x: 'calc(700px + 50%)', y: 240 }"
+                />
                 <a-divider />
                 <div>未选学员</div>
                 <div>
@@ -40,9 +47,27 @@ export default {
     name: 'Manager',
     components: {
         BaseManager,
-        CrudTable,
+        // CrudTable,
     },
+
     data() {
+        const mockList1 = require('mockjs').mock({
+            'list|1-20': [
+                {
+                    name: '@cname()',
+                    'course|+1': [
+                        '教学总体布局及其实施',
+                        '高效班级学习团队建设',
+                        '习近平总书记关于中国共产党历史的重要论述',
+                        '《忠诚》一党性救育情景课 （录像救学）',
+                        '深刻认识把握坚持以人民为中心的发展思想',
+                    ],
+                    'date|': '2021-@date(MM-dd)',
+                },
+            ],
+        });
+        const data1 = mockList1.list;
+
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
@@ -51,12 +76,21 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
                     'list|1-20': [
                         {
-                            test: '@cname()-课程名-@date(yyyy-MM-dd)',
+                            name: '@cname()',
+                            'course|+1': [
+                                '教学总体布局及其实施',
+                                '高效班级学习团队建设',
+                                '习近平总书记关于中国共产党历史的重要论述',
+                                '《忠诚》一党性救育情景课 （录像救学）',
+                                '深刻认识把握坚持以人民为中心的发展思想',
+                            ],
+                            'date|': '2021-@date(MM-dd)',
                         },
                     ],
                 });
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
+                console.log(dataSource);
                 const ro = {
                     extra: {
                         page: {
@@ -78,7 +112,7 @@ export default {
         // 初始化数据end
         const columns = [
             {
-                dataIndex: 'test',
+                // dataIndex: 'test',
                 title: '开班临时测试(测试需要)',
                 width: 300,
                 ellipsis: true,
@@ -86,23 +120,23 @@ export default {
                     {
                         title: '姓名',
                         width: 50,
-                        dataIndex: 'test',
+                        dataIndex: 'name',
                         ellipsis: true,
                     },
                     {
                         title: '所选课程',
                         width: 150,
-                        dataIndex: 'test',
+                        // dataIndex: 'course',
                         ellipsis: true,
                         children: [
                             {
                                 title: '课程名称',
-                                dataIndex: 'test',
+                                dataIndex: 'course',
                                 width: 75,
                             },
                             {
                                 title: '日期',
-                                dataIndex: 'test',
+                                dataIndex: 'date',
                                 width: 75,
                             },
                         ],
@@ -111,20 +145,12 @@ export default {
             },
         ];
 
-        this.formLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 7 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 13 },
-            },
-        };
         return {
             columns,
             moment,
             dateFormat: 'YYYY/MM/DD',
+            api: {},
+            data1,
         };
     },
     mounted() {

@@ -36,10 +36,16 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
                     'list|1-20': [
                         {
-                            courseName: '测试课程',
-                            courseType: '@pick(["学科程程","综合课程"])',
+                            'courseName|+1': [
+                                '教学总体布局及其实施',
+                                '高效班级学习团队建设',
+                                '习近平总书记关于中国共产党历史的重要论述',
+                                '《忠诚》一党性救育情景课 （录像救学）',
+                                '深刻认识把握坚持以人民为中心的发展思想',
+                            ],
+                            courseType: '@pick(["选修课"])',
                             teacher: '@cname()',
-                            startTime: '@date(yyyy-MM-dd)',
+                            startTime: '2021-@integer(10,11)-@date(dd)',
                             length: '@integer(10,60)',
                         },
                     ],

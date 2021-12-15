@@ -76,8 +76,8 @@ export default {
                             teacher: '@cname',
                             student: '@cname',
                             creator: '@cname',
-                            createdTime: '@date(yyyy-MM-dd)',
-                            lastSigninTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            createdTime: '@integer(2000,2020)-@date(MM-dd)',
+                            lastSigninTime: '2021-@date(MM-dd hh:mm:ss)',
                         },
                     ],
                 });

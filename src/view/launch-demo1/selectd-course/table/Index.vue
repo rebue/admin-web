@@ -46,12 +46,18 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
                     'list|1-20': [
                         {
-                            orign: '@cword(3,6)',
-                            'date|': '@date(yyyy-MM-dd)',
-                            wubie: '',
-                            course: '测试课程',
+                            orign: '',
+                            'date|': '2021-@date(MM-dd)',
+                            wubie: '@pick(["上午","下午"])',
+                            'course|+1': [
+                                '教学总体布局及其实施',
+                                '高效班级学习团队建设',
+                                '习近平总书记关于中国共产党历史的重要论述',
+                                '《忠诚》一党性救育情景课 （录像救学）',
+                                '深刻认识把握坚持以人民为中心的发展思想',
+                            ],
                             teacher: '@cname',
-                            classroom: '@integer(1,9)号教室',
+                            classroom: '',
                             ssica: '',
                         },
                     ],
