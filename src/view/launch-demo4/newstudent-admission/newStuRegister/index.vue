@@ -139,15 +139,17 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            grade: '@pick(["2021"])',
                             teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
                             major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
                             'number|1-1000': 1,
                             name: '@cname',
-                            admission: '@pick(["录取","未录取"])',
+                            admission: function() {
+                                return this.allAchievement > 250 ? '录取' : '未录取';
+                            },
                             turnMajor: '@pick(["是","否"])',
                             studentStatus: '@pick("是")',
-                            'allAchievement|250-300': 250,
+                            'allAchievement|240-300': 250,
                             stuRegister: '@pick(["是","否"])',
                             nation:
                                 '@pick(["汉族", "苗族", "壮族", "回族", "藏族", "白族", "土家族", "黎族", "布依族"])',

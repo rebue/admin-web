@@ -126,11 +126,23 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3-20': [
+                    'list|3-11': [
                         {
                             'id|+1': 10000000,
                             teachPointNum: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
-                            majorNum: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","中共党史"])',
+                            'majorNum|+1': [
+                                '电子商务',
+                                '应用数学',
+                                '计算机科学',
+                                '软件技术',
+                                '汉语言文学',
+                                '财务管理',
+                                '通信工程',
+                                '国际经济法',
+                                '建筑学',
+                                '土木工程',
+                                '信息资源管理',
+                            ],
                             'admissionIndex|40-50': 1,
                         },
                     ],

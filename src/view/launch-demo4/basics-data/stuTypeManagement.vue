@@ -42,7 +42,19 @@ export default {
                         {
                             'id|+1': 10000000,
                             'stuTypeNum|1-10': 1,
-                            typeName: '@pick(["党校研究生", "中政大研究生"])',
+                            'typeName|+1': [
+                                '电子商务研究生',
+                                '应用数学研究生',
+                                '计算机科学研究生',
+                                '软件技术研究生',
+                                '汉语言文学研究生',
+                                '财务管理研究生',
+                                '通信工程研究生',
+                                '国际经济法研究生',
+                                '建筑学研究生',
+                                '土木工程研究生',
+                                '信息资源管理研究生',
+                            ],
                             desc: '',
                         },
                     ],
@@ -77,7 +89,7 @@ export default {
             {
                 dataIndex: 'stuTypeNum',
                 title: '研究生类型编号',
-                width: 150,
+                width: 100,
             },
             {
                 dataIndex: 'typeName',

@@ -37,20 +37,33 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3-20': [
+                    'list|3-10': [
                         {
                             'id|+1': 10000000,
-                            type: '@pick(["党校研究生","中政大研究生"])',
-                            gradeName: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            'type|+1': [
+                                '电子商务研究生',
+                                '应用数学研究生',
+                                '计算机科学研究生',
+                                '软件技术研究生',
+                                '汉语言文学研究生',
+                                '财务管理研究生',
+                                '通信工程研究生',
+                                '国际经济法研究生',
+                                '建筑学研究生',
+                                '土木工程研究生',
+                                '信息资源管理研究生',
+                            ],
+                            gradeName: '2021',
                             remark: '@pick(["允许","不允许"])',
-                            startTime: '@datetime',
-                            endTime: '@datetime',
+                            startTime: '2021-06-30 23:59:00',
+                            endTime: '2021-08-30 23:59:00',
                             desc: '',
                         },
                     ],
                 });
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
+
                 const ro = {
                     extra: {
                         page: {
@@ -79,7 +92,7 @@ export default {
             {
                 dataIndex: 'type',
                 title: '研究生类型',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'gradeName',

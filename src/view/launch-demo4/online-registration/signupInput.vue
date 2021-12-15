@@ -33,6 +33,7 @@
 <script>
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
+
 export default {
     name: 'signupConf',
     components: {
@@ -118,7 +119,7 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            grade: '@pick(["2021"])',
                             teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
                             major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
                             'number|1-100': 1,
@@ -133,7 +134,7 @@ export default {
                             majorStudied: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
                             gradSchool:
                                 '@pick(["桂林电子科技大学","广西民族大学","广西师范大学","广西农业职业技术大学","北京大学","南昌理工大学","清华大学"])',
-                            gradTime: '@date',
+                            gradTime: '2021-06-29',
                             workTime: '@date',
                             'diplomaNum|100000000000-1000000000000': 100000000000,
                             political: '@pick(["群众","共青团员","中共党员"])',
@@ -281,7 +282,7 @@ export default {
                 dataIndex: 'workPlace',
                 title: '工作所在地',
 
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'operation',

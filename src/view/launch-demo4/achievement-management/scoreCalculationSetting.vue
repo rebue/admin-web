@@ -159,9 +159,9 @@ export default {
                             curriculumName:
                                 '@pick(["政治理论", "中国化马克思主义理论", "公共管理学", "新时代党的建设理论", "应用数学", "中国共产党历史"])',
                             examForm: '@pick(["闭卷","开卷","论文"])',
-                            checkProportion: '',
-                            taskProportion: '',
-                            surfaceProportion: '',
+                            checkProportion: '10%',
+                            taskProportion: '30%',
+                            surfaceProportion: '60%',
                         },
                     ],
                 });

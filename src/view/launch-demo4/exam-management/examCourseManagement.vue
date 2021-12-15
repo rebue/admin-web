@@ -122,12 +122,12 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            grade: '@pick(["2021"])',
                             major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
                             courseName:
                                 '@pick(["马克思主义基础理论", "公共管理学", "领导科学", "应用数学", "计算机理论科学", "体育"])',
-                            examStartData: '@date',
-                            examEndData: '@date',
+                            examStartData: '2021-08-15',
+                            examEndData: '2021-08-16',
                             desc: '',
                         },
                     ],

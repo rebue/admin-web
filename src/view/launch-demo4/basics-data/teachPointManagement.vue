@@ -116,7 +116,7 @@ export default {
                             'id|+1': 10000000,
                             teachPointCode: '@pick(["4100", "5200"])',
                             teachPointName: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
-                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
+                            grade: '@pick(["2021"])',
                             examPlace: '',
                             desc: '',
                         },

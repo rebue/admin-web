@@ -127,8 +127,8 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            grade: '@pick(["2021", "2020", "2019", "2018", "2017", "2016"])',
-                            teachPoint: '@pick(["党校研究生","中政大研究生"])',
+                            grade: '@pick(["2021"])',
+                            teachPoint: '@pick(["中共广西区委党校", "中共广西区政法大学"])',
                             major: '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务"])',
                             name: '@cname',
                             sex: '@pick(["男", "女"])',
@@ -142,7 +142,7 @@ export default {
                                 '@pick(["公共管理","政治与法律","计算机应用","软件技术","电子商务","物流管理","体育教育","物理学","日语"])',
                             gradSchool:
                                 '@pick(["钦州学院","玉林师范学院","广西师范大学","广西民族大学","钦州学院","广西大学","中南民族大学","北京邮电大学","广西农业职业技术大学"])',
-                            gradData: '@date',
+                            gradData: '2021-06-29',
                             workData: '@date',
                             'diplomaNum|0000000000000001-90000000000000000': 111111111111111,
                             partyData: '@date',
@@ -187,7 +187,7 @@ export default {
                 dataIndex: 'teachPoint',
                 title: '教学点',
 
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'major',
