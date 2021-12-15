@@ -13,7 +13,22 @@
                     <a-form-model-item>
                         <a-select default-value="lucy" style="width: 250px">
                             <a-select-option value="lucy">
-                                中青年干部培训一班（第45期）
+                                第1期中青年干部培训一班
+                            </a-select-option>
+                            <a-select-option value="2">
+                                第2期全区党校(行政院校)系统师资培训班
+                            </a-select-option>
+                            <a-select-option value="3">
+                                第3期全区党校(行政院校)系统师资培训班
+                            </a-select-option>
+                            <a-select-option value="4">
+                                第4期全区党校(行政院校)系统师资培训班
+                            </a-select-option>
+                            <a-select-option value="5">
+                                第5期中青年干部培训二班班
+                            </a-select-option>
+                            <a-select-option value="5">
+                                第6期县处级领导干部进修班
                             </a-select-option>
                         </a-select>
                     </a-form-model-item>
@@ -36,7 +51,7 @@
                         </a-tabs>
                         <div>考勤情况</div>
                         <a-row type="flex" style="margin: 20px 0;padding: 20px;background:#ededed">
-                            <a-col :flex="1"> 正常：<a-button type="link">61 </a-button> </a-col>
+                            <a-col :flex="1"> 正常：<a-button type="link">20 </a-button> </a-col>
                             <a-col :flex="1"> 迟到：<a-button type="link">0</a-button> </a-col>
                             <a-col :flex="1"> 早退：<a-button type="link">0</a-button> </a-col>
                             <a-col :flex="1"> 请假：<a-button type="link">0</a-button> </a-col>
@@ -87,37 +102,65 @@ export default {
                 key: '1',
                 children: [
                     {
-                        title: '班级1',
+                        title: '于磊',
                         key: '101',
                     },
                     {
-                        title: '班级2',
+                        title: '陆娟',
                         key: '102',
                     },
                     {
-                        title: '班级3',
+                        title: '苏霞',
                         key: '103',
                     },
+                    {
+                        title: '蒋军',
+                        key: '104',
+                    },
+                    {
+                        title: '万涛',
+                        key: '105',
+                    },
+                    {
+                        title: '史洋',
+                        key: '106',
+                    },
+                    {
+                        title: '曹杰',
+                        key: '107',
+                    },
+                    {
+                        title: '刘娟',
+                        key: '108',
+                    },
+                    {
+                        title: '钱刚',
+                        key: '109',
+                    },
+                    {
+                        title: '谭丽',
+                        key: '1010',
+                    },
                 ],
             },
-            {
-                title: '中青年干部培训班二班',
-                key: '2',
-                children: [
-                    {
-                        title: '班级1',
-                        key: '201',
-                    },
-                    {
-                        title: '班级2',
-                        key: '202',
-                    },
-                    {
-                        title: '班级3',
-                        key: '203',
-                    },
-                ],
-            },
+            // {
+            //     title: '中青年干部培训班二班',
+            //     key: '2',
+            //     children: [
+            //         {
+            //             title: '班级1',
+            //             key: '201',
+            //         },
+            //         {
+            //             title: '班级2',
+            //             key: '202',
+            //         },
+            //         {
+            //             title: '班级3',
+            //             key: '203',
+            //         },
+            //     ],
+            // },
         ];
 
         // 初始化数据start
@@ -128,9 +171,16 @@ export default {
                     'list|20': [
                         {
                             activate: '报到',
-                            student: '@cname()',
-                            inTime: '@date(yyyy-MM-dd hh:mm:ss)',
-                            outTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            'student|+1': treeData[0].children.map(v => {
+                                return v.title;
+                            }),
+                            // inTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            // outTime: '@date(yyyy-MM-dd hh:mm:ss)',
+                            inTime:
+                                '@pick(["2021-08-21 08:25","2021-08-21 08:13","2021-08-21 08:30","2021-08-21 08:29","2021-08-21 08:27","2021-08-21 08:20"])',
+                            outTime:
+                                '@pick(["2021-08-21 11:45","2021-08-21 11:35","2021-08-21 11:31","2021-08-21 11:50","2021-08-21 11:37","2021-08-21 11:40"])',
+                            type: '@pick(["刷卡","录入","修改"])',
                             way: '刷卡',
                             status: '正常',
                             desc: '',
@@ -178,13 +228,13 @@ export default {
             {
                 dataIndex: 'inTime',
                 title: '进入时间',
-                width: 150,
+                width: 200,
             },
 
             {
                 dataIndex: 'outTime',
                 title: '离开时间',
-                width: 150,
+                width: 200,
                 ellipsis: true,
             },
             {

@@ -49,22 +49,40 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             name: '@cname()',
                             sex: '@pick(["男", "女"])',
-                            birth: '@date("yyyy-MM")',
+                            'birth|+1': ['1995-11', '1996-04', '1997-10', '1998-08'],
                             'idCard|1-100000000000000000': 12345679012345678,
                             'cardId|1-1000000': 193201,
                             'qrcode|1-1000000': 193201,
-                            class: '@pick(["计算机一班", "计算机二班","GC班"])',
-                            company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
+                            'class|+1': [
+                                '市场营销一班',
+                                '国际贸易一班',
+                                '网络工程一班',
+                                '计算机一班',
+                                '计算机二班',
+                                'GC班',
+                            ],
+                            'company|+1': [
+                                '上汽通用五菱汽车股份有限公司',
+                                '广西投资集团有限公司',
+                                '广西建工集团有限责任公司',
+                                '广西电网有限责任公司',
+                                '广西柳州钢铁集团有限公司',
+                                '广西北部湾国际港务集团有限公司',
+                                '广西壮族自治区农村信用社联合社',
+                                '广西玉柴机器集团有限公司',
+                                '广西盛隆冶金有限公司',
+                                '中国石油天然气股份有限公司广西石化分公司',
+                            ],
                             flag: '@pick(["是", "否"])',
-                            lastModifiedTime: '@date("yyyy-MM-dd")',
+                            'lastModifiedTime|+1': ['2021-12-01', '2021-11-20', '2021-11-10', '2021-12-04'],
                             lastChecker: '@cname()',
                             by: '@pick(["自驾","公交","火车", "飞机"])',
-                            arriveTime: '@now("yyyy-MM-dd")',
+                            arriveTime: '@pick(["2021-12-12","2021-12-13","2021-12-14","2021-12-15"])',
                             meet: '@pick(["是", "否"])',
                             // 'realmId|+1': ['default', 'platform', 'ops'],
                             //'opType': '@pick(["锁定", "启用"])',
@@ -79,7 +97,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

@@ -36,14 +36,21 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             'qrcode|1-1000000': 193201,
-                            class: '@pick(["计算机一班", "计算机二班"])',
-                            startTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            endTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            'total|1-20': 20,
+                            'class|+1': [
+                                '市场营销一班',
+                                '国际贸易一班',
+                                '网络工程一班',
+                                '计算机一班',
+                                '计算机二班',
+                                'GC班',
+                            ],
+                            startTime: '2021-07-01',
+                            endTime: '2021-08-01',
+                            'total|30-100': 20,
                             // 'realmId|+1': ['default', 'platform', 'ops'],
                             //'opType': '@pick(["锁定", "启用"])',
                             //'opTitle': '@title()',
@@ -57,7 +64,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: 20,
                         },
                         list: dataSource,
                     },

@@ -42,7 +42,7 @@
                             <div>
                                 <a-icon type="plus" />
                                 <div class="ant-upload-text">
-                                    Upload
+                                    选择文件
                                 </div>
                             </div>
                         </a-upload>

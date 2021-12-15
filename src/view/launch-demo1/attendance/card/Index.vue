@@ -36,13 +36,21 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             no: '@integer(3000000,3999999)',
-                            createdTime: '@date(yyyy-MM-dd hh:mm)',
-                            device: '多功能厅西门 @ip()',
+                            createdTime:
+                                '@pick(["2021-10-11 11:11","2021-11-05 11:12","2021-09-21 11:14","2021-11-18 11:16"])',
+                            device: '@pick(["多功能厅西门","综合楼东门","实训楼东门","图书馆西门"])@ip()',
                             name: '@cname()',
-                            className: '校委中心组成员(扩大)',
+                            'className|+1': [
+                                '第1期中青年干部培训一班',
+                                '第2期全区党校(行政院校)系统师资培训班',
+                                '第3期全区党校(行政院校)系统师资培训班',
+                                '第4期全区党校(行政院校)系统师资培训班',
+                                '第5期中青年干部培训二班班',
+                                '第6期县处级领导干部进修班',
+                            ],
                         },
                     ],
                 });
@@ -82,17 +90,17 @@ export default {
             {
                 dataIndex: 'device',
                 title: '考勤机',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'name',
                 title: '姓名',
-                width: 150,
+                width: 80,
             },
             {
                 dataIndex: 'className',
                 title: '班级',
-                width: 150,
+                width: 220,
                 ellipsis: true,
             },
         ];

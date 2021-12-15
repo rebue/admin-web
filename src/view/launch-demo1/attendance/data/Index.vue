@@ -4,7 +4,7 @@
             <template #managerCard>
                 <a-form-model layout="inline">
                     <a-form-model-item label="学期">
-                        <a-select default-value="lucy" style="width: 120px">
+                        <a-select default-value="lucy" style="width: 220px">
                             <a-select-option value="lucy">
                                 2021年秋季学期
                             </a-select-option>
@@ -121,7 +121,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             name: '@cname()',
                             '09-01': '@boolean(1,9,"事假上午（手工）")',

@@ -103,7 +103,7 @@ export default {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
-                width: 70,
+                width: 150,
             },
             {
                 dataIndex: 'value3',

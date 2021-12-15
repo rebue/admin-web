@@ -2,7 +2,7 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <a-row>
+                <a-row type="flex">
                     <a-col :span="6">
                         <a-radio-group :value="1">
                             <a-radio :value="1">
@@ -12,7 +12,7 @@
                                 按课程
                             </a-radio>
                         </a-radio-group>
-                        <a-calendar :fullscreen="false" style="width: 250px" />
+                        <a-calendar defaultValue="2021-11-3" :fullscreen="false" style="width: 250px" />
                         <a-select default-value="lucy">
                             <a-select-option value="lucy">
                                 01中青年干部培训一班（第45期）
@@ -25,7 +25,10 @@
                             <p>玉柴高质量发展思路</p>
                         </div>
                     </a-col>
-                    <a-col :span="18">
+                    <a-col :span="1">
+                        <a-divider type="vertical" style="height:100%"></a-divider>
+                    </a-col>
+                    <a-col :span="17">
                         <div>
                             <p>2021年秋季下学期01中青年干部培训一班（第45期）</p>
                             <h4>
@@ -67,14 +70,23 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             name: '@cname()',
-                            inTime: '@date(hh:mm)',
-                            outTime: '@date(hh:mm)',
-                            type: '@pick(["刷卡","录入","修改"])',
-                            status: '@pick(["正常","病假"])',
-                            desc: '@pick(["正常",""])',
+                            inTime: '@pick(["08:25","08:13","08:30","08:29","08:27","08:20","00:00"])',
+                            outTime: '@pick(["11:45","11:35","11:31","11:50","11:37","11:40","00:00"])',
+                            // type: '@pick(["刷卡","录入","修改"])',
+                            type: function() {
+                                if (this.inTime == '00:00') {
+                                    this.outTime = '00:00';
+                                    this.status = '请假';
+                                    return '录入';
+                                } else {
+                                    return '刷卡';
+                                }
+                            },
+                            status: '@pick(["正常"])',
+                            // desc: '@pick(["正常",""])',
                         },
                     ],
                 });
