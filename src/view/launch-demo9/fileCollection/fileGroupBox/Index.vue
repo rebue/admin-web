@@ -203,22 +203,27 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '导入',
+                title: '自动组合',
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '导出',
+                title: '加入已有盒',
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '批量挂接',
+                title: '目录打印',
             },
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '编号',
+                title: '清楚档号',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '组建',
             },
             {
                 buttonType: 'primary',
@@ -228,7 +233,7 @@ export default {
             {
                 buttonType: 'primary',
                 icon: 'plus',
-                title: '转移',
+                title: '粘贴',
             },
             {
                 buttonType: 'primary',

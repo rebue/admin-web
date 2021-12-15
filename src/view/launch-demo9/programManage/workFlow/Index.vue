@@ -3,7 +3,7 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <div class="stepsCss">
-                    <a-steps :current="0">
+                    <a-steps direction="vertical" :current="0">
                         <a-step>
                             <template slot="title">
                                 开始事件
@@ -323,6 +323,9 @@ export default {
     /deep/ .ant-form-item {
         width: 100%;
     }
+}
+.ant-steps-vertical .ant-steps-item {
+    height: 65px;
 }
 .table-left {
     display: flex;

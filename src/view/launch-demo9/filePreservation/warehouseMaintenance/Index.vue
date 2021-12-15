@@ -146,19 +146,19 @@ export default {
         ];
         const treeData = [
             {
-                title: '某某某全宗',
+                title: '全宗',
                 key: '20211',
                 children: [
                     {
-                        title: '文书档案库房',
+                        title: '档案库',
                         key: '20211-1',
                         children: [
                             {
-                                title: '1区',
+                                title: '库房内区域',
                                 key: '20211-1-1',
                                 children: [
                                     {
-                                        title: 'no1',
+                                        title: '密集架列no1',
                                         key: '20211-1-1-1',
                                         children: [
                                             {
@@ -172,11 +172,11 @@ export default {
                                         ],
                                     },
                                     {
-                                        title: 'no2',
+                                        title: '密集架列no2',
                                         key: '20211-1-1-2',
                                     },
                                     {
-                                        title: 'no3',
+                                        title: '密集架列no3',
                                         key: '20211-1-1-3',
                                     },
                                 ],
