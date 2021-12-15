@@ -103,6 +103,7 @@ import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
+import moment from 'moment';
 
 export default {
     name: 'school-profile-year',
@@ -229,6 +230,24 @@ export default {
                         },
                     ],
                 });
+                //时间设置
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+                    const MonthTime = 2626560 * Math.round(Math.random() * 5);
+
+                    dateTime = dateTime - time - MonthTime;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+                    const month = Math.round(Math.random() * 15);
+
+                    mockList.list[i].applyTime = moment(
+                        applyTime.getFullYear() - year + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                    mockList.list[i].year = applyTime.getFullYear() - year;
+                }
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
                 const ro = {

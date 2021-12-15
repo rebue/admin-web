@@ -54,6 +54,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
 import OrgTree from '@/view/rac/rac-org/Tree';
 import log from '../result-allocation/log';
+import moment from 'moment';
 
 export default {
     name: 'press',
@@ -96,6 +97,25 @@ export default {
                         },
                     ],
                 });
+                //时间设置
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+                    const MonthTime = 2626560 * Math.round(Math.random() * 5);
+
+                    dateTime = dateTime - time - MonthTime;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+
+                    mockList.list[i].createTime = moment(
+                        applyTime.getFullYear() - year + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                    mockList.list[i].startTime = moment(
+                        applyTime.getFullYear() - year + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                }
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
                 const ro = {

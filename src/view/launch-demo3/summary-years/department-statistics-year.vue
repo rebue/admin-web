@@ -19,13 +19,13 @@
                                             全部
                                         </a-select-option>
                                         <a-select-option value="2020">
-                                            2020
+                                            2021
                                         </a-select-option>
                                         <a-select-option value="2019">
-                                            2019
+                                            2020
                                         </a-select-option>
                                         <a-select-option value="2018">
-                                            2018
+                                            2019
                                         </a-select-option>
                                     </a-select>
                                 </a-form-item>
@@ -123,7 +123,7 @@ export default {
                                 '"马克思主义学院",' +
                                 '"继续教育学院"])',
                             'workload|500-10000': 100000,
-                            year: '@now(yyyy)',
+                            year: '@pick(["2021","2020","2019"])',
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
                             // arriveTime: '@now("yyyy-MM-dd")',

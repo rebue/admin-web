@@ -149,7 +149,7 @@ export default {
                                 '"中国博士后科学基金特别资助项目",' +
                                 '"国家社科基金重点预目",' +
                                 '"国家社科基金中华学术外译项目"])',
-                            year: '@now(yyyy)',
+                            year: '@pick(["2021","2020","2019"])',
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
                             // arriveTime: '@now("yyyy-MM-dd")',

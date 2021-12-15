@@ -70,6 +70,7 @@ import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
+import moment from 'moment';
 
 export default {
     name: 'log',
@@ -95,11 +96,26 @@ export default {
                             // level: '@pick(["一级","二级","三级"])',
                             operation:
                                 '@pick(["按指定每小时劳务费方式统计2019年度劳务费,每小时劳务费:1,任务内劳务费系数:0.7"' +
-                                ',"清除2018年度汇总记录","按分值方式统计2017年度工作量"])',
+                                ',"清除2020年度汇总记录","按分值方式统计2020年度工作量"])',
                             createTime: '@dateTime',
                         },
                     ],
                 });
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+
+                    dateTime = dateTime - time;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+
+                    mockList.list[i].createTime = moment(
+                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1 - year) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                    // mockList.list[i].workTime = moment((applyTime.getFullYear())+'-'+(applyTime.getMonth()+1-year)+'-'+(applyTime.getDate()+1)).format('YYYY-MM-DD');
+                }
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
                 const ro = {

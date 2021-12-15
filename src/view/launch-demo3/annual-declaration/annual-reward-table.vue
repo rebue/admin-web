@@ -77,6 +77,8 @@
 import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
+import moment from 'moment';
+
 export default {
     name: 'annual-reward-table',
     components: {
@@ -120,6 +122,20 @@ export default {
                     ],
                 });
                 // 数据列表在这里设置
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+
+                    dateTime = dateTime - time;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+
+                    mockList.list[i].date = moment(
+                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1 - year) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                }
                 const dataSource = mockList.list;
                 const ro = {
                     extra: {

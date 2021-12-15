@@ -81,13 +81,20 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-7': [
+                    'list|1-6': [
                         {
                             'id|+1': 10000000,
 
                             'totalWorkload|3002-55555': 55555,
-                            totalCostName: '@pick(["2021年费用汇总"])',
-                            year: '@now("yyyy")',
+                            'totalCostName|+1': [
+                                '2021年费用汇总',
+                                '2021年费用汇总',
+                                '2020年费用汇总',
+                                '2020年费用汇总',
+                                '2019年费用汇总',
+                                '2019年费用汇总',
+                            ],
+                            'year|+1': ['2021', '2021', '2020', '2020', '2019', '2019'],
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
                             // arriveTime: '@now("yyyy-MM-dd")',

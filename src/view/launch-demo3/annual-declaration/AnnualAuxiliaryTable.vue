@@ -75,6 +75,8 @@
 import CrudTable from '../../../component/rebue/CrudTable';
 import { racRealmApi } from '@/api/Api';
 import BaseManager from '@/component/rebue/BaseManager';
+import moment from 'moment';
+
 export default {
     name: 'AnnualAuxiliaryTable',
     components: {
@@ -168,6 +170,28 @@ export default {
                     ],
                 });
                 // 数据列表在这里设置
+                //设置时间
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+
+                    dateTime = dateTime - time;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+
+                    mockList.list[i].createTime = moment(
+                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1 - year) + '-' + applyTime.getDate()
+                    ).format('YYYY-MM-DD');
+                    mockList.list[i].workTime = moment(
+                        applyTime.getFullYear() +
+                            '-' +
+                            (applyTime.getMonth() + 1 - year) +
+                            '-' +
+                            (applyTime.getDate() + 1)
+                    ).format('YYYY-MM-DD');
+                }
                 const dataSource = mockList.list;
                 const ro = {
                     extra: {
@@ -206,28 +230,28 @@ export default {
             {
                 dataIndex: 'auxiliaryWork',
                 title: '辅助的工作',
-                width: 450,
+                width: 300,
             },
             {
                 dataIndex: 'workTime',
                 title: '工作日期',
                 ellipsis: true,
+                width: 150,
             },
             {
                 dataIndex: 'auxiliaryWorkload',
                 title: '辅助的工作量',
-                with: 80,
+                with: 200,
             },
             {
                 dataIndex: 'createTime',
                 title: '添加时间',
-                with: 180,
+                with: 150,
             },
             {
                 dataIndex: 'action',
                 title: '操作',
                 width: 150,
-
                 scopedSlots: { customRender: 'action' },
             },
         ];

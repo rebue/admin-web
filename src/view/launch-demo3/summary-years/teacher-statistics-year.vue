@@ -81,18 +81,18 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|5-20': [
+                    'list|1-6': [
                         {
                             'id|+1': 10000000,
 
                             'achievementNo|10001-99999': 99999,
-                            year: '@now(yyyy)',
+                            'year|+1': ['2021', '2021', '2020', '2020', '2019', '2019'],
 
                             author: '@cname',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             'workload|500-2000': 1500,
-                            status: '@pick(["专职教师", "非专职教师",])',
+                            'status|+1': ['专职教师', '非专职教师'],
                             department:
                                 '@pick(["党委办公室、校长办公室",' +
                                 '"党委组织部",' +

@@ -55,6 +55,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 import baseSearch from '../search/baseSearch';
 import OrgTree from '@/view/rac/rac-org/Tree';
 import log from '../result-allocation/log';
+import moment from 'moment';
 
 export default {
     name: 'JournalClassification',
@@ -100,6 +101,25 @@ export default {
                         },
                     ],
                 });
+                //时间格式
+                const date = new Date();
+                for (let i = 0; i < mockList.list.length; i++) {
+                    let dateTime = date.getTime() / 1000;
+
+                    const time = 86400 * Math.round(Math.random() * 15);
+
+                    dateTime = dateTime - time;
+                    const applyTime = new Date(dateTime * 1000);
+                    const year = Math.round(Math.random() * 2);
+
+                    //       myDate.getHours();       //获取当前小时数(0-23)
+                    // myDate.getMinutes();     //获取当前分钟数(0-59)
+                    // myDate.getSeconds()
+                    mockList.list[i].createTime = moment(
+                        applyTime.getFullYear() - year + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
+                    ).format('yyyy-MM-DD');
+                    // mockList.list[i].workTime = moment((applyTime.getFullYear())+'-'+(applyTime.getMonth()+1-year)+'-'+(applyTime.getDate()+1)).format('YYYY-MM-DD');
+                }
                 // 数据列表在这里设置
                 const dataSource = mockList.list;
                 const ro = {

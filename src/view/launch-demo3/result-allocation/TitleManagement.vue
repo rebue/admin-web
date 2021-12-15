@@ -68,12 +68,12 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|5-20': [
+                    'list|6': [
                         {
                             'id|+1': 10000000,
 
-                            post: '@pick(["教师","教师","教师","教师","行政主任","行政副主任",])',
-                            level: '@pick(["一级","二级","三级"])',
+                            'post|+1': ['教师', '教师', '教师', '教师', '行政主任', '行政副主任'],
+                            'level|+1': ['一级', '二级', '三级'],
                         },
                     ],
                 });

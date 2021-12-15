@@ -51,19 +51,19 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|5-20': [
+                    'list|1-2': [
                         {
                             'id|+1': 10000000,
 
                             'achievementNo|10001-99999': 99999,
-                            year: '@now(yyyy)',
+                            'year|+1': ['2021', '2021'],
 
                             author: '@cname',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
-                            'workload|1-500': 500,
-                            status: '@pick(["专职教师", "非专职教师",])',
-                            department: '@pick(["行政部", "教研部","计算机一班", "计算机二班","GC班"])',
+                            'workload|200-500': 500,
+                            'status|+1': ['专职教师', '非专职教师'],
+
                             //workloadTask: '@ctitle',
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             // flag: '@pick(["是", "否"])',
