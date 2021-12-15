@@ -114,7 +114,7 @@ export default {
                     'list|1-20': [
                         {
                             name: '@cname',
-                            year: '@date(yyyy)',
+                            year: '@pick(["2021","2020","2019","2018","2017"])',
                             department: '@pick(["教工部", "后勤部"])',
                             dept: '@integer(0,200)',
                             train: '@integer(0,200)',
