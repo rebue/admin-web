@@ -54,99 +54,29 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '2021-@date("MM-dd")',
+                            value2: '@pick(["一", "二", "三", "四", "五"])',
+                            value3: '@pick(["上午","下午"])',
+                            'value4|+1': [
+                                '传承和弘扬英家革命老区精神',
+                                '体验式教学主题: “不忘初心，牢记使命”主题教育',
+                                '专业技术人才成长',
+                                '决定中国革命命运的湘江战役',
+                                '教学总体布局',
+                            ],
+                            value5: '@cname()',
+                            value6: '@pick(["至诚园服务台","会议中心报告厅","201教室","304教室","105教室"])',
+                            value7: '@pick(["不评估"])',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-12',
-                        value2: '一',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-13',
-                        value2: '二 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-14',
-                        value2: '三',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-14',
-                        value2: '三 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-15',
-                        value2: '四',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-15',
-                        value2: '四 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-16',
-                        value2: '五',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                    {
-                        value1: '2921-10-16',
-                        value2: '五 ',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '不评估',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -158,6 +88,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -175,18 +106,18 @@ export default {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
-                width: 150,
+                width: 70,
             },
             {
                 dataIndex: 'value3',
                 title: '午别',
                 ellipsis: true,
-                width: 150,
+                width: 70,
             },
             {
                 dataIndex: 'value4',
                 title: '教学内容',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'value5',

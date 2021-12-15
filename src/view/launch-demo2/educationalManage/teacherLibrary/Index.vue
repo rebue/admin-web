@@ -60,8 +60,17 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|1-20': [
                         {
-                            value1: '@pick(["教学计划（方案）", "办班文件", "异地教学方案", "学院论坛方案"])',
-                            'value2|1-10': 10,
+                            'value1|+1': [
+                                '办班文件（调训通知，批示，协调函数等）',
+                                '教学计划（方案）',
+                                '课程（校院与异地）表',
+                                '培训班管理人员名单',
+                                '结业式方案',
+                                '现场教学方案',
+                                '开班（开学）、结业仪式方案',
+                                '结构化讨论方案',
+                            ],
+                            'value2|1-10': 0,
                             value3: '@pick(["教务处", "教学处"])',
                         },
                     ],
@@ -98,15 +107,18 @@ export default {
             {
                 dataIndex: 'value1',
                 title: '标题',
+                width: 300,
             },
             {
                 dataIndex: 'value2',
                 title: '数量',
+                width: 60,
             },
             {
                 dataIndex: 'value3',
                 title: '责任部门',
                 ellipsis: true,
+                width: 80,
             },
             {
                 dataIndex: 'action',
@@ -177,6 +189,7 @@ export default {
             showOrg: true,
             curOrgId: undefined,
             treeData,
+            context: false,
         };
     },
     mounted() {

@@ -13,17 +13,6 @@
                     :showKeywords="false"
                     :query="{ orgId: curOrgId }"
                 >
-                    <template #keywordsLeft>
-                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
-                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
-                            <a-select-option value="2021">
-                                2021
-                            </a-select-option>
-                            <a-select-option value="2020">
-                                2020
-                            </a-select-option>
-                        </a-select>
-                    </template>
                 </crud-table>
                 <div>
                     <a-modal
@@ -132,14 +121,19 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|1-20': [
                         {
-                            value1: '@pick(["理论教育（基本理论）","广西区情与实践"])',
+                            'value1|+1': [
+                                '《习近平新时代中国特色社会主义思想学习问答》导读',
+                                '深入学习领会习近平总书记在庆祝中国共产党成立100周年大会的讲话精神',
+                                '在推动边疆民族地区高质量发展上闯出新路子',
+                                '弘扬湘江战役精神，增强领导干部信仰，信念，信心',
+                            ],
                             'value2|1-10000': 10000,
                             value3: '@cname()',
-                            value4: '@pick(["2021年秋季学期", "2020年秋季学期","2019年秋季学期"])',
-                            'value5|1-10': 10,
+                            value4: '@pick(["2021年秋季学期"])',
+                            'value5|+1': 1,
                             value6: '',
-                            'value7|1-100': 100,
-                            value8: '@date("yyyy-MM-dd")',
+                            'value7|60-100': 0,
+                            value8: '2021-@date("MM-dd")',
                         },
                     ],
                 });

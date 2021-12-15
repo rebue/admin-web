@@ -52,13 +52,19 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|1-20': [
                         {
-                            value1: '@date("yyyy-MM-dd")',
+                            value1: '2021-@date("MM-dd")',
                             value2: '@pick(["一", "二", "三", "四", "五"])',
-                            value3: '@date("yyyy-MM-dd hh:mm:ss")',
-                            value4: '@date("yyyy-MM-dd hh:mm:ss")',
-                            value5: '@pick(["专业技术人才成长", "决定中国革命命运的湘江战役"])',
+                            'value3|+1': ['8:30', '15:00', '19:30', '17:00', '16:00'],
+                            'value4|+1': ['11:30', '17:30', '21:30', '19:00', '18:00'],
+                            'value5|+1': [
+                                '传承和弘扬英家革命老区精神',
+                                '体验式教学主题: “不忘初心，牢记使命”主题教育',
+                                '专业技术人才成长',
+                                '决定中国革命命运的湘江战役',
+                                '教学总体布局',
+                            ],
                             value6: '@cname()',
-                            value7: '',
+                            value7: '@integer(101,109)教室',
                             value8: '@cname()',
                             value9: '@cname()',
                             value10: '',
@@ -97,19 +103,19 @@ export default {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
-                width: 50,
+                width: 70,
             },
             {
                 dataIndex: 'value3',
                 title: '上课时间',
                 ellipsis: true,
-                width: 200,
+                width: 100,
             },
             {
                 dataIndex: 'value4',
                 title: '下课时间',
                 ellipsis: true,
-                width: 200,
+                width: 100,
             },
             {
                 dataIndex: 'value5',

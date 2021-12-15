@@ -54,99 +54,29 @@ export default {
         // 初始化数据start
         const page = function() {
             const p = new Promise(resolve => {
+                // const Mock = require('mockjs');
+                const mockList = require('mockjs').mock({
+                    // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
+                    'list|1-20': [
+                        {
+                            value1: '2021-@date("MM-dd")',
+                            value2: '@pick(["一", "二", "三", "四", "五"])',
+                            value3: '@pick(["上午","下午"])',
+                            'value4|+1': [
+                                '传承和弘扬英家革命老区精神',
+                                '体验式教学主题: “不忘初心，牢记使命”主题教育',
+                                '专业技术人才成长',
+                                '决定中国革命命运的湘江战役',
+                                '教学总体布局',
+                            ],
+                            value5: '@cname()',
+                            value6: '@pick(["至诚园服务台","会议中心报告厅","201教室","304教室","105教室"])',
+                            value7: '@cname()',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        value1: '2021-10-12',
-                        value2: '一',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-12',
-                        value2: '一',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-13',
-                        value2: '二',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-13',
-                        value2: '二',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-14',
-                        value2: '三',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-14',
-                        value2: '三',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-15',
-                        value2: '四',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-15',
-                        value2: '四',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-16',
-                        value2: '五',
-                        value3: '上午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                    {
-                        value1: '2021-10-16',
-                        value2: '五',
-                        value3: '下午',
-                        value4: '报到',
-                        value5: '学员工作处',
-                        value6: '至诚院服务台',
-                        value7: '',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {
@@ -158,6 +88,7 @@ export default {
                 };
                 resolve(ro);
             });
+
             return p;
         };
         this.api = {
@@ -175,18 +106,18 @@ export default {
                 dataIndex: 'value2',
                 title: '星期',
                 ellipsis: true,
-                width: 150,
+                width: 70,
             },
             {
                 dataIndex: 'value3',
                 title: '午别',
                 ellipsis: true,
-                width: 150,
+                width: 70,
             },
             {
                 dataIndex: 'value4',
                 title: '教学内容',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'value5',
@@ -217,22 +148,18 @@ export default {
                 key: '20183',
                 children: [
                     {
-                        title: '市领导授课专题',
+                        title: '自治区党委管理干部进修班（第29期）“推进改革开放构建发展新格局”研究专题',
                         key: '20183-1',
                     },
                     {
-                        title: '外聘专家教授授课专题',
+                        title: '县处级女干部进修班（第25期）',
                         key: '20183-2',
                     },
                     {
-                        title: '本校教师授课专题',
+                        title: '乡（镇）党委书记进惨班（第37期）“乡村振兴“研究专题',
                         key: '20183-3',
                     },
                 ],
-            },
-            {
-                title: '2020年秋季学期',
-                key: '20184',
             },
         ];
         this.tableCommands = [
@@ -322,6 +249,8 @@ export default {
     display: flex;
     height: 100%;
     margin: 4px 0;
+    width: 200px;
+    overflow: scroll;
     .table-divider {
         width: 20px;
         border-left: 1px solid #eee;
