@@ -19,9 +19,14 @@
                         </a-menu>
                         <a-button> 新增 <a-icon type="down" /> </a-button>
                     </a-dropdown>
-                    <div v-show="showOrg" class="table-left" style="margin-top:10px">
-                        <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
-                    </div>
+                    <a-row type="flex">
+                        <a-col :span="23">
+                            <div style="margin-right: 10px;overflow: auto" class="table-left">
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                    </a-row>
                 </a-col>
                 <a-col :span="1">
                     <a-divider type="vertical" style="height:100%"></a-divider>
@@ -65,10 +70,23 @@ export default {
         BaseManager,
         // eslint-disable-next-line vue/no-unused-components
         baseSearch,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '其他市厅级单位、省级学会主办',
+                key: '1',
+            },
+            {
+                title: '境内召开打国际级、国家级、区域性、省部党委和政府部门、党校（行政学院）、社科院主办',
+                key: '102',
+            },
+            {
+                title:
+                    '中央和国家部委、中国社会科学院、中共中央党校（国家行政学院）、中央三所干部学院主办，境外开展召开打国际级',
+                key: '103',
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -184,7 +202,7 @@ export default {
 
         return {
             columns,
-
+            treeData,
             formInline: {
                 user: '',
                 password: '',

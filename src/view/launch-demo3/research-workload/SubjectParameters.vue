@@ -2,11 +2,15 @@
     <base-manager>
         <template #managerCard>
             <a-row type="flex">
-                <a-col :span="5">
-                    <div v-show="showOrg" class="table-left">
-                        <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
-                        <div class="table-divider"></div>
-                    </div>
+                <a-col :span="4">
+                    <a-row type="flex">
+                        <a-col :span="23">
+                            <div style="margin-right: 10px;overflow: auto" class="table-left">
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                    </a-row>
                 </a-col>
                 <a-col :span="1">
                     <a-divider type="vertical" style="height:100%"></a-divider>
@@ -49,10 +53,58 @@ export default {
         BaseManager,
         // eslint-disable-next-line vue/no-unused-components
         baseSearch,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '所属系统',
+                key: '1',
+            },
+            {
+                title: '所在省市',
+                key: '102',
+            },
+            {
+                title: '担任导师',
+                key: '103',
+            },
+            {
+                title: '最后学位',
+                key: '104',
+            },
+            {
+                title: '研究专长',
+                key: '105',
+            },
+            {
+                title: '最后学历',
+                key: '106',
+            },
+            {
+                title: '专业职务',
+                key: '107',
+            },
+            {
+                title: '行政职务',
+                key: '108',
+            },
+            {
+                title: '研究分类',
+                key: '109',
+            },
+            {
+                title: '学科分类',
+                key: '110',
+            },
+            {
+                title: '预期成果',
+                key: '111',
+            },
+            {
+                title: '项目类别',
+                key: '112',
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -122,7 +174,7 @@ export default {
 
         return {
             columns,
-
+            treeData,
             formInline: {
                 user: '',
                 password: '',

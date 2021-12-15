@@ -63,10 +63,17 @@
                     </a-row>
                 </template>
                 <template #left>
-                    <div v-show="showOrg" class="table-left">
-                        <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
-                        <div class="table-divider"></div>
-                    </div>
+                    <a-row type="flex">
+                        <a-col :span="19">
+                            <div style="margin-right: 10px;overflow: auto" class="table-left">
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                    </a-row>
                 </template>
             </crud-table>
         </template>
@@ -89,10 +96,132 @@ export default {
         BaseManager,
         // eslint-disable-next-line vue/no-unused-components
         baseSearch,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '教职工',
+                key: '1',
+                children: [
+                    {
+                        title: '办公室',
+                        key: '101',
+                    },
+                    {
+                        title: '教务部',
+                        key: '102',
+                    },
+                    {
+                        title: '学员工作部',
+                        key: '103',
+                    },
+                    {
+                        title: '教学研究部',
+                        key: '104',
+                    },
+                    {
+                        title: '对外交流与开发部（东盟）',
+                        key: '105',
+                    },
+                    {
+                        title: '邓小平理论研究中心（科研管理）',
+                        key: '106',
+                    },
+                    {
+                        title: '财务后勤资产部',
+                        key: '107',
+                    },
+                    {
+                        title: '信息化建设与管理部（图书管）',
+                        key: '108',
+                    },
+                    {
+                        title: '机关党委（人力资源部）',
+                        key: '109',
+                    },
+                    {
+                        title: '学校领导',
+                        key: '110',
+                    },
+                ],
+            },
+            {
+                title: '培训学院',
+                key: '2',
+                children: [
+                    {
+                        title: '学员人数',
+                        key: '201',
+                    },
+                ],
+            },
+            {
+                title: '办公室',
+                key: '2',
+            },
+            {
+                title: '教务部',
+                key: '3',
+                //   children: [{
+                //       title: '学员人数',
+                //        key: '201',
+                //   },
+                // ]
+            },
+            {
+                title: '学员工作部',
+                key: '4',
+            },
+            {
+                title: '教学研究部',
+                key: '5',
+                //   children: [{
+                //       title: '学员人数',
+                //        key: '201',
+                //   },
+                // ]
+            },
+            {
+                title: '对外交流与培训开发部（东盟研究部）',
+                key: '6',
+            },
+            {
+                title: '邓小平理论研究中心（科研管理部）',
+                key: '7',
+            },
+            {
+                title: '财务后勤资产部',
+                key: '8',
+            },
+            {
+                title: '信息化建设与管理部（图书馆）',
+                key: '9',
+            },
+            {
+                title: '机关党委',
+                key: '10',
+            },
+            {
+                title: '柳州饭店团队',
+                key: '11',
+            },
+            {
+                title: '印象物业团队',
+                key: '12',
+            },
+            {
+                title: '信息化驻场团队',
+                key: '13',
+            },
+            {
+                title: '学员部',
+                key: '14',
+            },
+            {
+                title: 'CS',
+                key: '14',
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -216,7 +345,7 @@ export default {
 
         return {
             columns,
-
+            treeData,
             formInline: {
                 user: '',
                 password: '',

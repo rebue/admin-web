@@ -2,7 +2,7 @@
     <base-manager>
         <template #managerCard>
             <a-row type="flex">
-                <a-col :span="6">
+                <a-col :span="5">
                     <a-button class="btn">编辑</a-button>
                     <a-button class="btn">删除</a-button>
                     <a-dropdown>
@@ -19,9 +19,17 @@
                         </a-menu>
                         <a-button> 新增 <a-icon type="down" /> </a-button>
                     </a-dropdown>
-                    <div v-show="showOrg" class="table-left" style="margin-top:10px">
-                        <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
-                    </div>
+                    <a-row type="flex">
+                        <a-col :span="23">
+                            <div
+                                style="margin-left: -20px;margin-top: 10px;overflow: auto;border-top: 1px solid #000"
+                                class="table-left"
+                            >
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                    </a-row>
                 </a-col>
                 <a-col :span="1">
                     <a-divider type="vertical" style="height:100%"></a-divider>
@@ -66,10 +74,34 @@ export default {
         BaseManager,
         // eslint-disable-next-line vue/no-unused-components
         baseSearch,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
     data() {
+        const treeData = [
+            {
+                title: '测试的出版社',
+                key: '1',
+            },
+            {
+                title: '内部出版社',
+                key: '102',
+            },
+            {
+                title: '国家认定的著作',
+                key: '103',
+            },
+            {
+                title: '各部委主办的出版社和省级出版社',
+                key: '104',
+            },
+            {
+                title: '中央党校精品文库出版',
+                key: '105',
+            },
+            {
+                title: '权威出版社',
+                key: '106',
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -165,7 +197,7 @@ export default {
 
         return {
             columns,
-
+            treeData,
             formInline: {
                 user: '',
                 password: '',

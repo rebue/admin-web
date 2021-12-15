@@ -225,7 +225,7 @@ export default {
             {
                 dataIndex: 'author',
                 title: '作者',
-                with: 150,
+                width: 150,
             },
             {
                 dataIndex: 'auxiliaryWork',
@@ -241,12 +241,12 @@ export default {
             {
                 dataIndex: 'auxiliaryWorkload',
                 title: '辅助的工作量',
-                with: 200,
+                width: 300,
             },
             {
                 dataIndex: 'createTime',
                 title: '添加时间',
-                with: 150,
+                width: 150,
             },
             {
                 dataIndex: 'action',

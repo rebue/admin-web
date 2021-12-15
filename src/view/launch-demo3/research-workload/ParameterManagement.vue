@@ -3,13 +3,17 @@
         <template #managerCard>
             <a-row type="flex">
                 <a-col :span="5">
-                    <div v-show="showOrg" class="table-left">
-                        <org-tree ref="orgTree.platform" :show.sync="showOrg" realmId="platform" />
-                        <div class="table-divider"></div>
-                    </div>
-                </a-col>
-                <a-col :span="1">
-                    <a-divider type="vertical" style="height:100%"></a-divider>
+                    <a-row type="flex">
+                        <a-col :span="22">
+                            <div style="margin-right: 10px;overflow: auto" class="table-left">
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
+                                <div class="table-divider"></div>
+                            </div>
+                        </a-col>
+                        <a-col :span="1">
+                            <a-divider type="vertical" style="height:100%"></a-divider>
+                        </a-col>
+                    </a-row>
                 </a-col>
                 <a-col :span="18">
                     <crud-table
@@ -49,10 +53,51 @@ export default {
         BaseManager,
         // eslint-disable-next-line vue/no-unused-components
         baseSearch,
-        // eslint-disable-next-line no-undef
-        OrgTree,
     },
+
     data() {
+        const treeData = [
+            {
+                title: '转载参数类型',
+                key: '1',
+            },
+            {
+                title: '权限类型',
+                key: '102',
+            },
+            {
+                title: '课程类型参数',
+                key: '103',
+            },
+            {
+                title: '奖项名称',
+                key: '104',
+            },
+            {
+                title: '获奖级别参数',
+                key: '105',
+            },
+            {
+                title: '核心期刊参数类型',
+                key: '106',
+            },
+            {
+                title: '工作量系数参数',
+                key: '107',
+            },
+            {
+                title: '发表级别参数',
+                key: '108',
+            },
+            {
+                title: '成果形式参数',
+                key: '109',
+            },
+            {
+                title: '采纳参数类型',
+                key: '110',
+            },
+        ];
         const page = function() {
             const p = new Promise(resolve => {
                 // const Mock = require('mockjs');
@@ -129,7 +174,7 @@ export default {
 
         return {
             columns,
-
+            treeData,
             formInline: {
                 user: '',
                 password: '',
