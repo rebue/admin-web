@@ -122,6 +122,16 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '批量增加',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '盘点',
+            },
         ];
 
         this.tableActions = [

@@ -13,6 +13,20 @@
                         :defaultPagination="true"
                         :showKeywords="false"
                     >
+                        <template #keywordsLeft>
+                            <a-select
+                                default-value="未整理"
+                                style="width: 120px;margin-right: 10px;"
+                                @change="handleChange"
+                            >
+                                <a-select-option value="未整理">
+                                    未整理
+                                </a-select-option>
+                                <a-select-option value="已整理">
+                                    已整理
+                                </a-select-option>
+                            </a-select>
+                        </template>
                         <template #left>
                             <div v-show="showOrg" class="table-left">
                                 <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
@@ -214,6 +228,41 @@ export default {
                 icon: 'plus',
                 title: '新建',
                 onClick: this.handleAdd,
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '导入',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '导出',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '批量挂接',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '编号',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '复制',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '转移',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '提交',
             },
         ];
 

@@ -200,6 +200,41 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '导入',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '导出',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '批量挂接',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '编号',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '复制',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '转移',
+            },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '提交',
+            },
         ];
 
         this.tableActions = [

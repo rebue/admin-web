@@ -12,6 +12,35 @@
                     :showKeywords="true"
                     :defaultPagination="true"
                 >
+                    <template #keywordsLeft>
+                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
+                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
+                            <a-select-option value="2021">
+                                2021
+                            </a-select-option>
+                            <a-select-option value="2020">
+                                2020
+                            </a-select-option>
+                        </a-select>
+                        <label style="width: 100px; line-height: 30px; text-align: right;">部门选择：</label>
+                        <a-select default-value="2021" style="width: 120px" @change="handleChange">
+                            <a-select-option value="2021">
+                                学工部
+                            </a-select-option>
+                            <a-select-option value="2020">
+                                教务部
+                            </a-select-option>
+                        </a-select>
+                        <label style="width: 100px; line-height: 30px; text-align: right;">班级选择：</label>
+                        <a-select default-value="2021" style="width: 120px;margin-right: 20px;" @change="handleChange">
+                            <a-select-option value="2021">
+                                1班
+                            </a-select-option>
+                            <a-select-option value="2020">
+                                2班
+                            </a-select-option>
+                        </a-select>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>

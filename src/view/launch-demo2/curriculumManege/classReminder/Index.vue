@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="true"
-                    :showKeywords="false"
+                    :showKeywords="true"
                     :query="{ orgId: curOrgId }"
                 >
                 </crud-table>

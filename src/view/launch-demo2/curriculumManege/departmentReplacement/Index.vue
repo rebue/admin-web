@@ -10,7 +10,7 @@
                     :api="api"
                     :scrollX="600"
                     :defaultPagination="true"
-                    :showKeywords="false"
+                    :showKeywords="true"
                     :query="{ orgId: curOrgId }"
                 >
                 </crud-table>
@@ -84,12 +84,11 @@ export default {
         ];
 
         this.tableCommands = [
-            // {
-            //     buttonType: 'primary',
-            //     icon: 'plus',
-            //     title: '新建',
-            //     onClick: this.handleAdd,
-            // },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '部门领导',
+            },
         ];
 
         this.tableActions = [

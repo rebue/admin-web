@@ -12,6 +12,17 @@
                     :showKeywords="true"
                     :defaultPagination="true"
                 >
+                    <template #keywordsLeft>
+                        <label style="width: 100px; line-height: 30px; text-align: right;">选择学期：</label>
+                        <a-select default-value="2021" style="width: 120px;margin-right: 10px;" @change="handleChange">
+                            <a-select-option value="2021">
+                                2021
+                            </a-select-option>
+                            <a-select-option value="2020">
+                                2020
+                            </a-select-option>
+                        </a-select>
+                    </template>
                 </crud-table>
             </template>
         </base-manager>

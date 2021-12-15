@@ -185,6 +185,11 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
+            {
+                buttonType: 'primary',
+                icon: 'plus',
+                title: '排班情况',
+            },
         ];
 
         this.tableActions = [
