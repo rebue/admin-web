@@ -10,7 +10,8 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
+                        :showKeywords="false"
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
@@ -52,7 +53,7 @@ export default {
                             value2: '@pick(["DALX","JSJMJ"])',
                             value3: '@pick(["2020年","2021年"])',
                             value4: '',
-                            value5: '',
+                            value5: '@pick(["分类号大于1或保管期大于3","分类号大于1或保管期等于永久"])',
                             value6: '@pick(["基建档案"])',
                             value7: '@pick(["第一版","第二版"])',
                             value8: '@pick(["第一版","第二版"])',
@@ -106,7 +107,8 @@ export default {
                 dataIndex: 'value5',
                 align: 'center',
                 title: '保管期限',
-                width: 150,
+                ellipsis: true,
+                width: 200,
             },
             {
                 dataIndex: 'value6',

@@ -10,7 +10,8 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
+                        :showKeywords="false"
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
@@ -48,7 +49,7 @@ export default {
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
                     'list|1-20': [
                         {
-                            value1: '@pick(["企业通用分裂"])',
+                            value1: '@pick(["企业通用分类"])',
                             value2: '@pick(["BFL"])',
                             value3: '@pick(["永久"])',
                             'value4|1-10': 1,

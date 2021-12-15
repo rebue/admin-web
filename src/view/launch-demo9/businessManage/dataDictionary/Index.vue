@@ -10,7 +10,8 @@
                         :columns="columns"
                         :api="api"
                         :scrollX="600"
-                        :defaultPagination="false"
+                        :defaultPagination="true"
+                        :showKeywords="false"
                     >
                         <template #left>
                             <div v-show="showOrg" class="table-left">
@@ -50,7 +51,7 @@ export default {
                         {
                             value1: '@pick(["档案类型","计算机密级","保管期限","开发状态"])',
                             value2: '@pick(["DALX","JSJMJ","BGQX","KFZT"])',
-                            value3: '',
+                            'value3|1-10': 1,
                             value4: '',
                         },
                     ],

@@ -9,7 +9,8 @@
                     :columns="columns"
                     :api="api"
                     :scrollX="600"
-                    :defaultPagination="false"
+                    :defaultPagination="true"
+                    :showKeywords="false"
                 >
                     <template #left>
                         <div v-show="showOrg" class="table-left">
