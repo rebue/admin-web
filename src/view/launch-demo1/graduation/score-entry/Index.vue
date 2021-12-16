@@ -6,8 +6,7 @@
                     <a-row type="flex">
                         <a-col :span="5">
                             <div class="table-left">
-                                <a-tree class="ant-card-body" :defaultExpandAll="true" :tree-data="treeData" />
-                                <div class="table-divider"></div>
+                                <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                             </div>
                         </a-col>
                         <a-col :span="1">

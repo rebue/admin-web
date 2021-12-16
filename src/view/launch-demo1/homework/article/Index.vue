@@ -40,7 +40,7 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             'number|+1': 10000,
                             articleTitle: '@csentence(5,10)',
@@ -92,7 +92,7 @@ export default {
             {
                 dataIndex: 'time',
                 title: '时间',
-                width: 80,
+                width: 150,
                 ellipsis: true,
             },
             {

@@ -14,6 +14,7 @@
                             <a-tabs style="left: 10px" :activeKey="curRealmId" @change="handleRealmChanged">
                                 <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                                     <crud-table
+                                        v-if="curRealmId == 'count'"
                                         :ref="`crudTable.${realm.id}`"
                                         :commands="tableCommands"
                                         :actions="tableActions"
@@ -281,10 +282,14 @@ export default {
 
         return {
             loading: false,
-            curRealmId: '',
+            curRealmId: 'count',
             manageMenusFormVisible: false,
             curApp: {},
-            realms: [],
+            realms: [
+                { id: 'manage', name: '评委管理', remark: '十佳文章管理' },
+                { id: 'count', name: '评委数量统计', remark: '十佳文章统计' },
+                { id: 'number', name: '评分要素统计', remark: '十佳文章统计' },
+            ],
             columns,
             showOrg: false,
             treeData,
@@ -297,7 +302,6 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
     },
     methods: {
         handleOrgMenuClick() {
@@ -326,21 +330,7 @@ export default {
         handleEnableVisibleChange(visible, record) {
             this.$set(record, 'enabledVisible', visible);
         },
-        refreshData() {
-            this.loading = true;
-            racRealmApi
-                .listAll()
-                .then(ro => {
-                    this.realms = [
-                        { id: 'manage', name: '评委管理', remark: '十佳文章管理' },
-                        { id: 'count', name: '评委数量统计', remark: '十佳文章统计' },
-                        { id: 'number', name: '评分要素统计', remark: '十佳文章统计' },
-                    ];
-                    console.log('@' + JSON.stringify(this.realms));
-                    this.curRealmId = this.realms[0].id;
-                })
-                .finally(() => (this.loading = false));
-        },
+
         /**
          * 刷新表格数据
          */

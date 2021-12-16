@@ -13,7 +13,7 @@
                     <a-form-model-item label="班级">
                         <a-select default-value="lucy">
                             <a-select-option value="lucy">
-                                01中青年干部培训一班（第45期）
+                                中青年干部培训一班（第45期）
                             </a-select-option>
                         </a-select>
                     </a-form-model-item>
@@ -59,7 +59,11 @@
                     <a-button class="btn">提交</a-button>
                     <a-button class="btn">打印</a-button>
                     <a-button class="btn">导出</a-button>
+                    <span>(注:连续出现刷卡缺勤10次以上系统认为异常，请联系学员进行卡号登记工作)</span>
                 </div>
+                <h2 style="margin-top:20px;margin-bottom:0">
+                    2021年秋季 中青年干部培训一班（第45期） 学员自动查询月份考勤登记表
+                </h2>
                 <crud-table
                     ref="crudTable"
                     :showKeywords="false"

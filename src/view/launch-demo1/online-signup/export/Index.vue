@@ -225,7 +225,15 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
+                title: '打印查看',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                type: 'confirm',
                 title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
                 onClick: () => {
                     /**/
                 },

@@ -201,7 +201,7 @@ export default {
             {
                 dataIndex: 'className',
                 title: '班级名称',
-                width: 200,
+                width: 220,
             },
             {
                 dataIndex: 'name',
@@ -223,7 +223,7 @@ export default {
             {
                 dataIndex: 'semesterNo',
                 title: '学期编号',
-                width: 120,
+                width: 220,
                 ellipsis: true,
             },
 
@@ -239,9 +239,10 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '保存',
-                onClick: this.handleAdd,
+                onClick: () => {
+                    /**/
+                },
             },
         ];
 
@@ -287,7 +288,6 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
     },
     methods: {
         handleOrgMenuClick() {

@@ -3,6 +3,15 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
+                    <div>
+                        <a-button class="btn">刷新</a-button>
+                        <a-button class="btn">编辑</a-button>
+                        <a-button class="btn">复制</a-button>
+                        <a-button class="btn">权限管理</a-button>
+                        <a-button class="btn">删除</a-button>
+                        <a-button class="btn">新增评分项目</a-button>
+                    </div>
+                    <a-divider />
                     <a-row type="flex">
                         <a-col :span="5" style="overflow: auto">
                             <a-tree :defaultExpandAll="true" :tree-data="treeData" />
@@ -21,6 +30,7 @@
                                 :scrollX="600"
                                 :defaultPagination="true"
                                 :commands="tableCommands"
+                                :rowSelection="{}"
                             >
                             </crud-table>
                         </a-col>
@@ -85,7 +95,7 @@ export default {
             {
                 dataIndex: 'content',
                 title: '分项及内容',
-                width: 200,
+                width: 300,
                 ellipsis: true,
             },
             {
@@ -103,36 +113,12 @@ export default {
             {
                 dataIndex: 'use',
                 title: '是否使用',
-                width: 60,
+                width: 150,
                 ellipsis: true,
             },
         ];
 
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '编辑',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '复制',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '权限管理',
-                onClick: () => {
-                    /**/
-                },
-            },
             {
                 buttonType: 'primary',
                 // icon: 'plus',
@@ -144,7 +130,15 @@ export default {
             {
                 buttonType: 'primary',
                 // icon: 'plus',
-                title: '新增评分项目',
+                title: '编辑',
+                onClick: () => {
+                    /**/
+                },
+            },
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '新增',
                 onClick: () => {
                     /**/
                 },
@@ -236,5 +230,8 @@ export default {
         border-left: 1px solid #eee;
         margin-left: 10px;
     }
+}
+.btn {
+    margin-right: 10px;
 }
 </style>

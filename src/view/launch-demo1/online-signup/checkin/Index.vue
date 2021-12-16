@@ -12,7 +12,7 @@
                     <a-col :span="18">
                         <crud-table
                             ref="crudTable"
-                            :showKeywords="false"
+                            :showKeywords="true"
                             :commands="tableCommands"
                             :actions="tableActions"
                             :columns="columns"
@@ -247,7 +247,7 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '查看',
+                title: '查看打印',
                 onClick: () => {
                     /**/
                 },

@@ -36,7 +36,12 @@
                 <a-row type="flex">
                     <a-col :span="5">
                         <div class="table-left">
-                            <a-tree :defaultExpandAll="true" show-icon :tree-data="treeData">
+                            <a-tree
+                                :defaultExpandAll="true"
+                                show-icon
+                                :tree-data="treeData"
+                                :default-selected-keys="['101']"
+                            >
                                 <a-icon slot="team" type="team" />
                             </a-tree>
                         </div>
@@ -171,9 +176,11 @@ export default {
                     'list|20': [
                         {
                             activate: '报到',
-                            'student|+1': treeData[0].children.map(v => {
-                                return v.title;
-                            }),
+                            'student|+1':
+                                '于磊' ||
+                                treeData[0].children.map(v => {
+                                    return v.title;
+                                }),
                             // inTime: '@date(yyyy-MM-dd hh:mm:ss)',
                             // outTime: '@date(yyyy-MM-dd hh:mm:ss)',
                             inTime:
@@ -287,6 +294,7 @@ export default {
         return {
             columns,
             treeData,
+            checkedKeys: [],
             curOrgId: undefined,
         };
     },

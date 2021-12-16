@@ -18,7 +18,7 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到  个元素
-                    'list|1-8': [
+                    'list|8': [
                         {
                             demo: '党性教育"制高点”(30分)',
                             specific: '@cword(10,15)',

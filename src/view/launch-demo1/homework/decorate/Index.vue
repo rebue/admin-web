@@ -41,7 +41,7 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             'homework|+1': 10000,
                             homeworkName: '@csentence(4,9)',
@@ -99,7 +99,7 @@ export default {
             {
                 dataIndex: 'time',
                 title: '时间',
-                width: 90,
+                width: 150,
                 ellipsis: true,
             },
             {
@@ -119,18 +119,19 @@ export default {
                     /**/
                 },
             },
+        ];
+        this.tableActions = [
             {
-                buttonType: 'primary',
-                // icon: 'plus',
+                type: 'a',
                 title: '编辑',
                 onClick: () => {
                     /**/
                 },
             },
             {
-                buttonType: 'primary',
-                // icon: 'plus',
+                type: 'confirm',
                 title: '删除',
+                confirmTitle: '你确定要删除本条记录吗?',
                 onClick: () => {
                     /**/
                 },

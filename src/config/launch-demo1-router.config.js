@@ -574,7 +574,7 @@ const constantRouters = {
                     name: 'launch-demo1-teacher-system-member',
                     component: () => import('@/view/launch-demo1/teacher-system/member/Index.vue'),
                     hidden: true,
-                    meta: { title: '组员查询', keepAlive: true, icon: 'global' },
+                    meta: { title: '组织员查询', keepAlive: true, icon: 'global' },
                 },
             ],
         },
@@ -723,7 +723,7 @@ const constantRouters = {
                     component: () => import('@/view/launch-demo1/graduation/assess-conf/Index.vue'),
                     hidden: true,
                     meta: {
-                        title: '量化考核配置',
+                        title: '量化考核配置管理',
                         keepAlive: true,
                         icon: 'global',
                     },
@@ -842,7 +842,7 @@ const constantRouters = {
                     component: () => import('@/view/launch-demo1/student-system/basic-function/Student.vue'),
                     hidden: true,
                     meta: {
-                        title: '学籍信息',
+                        title: '学员档案',
                         keepAlive: true,
                         icon: 'global',
                     },
@@ -879,7 +879,7 @@ const constantRouters = {
             component: () => import('@/view/launch-demo1/student-system/course-selection/curriculum.vue'),
             hidden: true,
             meta: {
-                title: '网上选课',
+                title: '网上选修课',
                 keepAlive: true,
                 icon: 'global',
             },
@@ -891,7 +891,7 @@ const constantRouters = {
             //
             hidden: true,
             meta: {
-                title: '评委入口',
+                title: '十佳评委入口',
                 keepAlive: true,
                 icon: 'global',
             },

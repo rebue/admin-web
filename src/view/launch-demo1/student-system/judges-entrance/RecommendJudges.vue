@@ -2,38 +2,38 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :defaultPagination="true"
-                    :rowSelection="{}"
-                >
-                    <template #left>
-                        <div
-                            style="height: 100%;width: 200px;margin-top: 50px;border: 1px solid #000;margin-right: 10px; border-bottom:none; "
+                <a-row type="flex" :gutter="20">
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :defaultPagination="true"
+                            :rowSelection="{}"
                         >
-                            <div style="height: 20px;background-color: #e8e8e8">
-                                <center>
-                                    <div style="margin: 0 auto;">
-                                        系统帮助
-                                    </div>
-                                </center>
-                                <span>
-                                    请点击评分要素列中的单元格，设置评委的评分要素
-                                    <br />
-                                    本次评比请推荐5个评委
-                                    <br />
-                                    推荐在“观点新颖、有独特的的见解’ 此项安排俩名评委
-                                </span>
-                            </div>
+                        </crud-table>
+                    </a-col>
+                    <a-col :span="6" style="margin-top: 50px;border: 1px solid #ededed;">
+                        <div style="height: 20px;background-color: #e8e8e8">
+                            <center>
+                                <div style="margin: 0 auto;">
+                                    系统帮助
+                                </div>
+                            </center>
+                            <span>
+                                请点击评分要素列中的单元格，设置评委的评分要素
+                                <br />
+                                本次评比请推荐5个评委
+                                <br />
+                                推荐在“观点新颖、有独特的的见解’ 此项安排俩名评委
+                            </span>
                         </div>
-                    </template>
-                </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->

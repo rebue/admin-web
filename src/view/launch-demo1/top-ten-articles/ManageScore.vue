@@ -13,6 +13,7 @@
                         <a-tabs style="left: 10px" :activeKey="curRealmId" @change="handleRealmChanged">
                             <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                                 <crud-table
+                                    v-if="curRealmId == 'count'"
                                     :ref="`crudTable.${realm.id}`"
                                     :commands="tableCommands"
                                     :actions="tableActions"
@@ -244,9 +245,10 @@ export default {
         this.tableCommands = [
             {
                 buttonType: 'primary',
-                icon: 'plus',
                 title: '查看',
-                onClick: this.handleAdd,
+                onClick: () => {
+                    /**/
+                },
             },
         ];
 
@@ -276,10 +278,15 @@ export default {
 
         return {
             loading: false,
-            curRealmId: '',
+            curRealmId: 'count',
             manageMenusFormVisible: false,
             curApp: {},
-            realms: [],
+            realms: [
+                { id: 'manage', name: '评委评分', remark: '十佳文章管理' },
+                { id: 'count', name: '文章评分', remark: '十佳文章统计' },
+                { id: '1', name: '评分统计', remark: '十佳文章统计' },
+                { id: '2', name: '评比结果', remark: '十佳文章统计' },
+            ],
             columns,
             showOrg: false,
             treeData,
@@ -292,7 +299,6 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
     },
     methods: {
         handleOrgMenuClick() {
@@ -321,22 +327,7 @@ export default {
         handleEnableVisibleChange(visible, record) {
             this.$set(record, 'enabledVisible', visible);
         },
-        refreshData() {
-            this.loading = true;
-            racRealmApi
-                .listAll()
-                .then(ro => {
-                    this.realms = [
-                        { id: 'manage', name: '评委评分', remark: '十佳文章管理' },
-                        { id: 'count', name: '文章评分', remark: '十佳文章统计' },
-                        { id: '1', name: '评分统计', remark: '十佳文章统计' },
-                        { id: '2', name: '评比结果', remark: '十佳文章统计' },
-                    ];
 
-                    this.curRealmId = this.realms[0].id;
-                })
-                .finally(() => (this.loading = false));
-        },
         /**
          * 刷新表格数据
          */

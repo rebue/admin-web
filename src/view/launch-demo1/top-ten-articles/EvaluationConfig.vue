@@ -7,18 +7,9 @@
                         <tr>
                             <td class="td1">月十佳文章学习委员组</td>
                             <td class="td2">
-                                <a-select default-value="lucy" @change="handleChange">
-                                    <a-select-option value="jack">
-                                        Jack
-                                    </a-select-option>
+                                <a-select default-value="lucy">
                                     <a-select-option value="lucy">
-                                        Lucy
-                                    </a-select-option>
-                                    <a-select-option value="disabled" disabled>
-                                        Disabled
-                                    </a-select-option>
-                                    <a-select-option value="Yiminghe">
-                                        yiminghe
+                                        学习委员组
                                     </a-select-option>
                                 </a-select>
                             </td>
@@ -27,18 +18,9 @@
                         <tr>
                             <td class="td1">月十佳文章评委组</td>
                             <td class="td2">
-                                <a-select default-value="lucy" @change="handleChange">
-                                    <a-select-option value="jack">
-                                        Jack
-                                    </a-select-option>
+                                <a-select default-value="lucy">
                                     <a-select-option value="lucy">
-                                        Lucy
-                                    </a-select-option>
-                                    <a-select-option value="disabled" disabled>
-                                        Disabled
-                                    </a-select-option>
-                                    <a-select-option value="Yiminghe">
-                                        yiminghe
+                                        评委组
                                     </a-select-option>
                                 </a-select>
                             </td>
@@ -47,18 +29,9 @@
                         <tr>
                             <td class="td1">查看学员</td>
                             <td class="td2">
-                                <a-select default-value="lucy" @change="handleChange">
-                                    <a-select-option value="jack">
-                                        Jack
-                                    </a-select-option>
+                                <a-select default-value="lucy">
                                     <a-select-option value="lucy">
-                                        Lucy
-                                    </a-select-option>
-                                    <a-select-option value="disabled" disabled>
-                                        Disabled
-                                    </a-select-option>
-                                    <a-select-option value="Yiminghe">
-                                        yiminghe
+                                        学员组
                                     </a-select-option>
                                 </a-select>
                             </td>

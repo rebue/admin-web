@@ -15,14 +15,14 @@
                     <template #commands>
                         <a-form-model layout="inline">
                             <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleTermChange">
+                                <a-select default-value="lucy" style="width: 220px" @change="handleTermChange">
                                     <a-select-option value="lucy">
                                         2021年秋季学期
                                     </a-select-option>
                                 </a-select>
                             </a-form-model-item>
                             <a-form-model-item>
-                                <a-select default-value="lucy" style="width: 120px" @change="handleClassChange">
+                                <a-select default-value="lucy" style="width: 220px" @change="handleClassChange">
                                     <a-select-option value="lucy">
                                         全区党校（行政院校）系统师资培训班
                                     </a-select-option>

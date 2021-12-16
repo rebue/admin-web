@@ -5,6 +5,7 @@
                 <template #managerCard>
                     <crud-table
                         ref="crudTable"
+                        :commands="tableCommands"
                         :showKeywords="true"
                         :columns="columns"
                         :api="api"
@@ -100,6 +101,16 @@ export default {
                 title: '描述',
                 width: 400,
                 ellipsis: true,
+            },
+        ];
+        this.tableCommands = [
+            {
+                buttonType: 'primary',
+                // icon: 'plus',
+                title: '查看',
+                onClick: () => {
+                    /**/
+                },
             },
         ];
 

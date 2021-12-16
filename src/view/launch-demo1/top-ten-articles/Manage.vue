@@ -14,6 +14,7 @@
                             <a-tabs style="left: 10px" :activeKey="curRealmId" @change="handleRealmChanged">
                                 <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
                                     <crud-table
+                                        v-if="curRealmId == 'manage'"
                                         :ref="`crudTable.${realm.id}`"
                                         :commands="tableCommands"
                                         :actions="tableActions"
@@ -239,67 +240,55 @@ export default {
                 title: '修改时间',
                 width: 180,
             },
-
-            // {
-            //     dataIndex: 'action',
-            //     title: '操作',
-            //     width: 200,
-            //     fixed: 'right',
-            //     scopedSlots: { customRender: 'action' },
-            // },
+            {
+                dataIndex: 'action',
+                title: '操作',
+                width: 150,
+                scopedSlots: { customRender: 'action' },
+            },
         ];
 
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '新建',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '查看',
-                onClick: this.handleAdd,
-            },
-            {
-                buttonType: 'primary',
-                icon: 'plus',
-                title: '审核',
-                onClick: this.handleAdd,
-            },
+            // {
+            //     buttonType: 'primary',
+            //     title: '新建',
+            //     onClick: ()=>{/**/},
+            // },
         ];
 
         this.tableActions = [
             {
                 type: 'a',
                 title: '编辑',
-                onClick: record => this.handleEdit(record),
-            },
-            {
-                type: 'confirm',
-                title: '删除',
-                confirmTitle: '你确定要删除本条记录吗?',
-                onClick: record => this.handleDel(record),
+                onClick: () => {
+                    /**/
+                },
             },
             {
                 type: 'a',
-                title: '菜单',
-                onClick: record => this.handleMenus(record),
+                title: '查看',
+                onClick: () => {
+                    /**/
+                },
             },
             {
                 type: 'a',
-                title: '认证',
-                onClick: record => this.handleAuth(record),
+                title: '审核',
+                onClick: () => {
+                    /**/
+                },
             },
         ];
 
         return {
             loading: false,
-            curRealmId: '',
+            curRealmId: 'manage',
             manageMenusFormVisible: false,
             curApp: {},
-            realms: [],
+            realms: [
+                { id: 'manage', name: '文章管理', remark: '十佳文章管理' },
+                { id: 'count', name: '文章统计', remark: '十佳文章统计' },
+            ],
             columns,
             showOrg: false,
             treeData,
@@ -312,7 +301,6 @@ export default {
     },
     mounted() {
         this.editForm = this.$refs.editForm;
-        this.refreshData();
     },
     methods: {
         handleOrgMenuClick() {
@@ -341,20 +329,7 @@ export default {
         handleEnableVisibleChange(visible, record) {
             this.$set(record, 'enabledVisible', visible);
         },
-        refreshData() {
-            this.loading = true;
-            racRealmApi
-                .listAll()
-                .then(ro => {
-                    this.realms = [
-                        { id: 'manage', name: '文章管理', remark: '十佳文章管理' },
-                        { id: 'count', name: '文章统计', remark: '十佳文章统计' },
-                    ];
-                    console.log('@' + JSON.stringify(this.realms));
-                    this.curRealmId = this.realms[0].id;
-                })
-                .finally(() => (this.loading = false));
-        },
+
         /**
          * 刷新表格数据
          */

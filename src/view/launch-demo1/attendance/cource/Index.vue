@@ -139,7 +139,7 @@ export default {
         this.tableActions = [
             {
                 type: 'a',
-                title: '查看考勤',
+                title: '查看考勤记录',
                 onClick: () => {
                     /**/
                 },

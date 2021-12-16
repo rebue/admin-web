@@ -2,34 +2,34 @@
     <fragment>
         <base-manager ref="baseManager">
             <template #managerCard>
-                <crud-table
-                    ref="crudTable"
-                    :showKeywords="false"
-                    :commands="tableCommands"
-                    :actions="tableActions"
-                    :columns="columns"
-                    :api="api"
-                    :scrollX="600"
-                    :rowSelection="{}"
-                    :defaultPagination="true"
-                >
-                    <template #left>
-                        <div
-                            style="height: 100%;width: 200px;margin-top: 50px;border: 1px solid #000;margin-right: 10px; border-bottom:none; "
+                <a-row type="flex" :gutter="20">
+                    <a-col :span="18">
+                        <crud-table
+                            ref="crudTable"
+                            :showKeywords="false"
+                            :commands="tableCommands"
+                            :actions="tableActions"
+                            :columns="columns"
+                            :api="api"
+                            :scrollX="600"
+                            :rowSelection="{}"
+                            :defaultPagination="true"
                         >
-                            <div style="height: 20px;background-color: #e8e8e8">
-                                <center>
-                                    <div style="margin: 0 auto;">
-                                        系统帮助
-                                    </div>
-                                </center>
-                                <span>
-                                    本次评比请推荐5篇文章
-                                </span>
-                            </div>
+                        </crud-table>
+                    </a-col>
+                    <a-col :span="6" style="margin-top: 50px;border: 1px solid #000">
+                        <div style="height: 20px;background-color: #e8e8e8">
+                            <center>
+                                <div style="margin: 0 auto;">
+                                    系统帮助
+                                </div>
+                            </center>
+                            <span>
+                                本次评比请推荐5篇文章
+                            </span>
                         </div>
-                    </template>
-                </crud-table>
+                    </a-col>
+                </a-row>
             </template>
         </base-manager>
         <!-- <edit-form ref="editForm" @close="handleEditFormClose" /> -->
@@ -153,28 +153,20 @@ export default {
         ];
 
         this.tableCommands = [
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '添加',
-                onClick: () => {
-                    /**/
-                },
-            },
-            {
-                buttonType: 'primary',
-                // icon: 'plus',
-                title: '查看',
-                onClick: () => {
-                    /**/
-                },
-            },
+            // {
+            //     buttonType: 'primary',
+            //     // icon: 'plus',
+            //     title: '查看',
+            //     onClick: () => {
+            //         /**/
+            //     },
+            // },
         ];
 
         this.tableActions = [
             {
                 type: 'a',
-                title: '删除',
+                title: '查看',
                 onClick: () => {
                     /**/
                 },

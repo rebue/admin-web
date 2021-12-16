@@ -3,6 +3,7 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
+                    <div><a-button>查看</a-button></div>
                     <crud-table
                         ref="crudTable"
                         :showKeywords="false"
@@ -10,18 +11,19 @@
                         :api="api"
                         :scrollX="600"
                         :defaultPagination="true"
+                        :rowSelection="{}"
                     >
                         <template #commands>
                             <a-form-model layout="inline">
                                 <a-form-model-item>
-                                    <a-select default-value="lucy" style="width: 120px">
+                                    <a-select default-value="lucy" style="width: 150px">
                                         <a-select-option value="lucy">
                                             2021年秋季学期
                                         </a-select-option>
                                     </a-select>
                                 </a-form-model-item>
                                 <a-form-model-item>
-                                    <a-select default-value="lucy" style="width: 120px">
+                                    <a-select default-value="lucy" style="width: 250px">
                                         <a-select-option value="lucy">
                                             全区党校（行政院长）系统咨询
                                         </a-select-option>
@@ -104,7 +106,7 @@ export default {
             {
                 dataIndex: 'grade',
                 title: '班级',
-                width: 200,
+                width: 300,
                 ellipsis: true,
             },
             {
@@ -116,13 +118,13 @@ export default {
             {
                 dataIndex: 'report',
                 title: '咨政报告评分',
-                width: 60,
+                width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'graduation',
                 title: '毕业论文评分',
-                width: 60,
+                width: 150,
                 ellipsis: true,
             },
         ];
