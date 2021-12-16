@@ -221,13 +221,6 @@ export default {
                 width: 150,
                 ellipsis: true,
             },
-
-            {
-                dataIndex: 'action',
-                title: '操作',
-                width: 200,
-                scopedSlots: { customRender: 'action' },
-            },
         ];
 
         this.tableActions = [

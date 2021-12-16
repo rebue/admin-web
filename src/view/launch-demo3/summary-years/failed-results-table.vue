@@ -30,7 +30,7 @@
                                     </a-select>
                                 </a-form-model-item>
                                 <a-form-model-item label="成果名称">
-                                    <a-input v-model="formInline.achievementName"> </a-input>
+                                    <a-input style="min-width: 195px;" v-model="formInline.achievementName"> </a-input>
                                 </a-form-model-item>
                                 <a-form-model-item label="起始时间">
                                     <a-date-picker
@@ -53,7 +53,13 @@
                                     />
                                 </a-form-model-item>
                                 <a-form-model-item label="审核状态">
-                                    <a-input v-model="formInline.status" type="text" placeholder=""> </a-input>
+                                    <a-input
+                                        style="min-width: 195px;"
+                                        v-model="formInline.status"
+                                        type="text"
+                                        placeholder=""
+                                    >
+                                    </a-input>
                                 </a-form-model-item>
                             </a-form-model>
                         </a-col>

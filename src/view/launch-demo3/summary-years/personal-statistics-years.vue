@@ -61,7 +61,7 @@
                                 </a-form-model-item>
                             </a-form-model>
                         </a-col>
-                        <a-col style="margin-top: 10px">
+                        <a-col style="margin-top: 5px">
                             <a-button style="line-height: 10px">查找</a-button>
                             <a-button style="margin-left: 10px">导出</a-button>
                         </a-col>
