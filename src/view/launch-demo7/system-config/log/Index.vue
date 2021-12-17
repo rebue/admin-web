@@ -41,12 +41,20 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             people: '@cname',
-                            time: '@date(yyyy-mm-dd hh:mm)',
+                            time: '@date(2021-MM-dd hh:mm)',
                             status: '计算完成',
-                            describe: '@cparagraph(2)',
+                            'describe|+1': [
+                                '教务处',
+                                '公培处',
+                                '应急部',
+                                '网络部',
+                                '党性教育情景课研究部',
+                                '人事处',
+                                '业务指导处',
+                            ],
                         },
                     ],
                 });

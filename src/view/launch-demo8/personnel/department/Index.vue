@@ -109,7 +109,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3-11': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             'number|100000-900000': 111111,

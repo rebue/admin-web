@@ -37,7 +37,7 @@
                                         :columns="columns"
                                         :api="api"
                                         :scrollX="600"
-                                        :defaultPagination="true"
+                                        :defaultPagination="false"
                                     >
                                         <template #commands>
                                             <a-tag>今日</a-tag>
@@ -74,16 +74,17 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|24': [
                         {
-                            time: '@date("hh:mm")',
-                            2: '@cparagraph(1)',
-                            3: '@cparagraph(1)',
-                            4: '@csentence(5)',
-                            5: '@csentence(4)',
-                            6: '@cparagraph(1)',
-                            7: '@csentence(4)',
-                            8: '@csentence(5)',
+                            'index|+1': 0,
+                            time: '@index :00',
+                            2: '',
+                            3: '',
+                            4: '',
+                            5: '',
+                            6: '',
+                            7: '',
+                            8: '',
                         },
                     ],
                 });
@@ -93,7 +94,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 20,
+                            total: 24,
                         },
                         list: dataSource,
                     },

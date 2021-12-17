@@ -27,15 +27,7 @@
                                 <a-divider />
                                 <a-row type="flex">
                                     <a-col :span="6">
-                                        <div v-show="showOrg" class="table-left">
-                                            <org-tree
-                                                :ref="`orgTree.platform`"
-                                                :show.sync="showOrg"
-                                                realmId="platform"
-                                                @click="handleOrgMenuClick"
-                                                @select="handleOrgTreeSelect"
-                                            />
-                                        </div>
+                                        <a-tree :defaultExpandAll="true" :tree-data="treeData" />
                                     </a-col>
                                     <a-col :span="1">
                                         <a-divider type="vertical" style="height:100%"></a-divider>
@@ -162,6 +154,54 @@ export default {
             },
         ];
 
+        const treeData = [
+            {
+                title: '中青年干部培训班一班',
+                key: '1',
+                children: [
+                    {
+                        title: '于磊',
+                        key: '101',
+                    },
+                    {
+                        title: '陆娟',
+                        key: '102',
+                    },
+                    {
+                        title: '苏霞',
+                        key: '103',
+                    },
+                    {
+                        title: '蒋军',
+                        key: '104',
+                    },
+                    {
+                        title: '万涛',
+                        key: '105',
+                    },
+                    {
+                        title: '史洋',
+                        key: '106',
+                    },
+                    {
+                        title: '曹杰',
+                        key: '107',
+                    },
+                    {
+                        title: '刘娟',
+                        key: '108',
+                    },
+                    {
+                        title: '钱刚',
+                        key: '109',
+                    },
+                    {
+                        title: '谭丽',
+                        key: '1010',
+                    },
+                ],
+            },
+        ];
         return {
             loading: false,
             curRealmId: '',
@@ -170,7 +210,7 @@ export default {
             realms: [],
             columns,
             form: '',
-            showOrg: false,
+            treeData: treeData,
         };
     },
 

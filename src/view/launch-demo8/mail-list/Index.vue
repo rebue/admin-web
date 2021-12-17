@@ -221,11 +221,7 @@ export default {
                 title: '头像',
                 width: 100,
                 customRender: () => {
-                    return (
-                        <div>
-                            <img width="50" src={this.photo1}></img>
-                        </div>
-                    );
+                    return <a-avatar icon="user" />;
                 },
             },
             {

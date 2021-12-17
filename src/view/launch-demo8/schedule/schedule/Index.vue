@@ -59,6 +59,7 @@
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
 import { racRealmApi } from '@/api/Api';
+import moment from 'moment';
 export default {
     name: 'schedule',
     components: {
@@ -71,14 +72,15 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|7': [
                         {
+                            'index|+1': 0,
                             week:
                                 '@date("MM月dd日")@pick(["星期一","星期二","星期三","星期四","星期五","星期六","星期日"])',
-                            plan: '@cparagraph(1)',
-                            conclusion: '@cparagraph(1)',
-                            evaluation: '@csentence(5)',
-                            leader: '@cname()',
+                            plan: '',
+                            conclusion: '',
+                            evaluation: '',
+                            leader: '',
                         },
                     ],
                 });
@@ -109,6 +111,12 @@ export default {
                 title: '星期',
                 width: 150,
                 ellipsis: true,
+                customRender: (text, record) => {
+                    const weekofday = moment().format('E');
+                    return moment()
+                        .add(record.index - weekofday, 'days')
+                        .format('MM月DD日 星期dd');
+                },
             },
             {
                 dataIndex: 'plan',

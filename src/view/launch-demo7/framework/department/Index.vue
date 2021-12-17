@@ -74,27 +74,29 @@ export default {
 
         const page = function() {
             const p = new Promise((resolve, reject) => {
+                const mockList = require('mockjs').mock({
+                    'list|8': [
+                        {
+                            'id|+1': 1,
+                            'noe|+1': 1,
+                            'name|+1': [
+                                '教务处',
+                                '公培处',
+                                '应急部',
+                                '网络部',
+                                '党性教育情景课研究部',
+                                '人事处',
+                                '业务指导处',
+                            ],
+                            lx: '部门工作量',
+                            'dm|+1': 1,
+                            gzl: '@pick(["是"," "])',
+                            bm: '@name',
+                        },
+                    ],
+                });
                 // 数据列表在这里设置
-                const dataSource = [
-                    {
-                        id: 1,
-                        no: 1,
-                        name: '教务处',
-                        lx: '部门工作量',
-                        dm: '13512345678',
-                        gzl: '是',
-                        bm: '教务处',
-                    },
-                    {
-                        id: 2,
-                        no: 2,
-                        name: '公培处',
-                        lx: '部门工作量',
-                        dm: '13512345678',
-                        gzl: '是',
-                        bm: '公务员培训处',
-                    },
-                ];
+                const dataSource = mockList.list;
                 const ro = {
                     extra: {
                         page: {

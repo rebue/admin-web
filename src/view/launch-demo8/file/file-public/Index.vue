@@ -104,7 +104,7 @@ export default {
                     'list|3-20': [
                         {
                             'id|+1': 10000000,
-                            title: '新文档.doc',
+                            'title|+1': ['新文档.doc', '办公系统客户端控件安装说明.doc'],
                             useState: '@pick(["使用中","未使用"])',
                             degree: '@pick(["一般","中等","重要"])',
                             'date|+1': [
