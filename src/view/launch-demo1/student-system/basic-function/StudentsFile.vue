@@ -3,28 +3,30 @@
         <table class="tableFile">
             <tr>
                 <td class="td1">姓名</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">尚工法</td>
                 <td class="td3">性别</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">女</td>
                 <td class="td3">身份证</td>
-                <td class="td2">{{ name }}</td>
-                <td rowspan="4"><img style="height: 120px" src="@/asset/logo.png" /></td>
+                <td class="td2"></td>
+                <td rowspan="4">
+                    <img style="height: 120px" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                </td>
             </tr>
             <tr>
                 <td class="td1">名族</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">汉族</td>
                 <td class="td3">籍贯</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">河北涿州</td>
                 <td class="td3">文化程度</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">硕士研究生毕业</td>
             </tr>
             <tr>
                 <td class="td1">毕业院校</td>
                 <td class="td2">{{ name }}</td>
                 <td class="td3">专业</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">经济管理</td>
                 <td class="td3">学位</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">硕士</td>
             </tr>
             <tr>
                 <td class="td1">出生年月</td>
@@ -44,7 +46,7 @@
                 <td class="td3">工作职称</td>
                 <td class="td2">{{ name }}</td>
                 <td class="td3">行政级别</td>
-                <td class="td2" colspan="2">{{ name }}</td>
+                <td class="td2" colspan="2">县、处级</td>
             </tr>
             <tr>
                 <td class="td1">参加工作日期</td>
@@ -52,7 +54,7 @@
                 <td class="td3">先任职日期</td>
                 <td class="td2">{{ name }}</td>
                 <td class="td3">政治面貌</td>
-                <td class="td2" colspan="2">{{ name }}</td>
+                <td class="td2" colspan="2">中国共产党</td>
             </tr>
             <tr>
                 <td class="td1">一卡通号作日期</td>
@@ -66,9 +68,9 @@
                 <td class="td1">学号</td>
                 <td class="td2">{{ name }}</td>
                 <td class="td3">入学时间</td>
-                <td class="td2">{{ name }}</td>
+                <td class="td2">2021-08-23 00:00:00.000</td>
                 <td class="td3">毕业时间</td>
-                <td class="td2" colspan="2">{{ name }}</td>
+                <td class="td2" colspan="2">2021-08-23 00:00:00.000</td>
             </tr>
 
             <tr>
@@ -106,7 +108,7 @@ export default {
     name: 'StudentsFile',
     data() {
         return {
-            name: 'lsl',
+            name: '',
         };
     },
 };

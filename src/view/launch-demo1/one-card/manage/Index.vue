@@ -46,7 +46,7 @@ export default {
                         {
                             name: '@cname()',
                             'cardNumber|+1': 100000,
-                            time: '@date(yyyy-MM-dd hh:mm:ss)',
+                            time: '@date(2021-MM-dd hh:mm:ss)',
                         },
                     ],
                 });

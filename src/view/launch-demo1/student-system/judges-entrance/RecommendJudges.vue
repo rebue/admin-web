@@ -60,28 +60,16 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             name: '@cname',
-                            scoringElements: '观点新颖，有独特的见解',
+                            scoringElements: '@pick(["观点新颖", "见解独特","表达严谨缜密"])',
                             startTime: '@date("yyyy-MM-dd HH:mm:ss")',
-                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
-                            // 'idCard|1-100000000000000000': 12345679012345678,
-                            // 'cardId|1-1000000': 193201,
-                            // 'qrcode|1-1000000': 193201,
+                            endTime: '2021年秋学期',
+                            'phone|11': '@character("number")',
                             status: '@pick(["正在进行", "未开始","已结束"])',
-                            // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             examine: '@pick(["审核通过", "审核未通过"])',
-                            // lastModifiedTime: '@date("yyyy-MM-dd")',
-                            // lastChecker: '@cname()',
-                            // by: '@pick(["自驾","公交","火车", "飞机"])',
-                            // arriveTime: '@now("yyyy-MM-dd")',
-                            // meet: '@pick(["是", "否"])',
-                            // 'realmId|+1': ['default', 'platform', 'ops'],
-                            //'opType': '@pick(["锁定", "启用"])',
-                            //'opTitle': '@title()',
-                            //'opDetail': '@cparagraph',
                         },
                     ],
                 });
@@ -119,14 +107,14 @@ export default {
                 width: 250,
             },
             {
-                dataIndex: 'startTime',
+                dataIndex: 'phone',
                 title: '电话号码',
                 width: 150,
             },
             {
                 dataIndex: 'endTime',
                 title: '评比期',
-                width: 150,
+                width: 200,
                 ellipsis: true,
             },
             {

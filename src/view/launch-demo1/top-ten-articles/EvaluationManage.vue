@@ -133,7 +133,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|21-25': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
 
@@ -148,8 +148,8 @@ export default {
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
 
-                            startTime: '@now("yyyy-MM-dd")',
-                            endTime: '@now("yyyy-MM-dd")',
+                            startTime: '@date("2021-03-dd")',
+                            endTime: '@date("2021-05-dd")',
                             'semesterNo|100000-55555555555': 444444444444,
                             // meet: '@pick(["是", "否"])',
                             // 'realmId|+1': ['default', 'platform', 'ops'],

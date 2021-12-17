@@ -45,8 +45,8 @@ export default {
                         {
                             collegeName: '@cword(4,5)学院',
                             'homework-paper': '@csentence(4,9)',
-                            time: '@date(yyyy-MM-dd hh:mm:ss)',
-                            score: '@integer(0,100)',
+                            time: '@date(2021-MM-dd hh:mm:ss)',
+                            score: '@integer(60,100)',
                         },
                     ],
                 });

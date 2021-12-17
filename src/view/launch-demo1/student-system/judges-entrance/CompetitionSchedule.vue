@@ -53,9 +53,8 @@ export default {
                                 '评委要素',
                                 '汇总评比结果',
                             ],
-                            classDate: '@date("yyyy-MM-dd")',
-                            startTime: '@date("yyyy-MM-dd HH:mm:ss")',
-                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            startTime: '@date("2021-03-dd HH:mm:ss")',
+                            endTime: '@date("2021-05-dd HH:mm:ss")',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             // 'qrcode|1-1000000': 193201,
@@ -113,17 +112,17 @@ export default {
             {
                 dataIndex: 'phaseName',
                 title: '阶段名称',
-                width: 150,
+                width: 250,
             },
             {
                 dataIndex: 'startTime',
                 title: '起始时间',
-                width: 150,
+                width: 200,
             },
             {
                 dataIndex: 'endTime',
                 title: '截止时间',
-                width: 150,
+                width: 200,
                 ellipsis: true,
             },
             {

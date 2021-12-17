@@ -734,7 +734,7 @@ const constantRouters = {
                     component: () => import('@/view/launch-demo1/graduation/assess-log/Index.vue'),
                     hidden: true,
                     meta: {
-                        title: '量化考核日志',
+                        title: '量化考核日志查询',
                         keepAlive: true,
                         icon: 'global',
                     },

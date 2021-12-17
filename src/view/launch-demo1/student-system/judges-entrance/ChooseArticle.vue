@@ -17,7 +17,7 @@
                         >
                         </crud-table>
                     </a-col>
-                    <a-col :span="6" style="margin-top: 50px;border: 1px solid #000">
+                    <a-col :span="6" style="margin-top: 50px;border: 1px solid #ededed">
                         <div style="height: 20px;background-color: #e8e8e8">
                             <center>
                                 <div style="margin: 0 auto;">
@@ -63,7 +63,7 @@ export default {
                                 '@pick(["拓展“出彩”平台注重人文关怀——关于完善干部激励机制的思考",' +
                                 '"关于加快推进广西“互联网”发展的初步思考","“—带一路”战略背景下广西新闻出版广播影视走出去的困境和路径探析","新常态下广西农业可持续发展思考","' +
                                 '提升广西智库对决策影响力的探讨","确立多民族文化发展观弘扬广西多民族文化精神","从哲学思维视角谈广西贯彻落实“四个全面”战略布局","经济新常态下广西扩大消费需求途径的对策思考"])',
-                            createTime: '@date("yyyy-MM-dd")',
+                            createTime: '@date("2021-MM-dd")',
                             author: '@cname',
                             'className|+1': [
                                 '第6期自治区管理干部研修班',

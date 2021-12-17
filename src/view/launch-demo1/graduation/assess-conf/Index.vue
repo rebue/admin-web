@@ -62,9 +62,14 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|4': [
                         {
-                            content: '@csentence(10,20)',
+                            'content|+1': [
+                                '作为班级选手(代表)参加跨班主题党日等活动一-次',
+                                '作为选手(代表)参加党性讲堂、党性分析等班级 集体活动- -次',
+                                '热心为班集体或他人服务，表现突出，得到公认',
+                                '未参加党组织生活或党性分析活动一次',
+                            ],
                             score: '+@integer(1,5)',
                             demo: '党性教育“制高点”',
                             use: '@pick(["是","否"])',
@@ -77,7 +82,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 20,
+                            total: 4,
                         },
                         list: dataSource,
                     },
@@ -95,7 +100,7 @@ export default {
             {
                 dataIndex: 'content',
                 title: '分项及内容',
-                width: 300,
+                width: 400,
                 ellipsis: true,
             },
             {
@@ -148,18 +153,20 @@ export default {
             {
                 title: '主体班学员“两点—线”量化考核表(90分)',
                 key: '101',
-            },
-            {
-                title: '党性教育“制高点”(30分)',
-                key: '102',
-            },
-            {
-                title: '纪律“底线”(30分)学习成果“亮点”(30分)',
-                key: '103',
-            },
-            {
-                title: '学习成果“亮点”(30分)',
-                key: '104',
+                children: [
+                    {
+                        title: '党性教育“制高点”(30分)',
+                        key: '102',
+                    },
+                    {
+                        title: '纪律“底线”(30分)学习成果“亮点”(30分)',
+                        key: '103',
+                    },
+                    {
+                        title: '学习成果“亮点”(30分)',
+                        key: '104',
+                    },
+                ],
             },
         ];
         return {

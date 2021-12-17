@@ -46,7 +46,7 @@ export default {
                             'homework|+1': 10000,
                             homeworkName: '@csentence(4,9)',
                             describe: '@cparagraph(1)',
-                            time: '@date(yyyy-MM-dd hh:mm:ss)',
+                            time: '@date(2021-MM-dd hh:mm:ss)',
                             score: '@integer(0,100)',
                         },
                     ],
@@ -81,7 +81,7 @@ export default {
             {
                 dataIndex: 'homework',
                 title: '作业批次号',
-                width: 60,
+                width: 100,
                 ellipsis: true,
             },
             {

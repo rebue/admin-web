@@ -152,7 +152,7 @@ export default {
                 const arr = ['计算机一班', '计算机二班', 'GC班'];
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|3-20': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             'className|+1': [
@@ -168,8 +168,8 @@ export default {
                                 '第10期市、县（市、区）党校师资培训班',
                             ],
                             judges: '@cname',
-                            scoringElements: '@pick(["观点新颖，有独特的见解"])',
-                            'grade|50-100': 100,
+                            scoringElements: '@pick(["观点新颖", "见解独特","表达严谨缜密"])',
+                            'grade|80-100': 100,
 
                             // meet: '@pick(["是", "否"])',
                             // 'realmId|+1': ['default', 'platform', 'ops'],

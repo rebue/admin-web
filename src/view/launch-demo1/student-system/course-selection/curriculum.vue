@@ -29,8 +29,7 @@ import BaseManager from '@/component/rebue/BaseManager';
 // import EditForm from './EditForm';
 import { EditFormTypeDic } from '@/dic/EditFormTypeDic';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racRealmApi } from '@/api/Api';
-
+import moment from 'moment';
 export default {
     name: 'curriculum',
     components: {
@@ -52,12 +51,12 @@ export default {
                                 '"数据库原理","设计模式","毛泽东思想概论","html程序设计","操作系统"])',
                             classType: '@pick(["必修","选修"])',
                             classTeacher: '@cname',
-                            startTime: '@date("yyyy-MM-dd HH:mm:ss")',
-                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            startTime: '@date("2021-MM-dd HH:mm:ss")',
+                            endTime: '@date("2021-MM-dd HH:mm:ss")',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             // 'qrcode|1-1000000': 193201,
-                            classHour: '@pick(["64", "24","46"])',
+                            classHour: '@pick(["60", "45", "30"])',
                             // company: '@pick(["南宁市迈越研发中心", "成都迈越研发中心"])',
                             // flag: '@pick(["是", "否"])',
                             // lastModifiedTime: '@date("yyyy-MM-dd")',
@@ -115,14 +114,19 @@ export default {
             {
                 dataIndex: 'startTime',
                 title: '课程开始时间',
-                width: 180,
+                width: 200,
                 ellipsis: true,
             },
             {
                 dataIndex: 'endTime',
                 title: '课程结束时间',
-                width: 180,
+                width: 200,
                 ellipsis: true,
+                customRender: (text, record) => {
+                    return moment(record.startTime)
+                        .add(+record.classHour, 'd')
+                        .format('YYYY-MM-DD HH:mm:ss');
+                },
             },
             {
                 dataIndex: 'classHour',

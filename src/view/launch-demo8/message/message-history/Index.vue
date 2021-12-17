@@ -176,7 +176,7 @@ export default {
             {
                 dataIndex: 'no',
                 title: '自动编号',
-                width: 80,
+                width: 100,
                 scopedSlots: { customRender: 'serial' },
             },
             {

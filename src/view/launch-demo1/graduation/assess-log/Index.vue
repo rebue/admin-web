@@ -44,10 +44,10 @@ export default {
                         {
                             'number|+1': 10000,
                             user: '@cname()',
-                            time: '@date(yyyy-mm-dd hh:mm:ss)',
+                            time: '@date(2021-12-dd hh:mm:ss)',
                             type: '修改',
                             describe:
-                                '@cname()修改学员【@cname()】,咨政报告评分:0 修改成：@integer(60,100),毕业论文评分：null 修改成：',
+                                '修改学员【@cname()】,咨政报告评分:0 修改成：@integer(60,100),毕业论文评分：null 修改成：',
                         },
                     ],
                 });
@@ -75,7 +75,7 @@ export default {
             {
                 dataIndex: 'number',
                 title: '自动编号',
-                width: 70,
+                width: 100,
                 ellipsis: true,
             },
             {
@@ -87,7 +87,7 @@ export default {
             {
                 dataIndex: 'time',
                 title: '时间',
-                width: 150,
+                width: 200,
                 ellipsis: true,
             },
             {
@@ -101,6 +101,9 @@ export default {
                 title: '描述',
                 width: 400,
                 ellipsis: true,
+                customRender: (text, record) => {
+                    return record.user + text;
+                },
             },
         ];
         this.tableCommands = [

@@ -143,7 +143,7 @@ export default {
                 const arr = ['计算机一班', '计算机二班', 'GC班'];
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|10': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
                             'className|+1': [

@@ -45,7 +45,7 @@ export default {
                             'number|+1': 10000,
                             articleTitle: '@csentence(5,10)',
                             describe: '@cparagraph(2)',
-                            time: '@date(yyyy-mm-dd hh:mm:ss)',
+                            time: '@date(2021-MM-dd hh:mm:ss)',
                             name: '@cname()',
                         },
                     ],

@@ -3,7 +3,6 @@
         <fragment>
             <base-manager ref="baseManager">
                 <template #managerCard>
-                    <div><a-button>查看</a-button></div>
                     <crud-table
                         ref="crudTable"
                         :showKeywords="false"
@@ -64,15 +63,15 @@ export default {
             const p = new Promise(resolve => {
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 20 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             status: '未填',
-                            'report|0-100': 0,
+                            'report|60-100': 60,
                             name: '@cname()',
                             semester: '2021年秋季学期',
                             post: '@pick(["班长","副班长","学习委员"])',
                             grade: '全区党校（行政院校）系统师咨培训班（第22期）',
-                            'graduation|0-100': 0,
+                            'graduation|70-100': 0,
                         },
                     ],
                 });

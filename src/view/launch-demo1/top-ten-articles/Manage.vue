@@ -141,7 +141,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|21-25': [
+                    'list|20': [
                         {
                             'id|+1': 10000000,
 
@@ -165,9 +165,9 @@ export default {
                             // lastModifiedTime: '@date("yyyy-MM-dd")',
                             // lastChecker: '@cname()',
                             // by: '@pick(["自驾","公交","火车", "飞机"])',
-                            createTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            updateTime: '@now("yyyy-MM-dd HH:mm:ss")',
-                            evaluationPeriod: '2015年十佳文章评比',
+                            createTime: '@date("2021-03-dd HH:mm:ss")',
+                            updateTime: '@date("2021-04-dd HH:mm:ss")',
+                            evaluationPeriod: '2021年3月份十佳文章评比',
                             // meet: '@pick(["是", "否"])',
                             // 'realmId|+1': ['default', 'platform', 'ops'],
                             //'opType': '@pick(["锁定", "启用"])',
@@ -233,7 +233,7 @@ export default {
             {
                 dataIndex: 'evaluationPeriod',
                 title: '评比期',
-                width: 200,
+                width: 220,
             },
             {
                 dataIndex: 'updateTime',

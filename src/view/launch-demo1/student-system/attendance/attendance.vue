@@ -43,9 +43,9 @@ export default {
                         {
                             'id|+1': 10000000,
                             classNative: '@pick(["数学竞赛", "大学生数据结构讲课","食神大赛","谁是最强歌手"])',
-                            classDate: '@date("yyyy-MM-dd")',
-                            startTime: '@date("yyyy-MM-dd HH:mm:ss")',
-                            endTime: '@date("yyyy-MM-dd HH:mm:ss")',
+                            classDate: '@date("2021-MM-dd")',
+                            startTime: '@pick(["8:30","8:27","8:20"])',
+                            endTime: '@pick(["11:33","11:45","11:37"])',
                             // 'idCard|1-100000000000000000': 12345679012345678,
                             // 'cardId|1-1000000': 193201,
                             // 'qrcode|1-1000000': 193201,
@@ -103,13 +103,19 @@ export default {
             {
                 dataIndex: 'startTime',
                 title: '上课刷卡时间',
-                width: 150,
+                width: 220,
+                customRender: (text, record) => {
+                    return record.classDate + '  ' + text;
+                },
             },
             {
                 dataIndex: 'endTime',
                 title: '下课刷卡时间',
-                width: 150,
+                width: 220,
                 ellipsis: true,
+                customRender: (text, record) => {
+                    return record.classDate + '  ' + text;
+                },
             },
             {
                 dataIndex: 'status',
