@@ -2,42 +2,44 @@
     <div class="flex-box page index-wrap">
         <Aside />
         <div class="ml20 mc backgWhite scrollBar flex-1 newStyle " v-if="!loading">
-            <div class="listCard" v-for="(item, index) in newLabelSelect" :key="index">
-                <div class="cardBox" @click="openWindow(item)" v-if="item.isEnabled">
-                    <div class="imageStyle">
-                        <img
-                            :src="item.imgUrl || defaultImg()"
-                            @error="
-                                () => {
-                                    item.imgUrl || defaultImg();
-                                }
-                            "
-                            alt=""
-                            class="item-logo"
-                        />
-                        <div class="labelStyle">
-                            <img :src="labelImg[item.labelIndex]" alt="" />
-                            <span>
-                                {{ item.labelName }}
-                            </span>
+            <template v-for="(item, index) in newLabelSelect">
+                <div class="listCard" v-if="item.isEnabled" :key="index">
+                    <div class="cardBox" @click="openWindow(item)">
+                        <div class="imageStyle">
+                            <img
+                                :src="item.imgUrl || defaultImg()"
+                                @error="
+                                    () => {
+                                        item.imgUrl || defaultImg();
+                                    }
+                                "
+                                alt=""
+                                class="item-logo"
+                            />
+                            <div class="labelStyle">
+                                <img :src="labelImg[item.labelIndex]" alt="" />
+                                <span>
+                                    {{ item.labelName }}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="appTitle">
-                        <div class="autoImg">
-                            <img :src="item.isCertified == true ? autoImg : noautoImg" alt="" />
-                        </div>
-                        <div class="appName" :class="item.isCertified == false ? 'greyColor' : ''">
-                            <!-- {{ item.name }} -->
-                            <a-tooltip>
-                                <template slot="title">
+                        <div class="appTitle">
+                            <div class="autoImg">
+                                <img :src="item.isCertified == true ? autoImg : noautoImg" alt="" />
+                            </div>
+                            <div class="appName" :class="item.isCertified == false ? 'greyColor' : ''">
+                                <!-- {{ item.name }} -->
+                                <a-tooltip>
+                                    <template slot="title">
+                                        {{ item.name }}
+                                    </template>
                                     {{ item.name }}
-                                </template>
-                                {{ item.name }}
-                            </a-tooltip>
+                                </a-tooltip>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>
