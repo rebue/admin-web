@@ -17,10 +17,8 @@
                                 class="item-logo"
                             />
                             <div class="labelStyle">
-                                <img :src="labelImg[item.labelIndex]" alt="" />
-                                <span :class="item.labelName.length > 3 ? 'smallFont' : ''">
-                                    {{ item.labelName }}
-                                </span>
+                                <img :src="labelImg[item.labelIndex % 5]" alt="" />
+                                <span>{{ item.labelName }}</span>
                             </div>
                         </div>
                         <div class="appTitle">
@@ -64,11 +62,6 @@ export default {
             autoImg: require(`../assets/img/autoImage.png`),
             noautoImg: require(`../assets/img/noautoImage.png`),
             labelImg: [
-                require(`../assets/img/labelImg1.png`),
-                require(`../assets/img/labelImg2.png`),
-                require(`../assets/img/labelImg3.png`),
-                require(`../assets/img/labelImg4.png`),
-                require(`../assets/img/labelImg5.png`),
                 require(`../assets/img/labelImg1.png`),
                 require(`../assets/img/labelImg2.png`),
                 require(`../assets/img/labelImg3.png`),
@@ -157,8 +150,10 @@ export default {
                                 childItem.labelIndex = labelIndex;
                                 newLabelSelect.push(childItem);
                                 completeLable.push(childItem.appId);
+                                return childItem;
                             });
                         }
+                        return item;
                     });
                     labelIndex = labelIndex + 1;
                     racAppList.map(item => {
@@ -260,21 +255,29 @@ export default {
                 font-size: 14px;
                 font-weight: 400;
                 color: #ffffff;
+                min-width: 65px;
+                margin-right: 5px;
+                padding-right: 5px;
                 img {
-                    width: 65px;
+                    // width: 65px;
+                    width: 100%;
                     height: 26px;
+                    position: absolute;
                 }
                 .smallFont {
                     font-size: 12px !important;
                 }
                 span {
-                    position: absolute;
-                    left: 0;
-                    top: 4px;
-                    width: 65px;
+                    position: relative;
+                    padding: 0 5px;
                     height: 26px;
-                    font-size: 14px;
-                    padding-left: 5px;
+                    line-height: 26px;
+                    // left: 0;
+                    // top: 4px;
+                    // width: 65px;
+
+                    // font-size: 14px;
+                    // padding-left: 5px;
                     // text-align: center;
                 }
             }
