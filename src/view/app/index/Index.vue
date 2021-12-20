@@ -18,7 +18,7 @@
                             />
                             <div class="labelStyle">
                                 <img :src="labelImg[item.labelIndex]" alt="" />
-                                <span>
+                                <span :class="item.labelName.length > 3 ? 'smallFont' : ''">
                                     {{ item.labelName }}
                                 </span>
                             </div>
@@ -233,6 +233,7 @@ export default {
     .cardBox {
         // width: 174px;
         width: 75%;
+        min-width: 100px;
         height: 100%;
         margin: auto;
         background: #f4f4f4;
@@ -260,16 +261,21 @@ export default {
                 font-weight: 400;
                 color: #ffffff;
                 img {
-                    width: 58px;
+                    width: 65px;
                     height: 26px;
+                }
+                .smallFont {
+                    font-size: 12px !important;
                 }
                 span {
                     position: absolute;
                     left: 0;
                     top: 4px;
-                    width: 58px;
+                    width: 65px;
                     height: 26px;
-                    text-align: center;
+                    font-size: 14px;
+                    padding-left: 5px;
+                    // text-align: center;
                 }
             }
         }
