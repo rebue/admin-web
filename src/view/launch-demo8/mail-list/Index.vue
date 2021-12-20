@@ -275,7 +275,7 @@ export default {
                         '177',
                     ];
                     let str = Math.random();
-                    str = Math.round(str * numArray.length);
+                    str = Math.round(str * numArray.length - 1);
 
                     const strMobile = numArray[str] + '' + Math.round(Math.random() * 99999999) + '';
                     return strMobile;
