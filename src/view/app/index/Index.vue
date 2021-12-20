@@ -280,13 +280,14 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0 5px;
             .autoImg {
                 width: 16px;
                 height: 16px;
                 display: flex;
                 margin-right: 2px;
                 img {
-                    width: 100%;
+                    min-width: 100%;
                     height: 100%;
                 }
             }
