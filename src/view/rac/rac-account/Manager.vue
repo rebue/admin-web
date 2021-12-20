@@ -6,6 +6,7 @@
                     <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name"> </a-tab-pane>
                 </a-tabs>
                 <crud-table
+                    v-if="curRealmId"
                     :showKeywords="true"
                     :key="`crudTable.${curRealmId}`"
                     :ref="`crudTable.${curRealmId}`"

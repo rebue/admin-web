@@ -3,32 +3,32 @@
         <base-manager ref="baseManager">
             <template #managerCard>
                 <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
-                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
-                        <crud-table
-                            :showKeywords="true"
-                            :ref="`crudTable.${realm.id}`"
-                            :actions="tableActions"
-                            :columns="columns"
-                            :api="api"
-                            :query="{ realmId: curRealmId, orgId: curOrgId }"
-                            :scrollX="600"
-                            :showHierarchical="showOrg"
-                        >
-                            <template #left>
-                                <div v-show="showOrg" class="table-left">
-                                    <org-tree
-                                        :ref="`orgTree.${realm.id}`"
-                                        :show.sync="showOrg"
-                                        :realmId="realm.id"
-                                        @click="handleOrgMenuClick"
-                                        @select="handleOrgTreeSelect"
-                                    />
-                                    <div class="table-divider"></div>
-                                </div>
-                            </template>
-                        </crud-table>
-                    </a-tab-pane>
+                    <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name"> </a-tab-pane>
                 </a-tabs>
+                <crud-table
+                    v-if="curRealmId"
+                    :showKeywords="true"
+                    :ref="`crudTable.${curRealmId}`"
+                    :actions="tableActions"
+                    :columns="columns"
+                    :api="api"
+                    :query="{ realmId: curRealmId, orgId: curOrgId }"
+                    :scrollX="600"
+                    :showHierarchical="showOrg"
+                >
+                    <template #left>
+                        <div v-show="showOrg" class="table-left">
+                            <org-tree
+                                :ref="`orgTree.${curRealmId}`"
+                                :show.sync="showOrg"
+                                :realmId="curRealmId"
+                                @click="handleOrgMenuClick"
+                                @select="handleOrgTreeSelect"
+                            />
+                            <div class="table-divider"></div>
+                        </div>
+                    </template>
+                </crud-table>
             </template>
         </base-manager>
         <unlock-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
@@ -107,6 +107,7 @@ export default {
             {
                 dataIndex: 'lockReason',
                 title: '锁定原因',
+                width: 220,
                 ellipsis: true,
             },
             {
@@ -151,10 +152,10 @@ export default {
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curRealmId][0];
+            return this.$refs['crudTable.' + this.curRealmId];
         },
         orgTree() {
-            return this.$refs['orgTree.' + this.curRealmId][0];
+            return this.$refs['orgTree.' + this.curRealmId];
         },
     },
     mounted() {
@@ -185,6 +186,7 @@ export default {
          */
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
+            this.curOrgId = undefined;
             this.$nextTick(() => {
                 this.orgTree.refreshData();
                 this.crudTable.refreshData();
