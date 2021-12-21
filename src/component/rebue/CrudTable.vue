@@ -21,7 +21,7 @@
             <slot name="keywords">
               <a-input-search :style="{ width: searchWidth + 'px' }" v-if="showKeywords"
                 v-model.trim="keywords" :loading="loading" placeholder="关键字"
-                @search="refreshData" />
+                @search="fetchFirstPage" />
             </slot>
           </div>
           <div class="table-tools">
@@ -368,6 +368,16 @@ export default observer({
     },
     methods: {
         /**
+         * 页数置1，加载数据
+         */
+        fetchFirstPage() {
+            this.pagination.current = 1;
+            this.$nextTick(()=>{
+              this.refreshData()
+            })
+
+        },
+        /**
          * 刷新数据
          */
         refreshData() {
@@ -391,6 +401,8 @@ export default observer({
                 promise = this.api.page(data).then((ro) => {
                     this.pagination = {
                         ...this.pagination,
+                        pageSize: ro.extra.page.pageSize,
+                        current: ro.extra.page.pageNum,
                         total: ro.extra.page.total - 0,
                     };
                     this.dataSource = ro.extra.page.list;
