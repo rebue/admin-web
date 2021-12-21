@@ -23,7 +23,7 @@
                         @change="onChangeBir"
                         @openChange="onOpenChange"
                         @ok="onOK"
-                        style="width: 350px; padding-right: 20px"
+                        style="width: 400px; margin-right: 20px"
                     />
                 </template>
             </crud-table>
@@ -201,7 +201,7 @@ export default observer({
          */
         onOpenChange(status) {
             if (!status) {
-                this.refreshTableData();
+                this.crudTable.fetchFirstPage();
             }
         },
         /**
@@ -225,7 +225,7 @@ export default observer({
             if (dateDates[0] === '') {
                 delete this.query['startDate'];
                 delete this.query['endDate'];
-                this.refreshTableData();
+                this.crudTable.fetchFirstPage();
             }
         },
     },
