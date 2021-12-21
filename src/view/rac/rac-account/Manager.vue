@@ -329,10 +329,6 @@ export default {
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
             this.curOrgId = undefined;
-            this.$nextTick(() => {
-                this.orgTree.refreshData();
-                this.crudTable.fetchFirstPage();
-            });
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
