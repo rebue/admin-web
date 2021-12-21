@@ -62,18 +62,20 @@ export default {
             {
                 dataIndex: 'idCard',
                 title: '身份证号',
-                width: 220,
+                width: 150,
                 ellipsis: true,
             },
             {
                 dataIndex: 'sex',
                 title: '性别',
+                width: 100,
                 ellipsis: true,
                 customRender: (text, record) => <span>{record.sex == 1 ? '男' : '女'}</span>,
             },
             {
                 dataIndex: 'mobile',
                 title: '手机号码',
+                width: 150,
                 ellipsis: true,
             },
             {
@@ -182,7 +184,7 @@ export default {
                 {
                     methods: {
                         callback() {
-                            that.refreshTableData();
+                            that.crudTable.fetchFirstPage();
                         },
                     },
                 },
