@@ -42,13 +42,13 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             value1: '@pick(["pckp","weod"])',
                             value2: '@pick(["回档流程","文书档案和业务流程"])',
                             'value3|1-10': 1,
-                            value4: '@date("yyyy-MM-dd hh:mm:ss")',
-                            value5: '@date("yyyy-MM-dd hh:mm:ss")',
+                            value4: '@date("2021-MM-dd hh:mm:ss")',
+                            value5: '@value4',
                         },
                     ],
                 });

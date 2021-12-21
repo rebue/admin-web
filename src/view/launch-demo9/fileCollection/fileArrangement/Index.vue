@@ -61,7 +61,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             value1: '@pick(["党务工作（01）"])',
                             value2: '@pick(["永久（Y）"])',
@@ -85,7 +85,7 @@ export default {
                     extra: {
                         page: {
                             list: dataSource,
-                            total: 50,
+                            total: dataSource.length,
                         },
                         list: dataSource,
                     },

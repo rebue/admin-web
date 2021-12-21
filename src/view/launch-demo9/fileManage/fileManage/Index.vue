@@ -42,7 +42,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             value1: '@pick(["ABCD","12138","基建01"])',
                             'value2|1-10': 1,
@@ -50,13 +50,13 @@ export default {
                             value4: '@pick(["公开（GK）"])',
                             value5: '@pick(["人力资源部"])',
                             'value6|1-100000': 1,
-                            value7: '@pick(["档案"])',
+                            'value7|+1': 1,
                             value8: '@cname()',
-                            value9: '@date("yyyy-MM-dd")',
-                            value10: '@pick(["档案"])',
+                            value9: '@pick(["档案"])',
+                            value10: '@date("2020-10-dd")',
                             value11: '@cname()',
-                            value12: '@date("yyyy-MM-dd")',
-                            value13: '@date("yyyy-MM-dd")',
+                            value12: '@date("2020-11-dd")',
+                            value13: '@date("2020-12-dd")',
                         },
                     ],
                 });

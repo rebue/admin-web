@@ -1,4 +1,5 @@
 <template>
+    <!-- 业务管理中心/数据字典管理  -->
     <base-edit-form
         ref="baseEditForm"
         title="数据字典"

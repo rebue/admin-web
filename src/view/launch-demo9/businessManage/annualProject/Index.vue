@@ -47,7 +47,7 @@ export default {
                 // const Mock = require('mockjs');
                 const mockList = require('mockjs').mock({
                     // 属性 list 的值是一个数组，其中含有 1 到 3 个元素
-                    'list|1-20': [
+                    'list|20': [
                         {
                             value1: '@pick(["档案类型","计算机密级"])',
                             value2: '@pick(["DALX","JSJMJ"])',
