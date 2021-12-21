@@ -2,7 +2,6 @@
     <base-manager ref="baseManager">
         <template #managerCard>
             <crud-table
-                v-if="JSON.stringify(query) !== '{}'"
                 ref="crudTable"
                 :columns="columns"
                 :api="api"
@@ -13,6 +12,7 @@
                 <template #keywordsLeft>
                     <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
                     <a-range-picker
+                        :defaultValue="[query.startDate, query.endDate]"
                         format="YYYY-MM-DD HH:mm:ss"
                         :show-time="{
                             hideDisabledOptions: true,
@@ -21,7 +21,7 @@
                         @change="onChangeBir"
                         @openChange="onOpenChange"
                         @ok="onOK"
-                        style="width: 350px; padding-right: 20px"
+                        style="width: 400px;"
                     />
                 </template>
             </crud-table>
@@ -50,6 +50,9 @@ export default {
                     ro.extra.list = [data];
                     return ro;
                 });
+            },
+            listAll() {
+                return this.list({});
             },
         };
         this.columns = [
@@ -113,7 +116,11 @@ export default {
         return {
             loading: false,
             curRealmId: '',
-            query: {},
+            query: {
+                startDate: moment().format('YYYY-MM-DD 00:00:00'),
+                endDate: moment().format('YYYY-MM-DD 23:59:59'),
+                pageNum: 1,
+            },
             realms: [],
             moment,
             startDate: '',
@@ -121,24 +128,9 @@ export default {
         };
     },
     mounted() {
-        this.getCurrentTime();
-        this.crudTable = this.$refs.crudTable;
+        //
     },
     methods: {
-        getCurrentTime() {
-            //获取当前时间并打印
-            const yy = new Date().getFullYear();
-            const mm = new Date().getMonth() + 1;
-            const dd = new Date().getDate();
-            const gettime = yy + '-' + mm + '-' + dd + '';
-            const startDate = gettime + ' ' + '00:00:00';
-            const endDate = gettime + ' ' + '23:59:59';
-            this.query = {
-                pageNum: 1,
-                startDate,
-                endDate,
-            };
-        },
         /**
          * 刷新表格数据
          */
@@ -146,7 +138,9 @@ export default {
             if (!this.crudTable) {
                 this.crudTable = this.$refs.crudTable;
             }
-            this.crudTable.refreshData();
+            this.$nextTick(() => {
+                this.crudTable.refreshData();
+            });
         },
         /**
          * 弹出日历和关闭日历的回调
@@ -160,7 +154,7 @@ export default {
          * ok按扭回调
          */
         onOK() {
-            this.refreshTableData();
+            // this.refreshTableData();
         },
         /**
          * 根据时间发生变化的回调
