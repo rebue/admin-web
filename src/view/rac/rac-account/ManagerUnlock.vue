@@ -8,6 +8,7 @@
                 <crud-table
                     v-if="curRealmId"
                     :showKeywords="true"
+                    :key="`crudTable.${curRealmId}`"
                     :ref="`crudTable.${curRealmId}`"
                     :actions="tableActions"
                     :columns="columns"
@@ -187,22 +188,18 @@ export default {
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
             this.curOrgId = undefined;
-            this.$nextTick(() => {
-                this.orgTree.refreshData();
-                this.crudTable.refreshData();
-            });
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
             this.curOrgId = item.id;
             this.$nextTick(() => {
-                this.refreshTableData();
+                this.crudTable.fetchFirstPage();
             });
         },
         /** 处理组织树选择节点的事件 */
         handleOrgTreeSelect({ isSelected, item }) {
             this.curOrgId = isSelected ? item.id : undefined;
-            this.$nextTick(this.refreshTableData);
+            this.$nextTick(this.crudTable.fetchFirstPage);
         },
         /** 处理账户解锁 */
         handleAccountCheck(record) {
