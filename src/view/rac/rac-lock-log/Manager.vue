@@ -2,33 +2,34 @@
     <base-manager ref="baseManager">
         <template #managerCard>
             <a-tabs class="realm-tabs" :activeKey="curRealmId" @change="handleRealmChanged">
-                <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name">
-                    <crud-table
-                        :showKeywords="true"
-                        :ref="`crudTable.${realm.id}`"
-                        :columns="columns"
-                        :api="api"
-                        :query="query"
-                        :scrollX="600"
-                        :expandable="false"
-                    >
-                        <template #keywordsLeft>
-                            <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
-                            <a-range-picker
-                                format="YYYY-MM-DD HH:mm:ss"
-                                :show-time="{
-                                    hideDisabledOptions: true,
-                                    defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
-                                }"
-                                @change="onChangeBir"
-                                @openChange="onOpenChange"
-                                @ok="onOK"
-                                style="width: 350px; padding-right: 20px"
-                            />
-                        </template>
-                    </crud-table>
-                </a-tab-pane>
+                <a-tab-pane v-for="realm in realms" :key="realm.id" :tab="realm.name"></a-tab-pane>
             </a-tabs>
+            <crud-table
+                v-if="curRealmId"
+                :showKeywords="true"
+                :key="`crudTable.${curRealmId}`"
+                :ref="`crudTable.${curRealmId}`"
+                :columns="columns"
+                :api="api"
+                :query="query"
+                :scrollX="600"
+                :expandable="false"
+            >
+                <template #keywordsLeft>
+                    <!-- <label style="width: 100px; line-height: 30px">选择日期：</label> -->
+                    <a-range-picker
+                        format="YYYY-MM-DD HH:mm:ss"
+                        :show-time="{
+                            hideDisabledOptions: true,
+                            defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
+                        }"
+                        @change="onChangeBir"
+                        @openChange="onOpenChange"
+                        @ok="onOK"
+                        style="width: 400px; margin-right: 20px"
+                    />
+                </template>
+            </crud-table>
         </template>
     </base-manager>
 </template>
@@ -162,7 +163,7 @@ export default {
     },
     computed: {
         crudTable() {
-            return this.$refs['crudTable.' + this.curRealmId][0];
+            return this.$refs['crudTable.' + this.curRealmId];
         },
     },
     mounted() {
@@ -187,7 +188,7 @@ export default {
          */
         onOpenChange(status) {
             if (!status) {
-                this.refreshTableData();
+                this.crudTable.fetchFirstPage();
             }
         },
         /**
@@ -205,7 +206,7 @@ export default {
             if (dateDates[0] === '') {
                 delete this.query['startDate'];
                 delete this.query['endDate'];
-                this.refreshTableData();
+                this.crudTable.fetchFirstPage();
             }
         },
         /**
@@ -238,7 +239,6 @@ export default {
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
             this.query = {
-                ...this.query,
                 realmId: this.curRealmId,
             };
         },
