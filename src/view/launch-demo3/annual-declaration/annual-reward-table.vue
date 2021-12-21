@@ -133,7 +133,7 @@ export default {
                     const year = Math.round(Math.random() * 2);
 
                     mockList.list[i].date = moment(
-                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1 - year) + '-' + applyTime.getDate()
+                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
                     ).format('YYYY-MM-DD');
                 }
                 const dataSource = mockList.list;

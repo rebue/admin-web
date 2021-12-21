@@ -112,7 +112,7 @@ export default {
                     const year = Math.round(Math.random() * 2);
 
                     mockList.list[i].createTime = moment(
-                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1 - year) + '-' + applyTime.getDate()
+                        applyTime.getFullYear() + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
                     ).format('YYYY-MM-DD');
                     // mockList.list[i].workTime = moment((applyTime.getFullYear())+'-'+(applyTime.getMonth()+1-year)+'-'+(applyTime.getDate()+1)).format('YYYY-MM-DD');
                 }

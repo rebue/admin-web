@@ -133,12 +133,7 @@ export default {
                     // myDate.getMinutes();     //获取当前分钟数(0-59)
                     // myDate.getSeconds()
                     mockList.list[i].createTime = moment(
-                        applyTime.getFullYear() -
-                            year +
-                            '-' +
-                            (applyTime.getMonth() + 1 - year) +
-                            '-' +
-                            applyTime.getDate()
+                        applyTime.getFullYear() - year + '-' + (applyTime.getMonth() + 1) + '-' + applyTime.getDate()
                     ).format('yyyy-MM-DD');
                     // mockList.list[i].workTime = moment((applyTime.getFullYear())+'-'+(applyTime.getMonth()+1-year)+'-'+(applyTime.getDate()+1)).format('YYYY-MM-DD');
                 }
