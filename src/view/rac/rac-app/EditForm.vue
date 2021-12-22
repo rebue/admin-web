@@ -240,13 +240,19 @@ export default {
                         const data = { ...this.model, authnType };
                         this.api
                             .add(data)
-                            .then(() => (this.visible = false))
+                            .then(ro => {
+                                this.visible = false;
+                                this.$emit('success', ro);
+                            })
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         const data = { ...this.model };
                         this.api
                             .modify(data)
-                            .then(() => (this.visible = false))
+                            .then(ro => {
+                                this.visible = false;
+                                this.$emit('success', ro);
+                            })
                             .finally(() => (this.loading = false));
                     }
                     this.loading = false;

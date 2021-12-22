@@ -271,19 +271,28 @@ export default {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
                             .add(data)
-                            .then(() => (this.visible = false))
+                            .then(ro => {
+                                this.visible = false;
+                                this.$emit('success', ro);
+                            })
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         console.log(data);
                         if (data.authnType == 0) {
                             this.api
                                 .delById(data.id)
-                                .then(() => (this.visible = false))
+                                .then(ro => {
+                                    this.visible = false;
+                                    this.$emit('success', ro);
+                                })
                                 .finally(() => (this.loading = false));
                         } else {
                             this.api
                                 .modify(data)
-                                .then(() => (this.visible = false))
+                                .then(ro => {
+                                    this.visible = false;
+                                    this.$emit('success', ro);
+                                })
                                 .finally(() => (this.loading = false));
                         }
                     }
@@ -308,7 +317,10 @@ export default {
                     this.loading = true;
                     this.api
                         .delById(this.model.id)
-                        .then(() => (this.visible = false))
+                        .then(ro => {
+                            this.visible = false;
+                            this.$emit('success', ro);
+                        })
                         .finally(() => (this.loading = false));
                 }
             }

@@ -22,9 +22,13 @@
             </template>
         </base-manager>
 
-        <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-menus-form :curApp.sync="curApp" :visible.sync="manageMenusFormVisible" @close="handleEditFormClose" />
-        <edit-auth-form ref="editAuthForm" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
+        <manage-menus-form
+            :curApp.sync="curApp"
+            :visible.sync="manageMenusFormVisible"
+            @success="handleEditFormClose"
+        />
+        <edit-auth-form ref="editAuthForm" @success="handleEditFormClose" />
     </fragment>
 </template>
 

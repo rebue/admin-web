@@ -72,8 +72,8 @@ export default {
                 const data = { id: this.curApp.id, menu };
                 this.api
                     .modify(data)
-                    .then(() => {
-                        //
+                    .then(ro => {
+                        this.$emit('success', ro);
                     })
                     .finally(() => {
                         this.loading = false;
