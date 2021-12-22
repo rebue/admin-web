@@ -79,7 +79,10 @@ export default {
                     };
                     racSignInUnlockApi
                         .signInLockRecord(data)
-                        .then(() => this.$emit('update:visible', false))
+                        .then(ro => {
+                            this.$emit('update:visible', false);
+                            this.$emit('success', ro);
+                        })
                         .finally(() => (this.loading = false));
                     this.loading = false;
                 } else {

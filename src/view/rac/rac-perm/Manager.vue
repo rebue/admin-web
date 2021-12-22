@@ -22,17 +22,11 @@
                 </a-tabs>
             </template>
         </base-manager>
-        <perm-group-edit-form ref="permGroupEditForm" @close="handleEditFormClose" />
-        <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-menu-form :perm="curRecord" :visible.sync="manageMenuFormVisible" @close="handleEditFormClose" />
-        <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" @close="handleEditFormClose" />
-        <manager-command
-            :width="750"
-            :title="'权限命令'"
-            :record="curRecord"
-            :visible.sync="managerCommandVisible"
-            @close="handleEditFormClose"
-        />
+        <perm-group-edit-form ref="permGroupEditForm" @success="handleEditFormClose" />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
+        <manage-menu-form :perm="curRecord" :visible.sync="manageMenuFormVisible" />
+        <urn-edit-form :record="curRecord" :visible.sync="edintLinkFormVisible" />
+        <manager-command :width="750" :title="'权限命令'" :record="curRecord" :visible.sync="managerCommandVisible" />
     </fragment>
 </template>
 

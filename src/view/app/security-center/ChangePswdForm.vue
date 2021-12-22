@@ -105,7 +105,10 @@ export default {
                             signInPswd: md5(this.model.signInPswd).toString(),
                             newSignInPswd: md5(this.model.newSignInPswd).toString(),
                         })
-                        .then(() => this.$emit('update:visible', false))
+                        .then(ro => {
+                            this.$emit('update:visible', false);
+                            this.$emit('success', ro);
+                        })
                         .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {

@@ -20,13 +20,8 @@
                 </a-tabs>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
-        <account-manage-form
-            :record="curRecord"
-            :curOrgName="curOrgName"
-            :visible.sync="addToOrgVisible"
-            @close="handleEditFormClose"
-        />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
+        <account-manage-form :record="curRecord" :curOrgName="curOrgName" :visible.sync="addToOrgVisible" />
     </fragment>
 </template>
 

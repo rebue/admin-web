@@ -97,7 +97,7 @@
         <change-pswd-form
             :record="accountStore.accountId"
             :visible.sync="changePswdFormVisible"
-            @close="refreshAccountInfo"
+            @success="refreshAccountInfo"
         />
         <ifLoginPass />
     </fragment>

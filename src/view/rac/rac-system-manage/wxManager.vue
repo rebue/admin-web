@@ -14,7 +14,7 @@
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" configType="公众号" />
+        <edit-form ref="editForm" @success="handleEditFormClose" configType="公众号" />
     </fragment>
 </template>
 

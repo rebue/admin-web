@@ -70,7 +70,10 @@ export default {
                 if (valid) {
                     racAccountApi
                         .modifySignInPswd(this.record.id, this.model.signInPswd)
-                        .then(() => this.$emit('update:visible', false))
+                        .then(ro => {
+                            this.$emit('update:visible', false);
+                            this.$emit('success', ro);
+                        })
                         .finally(() => (this.loading = false));
                 } else {
                     this.$nextTick(() => {

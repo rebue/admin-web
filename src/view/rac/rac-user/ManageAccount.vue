@@ -59,11 +59,11 @@
                 </template>
             </span>
         </a-table>
-        <edit-form ref="editForm" @close="refreshData" />
+        <edit-form ref="editForm" @success="refreshData" />
         <!-- 修改密码 -->
-        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="refreshData" />
+        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @success="refreshData" />
         <!-- 组织 -->
-        <manage-org ref="manageOrgForm" :account="curRecord" :visible.sync="manageOrgVisible" @close="refreshData" />
+        <manage-org ref="manageOrgForm" :account="curRecord" :visible.sync="manageOrgVisible" />
     </a-drawer>
 </template>
 

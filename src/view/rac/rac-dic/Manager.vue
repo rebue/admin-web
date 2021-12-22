@@ -18,8 +18,8 @@
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="dicEditForm" @close="handleEditFormClose" />
-        <edit-dic-item-form ref="dicItemeditForm" @close="handleEditFormClose" />
+        <edit-form ref="dicEditForm" @success="handleEditFormClose" />
+        <edit-dic-item-form ref="dicItemeditForm" @success="handleEditFormClose" />
     </fragment>
 </template>
 

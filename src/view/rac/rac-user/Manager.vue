@@ -15,12 +15,7 @@
                 </crud-table>
             </template>
         </base-manager>
-        <manage-account
-            ref="manageOrgForm"
-            :user="curRecord"
-            :visible.sync="manageOrgFormVisible"
-            @close="handleEditFormClose"
-        />
+        <manage-account ref="manageOrgForm" :user="curRecord" :visible.sync="manageOrgFormVisible" />
 
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />

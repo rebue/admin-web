@@ -21,9 +21,9 @@
                 </a-tabs>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
-        <manage-perm-form :role.sync="curRole" :visible.sync="managePermFormVisible" @close="handleEditFormClose" />
-        <manage-app-form :role.sync="curRole" :visible.sync="manageAppFormVisible" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
+        <manage-perm-form :role.sync="curRole" :visible.sync="managePermFormVisible" />
+        <manage-app-form :role.sync="curRole" :visible.sync="manageAppFormVisible" />
     </fragment>
 </template>
 

@@ -32,7 +32,7 @@
                 </crud-table>
             </template>
         </base-manager>
-        <unlock-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
+        <unlock-form :record="curRecord" :visible.sync="enabledFormVisible" @success="handleEditFormClose" />
     </fragment>
 </template>
 

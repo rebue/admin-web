@@ -33,22 +33,17 @@
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
         <manage-org
             ref="manageOrgForm"
             :account="curRecord"
             :visible.sync="manageOrgVisible"
             @close="handleEditFormClose"
         />
-        <manage-role-form
-            ref="manageRoleForm"
-            :account="curRecord"
-            :visible.sync="manageRoleFormVisible"
-            @close="handleEditFormClose"
-        />
+        <manage-role-form ref="manageRoleForm" :account="curRecord" :visible.sync="manageRoleFormVisible" />
         <disabled-form :record="curRecord" :visible.sync="disabledFormVisible" @close="handleEditFormClose" />
         <enabled-form :record="curRecord" :visible.sync="enabledFormVisible" @close="handleEditFormClose" />
-        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @close="handleEditFormClose" />
+        <change-pswd-form :record="curRecord" :visible.sync="changePswdFormVisible" @success="handleEditFormClose" />
         <agent-sign-in-form
             :record="curRecord"
             :realmId="curRealmId"
