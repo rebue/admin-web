@@ -72,6 +72,7 @@ export default {
             flex-direction: column;
             justify-content: center; /* 水平居中 */
             align-items: center; /* 垂直居中 */
+            min-width: 500px;
 
             .form {
                 width: auto;

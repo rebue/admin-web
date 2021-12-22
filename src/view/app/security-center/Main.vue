@@ -117,6 +117,10 @@ export default observer({
         },
         // 手机号
         bindPhone() {
+            if (!clientConfigEnv.VUE_APP_SMS) {
+                this.$message.warning('暂不支持绑定手机号');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Phone.vue').default,
@@ -140,6 +144,10 @@ export default observer({
             );
         },
         unbindPhone() {
+            if (!clientConfigEnv.VUE_APP_SMS) {
+                this.$message.warning('暂不支持解绑手机号');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./unPhone.vue').default,
@@ -192,6 +200,10 @@ export default observer({
             );
         },
         unbindWechat() {
+            if (!clientConfigEnv.VUE_APP_WX_CODE_APPID) {
+                this.$message.warning('暂不支持解绑微信');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Wechat.vue').default,
@@ -246,6 +258,10 @@ export default observer({
             );
         },
         unbindDing() {
+            if (!clientConfigEnv.VUE_APP_DD_CODE_APPID) {
+                this.$message.warning('暂不解绑钉钉');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Dingding.vue').default,
@@ -278,6 +294,10 @@ export default observer({
 
         //修改邮箱
         changeEmail() {
+            if (!clientConfigEnv.VUE_APP_EMAIL) {
+                this.$message.warning('暂不支持设置邮箱');
+                return;
+            }
             const that = this;
             this.$showDialog(
                 require('./Email.vue').default,

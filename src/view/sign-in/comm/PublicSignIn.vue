@@ -1,10 +1,10 @@
 <template>
     <fragment>
-        <a-tabs v-model="activeKey">
+        <a-tabs v-model="activeKey" style="align-self: stretch;">
             <a-tab-pane :key="1" tab="账号密码登录"></a-tab-pane>
-            <a-tab-pane :key="2" tab="手机登录"></a-tab-pane>
-            <a-tab-pane :key="3" tab="微信扫码登录"></a-tab-pane>
-            <a-tab-pane :key="4" tab="钉钉扫码登录"></a-tab-pane>
+            <a-tab-pane :key="2" tab="手机登录" v-if="clientConfigEnv.VUE_APP_SMS"></a-tab-pane>
+            <a-tab-pane :key="3" tab="微信扫码登录" v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID"></a-tab-pane>
+            <a-tab-pane :key="4" tab="钉钉扫码登录" v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID"></a-tab-pane>
         </a-tabs>
         <div class="sign">
             <Password

@@ -19,9 +19,11 @@
                 <router-link :to="forgetPswdPath" class="forget-password" v-if="phoneShow">忘记密码</router-link>
                 <div class="scan-code-card">
                     <div class="top-list">
-                        <span @click="vxScanCodeClick">微信扫码登录</span>
-                        <span>|</span>
-                        <span @click="ddScanCodeClick">钉钉扫码登录</span>
+                        <span @click="vxScanCodeClick" v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID">微信扫码登录</span>
+                        <span v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID && clientConfigEnv.VUE_APP_DD_CODE_APPID"
+                            >|</span
+                        >
+                        <span @click="ddScanCodeClick" v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID">钉钉扫码登录</span>
                     </div>
                     <div class="mid-list">
                         <!-- <img src="./loginIcon.png" alt="" /> -->
@@ -60,6 +62,7 @@ export default {
             phoneShow: true,
             codeType: '微信',
             forgetPswdPath: `/${getAppIdByUrl()}/forget-password`,
+            clientConfigEnv: clientConfigEnv,
         };
     },
     methods: {

@@ -5,7 +5,7 @@
                 <psw-form :action="onPswdSubmit" :captchaSessionName="captchaSessionName" />
             </div>
         </a-tab-pane>
-        <a-tab-pane key="2" tab="手机短信登录">
+        <a-tab-pane key="2" tab="手机短信登录" v-if="clientConfigEnv.VUE_APP_SMS">
             <div v-if="!show" class="sign phone-sign">
                 <phone-form :action="onPhoneSubmit" />
             </div>
@@ -17,6 +17,8 @@ import request from '@/util/request';
 import PswForm from './Password.vue';
 import PhoneForm from './Phone.vue';
 import { AppIdDic } from '@/dic/AppIdDic';
+import clientConfig from '@client/config';
+const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default {
     components: {
         PswForm,
@@ -28,6 +30,7 @@ export default {
             show: true,
             tabKey: 1,
             captchaSessionName: `is-${AppIdDic.UnifiedAuth}-need-captcha`,
+            clientConfigEnv: clientConfigEnv,
         };
     },
     methods: {

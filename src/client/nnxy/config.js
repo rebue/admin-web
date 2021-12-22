@@ -22,6 +22,12 @@ export default {
 
             // 平台/运营默认走oidc登录流程
             VUE_APP_LOGIN_BY_OIDC: true,
+
+            // 支持手机短信
+            VUE_APP_SMS: true,
+
+            // 支持邮箱
+            VUE_APP_EMAIL: false,
         },
         production: {
             // 微信的扫码登录redireact_url
@@ -38,6 +44,12 @@ export default {
 
             // 平台/运营默认走oidc登录流程
             VUE_APP_LOGIN_BY_OIDC: true,
+
+            // 支持手机短信
+            VUE_APP_SMS: true,
+
+            // 支持邮箱
+            VUE_APP_EMAIL: false,
         },
     },
 };
