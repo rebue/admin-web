@@ -239,6 +239,10 @@ export default observer({
 .page >>> .manager-card {
     width: 100%;
 }
+.page >>> .main .client .table-operator {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
 </style>
 <style type="text/css">
 .mystyle {
