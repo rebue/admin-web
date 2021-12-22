@@ -176,12 +176,12 @@ export default {
                     if (this.editFormType === EditFormTypeDic.Add) {
                         this.api
                             .add(this.model)
-                            .then(() => (this.visible = false))
+                            .then((ro) => {this.visible = false;this.$emit('success', ro)})
                             .finally(() => (this.loading = false));
                     } else if (this.editFormType === EditFormTypeDic.Modify) {
                         this.api
                             .modify(this.model)
-                            .then(() => (this.visible = false))
+                            .then((ro) => {this.visible = false;this.$emit('success', ro)})
                             .finally(() => (this.loading = false));
                     }
                 } else {

@@ -14,7 +14,7 @@
                 </crud-table>
             </template>
         </base-manager>
-        <edit-form ref="editForm" @close="handleEditFormClose" />
+        <edit-form ref="editForm" @success="handleEditFormClose" />
     </fragment>
 </template>
 
