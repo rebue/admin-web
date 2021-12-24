@@ -49,4 +49,7 @@ export default class AccountStore {
     /** 绑定的手机号 */
     @observable
     signInMobile = '';
+    //修改过密码的时间
+    @observable
+    expirationDatetime = '';
 }

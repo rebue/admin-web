@@ -34,14 +34,15 @@ export default {
         
         /**获取密码过期时长接口和是否是第一次登录接口 */
         getPasswordApiFun() {
-            racAccountApi.getCurAccountInfo().then(res => {
+            // racAccountApi.getCurAccountInfo().then(res => {
                 raclevelProtectApi.getConfig().then(ro => {
+                    console.log(accountStore.expirationDatetime)
                     let passwordTips = ro.extra?.passwordTips;
                      if(passwordTips == undefined){
                         passwordTips = false;
                     }
                     if (passwordTips == 'true' || passwordTips == true) {
-                        if (!res.extra.expirationDatetime) {
+                        if (!accountStore?.expirationDatetime) {
                             this.$warning({
                                 title: '提示',
                                 content: `您是第一次登录，根据等保配置，需要强制修改密码。`,
@@ -52,11 +53,11 @@ export default {
                         }
                         return;
                     }
-                    if(res.extra?.expirationDatetime == undefined){
+                    if(accountStore?.expirationDatetime == undefined){
                         return;
                     }
                     let passworDoverdue = ro.extra?.passwordDoverdue;
-                    let expirationDatetime = res.extra?.expirationDatetime.slice(0,10);
+                    let expirationDatetime = accountStore?.expirationDatetime.slice(0,10);
                     var startDateM = (new Date(expirationDatetime)).getTime(); //得到毫秒数
                     const dateEnd = new Date(); //获取当前时间
                     const dateDiff = dateEnd.getTime() - startDateM; //时间差的毫秒数
@@ -77,7 +78,7 @@ export default {
                     }
                   
                 });
-            });
+            // });
         },
         refreshAccountInfo() {
             racMenuAction.refreshAccountInfo();

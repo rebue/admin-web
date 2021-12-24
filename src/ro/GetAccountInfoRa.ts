@@ -1,4 +1,5 @@
 export interface GetAccountInfoRa {
+    expirationDatetime: any;
     /** 领域ID */
     realmId: string;
     /** 账户ID */

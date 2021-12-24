@@ -230,22 +230,25 @@ export default {
             this.$nextTick(() => {
                 this.loading = true;
                 this.$refs.form.resetFields();
+                console.log(EditFormTypeDic.Modify);
                 if (this.editFormType === EditFormTypeDic.Modify) {
-                    this.api
-                        .getByAppId(this.model.appId)
-                        .then(ro => {
-                            const authnType = ro.extra.racAppMo.authnType;
-                            this.model = {
-                                ...JSON.parse(JSON.stringify(this.model)),
-                                ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
-                                authnType,
-                            };
-                            this.secretShow = false;
-                        })
-                        .catch(() => (this.visible = false))
-                        .finally(() => {
-                            this.loading = false;
-                        });
+                    this.model.authnType = this.model.racAppMo.authnType;
+                    this.loading = false;
+                    // this.api
+                    //     .getByAppId(this.model.appId)
+                    //     .then(ro => {
+                    //         const authnType = ro.extra.racAppMo.authnType;
+                    //         this.model = {
+                    //             ...JSON.parse(JSON.stringify(this.model)),
+                    //             ...JSON.parse(JSON.stringify(this.formatDetail(ro.extra))),
+                    //             authnType,
+                    //         };
+                    //         this.secretShow = false;
+                    //     })
+                    //     .catch(() => (this.visible = false))
+                    //     .finally(() => {
+                    //         this.loading = false;
+                    //     });
                 } else {
                     this.secretShow = true;
                     this.loading = false;

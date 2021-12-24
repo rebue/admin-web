@@ -46,6 +46,7 @@ export class RacAccountAction {
         accountStore.agentAccountId = ra.agentAccountId;
         accountStore.agentNickname = ra.agentNickname;
         accountStore.agentAvatar = ra.agentAvatar;
+        accountStore.expirationDatetime = ra.expirationDatetime;
 
         accountStore.orgId = ra.orgId;
         accountStore.orgFullName = ra.orgFullName;
