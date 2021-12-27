@@ -8,8 +8,6 @@
 <script>
 import DdCode from '@/component/app/Dingding.vue';
 import { observer } from 'mobx-vue';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'app-security-center-dingding',
     components: {
@@ -25,7 +23,7 @@ export default observer({
     },
     computed: {
         redirectUri() {
-            return `${clientConfigEnv.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}/${this.accountId}`;
+            return `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/orp/${this.eventType}/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.accountId}`;
         },
     },
     methods: {

@@ -189,11 +189,8 @@ export default class RacAccountApi extends BaseCrudApi {
      *忘记密码，微信修改登录密码
      */
     modifySignInPswdByWeChat(data): Promise<Ro> {
-        // @client
-        const clientConfig = require(`@/client/${process.env.VUE_APP_CLIENT}/config`).default;
-        const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
         return request.post({
-            url: `/orp-svr/forget/sign-in-pswd/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}`,
+            url: `/orp-svr/forget/sign-in-pswd/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}`,
             data,
         });
     }
@@ -201,11 +198,8 @@ export default class RacAccountApi extends BaseCrudApi {
      *忘记密码，钉钉修改登录密码
      */
     modifySignInPswdByDingding(data): Promise<Ro> {
-        // @client
-        const clientConfig = require(`@/client/${process.env.VUE_APP_CLIENT}/config`).default;
-        const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
         return request.post({
-            url: `/orp-svr/forget/sign-in-pswd/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}`,
+            url: `/orp-svr/forget/sign-in-pswd/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
             data,
         });
     }

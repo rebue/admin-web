@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('@client/images/logo.png')" alt="" class="logo" :class="`${clientConfig.id}-logo`" />
+            <img :src="require(`@client/images/logo.png`)" alt="" class="logo" :class="`${env.VUE_APP_CLIENT}-logo`" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -10,11 +10,11 @@
         </div>
         <Main class="main" />
         <div class="footer">
-            <template v-if="clientConfig.id === 'default'">
+            <template v-if="env.VUE_APP_CLIENT === 'default'">
                 桂ICP备08001078号-2
             </template>
             <template v-else>
-                <p>{{ clientConfig.name }}版权所有</p>
+                <p>{{ env.VUE_APP_NAME }}版权所有</p>
                 <p>由南宁迈越提供技术支持</p>
             </template>
         </div>
@@ -22,15 +22,13 @@
 </template>
 <script>
 import Main from './Main.vue';
-import clientConfig from '@client/config';
-
 export default {
     components: {
         Main,
     },
     data() {
         return {
-            clientConfig,
+            env: process.env,
         };
     },
 };

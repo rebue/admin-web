@@ -12,8 +12,6 @@
 import DdLoginCode from '@/component/app/DDLoginCode.vue';
 import request from '@/util/request';
 import { observer } from 'mobx-vue';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'app-security-center-dingding',
     components: {
@@ -103,7 +101,7 @@ export default observer({
             const redirectUri = `${this.redirect_uri}?callbackUrl=${callbackUrl}`;
             request
                 .get({
-                    url: `/orp-svr/orp/get-auth-url/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}`,
+                    url: `/orp-svr/orp/get-auth-url/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}`,
                     params: {
                         redirectUri: redirectUri,
                     },

@@ -5,6 +5,16 @@
     "scripts": {
         "dev": "vue-cli-service serve",
         "build": "vue-cli-service build --mode production",
+        
+        "dev:nnxy": "vue-cli-service serve --mode nnxy.development",
+        "build:nnxy": "vue-cli-service build --mode nnxy.production",
+
+        "dev:fangchenggang": "vue-cli-service serve --mode fangchenggang.development",
+        "build:fangchenggang": "vue-cli-service build --mode fangchenggang.production",
+
+        "dev:gxhqxx": "vue-cli-service serve --mode gxhqxx.development",
+        "build:gxhqxx": "vue-cli-service build --mode gxhqxx.production",
+
         "lint": "vue-cli-service lint",
         "report": "vue-cli-service build --report"
     },

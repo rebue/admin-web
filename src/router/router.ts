@@ -128,9 +128,7 @@ router.beforeEach(async (to, from, next) => {
         //如果没有JWT Token，说明未登录或登录过期，应跳转到登录页面
         if (!hasJwtToken()) {
             const appId = getAppIdByUrl();
-            const clientConfig = require(`@/client/${process.env.VUE_APP_CLIENT}/config`).default;
-            const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
-            if (clientConfigEnv.VUE_APP_LOGIN_BY_OIDC === true) {
+            if (process.env.VUE_APP_LOGIN_BY_OIDC === 'true') {
                 sessionStorage.setItem('auth_info_clientId', AppDic.getClientId(appId));
                 return oidc(next);
             } else {

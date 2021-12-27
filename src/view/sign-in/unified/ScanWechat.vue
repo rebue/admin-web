@@ -6,8 +6,6 @@ import WxCode from '@/component/app/Wechat.vue';
 import { observer } from 'mobx-vue';
 import { AppDic } from '@/dic/AppDic';
 import { AppIdDic } from '@/dic/AppIdDic';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'sign-in-unified-wechat',
     components: {
@@ -21,7 +19,7 @@ export default observer({
     },
     data() {
         return {
-            redirectUri: `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/${this.clientId}`,
+            redirectUri: `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/orp/sign-in-by-code/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.clientId}`,
         };
     },
     methods: {

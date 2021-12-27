@@ -10,8 +10,6 @@
 <script>
 import DdCode from '@/component/app/Dingding.vue';
 import { observer } from 'mobx-vue';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'forget-password-by-dingding',
     components: {
@@ -20,7 +18,7 @@ export default observer({
     props: ['account'],
     data() {
         return {
-            redirectUri: `${clientConfigEnv.VUE_APP_DD_REDIRECT_URL}/orp-svr/forget/verifiy-account/ding-talk/${clientConfigEnv.VUE_APP_DD_CODE_APPID}/${this.account.id}`,
+            redirectUri: `${process.env.VUE_APP_DD_REDIRECT_URL}/orp-svr/forget/verifiy-account/ding-talk/${process.env.VUE_APP_DD_CODE_APPID}/${this.account.id}`,
         };
     },
     methods: {

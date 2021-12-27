@@ -10,8 +10,6 @@
 <script>
 import WxCode from '@/component/app/Wechat.vue';
 import { observer } from 'mobx-vue';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default observer({
     name: 'forget-password-by-wechat',
     components: {
@@ -20,7 +18,7 @@ export default observer({
     props: ['account'],
     data() {
         return {
-            redirectUri: `${clientConfigEnv.VUE_APP_WX_REDIRECT_URL}/orp-svr/forget/verifiy-account/wechat-open/${clientConfigEnv.VUE_APP_WX_CODE_APPID}/${this.account.id}`,
+            redirectUri: `${process.env.VUE_APP_WX_REDIRECT_URL}/orp-svr/forget/verifiy-account/wechat-open/${process.env.VUE_APP_WX_CODE_APPID}/${this.account.id}`,
         };
     },
     methods: {

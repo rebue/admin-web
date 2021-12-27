@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="header">
-            <img :src="require('@client/images/logo.png')" alt="" class="logo" :class="`${clientConfig.id}-logo`" />
+            <img :src="require(`@client/images/logo.png`)" alt="" class="logo" :class="`${env.VUE_APP_CLIENT}-logo`" />
             <div class="divider"></div>
             <div class="title-wrap">
                 <div class="title">统一身份认证平台</div>
@@ -19,11 +19,9 @@
                 <router-link :to="forgetPswdPath" class="forget-password" v-if="phoneShow">忘记密码</router-link>
                 <div class="scan-code-card">
                     <div class="top-list">
-                        <span @click="vxScanCodeClick" v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID">微信扫码登录</span>
-                        <span v-if="clientConfigEnv.VUE_APP_WX_CODE_APPID && clientConfigEnv.VUE_APP_DD_CODE_APPID"
-                            >|</span
-                        >
-                        <span @click="ddScanCodeClick" v-if="clientConfigEnv.VUE_APP_DD_CODE_APPID">钉钉扫码登录</span>
+                        <span @click="vxScanCodeClick" v-if="env.VUE_APP_WX_CODE_APPID">微信扫码登录</span>
+                        <span v-if="env.VUE_APP_WX_CODE_APPID && env.VUE_APP_DD_CODE_APPID">|</span>
+                        <span @click="ddScanCodeClick" v-if="env.VUE_APP_DD_CODE_APPID">钉钉扫码登录</span>
                     </div>
                     <div class="mid-list">
                         <!-- <img src="./loginIcon.png" alt="" /> -->
@@ -35,11 +33,11 @@
             </div>
         </div>
         <div class="footer">
-            <template v-if="clientConfig.id === 'default'">
+            <template v-if="env.VUE_APP_CLIENT === 'default'">
                 桂ICP备08001078号-2
             </template>
             <template v-else>
-                <p>{{ clientConfig.name }}版权所有</p>
+                <p>{{ env.VUE_APP_NAME }}版权所有</p>
                 <p>由南宁迈越提供技术支持</p>
             </template>
         </div>
@@ -49,8 +47,6 @@
 import PublicSignIn from './PublicSignIn.vue';
 import scanCode from './scanCode.vue';
 import { getAppIdByUrl } from '@/util/common';
-import clientConfig from '@client/config';
-const clientConfigEnv = clientConfig.env[process.env.NODE_ENV];
 export default {
     components: {
         PublicSignIn,
@@ -58,17 +54,16 @@ export default {
     },
     data() {
         return {
-            clientConfig,
             phoneShow: true,
             codeType: '微信',
             forgetPswdPath: `/${getAppIdByUrl()}/forget-password`,
-            clientConfigEnv: clientConfigEnv,
+            env: process.env,
         };
     },
     methods: {
         //微信扫码点击事件
         vxScanCodeClick() {
-            if (!clientConfigEnv.VUE_APP_WX_CODE_APPID) {
+            if (!process.env.VUE_APP_WX_CODE_APPID) {
                 this.$message.warning('暂不支持微信扫码登录');
                 return;
             }
@@ -77,7 +72,7 @@ export default {
         },
         //钉钉扫码点击事件
         ddScanCodeClick() {
-            if (!clientConfigEnv.VUE_APP_DD_CODE_APPID) {
+            if (!process.env.VUE_APP_DD_CODE_APPID) {
                 this.$message.warning('暂不支持钉钉扫码登录');
                 return;
             }
