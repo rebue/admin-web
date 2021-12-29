@@ -173,12 +173,12 @@ export default {
                 title: '新建',
                 onClick: this.handleAdd,
             },
-            // {
-            //     buttonType: 'primary',
-            //     icon: 'align-center',
-            //     title: '批量导入',
-            //     onClick: this.batchOperation,
-            // },
+            {
+                buttonType: 'primary',
+                icon: 'align-center',
+                title: '批量导入',
+                onClick: this.batchOperation,
+            },
             // {
             //     buttonType: 'primary',
             //     icon: 'align-center',
@@ -384,8 +384,7 @@ export default {
                 {
                     data() {
                         return {
-                            // realmId: that.curRealmId,
-                            // orgId: that.curOrgId,
+                            //
                         };
                     },
                     methods: {
@@ -397,7 +396,6 @@ export default {
                 {
                     title: '批量操作',
                     width: '50%',
-                    // footer: null,
                     destroyOnClose: true,
                     wrapClassName: 'account-batch-dialog-wrap',
                 }

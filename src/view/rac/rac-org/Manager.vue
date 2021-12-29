@@ -83,6 +83,12 @@ export default {
                 title: '新建根组织',
                 onClick: this.handleAdd,
             },
+            {
+                buttonType: 'primary',
+                icon: 'align-center',
+                title: '批量导入',
+                onClick: this.batchOperation,
+            },
         ];
 
         this.tableActions = [
@@ -190,6 +196,33 @@ export default {
         },
         handleEditFormClose() {
             this.refreshTableData();
+        },
+        /**
+         * 处理批量操作账户的事件
+         */
+        batchOperation() {
+            const that = this;
+            this.$showDialog(
+                require('./batchOperation.vue').default,
+                {
+                    data() {
+                        return {
+                            //
+                        };
+                    },
+                    methods: {
+                        callback() {
+                            that.refreshTableData();
+                        },
+                    },
+                },
+                {
+                    title: '批量操作',
+                    width: '50%',
+                    destroyOnClose: true,
+                    wrapClassName: 'account-batch-dialog-wrap',
+                }
+            );
         },
     },
 };

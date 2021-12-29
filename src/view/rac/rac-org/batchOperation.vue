@@ -1,12 +1,12 @@
 <template>
     <a-form-model ref="form" :model="model" v-bind="formLayout">
-        <a-form-model-item key="selectValue" label="账号状态">
+        <!-- <a-form-model-item key="selectValue" label="账号状态">
             <a-select :value="model.selectValue" @change="handleChange">
                 <a-select-option :value="item" v-for="(item, index) in checkedData" :key="index">
                     {{ item }}
                 </a-select-option>
             </a-select>
-        </a-form-model-item>
+        </a-form-model-item> -->
         <a-form-model-item key="uploadExcel" label="选择上传的Excel文件">
             <a-upload
                 name="excel"
@@ -66,7 +66,7 @@ export default {
         exportData() {
             const link = document.createElement('a');
             link.style.display = 'none';
-            link.href = racExcelApi.getDownload('account');
+            link.href = racExcelApi.getDownload('org');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link); //下载完成移除元素
@@ -89,7 +89,7 @@ export default {
                 formData.append('excel', file);
             });
             this.uploading = true;
-            racExcelApi.getUpload('account', formData).finally(() => {
+            racExcelApi.getUpload('org', formData).finally(() => {
                 this.$message.success('导入成功');
                 this.callback();
             });
