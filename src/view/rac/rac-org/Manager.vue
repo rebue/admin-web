@@ -153,6 +153,31 @@ export default {
         },
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
+            if (realmId == 'default') {
+                this.tableCommands = [
+                    {
+                        buttonType: 'primary',
+                        icon: 'plus',
+                        title: '新建根组织',
+                        onClick: this.handleAdd,
+                    },
+                    {
+                        buttonType: 'primary',
+                        icon: 'align-center',
+                        title: '批量导入',
+                        onClick: this.batchOperation,
+                    },
+                ];
+            } else {
+                this.tableCommands = [
+                    {
+                        buttonType: 'primary',
+                        icon: 'plus',
+                        title: '新建根组织',
+                        onClick: this.handleAdd,
+                    },
+                ];
+            }
         },
         /**
          * 处理添加组织的事件

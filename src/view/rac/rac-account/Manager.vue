@@ -324,6 +324,37 @@ export default {
         handleRealmChanged(realmId) {
             this.curRealmId = realmId;
             this.curOrgId = undefined;
+            if (realmId == 'default') {
+                this.tableCommands = [
+                    {
+                        buttonType: 'primary',
+                        icon: 'plus',
+                        title: '新建',
+                        onClick: this.handleAdd,
+                    },
+                    {
+                        buttonType: 'primary',
+                        icon: 'align-center',
+                        title: '批量导入',
+                        onClick: this.batchOperation,
+                    },
+                    // {
+                    //     buttonType: 'primary',
+                    //     icon: 'align-center',
+                    //     title: '导出',
+                    //     onClick: this.batchOperation,
+                    // },
+                ];
+            } else {
+                this.tableCommands = [
+                    {
+                        buttonType: 'primary',
+                        icon: 'plus',
+                        title: '新建',
+                        onClick: this.handleAdd,
+                    },
+                ];
+            }
         },
         /** 处理组织菜单点击节点的事件 */
         handleOrgMenuClick(item) {
