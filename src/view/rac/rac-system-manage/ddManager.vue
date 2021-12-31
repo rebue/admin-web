@@ -36,7 +36,7 @@ export default {
         this.api = {
             listAll() {
                 return oapConfig.getNacosConfig().then(ro => {
-                    const data = ro.extra.dingTalkMapList;
+                    const data = ro.extra[0];
                     ro.extra.list = data;
                     return ro;
                 });

@@ -35,7 +35,7 @@ export default {
         /**获取密码过期时长接口和是否是第一次登录接口 */
         getPasswordApiFun() {
             // racAccountApi.getCurAccountInfo().then(res => {
-                raclevelProtectApi.getConfig().then(ro => {
+                raclevelProtectApi.getConfig('rac-svr').then(ro => {
                     console.log(accountStore.expirationDatetime)
                     let passwordTips = ro.extra?.passwordTips;
                      if(passwordTips == undefined){

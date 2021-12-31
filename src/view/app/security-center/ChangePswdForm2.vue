@@ -122,7 +122,7 @@ export default {
     },
     methods: {
         getbyIdFun() {
-            raclevelProtectApi.getConfig().then(ro => {
+            raclevelProtectApi.getConfig('rac-svr').then(ro => {
                 this.passwordMinLength = ro.extra?.passwordMinLength;
                 this.passwordCharacter = ro.extra?.passwordCharacter;
                 this.help = `登录密码由${this.passwordMinLength}位以上字符组成，包含由字母，数字和符号${this.passwordCharacter}种以上组合，区分大小写`;

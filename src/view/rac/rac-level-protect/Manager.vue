@@ -69,7 +69,7 @@ export default {
     data() {
         this.api = {
             listAll() {
-                return raclevelProtectApi.getConfig().then(ro => {
+                return raclevelProtectApi.getConfig('rac-svr').then(ro => {
                     const data = [];
                     for (const i in configData) {
                         for (const j in ro.extra) {
@@ -134,7 +134,7 @@ export default {
                 value: value,
             };
             raclevelProtectApi
-                .publishConfig(data)
+                .publishConfig('rac-svr', data)
                 .then(() => {
                     this.visible = false;
                 })
@@ -152,7 +152,7 @@ export default {
                 value: oldData.dicItemValue,
             };
             raclevelProtectApi
-                .publishConfig(data)
+                .publishConfig('rac-svr', data)
                 .then(() => {
                     this.visible = false;
                 })

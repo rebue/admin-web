@@ -7,21 +7,19 @@ import request from '@/util/request';
 
 export default class OapConfig extends BaseCrudApi {
     /** 请求的基础链接 */
-    baseUrn = '/orp-svr/orp/nacos/publish';
+    baseUrn = '/rac-svr/rac/nacos/';
     /**
      * 获取配置信息
      */
     getNacosConfig(): Promise<Ro> {
-        return request.get({
-            url: '/orp-svr/orp/get/nacos/config',
-        });
+        return request.get({ url: this.baseUrn + `/get/orp-svr/config` });
     }
     /**
      * 新增配置信息
      */
     setNacosAddConfig(data): Promise<Ro> {
         return request.post({
-            url: this.baseUrn + '/add-config',
+            url: this.baseUrn + `/add/publish/orp-svr/config`,
             data,
         });
     }
@@ -30,7 +28,7 @@ export default class OapConfig extends BaseCrudApi {
      */
     setNacosModifyConfig(data): Promise<Ro> {
         return request.post({
-            url: this.baseUrn + '/modify-config',
+            url: this.baseUrn + `/modify/publish/orp-svr/config`,
             data,
         });
     }
@@ -39,7 +37,7 @@ export default class OapConfig extends BaseCrudApi {
      */
     setNacosDelConfig(data): Promise<Ro> {
         return request.post({
-            url: this.baseUrn + '/del-config',
+            url: this.baseUrn + `/del/publish/orp-svr/config`,
             data,
         });
     }

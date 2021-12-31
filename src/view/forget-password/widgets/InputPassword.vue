@@ -84,7 +84,7 @@ export default {
             this.$emit('update:value', e.target.value);
         },
         getbyIdFun() {
-            raclevelProtectApi.getConfig().then(ro => {
+            raclevelProtectApi.getConfig('rac-svr').then(ro => {
                 this.showHelp = true;
                 this.passwordMinLength = ro.extra?.passwordMinLength;
                 this.passwordCharacter = ro.extra?.passwordCharacter;
