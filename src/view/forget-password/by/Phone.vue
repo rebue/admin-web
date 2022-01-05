@@ -72,7 +72,7 @@ export default {
                             accountId: this.model.id,
                             code: this.model.code,
                         })
-                        .then(ro => {
+                        .then(() => {
                             console.log('--身份认证 手机号 提交数据', this.model);
                             this.$emit('callback', { ...this.model });
                         });

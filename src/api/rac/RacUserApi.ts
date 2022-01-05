@@ -1,7 +1,6 @@
 /**
  * 用户信息相关请求
  */
-import md5 from 'crypto-js/md5';
 import { Ro } from '@/ro/Ro';
 import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';

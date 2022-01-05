@@ -28,7 +28,7 @@ export default observer({
     },
     methods: {
         handleSuccess(data) {
-            const { result, msg } = data;
+            const { result } = data;
             if (result === 'success') {
                 setTimeout(() => {
                     this.callback && this.callback();

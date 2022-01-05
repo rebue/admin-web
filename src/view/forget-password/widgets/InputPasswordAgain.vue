@@ -25,7 +25,6 @@ export default {
         },
     },
     data() {
-        const that = this;
         this.rules = {
             required: true,
             trigger: ['change', 'blur'],

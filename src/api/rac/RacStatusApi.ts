@@ -7,10 +7,7 @@
 /**
  * 用户身份相关请求
  */
-import { Ro } from '@/ro/Ro';
-import request from '@/util/request';
 import BaseCrudApi from '../comm/BaseCrudApi';
-import { RacUserEnableMo } from '@/mo/rac/RacUserEnableMo';
 
 export default class RacStatusApi extends BaseCrudApi {
     /** 请求的基础链接 */

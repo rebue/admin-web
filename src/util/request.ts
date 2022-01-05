@@ -3,7 +3,6 @@ import qs from 'qs';
 import { isSimulateNetDelay, requestBaseUrl, xHTTPMethodOverride } from '@/env';
 import { message } from 'ant-design-vue';
 import { Ro } from '@/ro/Ro';
-import router from '@/router/router';
 import { getAppIdByUrl } from '@/util/common';
 import { hasJwtToken, removeJwtToken, hasAuthInfo, removeAuthInfo, getAuthInfo } from '@/util/cookie';
 import { Modal } from 'ant-design-vue';

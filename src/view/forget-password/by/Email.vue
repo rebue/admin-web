@@ -61,7 +61,7 @@ export default {
                             code: this.model.code,
                             captchaVerification: this.model.captchaVerification,
                         })
-                        .then(ro => {
+                        .then(() => {
                             console.log('--身份认证 邮箱 提交数据', this.model);
                             this.$emit('callback', { ...this.model });
                         });

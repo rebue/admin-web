@@ -69,7 +69,7 @@ export default {
         showVerify() {
             // 首先验证手机号是否输入
             let valid = true;
-            this.$refs.form.validateField('signInName', (errors, values) => {
+            this.$refs.form.validateField('signInName', errors => {
                 valid = !errors;
             });
 
@@ -129,7 +129,7 @@ export default {
     watch: {
         'model.signInName': {
             immediate: true,
-            handler(val) {
+            handler() {
                 this.handleVerifyError();
             },
         },

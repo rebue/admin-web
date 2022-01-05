@@ -99,7 +99,7 @@ export default {
         },
         validatePhone() {
             let valid = false;
-            this.$refs.form.validateField('mobile', (errors, values) => {
+            this.$refs.form.validateField('mobile', errors => {
                 valid = !errors;
             });
             return valid;

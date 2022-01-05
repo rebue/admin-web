@@ -36,7 +36,7 @@ import { observer } from 'mobx-vue';
 import { accountStore } from '@/store/Store';
 import BaseManager from '@/component/rebue/BaseManager';
 import CrudTable from '@/component/rebue/CrudTable.vue';
-import { racOpLogApi, racAccountApi } from '@/api/Api';
+import { racOpLogApi } from '@/api/Api';
 import { OpTypeDic } from '@/dic/OpTypeDic';
 import moment from 'moment';
 import 'moment/locale/zh-cn';

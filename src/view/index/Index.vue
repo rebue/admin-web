@@ -112,7 +112,6 @@ import defaultSettings from '@/config/defaultSettings';
 import { accountStore, settingStore } from '@/store/Store';
 import { racMenuAction, settingAction } from '@/action/Action';
 import { AppIdDic } from '@/dic/AppIdDic';
-import { removeJwtToken } from '@/util/cookie';
 import { racAgentSignOutApi } from '@/api/Api';
 import ImageUploader from 'vue-image-crop-upload/upload-2.vue';
 import ChangePswdForm from '@/view/app/security-center/ChangePswdForm.vue';
@@ -213,7 +212,7 @@ export default observer({
                             window.close();
 
                             // 其他情况，如通过平台/运营登录页登录，360能关闭当前标签页。火狐 safai, chrome只是替换了成了空白页
-                            const myWindow = window.open('about:blank', '_self', '', true).close();
+                            window.open('about:blank', '_self', '', true).close();
                         },
                     });
                     break;
