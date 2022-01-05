@@ -166,9 +166,8 @@ export default {
             });
             return promise;
         },
-        handleTreeChange(page, pageSize) {
+        handleTreeChange(page) {
             this.pageNum = page;
-            // this.pageSize = pageSize;
             this.$nextTick(() => {
                 this.refreshData();
             });

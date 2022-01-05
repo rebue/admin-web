@@ -43,7 +43,7 @@ export default {
             {
                 dataIndex: 'signInName',
                 title: '账号',
-                customRender: (text, record) => {
+                customRender: text => {
                     return text || '--';
                 },
             },
@@ -142,7 +142,7 @@ export default {
                         };
                     },
                     methods: {
-                        callback(ro) {
+                        callback() {
                             // 添加映射账号之后，回填unionId
                             that.refreshData();
                         },
@@ -167,7 +167,7 @@ export default {
                         };
                     },
                     methods: {
-                        callback(ro) {
+                        callback() {
                             that.refreshData();
                         },
                     },

@@ -23,7 +23,7 @@
 
 <script>
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { racAccountApi, racDicApi } from '@/api/Api';
+import { racAccountApi } from '@/api/Api';
 import InputPassword from '@/view/forget-password/widgets/InputPassword.vue';
 import InputPasswordAgain from '@/view/forget-password/widgets/InputPasswordAgain.vue';
 export default {

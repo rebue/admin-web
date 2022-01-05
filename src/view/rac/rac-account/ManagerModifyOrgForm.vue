@@ -207,9 +207,8 @@ export default {
             }
         },
         /**处理分页 */
-        handleTreeChange(page, pageSize) {
+        handleTreeChange(page) {
             this.pageNum = page;
-            // this.pageSize = pageSize;
             this.$nextTick(() => {
                 this.refreshData();
             });

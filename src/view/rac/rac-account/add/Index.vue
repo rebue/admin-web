@@ -127,7 +127,7 @@ export default {
         },
         // 提交账号表单
         submitAccount() {
-            this.$refs.accountForm.ok(null, ro => {
+            this.$refs.accountForm.ok(null, () => {
                 setTimeout(() => {
                     this.callback && this.callback();
                 }, 1000);

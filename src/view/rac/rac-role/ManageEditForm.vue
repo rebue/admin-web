@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import { racRealmApi, racRoleApi, racPermApi } from '@/api/Api';
+import { racRoleApi, racPermApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { findFromTree, forEachTree } from '@/util/tree';
+import { forEachTree } from '@/util/tree';
 
 export default {
     name: 'Manager',
@@ -104,15 +104,10 @@ export default {
             this.$nextTick(() => {
                 this.loading = true;
                 const data = { roleId: this.role.id, permIds: this.checkedKeys };
-                racRoleApi
-                    .addRolePerm(data)
-                    .then(ro => {
-                        //
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                        this.$emit('update:visible', false);
-                    });
+                racRoleApi.addRolePerm(data).finally(() => {
+                    this.loading = false;
+                    this.$emit('update:visible', false);
+                });
             });
         },
         /**

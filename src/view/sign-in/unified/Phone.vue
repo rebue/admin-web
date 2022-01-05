@@ -38,7 +38,6 @@
     </a-form-model>
 </template>
 <script>
-import request from '@/util/request';
 import { isPhone } from '@/util/validator';
 import SendSMSCode from '@/component/app/SendSMSCode.vue';
 
@@ -119,7 +118,7 @@ export default {
         },
         validatePhone() {
             let valid = false;
-            this.$refs.phoneForm.validateField('phoneNumber', (errors, values) => {
+            this.$refs.phoneForm.validateField('phoneNumber', errors => {
                 valid = !errors;
             });
             return valid;

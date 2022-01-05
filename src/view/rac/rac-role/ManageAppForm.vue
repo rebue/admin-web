@@ -31,7 +31,6 @@
 <script>
 import { racRoleApi, racPermApi, racAppApi } from '@/api/Api';
 import BaseModal from '@/component/rebue/BaseModal.vue';
-import { forEachTree } from '@/util/tree';
 
 export default {
     name: 'Manager',
