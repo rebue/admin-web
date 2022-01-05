@@ -1,14 +1,5 @@
 import { AppIdDic } from '@/dic/AppIdDic';
 import { getAppIdByUrl } from '@/util/common';
-import LaunchDemo1 from './launch-demo1-router.config.js';
-import LaunchDemo2 from './launch-demo2-router.config.js';
-import LaunchDemo3 from './launch-demo3-router.config.js';
-import LaunchDemo4 from './launch-demo4-router.config.js';
-import LaunchDemo5 from './launch-demo5-router.config.js';
-import LaunchDemo6 from './launch-demo6-router.config.js';
-import LaunchDemo7 from './launch-demo7-router.config.js';
-import LaunchDemo8 from './launch-demo8-router.config.js';
-import LaunchDemo9 from './launch-demo9-router.config.js';
 
 const RouteView = {
     name: 'RouteView',
@@ -653,121 +644,11 @@ export const constantRouters = [
             },
         ],
     },
-    {
-        ...LaunchDemo1,
-    },
-    {
-        path: '/launch-demo1/login',
-        name: 'launch-demo1-login',
-        component: () => import('@/view/launch-demo1/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo2,
-    },
-    {
-        path: '/launch-demo2/login',
-        name: 'launch-demo2-login',
-        component: () => import('@/view/launch-demo2/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo3,
-    },
-    {
-        path: '/launch-demo3/login',
-        name: 'launch-demo3-login',
-        component: () => import('@/view/launch-demo3/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo4,
-    },
-    {
-        path: '/launch-demo4/login',
-        name: 'launch-demo4-login',
-        component: () => import('@/view/launch-demo4/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo5,
-    },
-    {
-        ...LaunchDemo6,
-    },
-    {
-        ...LaunchDemo7,
-    },
-    {
-        path: '/launch-demo7/login',
-        name: 'launch-demo7-login',
-        component: () => import('@/view/launch-demo7/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo8,
-    },
-    {
-        path: '/launch-demo8/login',
-        name: 'launch-demo8-login',
-        component: () => import('@/view/launch-demo8/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
-    {
-        ...LaunchDemo9,
-    },
-    {
-        path: '/launch-demo9/login',
-        name: 'launch-demo9-login',
-        component: () => import('@/view/launch-demo9/login/Index.vue'),
-        hidden: true,
-        meta: {
-            title: '登录页',
-            keepAlive: true,
-            icon: 'global',
-        },
-    },
 
     /** 404 */
     {
         path: '/404',
         component: () => import('@/view/404/404.vue'),
-    },
-    {
-        path: '/research-workload2',
-        name: 'ceshi',
-        hidden: true,
-        component: () => import('@/view/launch-demo3/search/baseSearch.vue'),
     },
     // 404 page must be placed at the end !!!
     {

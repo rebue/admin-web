@@ -79,8 +79,6 @@ const uncheckJwtTokenPaths = [
     '/404',
     '/unifiedLogin',
     '/demo',
-
-    '/launch-demo',
 ];
 /**
  * 路由跳转前置钩子
