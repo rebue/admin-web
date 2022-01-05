@@ -10,7 +10,7 @@
         </div>
         <div class="footer">
             相关应用链接:
-            <router-link to="/platform-admin-web/sign-in/platform">平台管理应用</router-link>
+            <router-link to="/platform-admin-web/sign-in">平台管理应用</router-link>
         </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>

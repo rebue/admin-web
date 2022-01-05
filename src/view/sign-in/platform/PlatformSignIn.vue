@@ -10,7 +10,7 @@
         </div>
         <div class="footer">
             相关应用链接:
-            <router-link to="/ops-admin-web/sign-in/ops">运营管理应用</router-link>
+            <router-link to="/ops-admin-web/sign-in">运营管理应用</router-link>
         </div>
         <div class="footer">&copy;2020 zbz, Rebue. All rights reserved.</div>
     </div>

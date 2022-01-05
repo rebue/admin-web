@@ -98,7 +98,7 @@ router.beforeEach(async (to, from, next) => {
      * 输入登录路径访问统一登录页，帐密登录报“未找到session信息”：
      * 无auth_info cookie，需要走认证拿到cookie， 该cookie在帐密登录需要，表示将要登录的应用
      */
-    if (to.path.startsWith('/unified-auth/sign-in/')) {
+    if (to.path.startsWith('/unified-auth/sign-in')) {
         if (!hasAuthInfo()) {
             //通过认证，后端设置cookie clientId
             //第一步 获取认证

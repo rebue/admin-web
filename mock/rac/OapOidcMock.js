@@ -38,7 +38,7 @@ module.exports = {
             res.cookie(authInfoKey, auth_info, { expires: new Date(Date.now() + 1800000) });
             if (true) {
                 //去登录页
-                res.writeHead(302, {'Location': `http://${req.headers.host}/admin-web/unified-auth/sign-in/unified`});
+                res.writeHead(302, {'Location': `http://${req.headers.host}/admin-web/unified-auth/sign-in`});
             } else {
                 let redirect_uri = params.redirect_uri
                 redirect_uri = `${redirect_uri}${redirect_uri.includes('?') ? '&' : '?'}state=RECOMMENDED&code=1111` 
