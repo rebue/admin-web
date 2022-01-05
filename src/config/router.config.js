@@ -54,7 +54,7 @@ export const constantRouters = [
     /** 平台管理 */
     /** 登录 */
     {
-        path: '/platform-admin-web/sign-in/platform',
+        path: '/platform-admin-web/sign-in',
         name: 'platform-sign-in',
         component: () => import('@/view/sign-in/platform/PlatformSignIn.vue'),
     },
@@ -385,7 +385,7 @@ export const constantRouters = [
     /** 运营管理 */
     /** 登录 */
     {
-        path: '/ops-admin-web/sign-in/ops',
+        path: '/ops-admin-web/sign-in',
         name: 'ops-sign-in',
         component: () => import('@/view/sign-in/ops/OpsSignIn.vue'),
     },
@@ -595,7 +595,7 @@ export const constantRouters = [
     /** 统一应用*/
     /** 登录 */
     {
-        path: '/unified-auth/sign-in/unified',
+        path: '/unified-auth/sign-in',
         name: 'unified-sign-in',
         component: () => import('@/view/sign-in/unified/UnifiedSignIn.vue'),
     },

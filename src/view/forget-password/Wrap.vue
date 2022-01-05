@@ -57,11 +57,11 @@ export default {
         goLogin() {
             const appId = getAppIdByUrl();
             if (appId === AppIdDic.UnifiedAuth) {
-                this.$router.replace(`/${appId}/sign-in/unified`);
+                this.$router.replace(`/${appId}/sign-in`);
             } else if (appId === AppIdDic.PlatformAdminWeb) {
-                this.$router.replace(`/${appId}/sign-in/platform`);
+                this.$router.replace(`/${appId}/sign-in`);
             } else if (appId === AppIdDic.OpsAdminWeb) {
-                this.$router.replace(`/${appId}/sign-in/ops`);
+                this.$router.replace(`/${appId}/sign-in`);
             }
         },
     },

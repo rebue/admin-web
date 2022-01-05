@@ -68,9 +68,9 @@ const oidc = async function(next) {
 
 /** 不检查JWT Token的路径列表 */
 const uncheckJwtTokenPaths = [
-    '/platform-admin-web/sign-in/',
-    '/ops-admin-web/sign-in/',
-    '/unified-auth/sign-in/',
+    '/platform-admin-web/sign-in',
+    '/ops-admin-web/sign-in',
+    '/unified-auth/sign-in',
     '/scanTransfer',
     '/platform-admin-web/forget-password',
     '/ops-admin-web/forget-password',
@@ -133,10 +133,10 @@ router.beforeEach(async (to, from, next) => {
                 return oidc(next);
             } else {
                 if (appId === AppIdDic.PlatformAdminWeb) {
-                    next(`/${appId}/sign-in/platform`);
+                    next(`/${appId}/sign-in`);
                     return;
                 } else if (appId === AppIdDic.OpsAdminWeb) {
-                    next(`/${appId}/sign-in/ops`);
+                    next(`/${appId}/sign-in`);
                     return;
                 }
             }
