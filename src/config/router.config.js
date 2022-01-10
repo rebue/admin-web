@@ -34,10 +34,10 @@ export const constantRouters = [
             // 在应用下去路由到path: '/'
             const App_Id = getAppIdByUrl();
             if (App_Id) {
-                return `/${getAppIdByUrl()}`;
+                return `/${App_Id}`;
             } else {
-                // 手动访问path: '/'， 默认redirect到统一
-                return `/${AppIdDic.UnifiedAuth}`;
+                // 必须访问具体的app_id， 否则去404页面
+                return '/404';
             }
         },
     },
