@@ -130,13 +130,8 @@ router.beforeEach(async (to, from, next) => {
                 sessionStorage.setItem('auth_info_clientId', AppDic.getClientId(appId));
                 return oidc(next);
             } else {
-                if (appId === AppIdDic.PlatformAdminWeb) {
-                    next(`/${appId}/sign-in`);
-                    return;
-                } else if (appId === AppIdDic.OpsAdminWeb) {
-                    next(`/${appId}/sign-in`);
-                    return;
-                }
+                next(`/${appId}/sign-in`);
+                return;
             }
         } else {
             //已登录
