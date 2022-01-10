@@ -15,7 +15,7 @@
             </div>
         </a-list-item>
         <!-- 手机号 -->
-        <a-list-item class="list-item">
+        <a-list-item class="list-item" v-if="env.VUE_APP_SMS === 'true'">
             <a-list-item-meta>
                 <div class="avatar" slot="avatar">
                     <a-icon type="mobile" />
@@ -33,7 +33,7 @@
         </a-list-item>
 
         <!-- 微信 -->
-        <a-list-item class="list-item">
+        <a-list-item class="list-item" v-if="env.VUE_APP_WX_CODE_APPID">
             <a-list-item-meta>
                 <div class="avatar" slot="avatar" style="background-color: #00db6c;">
                     <a-icon type="wechat" />
@@ -51,7 +51,7 @@
             </div>
         </a-list-item>
         <!-- 钉钉 -->
-        <a-list-item class="list-item">
+        <a-list-item class="list-item" v-if="env.VUE_APP_DD_CODE_APPID">
             <a-list-item-meta>
                 <div class="avatar" slot="avatar">
                     <a-icon type="dingding" />
@@ -69,7 +69,7 @@
         </a-list-item>
 
         <!-- 修改 -->
-        <a-list-item class="list-item">
+        <a-list-item class="list-item" v-if="env.VUE_APP_EMAIL === 'true'">
             <a-list-item-meta>
                 <div class="avatar" slot="avatar">
                     <a-icon type="mail" />
@@ -104,6 +104,7 @@ export default observer({
             isVerifiedEmail: false,
             changePswdFormVisible: false,
             changePswdId: '',
+            env: process.env,
         };
     },
     components: {
