@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="header-user">
-            <span class="nickname">{{ accountStore.nickname }}</span>
             <a-popconfirm title="确定要退出吗?" @confirm="() => logout()" ok-text="确定" cancel-text="取消">
+                <span class="nickname">{{ accountStore.nickname }}</span>
                 <img :src="require('../../view/app/assets/img/logout.png')" style="cursor:pointer"/>
             </a-popconfirm>
         </div>
