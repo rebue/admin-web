@@ -1,5 +1,5 @@
 <template>
-    <base-manager ref="baseManager" class="page">
+    <base-manager ref="baseManager" class="page h100">
         <template #managerCard>
             <crud-table
                 :showKeywords="true"

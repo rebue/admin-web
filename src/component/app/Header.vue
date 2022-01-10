@@ -72,10 +72,11 @@ export default {
 .header {
     height: 77px;
     background: #3A69C9;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 60;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // right:0;
+    // z-index: 60;
     .nickname {
         color: #fff;
         vertical-align: middle;
@@ -96,7 +97,7 @@ export default {
             max-width: 172px;
         }
         .header-nav {
-            margin-left: 180px;
+            margin-left: 100px;
             min-width: 450px;
         }
         .header-nav-item {
@@ -110,6 +111,14 @@ export default {
         }
         .header-nav-item.router-link-active {
             background: #2752AA
+        }
+        .header-user {
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+        }
+        .nickname {
+            flex:1 
         }
     }
 }

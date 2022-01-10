@@ -1,11 +1,13 @@
 <template>
     <div class="layout">
         <ifLoginPass />
-        <Header />
-        <div class="mt20 main">
-            <router-view />
+        <Header class="header" />
+        <div class="main">
+            <div class="contain">
+                <router-view />
+            </div>
+            <div class="footer">技术支持 迈越公司版权所有 @ 2021</div>
         </div>
-        <div class="footer">技术支持 迈越公司版权所有 @ 2021</div>
     </div>
 </template>
 
@@ -34,27 +36,35 @@ export default {
 <style src="./base.css"></style>
 <style scoped lang="less">
 .layout {
-    /* height: 100%; */
+    height: 100%;
+    overflow: hidden;
+    min-width: 1080px;
     padding-top: 1px;
     background: url(./assets/img/mainbg.png) no-repeat;
     background-size: cover;
 }
 
 .main {
-    width: 80%;
-    margin: 0 auto;
-    padding: 18px 0;
     display: flex;
+    flex-direction: column;
     .page {
         display: flex;
         width: 100%;
     }
 }
 .header + .main {
-    margin-top: 77px;
-    min-height: calc(100vh - 112px);
+    // margin-top: 77px;
+    height: calc(100vh - 77px);
+    overflow: scroll;
+    padding-top: 20px;
 }
-.main + .footer {
+.contain {
+    width: 80%;
+    margin: 0 auto;
+    padding: 18px 0;
+    flex: 1;
+}
+.footer {
     height: 34px;
     line-height: 34px;
     background: #2d59b3;

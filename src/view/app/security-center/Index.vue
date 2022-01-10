@@ -2,7 +2,7 @@
     <div class="flex-box page index-wrap">
         <Aside />
         <div class="ml20 mc flex-1">
-            <div class="w100 pt20 pb20 bg-w card card-shadow security-center-card">
+            <div class="w100 pt20 pb20 bg-w card card-shadow security-center-card h100">
                 <div class="title">
                     <img :src="require('../assets/img/safety.png')" width="20" height="24" />
                     <span class="font-20">安全中心</span>
