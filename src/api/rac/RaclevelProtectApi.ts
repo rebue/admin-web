@@ -12,7 +12,7 @@ export default class RacSignInApi {
      * 获取配置信息
      */
     getConfig(type): Promise<Ro> {
-        return request.get({ url: this.baseUrn + `/get/${type}/config` });
+        return request.get({ url: this.baseUrn + `get/${type}/config` });
     }
     /**
      * 获取配置信息
