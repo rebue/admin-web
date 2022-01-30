@@ -36,30 +36,30 @@ const instance = axios.create({
 
 // request interceptor
 instance.interceptors.request.use(
-    config => {
+    (config) => {
         console.log('request config', config);
 
         /** 根据路径获取appId, 放到请求头里*/
         // location.pathname /admin-web/platform-admin-web/   /platform-admin-web/
         const appId = getAppIdByUrl();
         if (appId) {
-            config.headers['App-Id'] = appId;
+            (config as any).headers['App-Id'] = appId;
         }
 
         // 是否模拟网络延迟
         if (isSimulateNetDelay) {
             console.log('模拟网络延迟');
-            return new Promise(resolve => setTimeout(() => resolve(config), 1000));
+            return new Promise((resolve) => setTimeout(() => resolve(config), 1000));
         }
         // 默认参数序列化方法传递数组参数的时候会缺失索引
-        config.paramsSerializer = params => {
+        config.paramsSerializer = (params) => {
             return qs.stringify(params);
         };
 
         // 是否开启了delete、put等请求转换为post
         if (xHTTPMethodOverride) {
             if (config.method == 'delete' || config.method == 'put') {
-                config.headers['X-HTTP-Method-Override'] = config.method.toUpperCase();
+                (config as any).headers['X-HTTP-Method-Override'] = config.method.toUpperCase();
                 config.method = 'post';
             }
             // console.log(config);
@@ -67,7 +67,7 @@ instance.interceptors.request.use(
 
         return config;
     },
-    error => {
+    (error) => {
         // do something with request error
         console.log('request error', error); // for debug
         const msg = codeMessage['ECONNABORTED'];
@@ -84,7 +84,7 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
 
     return instance
         .request(config)
-        .then(resp => {
+        .then((resp) => {
             //console.log('response', resp);
 
             const ro = resp.data as Ro;
@@ -100,7 +100,7 @@ function request(config: AxiosRequestConfig): Promise<Ro> {
                 return Promise.reject({ result: 0, msg: ro.msg });
             }
         })
-        .catch(err => {
+        .catch((err) => {
             console.log('response error', err);
             // 错误提示信息
             const msg =

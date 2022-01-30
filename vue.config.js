@@ -7,7 +7,7 @@
 const path = require('path');
 const apiMocker = require('mocker-api');
 
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // 设置请求的基础URL
@@ -23,6 +23,8 @@ process.env.VUE_APP_REQUEST_BASE_URL =
         : ':' + process.env.VUE_APP_REQUEST_BASE_PORT);
 
 module.exports = {
+    // 打包带不带源码
+    productionSourceMap: process.env.NODE_ENV === 'development',
     chainWebpack(config) {
         // 配置Vue可源码调试
         config.when(
@@ -42,9 +44,9 @@ module.exports = {
             .options({
                 symbolId: 'icon-[name]',
             });
-        
+
         //页面加载优化------“vue页面运行时，把所有的js文件全部加载了”的解决方案
-        config.plugins.delete("prefetch") //只加载当前页面需要的js
+        config.plugins.delete('prefetch'); //只加载当前页面需要的js
 
         // 客户主题start
         let CLIENT = 'default';
@@ -52,36 +54,38 @@ module.exports = {
         // 接收参数 console.log('--client',process.env.npm_config_client);
         // 命令 yarn dev --client=nnxy
         // 接收参数 console.log('--client', process.argv.find((v)=>{return v.includes('--client=')}).replace('--client=',''))
-        const yarn_config_client = process.argv.find((v)=>{return v.includes('--client=')})
-        if(process.env.VUE_APP_CLIENT){
-            CLIENT = process.env.VUE_APP_CLIENT
-        }else if(yarn_config_client) {
-            CLIENT = yarn_config_client.replace('--client=','')
-        }else if(process.env.npm_config_client){
-            CLIENT = process.env.npm_config_client
+        const yarn_config_client = process.argv.find(v => {
+            return v.includes('--client=');
+        });
+        if (process.env.VUE_APP_CLIENT) {
+            CLIENT = process.env.VUE_APP_CLIENT;
+        } else if (yarn_config_client) {
+            CLIENT = yarn_config_client.replace('--client=', '');
+        } else if (process.env.npm_config_client) {
+            CLIENT = process.env.npm_config_client;
         }
         //设置对接的客户，如南宁学院
         config.plugin('define').tap(args => {
-            args[0]['process.env'].VUE_APP_CLIENT = JSON.stringify(CLIENT)
-            return args
-        })
+            args[0]['process.env'].VUE_APP_CLIENT = JSON.stringify(CLIENT);
+            return args;
+        });
         // 映射对接的客户目录
-        config.resolve.alias
-            .set("@client", path.resolve(__dirname,`./src/client/${CLIENT}`))
+        config.resolve.alias.set('@client', path.resolve(__dirname, `./src/client/${CLIENT}`));
         // 客户主题end
     },
-    configureWebpack(config){
-        config.plugins.push(new CopyPlugin(
-            [
-                { from: path.resolve(__dirname,'./src/view/app/security-center/wechat.css'), to: 'css' },
-                { from: path.resolve(__dirname,'./src/view/sign-in/unified/wechat-login.css'), to: 'css' }
-            ]
-        ))
-        if(process.env.npm_config_report) {
+    configureWebpack(config) {
+        config.plugins.push(
+            new CopyPlugin({
+                patterns: [
+                    { from: path.resolve(__dirname, './src/view/app/security-center/wechat.css'), to: 'css' },
+                    { from: path.resolve(__dirname, './src/view/sign-in/unified/wechat-login.css'), to: 'css' },
+                ],
+            })
+        );
+        if (process.env.npm_config_report) {
             // npm run dev --report 访问http://127.0.0.1:8888/ 查看打包分析
-            config.plugins.push(new BundleAnalyzerPlugin())
+            config.plugins.push(new BundleAnalyzerPlugin());
         }
-        
     },
     devServer: {
         // 调试时自动打开浏览器
