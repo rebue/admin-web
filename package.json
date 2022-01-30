@@ -75,7 +75,6 @@
         "lint-staged": "^12.1.7",
         "mocker-api": "^2.9.4",
         "mockjs": "^1.1.0",
-        "mongodb": "^4.3.0",
         "prettier": "^2.5.1",
         "sass": "^1.48.0",
         "sass-loader": "^10.0.0",
