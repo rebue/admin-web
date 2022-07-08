@@ -33,7 +33,7 @@
         "lodash.get": "^4.4.2",
         "mobx": "^5.15.7",
         "mobx-vue": "^2.2.0",
-        "moment": "^2.29.1",
+        "moment": "^2.29.4",
         "qs": "^6.10.3",
         "regenerator-runtime": "^0.13.9",
         "register-service-worker": "^1.7.2",
