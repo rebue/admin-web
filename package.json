@@ -34,7 +34,7 @@
         "mobx": "^5.15.7",
         "mobx-vue": "^2.2.0",
         "moment": "^2.29.1",
-        "qs": "^6.10.3",
+        "qs": "^6.7.3",
         "regenerator-runtime": "^0.13.9",
         "register-service-worker": "^1.7.2",
         "store": "^2.0.12",
