@@ -30,7 +30,7 @@
             "node",
             // 支持Reactivity Transform
             "@vue-macros/reactivity-transform/macros-global",
-            // 支持vue类型声明
+            // 图标库插件支持vue类型声明
             "unplugin-icons/types/vue"
         ]
     },
@@ -40,7 +40,8 @@
         "src/**/*.vue",
 
         /* 新增 */
-        "auto-imports.d.ts"
+        "auto-imports.d.ts",
+        "components.d.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

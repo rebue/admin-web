@@ -17,17 +17,23 @@ import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
 export default defineConfig(({ command, mode }) => {
     // 根据当前工作目录中的 `mode` 加载 .env 文件
     // 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
+    // https://cn.vitejs.dev/config/#using-environment-variables-in-config
     const env = loadEnv(mode, process.cwd(), '');
 
     return {
         // 项目根目录(index.html所在的目录)
         root: path.resolve(__dirname, 'src'),
+        // 公共基础路径(网站的subpath，可以在.env系列文件中配置)
         base: env.VITE_BASE_URL,
-        resolve: {
-            alias: {
-                '@': path.resolve(__dirname, 'src'),
-            },
+        build: {
+            // 编译输出路径
+            outDir: '../dist',
         },
+        // resolve: {
+        //     alias: {
+        //         '@': path.resolve(__dirname, 'src'),
+        //     },
+        // },
         css: {
             preprocessorOptions: {
                 less: {
