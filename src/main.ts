@@ -1,3 +1,4 @@
+import 'element-plus/theme-chalk/dark/css-vars.css';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { ModuleNamespace } from 'vite/types/hot.js';
 import App from './App.vue';

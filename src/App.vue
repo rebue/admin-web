@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDark, useToggle } from '@vueuse/core';
 import en from 'element-plus/es/locale/lang/en';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 
@@ -7,6 +8,13 @@ const { ctx } = getCurrentInstance() as any;
 
 // ****** 局部状态 ******
 // 状态如果不会改变，用 const 声明
+// 暗黑模式
+// const isDark = useDark();
+const isDark = useDark({
+    onChanged(dark: boolean) {
+        ElMessage('切换暗黑模式');
+    },
+});
 // 语言区域
 let locale = $ref(zhCn);
 // 按钮的配置
@@ -17,6 +25,9 @@ const buttonConfig = {
 const messageConfig = {
     max: 3, // 可同时显示的消息最大数量
 };
+
+// 切换暗黑模式
+const toggleDark = useToggle(useDark());
 
 /** 切换语言区域 */
 const toggleLocale = () => {
@@ -37,6 +48,7 @@ const toggleLocale = () => {
             </a>
         </div>
         <el-button mb-2 @click="toggleLocale">{{ $t('app.切换语言') }}</el-button>
+        <el-switch inline-prompt v-model="isDark" active-text="暗黑" inactive-text="明亮" @change="toggleDark()" />
         <HelloWorld msg="Vite + Vue" />
         <el-table mb-1 :data="[]" />
     </el-config-provider>

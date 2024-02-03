@@ -22,7 +22,7 @@
         "@vitejs/plugin-vue": "^4.5.2",
         "@vue-macros/reactivity-transform": "^0.4.3",
         "@vue/compiler-sfc": "^3.4.15",
-        "@zougt/vite-plugin-theme-preprocessor": "^1.4.8",
+        "@vueuse/core": "^10.7.2",
         "sass": "^1.70.0",
         "typescript": "^5.2.2",
         "unplugin-auto-import": "^0.17.5",
