@@ -13,16 +13,21 @@ let locale = $ref(zhCn);
 const buttonConfig = {
     autoInsertSpace: true, // 中文自动插入空格
 };
+// 消息的配置
+const messageConfig = {
+    max: 3, // 可同时显示的消息最大数量
+};
 
 /** 切换语言区域 */
 const toggleLocale = () => {
     locale = locale.name === zhCn.name ? en : zhCn;
-    ctx.$i18n.locale = locale.name;
+    ctx.$i18n.locale = ctx.$i18n.locale === 'zhCn' ? 'en' : 'zhCn';
+    ElMessage(ctx.$t('app.切换为中文'));
 };
 </script>
 
 <template>
-    <el-config-provider :locale="locale" :button="buttonConfig">
+    <el-config-provider :locale="locale" :button="buttonConfig" :message="messageConfig">
         <div>
             <a href="https://vitejs.dev" target="_blank">
                 <img src="./assets/vite.svg" class="logo" alt="Vite logo" />

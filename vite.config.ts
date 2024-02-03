@@ -29,11 +29,12 @@ export default defineConfig(({ command, mode }) => {
             // 编译输出路径
             outDir: '../dist',
         },
-        // resolve: {
-        //     alias: {
-        //         '@': path.resolve(__dirname, 'src'),
-        //     },
-        // },
+        resolve: {
+            alias: {
+                // 代码中使用路径时，用@/开头来代表src下的路径
+                '@': path.resolve(__dirname, 'src'),
+            },
+        },
         css: {
             preprocessorOptions: {
                 less: {
@@ -88,17 +89,16 @@ export default defineConfig(({ command, mode }) => {
                         ],
                     },
                 ],
-                // // 第三方提供的自动导入解析器
-                // resolvers: [
-                //     // AntDesignVueResolver(),
-                //     ElementPlusResolver(),
-                //     // 自动导入图标组件，可以免写import语句
-                //     IconsResolver({
-                //         // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
-                //         // {prefix}-{collection}-{icon-name}
-                //         prefix: 'icon',
-                //     }),
-                // ],
+                // 第三方提供的自动导入解析器
+                resolvers: [
+                    // AntDesignVueResolver(),
+                    ElementPlusResolver(),
+                    // IconsResolver({
+                    //     // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
+                    //     // {prefix}-{collection}-{icon-name}
+                    //     prefix: 'icon',
+                    // }),
+                ],
                 // 在项目根目录下自动生成auto-imports.d.ts文件
                 dts: true,
             }),
