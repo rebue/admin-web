@@ -1,0 +1,12 @@
+#
+# 统一代码格式
+# VS Code 需要安装 "Prettier - Code formatter" 插件方能起效
+#
+# 格式化时用单引号替换双引号
+singleQuote: true
+# 每行不自动换行的最大宽度
+printWidth: 120
+# 在ES5的array和object的最后一个元素后面加上逗号
+trailingComma: all
+# tab宽度使用4个空格符
+tabWidth: 4
