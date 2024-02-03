@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElTable: typeof import('element-plus/es')['ElTable']
     HelloWorld: typeof import('./component/HelloWorld.vue')['default']
     'IconSvgSpinners:windToy': typeof import('~icons/svg-spinners/wind-toy')['default']

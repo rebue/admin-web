@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import en from 'element-plus/dist/locale/en.mjs';
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
+import en from 'element-plus/es/locale/lang/en';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
 
 // 获取当前Vue实例的上下文
 const { ctx } = getCurrentInstance() as any;
