@@ -11,7 +11,7 @@ const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 // 导入自定义插件
-const modules = import.meta.glob('@/plugin/*.ts', { eager: true });
+const modules = import.meta.glob('/plugin/*.ts', { eager: true });
 Object.values(modules).forEach((module) => {
     app.use((module as ModuleNamespace).default);
 });

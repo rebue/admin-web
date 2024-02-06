@@ -28,11 +28,17 @@ export default defineConfig(({ command, mode }) => {
         build: {
             // 编译输出路径
             outDir: '../dist',
+            terserOptions: {
+                compress: {
+                    drop_console: true, // 生产环境时移除console
+                    drop_debugger: true, // 生产环境时移除debugger;
+                },
+            },
         },
         resolve: {
             alias: {
-                // 代码中使用路径时，用@/开头来代表src下的路径
-                '@': path.resolve(__dirname, 'src'),
+                // 代码中使用路径时，用 ~/ 开头来代表src下的路径
+                '~/': path.resolve(__dirname, 'src'),
             },
         },
         css: {
@@ -50,8 +56,8 @@ export default defineConfig(({ command, mode }) => {
             // Reactivity Transform
             // https://vue-macros.sxzz.moe/zh-CN/features/reactivity-transform.html
             ReactivityTransform(),
-            // 图标库插件
-            // https://github.com/unplugin/unplugin-icons
+            // 图标库插件(https://github.com/unplugin/unplugin-icons)
+            // 图标库(https://icones.js.org)
             Icons({
                 // vue3编译器(需要安装@vue/compiler-sfc)
                 compiler: 'vue3',
@@ -93,11 +99,11 @@ export default defineConfig(({ command, mode }) => {
                 resolvers: [
                     // AntDesignVueResolver(),
                     ElementPlusResolver(),
-                    // IconsResolver({
-                    //     // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
-                    //     // {prefix}-{collection}-{icon-name}
-                    //     prefix: 'icon',
-                    // }),
+                    IconsResolver({
+                        // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
+                        // {prefix}-{collection}-{icon-name}
+                        prefix: 'icon',
+                    }),
                 ],
                 // 在项目根目录下自动生成auto-imports.d.ts文件
                 dts: true,

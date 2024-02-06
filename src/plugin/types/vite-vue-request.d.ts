@@ -1,6 +1,6 @@
 /// <reference types="vite/client"
 
-import { Ro } from '@/ro/Ro';
+import { Ro } from '~/ro/Ro';
 
 declare type RequestFunction = (config: AxiosRequestConfig, promptMsg?: PromptMsg) => Promise<Ro>;
 

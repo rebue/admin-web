@@ -9,10 +9,12 @@ const { ctx } = getCurrentInstance() as any;
 // ****** 局部状态 ******
 // 状态如果不会改变，用 const 声明
 // 暗黑模式
-// const isDark = useDark();
 const isDark = useDark({
     onChanged(dark: boolean) {
-        ElMessage('切换暗黑模式');
+        if (ctx.$t) {
+            const msg = dark ? ctx.$t('app.切换为暗黑模式') : ctx.$t('app.切换为亮色模式');
+            ElMessage(msg);
+        }
     },
 });
 // 语言区域
@@ -28,7 +30,6 @@ const messageConfig = {
 
 // 切换暗黑模式
 const toggleDark = useToggle(useDark());
-
 /** 切换语言区域 */
 const toggleLocale = () => {
     locale = locale.name === zhCn.name ? en : zhCn;
@@ -48,7 +49,14 @@ const toggleLocale = () => {
             </a>
         </div>
         <el-button mb-2 @click="toggleLocale">{{ $t('app.切换语言') }}</el-button>
-        <el-switch inline-prompt v-model="isDark" active-text="暗黑" inactive-text="明亮" @change="toggleDark()" />
+        <el-tooltip :content="isDark ? $t('app.切换为亮色模式') : $t('app.切换为暗黑模式')" placement="top">
+            <el-button size="small" circle @click="toggleDark()">
+                <template #icon>
+                    <icon-ep-moon v-show="isDark" />
+                    <icon-ep-sunny v-show="!isDark" />
+                </template>
+            </el-button>
+        </el-tooltip>
         <HelloWorld msg="Vite + Vue" />
         <el-table mb-1 :data="[]" />
     </el-config-provider>
