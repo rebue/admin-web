@@ -1,0 +1,56 @@
+:root {
+    padding: 0;
+    margin: 0;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+#app {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+// @keyframes scaleGrowAnimation {
+//     0% {
+//         clip-path: circle(0 at 200px 50px);
+//     }
+//     100% {
+//         clip-path: circle(200% at 200px 50px);
+//     }
+// }
+
+/* Alternative custom animation style */
+::view-transition-old(root),
+::view-transition-new(root) {
+    // height: auto;
+    // width: 100vw;
+    animation: none;
+    mix-blend-mode: normal;
+}
+.dark::view-transition-old(root) {
+    z-index: 1;
+}
+.dark::view-transition-new(root) {
+    z-index: 999;
+}
+::view-transition-old(root) {
+    z-index: 999;
+}
+::view-transition-new(root) {
+    z-index: 1;
+}
+// .dark #light {
+//     display: none;
+// }
+// .dark #dark {
+//     display: block;
+// }
+// #dark {
+//     display: none;
+// }
+// #light {
+//     display: block;
+// }

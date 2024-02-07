@@ -3,7 +3,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { ModuleNamespace } from 'vite/types/hot.js';
 import App from './App.vue';
 import i18n from './assets/i18n';
-import './style.css';
+import './style.scss';
 
 const app = createApp(App);
 const pinia = createPinia();
