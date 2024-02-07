@@ -64,8 +64,6 @@ const toggleDarkMode = () => {
             `circle(${beginRadius}px at ${circleX}px ${circleY}px)`,
             `circle(${endRadius}px at ${circleX}px ${circleY}px)`,
         ];
-        console.log(isDark);
-
         //开始动画
         document.documentElement.animate(
             {
