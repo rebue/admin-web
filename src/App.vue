@@ -91,7 +91,7 @@ const toggleDarkMode = () => {
         </div>
         <el-button @click="toggleLocale">{{ $t('app.切换语言') }}</el-button>
         <el-tooltip :content="isDark ? $t('app.切换为亮色模式') : $t('app.切换为暗黑模式')" placement="top">
-            <el-button ref="btnToggleDarkModeRef" size="small" circle @click="toggleDarkMode()">
+            <el-button ref="btnToggleDarkModeRef" size="small" circle style="font-size: 14px" @click="toggleDarkMode()">
                 <template #icon>
                     <icon-ep-moon v-show="isDark" />
                     <icon-ep-sunny v-show="!isDark" />
