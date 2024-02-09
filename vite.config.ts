@@ -1,13 +1,13 @@
-import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import AutoRegistry from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import { themePreprocessorPlugin } from '@zougt/vite-plugin-theme-preprocessor';
-import path from 'path';
-import Icons from 'unplugin-icons/vite';
-import IconsResolver from 'unplugin-icons/resolver';
-import AutoImport from 'unplugin-auto-import/vite';
+import AutoRegistry from 'unplugin-vue-components/vite';
+import { defineConfig, loadEnv } from 'vite';
+// import { themePreprocessorPlugin } from '@zougt/vite-plugin-theme-preprocessor';
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
+import path from 'path';
+import AutoImport from 'unplugin-auto-import/vite';
+import IconsResolver from 'unplugin-icons/resolver';
+import Icons from 'unplugin-icons/vite';
 
 // https://vitejs.dev/config/
 // mode:
@@ -38,7 +38,7 @@ export default defineConfig(({ command, mode }) => {
         resolve: {
             alias: {
                 // 代码中使用路径时，用 ~/ 开头来代表src下的路径
-                '~/': path.resolve(__dirname, 'src'),
+                '~': path.resolve(__dirname, 'src'),
             },
         },
         css: {
