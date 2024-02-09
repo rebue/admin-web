@@ -1,10 +1,10 @@
 import { createI18n } from 'vue-i18n';
 // 语言包
-import zhCn from './zh-cn';
 import en from './en';
+import zhCn from './zh-cn';
 
 const i18n = createI18n({
-    locale: sessionStorage.getItem('localeLang') || 'zhCn',
+    locale: 'zhCn',
     messages: {
         zhCn,
         en,
