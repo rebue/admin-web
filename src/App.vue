@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useLocaleStore } from '~/store/LocaleStore';
 
-// 获取当前Vue实例的上下文
-const { proxy } = getCurrentInstance() as any;
-
 // 按钮的配置
 const buttonConfig = {
     autoInsertSpace: true, // 中文自动插入空格
@@ -16,13 +13,6 @@ const messageConfig = {
 // ****** 中央状态 ******
 // 语言区域
 const { elementPlustLocale } = $(useLocaleStore());
-const { name: localeName } = storeToRefs(useLocaleStore());
-
-// 监听语言区域状态的改变
-watch(localeName, (newValue) => {
-    proxy.$i18n.locale = newValue;
-    ElMessage(proxy.$t('app.切换为中文'));
-});
 </script>
 
 <template>

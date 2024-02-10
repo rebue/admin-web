@@ -29,8 +29,18 @@ const isDark = $(
         },
     }),
 );
-/** 切换暗黑模式 */
+
+// ****** 方法和事件 ******
+/** 改变语言区域 */
+const changeLocale = (value: string | number | boolean) => {
+    localeName = value as string;
+    proxy.$i18n.locale = value;
+    ElMessage(proxy.$t('app.切换为中文'));
+};
+
+/** 切换暗黑模式的方法 */
 const toggleDark = useToggle(useDark());
+/** 切换暗黑模式的事件 */
 const toggleDarkMode = () => {
     // @ts-ignore Fallback for browsers that don't support this API:
     if (!document.startViewTransition) {
@@ -73,9 +83,9 @@ const toggleDarkMode = () => {
 <template>
     <h1>{{ msg }}</h1>
     {{ $t('app.切换语言') }}
-    <el-radio-group v-model="localeName" size="large" @change="(value) => (localeName = value as string)">
+    <el-radio-group v-radio-cancel v-model="localeName" size="large" @change="changeLocale">
         <el-radio-button label="zhCn">中文</el-radio-button>
-        <el-radio-button label="en">英文</el-radio-button>
+        <el-radio-button label="en">English</el-radio-button>
     </el-radio-group>
     <el-tooltip :content="isDark ? $t('app.切换为亮色模式') : $t('app.切换为暗黑模式')" placement="top">
         <el-button ref="btnToggleDarkModeRef" size="small" circle style="font-size: 14px" @click="toggleDarkMode()">
