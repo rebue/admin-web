@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useDark, useToggle } from '@vueuse/core';
+import { ComponentInternalInstance } from 'vue';
 import { useLocaleStore } from '~/store/LocaleStore';
 
 defineProps<{ msg: string }>();
 
 // 获取当前Vue实例的上下文
-const currentInstance = getCurrentInstance() as any;
+const currentInstance = getCurrentInstance() as ComponentInternalInstance;
 const { proxy } = currentInstance;
+const self = proxy as ComponentPublicInstance;
 
 // 切换暗黑模式按钮的引用
 const btnToggleDarkModeRef = $ref(null) as any;
@@ -22,8 +24,8 @@ const count = ref(0);
 const isDark = $(
     useDark({
         onChanged(dark: boolean) {
-            if (proxy.$t) {
-                const msg = dark ? proxy.$t('app.切换为暗黑模式') : proxy.$t('app.切换为亮色模式');
+            if (self.$t) {
+                const msg = dark ? self.$t('app.切换为暗黑模式') : self.$t('app.切换为亮色模式');
                 ElMessage(msg);
             }
         },
@@ -31,13 +33,6 @@ const isDark = $(
 );
 
 // ****** 方法和事件 ******
-/** 改变语言区域 */
-const changeLocale = (value: string | number | boolean) => {
-    localeName = value as string;
-    proxy.$i18n.locale = value;
-    ElMessage(proxy.$t('app.切换为中文'));
-};
-
 /** 切换暗黑模式的方法 */
 const toggleDark = useToggle(useDark());
 /** 切换暗黑模式的事件 */
@@ -83,7 +78,7 @@ const toggleDarkMode = () => {
 <template>
     <h1>{{ msg }}</h1>
     {{ $t('app.切换语言') }}
-    <el-radio-group v-radio-cancel v-model="localeName" size="large" @change="changeLocale">
+    <el-radio-group v-radio-cancel v-model="localeName" size="large">
         <el-radio-button label="zhCn">中文</el-radio-button>
         <el-radio-button label="en">English</el-radio-button>
     </el-radio-group>

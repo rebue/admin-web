@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { ComponentInternalInstance } from 'vue';
 import { useLocaleStore } from '~/store/LocaleStore';
+
+// 获取当前Vue实例的上下文
+const currentInstance = getCurrentInstance() as ComponentInternalInstance;
+const { proxy } = currentInstance;
+const self = proxy as ComponentPublicInstance;
 
 // 按钮的配置
 const buttonConfig = {
@@ -12,7 +18,13 @@ const messageConfig = {
 
 // ****** 中央状态 ******
 // 语言区域
-const { elementPlustLocale } = $(useLocaleStore());
+const localeStore = useLocaleStore();
+const { elementPlustLocale } = $(localeStore);
+// 监听语言区域状态变化
+localeStore.$subscribe((_mutation, state) => {
+    self.$i18n.locale = state.name || 'zhCn';
+    ElMessage(self.$t('app.切换为中文'));
+});
 </script>
 
 <template>

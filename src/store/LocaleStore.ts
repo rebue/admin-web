@@ -9,13 +9,14 @@ export const useLocaleStore = defineStore('localeStore', {
     }),
     getters: {
         elementPlustLocale: (state) => {
+            console.log('state.name', state.name);
             switch (state.name) {
                 case 'zhCn':
                     return zhCn;
                 case 'en':
                     return en;
                 default:
-                    throw new Error('不支持的语言区域: ' + state.name);
+                    return zhCn;
             }
         },
     },
