@@ -2,6 +2,7 @@
 import { useDark, useToggle } from '@vueuse/core';
 import { ComponentInternalInstance } from 'vue';
 import { useLocaleStore } from '~/store/LocaleStore';
+import { useThemeStore } from '~/store/ThemeStore';
 
 defineProps<{ msg: string }>();
 
@@ -15,7 +16,9 @@ const btnToggleDarkModeRef = $ref(null) as any;
 
 // ****** 中央状态 ******
 // 语言区域
-let { name: localeName } = $(useLocaleStore());
+const { name: localeName } = $(useLocaleStore());
+// 主题
+const { primaryColor } = $(useThemeStore());
 
 // ****** 局部状态 ******
 // 计数器
@@ -91,6 +94,15 @@ const toggleDarkMode = () => {
         </el-button>
     </el-tooltip>
     <icon-svg-spinners:wind-toy />
+    {{ $t('app.切换主题色彩') }}
+    <el-radio-group v-radio-cancel v-model="primaryColor" size="large">
+        <el-radio-button label="#409eff">拂晓蓝(默认)</el-radio-button>
+        <el-radio-button label="#e74c3c">薄暮红</el-radio-button>
+        <el-radio-button label="#e67e22">火山橘</el-radio-button>
+        <el-radio-button label="#f1c40f">日暮黄</el-radio-button>
+        <el-radio-button label="#16a085">极光绿</el-radio-button>
+        <el-radio-button label="#9b59b6">酱紫</el-radio-button>
+    </el-radio-group>
     <div class="card">
         <el-button @click="count++"> {{ $t('hello.当前计数', { count }) }}</el-button>
         <p>
