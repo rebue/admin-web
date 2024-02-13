@@ -22,6 +22,8 @@ declare interface ImportMetaEnv {
     readonly VITE_REQUEST_BASE_PORT: string;
     /** 自定义请求的基础路径 */
     readonly VITE_REQUEST_BASE_PATH: string;
+    /** Vite代理数组 */
+    readonly VITE_PROXIES: string;
 }
 
 declare interface ImportMeta {

@@ -7,6 +7,8 @@ export default {
         切换主题色彩: 'Switch Primary Color',
     },
     hello: {
-        当前计数: 'count is {count}',
+        你好: 'Hello',
+        你好名字: 'Hello，{name}',
+        当前计数: 'Count is {count}',
     },
 };

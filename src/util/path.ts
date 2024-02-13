@@ -22,3 +22,11 @@ export function contactPath(...paths: string[]): string {
     }
     return result;
 }
+
+/**
+ * 获取图片超链接
+ * @param imgPath 图片路径(相对于/assets/img/目录)
+ */
+export function getAssetsImgHref(imgPath: string) {
+    return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
+}

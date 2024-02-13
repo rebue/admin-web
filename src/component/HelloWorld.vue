@@ -3,6 +3,9 @@ import { useDark, useToggle } from '@vueuse/core';
 import { ComponentInternalInstance } from 'vue';
 import { useLocaleStore } from '~/store/LocaleStore';
 import { useThemeStore } from '~/store/ThemeStore';
+import { getAssetsImgHref } from '~/util/path';
+import { helloApi } from '~/api/hlw/HelloApi';
+import { Ro } from '~/ro/Ro';
 
 defineProps<{ msg: string }>();
 
@@ -21,8 +24,6 @@ const { name: localeName } = $(useLocaleStore());
 const { primaryColor } = $(useThemeStore());
 
 // ****** 局部状态 ******
-// 计数器
-const count = ref(0);
 // 暗黑模式
 const isDark = $(
     useDark({
@@ -34,6 +35,10 @@ const isDark = $(
         },
     }),
 );
+// hello名称
+let name = $ref('');
+// 计数器
+const count = $ref(0);
 
 // ****** 方法和事件 ******
 /** 切换暗黑模式的方法 */
@@ -76,10 +81,31 @@ const toggleDarkMode = () => {
         );
     });
 };
+/** hello方法 */
+function hello() {
+    helloApi
+        .hello(localeName)
+        // 处理返回的结果
+        .then((ro: Ro) => {
+            if (ro.result > 0) {
+                name = ro.data.name;
+            }
+        });
+}
 </script>
 
 <template>
+    <div>
+        <a href="https://vitejs.dev" target="_blank">
+            <img :src="getAssetsImgHref('vite.svg')" class="logo" alt="Vite logo" />
+        </a>
+        <a href="https://vuejs.org/" target="_blank">
+            <img :src="getAssetsImgHref('vue.svg')" class="logo vue" alt="Vue logo" />
+        </a>
+    </div>
     <h1>{{ msg }}</h1>
+    <h1>{{ $t('hello.你好名字', { name }) }}</h1>
+    <el-button @click="hello">{{ $t('hello.你好') }}</el-button>
     {{ $t('app.切换语言') }}
     <el-radio-group v-radio-cancel v-model="localeName" size="large">
         <el-radio-button label="zhCn">中文</el-radio-button>
@@ -128,5 +154,17 @@ const toggleDarkMode = () => {
 <style scoped>
 .read-the-docs {
     color: #888;
+}
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+    filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>

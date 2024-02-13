@@ -5,8 +5,8 @@
  */
 import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
-import { simulateNetDelay, requestBasePath, xHttpMethodOverride } from '@/env';
-import { Ro } from '@/ro/Ro';
+import { simulateNetDelay, requestBasePath, xHttpMethodOverride } from '~/env';
+import { Ro } from '~/ro/Ro';
 
 const codeMessage: { [key: string]: string } = {
     ETIMEDOUT: '请求超时，请稍后重试',

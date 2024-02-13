@@ -3,5 +3,5 @@ export interface Ro {
     msg: string;
     detail: string;
     code: string;
-    extra: object | [];
+    data: any | [];
 }
