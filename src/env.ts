@@ -21,7 +21,7 @@ export const requestBasePath = (function () {
 console.log('requestBasePath', requestBasePath);
 
 /** 模拟网络延迟(单位毫秒，为0或不设置为不模拟) */
-export const simulateNetDelay: number = import.meta.env.VITE_SIMULATE_NET_DELAY - 0;
+export const simulateNetDelay: number = import.meta.env.VITE_SIMULATE_NET_DELAY as unknown as number;
 
 /** 是否将delete、put等请求转换为post请求(默认为false) */
 export const xHttpMethodOverride: boolean = import.meta.env.VITE_X_HTTP_METHOD_OVERRIDE

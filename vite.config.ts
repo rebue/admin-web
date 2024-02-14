@@ -1,12 +1,13 @@
 import vue from '@vitejs/plugin-vue';
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
-import path from 'path';
+import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoRegistry from 'unplugin-vue-components/vite';
 import { defineConfig, loadEnv } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import { viteMockServe } from 'vite-plugin-mock';
 
 // https://vitejs.dev/config/
@@ -28,7 +29,7 @@ export default defineConfig(({ command, mode }) => {
             target: proxy.target,
             changeOrigin: true,
             rewrite: (path) => {
-                if (!!!proxy.pathRewrite) return path;
+                if (!proxy.pathRewrite) return path;
                 return path.replace(new RegExp(proxy.pathRewrite[0]), proxy.pathRewrite[1]);
             },
         };
@@ -37,7 +38,7 @@ export default defineConfig(({ command, mode }) => {
 
     return {
         // 项目根目录(index.html所在的目录)
-        root: path.resolve(__dirname, 'src'),
+        root: resolve(__dirname, 'src'),
         // 公共基础路径(网站的subpath，可以在.env系列文件中配置)
         base: env.VITE_BASE_URL,
         build: {
@@ -53,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
         resolve: {
             alias: {
                 // 代码中使用路径时，用 ~/ 开头来代表src下的路径
-                '~': path.resolve(__dirname, 'src'),
+                '~': resolve(__dirname, 'src'),
             },
         },
         server: {
@@ -146,6 +147,16 @@ export default defineConfig(({ command, mode }) => {
                 ],
                 // 在root目录下自动生成components.d.ts文件
                 dts: true,
+            }),
+            // HTML插件
+            // https://github.com/vbenjs/vite-plugin-html
+            createHtmlPlugin({
+                // 注入
+                inject: {
+                    data: {
+                        title: env.VITE_TITLE,  // 注入标题
+                    },
+                },
             }),
         ],
     };

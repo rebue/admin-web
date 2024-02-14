@@ -7,13 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AdmFw: typeof import('./component/adm/AdmFw.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    HelloWorld: typeof import('./component/HelloWorld.vue')['default']
+    HelloWorld: typeof import('./component/hlw/HelloWorld.vue')['default']
     IconEpMoon: typeof import('~icons/ep/moon')['default']
     IconEpSunny: typeof import('~icons/ep/sunny')['default']
     'IconSvgSpinners:windToy': typeof import('~icons/svg-spinners/wind-toy')['default']
