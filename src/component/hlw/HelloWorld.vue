@@ -4,10 +4,15 @@ import { ComponentInternalInstance } from 'vue';
 import { useLocaleStore } from '~/store/LocaleStore';
 import { useThemeStore } from '~/store/ThemeStore';
 import { getAssetsImgHref } from '~/util/path';
-import { helloApi } from '~/api/hlw/HelloApi';
+import { HlwHelloApi } from '~/api/hlw/HlwHelloApi';
 import { Ro } from '~/ro/Ro';
 
-defineProps<{ msg: string }>();
+// 定义组件属性
+interface Props {
+    msg?: string;
+}
+// 设置属性默认值
+withDefaults(defineProps<Props>(), { msg: 'Vite + Vue' });
 
 // 获取当前Vue实例的上下文
 const currentInstance = getCurrentInstance() as ComponentInternalInstance;
@@ -83,8 +88,7 @@ const toggleDarkMode = () => {
 };
 /** hello方法 */
 function hello() {
-    helloApi
-        .hello(localeName)
+    HlwHelloApi.hello(localeName)
         // 处理返回的结果
         .then((ro: Ro) => {
             if (ro.result > 0) {

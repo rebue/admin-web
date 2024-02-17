@@ -40,6 +40,7 @@ themeStore.$subscribe((_mutation, state) => {
 
 <template>
     <el-config-provider :locale="elementPlustLocale" :button="buttonConfig" :message="messageConfig">
-        <HelloWorld msg="Vite + Vue" />
+        <!-- <HelloWorld msg="Vite + Vue" /> -->
+        <AdmHome />
     </el-config-provider>
 </template>

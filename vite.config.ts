@@ -16,10 +16,15 @@ import { viteMockServe } from 'vite-plugin-mock';
 //      命令 vite build 的 mode 为 production
 //      如果想自定义mode，运行命令 vite build --mode <自定义mode名称>
 export default defineConfig(({ command, mode }) => {
+    // 获取应用版本
+    const appVersion: string = process.env.npm_package_version;
+    // 根目录
+    const rootDir = resolve(__dirname, 'src');
+
     // 根据当前工作目录中的 `mode` 加载 .env 文件
     // 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
     // https://cn.vitejs.dev/config/#using-environment-variables-in-config
-    const env = loadEnv(mode, process.cwd(), '');
+    const env = loadEnv(mode, rootDir, '');
 
     // 获取代理的配置
     const proxies = {};
@@ -38,12 +43,16 @@ export default defineConfig(({ command, mode }) => {
 
     return {
         // 项目根目录(index.html所在的目录)
-        root: resolve(__dirname, 'src'),
+        root: rootDir,
         // 公共基础路径(网站的subpath，可以在.env系列文件中配置)
         base: env.VITE_BASE_URL,
+        // 定义全局变量
+        define: {
+            __APP_VERSION__: `"${appVersion}"`,
+        },
         build: {
             // 编译输出路径
-            outDir: '../dist',
+            outDir: resolve(__dirname, 'dist'),
             terserOptions: {
                 compress: {
                     drop_console: true, // 生产环境时移除console
@@ -54,7 +63,7 @@ export default defineConfig(({ command, mode }) => {
         resolve: {
             alias: {
                 // 代码中使用路径时，用 ~/ 开头来代表src下的路径
-                '~': resolve(__dirname, 'src'),
+                '~': rootDir,
             },
         },
         server: {
@@ -73,6 +82,7 @@ export default defineConfig(({ command, mode }) => {
         plugins: [
             vue(),
             // mock
+            // https://github.com/vbenjs/vite-plugin-mock
             viteMockServe(),
             // Reactivity Transform
             // https://vue-macros.sxzz.moe/zh-CN/features/reactivity-transform.html
@@ -133,7 +143,7 @@ export default defineConfig(({ command, mode }) => {
             // https://github.com/unplugin/unplugin-vue-components
             AutoRegistry({
                 // 查找自定义组件的位置
-                dirs: ['component', 'view', 'assets/icon'],
+                dirs: ['component', 'view'],
                 // 第三方提供的自动注册解析器
                 resolvers: [
                     // AntDesignVueResolver(),
@@ -154,7 +164,7 @@ export default defineConfig(({ command, mode }) => {
                 // 注入
                 inject: {
                     data: {
-                        title: env.VITE_TITLE,  // 注入标题
+                        title: env.VITE_APP_NAME + ' v' + appVersion, // 注入标题
                     },
                 },
             }),

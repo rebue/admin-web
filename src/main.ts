@@ -3,6 +3,8 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { ModuleNamespace } from 'vite/types/hot.js';
 import App from '~/App.vue';
 import i18n from '~/assets/i18n';
+import '~/env';
+import router from '~/router/router';
 import '~/style.scss';
 
 // 建立app
@@ -14,10 +16,13 @@ const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 
+// vue-router
+app.use(router);
+
 // 语言区域
 app.use(i18n);
 
-// 导入自定义插件
+// 导入自定义指令插件
 const modules = import.meta.glob('~/plugin/*.ts', { eager: true });
 Object.values(modules).forEach((module) => {
     app.use((module as ModuleNamespace).default);

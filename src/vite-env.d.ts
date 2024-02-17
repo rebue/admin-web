@@ -10,8 +10,6 @@ declare interface ImportMetaEnv {
     readonly VITE_BASE_URL: string;
     /** 模拟网络延迟(单位毫秒，为0或不设置为不模拟) */
     readonly VITE_SIMULATE_NET_DELAY: number;
-    /** 标题 */
-    readonly VITE_TITLE: string;
     /** 是否将delete、put等请求转换为post请求(默认为false) */
     readonly VITE_X_HTTP_METHOD_OVERRIDEE: string;
     /** 是否自定义请求地址 */
@@ -26,6 +24,10 @@ declare interface ImportMetaEnv {
     readonly VITE_REQUEST_BASE_PATH: string;
     /** Vite代理数组 */
     readonly VITE_PROXIES: string;
+    /** 应用编码 */
+    readonly VITE_APP_CODE: string;
+    /** 应用名称 */
+    readonly VITE_APP_NAME: string;
 }
 
 declare interface ImportMeta {
