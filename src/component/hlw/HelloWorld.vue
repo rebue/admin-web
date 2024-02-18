@@ -34,7 +34,7 @@ const isDark = $(
     useDark({
         onChanged(dark: boolean) {
             if (self.$t) {
-                const msg = dark ? self.$t('app.切换为暗黑模式') : self.$t('app.切换为亮色模式');
+                const msg = dark ? self.$t('adm.切换为暗黑模式') : self.$t('adm.切换为亮色模式');
                 ElMessage(msg);
             }
         },
@@ -99,62 +99,72 @@ function hello() {
 </script>
 
 <template>
-    <div>
-        <a href="https://vitejs.dev" target="_blank">
-            <img :src="getAssetsImgHref('vite.svg')" class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://vuejs.org/" target="_blank">
-            <img :src="getAssetsImgHref('vue.svg')" class="logo vue" alt="Vue logo" />
-        </a>
-    </div>
-    <h1>{{ msg }}</h1>
-    <h1>{{ $t('hello.你好名字', { name }) }}</h1>
-    <el-button @click="hello">{{ $t('hello.你好') }}</el-button>
-    {{ $t('app.切换语言') }}
-    <el-radio-group v-radio-cancel v-model="localeName" size="large">
-        <el-radio-button label="zhCn">中文</el-radio-button>
-        <el-radio-button label="en">English</el-radio-button>
-    </el-radio-group>
-    <el-tooltip :content="isDark ? $t('app.切换为亮色模式') : $t('app.切换为暗黑模式')" placement="top">
-        <el-button ref="btnToggleDarkModeRef" size="small" circle style="font-size: 14px" @click="toggleDarkMode()">
-            <template #icon>
-                <icon-ep-moon v-show="isDark" />
-                <icon-ep-sunny v-show="!isDark" />
-            </template>
-        </el-button>
-    </el-tooltip>
-    <icon-svg-spinners:wind-toy />
-    {{ $t('app.切换主题色彩') }}
-    <el-radio-group v-radio-cancel v-model="primaryColor" size="large">
-        <el-radio-button label="#409eff">拂晓蓝(默认)</el-radio-button>
-        <el-radio-button label="#e74c3c">薄暮红</el-radio-button>
-        <el-radio-button label="#e67e22">火山橘</el-radio-button>
-        <el-radio-button label="#f1c40f">日暮黄</el-radio-button>
-        <el-radio-button label="#16a085">极光绿</el-radio-button>
-        <el-radio-button label="#9b59b6">酱紫</el-radio-button>
-    </el-radio-group>
-    <div class="card">
-        <el-button @click="count++"> {{ $t('hello.当前计数', { count }) }}</el-button>
-        <p>
-            Edit
-            <code>components/HelloWorld.vue</code> to test HMR
-        </p>
-    </div>
+    <el-scrollbar view-class="hlw-hello-world-root">
+        <div>
+            <a href="https://vitejs.dev" target="_blank">
+                <img :src="getAssetsImgHref('vite.svg')" class="logo" alt="Vite logo" />
+            </a>
+            <a href="https://vuejs.org/" target="_blank">
+                <img :src="getAssetsImgHref('vue.svg')" class="logo vue" alt="Vue logo" />
+            </a>
+        </div>
+        <h1>{{ msg }}</h1>
+        <h1>{{ $t('hello.你好名字', { name }) }}</h1>
+        <el-button @click="hello">{{ $t('hello.你好') }}</el-button>
+        {{ $t('adm.切换语言') }}
+        <el-radio-group v-radio-cancel v-model="localeName" size="large">
+            <el-radio-button label="zhCn">中文</el-radio-button>
+            <el-radio-button label="en">English</el-radio-button>
+        </el-radio-group>
+        <el-tooltip :content="isDark ? $t('adm.切换为亮色模式') : $t('adm.切换为暗黑模式')" placement="top">
+            <el-button ref="btnToggleDarkModeRef" size="small" circle style="font-size: 14px" @click="toggleDarkMode()">
+                <template #icon>
+                    <icon-ep-moon v-show="isDark" />
+                    <icon-ep-sunny v-show="!isDark" />
+                </template>
+            </el-button>
+        </el-tooltip>
+        <icon-svg-spinners:wind-toy />
+        {{ $t('adm.切换主题色彩') }}
+        <el-radio-group v-radio-cancel v-model="primaryColor" size="large">
+            <el-radio-button label="#409eff">拂晓蓝(默认)</el-radio-button>
+            <el-radio-button label="#e74c3c">薄暮红</el-radio-button>
+            <el-radio-button label="#e67e22">火山橘</el-radio-button>
+            <el-radio-button label="#f1c40f">日暮黄</el-radio-button>
+            <el-radio-button label="#16a085">极光绿</el-radio-button>
+            <el-radio-button label="#9b59b6">酱紫</el-radio-button>
+        </el-radio-group>
+        <div class="card">
+            <el-button @click="count++"> {{ $t('hello.当前计数', { count }) }}</el-button>
+            <p>
+                Edit
+                <code>components/HelloWorld.vue</code> to test HMR
+            </p>
+        </div>
 
-    <p>
-        Check out
-        <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
-        starter
-    </p>
-    <p>
-        Install
-        <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-        in your IDE for a better DX
-    </p>
-    <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
-    <el-table mb-1 :data="[]" />
+        <p>
+            Check out
+            <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue +
+            Vite starter
+        </p>
+        <p>
+            Install
+            <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
+            in your IDE for a better DX
+        </p>
+        <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+        <el-table mb-1 :data="[]" />
+    </el-scrollbar>
 </template>
 
+<style>
+/* XXX: 不知道为什么这个类如果是放在scoped下不能生成匹配到滚动条视图的样式 */
+.hlw-hello-world-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
 <style scoped>
 .read-the-docs {
     color: #888;

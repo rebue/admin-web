@@ -25,7 +25,7 @@ const { elementPlustLocale } = $(localeStore);
 // 监听语言区域状态变化
 localeStore.$subscribe((_mutation, state) => {
     self.$i18n.locale = state.name || 'zhCn';
-    ElMessage(self.$t('app.切换为中文'));
+    ElMessage(self.$t('adm.切换为中文'));
 });
 
 // 主题色彩

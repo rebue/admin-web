@@ -123,6 +123,8 @@ export default defineConfig(({ command, mode }) => {
                             'createWebHashHistory',
                             'onBeforeRouteLeave',
                             'onBeforeRouteUpdate',
+                            'useRouter',
+                            'useRoute',
                         ],
                     },
                 ],
@@ -130,11 +132,11 @@ export default defineConfig(({ command, mode }) => {
                 resolvers: [
                     // AntDesignVueResolver(),
                     ElementPlusResolver(),
-                    // IconsResolver({
-                    //     // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
-                    //     // {prefix}-{collection}-{icon-name}
-                    //     prefix: 'icon',
-                    // }),
+                    IconsResolver({
+                        // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
+                        // {prefix}-{collection}-{icon-name}
+                        // prefix: 'icon',
+                    }),
                 ],
                 // 在root目录下自动生成auto-imports.d.ts文件
                 dts: true,
@@ -152,7 +154,8 @@ export default defineConfig(({ command, mode }) => {
                     IconsResolver({
                         // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
                         // {prefix}-{collection}-{icon-name}
-                        prefix: 'icon',
+                        // prefix: 'icon',
+                        // enabledCollections: ['ep'],
                     }),
                 ],
                 // 在root目录下自动生成components.d.ts文件

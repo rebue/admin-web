@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 interface Menu {
     /** 菜单ID */
     id: string | number;
@@ -20,11 +19,15 @@ defineOptions({
     inheritAttrs: false, // 避免本组件的根元素被污染上父组件的属性
 });
 
-const onSelect = (index: string, indexPath: string[]) => {
-    console.log('onSelect:', index, indexPath);
+const route = useRoute();
+
+const onSelect = (index: string, indexPath: string[], a) => {
+    console.log('onSelect:', index, indexPath, a);
+    console.log('abc:', route.matched);
 };
 </script>
 <template>
+    {{ $route.matched.entries() }}
     <el-menu v-bind="$attrs" @select="onSelect">
         <RebueSubMenu :menus="menus" />
     </el-menu>

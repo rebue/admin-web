@@ -9,8 +9,25 @@ import { AdmMenuVo } from '~/vo/adm/AdmMenuVo';
 export const useMenuStore = defineStore('menuStore', {
     state: (): State => ({
         menus: [],
+        currentMenuId: undefined,
     }),
+    getters: {
+        /** 当前菜单 */
+        currentMenu(state) {
+            return state.menus[state.currentMenuId];
+        },
+    },
     actions: {
+        /**
+         * 设置当前菜单
+         * @param index 菜单的索引
+         */
+        setCurrentMenu(id: string) {
+            this.$patch({ currentMenuId: id });
+        },
+        /**
+         * 刷新菜单
+         */
         refreshMenus() {
             AdmMenuApi.list()
                 // 处理返回的结果
@@ -25,11 +42,13 @@ export const useMenuStore = defineStore('menuStore', {
     persist: false,
 });
 
+// 中央状态的类型
+// 注意: 目前pinia-plugin-persistedstate插件还不支持map的属性类型
 interface State {
-    /**
-     * 菜单列表
-     */
+    /** 菜单列表 */
     menus: AdmMenuVo[];
+    /** 当前菜单ID */
+    currentMenuId: string | undefined;
 }
 
 if (import.meta.hot) {

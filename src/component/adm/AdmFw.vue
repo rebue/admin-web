@@ -2,29 +2,32 @@
 import { appCode, appName } from '~/env';
 import { useMenuStore } from '~/store/MenuStore';
 import { getAssetsImgHref } from '~/util/path';
+import { useAdmStore } from '~/store/AdmStore';
 
 // ****** 中央状态 ******
 // 菜单
 const { menus } = $(useMenuStore());
+// 后台管理系统的中央状态
+let { isFoldLeft } = $(useAdmStore());
 </script>
 
 <template>
     <div class="adm-container">
-        <div class="adm-container-left">
+        <div class="adm-container-left" :style="{ minWidth: isFoldLeft ? '' : '14rem' }">
             <div class="adm-container-logo">
                 <img :src="getAssetsImgHref('vite.svg')" :alt="appName" />
-                <span>{{ appCode }}</span>
+                <span v-if="!isFoldLeft">{{ appCode }}</span>
             </div>
             <div class="adm-container-menu">
                 <el-scrollbar>
-                    <RebueMenu :menus="menus" unique-opened />
+                    <RebueMenu :menus="menus" unique-opened :collapse="isFoldLeft" />
                 </el-scrollbar>
             </div>
         </div>
         <div class="adm-container-right">
-            <div class="adm-container-header"></div>
+            <AdmHeader />
             <div class="adm-container-main">
-                <el-scrollbar> <router-view /></el-scrollbar>
+                <router-view />
             </div>
         </div>
     </div>
@@ -35,9 +38,6 @@ const { menus } = $(useMenuStore());
     height: 100vh;
     display: flex;
     .adm-container-left {
-        width: 12rem;
-        // display: flex;
-        // flex-direction: column;
         .adm-container-logo {
             height: 2rem;
             padding: 1rem;
@@ -52,6 +52,7 @@ const { menus } = $(useMenuStore());
         .adm-container-menu {
             .el-menu {
                 border: 0; // 去掉菜单右边的竖线
+                // width: 14rem;
             }
         }
     }
@@ -59,11 +60,9 @@ const { menus } = $(useMenuStore());
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        .adm-container-header {
-            height: 4rem;
-        }
         .adm-container-main {
             flex-grow: 1;
+            height: 100%;
         }
     }
 }
